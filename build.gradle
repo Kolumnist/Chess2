@@ -1,0 +1,38 @@
+group = "de.hhn.it.devtools"
+version = "1.0"
+
+
+allprojects {
+
+    wrapper {
+        gradleVersion = "7.5.1"
+    }
+
+    apply plugin: "java"
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        // use slf versions with module-info information inside
+        implementation ("org.slf4j:slf4j-api:2.0.0") {
+            because "we need the SimpleLoggingFacade with module information"
+        }
+        implementation ("org.slf4j:slf4j-simple:2.0.0")
+        // use JUnit 5
+        testImplementation ("org.junit.jupiter:junit-jupiter-api:5.9.0")
+        testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.9.0")
+    }
+    javadoc {
+        options.encoding = "UTF-8"
+        source = project(':apis').sourceSets.main.allJava
+    }
+
+}

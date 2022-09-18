@@ -1,0 +1,40 @@
+plugins {
+    id("java-library")
+    id("checkstyle")
+    id("jacoco")
+    id("pmd")
+}
+
+group = "de.hhn.it.devtools.components"
+version = "1.0"
+
+
+dependencies {
+    implementation project(":apis")
+    // see also the dependencies in build.gradle (root)
+}
+
+test {
+    useJUnitPlatform()
+}
+
+pmd {
+    ignoreFailures = true
+    sourceSets = [ project.sourceSets.main ]
+    ruleSetFiles = rootProject.files("etc/pmd-devtools-ruleset.xml")
+    ruleSets = []
+}
+
+
+checkstyle {
+    toolVersion = "8.41.1"
+    configFile = file("../etc/google-checks-2021.xml")
+    showViolations = false
+    checkstyleTest.enabled = false
+}
+
+
+task myJavadocs(type: Javadoc) {
+    source = sourceSets.main.allJava
+    failOnError = false
+}
