@@ -21,3 +21,6 @@ bin/
 
 # jenv specific files
 .java-version
+
+# ignore DS_Store files
+*.DS_Store
