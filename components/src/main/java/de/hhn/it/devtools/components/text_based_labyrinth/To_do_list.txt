@@ -1,1 +1,3 @@
 Create the demo
+-Input into a game loop
+-Creation of rooms, player, items, treasure.
