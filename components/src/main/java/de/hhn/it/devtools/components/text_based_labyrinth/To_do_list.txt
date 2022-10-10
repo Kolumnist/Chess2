@@ -1,3 +1,6 @@
 Create the demo
 -Input into a game loop
+--Player actions.
+--Room update?.
 -Creation of rooms, player, items, treasure.
+-Javadocs.
