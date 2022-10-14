@@ -15,8 +15,8 @@ public class ChessGame {
      *
      * @return the player who's on turn
      */
-    public Player getPlayer(){
-        return this.player;
+    public Player getStartingPlayer(){
+        return this.startingPlayer;
     }
 
 
