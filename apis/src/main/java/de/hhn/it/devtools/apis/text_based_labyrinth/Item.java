@@ -8,8 +8,6 @@ public class Item {
     private final int itemId;
 
 
-
-
     public Item(int id) {
 
         this.itemId = id;
