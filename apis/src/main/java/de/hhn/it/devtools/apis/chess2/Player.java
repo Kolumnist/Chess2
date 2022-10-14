@@ -29,7 +29,16 @@ public class Player {
     }
 
     /**
-     * Nachfragen ja nein vll I dont know
+     *
+     * @return the Piece you clicked on
+     */
+    Piece getPiece() {
+        return this.piece;
+    }
+
+    /**
+     *
+     *
      */
     void giveUp()
     {
