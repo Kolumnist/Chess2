@@ -1,6 +1,8 @@
 package de.hhn.it.devtools.apis.text_based_labyrinth;
 
 
+import de.hhn.it.devtools.apis.text_based_labyrinth.exceptions.NoSuchItemFoundException;
+
 import java.util.HashMap;
 
 /**
@@ -23,11 +25,23 @@ public class Player {
         inventory.put(item.getName(), item);
     }
 
-    public void removeItem(String itemName) {
+    public void removeItem(String itemName) throws NoSuchItemFoundException {
+        if (itemName.isEmpty() || itemName.isBlank()) {
+            throw new NoSuchItemFoundException("Name of the item cannot be zero or blank.");
+        }
+        if (!inventory.containsKey(itemName)) {
+            throw new NoSuchItemFoundException();
+        }
         inventory.remove(itemName);
     }
 
-    public Item getItem(String itemName) {
+    public Item getItem(String itemName) throws NoSuchItemFoundException {
+        if (itemName.isEmpty() || itemName.isBlank()) {
+            throw new NoSuchItemFoundException("Name of the item cannot be zero or blank.");
+        }
+        if (!inventory.containsKey(itemName)) {
+            throw new NoSuchItemFoundException();
+        }
         return inventory.get(itemName);
     }
 
