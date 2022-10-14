@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public class Piece {
     private int [] position;
+    private ArrayList<int[]> possiblePositions;
 
     /**
      * Sets the position of the piece if it was moved.
@@ -30,12 +31,12 @@ public class Piece {
      *
      * @return ArrayList of all the possible positions the piece can go to.
      */
-    public ArrayList showPossibleMove(){return possiblePositions;}
+    public ArrayList<int[]> showPossibleMove(){return possiblePositions;}
 
     /**
      * Ist das nicht einfach nur ein Setter?
      *
      * @return int[] of the new position of the piece on the borad.
      */
-    public int[] move(){return  newPosition;}
+    //public int[] move(){return  newPosition;}
 }
