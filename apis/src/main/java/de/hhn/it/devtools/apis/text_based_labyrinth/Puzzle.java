@@ -19,9 +19,6 @@ public class Puzzle {
         return isSolved;
     }
 
-    public Puzzle solvePuzzle() {
-        return this;
-    }
 
     public void execute() {
         isBeingWorkedOn = true;
