@@ -8,7 +8,8 @@ package de.hhn.it.devtools.apis.chess2;
  */
 public class Player {
 
-    boolean lostPiece = false;
+    protected boolean lostPiece = false;
+    protected boolean startingPlayer = true;
 
     /**
      * Returns boolean of player losing a piece, on the opponent players turn
@@ -30,17 +31,9 @@ public class Player {
 
     /**
      *
-     * @return the Piece you clicked on
-     */
-    Piece getPiece() {
-        return this.piece;
-    }
-
-    /**
-     *
      *
      */
-    void giveUp()
+    public void giveUp()
     {
 
     }
