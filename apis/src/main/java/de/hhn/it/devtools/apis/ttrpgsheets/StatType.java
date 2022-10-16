@@ -1,11 +1,12 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
 /**
- * Enum to represent the 5 Stat Types
+ * Enum to represent the Stat Types
  */
 public enum StatType {
-    LEVEL, // Maybe these
-    HEALTH, // two will change
+    LEVEL,
+    HEALTH,
+    MAX_HEALTH,
     STRENGTH,
     AGILITY,
     DEXTERITY
