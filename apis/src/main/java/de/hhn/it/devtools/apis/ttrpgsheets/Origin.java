@@ -5,7 +5,8 @@ package de.hhn.it.devtools.apis.ttrpgsheets;
  */
 public enum Origin {
     LEVEL_POINT,
-    INVENTORY,
+    ITEM,
+    ARMOR,
     EFFECT,
     OTHER
 }
