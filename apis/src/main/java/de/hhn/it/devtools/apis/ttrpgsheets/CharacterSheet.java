@@ -21,4 +21,19 @@ public interface CharacterSheet {
      * @param origin the origin of the change
      */
     void incrementStat(StatType type, Origin origin);
+
+    void incrementStat(StatType type, Origin origin, int amount);
+
+    void decrementStat(StatType type, Origin origin);
+
+    void decrementStat(StatType type, Origin origin, int amount);
+
+    void changeDescription(DescriptionType type, String text);
+
+    void rollDice();
+
+    void changeDiceType(DiceType type);
+
+    void changeDiceType(int size);
+
 }
