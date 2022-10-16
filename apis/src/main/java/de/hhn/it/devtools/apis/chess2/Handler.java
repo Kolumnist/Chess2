@@ -36,6 +36,7 @@ public interface Handler {
     /**
      * The king/queen gets send to jail upon defeat, the jail field is chosen
      * by the player who defeated the piece
+     *
      * @param piece gets placed in the
      * @param jail for 0-3
      */
