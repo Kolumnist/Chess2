@@ -26,7 +26,7 @@ public class DemoTtrpgSheetsUsage {
         characterSheet.changeDescription(DescriptionType.HAIRCOLOR, "Black");
         characterSheet.changeDescription(DescriptionType.EYECOLOR, "Blue-Gray");
         characterSheet.changeDescription(DescriptionType.CLASS, "Assassin");
-        characterSheet.changeDescription(DescriptionType.OTHER, "After 5 years held back in chains, Slyas wants" +
+        characterSheet.changeDescription(DescriptionType.OTHER, "After 5 years held back in chains, Sylas wants" +
                 " nothing more but revenge.");
 
         // By default, you start at level 1
