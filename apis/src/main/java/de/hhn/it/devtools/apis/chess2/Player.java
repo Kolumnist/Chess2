@@ -8,15 +8,15 @@ package de.hhn.it.devtools.apis.chess2;
  */
 public class Player {
 
+    private Piece[] myPieces;
     protected boolean lostPiece = false;
-    protected boolean startingPlayer = true;
 
     /**
      * Returns boolean of player losing a piece, on the opponent players turn
      *
      * @return boolean of player losing a piece, on the opponent players turn
      */
-    public boolean isLostPiece() {
+    public boolean hasLostPiece() {
         return lostPiece;
     }
 
@@ -30,12 +30,11 @@ public class Player {
     }
 
     /**
+     * The game ends, the currentPlayer who presses lost
      *
-     *
+     * @param currentPlayer who presses "give up" and ends/loses the game
      */
-    public void giveUp()
-    {
+    public void giveUp(Player currentPlayer){
 
     }
-
 }

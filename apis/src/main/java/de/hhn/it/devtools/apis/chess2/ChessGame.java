@@ -9,13 +9,18 @@ package de.hhn.it.devtools.apis.chess2;
 
 public class ChessGame {
 
+    private Player player1;
+    private Player player2;
+
+    protected boolean running = false;
+    protected boolean startingPlayer = true;
 
     /**
      * Returns the player who's on turn
      *
      * @return the player who's on turn
      */
-    public Player getStartingPlayer(){
+    public boolean getStartingPlayer(){
         return this.startingPlayer;
     }
 
