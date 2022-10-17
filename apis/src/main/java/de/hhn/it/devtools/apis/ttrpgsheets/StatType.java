@@ -7,6 +7,7 @@ public enum StatType {
     LEVEL,
     HEALTH,
     MAX_HEALTH,
+    DEFENCE,
     STRENGTH,
     AGILITY,
     DEXTERITY
