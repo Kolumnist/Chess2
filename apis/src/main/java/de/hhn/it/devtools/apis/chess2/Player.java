@@ -4,12 +4,26 @@ package de.hhn.it.devtools.apis.chess2;
  * This class handles all communication between player and components
  *
  * @author Collin, Lara, Michel
- * @version 0.1
+ * @version 0.1.1
  */
+
 public class Player {
 
     private Piece[] myPieces;
+
+    private int[] currentPiecePos;
+
     protected boolean lostPiece = false;
+    protected boolean isMyPiece = false;
+
+    public boolean isCurrentPlayersPiece(){
+        return isMyPiece;
+    }
+
+    public void setCurrentPiecePos(int[] currentPiecePos)
+    {
+        this.currentPiecePos = currentPiecePos;
+    }
 
     /**
      * Returns boolean of player losing a piece, on the opponent players turn
@@ -37,4 +51,5 @@ public class Player {
     public void giveUp(Player currentPlayer){
 
     }
+
 }
