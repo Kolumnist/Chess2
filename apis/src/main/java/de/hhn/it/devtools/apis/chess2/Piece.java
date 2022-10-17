@@ -8,16 +8,16 @@ import java.util.ArrayList;
  * @author Collin, Lara, Michel
  * @version 0.1
  */
-public class Piece {
+public abstract class Piece {
     private int [] position;
-    private ArrayList<int[]> possiblePositions;
+    private boolean defeated;
 
     /**
      * Sets the position of the piece if it was moved.
      *
-     * @param pPosition the position of the piece on the board.
+     * @param position the position of the piece on the board.
      */
-    public void setPosition(int[] pPosition){position = pPosition;}
+    public void setPosition(int[] position){this.position = position;}
 
     /**
      * Returns the position of the piece on the board as an int[].
@@ -31,12 +31,10 @@ public class Piece {
      *
      * @return ArrayList of all the possible positions the piece can go to.
      */
-    public ArrayList<int[]> showPossibleMove(){return possiblePositions;}
+    public abstract ArrayList<int[]> showPossibleMove();
 
     /**
-     * Ist das nicht einfach nur ein Setter?
-     *
-     * @return int[] of the new position of the piece on the borad.
+     * Not sure if this methode is needed.
      */
-    //public int[] move(){return  newPosition;}
+    //protected abstract void move(int[] position);
 }
