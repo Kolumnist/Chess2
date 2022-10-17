@@ -1,0 +1,4 @@
+package de.hhn.it.devtools.apis.text_based_labyrinth.enums;
+
+public class Drop {
+}
