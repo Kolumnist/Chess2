@@ -38,6 +38,7 @@ public class DemoTtrpgSheetsUsage {
         characterSheet.incrementStat(StatType.STRENGTH, Origin.LEVEL_POINT); // Same goes for Strength
         characterSheet.incrementStat(StatType.STRENGTH, Origin.LEVEL_POINT);
 
+
         // Now the game begins
         // The player wants to roll a D6 to decide where to go
         characterSheet.changeDiceType(DiceType.D6);
@@ -59,5 +60,7 @@ public class DemoTtrpgSheetsUsage {
         characterSheet.incrementStat(StatType.DEXTERITY, Origin.LEVEL_POINT);
         // It starts to rain, making it hard to move or fight. -1 Agility while raining
         characterSheet.decrementStat(StatType.AGILITY, Origin.EFFECT);
+        // The character uses his ability to heal himself with +2 HP
+        characterSheet.incrementStat(StatType.HEALTH, Origin.ABILITY, 2);
     }
 }
