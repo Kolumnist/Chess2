@@ -1,4 +1,4 @@
 package de.hhn.it.devtools.apis.battleship;
 
-public class Keybinding {
+public class GameState {
 }
