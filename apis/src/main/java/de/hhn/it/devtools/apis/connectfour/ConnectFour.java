@@ -7,12 +7,18 @@ public interface ConnectFour {
 
   void deleteProfile(int profileId);
 
+  void help();
+
   void setMode(Mode mode);
+
+  void setDifficulty();
 
   void startGame();
 
   void placeDiscAt(int column);
 
   void quitGame();
+
+
 
 }
