@@ -8,5 +8,7 @@ public enum Origin {
     ITEM,
     ARMOR,
     EFFECT,
+    DAMAGE,
+    ABILITY,
     OTHER
 }
