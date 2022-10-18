@@ -33,7 +33,7 @@ public class ChessGame {
     /**
      * Returns the player who's on turn
      *
-     * @return the player who's on turn
+     * @return currentPlayer on turn
      */
     public Player getCurrentPlayer() {
         return currentPlayer;
@@ -44,8 +44,8 @@ public class ChessGame {
      *
      * @return the player who's turn is next
      */
-    public void switchCurrentPlayer(Player player1, Player player2){
-
+    public void switchCurrentPlayer(){
+        this.currentPlayer = (currentPlayer == player1) ? player2 : player1;
     }
 
     /**

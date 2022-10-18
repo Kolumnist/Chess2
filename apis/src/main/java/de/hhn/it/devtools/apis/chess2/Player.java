@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.apis.chess2;
 
-/** //Interface??//
- * This class handles all communication between player and components
+/**
+ * This class gives all the information about the player
  *
  * @author Collin, Lara, Michel
  * @version 0.1.1
