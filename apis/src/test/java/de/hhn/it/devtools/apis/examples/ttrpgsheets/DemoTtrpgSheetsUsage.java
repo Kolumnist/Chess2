@@ -38,7 +38,6 @@ public class DemoTtrpgSheetsUsage {
         characterSheet.incrementStat(StatType.STRENGTH, Origin.LEVEL_POINT); // Same goes for Strength
         characterSheet.incrementStat(StatType.STRENGTH, Origin.LEVEL_POINT);
 
-
         // Now the game begins
         // The player wants to roll a D6 to decide where to go
         characterSheet.changeDiceType(DiceType.D6);
