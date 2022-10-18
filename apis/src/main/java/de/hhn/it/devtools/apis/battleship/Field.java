@@ -1,8 +1,8 @@
 package de.hhn.it.devtools.apis.battleship;
 
 /**
- * creates ship objects.
+ * creates field object.
  */
 
-public class Ship {
+public final class Field {
 }

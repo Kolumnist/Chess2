@@ -4,19 +4,13 @@ package de.hhn.it.devtools.apis.battleship;
  *  This BattleshipService is an interface for the interaction of a player with components.
  */
 
-    //TODO add exceptions to methods and add parameters to changeKeybinding()
-
 public interface BattleshipService {
     /**
-     * check if possible to place ship at given location.
-     * @param shipType type of ship to determine size
-     * @param x1 x start coordinate of the ship
-     * @param y1 y start coordinate of the ship
-     * @param x2 x end coordinate of the ship
-     * @param y2 y end coordinate of the ship
-     * @return placing (not)successful
+     * adds the type and amount of ships to each player inventory chosen in the game creation menu.
+     * @param typeOfShip type of ship that will be added
+     * @param numberOfShips amount of ships of the certain type that will be added
      */
-    boolean checkShipPlacingLocation(Ship shipType,int x1, int y1, int x2, int y2);
+    void addTypeOfShip(Ship typeOfShip, int numberOfShips);
 
     /**
      * places ship at given location
@@ -26,10 +20,10 @@ public interface BattleshipService {
      * @param x2 x end coordinate of the ship
      * @param y2 y end coordinate of the ship
      */
-    void placeShip(Ship shipToPlace,int x1, int y1, int x2, int y2);
+    void placeShip(Ship shipToPlace,int x1, int y1, int x2, int y2) throws IllegalPositionException;
 
     /**
-     * rotates the ship to left or right
+     * rotates the ship to left or right (front of the ship is the anchor point)
      */
     void rotateShip();
 
@@ -43,25 +37,16 @@ public interface BattleshipService {
 
     /**
      * sets the size of the field chosen in the game creation menu.
-     * @param width width of the field
-     * @param height height of the field
+     * @param size width and height of the field
+     * @param gameMode chosen game mode to see how many fields need to be created
      */
-    void setFieldSize(int width, int height);
+    void createFields(int size, GameMode gameMode);
 
     /**
      * sets the game mode chosen in the game creation menu.
      * @param chosenGameMode gameMode
      */
     void setGameMode(GameMode chosenGameMode);
-
-    /**
-     * adds the type and amount of ships to each player inventory chosen in the game creation menu.
-     * @param typeOfShip type of ship that will be added
-     * @param numbeOfShips amount of ships of the certain type that will be added
-     */
-    void addTypeOfShip(Ship typeOfShip, int numbeOfShips);
-
-    void changeKeybinding ();
 
     /**
      * sets the game volume to newVolume.
@@ -71,13 +56,23 @@ public interface BattleshipService {
 
     /**
      * saves the current game.
+     * @return current game state
      */
-    void saveGame();
+    GameState saveGame();
+
+    /**
+     * loads a saved game.
+     * @param gameState game state of a saved game
+     */
+    void loadGame(GameState gameState);
+
+    /**
+     * player concedes.
+     */
+    void concede();
 
     /**
      * displays the rules.
      */
     void displayRules();
-
-
 }
