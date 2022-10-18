@@ -52,7 +52,7 @@ public class DemoTtrpgSheetsUsage {
         characterSheet.decrementStat(StatType.DEXTERITY, Origin.ARMOR);
         // Watch out! The chest activated an ancient spike trap, poking the character for 5 Damage!
         // Luckily the Defense Stat just got increased (Callback would only decrease Health by 5 - 2 = 3)
-        characterSheet.decrementStat(StatType.HEALTH, Origin.OTHER, 5);
+        characterSheet.decrementStat(StatType.HEALTH, Origin.DAMAGE, 5);
         // After killing some wild animals, the level got increased
         characterSheet.incrementStat(StatType.LEVEL, Origin.OTHER);
         // The Player decides to level up his Dexterity
