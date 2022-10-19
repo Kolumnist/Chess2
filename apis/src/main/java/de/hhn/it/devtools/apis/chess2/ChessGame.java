@@ -83,42 +83,45 @@ public class ChessGame {
         this.currentPiece = currentPiece;
     }
 
-/*
-    startGame() - MainMenu
-    openRules() - MainMenu
-    closeRules() - MainMenu
+    /*
+    void startNewGame()
+    //erstellt ChessGame Instanz
+    //erstellt Spieler und legt Anfangsspieler fest
+    //erstellt Board
+    //setzt Felder, deren Positionen und deren Status
+    //setzt Figuren, deren Position (((und deren Rolle)))
+    //wechsel aktuelle Szene (Endscreen = andere Szene?)
 
-    getCurrentPlayer() - ChessGame
-    //both Players are local variables of ChessGame
-    //after every Players Turn they get switched
+    void reset()
+    //legt Anfangsspieler fest
+    //setzt Status aller Felder zurück auf den Startwert
+    //setzt Figuren, deren Position (((und deren Rolle)))
 
-    setCurrentPiece(int x, int y) - (as long as it is played locally) : ChessGame
-    //Only if a Piece is clicked on:
-    //The current piece is just a reference on the position
-    //meaning it just sets a current position of the mouse clicked
+    void changeNavigation(ArrayList<int[]> fieldPos)
+    //ändert alle States der bewegbaren Felder, von der ausgewählten Figur
+    //
 
-    isCurrentPlayersPiece() - Player
-    //When a click on a Piece is made it checks if
-    //that piece is a Piece of the current Player
+    FieldState getFieldState();
 
-    ?changeFieldStatus()? //how can we get possible paths so that it gets displayed
+    ArrayList<int[]> getPossiblePiecePosition(Piece piece) ?????
 
-    setCurrentFieldPos(int x, int y) - (as long as it is played locally) : ChessGame
-    //A or two position variable gets set
+    setPiecePos() -init?
+    //removeOtherPiece()
+    //Position von der aktuellen Figur wird geändert
+    //beachte Affe!!!
+    //switchCurrentPlayer()
 
-    getFieldStatus() - ?ChessGame?
+    giveUp()
+    //kürt Sieger
+    //ruft reset auf oder beendet aktuelle Instanz von ChessGame
 
-    setCurrentPiecePos(int x, int y) - Player
 
+    NUR FELDER ALS "BUTTON", NICHT FIGUREN
+    FIGUREN BEWEGUNG WIRD BEI ZUGSTART DES AKTUELLEN SPIELERS AKTUALISIERT
+    AFFE IST BESONDERS, MUSS IMMER AKTUALISIERT WERDEN ;(
 
-    setLostPiece() - Player
-    //Sets the other Players boolean to true and
-    //the currentPlayers to false
+    TRY TO GET A PIECE FROM THE CURRENT FIELD
 
-    switchCurrentPlayer() - ChessGame
-    //changes the currentPlayer variable
-
-    \\\isPossibleField() - Piece\\\
+    openRules nachfragen
     */
-
 }

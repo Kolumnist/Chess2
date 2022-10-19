@@ -1,13 +1,13 @@
 package de.hhn.it.devtools.apis.chess2;
 
 /**
- * here are all status that a Field can have
+ * here are all states a Field can have
  *
  * @author Collin, Lara, Michel
  * @version 0.1
  */
 
-public enum FieldStatus {
+public enum FieldState {
 
     FREE_JAIL, QUEEN_FOE_OCCUPIED_JAIL, KING_FOE_OCCUPIED_JAIL,
     QUEEN_PAL_OCCUPIED_JAIL, KING_PAL_OCCUPIED_JAIL,

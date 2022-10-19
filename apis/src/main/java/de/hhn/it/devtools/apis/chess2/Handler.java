@@ -28,12 +28,6 @@ public interface Handler {
     void openRules();
 
     /**
-     * closes the rules
-     */
-    void closeRules();
-
-
-    /**
      * The king/queen gets send to jail upon defeat, the jail field is chosen
      * by the player who defeated the piece
      *
