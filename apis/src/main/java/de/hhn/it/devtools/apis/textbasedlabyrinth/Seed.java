@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.apis.text_based_labyrinth;
+package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 /**
  * This is a unique number String.

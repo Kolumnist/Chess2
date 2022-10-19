@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.apis.text_based_labyrinth.exceptions;
+package de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions;
 
 
 public class RoomFailedException extends Exception {

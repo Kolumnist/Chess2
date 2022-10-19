@@ -1,7 +1,7 @@
-package de.hhn.it.devtools.apis.text_based_labyrinth;
+package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 
-import de.hhn.it.devtools.apis.text_based_labyrinth.exceptions.NoSuchItemFoundException;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 import java.util.HashMap;
 
 /**

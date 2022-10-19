@@ -1,8 +1,7 @@
-package de.hhn.it.devtools.apis.text_based_labyrinth;
+package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 
 import java.util.HashMap;
-import java.util.Set;
 
 /**
  * Javadoc.
