@@ -67,12 +67,4 @@ public interface CharacterSheet {
      */
     void changeDiceType(DiceType dice);
 
-    /**
-     * Changes the dice to one of the given size
-     * It is recommended to use {@link DiceType} instead for better readability
-     *
-     * @param size the size of dice to be used further
-     */
-    void changeDiceType(int size);
-
 }
