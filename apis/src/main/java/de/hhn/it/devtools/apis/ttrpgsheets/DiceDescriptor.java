@@ -4,6 +4,10 @@ public class DiceDescriptor {
     private int size;
     private int result;
 
+    public DiceDescriptor(DiceType diceType, int result) {
+        this.size = size;
+        this.result = result;
+    }
     public DiceDescriptor(int size, int result) {
         this.size = size;
         this.result = result;
