@@ -41,5 +41,4 @@ public interface Handler {
      * @param jail for 0-3
      */
     void setPieceInJail(Piece piece, int[] jail);
-
 }
