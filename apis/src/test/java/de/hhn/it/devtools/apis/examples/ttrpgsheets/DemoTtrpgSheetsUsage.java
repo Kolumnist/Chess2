@@ -25,7 +25,7 @@ public class DemoTtrpgSheetsUsage {
         characterSheet.changeDescription(DescriptionType.SKINCOLOR, "White");
         characterSheet.changeDescription(DescriptionType.HAIRCOLOR, "Black");
         characterSheet.changeDescription(DescriptionType.EYECOLOR, "Blue-Gray");
-        characterSheet.changeDescription(DescriptionType.CLASS, "Assassin");
+        characterSheet.changeDescription(DescriptionType.CHARACTERCLASS, "Assassin");
         characterSheet.changeDescription(DescriptionType.OTHER, "After 5 years held back in chains, Sylas wants" +
                 " nothing more but revenge.");
 

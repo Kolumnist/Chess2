@@ -14,6 +14,6 @@ public enum DescriptionType {
     SKINCOLOR,
     HAIRCOLOR,
     EYECOLOR,
-    CLASS,
+    CHARACTERCLASS,
     OTHER
 }
