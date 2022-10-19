@@ -28,7 +28,7 @@ public interface Wordle {
   /**
    * Compares the user's guess to the solution.
    */
-  void compareGuessToWorldeSolution();
+  void compareGuessToWordleSolution();
 
   /**
    * Updates the UI in accordance with the Wordle rules.
