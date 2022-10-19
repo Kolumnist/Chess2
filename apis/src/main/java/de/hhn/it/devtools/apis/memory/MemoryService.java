@@ -9,11 +9,14 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 public interface MemoryService {
 
     /**
-     * Changes the game mode of the memory game to the chosen difficulty.
-     * @param difficulty chosen difficulty
-     * @throws IllegalParameterException if the difficulty does not exist
+     * Opens the menu.
      */
-    void changeDifficulty(Difficulty difficulty) throws IllegalParameterException;
+    void openMenu();
+
+    /**
+     * Opens the sub-menu to choose a difficulty.
+     */
+    void openSettings();
 
     /**
      * Starts the memory game.
@@ -26,14 +29,43 @@ public interface MemoryService {
     void newGame();
 
     /**
-     * Adds a listener to get information on the state of the Card.
-     * @param name name of the Card
+     * Closes the current memory game.
+     */
+    void closeGame();
+
+    /**
+     * Changes the game mode of the memory game to the chosen difficulty.
+     * @param difficulty chosen difficulty
+     * @throws IllegalParameterException if the difficulty does not exist
+     */
+    void changeDifficulty(Difficulty difficulty) throws IllegalParameterException;
+
+    /**
+     * Adds a listener to get information on the state of the card.
+     *
+     * @param name name of the card
      * @param listener object implementing the listener interface
-     * @throws IllegalParameterException if the name of the Card does not exist oder the listener is a null reference
+     * @throws IllegalParameterException if the name of the Card does not exist or the listener is a null reference
      */
     void addCallback(String name, PictureCardListener listener) throws IllegalParameterException;
 
+    /**
+     * Removes a listener.
+     *
+     * @param name       name of the card
+     * @param listener listener to be removed
+     * @throws IllegalParameterException if the name of the card does not exist or the listener is a null reference
+     */
+    void removeCallback(String name, PictureCardListener listener) throws IllegalParameterException;
 
+    /**
+     * Returns the descriptor of the picture card with the corresponding name.
+     *
+     * @param name name of the Picture Card
+     * @return descriptor of the picture card
+     * @throws IllegalParameterException if the name of the card does not exist
+     */
+    PictureCardDescriptor getPictureCard(String name) throws IllegalParameterException;
 
 
 

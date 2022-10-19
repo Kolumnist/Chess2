@@ -3,7 +3,7 @@ package de.hhn.it.devtools.apis.memory;
 import java.io.FileNotFoundException;
 
 /**
- * Describes a Card in a memory game, its image, name and current state.
+ * Describes a card in a memory game, its image, name and current state.
  */
 public class PictureCardDescriptor {
 
