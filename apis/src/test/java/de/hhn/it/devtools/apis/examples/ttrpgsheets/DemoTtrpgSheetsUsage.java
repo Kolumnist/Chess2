@@ -31,12 +31,12 @@ public class DemoTtrpgSheetsUsage {
 
         // By default, you start at level 1
         // this equals to 5 Level Points (default) + 1 Level Point (Level 1) (= 6) that can be spent
-        characterSheet.incrementStat(StatType.MAX_HEALTH, Origin.LEVEL_POINT);
-        characterSheet.incrementStat(StatType.AGILITY, Origin.LEVEL_POINT); // User wanted more Agility, so he
-        characterSheet.incrementStat(StatType.AGILITY, Origin.LEVEL_POINT); // presses the Button twice
-        characterSheet.incrementStat(StatType.DEXTERITY, Origin.LEVEL_POINT);
-        characterSheet.incrementStat(StatType.STRENGTH, Origin.LEVEL_POINT); // Same goes for Strength
-        characterSheet.incrementStat(StatType.STRENGTH, Origin.LEVEL_POINT);
+        characterSheet.incrementStat(StatType.MAX_HEALTH, OriginType.LEVEL_POINT);
+        characterSheet.incrementStat(StatType.AGILITY, OriginType.LEVEL_POINT); // User wanted more Agility, so he
+        characterSheet.incrementStat(StatType.AGILITY, OriginType.LEVEL_POINT); // presses the Button twice
+        characterSheet.incrementStat(StatType.DEXTERITY, OriginType.LEVEL_POINT);
+        characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT); // Same goes for Strength
+        characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT);
 
         // Now the game begins
         // The player wants to roll a D6 to decide where to go
@@ -46,20 +46,20 @@ public class DemoTtrpgSheetsUsage {
         characterSheet.changeDiceType(DiceType.D20);
         characterSheet.rollDice();
         // How lucky! The player successfully opened the chest and found a sword granting him +2 Strength
-        characterSheet.incrementStat(StatType.STRENGTH, Origin.ITEM, 2);
+        characterSheet.incrementStat(StatType.STRENGTH, OriginType.ITEM, 2);
         // He also found a scarf, granting him +2 Defence at the cost of -1 Dexterity
-        characterSheet.incrementStat(StatType.DEFENCE, Origin.ARMOR, 2);
-        characterSheet.decrementStat(StatType.DEXTERITY, Origin.ARMOR);
+        characterSheet.incrementStat(StatType.DEFENCE, OriginType.ARMOR, 2);
+        characterSheet.decrementStat(StatType.DEXTERITY, OriginType.ARMOR);
         // Watch out! The chest activated an ancient spike trap, poking the character for 5 Damage!
         // Luckily the Defense Stat just got increased (Callback would only decrease Health by 5 - 2 = 3)
-        characterSheet.decrementStat(StatType.HEALTH, Origin.DAMAGE, 5);
+        characterSheet.decrementStat(StatType.HEALTH, OriginType.DAMAGE, 5);
         // After killing some wild animals, the level got increased
-        characterSheet.incrementStat(StatType.LEVEL, Origin.OTHER);
+        characterSheet.incrementStat(StatType.LEVEL, OriginType.OTHER);
         // The Player decides to level up his Dexterity
-        characterSheet.incrementStat(StatType.DEXTERITY, Origin.LEVEL_POINT);
+        characterSheet.incrementStat(StatType.DEXTERITY, OriginType.LEVEL_POINT);
         // It starts to rain, making it hard to move or fight. -1 Agility while raining
-        characterSheet.decrementStat(StatType.AGILITY, Origin.EFFECT);
+        characterSheet.decrementStat(StatType.AGILITY, OriginType.EFFECT);
         // The character uses his ability to heal himself with +2 HP
-        characterSheet.incrementStat(StatType.HEALTH, Origin.ABILITY, 2);
+        characterSheet.incrementStat(StatType.HEALTH, OriginType.ABILITY, 2);
     }
 }

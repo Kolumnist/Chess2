@@ -1,7 +1,5 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
-import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-
 /**
  * This interface controls the Character Sheet module.
  * It allows to change Stats or alter information about the Character.
@@ -16,38 +14,38 @@ public interface CharacterSheet {
     void addCallback(CharacterSheetListener listener);
 
     /**
-     * increments the given {@link StatType} based upon the {@link Origin}
+     * increments the given {@link StatType} based upon the {@link OriginType}
      *
      * @param type the Type of Stat to increment
      * @param origin the origin of the change
      */
-    void incrementStat(StatType type, Origin origin);
+    void incrementStat(StatType type, OriginType origin);
 
     /**
-     * Increments the given {@link StatType} based upon the {@link Origin} by a given amount
+     * Increments the given {@link StatType} based upon the {@link OriginType} by a given amount
      *
      * @param type the Type of Stat to increment
      * @param origin the origin of the change
      * @param amount the amount the Stat changes
      */
-    void incrementStat(StatType type, Origin origin, int amount);
+    void incrementStat(StatType type, OriginType origin, int amount);
 
     /**
-     * Decrements the given {@link StatType} based upon the {@link Origin}
+     * Decrements the given {@link StatType} based upon the {@link OriginType}
      *
      * @param type the Type of Stat to decrement
      * @param origin the origin of the change
      */
-    void decrementStat(StatType type, Origin origin);
+    void decrementStat(StatType type, OriginType origin);
 
     /**
-     * Decrements the given {@link StatType} based upon the {@link Origin} by a given amount
+     * Decrements the given {@link StatType} based upon the {@link OriginType} by a given amount
      *
      * @param type the Type of Stat to decrement
      * @param origin the origin of the change
      * @param amount the amount the Stat changes
      */
-    void decrementStat(StatType type, Origin origin, int amount);
+    void decrementStat(StatType type, OriginType origin, int amount);
 
     /**
      * Changes the description of the given {@link DescriptionType} to the String
