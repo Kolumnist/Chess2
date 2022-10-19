@@ -5,14 +5,23 @@ package de.hhn.it.devtools.apis.text_based_labyrinth;
  */
 public class Seed {
 
-    private final int Seed;
+  private final int Seed;
 
 
-    public Seed(int seedNumber) {
-        this.Seed = seedNumber;
-    }
+  public Seed(int seedNumber) {
 
-    public int getSeed() {
-        return Seed;
-    }
+    this.Seed = seedNumber;
+  }
+
+  /**
+   * Javadoc.
+   *
+   * @return return
+   *
+   */
+  public int getSeed() {
+
+    return Seed;
+
+  }
 }
