@@ -1,4 +1,4 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
-public class Description {
+public class DescriptionDescriptor {
 }

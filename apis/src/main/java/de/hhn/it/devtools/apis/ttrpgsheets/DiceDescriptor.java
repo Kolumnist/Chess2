@@ -1,4 +1,4 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
-public class Dice {
+public class DiceDescriptor {
 }
