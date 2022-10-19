@@ -8,16 +8,16 @@ public interface CharacterSheetListener {
     /**
      * Informs the listener that the stats of the character sheet changed.
      *
-     * @param stats actual stats of the character sheet
+     * @param stat actual stat of the character sheet
      */
-    void statsChanged(StatDescriptor[] stats);
+    void statChanged(StatDescriptor stat);
 
     /**
      * Informs the listener that the dice of the character sheet changed.
      *
      * @param dice actual value of the dice
      */
-    void diceChanged(DiceDescriptor[] dice);
+    void diceChanged(DiceDescriptor dice);
 
     /**
      * Informs the listener that the description of the character sheet changed.
