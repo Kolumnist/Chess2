@@ -1,24 +1,20 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
 public class DiceDescriptor {
-    private int size;
+    private DiceType diceType;
     private int result;
 
     public DiceDescriptor(DiceType diceType, int result) {
-        this.size = size;
-        this.result = result;
-    }
-    public DiceDescriptor(int size, int result) {
-        this.size = size;
+        this.diceType = diceType;
         this.result = result;
     }
 
-    public int getSize() {
-        return size;
+    public DiceType getDiceType() {
+        return diceType;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setDiceType(DiceType diceType) {
+        this.diceType = diceType;
     }
 
     public int getResult() {
