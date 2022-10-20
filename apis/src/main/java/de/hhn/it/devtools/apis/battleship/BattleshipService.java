@@ -1,39 +1,32 @@
 package de.hhn.it.devtools.apis.battleship;
 
+import java.util.IllegalFormatException;
+
 /**
  *  This BattleshipService is an interface for the interaction of a player with components.
  */
 
 public interface BattleshipService {
-    /**
-     * adds the type and amount of ships to each player inventory chosen in the game creation menu.
-     * @param typeOfShip type of ship that will be added
-     * @param numberOfShips amount of ships of the certain type that will be added
-     */
-    void addTypeOfShip(Ship typeOfShip, int numberOfShips);
 
-    /**
-     * places ship at given location
-     * @param shipToPlace ship object
-     * @param x1 x start coordinate of the ship
-     * @param y1 y start coordinate of the ship
-     * @param x2 x end coordinate of the ship
-     * @param y2 y end coordinate of the ship
-     */
-    void placeShip(Ship shipToPlace,int x1, int y1, int x2, int y2) throws IllegalPositionException;
+
+    /* Places ship at cursor-location */
+    void placeShip() throws IllegalPositionException;
 
     /**
      * rotates the ship to left or right (front of the ship is the anchor point)
      */
     void rotateShip();
 
+    /* Returns the selected Ship */
+    Ship getSelectedShip();
+
+
     /**
-     *
-     * @param x x coordinate of panel to be bombed
-     * @param y y coordinate of panel to be bombed
-     * @return  bombing (not)successful
+     * Bombs selected panel
+     * @return bombing (not)successful
      */
-    boolean bombPanel(int x, int y);
+    boolean bombPanel();
+
 
     /**
      * sets the size of the field chosen in the game creation menu.
@@ -42,11 +35,17 @@ public interface BattleshipService {
      */
     void createFields(int size, GameMode gameMode);
 
+
     /**
      * sets the game mode chosen in the game creation menu.
      * @param chosenGameMode gameMode
      */
     void setGameMode(GameMode chosenGameMode);
+
+
+    /* Returns the selected GameMode */
+    GameMode getGameMode();
+
 
     /**
      * sets the game volume to newVolume.
@@ -54,22 +53,26 @@ public interface BattleshipService {
      */
     void adjustSoundVolume(int newVolume);
 
+
     /**
      * saves the current game.
      * @return current game state
      */
     GameState saveGame();
 
+
     /**
      * loads a saved game.
      * @param gameState game state of a saved game
      */
-    void loadGame(GameState gameState);
+    void loadGame(GameState gameState) throws IllegalFormatException;
+
 
     /**
      * player concedes.
      */
     void concede();
+
 
     /**
      * displays the rules.
