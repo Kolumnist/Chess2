@@ -67,6 +67,14 @@ public interface MemoryService {
      */
     PictureCardDescriptor getPictureCard(String name) throws IllegalParameterException;
 
+    /**
+     * Turns a card around.
+     *
+     * @param pictureCard the card that should be turned around
+     * @throws IllegalParameterException if the card does not exist
+     */
+    void turnCard(PictureCardDescriptor pictureCard) throws  IllegalParameterException;
+
 
 
 }
