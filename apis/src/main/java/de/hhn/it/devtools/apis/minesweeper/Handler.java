@@ -44,7 +44,7 @@ public interface Handler {
      * Changes the color of the field to a choosen color combination
      * @return Color which the player has Choosen
      */
-    Color choosenColor();
+    public void choosenColor(Color c);
 
     /**
      * Reveals if the clicked field is a mine or not.
