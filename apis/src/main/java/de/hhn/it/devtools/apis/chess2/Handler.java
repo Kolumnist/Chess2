@@ -1,17 +1,18 @@
 package de.hhn.it.devtools.apis.chess2;
 
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import java.util.ArrayList;
 
 /**
  * This class handles all communication between player and components
  *
  * @author Collin, Lara, Michel
- * @version 0.1
+ * @version 1.0
  */
 public interface Handler {
 
     /**
-     * build board with all fields and the 4 jail fields, place pieces on the board,
+     * build board with all fields, place pieces on the board, sets fields,
      * set the starting player and inform the players about who starts.
      */
     void startNewGame();
@@ -23,31 +24,24 @@ public interface Handler {
     void reset();
 
     /**
-     *
+     * calls the method showWinningPlayer and after that calls reset or returns to the main menu
      */
     void giveUp();
 
     /**
-     *
+     * creates a window and shows which player has won and calls reset or returns to the main menu after that
      */
-    void showWiningPlayer();
+    void showWinningPlayer();
 
     /**
-     * displays the rules as text
-     * <p>
-     * TODO: new window? pictures as well?
+     * creates a window and displays the rules as text
      */
     void openRules();
 
     /**
-     *
+     * activates all fields with the state "HAS_CURRENT_PIECE"
      */
-    void activatePieceButton(ArrayList<int[]> piecePos);
-
-    /**
-     *
-     */
-    void activateFreeButton();
+    void activatePieceButton(ArrayList<int[]> piecePos) throws IllegalParameterException;
 
     /**
      * The king/queen gets send to jail upon defeat, the jail field is chosen
@@ -56,16 +50,18 @@ public interface Handler {
      * @param piece gets placed in the
      * @param pos for 0-3
      */
-    void setPieceInJail(Piece piece, int[] pos);
+    void setPieceInJail(Piece piece, int[] pos) throws IllegalParameterException;
 
     /**
-     *
+     * changes the position of the current piece
+     * @param pos the new position of the piece
      */
-    void setPiecePosition(int[] pos);
+    void setPiecePosition(int[] pos) throws IllegalParameterException;
 
     /**
+     * Returns the FieldState of the chosen field
      *
-     * @return
+     * @return FieldState of the chosen field
      */
     FieldState getFieldState();
 }
