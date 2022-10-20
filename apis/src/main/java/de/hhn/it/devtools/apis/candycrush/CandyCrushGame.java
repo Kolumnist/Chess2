@@ -6,6 +6,9 @@ package de.hhn.it.devtools.apis.candycrush;
  * @version 1.0
  */
 
+
+
+
 public class CandyCrushGame {
     private Profile profile1; // oder einfach nur profile und profile2und3 und current gibts ned
     private Profile profile2;
