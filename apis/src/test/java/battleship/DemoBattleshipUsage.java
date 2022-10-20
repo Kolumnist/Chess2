@@ -6,7 +6,6 @@ import de.hhn.it.devtools.apis.battleship.*;
  * implementation. The runnable demo is accessible in the components module.
  */
 
-    //@TODO callbacks when calling bombPanel(), displayRules() and saveGame().
     // Ask Professor how to handle Gamestate parameter in loadGame
 
 
