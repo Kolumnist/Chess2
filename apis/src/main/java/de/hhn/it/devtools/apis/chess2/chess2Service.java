@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author Collin, Lara, Michel
  * @version 1.0
  */
-public interface Handler {
+public interface chess2Service {
 
     /**
      * build board with all fields, place pieces on the board, sets fields,
