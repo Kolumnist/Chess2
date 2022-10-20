@@ -1,5 +1,7 @@
 package de.hhn.it.devtools.apis.battleship;
 
+import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerService;
+
 import java.util.IllegalFormatException;
 
 /**
@@ -9,23 +11,32 @@ import java.util.IllegalFormatException;
 public interface BattleshipService {
 
 
-    /* Places ship at cursor-location */
-    void placeShip() throws IllegalPositionException;
+    /**
+     * places ship at given location
+     * @param shipToPlace ship object
+     * @param x1 x start coordinate of the ship
+     * @param y1 y start coordinate of the ship
+     * @param x2 x end coordinate of the ship
+     * @param y2 y end coordinate of the ship
+     */
+    void placeShip(Ship shipToPlace,int x1, int y1, int x2, int y2) throws IllegalPositionException;
+
 
     /**
      * rotates the ship to left or right (front of the ship is the anchor point)
+     * @param shipToRotate ship object to rotate
+     * @param direction direction to turn to
      */
-    void rotateShip();
-
-    /* Returns the selected Ship */
-    Ship getSelectedShip();
+    void rotateShip(Ship shipToRotate, RotationDirection direction);
 
 
     /**
      * Bombs selected panel
      * @return bombing (not)successful
+     * @param x x coordinate of the target panel
+     * @param y y coordinate of the target panel
      */
-    boolean bombPanel();
+    boolean bombPanel(int x, int y) throws IllegalArgumentException;
 
 
     /**
@@ -33,25 +44,14 @@ public interface BattleshipService {
      * @param size width and height of the field
      * @param gameMode chosen game mode to see how many fields need to be created
      */
-    void createFields(int size, GameMode gameMode);
-
-
-    /**
-     * sets the game mode chosen in the game creation menu.
-     * @param chosenGameMode gameMode
-     */
-    void setGameMode(GameMode chosenGameMode);
-
-
-    /* Returns the selected GameMode */
-    GameMode getGameMode();
+    void createFields(int size, GameMode gameMode) throws IllegalArgumentException;
 
 
     /**
      * sets the game volume to newVolume.
      * @param newVolume value the game volume is set to
      */
-    void adjustSoundVolume(int newVolume);
+    void adjustSoundVolume(int newVolume) throws  IllegalArgumentException;
 
 
     /**
@@ -77,5 +77,5 @@ public interface BattleshipService {
     /**
      * displays the rules.
      */
-    void displayRules();
+    String displayRules();
 }

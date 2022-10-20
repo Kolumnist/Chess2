@@ -6,44 +6,48 @@ import de.hhn.it.devtools.apis.battleship.*;
  * implementation. The runnable demo is accessible in the components module.
  */
 
+    //@TODO callbacks when calling bombPanel(), displayRules() and saveGame().
+    // Ask Professor how to handle Gamestate parameter in loadGame
+
 
 public class DemoBattleshipUsage  {
     static BattleshipService game = null;
 
     public static void main(String[] args) throws Exception{
 
-        //User wants to play against computer and chooses Player vs Computer
-        game.setGameMode(GameMode.PVC);
 
         //Field size is set and the fields are created
         //9x9 field means that 5 ships will be generated for each player
-        game.createFields(9, game.getGameMode());
+        game.createFields(9, GameMode.PVC);
+
 
         //User wants to read the rules before he begins to play
         game.displayRules();
 
-        //User selects a ship to move
-        //User wants to rotate the selected ship
-        game.rotateShip();
 
-        //User places the selected ship and moves the other ships as well
-        game.placeShip();
-        game.placeShip();
-        game.placeShip();
-        game.placeShip();
-        game.placeShip();
+        //User wants to rotate ship before placing it
+        game.rotateShip(null,RotationDirection.LEFT);
+
+
+        //User places his ships
+        game.placeShip(null,1,2,1,6);
+        game.placeShip(null,2,2,2,6);
+        game.placeShip(null,3,2,3,6);
+        game.placeShip(null,4,2,4,3);
+        game.placeShip(null,6,2,6,4);
+
 
         //User starts the game by bombing the enemy panel and misses
-        game.bombPanel();
+        game.bombPanel(4,7);
 
         //Sound volume was too loud, user wants to adjust it
         game.adjustSoundVolume(30);
 
         //Enemy (here: computer) bombs the users panel and hits
-        game.bombPanel();
+        game.bombPanel(4,8);
 
         //Enemy bombs the users panel and hits
-        game.bombPanel();
+        game.bombPanel(3,6);
 
         //User wants to save the current game state
         game.saveGame();
