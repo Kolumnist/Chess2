@@ -28,6 +28,11 @@ public interface Handler {
     void giveUp();
 
     /**
+     *
+     */
+    void showWiningPlayer();
+
+    /**
      * displays the rules as text
      * <p>
      * TODO: new window? pictures as well?
@@ -49,9 +54,9 @@ public interface Handler {
      * by the player who defeated the piece
      *
      * @param piece gets placed in the
-     * @param jail for 0-3
+     * @param pos for 0-3
      */
-    void setPieceInJail(Piece piece, int[] jail);
+    void setPieceInJail(Piece piece, int[] pos);
 
     /**
      *
