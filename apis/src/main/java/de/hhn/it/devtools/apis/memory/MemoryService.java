@@ -3,6 +3,8 @@ package de.hhn.it.devtools.apis.memory;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 
+import java.util.List;
+
 /**
  * This interface MemoryService contains the functionality of a memory game.
  */
@@ -59,6 +61,13 @@ public interface MemoryService {
     void removeCallback(String name, PictureCardListener listener) throws IllegalParameterException;
 
     /**
+     * Returns a list of the cards in the current game.
+     *
+     * @return List of cards in the current game.
+     */
+    List<PictureCardDescriptor> getPictureCards();
+
+    /**
      * Returns the descriptor of the picture card with the corresponding name.
      *
      * @param name name of the Picture Card
@@ -73,7 +82,7 @@ public interface MemoryService {
      * @param pictureCard the card that should be turned around
      * @throws IllegalParameterException if the card does not exist
      */
-    void turnCard(PictureCardDescriptor pictureCard) throws  IllegalParameterException;
+    void turnCard(PictureCardDescriptor pictureCard) throws IllegalParameterException;
 
 
 
