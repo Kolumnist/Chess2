@@ -14,6 +14,8 @@ public class Room {
   private HashMap<Integer, Item> items;
   private int roomId;
 
+  private String description;
+
   public Room toTheNorth;
   public Room toTheSouth;
   public Room toTheEast;
@@ -29,13 +31,14 @@ public class Room {
    * Constructor of Room
    * @param id ID of the room
    */
-  public Room(int id) {
+  public Room(int id, String description) {
     this.roomId = id;
     this.isNorthAssigned = false;
     this.isSouthAssigned = false;
     this.isEastAssigned = false;
     this.isWestAssigned = false;
     items = new HashMap<>();
+    this.description = description;
   }
 
   public void addItem(Item item) {
@@ -49,6 +52,10 @@ public class Room {
 
   public int getRoomId() {
     return roomId;
+  }
+
+  public String getDescription() {
+    return description;
   }
 
   public List<Item> search() throws NullPointerException {

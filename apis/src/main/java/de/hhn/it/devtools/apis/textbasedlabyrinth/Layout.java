@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Layout defines the Dungeon Layout of the Game and is always random, however there are restricted possibilities
- * of different layouts.
+ * Layout defines the dungeon layout of the game and is always random,
+ * however there are restricted possibilities of different layouts.
  */
 public class Layout {
 
@@ -17,11 +17,12 @@ public class Layout {
     public Player player;
 
     /**
-     * Constructor of Layout Class
-     * @param player Player of the Game
+     * Constructor of layout class
+     * @param player player of the game
      */
-    public Layout(Player player){
+    public Layout(Player player) {
 
+        String exampleDescription = "A dark, cold room.";
         this.player = player;
         int roomCount = 1;
         // Random unique number list
@@ -41,8 +42,8 @@ public class Layout {
 
         // create as many rooms as maxRoomCount allows
         int j = 0;
-        while(allRooms.size() <= maxRoomCount){
-            Room newRoom = new Room(j);
+        while(allRooms.size() <= maxRoomCount) {
+            Room newRoom = new Room(j, exampleDescription);
             this.allRooms.add(newRoom);
             j++;
         }
@@ -55,10 +56,10 @@ public class Layout {
         // West side
         startRoom.setNextDoorRoom(allRooms.get(roomCount), false, true, false);
         roomCount++;
-        if(randomNumbers.get(0) > 1){
+        if(randomNumbers.get(0) > 1) {
             assignRandomNextDoorRoom(allRooms.get(roomCount), allRooms.get(roomCount + 1));
             roomCount++;
-            if(randomNumbers.get(0) > 2){
+            if(randomNumbers.get(0) > 2) {
                 assignRandomNextDoorRoom(allRooms.get(roomCount), allRooms.get(roomCount + 1));
                 roomCount++;
             }
@@ -67,10 +68,10 @@ public class Layout {
         // East side
         startRoom.setNextDoorRoom(allRooms.get(roomCount), true, false, false);
         roomCount++;
-        if (randomNumbers.get(1) > 1){
+        if (randomNumbers.get(1) > 1) {
             assignRandomNextDoorRoom(allRooms.get(roomCount), allRooms.get(roomCount + 1));
             roomCount++;
-            if (randomNumbers.get(1) > 2){
+            if (randomNumbers.get(1) > 2) {
                 assignRandomNextDoorRoom(allRooms.get(roomCount), allRooms.get(roomCount + 1));
                 roomCount++;
             }
@@ -79,10 +80,10 @@ public class Layout {
         // North side
         startRoom.setNextDoorRoom(allRooms.get(roomCount), false, false, true);
         roomCount++;
-        if (randomNumbers.get(2) > 1){
+        if (randomNumbers.get(2) > 1) {
             assignRandomNextDoorRoom(allRooms.get(roomCount), allRooms.get(roomCount + 1));
             roomCount++;
-            if (randomNumbers.get(2) > 2){
+            if (randomNumbers.get(2) > 2) {
                 assignRandomNextDoorRoom(allRooms.get(roomCount), allRooms.get(roomCount + 1));
                 //roomCount++;
             }
@@ -102,13 +103,13 @@ public class Layout {
         randomBoolean.add(false);
         Collections.shuffle(randomBoolean);
 
-        if(room.isNorthAssigned.equals(true)){
+        if(room.isNorthAssigned.equals(true)) {
             room.setNextDoorRoom(roomToBeAssigned, randomBoolean.get(0), randomBoolean.get(1), false);
         }
-        else if(room.isEastAssigned.equals(true)){
+        else if(room.isEastAssigned.equals(true)) {
             room.setNextDoorRoom(roomToBeAssigned, false, randomBoolean.get(0), randomBoolean.get(1));
         }
-        else if(room.isSouthAssigned.equals(true)){
+        else if(room.isSouthAssigned.equals(true)) {
             room.setNextDoorRoom(roomToBeAssigned, randomBoolean.get(0), randomBoolean.get(1), randomBoolean.get(2));
         }
         else {

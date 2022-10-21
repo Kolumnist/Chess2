@@ -103,4 +103,15 @@ public class Game implements GameService {
 
 
     }
+
+    /**
+     * Checks the game for its current status.
+     * Prints out what is currently going on.
+     */
+    public void check() {
+        System.out.println("You are " + player.getName());
+        System.out.println("You are in " + currentRoom.getDescription());
+        System.out.println("You are alone.");
+        System.out.println("You can search the room or move on.");
+    }
 }
