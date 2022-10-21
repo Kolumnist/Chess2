@@ -24,9 +24,9 @@ public interface WordleService {
   String selectWordle();
 
   /**
-   * A method to ensure that the user's guess is 5 letters long.
+   * A method to ensure that the user's guess is 5 letters long. An exception is thrown if it isn't.
    *
-   * @return true if the guess is 5 letters long and false if it is too short
+   * @return true if the guess is 5 letters long
    */
   boolean validateWordleGuess() throws IllegalGuessException;
 
