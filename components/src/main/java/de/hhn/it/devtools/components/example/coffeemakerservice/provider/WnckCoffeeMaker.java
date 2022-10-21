@@ -5,7 +5,7 @@ import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerListener;
 import de.hhn.it.devtools.apis.examples.coffeemakerservice.Recipe;
 import de.hhn.it.devtools.components.example.coffeemakerservice.provider.makerstates.MakerState;
 import de.hhn.it.devtools.components.example.coffeemakerservice.provider.makerstates.SwitchOffState;
-import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.apis.ttrpgsheets.exceptions.IllegalParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;

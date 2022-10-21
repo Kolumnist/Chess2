@@ -1,6 +1,6 @@
 package de.hhn.it.devtools.apis.examples.coffeemakerservice;
 
-import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.apis.ttrpgsheets.exceptions.IllegalParameterException;
 import java.util.List;
 
 /**

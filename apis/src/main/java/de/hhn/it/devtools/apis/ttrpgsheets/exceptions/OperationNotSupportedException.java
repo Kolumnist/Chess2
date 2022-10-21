@@ -1,20 +1,18 @@
-package de.hhn.it.devtools.apis.exceptions;
-
-import java.security.PrivilegedActionException;
+package de.hhn.it.devtools.apis.ttrpgsheets.exceptions;
 
 /**
- * Gets thrown when a parameter does not fulfill its specification.
+ * Gets thrown when a method is not implemented.
  */
-public class IllegalParameterException extends Exception {
+public class OperationNotSupportedException extends Exception {
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(IllegalParameterException.class);
+          org.slf4j.LoggerFactory.getLogger(OperationNotSupportedException.class);
 
   /**
    * Constructs a new exception with {@code null} as its detail message.
    * The cause is not initialized, and may subsequently be initialized by a
    * call to {@link #initCause}.
    */
-  public IllegalParameterException() {
+  public OperationNotSupportedException() {
   }
 
   /**
@@ -25,7 +23,7 @@ public class IllegalParameterException extends Exception {
    * @param message the detail message. The detail message is saved for
    *                later retrieval by the {@link #getMessage()} method.
    */
-  public IllegalParameterException(final String message) {
+  public OperationNotSupportedException(final String message) {
     super(message);
   }
 
@@ -45,7 +43,7 @@ public class IllegalParameterException extends Exception {
    *                unknown.)
    * @since 1.4
    */
-  public IllegalParameterException(final String message, final Throwable cause) {
+  public OperationNotSupportedException(final String message, final Throwable cause) {
     super(message, cause);
   }
 
@@ -54,8 +52,7 @@ public class IllegalParameterException extends Exception {
    * message of <code>(cause==null ? null : cause.toString())</code> (which
    * typically contains the class and detail message of <code>cause</code>).
    * This constructor is useful for exceptions that are little more than
-   * wrappers for other throwables (for example, {@link
-   * PrivilegedActionException}).
+   * wrappers for other throwables.
    *
    * @param cause the cause (which is saved for later retrieval by the
    *              {@link #getCause()} method).  (A <code>null</code> value is
@@ -63,7 +60,7 @@ public class IllegalParameterException extends Exception {
    *              unknown.)
    * @since 1.4
    */
-  public IllegalParameterException(final Throwable cause) {
+  public OperationNotSupportedException(final Throwable cause) {
     super(cause);
   }
 }

@@ -1,6 +1,6 @@
 package de.hhn.it.devtools.components.helper;
 
-import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.apis.ttrpgsheets.exceptions.IllegalParameterException;
 
 /**
  * Helper class to check simple things.

@@ -5,7 +5,7 @@ import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerDescriptor
 import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerListener;
 import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerService;
 import de.hhn.it.devtools.apis.examples.coffeemakerservice.Recipe;
-import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.apis.ttrpgsheets.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.components.helper.CheckingHelper;
 import java.util.ArrayList;
 import java.util.HashMap;

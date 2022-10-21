@@ -6,7 +6,7 @@ import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerService;
 import de.hhn.it.devtools.apis.examples.coffeemakerservice.Quantity;
 import de.hhn.it.devtools.apis.examples.coffeemakerservice.Recipe;
 import de.hhn.it.devtools.components.example.coffeemakerservice.provider.WnckCoffeeMakerService;
-import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.apis.ttrpgsheets.exceptions.IllegalParameterException;
 
 import java.util.List;
 
