@@ -24,4 +24,10 @@ public class StatDescriptor {
     public void setValue(int value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "Stat type=" + statType +
+                ", Value=" + value;
+    }
 }

@@ -24,4 +24,10 @@ public class DiceDescriptor {
     public void setResult(int result) {
         this.result = result;
     }
+
+    @Override
+    public String toString() {
+        return "Dice type = " + diceType +
+                ", Result = " + result;
+    }
 }
