@@ -4,3 +4,5 @@ Create the demo
 --Room update?.
 -Creation of rooms, player, items, treasure.
 -Javadocs.
+-Doors and walls.
+-Compass.

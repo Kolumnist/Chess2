@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
+import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
 
 import java.util.ArrayList;
@@ -88,7 +89,7 @@ public class Game implements GameService {
         List<Item> items = new ArrayList<>();
 
         try {
-            items = currentRoom.search();
+            items = itemSearcher();
         } catch (NullPointerException n) {
             throw new RoomFailedException(n.getMessage());
         }
@@ -105,8 +106,32 @@ public class Game implements GameService {
             }
         }
 
+    }
+
+    public Item pickUpItem(Item item) throws NoSuchItemFoundException,
+            NullPointerException {
+
+        List<Item> items = new ArrayList<>();
+
+        if (item == null) {
+            throw new NullPointerException("Item cannot be null.");
+        }
+
+        try {
+            items = itemSearcher();
+        } catch (NullPointerException n) {
+            throw new NoSuchItemFoundException(n.getMessage());
+        }
+        if (!items.contains(item)) {
+            throw new NoSuchItemFoundException("The item " + item.getName() + " was not found.");
+        } else {
+            return item;
+        }
 
     }
+
+
+
 
     /**
      * Checks the game for its current status.
@@ -117,5 +142,18 @@ public class Game implements GameService {
         System.out.println("You are in " + currentRoom.getDescription());
         System.out.println("You are alone.");
         System.out.println("You can search the room or move on.");
+    }
+
+
+    private List<Item> itemSearcher() throws NullPointerException {
+        List<Item> items = new ArrayList<>();
+
+        try {
+            items = currentRoom.search();
+        } catch (NullPointerException n) {
+            throw new NullPointerException(n.getMessage());
+        }
+
+        return items;
     }
 }
