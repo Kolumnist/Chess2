@@ -6,3 +6,6 @@ Create the demo
 -Javadocs.
 -Doors and walls.
 -Compass.
+
+Jan:
+-Seed is a chain of numbers. Each number determines something different in the layout generation.
