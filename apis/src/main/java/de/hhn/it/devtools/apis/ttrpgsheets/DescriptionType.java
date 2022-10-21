@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
 /**
- * Enum to represent the Description Types
+ * Enum to represent the Description Types.
  */
 public enum DescriptionType {
     PLAYERNAME,
