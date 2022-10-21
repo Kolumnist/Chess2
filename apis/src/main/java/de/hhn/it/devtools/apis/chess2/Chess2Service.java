@@ -4,7 +4,7 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import java.util.ArrayList;
 
 /**
- * This class handles all communication between player and components
+ * This class handles all communication between GUI and components
  *
  * @author Collin, Lara, Michel
  * @version 1.0
@@ -24,12 +24,19 @@ public interface Chess2Service {
   void reset();
 
   /**
+   * destroys an instance of ChessGame and
+   * brings scene back to main menu
+   */
+  void endGame();
+
+  /**
    * calls the method showWinningPlayer and after that calls reset or returns to the main menu
    */
   void giveUp();
 
   /**
-   * creates a window and shows which player has won and calls reset or returns to the main menu after that
+   * creates a window and shows which player has won and
+   * calls reset or returns to the main menu after that
    */
   void showWinningPlayer();
 
