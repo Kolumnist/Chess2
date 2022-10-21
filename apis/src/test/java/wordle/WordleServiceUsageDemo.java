@@ -9,8 +9,6 @@ import de.hhn.it.devtools.apis.wordle.WordleGuess;
 
 
 public class WordleServiceUsageDemo {
-  private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(WordleServiceUsageDemo.class);
   public static void main(String[] args) throws IllegalGuessException {
 
     WordleService demo = null;
