@@ -56,49 +56,50 @@ public class DemoTtrpgSheetsUsage {
     logger.info(">>> Change to D6");
     characterSheet.changeDiceType(DiceType.D6);
     characterSheet.rollDice();
-    //TODO logger debug Dice
+    logger.debug("" + characterSheet.getDice());
 
     // The player wants to open the Chest he found, rolling with a D20
     logger.info(">>> Change to D20");
     characterSheet.changeDiceType(DiceType.D20);
     characterSheet.rollDice();
-    //TODO logger debug Dice
+    logger.debug("" + characterSheet.getDice());
 
     // The player successfully opened the chest and found a sword granting him +2 Strength
     logger.info(">>> Equip sword");
     characterSheet.incrementStat(StatType.STRENGTH, OriginType.ITEM, 2);
-    //TODO logger debug Stat
+    logger.debug("" + characterSheet.getStat(StatType.STRENGTH));
 
     // He also found a scarf, granting him +2 Defence at the cost of -1 Dexterity
     logger.info(">>> Equip scarf");
     characterSheet.incrementStat(StatType.DEFENCE, OriginType.ARMOR, 2);
     characterSheet.decrementStat(StatType.DEXTERITY, OriginType.ARMOR);
-    //TODO logger debug Stat
+    logger.debug("" + characterSheet.getStat(StatType.DEFENCE));
+    logger.debug("" + characterSheet.getStat(StatType.DEXTERITY));
 
     // Watch out! The chest activated an ancient spike trap, poking the character for 5 Damage!
     // The Defense Stat just got increased (Callback would only decrease Health by 5 - 2 = 3)
     logger.info(">>> Get 5 raw damage");
     characterSheet.decrementStat(StatType.HEALTH, OriginType.DAMAGE, 5);
-    //TODO logger debug Stat
+    logger.debug("" + characterSheet.getStat(StatType.HEALTH));
 
     // After killing some wild animals, the level got increased
     logger.info(">>> Get level up");
     characterSheet.incrementStat(StatType.LEVEL, OriginType.OTHER);
-    //TODO logger debug Stat
+    logger.debug("" + characterSheet.getStat(StatType.LEVEL));
 
     // The Player decides to level up his Dexterity
     logger.info(">>> Level up dexterity");
     characterSheet.incrementStat(StatType.DEXTERITY, OriginType.LEVEL_POINT);
-    //TODO logger debug Stat
+    logger.debug("" + characterSheet.getStat(StatType.DEXTERITY));
 
     // It starts to rain, making it hard to move or fight. -1 Agility while raining
     logger.info(">>> Rain affects agility");
     characterSheet.decrementStat(StatType.AGILITY, OriginType.EFFECT);
-    //TODO logger debug stat
+    logger.debug("" + characterSheet.getStat(StatType.AGILITY));
 
     // The character uses his ability to heal himself with +2 HP
     logger.info(">>> Character heals themself by 2 HP");
     characterSheet.incrementStat(StatType.HEALTH, OriginType.ABILITY, 2);
-    //TODO logger debug stat
+    logger.debug("" + characterSheet.getStat(StatType.HEALTH));
   }
 }
