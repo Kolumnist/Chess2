@@ -16,7 +16,7 @@ public interface BattleshipService {
      *
      * @param listener object implementing the listener interface
      */
-    void addCallback(BattleshipListener listener);
+    void addCallBack(BattleshipListener listener);
 
 
     /**
