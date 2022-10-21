@@ -1,6 +1,13 @@
 package text_based_labyrinth;
 
+import de.hhn.it.devtools.apis.textbasedlabyrinth.Game;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.GameService;
+
 public class TextBasedLabyrinthUsageDemo {
 
-    //Insert here the demo.
+    public static void main(String[] args) {
+
+        GameService gameService = new Game();
+
+    }
 }

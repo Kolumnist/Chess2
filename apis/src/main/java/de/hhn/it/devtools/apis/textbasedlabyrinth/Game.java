@@ -9,34 +9,66 @@ public class Game implements GameService {
     public Player player;
     public Layout layout;
 
-
     /**
      * Constructor for Game.
      */
     public Game() {
-        this.layout = new Layout();
-        this.player = new Player("Steve");
+        this.player = new Player("Placeholder");
+        this.layout = new Layout(player);
+
         this.currentRoom = layout.startRoom;
     }
 
+    /**
+     * Command the Player to move to the Room to the South
+     */
     public void moveSouth(){
-        currentRoom = currentRoom.toTheSouth;
-        currentRoom.setPlayerInside(true);
+        if(currentRoom.isSouthAssigned.equals(true)){
+            currentRoom = currentRoom.toTheSouth;
+            player.setCurrentRoomOfPlayer(currentRoom);
+        }
+        else {
+            System.out.println("There is no Path to the South");
+        }
     }
 
+    /**
+     * Command the Player to move to the Room to the North
+     */
     public void moveNorth(){
-        currentRoom = currentRoom.toTheNorth;
-        currentRoom.setPlayerInside(true);
+        if(currentRoom.isNorthAssigned.equals(true)){
+            currentRoom = currentRoom.toTheNorth;
+            player.setCurrentRoomOfPlayer(currentRoom);
+        }
+        else {
+            System.out.println("There is no Path to the North");
+        }
     }
 
+    /**
+     * Command the Player to move to the Room to the West
+     */
     public void moveWest(){
-        currentRoom = currentRoom.toTheWest;
-        currentRoom.setPlayerInside(true);
+        if(currentRoom.isWestAssigned.equals(true)){
+            currentRoom = currentRoom.toTheWest;
+            player.setCurrentRoomOfPlayer(currentRoom);
+        }
+        else {
+            System.out.println("There is no Path to the West");
+        }
     }
 
+    /**
+     * Command the Player to move to the Room to the East
+     */
     public void moveEast(){
-        currentRoom = currentRoom.toTheEast;
-        currentRoom.setPlayerInside(true);
+        if(currentRoom.isEastAssigned.equals(true)){
+            currentRoom = currentRoom.toTheEast;
+            player.setCurrentRoomOfPlayer(currentRoom);
+        }
+        else {
+            System.out.println("There is no Path to the East");
+        }
     }
 
     public void interaction(){
@@ -46,10 +78,4 @@ public class Game implements GameService {
     public void searchRoom(){
 
     }
-
-    public void startGame(){
-
-    }
-
-
 }

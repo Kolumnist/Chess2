@@ -4,7 +4,7 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
 import java.util.HashMap;
 
 /**
- * Javadoc.
+ * Room Class for the Game, defines the Rooms of the Game with assigned next-door Rooms and Items inside of it
  */
 public class Room {
 
@@ -16,13 +16,24 @@ public class Room {
   public Room toTheSouth;
   public Room toTheEast;
   public Room toTheWest;
-  public Boolean isPlayerInside;
+
+  public Boolean isNorthAssigned;
+  public Boolean isSouthAssigned;
+  public Boolean isEastAssigned;
+  public Boolean isWestAssigned;
 
 
+  /**
+   * Constructor of Room
+   * @param id ID of the room
+   */
   public Room(int id) {
     this.roomId = id;
+    this.isNorthAssigned = false;
+    this.isSouthAssigned = false;
+    this.isEastAssigned = false;
+    this.isWestAssigned = false;
   }
-
 
   public void addItem(Item item) {
     items.put(item.getItemId(), item);
@@ -37,30 +48,38 @@ public class Room {
     return roomId;
   }
 
-  public Boolean getPlayerInside() {
-    return isPlayerInside;
-  }
 
-  public void setPlayerInside(Boolean playerInside) {
-    isPlayerInside = playerInside;
-  }
-
+  /**
+   * Set a Room as the Room next door for the current Room and vis versa.
+   * @param room Room to be assigned as the next door Room
+   * @param isEast Boolean check to see if the new Room will be to the east of current room
+   * @param isWest Boolean check to see if the new Room will be to the west of current room
+   * @param isNorth Boolean check to see if the new Room will be to the north of current room
+   */
   public void setNextDoorRoom(Room room, Boolean isEast, Boolean isWest, Boolean isNorth){
-    if(isEast){
+    if(isEast && !isWest && !isNorth){
       this.toTheEast = room;
+      this.isEastAssigned = true;
       room.toTheWest = this;
+      room.isWestAssigned = true;
     }
-    else if(isWest){
+    else if(isWest && !isEast && !isNorth){
       this.toTheWest = room;
+      this.isWestAssigned = true;
       room.toTheWest = this;
+      room.isEastAssigned = true;
     }
-    else if(isNorth){
+    else if(isNorth && !isEast && !isWest){
       this.toTheNorth = room;
+      this.isNorthAssigned = true;
       room.toTheSouth = this;
+      room.isSouthAssigned = true;
     }
     else {
       this.toTheSouth = room;
+      this.isSouthAssigned = true;
       room.toTheNorth = this;
+      room.isNorthAssigned = true;
     }
   }
 

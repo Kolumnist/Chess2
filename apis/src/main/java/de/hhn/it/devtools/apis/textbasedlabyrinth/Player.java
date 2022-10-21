@@ -5,15 +5,18 @@ import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundExce
 import java.util.HashMap;
 
 /**
- * The player does things.
+ * Player Class for the Game, the Player can move to other Rooms and interact with environment
  */
 public class Player {
 
-
   private final String name;
   private HashMap<String, KeyItem> inventory;
+  public Room currentRoomOfPlayer;
 
-
+  /**
+   * Constructor of Player
+   * @param name name of the Player
+   */
   public Player(String name) {
     this.name = name;
     inventory = new HashMap<>();
@@ -61,5 +64,22 @@ public class Player {
   public String getName() {
 
     return name;
+  }
+
+  /**
+   * Getter for currentRoomOfPlayer
+   * @return Room where the Player is inside right now
+   */
+  public Room getCurrentRoomOfPlayer() {
+    return currentRoomOfPlayer;
+  }
+
+  /**
+   * Setter for currentRoomOfPlayer.
+   * Sets the selected Room as the Room the Player is in
+   * @param currentRoomOfPlayer Room with the Player inside
+   */
+  public void setCurrentRoomOfPlayer(Room currentRoomOfPlayer) {
+    this.currentRoomOfPlayer = currentRoomOfPlayer;
   }
 }
