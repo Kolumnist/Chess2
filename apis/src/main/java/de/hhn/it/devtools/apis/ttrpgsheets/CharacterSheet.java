@@ -63,11 +63,11 @@ public interface CharacterSheet {
   void changeDescription(DescriptionType description, String text);
 
   /**
-   * Returns descriptor of description type.
+   * Returns descriptor of description.
    *
-   * @return descriptor of description type
+   * @return descriptor of description
    */
-  DescriptionDescriptor getDescriptionType(DescriptionType description);
+  DescriptionDescriptor getDescription(DescriptionType description);
 
   /**
    * Rolls the dice to generate a random number according to the current dice.
