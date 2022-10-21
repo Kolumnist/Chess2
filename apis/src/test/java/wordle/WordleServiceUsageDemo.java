@@ -1,6 +1,5 @@
 package wordle;
 
-import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerServiceUsageDemo;
 import de.hhn.it.devtools.apis.wordle.IllegalGuessException;
 import de.hhn.it.devtools.apis.wordle.WordleKeyListener;
 import de.hhn.it.devtools.apis.wordle.WordleService;
