@@ -2,10 +2,9 @@ package de.hhn.it.devtools.apis.memory;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 
-import java.io.FileNotFoundException;
 
 /**
- * Describes a card in a memory game, its image, name and current state.
+ * Describes a card in a memory game, its numeric reference to a corresponding picture, name and current state.
  */
 public class PictureCardDescriptor {
 
