@@ -1,5 +1,7 @@
 package de.hhn.it.devtools.apis.battleship;
 
+import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerService;
+
 import java.util.IllegalFormatException;
 
 /**
@@ -9,49 +11,59 @@ import java.util.IllegalFormatException;
 public interface BattleshipService {
 
 
-    /* Places ship at cursor-location */
-    void placeShip() throws IllegalPositionException;
+    /**
+     * Adds a listener to get updates on the state of the game.
+     *
+     * @param listener object implementing the listener interface
+     */
+    void addCallback(BattleshipListener listener);
+
+
+    /**
+     * places ship at given location
+     * @param shipToPlace ship object
+     * @param x1 x start coordinate of the ship
+     * @param y1 y start coordinate of the ship
+     * @param x2 x end coordinate of the ship
+     * @param y2 y end coordinate of the ship
+     * @throws IllegalPositionException if ship is not allowed to place at location
+     */
+    void placeShip(Ship shipToPlace,int x1, int y1, int x2, int y2) throws IllegalPositionException;
+
 
     /**
      * rotates the ship to left or right (front of the ship is the anchor point)
+     * @param shipToRotate ship object to rotate
+     * @param direction direction to turn to
      */
-    void rotateShip();
-
-    /* Returns the selected Ship */
-    Ship getSelectedShip();
+    void rotateShip(Ship shipToRotate, RotationDirection direction);
 
 
     /**
      * Bombs selected panel
      * @return bombing (not)successful
+     * @param x x coordinate of the target panel
+     * @param y y coordinate of the target panel
+     * @throws IllegalArgumentException if field does not exist
      */
-    boolean bombPanel();
+    boolean bombPanel(int x, int y) throws IllegalArgumentException;
 
 
     /**
      * sets the size of the field chosen in the game creation menu.
      * @param size width and height of the field
      * @param gameMode chosen game mode to see how many fields need to be created
+     * @throws IllegalArgumentException if player enters something else instead of numbers
      */
-    void createFields(int size, GameMode gameMode);
-
-
-    /**
-     * sets the game mode chosen in the game creation menu.
-     * @param chosenGameMode gameMode
-     */
-    void setGameMode(GameMode chosenGameMode);
-
-
-    /* Returns the selected GameMode */
-    GameMode getGameMode();
+    void createFields(int size, GameMode gameMode) throws IllegalArgumentException;
 
 
     /**
      * sets the game volume to newVolume.
      * @param newVolume value the game volume is set to
+     * @throws IllegalArgumentException if soundvolume is negative or over 100
      */
-    void adjustSoundVolume(int newVolume);
+    void adjustSoundVolume(int newVolume) throws  IllegalArgumentException;
 
 
     /**
@@ -64,6 +76,7 @@ public interface BattleshipService {
     /**
      * loads a saved game.
      * @param gameState game state of a saved game
+     * @throws IllegalFormatException when wrong file format is loaded
      */
     void loadGame(GameState gameState) throws IllegalFormatException;
 
@@ -77,5 +90,5 @@ public interface BattleshipService {
     /**
      * displays the rules.
      */
-    void displayRules();
+    String displayRules();
 }
