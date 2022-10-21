@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Layout defines the Dungeon Layout of the Game and is always random, however there are restricted possibilities
- * of different layouts.
+ * Layout defines the dungeon layout of the game and is always random,
+ * however there are restricted possibilities of different layouts.
  */
 public class Layout {
 
@@ -17,11 +17,12 @@ public class Layout {
     public Player player;
 
     /**
-     * Constructor of Layout Class
-     * @param player Player of the Game
+     * Constructor of layout class
+     * @param player player of the game
      */
-    public Layout(Player player){
+    public Layout(Player player) {
 
+        String exampleDescription = "A dark, cold room.";
         this.player = player;
         int roomCount = 1;
         // Random unique number list
@@ -41,8 +42,8 @@ public class Layout {
 
         // create as many rooms as maxRoomCount allows
         int j = 0;
-        while(allRooms.size() <= maxRoomCount){
-            Room newRoom = new Room(j);
+        while(allRooms.size() <= maxRoomCount) {
+            Room newRoom = new Room(j, exampleDescription);
             this.allRooms.add(newRoom);
             j++;
         }
@@ -102,13 +103,13 @@ public class Layout {
         randomBoolean.add(false);
         Collections.shuffle(randomBoolean);
 
-        if(room.isNorthAssigned.equals(true)){
+        if(room.isNorthAssigned.equals(true)) {
             room.setNextDoorRoom(roomToBeAssigned, randomBoolean.get(0), randomBoolean.get(1), false);
         }
-        else if(room.isEastAssigned.equals(true)){
+        else if(room.isEastAssigned.equals(true)) {
             room.setNextDoorRoom(roomToBeAssigned, false, randomBoolean.get(0), randomBoolean.get(1));
         }
-        else if(room.isSouthAssigned.equals(true)){
+        else if(room.isSouthAssigned.equals(true)) {
             room.setNextDoorRoom(roomToBeAssigned, randomBoolean.get(0), randomBoolean.get(1), randomBoolean.get(2));
         }
         else {

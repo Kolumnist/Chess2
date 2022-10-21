@@ -1,37 +1,39 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
+import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
+
 /**
- * Interface for the Game
+ * Interface for the game.
  */
 public interface GameService {
 
     /**
-     * Let the User move the The room to the South(if possible)
+     * Let the user move the room to the South(if possible)
      */
-    void moveSouth();
+    void moveSouth() throws RoomFailedException;
 
     /**
-     * Let the User move the The room to the North(if possible)
+     * Let the user move the room to the North(if possible)
      */
-    void moveNorth();
+    void moveNorth() throws RoomFailedException;
 
     /**
-     * Let the User move the The room to the West(if possible)
+     * Let the user move the room to the West(if possible)
      */
-    void moveWest();
+    void moveWest() throws RoomFailedException;
 
     /**
-     * Let the User move the The room to the East(if possible)
+     * Let the user move the room to the East(if possible)
      */
-    void moveEast();
+    void moveEast() throws RoomFailedException;
 
     /**
-     * Let the User interact with the environment
+     * Let the user interact with the environment
      */
     void interaction();
 
     /**
-     * Let the User search through the room
+     * Let the user search through the room
      */
-    void searchRoom();
+    void searchRoom() throws RoomFailedException;
 }
