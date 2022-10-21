@@ -1,5 +1,7 @@
 package de.hhn.it.devtools.apis.memory;
 
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+
 import java.io.FileNotFoundException;
 
 /**
@@ -7,18 +9,18 @@ import java.io.FileNotFoundException;
  */
 public class PictureCardDescriptor {
 
-    //private Image image;
+    private int pictureRef;
     private String name;
     private State state;
 
     /**
      * Constructor stating the image and name of the Card.
-     * @param filepath filepath to the image for the Card
+     * @param pictureRef numeric reference to the corresponding picture of the card
      * @param name name of the Card
-     * @throws FileNotFoundException if the image for the Card is not found
+     * @throws IllegalParameterException if the pictureRef does not exist
      */
-    public PictureCardDescriptor(String filepath, String name) throws FileNotFoundException {
-        //this.image = ---aus filepath---
+    public PictureCardDescriptor(int pictureRef, String name) throws IllegalParameterException {
+        this.pictureRef = pictureRef;
         this.name = name;
     }
 
