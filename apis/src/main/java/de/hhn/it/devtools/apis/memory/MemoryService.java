@@ -11,24 +11,14 @@ import java.util.List;
 public interface MemoryService {
 
     /**
-     * Opens the menu.
-     */
-    void openMenu();
-
-    /**
-     * Opens the sub-menu to choose a difficulty.
-     */
-    void openSettings();
-
-    /**
-     * Starts the memory game.
-     */
-    void startGame();
-
-    /**
      * Deletes the current memory game and creates a new memory game.
      */
     void newGame();
+
+    /**
+     * Starts the timer for a game if the card field is set up.
+     */
+    void startTimer();
 
     /**
      * Closes the current memory game.
