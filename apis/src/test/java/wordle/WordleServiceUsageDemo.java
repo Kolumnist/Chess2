@@ -1,6 +1,11 @@
 package wordle;
 
-import de.hhn.it.devtools.apis.wordle.*;
+import de.hhn.it.devtools.apis.wordle.IllegalGuessException;
+import de.hhn.it.devtools.apis.wordle.WordleKeyListener;
+import de.hhn.it.devtools.apis.wordle.WordleService;
+import de.hhn.it.devtools.apis.wordle.WordlePanel;
+import de.hhn.it.devtools.apis.wordle.WordleGuess;
+
 
 public class WordleServiceUsageDemo {
 
