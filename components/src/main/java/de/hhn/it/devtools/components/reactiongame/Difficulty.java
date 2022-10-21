@@ -1,2 +1,7 @@
-package de.hhn.it.devtools.components.reactiongame;public enum Diffculty {
+package de.hhn.it.devtools.components.reactiongame;
+
+public enum Difficulty {
+    EASY,
+    MEDIUM,
+    HARD
 }
