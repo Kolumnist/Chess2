@@ -24,6 +24,13 @@ public interface WordleService {
   String selectWordle();
 
   /**
+   * For the user to enter a letter for their guess using the WordleKeyListener.
+   */
+  void enterLetter(WordleKeyListener keyListener);
+
+  void deleteLetter(WordleKeyListener keyListener);
+
+  /**
    * A method to ensure that the user's guess is 5 letters long. An exception is thrown if it isn't.
    *
    * @return true if the guess is 5 letters long
@@ -38,7 +45,7 @@ public interface WordleService {
   /**
    * Updates the UI in accordance with the Wordle rules.
    */
-  void updateUiWithGuess();
+  void updateUiWithColours();
 
   /**
    * Opens a popup window to notify user of his win.
