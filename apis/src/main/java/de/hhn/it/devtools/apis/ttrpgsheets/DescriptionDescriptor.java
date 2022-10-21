@@ -56,7 +56,7 @@ public class DescriptionDescriptor {
 
   @Override
   public String toString() {
-    return "Description type = " + descriptionType
-            + ", Text = " + text;
+    return "Description type = " + getDescriptionType()
+            + ", Text = " + getText();
   }
 }

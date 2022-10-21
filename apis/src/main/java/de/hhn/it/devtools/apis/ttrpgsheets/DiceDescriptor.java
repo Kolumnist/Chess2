@@ -56,7 +56,7 @@ public class DiceDescriptor {
 
   @Override
   public String toString() {
-    return "Dice type = " + diceType
-            + ", Result = " + result;
+    return "Dice type = " + getDiceType()
+            + ", Result = " + getResult();
   }
 }

@@ -56,7 +56,7 @@ public class StatDescriptor {
 
   @Override
   public String toString() {
-    return "Stat type=" + statType
-            + ", Value=" + value;
+    return "Stat type=" + getStatType()
+            + ", Value=" + getValue();
   }
 }
