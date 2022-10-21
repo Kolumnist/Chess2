@@ -7,7 +7,7 @@ public class TextBasedLabyrinthUsageDemo {
 
     public static void main(String[] args) {
 
-        GameService gameService = new Game();
+        //GameService gameService = new Game();
 
 
     }

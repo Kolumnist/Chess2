@@ -15,27 +15,16 @@ public class Layout {
     public List<Layout> allLayouts;
     public Room startRoom;
     public Player player;
+    public Seed seed;
 
     /**
      * Constructor of layout class
      * @param player player of the game
      */
-    public Layout(Player player) {
+    public Layout(Player player, Seed seed) {
 
         String exampleDescription = "A dark, cold room.";
         this.player = player;
-        int roomCount = 1;
-        // Random unique number list
-        ArrayList<Integer> randomNumbers = new ArrayList<>();
-        for (int i = 1; i < 3; i++) randomNumbers.add(i);
-        Collections.shuffle(randomNumbers);
-
-        // a Random List with 2 false values and 1 true value
-        ArrayList<Boolean> randomBoolean = new ArrayList<>();
-        randomBoolean.add(true);
-        randomBoolean.add(false);
-        randomBoolean.add(false);
-        Collections.shuffle(randomBoolean);
 
         // create a List for all the Rooms generated
         this.allRooms = new ArrayList<>();
@@ -53,40 +42,23 @@ public class Layout {
         // place player inside
         player.setCurrentRoomOfPlayer(startRoom);
 
-        // West side
-        startRoom.setNextDoorRoom(allRooms.get(roomCount), false, true, false);
-        roomCount++;
-        if(randomNumbers.get(0) > 1){
-            assignRandomNextDoorRoom(allRooms.get(roomCount - 1), allRooms.get(roomCount));
-            roomCount++;
-            if(randomNumbers.get(0) > 2){
-                assignRandomNextDoorRoom(allRooms.get(roomCount - 1), allRooms.get(roomCount));
-                roomCount++;
-            }
+        startRoom.setNextDoorRoom(allRooms.get(1), false, true, false);
+        startRoom.setNextDoorRoom(allRooms.get(2), false, false, true);
+        startRoom.setNextDoorRoom(allRooms.get(3), true, false, false);
+        if(seed.getSeed() == 1){
+            allRooms.get(2).setNextDoorRoom(allRooms.get(4), true, false, false);
+            allRooms.get(3).setNextDoorRoom(allRooms.get(5), true, false, false);
+            allRooms.get(5).setNextDoorRoom(allRooms.get(6), true, false, false);
         }
-
-        // East side
-        startRoom.setNextDoorRoom(allRooms.get(roomCount), true, false, false);
-        roomCount++;
-        if (randomNumbers.get(1) > 1){
-            assignRandomNextDoorRoom(allRooms.get(roomCount - 1), allRooms.get(roomCount));
-            roomCount++;
-            if (randomNumbers.get(1) > 2){
-                assignRandomNextDoorRoom(allRooms.get(roomCount - 1), allRooms.get(roomCount));
-                roomCount++;
-            }
+        else if(seed.getSeed() == 2){
+            allRooms.get(1).setNextDoorRoom(allRooms.get(4), false, true, false);
+            allRooms.get(2).setNextDoorRoom(allRooms.get(5), true, false, false);
+            allRooms.get(5).setNextDoorRoom(allRooms.get(6), false, false, true);
         }
-
-        // North side
-        startRoom.setNextDoorRoom(allRooms.get(roomCount), false, false, true);
-        roomCount++;
-        if (randomNumbers.get(2) > 1){
-            assignRandomNextDoorRoom(allRooms.get(roomCount - 1), allRooms.get(roomCount));
-            roomCount++;
-            if (randomNumbers.get(2) > 2){
-                assignRandomNextDoorRoom(allRooms.get(roomCount - 1), allRooms.get(roomCount));
-                //roomCount++;
-            }
+        else if(seed.getSeed() == 3){
+            allRooms.get(1).setNextDoorRoom(allRooms.get(4), false, true, false);
+            allRooms.get(4).setNextDoorRoom(allRooms.get(5), false, false, false);
+            allRooms.get(2).setNextDoorRoom(allRooms.get(6), true, false, false);
         }
     }
 
