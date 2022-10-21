@@ -4,16 +4,16 @@ package de.hhn.it.devtools.apis.ttrpgsheets;
  * Enum to represent the Description Types.
  */
 public enum DescriptionType {
-    PLAYERNAME,
-    CHARACTERNAME,
+    PLAYER_NAME,
+    CHARACTER_NAME,
     NICKNAME,
     AGE,
     RACE,
     HEIGHT,
     WEIGHT,
-    SKINCOLOR,
-    HAIRCOLOR,
-    EYECOLOR,
-    CHARACTERCLASS,
+    SKIN_COLOR,
+    HAIR_COLOR,
+    EYE_COLOR,
+    CHARACTER_CLASS,
     OTHER
 }

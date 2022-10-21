@@ -25,17 +25,17 @@ public class DemoTtrpgSheetsUsage {
 
     // Starting to change the description of the character
     logger.info(">>> Setup character description");
-    characterSheet.changeDescription(DescriptionType.PLAYERNAME, "Herbert");
-    characterSheet.changeDescription(DescriptionType.CHARACTERNAME, "Sylas Thatcher");
+    characterSheet.changeDescription(DescriptionType.PLAYER_NAME, "Herbert");
+    characterSheet.changeDescription(DescriptionType.CHARACTER_NAME, "Sylas Thatcher");
     characterSheet.changeDescription(DescriptionType.NICKNAME, "Sy");
     characterSheet.changeDescription(DescriptionType.AGE, "34");
     characterSheet.changeDescription(DescriptionType.RACE, "Human");
     characterSheet.changeDescription(DescriptionType.HEIGHT, "1.85m");
     characterSheet.changeDescription(DescriptionType.WEIGHT, "87kg");
-    characterSheet.changeDescription(DescriptionType.SKINCOLOR, "White");
-    characterSheet.changeDescription(DescriptionType.HAIRCOLOR, "Black");
-    characterSheet.changeDescription(DescriptionType.EYECOLOR, "Blue-Gray");
-    characterSheet.changeDescription(DescriptionType.CHARACTERCLASS, "Assassin");
+    characterSheet.changeDescription(DescriptionType.SKIN_COLOR, "White");
+    characterSheet.changeDescription(DescriptionType.HAIR_COLOR, "Black");
+    characterSheet.changeDescription(DescriptionType.EYE_COLOR, "Blue-Gray");
+    characterSheet.changeDescription(DescriptionType.CHARACTER_CLASS, "Assassin");
     characterSheet.changeDescription(DescriptionType.OTHER, "After 5 years held back in chains,"
             + " Sylas wants nothing more but revenge.");
 
