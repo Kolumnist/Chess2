@@ -1,7 +1,9 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Room Class for the Game, defines the Rooms of the Game with assigned next-door Rooms and Items inside of it
@@ -33,6 +35,7 @@ public class Room {
     this.isSouthAssigned = false;
     this.isEastAssigned = false;
     this.isWestAssigned = false;
+    items = new HashMap<>();
   }
 
   public void addItem(Item item) {
@@ -48,6 +51,23 @@ public class Room {
     return roomId;
   }
 
+  public List<Item> search() throws NullPointerException {
+    if (items == null) {
+      throw new NullPointerException("Room could not hold items.");
+    }
+    boolean fail = false; // May need later.
+
+    List<Item> items1 = items.values().stream().toList();
+
+    if (items1.isEmpty()) {
+      Item item = new Item(10077001, "NoItem");
+      ArrayList<Item> items2 = new ArrayList<>();
+              items2.add(item);
+      return items2;
+    } else {
+      return items1;
+    }
+  }
 
   /**
    * Set a Room as the Room next door for the current Room and vis versa.

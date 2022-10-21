@@ -1,5 +1,10 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
+import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Game class.
  */
@@ -22,60 +27,80 @@ public class Game implements GameService {
     /**
      * Command the Player to move to the Room to the South
      */
-    public void moveSouth(){
+    public void moveSouth() throws RoomFailedException {
         if(currentRoom.isSouthAssigned.equals(true)){
             currentRoom = currentRoom.toTheSouth;
             player.setCurrentRoomOfPlayer(currentRoom);
         }
         else {
-            System.out.println("There is no Path to the South");
+            throw new RoomFailedException("No room found in the southern direction.");
         }
     }
 
     /**
      * Command the Player to move to the Room to the North
      */
-    public void moveNorth(){
+    public void moveNorth() throws RoomFailedException {
         if(currentRoom.isNorthAssigned.equals(true)){
             currentRoom = currentRoom.toTheNorth;
             player.setCurrentRoomOfPlayer(currentRoom);
         }
         else {
-            System.out.println("There is no Path to the North");
+            throw new RoomFailedException("No room found in the northern direction.");
         }
     }
 
     /**
      * Command the Player to move to the Room to the West
      */
-    public void moveWest(){
+    public void moveWest() throws RoomFailedException {
         if(currentRoom.isWestAssigned.equals(true)){
             currentRoom = currentRoom.toTheWest;
             player.setCurrentRoomOfPlayer(currentRoom);
         }
         else {
-            System.out.println("There is no Path to the West");
+            throw new RoomFailedException("No room found in the western direction.");
         }
     }
 
     /**
      * Command the Player to move to the Room to the East
      */
-    public void moveEast(){
+    public void moveEast() throws RoomFailedException {
         if(currentRoom.isEastAssigned.equals(true)){
             currentRoom = currentRoom.toTheEast;
             player.setCurrentRoomOfPlayer(currentRoom);
         }
         else {
-            System.out.println("There is no Path to the East");
+            throw new RoomFailedException("No room found in the eastern direction.");
         }
     }
 
-    public void interaction(){
+    public void interaction() {
 
     }
 
-    public void searchRoom(){
+    public void searchRoom() throws RoomFailedException {
+        List<Item> items = new ArrayList<>();
+
+        try {
+            items = currentRoom.search();
+        } catch (NullPointerException n) {
+            throw new RoomFailedException(n.getMessage());
+        }
+
+        if (items.size() == 1) {
+            if (items.get(0).getItemId() == 10077001) {
+                System.out.println("There are no items in this room.");
+            } else {
+                System.out.println("In this room, you find: ");
+                for (Item item : items) {
+                    System.out.println(item.getName());
+                }
+
+            }
+        }
+
 
     }
 }
