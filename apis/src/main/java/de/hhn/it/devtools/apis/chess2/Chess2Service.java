@@ -40,6 +40,9 @@ public interface Chess2Service {
 
     /**
      * activates all fields with the state "HAS_CURRENT_PIECE"
+     *
+     * @param piecePos ArrayList of the positions of all Pieces
+     * @throws IllegalParameterException if piecePos is a null reference or incomplete.
      */
     void activatePieceButton(ArrayList<int[]> piecePos) throws IllegalParameterException;
 
@@ -48,13 +51,16 @@ public interface Chess2Service {
      * by the player who defeated the piece
      *
      * @param piece gets placed in the
-     * @param pos for 0-3
+     * @param pos for the position of the jail on the board
+     * @throws IllegalParameterException if piece or pos is a null reference or incomplete.
      */
     void setPieceInJail(Piece piece, int[] pos) throws IllegalParameterException;
 
     /**
      * changes the position of the current piece
+     *
      * @param pos the new position of the piece
+     * @throws IllegalParameterException if pos is a null reference or incomplete.
      */
     void setPiecePosition(int[] pos) throws IllegalParameterException;
 
