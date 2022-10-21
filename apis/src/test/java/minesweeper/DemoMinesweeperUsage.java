@@ -1,8 +1,12 @@
 package minesweeper;
 
-import java.beans.DesignMode;
+/**
+ * The Handler interface is for handling interactions between a player with a component
+ * @author Lara Weller, Jason Herrmann
+ * @version 0.1
+ */
 
-import de.hhn.it.devtools.apis.minesweeper.*;
+import de.hhn.it.devtools.apis.minesweeper.Handler;
 
 public class DemoMinesweeperUsage implements Handler{
 
@@ -18,9 +22,6 @@ public class DemoMinesweeperUsage implements Handler{
 
         // Player opens color menu to choose a different color
         demo.changeColor();
-
-        // Player selects his favorit color
-        demo.choosenColor(Color.WHITE);
 
         // Player clicks on fields
         demo.clickField();
@@ -69,12 +70,6 @@ public class DemoMinesweeperUsage implements Handler{
     }
 
     @Override
-    public void choosenColor(Color c) {
-        // TODO Auto-generated method stub
-    }
-        
-
-    @Override
     public void clickField() {
         // TODO Auto-generated method stub
         
@@ -85,6 +80,4 @@ public class DemoMinesweeperUsage implements Handler{
         // TODO Auto-generated method stub
         
     }
-
-
 }

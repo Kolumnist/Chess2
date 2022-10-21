@@ -1,7 +1,5 @@
 package de.hhn.it.devtools.apis.minesweeper;
 
-import javafx.scene.paint.Color;
-
 /**
  * The Handler interface is for handling interactions between a player with a component
  * @author Lara Weller, Jason Herrmann
@@ -39,12 +37,6 @@ public interface Handler {
      * Open window to let player choose between different Colors
      */
     void changeColor();
-
-    /**
-     * Changes the color of the field to a choosen color combination
-     * @return Color which the player has Choosen
-     */
-    public void choosenColor(Color c);
 
     /**
      * Reveals if the clicked field is a mine or not.
