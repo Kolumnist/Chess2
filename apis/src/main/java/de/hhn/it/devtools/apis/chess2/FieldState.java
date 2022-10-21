@@ -18,8 +18,10 @@ public enum FieldState {
 
     /** (NO JAIL) A Piece of the current Player is on the Field */
     HAS_CURRENT_PIECE,
-    /** (NO JAIL) Any other Piece is on the Field */
+    /** (NO JAIL) Any other Piece (besides bear) is on the Field */
     HAS_OTHER_PIECE,
+    /** (NO JAIL) Bear on Field*/
+    HAS_BEAR,
     /** Any other Field */
     FREE_FIELD
 
