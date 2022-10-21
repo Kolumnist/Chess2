@@ -10,16 +10,19 @@ public interface CharacterSheet {
    * Adds a listener to get updates on the state of the character sheet.
    *
    * @param listener object implementing the listener interface
+   * @throws IllegalArgumentException if the listener is a null reference
    */
-  void addCallback(CharacterSheetListener listener);
+  void addCallback(CharacterSheetListener listener) throws IllegalArgumentException;
 
   /**
    * increments the given {@link StatType} based upon the {@link OriginType}.
    *
    * @param stat   the Type of Stat to increment
    * @param origin the origin of the change
+   * @throws IllegalArgumentException if the given Stat Type can't be incremented with
+   *     the given Origin Type or if there are null references
    */
-  void incrementStat(StatType stat, OriginType origin);
+  void incrementStat(StatType stat, OriginType origin) throws IllegalArgumentException;
 
   /**
    * Increments the given {@link StatType} based upon the {@link OriginType} by a given amount.
@@ -27,16 +30,20 @@ public interface CharacterSheet {
    * @param stat   the Type of Stat to increment
    * @param origin the origin of the change
    * @param amount the amount the Stat changes
+   * @throws IllegalArgumentException if the given Stat Type can't be incremented with
+   *     the given Origin Type or if there are null references
    */
-  void incrementStat(StatType stat, OriginType origin, int amount);
+  void incrementStat(StatType stat, OriginType origin, int amount) throws IllegalArgumentException;
 
   /**
    * Decrements the given {@link StatType} based upon the {@link OriginType}.
    *
    * @param stat   the Type of Stat to decrement
    * @param origin the origin of the change
+   * @throws IllegalArgumentException if the given Stat Type can't be incremented with
+   *     the given Origin Type or if there are null references
    */
-  void decrementStat(StatType stat, OriginType origin);
+  void decrementStat(StatType stat, OriginType origin) throws IllegalArgumentException;
 
   /**
    * Decrements the given {@link StatType} based upon the {@link OriginType} by a given amount.
@@ -44,8 +51,10 @@ public interface CharacterSheet {
    * @param stat   the Type of Stat to decrement
    * @param origin the origin of the change
    * @param amount the amount the Stat changes
+   * @throws IllegalArgumentException if the given Stat Type can't be incremented with
+   *     the given Origin Type or if there are null references
    */
-  void decrementStat(StatType stat, OriginType origin, int amount);
+  void decrementStat(StatType stat, OriginType origin, int amount) throws IllegalArgumentException;
 
   /**
    * Returns descriptor of the stat.
@@ -59,8 +68,9 @@ public interface CharacterSheet {
    *
    * @param description the type of description to change
    * @param text        the text the description is changed to
+   * @throws IllegalArgumentException if there are null references
    */
-  void changeDescription(DescriptionType description, String text);
+  void changeDescription(DescriptionType description, String text) throws IllegalArgumentException;
 
   /**
    * Returns descriptor of description.
@@ -71,15 +81,19 @@ public interface CharacterSheet {
 
   /**
    * Rolls the dice to generate a random number according to the current dice.
+   *
+   * @throws NullPointerException if the Dice Type hasn't yet been changed
+   *     with {@link CharacterSheet#changeDiceType(DiceType)}
    */
-  void rollDice();
+  void rollDice() throws NullPointerException;
 
   /**
    * Changes the dice to the give {@link DiceType}.
    *
    * @param dice the type of dice to be used further
+   * @throws IllegalArgumentException if the Dice Type is a null reference
    */
-  void changeDiceType(DiceType dice);
+  void changeDiceType(DiceType dice) throws IllegalArgumentException;
 
   /**
    * Returns the descriptor of the Dice.
