@@ -15,7 +15,7 @@ public class Game implements GameService {
     public Layout layout;
 
     /**
-     * Constructor for Game.
+     * Constructor for game.
      */
     public Game() {
         this.player = new Player("Placeholder");
@@ -25,12 +25,13 @@ public class Game implements GameService {
     }
 
     /**
-     * Command the Player to move to the Room to the South
+     * Command the player to move to the room to the south
      */
     public void moveSouth() throws RoomFailedException {
         if(currentRoom.isSouthAssigned.equals(true)){
             currentRoom = currentRoom.toTheSouth;
             player.setCurrentRoomOfPlayer(currentRoom);
+            check();
         }
         else {
             throw new RoomFailedException("No room found in the southern direction.");
@@ -38,12 +39,13 @@ public class Game implements GameService {
     }
 
     /**
-     * Command the Player to move to the Room to the North
+     * Command the player to move to the room to the north
      */
     public void moveNorth() throws RoomFailedException {
         if(currentRoom.isNorthAssigned.equals(true)){
             currentRoom = currentRoom.toTheNorth;
             player.setCurrentRoomOfPlayer(currentRoom);
+            check();
         }
         else {
             throw new RoomFailedException("No room found in the northern direction.");
@@ -51,12 +53,13 @@ public class Game implements GameService {
     }
 
     /**
-     * Command the Player to move to the Room to the West
+     * Command the player to move to the room to the west
      */
     public void moveWest() throws RoomFailedException {
         if(currentRoom.isWestAssigned.equals(true)){
             currentRoom = currentRoom.toTheWest;
             player.setCurrentRoomOfPlayer(currentRoom);
+            check();
         }
         else {
             throw new RoomFailedException("No room found in the western direction.");
@@ -64,12 +67,13 @@ public class Game implements GameService {
     }
 
     /**
-     * Command the Player to move to the Room to the East
+     * Command the player to move to the room to the east
      */
     public void moveEast() throws RoomFailedException {
         if(currentRoom.isEastAssigned.equals(true)){
             currentRoom = currentRoom.toTheEast;
             player.setCurrentRoomOfPlayer(currentRoom);
+            check();
         }
         else {
             throw new RoomFailedException("No room found in the eastern direction.");
