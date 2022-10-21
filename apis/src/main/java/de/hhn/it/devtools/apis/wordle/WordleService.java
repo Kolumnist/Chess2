@@ -4,12 +4,17 @@ package de.hhn.it.devtools.apis.wordle;
  * An interface that provides methods for our Wordle micro-project.
  */
 
-public interface Wordle {
+public interface WordleService {
 
   /**
    * Method to start the game, i.e. run constructors and show UI.
    */
   void startGame();
+
+  /**
+   * Method to start another game while the program is still running.
+   */
+  void startAnotherGame();
 
   /**
    * Method that randomly selects a Wordle solution that the user must attempt to guess.
@@ -23,7 +28,7 @@ public interface Wordle {
    *
    * @return true if the guess is 5 letters long and false if it is too short
    */
-  boolean validateWordleGuess();
+  boolean validateWordleGuess() throws IllegalGuessException;
 
   /**
    * Compares the user's guess to the solution.
