@@ -17,9 +17,6 @@ import java.util.List;
 
 public class ConnectFourUsageDemo {
 
-  private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(CoffeeMakerServiceUsageDemo.class);
-
   public static void main(String[] args)
       throws IllegalParameterException, InterruptedException, IllegalOperationException {
     ConnectFour connectFour = null;
