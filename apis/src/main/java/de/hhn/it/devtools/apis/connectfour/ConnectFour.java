@@ -1,5 +1,7 @@
 package de.hhn.it.devtools.apis.connectfour;
 
+import java.util.List;
+
 /**
  * This is an interface to the game Connect Four.
  */
@@ -28,6 +30,13 @@ public interface ConnectFour {
   void deleteProfile(int profileId);
 
   /**
+   * Get a list of all user profiles.
+   *
+   * @return List of user profiles
+   */
+  List<Profile> getProfiles();
+
+  /**
    * Show the help dialogue.
    */
   void help();
@@ -54,9 +63,10 @@ public interface ConnectFour {
   /**
    * Place a disc at the specified position.
    *
-   * @param column Column in which the disc should be placed in.
+   * @param column Column in which the disc should be placed in
+   * @throws IllegalOperationException If column is full
    */
-  void placeDiscAt(int column);
+  void placeDiscAt(int column) throws IllegalOperationException;
 
   /**
    * End the current game.
