@@ -56,11 +56,11 @@ public class Layout {
         // West side
         startRoom.setNextDoorRoom(allRooms.get(roomCount), false, true, false);
         roomCount++;
-        if(randomNumbers.get(0) > 1) {
-            assignRandomNextDoorRoom(allRooms.get(roomCount), allRooms.get(roomCount + 1));
+        if(randomNumbers.get(0) > 1){
+            assignRandomNextDoorRoom(allRooms.get(roomCount - 1), allRooms.get(roomCount));
             roomCount++;
-            if(randomNumbers.get(0) > 2) {
-                assignRandomNextDoorRoom(allRooms.get(roomCount), allRooms.get(roomCount + 1));
+            if(randomNumbers.get(0) > 2){
+                assignRandomNextDoorRoom(allRooms.get(roomCount - 1), allRooms.get(roomCount));
                 roomCount++;
             }
         }
@@ -68,11 +68,11 @@ public class Layout {
         // East side
         startRoom.setNextDoorRoom(allRooms.get(roomCount), true, false, false);
         roomCount++;
-        if (randomNumbers.get(1) > 1) {
-            assignRandomNextDoorRoom(allRooms.get(roomCount), allRooms.get(roomCount + 1));
+        if (randomNumbers.get(1) > 1){
+            assignRandomNextDoorRoom(allRooms.get(roomCount - 1), allRooms.get(roomCount));
             roomCount++;
-            if (randomNumbers.get(1) > 2) {
-                assignRandomNextDoorRoom(allRooms.get(roomCount), allRooms.get(roomCount + 1));
+            if (randomNumbers.get(1) > 2){
+                assignRandomNextDoorRoom(allRooms.get(roomCount - 1), allRooms.get(roomCount));
                 roomCount++;
             }
         }
@@ -80,11 +80,11 @@ public class Layout {
         // North side
         startRoom.setNextDoorRoom(allRooms.get(roomCount), false, false, true);
         roomCount++;
-        if (randomNumbers.get(2) > 1) {
-            assignRandomNextDoorRoom(allRooms.get(roomCount), allRooms.get(roomCount + 1));
+        if (randomNumbers.get(2) > 1){
+            assignRandomNextDoorRoom(allRooms.get(roomCount - 1), allRooms.get(roomCount));
             roomCount++;
-            if (randomNumbers.get(2) > 2) {
-                assignRandomNextDoorRoom(allRooms.get(roomCount), allRooms.get(roomCount + 1));
+            if (randomNumbers.get(2) > 2){
+                assignRandomNextDoorRoom(allRooms.get(roomCount - 1), allRooms.get(roomCount));
                 //roomCount++;
             }
         }

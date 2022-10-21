@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class Player {
 
   private final String name;
-  private HashMap<String, KeyItem> inventory;
+  private HashMap<String, Item> inventory;
   public Room currentRoomOfPlayer;
 
   /**
@@ -23,7 +23,7 @@ public class Player {
   }
 
 
-  public void addItem(KeyItem item) {
+  public void addItem(Item item) {
 
     inventory.put(item.getName(), item);
   }
