@@ -4,6 +4,7 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Room Class for the Game, defines the Rooms of the Game with assigned next-door Rooms and Items inside of it
@@ -26,6 +27,10 @@ public class Room {
   public Boolean isEastAssigned;
   public Boolean isWestAssigned;
 
+  private Door leftDoor;
+  private Door rightDoor;
+  private Door doorStraightAhead;
+  private Door backdoor;
 
   /**
    * Constructor of Room
@@ -39,10 +44,26 @@ public class Room {
     this.isWestAssigned = false;
     items = new HashMap<>();
     this.description = description;
+
   }
 
   public void addItem(Item item) {
     items.put(item.getItemId(), item);
+
+  }
+
+  public void setDoors(boolean hasPuzzle, Item key) {
+    backdoor = new Door(false, null);
+    int number = 0;
+    if (hasPuzzle) {
+      Random random = new Random();
+      number = random.nextInt(1, 4);
+    }
+
+    leftDoor = new Door(number == 1, key);
+    rightDoor = new Door(number == 2, key);
+    doorStraightAhead = new Door(number == 3, key);
+
 
   }
 
