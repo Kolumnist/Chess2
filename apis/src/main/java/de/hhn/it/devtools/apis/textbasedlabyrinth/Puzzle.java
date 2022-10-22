@@ -6,18 +6,14 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
 public class Puzzle {
 
 
-  private final int puzzleId;
+  //private final int puzzleId;
   private boolean isSolved;
   private boolean isBeingWorkedOn;
+  private Item item;
 
-  /**
-   * Javadoc.
-   *
-   * @param id newID
-   *
-   */
-  public Puzzle(int id) {
-    puzzleId = id;
+
+  public Puzzle(Item item) {
+    this.item = item;
     isSolved = false;
     isBeingWorkedOn = false;
   }
@@ -27,30 +23,14 @@ public class Puzzle {
     return isSolved;
   }
 
-  /**
-   * Javadoc.
-   */
-  public void execute() {
-    isBeingWorkedOn = true;
-    boolean correctSolutionGiven = false;
 
-    //
-    //Code for execution.
-    //
-    // Wow, we found the correct solution!
-    correctSolutionGiven = true;
 
-    if (correctSolutionGiven) {
-      isBeingWorkedOn = false;
+
+  public boolean setSolved(Item item) {
+    if (item == this.item) {
       isSolved = true;
     }
+    return isSolved;
   }
 
-  public void setSolved(boolean solution) {
-    isSolved = solution;
-  }
-
-  public int getPuzzleId() {
-    return puzzleId;
-  }
 }

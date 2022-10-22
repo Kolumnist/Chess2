@@ -28,6 +28,11 @@ public interface GameService {
     void moveEast() throws RoomFailedException;
 
     /**
+     * Inspect a door/pathway.
+     */
+    void inspect();
+
+    /**
      * Let the user interact with the environment
      */
     void interaction();

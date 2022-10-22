@@ -81,7 +81,12 @@ public class Game implements GameService {
         }
     }
 
+    public void inspect() {
+
+    }
+
     public void interaction() {
+
 
     }
 
