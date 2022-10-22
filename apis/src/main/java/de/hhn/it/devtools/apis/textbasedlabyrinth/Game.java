@@ -14,14 +14,15 @@ public class Game implements GameService {
     public Room currentRoom;
     public Player player;
     public Layout layout;
+    public Seed seed;
 
     /**
      * Constructor for game.
      */
-    public Game() {
+    public Game(Seed seed) {
+        this.seed = seed;
         this.player = new Player("Placeholder");
-        this.layout = new Layout(player);
-
+        this.layout = new Layout(player, seed);
         this.currentRoom = layout.startRoom;
     }
 
