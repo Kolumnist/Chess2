@@ -23,6 +23,7 @@ public class Layout {
      */
     public Layout(Player player, Seed seed) {
 
+        int roomCount = 1;
         String exampleDescription = "A dark, cold room.";
         this.player = player;
 
@@ -42,23 +43,38 @@ public class Layout {
         // place player inside
         player.setCurrentRoomOfPlayer(startRoom);
 
-        startRoom.setNextDoorRoom(allRooms.get(1), false, true, false);
-        startRoom.setNextDoorRoom(allRooms.get(2), false, false, true);
-        startRoom.setNextDoorRoom(allRooms.get(3), true, false, false);
-        if(seed.getSeed() == 1){
-            allRooms.get(2).setNextDoorRoom(allRooms.get(4), true, false, false);
-            allRooms.get(3).setNextDoorRoom(allRooms.get(5), true, false, false);
-            allRooms.get(5).setNextDoorRoom(allRooms.get(6), true, false, false);
+        // West
+        startRoom.setNextDoorRoom(allRooms.get(roomCount), false, true, false);
+        roomCount++;
+        if (seed.getFloorLength().get(0) > 1){
+            allRooms.get(roomCount - 1).setNextDoorRoom(allRooms.get(roomCount), false, seed.floorDir.get(0), seed.floorDir.get(1));
+            roomCount++;
+            if(seed.getFloorLength().get(0) > 2){
+                allRooms.get(roomCount - 1).setNextDoorRoom(allRooms.get(roomCount), seed.floorDir.get(1), seed.floorDir.get(2), false);
+                roomCount++;
+            }
         }
-        else if(seed.getSeed() == 2){
-            allRooms.get(1).setNextDoorRoom(allRooms.get(4), false, true, false);
-            allRooms.get(2).setNextDoorRoom(allRooms.get(5), true, false, false);
-            allRooms.get(5).setNextDoorRoom(allRooms.get(6), false, false, true);
+        // North
+        startRoom.setNextDoorRoom(allRooms.get(roomCount), false, false, true);
+        roomCount++;
+        if(seed.getFloorLength().get(1) > 1){
+            allRooms.get(roomCount - 1).setNextDoorRoom(allRooms.get(roomCount), seed.floorDir.get(0), false, seed.floorDir.get(1));
+            roomCount++;
+            if(seed.getFloorLength().get(1) > 2){
+                allRooms.get(roomCount - 1).setNextDoorRoom(allRooms.get(roomCount), seed.floorDir.get(0), false, seed.floorDir.get(1));
+                roomCount++;
+            }
         }
-        else if(seed.getSeed() == 3){
-            allRooms.get(1).setNextDoorRoom(allRooms.get(4), false, true, false);
-            allRooms.get(4).setNextDoorRoom(allRooms.get(5), false, false, false);
-            allRooms.get(2).setNextDoorRoom(allRooms.get(6), true, false, false);
+        // East
+        startRoom.setNextDoorRoom(allRooms.get(roomCount), true, false, false);
+        roomCount++;
+        if(seed.getFloorLength().get(2) > 1){
+            allRooms.get(roomCount - 1).setNextDoorRoom(allRooms.get(roomCount), seed.floorDir.get(0), false, seed.floorDir.get(1));
+            roomCount++;
+            if(seed.getFloorLength().get(2) > 2){
+                allRooms.get(roomCount - 1).setNextDoorRoom(allRooms.get(roomCount), seed.floorDir.get(1), seed.floorDir.get(2), false);
+                roomCount++;
+            }
         }
     }
 

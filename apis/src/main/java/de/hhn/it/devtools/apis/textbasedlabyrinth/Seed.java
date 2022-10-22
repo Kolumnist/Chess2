@@ -10,43 +10,43 @@ public class Seed {
   private final int Seed;
 
   public ArrayList<Integer> floorLength;
-  public ArrayList<Boolean> floorDirections;
+  public ArrayList<Boolean> floorDir;
 
 
   public Seed(int seedNumber) {
     this.Seed = seedNumber;
     floorLength = new ArrayList<>();
-    floorDirections = new ArrayList<>();
+    floorDir = new ArrayList<>();
 
     if (seedNumber == 1){
       floorLength.add(1);
       floorLength.add(2);
       floorLength.add(3);
-      floorDirections.add(true);
-      floorDirections.add(false);
-      floorDirections.add(false);
+      floorDir.add(true);
+      floorDir.add(false);
+      floorDir.add(false);
     }
     else if (seedNumber == 2){
       floorLength.add(2);
       floorLength.add(3);
       floorLength.add(1);
-      floorDirections.add(false);
-      floorDirections.add(true);
-      floorDirections.add(false);
+      floorDir.add(false);
+      floorDir.add(true);
+      floorDir.add(false);
     }
     else if (seedNumber == 3){
       floorLength.add(3);
-      floorLength.add(2);
       floorLength.add(1);
-      floorDirections.add(false);
-      floorDirections.add(false);
-      floorDirections.add(true);
+      floorLength.add(2);
+      floorDir.add(false);
+      floorDir.add(false);
+      floorDir.add(true);
     }
   }
 
   public ArrayList<Integer> getFloorLength() { return floorLength; }
 
-  public ArrayList<Boolean> getFloorDirections() { return floorDirections; }
+  public ArrayList<Boolean> getFloorDirections() { return floorDir; }
 
   /**
    * Javadoc.
