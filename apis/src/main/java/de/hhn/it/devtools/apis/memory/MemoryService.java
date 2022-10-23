@@ -11,12 +11,13 @@ import java.util.List;
 public interface MemoryService {
 
     /**
-     * Deletes the current memory game and creates a new memory game.
+     * If there is a current memory game, it deletes the game and creates a new memory game.
+     * If there is no current memory game, it creates a game.
      */
     void newGame();
 
     /**
-     * Starts the timer for a game if the card field is set up.
+     * Starts the timer of a game if the card field is set up.
      */
     void startTimer();
 
@@ -35,20 +36,20 @@ public interface MemoryService {
     /**
      * Adds a listener to get information on the state of the card.
      *
-     * @param name name of the card
+     * @param id of the card
      * @param listener object implementing the listener interface
      * @throws IllegalParameterException if the name of the Card does not exist or the listener is a null reference
      */
-    void addCallback(String name, PictureCardListener listener) throws IllegalParameterException;
+    void addCallback(int id, PictureCardListener listener) throws IllegalParameterException;
 
     /**
      * Removes a listener.
      *
-     * @param name       name of the card
+     * @param id ID of the card
      * @param listener listener to be removed
      * @throws IllegalParameterException if the name of the card does not exist or the listener is a null reference
      */
-    void removeCallback(String name, PictureCardListener listener) throws IllegalParameterException;
+    void removeCallback(int id, PictureCardListener listener) throws IllegalParameterException;
 
     /**
      * Returns a list of the cards in the current game.
@@ -58,13 +59,13 @@ public interface MemoryService {
     List<PictureCardDescriptor> getPictureCards();
 
     /**
-     * Returns the descriptor of the picture card with the corresponding name.
+     * Returns the descriptor of the picture card with the corresponding ID.
      *
-     * @param name name of the Picture Card
+     * @param id ID of the picture card
      * @return descriptor of the picture card
-     * @throws IllegalParameterException if the name of the card does not exist
+     * @throws IllegalParameterException if the ID of the card does not exist
      */
-    PictureCardDescriptor getPictureCard(String name) throws IllegalParameterException;
+    PictureCardDescriptor getPictureCard(int id) throws IllegalParameterException;
 
     /**
      * Turns a card around.

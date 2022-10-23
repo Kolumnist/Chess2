@@ -1,38 +1,42 @@
 package de.hhn.it.devtools.apis.memory;
 
-import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 
 
 /**
- * Describes a card in a memory game, its numeric reference to a corresponding picture, name and current state.
+ * Describes a card in a memory game, its numeric reference to a corresponding picture, name, ID and current state.
+ * If it is an image card, it has a specific picture reference. If it is a name card, it has a specific name.
  */
+
 public class PictureCardDescriptor {
 
     private int pictureRef;
+    private int id;
     private String name;
     private State state;
 
     /**
-     * Constructor stating the image and name of the Card.
+     * Constructor stating a picture reference, ID and name of the card.
+     *
      * @param pictureRef numeric reference to the corresponding picture of the card
-     * @param name name of the Card
-     * @throws IllegalParameterException if the pictureRef does not exist
+     * @param name name of the card
+     * @param id id of the card
      */
-    public PictureCardDescriptor(int pictureRef, String name) throws IllegalParameterException {
+    public PictureCardDescriptor(int pictureRef, int id, String name) {
         this.pictureRef = pictureRef;
+        this.id = id;
         this.name = name;
     }
 
     /**
-     * Returns the state of the Card.
-     * @return current state of the Card
+     * Returns the state of the card.
+     * @return current state of the card
      */
     public State getState() {
         return state;
     }
 
     /**
-     * Sets the current state of the Card.
+     * Sets the current state of the card.
      * @param state current state
      */
     public void setState(State state) {
@@ -40,10 +44,16 @@ public class PictureCardDescriptor {
     }
 
     /**
-     * Returns the name of the Card.
-     * @return name of the Card
+     * Returns the name of the card.
+     * @return name of the card
      */
     public String getName() {
         return name;
     }
+
+    /**
+     * Returns the reference for the picture of the card.
+     * @return reference to the picture
+     */
+    public int getPictureRef() { return pictureRef;}
 }
