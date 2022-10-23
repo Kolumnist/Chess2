@@ -17,11 +17,11 @@ public class PictureCardDescriptor {
     private State state;
 
     /**
-     * Constructor stating a picture reference, ID and name of the card.
+     * Constructor stating a picture reference, ID, name of the card and its default state hidden.
      *
      * @param pictureRef numeric reference to the corresponding picture of the card
-     * @param name name of the card
      * @param id id of the card
+     * @param name name of the card
      */
     public PictureCardDescriptor(int pictureRef, int id, String name) {
         this.pictureRef = pictureRef;

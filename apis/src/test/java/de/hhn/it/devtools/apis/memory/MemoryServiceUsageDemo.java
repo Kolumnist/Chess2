@@ -1,7 +1,6 @@
 package de.hhn.it.devtools.apis.memory;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-
 import java.util.List;
 
 /**

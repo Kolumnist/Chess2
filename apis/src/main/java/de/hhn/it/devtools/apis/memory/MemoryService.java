@@ -40,9 +40,9 @@ public interface MemoryService {
     /**
      * Adds a listener to get information on the state of the card.
      *
-     * @param id of the card
+     * @param id ID of the card
      * @param listener object implementing the listener interface
-     * @throws IllegalParameterException if the name of the Card does not exist or the listener is a null reference
+     * @throws IllegalParameterException if the name of the card does not exist or the listener is a null reference
      */
     void addCallback(int id, PictureCardListener listener) throws IllegalParameterException;
 
@@ -58,7 +58,7 @@ public interface MemoryService {
     /**
      * Returns a list of the cards in the current game.
      *
-     * @return List of cards in the current game.
+     * @return list of cards in the current game
      */
     List<PictureCardDescriptor> getPictureCards();
 
