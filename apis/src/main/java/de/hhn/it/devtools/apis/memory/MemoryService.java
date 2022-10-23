@@ -5,6 +5,7 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 
 import java.util.List;
 
+
 /**
  * This interface MemoryService contains the functionality of a memory game.
  */
@@ -13,8 +14,10 @@ public interface MemoryService {
     /**
      * If there is a current memory game, it deletes the game and creates a new memory game.
      * If there is no current memory game, it creates a game.
+     * @param difficulty the difficulty of the game that should be created
+     * @throws IllegalParameterException if the difficulty does not exist
      */
-    void newGame();
+    void newGame(Difficulty difficulty) throws IllegalParameterException;
 
     /**
      * Starts the timer of a game if the card field is set up.
