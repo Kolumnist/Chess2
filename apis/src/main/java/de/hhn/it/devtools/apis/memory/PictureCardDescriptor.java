@@ -27,6 +27,7 @@ public class PictureCardDescriptor {
         this.pictureRef = pictureRef;
         this.id = id;
         this.name = name;
+        this.state = State.HIDDEN;
     }
 
     /**
