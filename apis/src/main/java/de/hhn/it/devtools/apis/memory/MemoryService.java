@@ -2,7 +2,6 @@ package de.hhn.it.devtools.apis.memory;
 
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-
 import java.util.List;
 
 
@@ -14,6 +13,7 @@ public interface MemoryService {
     /**
      * If there is a current memory game, it deletes the game and creates a new memory game.
      * If there is no current memory game, it creates a game.
+     *
      * @param difficulty the difficulty of the game that should be created
      * @throws IllegalParameterException if the difficulty does not exist
      */
@@ -31,6 +31,7 @@ public interface MemoryService {
 
     /**
      * Changes the game mode of the memory game to the chosen difficulty.
+     *
      * @param difficulty chosen difficulty
      * @throws IllegalParameterException if the difficulty does not exist
      */

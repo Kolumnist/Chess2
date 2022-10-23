@@ -3,8 +3,10 @@ package de.hhn.it.devtools.apis.memory;
 
 
 /**
- * Describes a card in a memory game, its numeric reference to a corresponding picture, name, ID and current state.
- * If it is an image card, it has a specific picture reference. If it is a name card, it has a specific name.
+ * Describes a card in a memory game, its numeric reference to a
+ * corresponding picture, name, ID and current state.
+ * If it is an image card, it has a specific picture reference.
+ * If it is a name card, it has a specific name.
  */
 
 public class PictureCardDescriptor {
@@ -29,6 +31,7 @@ public class PictureCardDescriptor {
 
     /**
      * Returns the state of the card.
+     *
      * @return current state of the card
      */
     public State getState() {
@@ -37,6 +40,7 @@ public class PictureCardDescriptor {
 
     /**
      * Sets the current state of the card.
+     *
      * @param state current state
      */
     public void setState(State state) {
@@ -45,6 +49,7 @@ public class PictureCardDescriptor {
 
     /**
      * Returns the name of the card.
+     *
      * @return name of the card
      */
     public String getName() {
@@ -53,7 +58,19 @@ public class PictureCardDescriptor {
 
     /**
      * Returns the reference for the picture of the card.
+     *
      * @return reference to the picture
      */
-    public int getPictureRef() { return pictureRef;}
+    public int getPictureRef() {
+        return pictureRef;
+    }
+
+    /**
+     * Returns the ID of the card.
+     *
+     * @return id of the card
+     */
+    public int getId() {
+        return id;
+    }
 }
