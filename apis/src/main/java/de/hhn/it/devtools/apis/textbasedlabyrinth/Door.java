@@ -8,22 +8,14 @@ public class Door {
 
 
     private Puzzle puzzle;
-    private Item key;
     private boolean locked;
     private String inspectMessage;
 
 
 
-    public Door(boolean hasPuzzle, Item key) {
-        if (hasPuzzle) {
-            this.puzzle = new Puzzle(key);
-            locked = true;
-            inspectMessage = "This door is locked. ";
-        } else {
-            locked = false;
-            inspectMessage = "This door is open. ";
-
-        }
+    public Door() {
+        inspectMessage = "This door is open";
+        locked = false;
     }
 
 
@@ -37,7 +29,19 @@ public class Door {
     }
 
     public String getInspectMessage() {
-        return inspectMessage;
+        String s = inspectMessage;
+        if (locked) {
+            s = s + puzzle.getDescription();
+        }
+
+        return s;
+    }
+
+    public void setPuzzle(Item key) {
+        this.puzzle = new Puzzle(key);
+
+        locked = true;
+        inspectMessage = "This door is locked.";
     }
 
     public String open() {

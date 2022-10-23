@@ -10,12 +10,14 @@ public class Puzzle {
   private boolean isSolved;
   private boolean isBeingWorkedOn;
   private Item item;
+  private String description;
 
 
   public Puzzle(Item item) {
     this.item = item;
     isSolved = false;
     isBeingWorkedOn = false;
+    description = "A key is needed.";
   }
 
 
@@ -23,7 +25,9 @@ public class Puzzle {
     return isSolved;
   }
 
-
+  public String getDescription() {
+    return description;
+  }
 
 
   public boolean setSolved(Item item) {

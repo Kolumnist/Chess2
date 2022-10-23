@@ -52,18 +52,22 @@ public class Room {
 
   }
 
-  public void setDoors(boolean hasPuzzle, Item key) {
-    backdoor = new Door(false, null);
-    int number = 0;
-    if (hasPuzzle) {
-      Random random = new Random();
-      number = random.nextInt(1, 4);
+
+  public void setDoors() {
+
+
+    if (isSouthAssigned) {
+      backdoor = new Door();
     }
-
-    leftDoor = new Door(number == 1, key);
-    rightDoor = new Door(number == 2, key);
-    doorStraightAhead = new Door(number == 3, key);
-
+    if (isWestAssigned) {
+      leftDoor = new Door();
+    }
+    if (isNorthAssigned) {
+      doorStraightAhead = new Door();
+    }
+    if (isEastAssigned) {
+      rightDoor = new Door();
+    }
 
   }
 
@@ -78,6 +82,24 @@ public class Room {
   public String getDescription() {
     return description;
   }
+
+  public Door getWestDoor() {
+    return leftDoor;
+  }
+
+  public Door getEastDoor() {
+    return rightDoor;
+  }
+
+  public Door getNorthDoor() {
+    return doorStraightAhead;
+  }
+
+  public Door getSouthDoor() {
+    return backdoor;
+  }
+
+
 
   public List<Item> search() throws NullPointerException {
     if (items == null) {
@@ -105,19 +127,19 @@ public class Room {
    * @param isNorth Boolean check to see if the new Room will be to the north of current room
    */
   public void setNextDoorRoom(Room room, Boolean isEast, Boolean isWest, Boolean isNorth){
-    if(isEast && !isWest && !isNorth){
+    if(isEast && !isWest && !isNorth) {
       this.toTheEast = room;
       this.isEastAssigned = true;
       room.toTheWest = this;
       room.isWestAssigned = true;
     }
-    else if(isWest && !isEast && !isNorth){
+    else if(isWest && !isEast && !isNorth) {
       this.toTheWest = room;
       this.isWestAssigned = true;
       room.toTheWest = this;
       room.isEastAssigned = true;
     }
-    else if(isNorth && !isEast && !isWest){
+    else if(isNorth && !isEast && !isWest) {
       this.toTheNorth = room;
       this.isNorthAssigned = true;
       room.toTheSouth = this;

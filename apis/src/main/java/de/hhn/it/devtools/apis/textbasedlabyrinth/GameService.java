@@ -30,12 +30,12 @@ public interface GameService {
     /**
      * Inspect a door/pathway.
      */
-    void inspect();
+    void inspect(Direction direction);
 
     /**
      * Let the user interact with the environment
      */
-    void interaction();
+    void interaction(Direction direction);
 
     /**
      * Let the user search through the room

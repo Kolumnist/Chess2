@@ -30,7 +30,7 @@ public class Game implements GameService {
      * Command the player to move to the room to the south
      */
     public void moveSouth() throws RoomFailedException {
-        if(currentRoom.isSouthAssigned.equals(true)){
+        if(currentRoom.isSouthAssigned.equals(true)) {
             currentRoom = currentRoom.toTheSouth;
             player.setCurrentRoomOfPlayer(currentRoom);
             check();
@@ -44,7 +44,7 @@ public class Game implements GameService {
      * Command the player to move to the room to the north
      */
     public void moveNorth() throws RoomFailedException {
-        if(currentRoom.isNorthAssigned.equals(true)){
+        if(currentRoom.isNorthAssigned.equals(true)) {
             currentRoom = currentRoom.toTheNorth;
             player.setCurrentRoomOfPlayer(currentRoom);
             check();
@@ -58,7 +58,7 @@ public class Game implements GameService {
      * Command the player to move to the room to the west
      */
     public void moveWest() throws RoomFailedException {
-        if(currentRoom.isWestAssigned.equals(true)){
+        if(currentRoom.isWestAssigned.equals(true)) {
             currentRoom = currentRoom.toTheWest;
             player.setCurrentRoomOfPlayer(currentRoom);
             check();
@@ -82,12 +82,11 @@ public class Game implements GameService {
         }
     }
 
-    public void inspect() {
+    public void inspect(Direction direction) {
 
     }
 
-    public void interaction() {
-
+    public void interaction(Direction direction) {
 
     }
 
