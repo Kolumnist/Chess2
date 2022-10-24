@@ -5,11 +5,11 @@ package de.hhn.it.devtools.apis.memory;
  */
 public interface PictureCardListener {
 
-    /**
-     * Informs the listener that the card has changed its current state.
-     *
-     * @param state the current state of the card
-     */
-    void currentState(State state);
+  /**
+   * Informs the listener that the card has changed its current state.
+   *
+   * @param state the current state of the card
+   */
+  void currentState(State state);
 
 }
