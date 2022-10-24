@@ -11,6 +11,8 @@ public class Puzzle {
   private boolean isBeingWorkedOn;
   private Item item;
   private String description;
+  private String unlockMessage;
+  private String lockedMessage;
 
 
   public Puzzle(Item item) {
@@ -18,6 +20,8 @@ public class Puzzle {
     isSolved = false;
     isBeingWorkedOn = false;
     description = "A key is needed.";
+    unlockMessage = "The key turns, the lock clicks. It is open.";
+    lockedMessage = "The door does not unlock.";
   }
 
 
@@ -37,4 +41,11 @@ public class Puzzle {
     return isSolved;
   }
 
+  public String getUnlockMessage() {
+    return unlockMessage;
+  }
+
+  public String getLockedMessage() {
+    return lockedMessage;
+  }
 }

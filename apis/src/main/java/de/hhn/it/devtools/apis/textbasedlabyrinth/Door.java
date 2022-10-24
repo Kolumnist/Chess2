@@ -48,11 +48,21 @@ public class Door {
         String s = inspectMessage;
 
         if (locked) {
-            s = s + "You need to open it";
+            s = s + ""
+                    + puzzle.getDescription();
         } else {
-            s = s + "You open the door.";
+            s = s + ""
+                    + "You open the door.";
         }
         return s;
+    }
+
+    public boolean checkIfLocked() {
+        return locked;
+    }
+
+    public Puzzle getPuzzle() {
+        return puzzle;
     }
 
 }

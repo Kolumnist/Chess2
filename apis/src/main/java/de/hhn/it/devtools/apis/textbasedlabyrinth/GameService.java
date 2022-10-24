@@ -35,7 +35,7 @@ public interface GameService {
     /**
      * Let the user interact with the environment
      */
-    void interaction(Direction direction);
+    void interaction(Direction direction, Item item);
 
     /**
      * Let the user search through the room

@@ -31,9 +31,17 @@ public class Game implements GameService {
      */
     public void moveSouth() throws RoomFailedException {
         if(currentRoom.isSouthAssigned.equals(true)) {
-            currentRoom = currentRoom.toTheSouth;
-            player.setCurrentRoomOfPlayer(currentRoom);
-            check();
+            Door checkDoor = currentRoom.getSouthDoor();
+            String message = checkDoor.open();
+            if (checkDoor.checkIfLocked()) {
+                System.out.println(message);
+                check();
+            } else {
+                System.out.println(message);
+                currentRoom = currentRoom.toTheSouth;
+                player.setCurrentRoomOfPlayer(currentRoom);
+                check();
+            }
         }
         else {
             throw new RoomFailedException("No room found in the southern direction.");
@@ -45,9 +53,17 @@ public class Game implements GameService {
      */
     public void moveNorth() throws RoomFailedException {
         if(currentRoom.isNorthAssigned.equals(true)) {
-            currentRoom = currentRoom.toTheNorth;
-            player.setCurrentRoomOfPlayer(currentRoom);
-            check();
+            Door checkDoor = currentRoom.getNorthDoor();
+            String message = checkDoor.open();
+            if (checkDoor.checkIfLocked()) {
+                System.out.println(message);
+                check();
+            } else {
+                System.out.println(message);
+                currentRoom = currentRoom.toTheNorth;
+                player.setCurrentRoomOfPlayer(currentRoom);
+                check();
+            }
         }
         else {
             throw new RoomFailedException("No room found in the northern direction.");
@@ -59,9 +75,17 @@ public class Game implements GameService {
      */
     public void moveWest() throws RoomFailedException {
         if(currentRoom.isWestAssigned.equals(true)) {
-            currentRoom = currentRoom.toTheWest;
-            player.setCurrentRoomOfPlayer(currentRoom);
-            check();
+            Door checkDoor = currentRoom.getWestDoor();
+            String message = checkDoor.open();
+            if (checkDoor.checkIfLocked()) {
+                System.out.println(message);
+                check();
+            } else {
+                System.out.println(message);
+                currentRoom = currentRoom.toTheWest;
+                player.setCurrentRoomOfPlayer(currentRoom);
+                check();
+            }
         }
         else {
             throw new RoomFailedException("No room found in the western direction.");
@@ -73,21 +97,113 @@ public class Game implements GameService {
      */
     public void moveEast() throws RoomFailedException {
         if(currentRoom.isEastAssigned.equals(true)){
-            currentRoom = currentRoom.toTheEast;
-            player.setCurrentRoomOfPlayer(currentRoom);
-            check();
+            Door checkDoor = currentRoom.getEastDoor();
+            String message = checkDoor.open();
+            if (checkDoor.checkIfLocked()) {
+                System.out.println(message);
+                check();
+            } else {
+                System.out.println(message);
+                currentRoom = currentRoom.toTheEast;
+                player.setCurrentRoomOfPlayer(currentRoom);
+                check();
+            }
         }
         else {
             throw new RoomFailedException("No room found in the eastern direction.");
         }
     }
 
-    public void inspect(Direction direction) {
+    public void inspect(Direction direction) throws IllegalArgumentException {
+        if (direction == null) {
+            throw new IllegalArgumentException("Direction should not be null.");
+        }
+        boolean succeeded = false;
 
+        if (direction == Direction.NORTH) {
+            currentRoom.getNorthDoor().getInspectMessage();
+            succeeded = true;
+        }
+        if (direction == Direction.WEST) {
+            currentRoom.getWestDoor().getInspectMessage();
+            succeeded = true;
+        }
+        if (direction == Direction.EAST) {
+            currentRoom.getEastDoor().getInspectMessage();
+            succeeded = true;
+        }
+        if (direction == Direction.SOUTH) {
+            currentRoom.getSouthDoor().getInspectMessage();
+            succeeded = true;
+        }
+
+        if (!succeeded) {
+            throw new IllegalArgumentException("Direction was not valid.");
+        }
     }
 
-    public void interaction(Direction direction) {
 
+    public void interaction(Direction direction, Item item) throws IllegalArgumentException {
+        if (direction == null) {
+            throw new IllegalArgumentException("Direction should not be null.");
+        }
+        if (item == null) {
+            throw new IllegalArgumentException("Item should not be null.");
+        }
+        boolean succeeded = false;
+
+        if (direction == Direction.NORTH) {
+            boolean unlocked = currentRoom.getNorthDoor().unlock(item);
+            succeeded = true;
+            Door door = currentRoom.getNorthDoor();
+            if (unlocked) {
+                String successMessage = door.getPuzzle().getUnlockMessage();
+                System.out.println(successMessage);
+            } else {
+                String lockedMessage = door.getPuzzle().getLockedMessage();
+                System.out.println(lockedMessage);
+            }
+        }
+        if (direction == Direction.WEST) {
+            boolean unlocked = currentRoom.getWestDoor().unlock(item);
+            succeeded = true;
+            Door door = currentRoom.getWestDoor();
+            if (unlocked) {
+                String successMessage = door.getPuzzle().getUnlockMessage();
+                System.out.println(successMessage);
+            } else {
+                String lockedMessage = door.getPuzzle().getLockedMessage();
+                System.out.println(lockedMessage);
+            }
+        }
+        if (direction == Direction.EAST) {
+            boolean unlocked = currentRoom.getEastDoor().unlock(item);
+            succeeded = true;
+            Door door = currentRoom.getEastDoor();
+            if (unlocked) {
+                String successMessage = door.getPuzzle().getUnlockMessage();
+                System.out.println(successMessage);
+            } else {
+                String lockedMessage = door.getPuzzle().getLockedMessage();
+                System.out.println(lockedMessage);
+            }
+        }
+        if (direction == Direction.SOUTH) {
+            boolean unlocked = currentRoom.getSouthDoor().unlock(item);
+            succeeded = true;
+            Door door = currentRoom.getSouthDoor();
+            if (unlocked) {
+                String successMessage = door.getPuzzle().getUnlockMessage();
+                System.out.println(successMessage);
+            } else {
+                String lockedMessage = door.getPuzzle().getLockedMessage();
+                System.out.println(lockedMessage);
+            }
+        }
+
+        if (!succeeded) {
+            throw new IllegalArgumentException("Direction was not valid.");
+        }
     }
 
     public void searchRoom() throws RoomFailedException {
