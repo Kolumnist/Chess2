@@ -28,7 +28,7 @@ public class MemoryServiceUsageDemo {
     logger.debug("" + descriptor0);
 
     //turn a card
-    memoryService.turnCard(descriptor0);
+    memoryService.turnCard(cardId0);
     logger.info("turned around " + descriptor0);
 
     //create new game

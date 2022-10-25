@@ -76,10 +76,10 @@ public interface MemoryService {
   /**
    * Turns a card around.
    *
-   * @param pictureCard the card that should be turned around
+   * @param id ID of the picture card that should be turned around
    * @throws IllegalParameterException if the card does not exist
    */
-  void turnCard(PictureCardDescriptor pictureCard) throws IllegalParameterException;
+  void turnCard(int id) throws IllegalParameterException;
 
 
 }
