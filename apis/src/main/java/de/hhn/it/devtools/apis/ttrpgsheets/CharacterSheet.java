@@ -15,6 +15,20 @@ public interface CharacterSheet {
   void addCallback(CharacterSheetListener listener) throws IllegalArgumentException;
 
   /**
+   * Imports {@link CharacterDescriptor} of character.
+   *
+   * @param character the CharacterDescriptor
+   */
+  void importCharacter(CharacterDescriptor character);
+
+  /**
+   * Exports {@link CharacterDescriptor} of character.
+   *
+   * @return the CharacterDescriptor
+   */
+  CharacterDescriptor exportCharacter();
+
+  /**
    * increments the given {@link StatType} based upon the {@link OriginType}.
    *
    * @param stat   the Type of Stat to increment
