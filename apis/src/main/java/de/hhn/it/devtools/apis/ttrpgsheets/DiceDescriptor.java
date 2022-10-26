@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
 /**
- * The Descriptor for the Dice Class.
+ * The Descriptor for the Dice class.
  */
 public class DiceDescriptor {
   private DiceType diceType;

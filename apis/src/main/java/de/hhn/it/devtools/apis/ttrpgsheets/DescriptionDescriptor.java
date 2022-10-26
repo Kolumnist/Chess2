@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
 /**
- * The Descriptor for the Description Class.
+ * The Descriptor for the Description class.
  */
 public class DescriptionDescriptor {
   private DescriptionType descriptionType;

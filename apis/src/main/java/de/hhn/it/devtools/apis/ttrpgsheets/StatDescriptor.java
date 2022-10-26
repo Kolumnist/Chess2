@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
 /**
- * The Descriptor for the Stat Class.
+ * The Descriptor for the Stat class.
  */
 public class StatDescriptor {
   private StatType statType;
