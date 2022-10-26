@@ -23,5 +23,12 @@ public interface Piece {
    */
   ArrayList<int[]> getPossibleMove();
 
-  void setPos();
+  /*private void calculate() {
+
+  }*/
+
+  /**
+   * @param pos is the new position
+   */
+  void setPos(int[] pos);
 }
