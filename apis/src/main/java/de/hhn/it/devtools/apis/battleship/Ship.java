@@ -4,22 +4,20 @@ package de.hhn.it.devtools.apis.battleship;
  * creates ship objects.
  */
 
-public enum Ship {
-    //types of ships and their size
-    Carrier(5),
-    Battleship(4),
-    Cruiser(3),
-    Submarine(3),
-    Destroyer(2);
+public class Ship {
 
 
-    //final variable for the ship size
     private final int size;
+    private int destroyedParts = 0;
+    private boolean isHorizontal = true;
+    //fieldPosition is always the panel at the top or at the left of the ship
+    private Position fieldPosition;
 
 
     //constructor
-    Ship (int size){
-        this.size = size;
+    Ship (Shiptypes ShipSize, Position fieldPosition){
+        this.size = ShipSize.getShipSize();
+        this.fieldPosition = fieldPosition;
     }
 
 

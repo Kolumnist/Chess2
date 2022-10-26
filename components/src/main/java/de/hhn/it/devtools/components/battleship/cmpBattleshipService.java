@@ -2,11 +2,9 @@ package de.hhn.it.devtools.components.battleship;
 
 import de.hhn.it.devtools.apis.battleship.BattleshipListener;
 import de.hhn.it.devtools.apis.battleship.BattleshipService;
-import de.hhn.it.devtools.apis.battleship.Field;
 import de.hhn.it.devtools.apis.battleship.GameMode;
 import de.hhn.it.devtools.apis.battleship.GameState;
 import de.hhn.it.devtools.apis.battleship.IllegalPositionException;
-import de.hhn.it.devtools.apis.battleship.RotationDirection;
 import de.hhn.it.devtools.apis.battleship.Ship;
 
 import java.util.IllegalFormatException;
@@ -41,10 +39,9 @@ public class cmpBattleshipService implements BattleshipService {
      * rotates the ship to left or right (front of the ship is the anchor point)
      *
      * @param shipToRotate ship object to rotate
-     * @param direction    direction to turn to
      */
     @Override
-    public void rotateShip(Ship shipToRotate, RotationDirection direction) {
+    public void rotateShip(Ship shipToRotate) {
 
     }
 
