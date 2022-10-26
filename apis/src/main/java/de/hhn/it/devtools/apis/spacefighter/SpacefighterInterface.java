@@ -1,9 +1,19 @@
 package de.hhn.it.devtools.apis.spacefighter;
 import de.hhn.it.devtools.apis.spacefighter.Exception.NoMoreRoomException;
+import de.hhn.it.devtools.apis.spacefighter.Exception.IllegalParameterExeption;
 import de.hhn.it.devtools.apis.spacefighter.Exception.MissTheEnemieException;
 import de.hhn.it.devtools.apis.spacefighter.Exception.NotReachedScoreException;
 
+/*
+ *  Interface for Game.
+ */
 public interface SpacefighterInterface {
+
+    /**
+     * Initialize a new Game.
+     */
+    void initializeGame();
+
     /**
      * Lets the player move the figure.
      * @param x is the position of the figure.
