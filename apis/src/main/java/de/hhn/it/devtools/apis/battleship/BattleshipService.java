@@ -32,7 +32,7 @@ public interface BattleshipService {
 
 
     /**
-     * rotates the ship to left or right (isHorizontal changes its boolean value)
+     * rotates the ship horizontal or vertical (isHorizontal changes its boolean value)
      * @param shipToRotate ship object to rotate around the ship fieldPosition
      */
     void rotateShip(Ship shipToRotate);
