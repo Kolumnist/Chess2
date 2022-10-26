@@ -29,6 +29,13 @@ public interface CharacterSheet {
   CharacterDescriptor exportCharacter();
 
   /**
+   * Returns {@link CharacterDescriptor} of character.
+   *
+   * @return the CharacterDescriptor
+   */
+  CharacterDescriptor getCharacter();
+
+  /**
    * increments the given {@link StatType} based upon the {@link OriginType}.
    *
    * @param stat   the Type of Stat to increment
