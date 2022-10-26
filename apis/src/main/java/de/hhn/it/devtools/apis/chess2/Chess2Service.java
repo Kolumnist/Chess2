@@ -24,6 +24,12 @@ public interface Chess2Service {
     void reset();
 
     /**
+     * destroys an instance of ChessGame and
+     * brings scene back to main menu
+     */
+    void endGame();
+
+    /**
      * calls the method showWinningPlayer and after that calls reset or returns to the main menu
      */
     void giveUp();
