@@ -1,10 +1,6 @@
 package de.hhn.it.devtools.apis.examples.ttrpgsheets;
 
-import de.hhn.it.devtools.apis.ttrpgsheets.CharacterSheet;
-import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionType;
-import de.hhn.it.devtools.apis.ttrpgsheets.DiceType;
-import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
-import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
+import de.hhn.it.devtools.apis.ttrpgsheets.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,22 +18,16 @@ public class DemoTtrpgSheetsUsage {
    */
   public static void main(String[] args) {
     CharacterSheet characterSheet = null;
+    CharacterDescriptor characterDescriptor = null;
 
-    // Starting to change the description of the character
+    logger.info(">>> Import CharacterDescriptor");
+    characterSheet.importCharacter(characterDescriptor);
+    logger.debug("" + characterSheet.getCharacter());
+
+    // change the character weight, because he ate too much cake
     logger.info(">>> Setup character description");
-    characterSheet.changeDescription(DescriptionType.PLAYER_NAME, "Herbert");
-    characterSheet.changeDescription(DescriptionType.CHARACTER_NAME, "Sylas Thatcher");
-    characterSheet.changeDescription(DescriptionType.NICKNAME, "Sy");
-    characterSheet.changeDescription(DescriptionType.AGE, "34");
-    characterSheet.changeDescription(DescriptionType.RACE, "Human");
-    characterSheet.changeDescription(DescriptionType.HEIGHT, "1.85m");
-    characterSheet.changeDescription(DescriptionType.WEIGHT, "87kg");
-    characterSheet.changeDescription(DescriptionType.SKIN_COLOR, "White");
-    characterSheet.changeDescription(DescriptionType.HAIR_COLOR, "Black");
-    characterSheet.changeDescription(DescriptionType.EYE_COLOR, "Blue-Gray");
-    characterSheet.changeDescription(DescriptionType.CHARACTER_CLASS, "Assassin");
-    characterSheet.changeDescription(DescriptionType.OTHER, "After 5 years held back in chains,"
-            + " Sylas wants nothing more but revenge.");
+    characterSheet.changeDescription(DescriptionType.WEIGHT, "92kg");
+    logger.debug("" + characterSheet.getDescription(DescriptionType.WEIGHT));
 
     // By default, you start at level 1
     // this equals to 5 Level Points (default) + 1 Level Point (Level 1) (= 6) that can be spent
@@ -101,5 +91,11 @@ public class DemoTtrpgSheetsUsage {
     logger.info(">>> Character heals themself by 2 HP");
     characterSheet.incrementStat(StatType.HEALTH, OriginType.ABILITY, 2);
     logger.debug("" + characterSheet.getStat(StatType.HEALTH));
+
+    // The character gets exported
+    logger.info(">>> Export character");
+    characterSheet.exportCharacter();
+    logger.debug("" + characterSheet.getCharacter());
+
   }
 }
