@@ -24,7 +24,7 @@ public enum Ship {
 
 
     //return the ship size of the respective ship
-    public int getNumber(){
+    public int getSize(){
         return size;
     }
 
