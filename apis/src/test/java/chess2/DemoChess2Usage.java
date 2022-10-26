@@ -2,6 +2,7 @@ package chess2;
 
 import de.hhn.it.devtools.apis.chess2.Chess2Service;
 import de.hhn.it.devtools.apis.chess2.Piece;
+
 import java.util.ArrayList;
 
 /**
@@ -12,7 +13,6 @@ import java.util.ArrayList;
  */
 
 public class DemoChess2Usage {
-
   public static void main(String[] args) throws Exception {
     Chess2Service service = null;
 
@@ -29,7 +29,7 @@ public class DemoChess2Usage {
      * More: Players get switched and all fields get their states updated */
     service.activatePieceButton(piecePos);
     service.getFieldState();
-    service.setPiecePosition(new int[2]);
+    service.moveSelectedPiece(new int[2]);
     piecePos = new ArrayList<>();
 
     /* Second players turn:
@@ -40,7 +40,7 @@ public class DemoChess2Usage {
      * More: Players get switched and all fields get their states updated */
     service.activatePieceButton(piecePos);
     service.getFieldState();
-    service.setPiecePosition(new int[2]);
+    service.moveSelectedPiece(new int[2]);
     service.setPieceInJail(piece, new int[2]);
     piecePos = new ArrayList<>();
 
@@ -69,10 +69,10 @@ public class DemoChess2Usage {
      * More: A player loses, player ends the game completely */
     service.activatePieceButton(piecePos);
     service.getFieldState();
-    service.setPiecePosition(new int[2]);
+    service.moveSelectedPiece(new int[2]);
     service.activatePieceButton(piecePos);
     service.getFieldState();
-    service.setPiecePosition(new int[2]);
+    service.moveSelectedPiece(new int[2]);
     service.setPieceInJail(piece, new int[2]);
     service.showWinningPlayer();
     service.endGame();

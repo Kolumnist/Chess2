@@ -4,7 +4,7 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import java.util.ArrayList;
 
 /**
- * This class handles all communication between GUI and components
+ * This class handles all communication between player and components
  *
  * @author Collin, Lara, Michel
  * @version 1.0
@@ -69,7 +69,7 @@ public interface Chess2Service {
    * @param pos the new position of the piece
    * @throws IllegalParameterException if pos is a null reference or incomplete.
    */
-  void setPiecePosition(int[] pos) throws IllegalParameterException;
+  void moveSelectedPiece(int[] pos) throws IllegalParameterException;
 
   /**
    * Returns the FieldState of the chosen field

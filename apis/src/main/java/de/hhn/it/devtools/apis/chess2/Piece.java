@@ -3,10 +3,10 @@ package de.hhn.it.devtools.apis.chess2;
 import java.util.ArrayList;
 
 /**
- * This interface does nothing
+ * This interface defines attributes of every piece
  *
  * @author Collin, Lara, Michel
- * @version 0.1
+ * @version 1.0
  */
 
 public interface Piece {
@@ -23,5 +23,12 @@ public interface Piece {
    */
   ArrayList<int[]> getPossibleMove();
 
-  void setPos();
+  /*private void calculate() {
+
+  }*/
+
+  /**
+   * @param pos is the new position
+   */
+  void setPos(int[] pos);
 }
