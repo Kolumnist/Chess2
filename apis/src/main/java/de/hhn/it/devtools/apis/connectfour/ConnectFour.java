@@ -20,14 +20,15 @@ public interface ConnectFour {
    * @param profileId ID of the profil
    * @param name      Name of the profile
    */
-  void setProfileName(long profileId, String name) throws IllegalNameException;
+  void setProfileName(long profileId, String name) throws
+      ProfileNotFoundException, IllegalNameException;
 
   /**
    * Delete the profile with the specified ID.
    *
    * @param profileId ID of the profile.
    */
-  void deleteProfile(long profileId);
+  void deleteProfile(long profileId) throws ProfileNotFoundException;
 
   /**
    * Get a list of all user profiles.
