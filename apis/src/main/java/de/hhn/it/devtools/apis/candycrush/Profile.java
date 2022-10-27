@@ -4,7 +4,7 @@ package de.hhn.it.devtools.apis.candycrush;
  */
 public class Profile {
     // Profile ID
-    private final long id;
+    private final int id;
     /**
      * Create a new user profile.
      *
@@ -16,7 +16,7 @@ public class Profile {
     /**
      * Get the ID of the user profile. (return)
      */
-    public long getId() {
+    public int getId() {
         return id;
     }
 
