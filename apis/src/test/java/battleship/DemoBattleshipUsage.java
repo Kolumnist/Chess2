@@ -25,7 +25,7 @@ public class DemoBattleshipUsage  {
 
 
         //User wants to rotate ship before placing it
-        game.rotateShip(null,RotationDirection.LEFT);
+        game.rotateShip(null);
 
 
         //User places his ships

@@ -5,4 +5,8 @@ package de.hhn.it.devtools.apis.battleship;
  */
 
 public final class Field {
+    private final int size;
+    Field (int size){
+        this.size= size;
+    }
 }
