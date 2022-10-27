@@ -25,7 +25,7 @@ public enum Shiptypes {
 
 
     /**
-     * returns size of a certain ship
+     * @return size of a certain ship
      */
     public int getShipSize() {
         return shipSize;

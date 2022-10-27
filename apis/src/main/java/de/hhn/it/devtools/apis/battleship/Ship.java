@@ -22,7 +22,7 @@ public class Ship {
 
 
     /**
-     * returns the ship size of the respective ship
+     * @return the ship size of the respective ship
      */
     public int getSize(){
         return size;
