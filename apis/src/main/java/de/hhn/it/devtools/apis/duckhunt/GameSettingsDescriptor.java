@@ -19,7 +19,16 @@ public class GameSettingsDescriptor {
     return volume;
   }
 
-  public void setVolume(double volume) {
+  /**
+   * Volume setter with parameter range check.
+   *
+   * @param volume the volume to be set (range: 0.0 - 100.0)
+   * @throws IllegalStateException is thrown when parameter volume out of range
+   */
+  public void setVolume(double volume) throws IllegalStateException {
+    if (volume > 100.0 || volume < 0.0) {
+      throw new IllegalStateException("Volume not in acceptable range");
+    }
     this.volume = volume;
   }
 
