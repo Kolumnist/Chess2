@@ -21,7 +21,7 @@ public class Stats {
     /**
      * Candy is dead and will be deleted.
      */
-    DEAD,
+    DEAD
 
   }
 }
