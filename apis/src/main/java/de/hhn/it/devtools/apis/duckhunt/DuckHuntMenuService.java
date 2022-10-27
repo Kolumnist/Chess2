@@ -19,7 +19,7 @@ public interface DuckHuntMenuService {
    * @param listener object implementing the listener interface
    * @throws IllegalParameterException if the listener is a null reference.
    */
-  void addCallback(DuckHuntListener listener) throws IllegalParameterException;
+  void addCallback(DuckHuntMenuListener listener) throws IllegalParameterException;
 
   /**
    * Removes a listener.
@@ -27,7 +27,7 @@ public interface DuckHuntMenuService {
    * @param listener object implementing the listener interface
    * @throws IllegalParameterException if the listener is a null reference.
    */
-  void removeCallback(DuckHuntListener listener) throws IllegalParameterException;
+  void removeCallback(DuckHuntMenuListener listener) throws IllegalParameterException;
 
   /**
    * Changes the game settings.

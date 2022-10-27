@@ -13,4 +13,8 @@ public interface DuckHuntService {
    * @param gunButton left click (shot), right click (reload)
    */
   void onClicked(int x, int y, GunButton gunButton);
+
+  void addCallback(DuckHuntListener listener);
+
+  void removeCallback(DuckHuntListener listener);
 }
