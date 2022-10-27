@@ -1,9 +1,13 @@
 package de.hhn.it.devtools.apis.battleship;
 
+/**
+ * is a class that contains the different battleships and their sizes
+ */
+
 public enum Shiptypes {
 
     /**
-     * Battleshiptype with its size
+     * name of the certain battleship with its size
      */
     Carrier(5),
     Battleship(4),
@@ -21,7 +25,7 @@ public enum Shiptypes {
 
 
     /**
-     * @return size of a certain ship
+     * returns size of a certain ship
      */
     public int getShipSize() {
         return shipSize;

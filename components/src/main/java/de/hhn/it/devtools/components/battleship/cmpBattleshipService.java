@@ -1,11 +1,6 @@
 package de.hhn.it.devtools.components.battleship;
 
-import de.hhn.it.devtools.apis.battleship.BattleshipListener;
-import de.hhn.it.devtools.apis.battleship.BattleshipService;
-import de.hhn.it.devtools.apis.battleship.GameMode;
-import de.hhn.it.devtools.apis.battleship.GameState;
-import de.hhn.it.devtools.apis.battleship.IllegalPositionException;
-import de.hhn.it.devtools.apis.battleship.Ship;
+import de.hhn.it.devtools.apis.battleship.*;
 
 import java.util.IllegalFormatException;
 
@@ -87,7 +82,7 @@ public class cmpBattleshipService implements BattleshipService {
      * @return current game state
      */
     @Override
-    public GameState saveGame() {
+    public SavedGame saveGame() {
         return null;
     }
 

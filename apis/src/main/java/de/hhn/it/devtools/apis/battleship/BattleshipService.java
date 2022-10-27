@@ -69,7 +69,7 @@ public interface BattleshipService {
      * saves the current game.
      * @return current game state
      */
-    GameState saveGame();
+    SavedGame saveGame();
 
 
     /**
