@@ -93,7 +93,7 @@ public class cmpBattleshipService implements BattleshipService {
      * @throws IllegalFormatException when wrong file format is loaded
      */
     @Override
-    public void loadGame(GameState gameState) throws IllegalFormatException {
+    public void loadGame(SavedGame gameState) throws IllegalFormatException {
 
     }
 

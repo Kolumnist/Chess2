@@ -74,10 +74,10 @@ public interface BattleshipService {
 
     /**
      * loads a saved game.
-     * @param gameState game state of a saved game
+     * @param  savedGame state of a saved game
      * @throws IllegalFormatException when wrong file format is loaded
      */
-    void loadGame(GameState gameState) throws IllegalFormatException;
+    void loadGame(SavedGame savedGame) throws IllegalFormatException;
 
 
     /**
