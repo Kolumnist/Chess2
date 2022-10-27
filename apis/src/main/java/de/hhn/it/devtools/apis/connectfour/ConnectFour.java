@@ -20,14 +20,15 @@ public interface ConnectFour {
    * @param profileId ID of the profil
    * @param name      Name of the profile
    */
-  void setProfileName(int profileId, String name);
+  void setProfileName(long profileId, String name) throws
+      ProfileNotFoundException, IllegalNameException;
 
   /**
    * Delete the profile with the specified ID.
    *
    * @param profileId ID of the profile.
    */
-  void deleteProfile(int profileId);
+  void deleteProfile(long profileId) throws ProfileNotFoundException;
 
   /**
    * Get a list of all user profiles.
@@ -35,11 +36,6 @@ public interface ConnectFour {
    * @return List of user profiles
    */
   List<Profile> getProfiles();
-
-  /**
-   * Show the help dialogue.
-   */
-  void help();
 
   /**
    * Change the mode of the game.
@@ -56,9 +52,26 @@ public interface ConnectFour {
   void setDifficulty(Difficulty difficulty);
 
   /**
-   * Start the game.
+   * Choose the profile which will be used in singleplayer mode or as the profile for player 1 in
+   * PvP mode.
+   * Player 1 begins.
+   *
+   * @param a Player 1
    */
-  void startGame();
+  void chooseProfileA(Profile a);
+
+  /**
+   * Choose the profile, which will be used in PvP mode for player 2.
+   * Player 2 is second.
+   *
+   * @param b Player 2
+   */
+  void chooseProfileB(Profile b);
+
+  /**
+   * Start the game
+   */
+  void startGame() throws ProfileNotSelectedException;
 
   /**
    * Place a disc at the specified position.
@@ -74,3 +87,4 @@ public interface ConnectFour {
   void quitGame();
 
 }
+
