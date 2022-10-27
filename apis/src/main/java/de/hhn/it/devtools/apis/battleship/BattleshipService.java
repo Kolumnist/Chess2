@@ -1,7 +1,5 @@
 package de.hhn.it.devtools.apis.battleship;
 
-import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerService;
-
 import java.util.IllegalFormatException;
 
 /**
