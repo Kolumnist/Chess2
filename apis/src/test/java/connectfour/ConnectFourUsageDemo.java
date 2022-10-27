@@ -23,9 +23,14 @@ public class ConnectFourUsageDemo {
     ConnectFour connectFour = null;
 
     //create three profiles
-    Profile user1 = connectFour.createProfile("User1");
-    Profile user2 = connectFour.createProfile("User2");
-    Profile user3 = connectFour.createProfile("User3");
+    try {
+      Profile user1 = connectFour.createProfile("User1");
+      Profile user2 = connectFour.createProfile("User2");
+      Profile user3 = connectFour.createProfile("User3");
+    } catch (IllegalNameException e) {
+      e.printStackTrace();
+    }
+
 
     //browse profiles
     List<Profile> profiles = connectFour.getProfiles();

@@ -12,7 +12,7 @@ public interface ConnectFour {
    * @param name name of the profile
    * @return User profile
    */
-  Profile createProfile(String name);
+  Profile createProfile(String name) throws IllegalNameException;
 
   /**
    * Change the name of the profile with the specified ID.
