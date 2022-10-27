@@ -88,6 +88,7 @@ public interface BattleshipService {
 
     /**
      * displays the rules.
+     * @return rules for the game
      */
     String displayRules();
 }

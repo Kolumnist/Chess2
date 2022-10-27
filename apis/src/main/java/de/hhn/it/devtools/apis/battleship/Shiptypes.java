@@ -1,6 +1,10 @@
 package de.hhn.it.devtools.apis.battleship;
 
 public enum Shiptypes {
+
+    /**
+     * Battleshiptype with its size
+     */
     Carrier(5),
     Battleship(4),
     Cruiser(3),
@@ -16,6 +20,9 @@ public enum Shiptypes {
     }
 
 
+    /**
+     * @return size of a certain ship
+     */
     public int getShipSize() {
         return shipSize;
     }
