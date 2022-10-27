@@ -1,11 +1,12 @@
 package de.hhn.it.devtools.apis.duckhunt;
 
 /**
- * Describes a games sound (ON/OFF), volume.
+ * Describes the games Settings
+ * Describes games sound (ON/OFF), volume.
  */
 public class GameSettingsDescriptor {
 
-  private boolean soundOn;
+  private boolean sound;
   private double volume;
 
   /**
@@ -23,17 +24,17 @@ public class GameSettingsDescriptor {
   }
 
   public boolean isSoundOn() {
-    return soundOn;
+    return sound;
   }
 
-  public void setSoundOn(boolean soundOn) {
-    this.soundOn = soundOn;
+  public void setSoundOn(boolean sound) {
+    this.sound = sound;
   }
 
   @Override
   public String toString() {
     return "GameSettingsDescriptor{"
-         + "SoundOn=" + soundOn
+         + "Sound=" + sound
          + ", volume=" + volume
          + '}';
   }
