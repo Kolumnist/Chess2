@@ -7,6 +7,11 @@ public class WordlePanel {
 
   private char letter;
 
+  /**
+   * Constructor for WordlePanel which assigns a char to the field letter.
+   *
+   * @param letter The letter that will be entered into the field letter.
+   */
   public WordlePanel(char letter) {
     this.letter = letter;
   }
