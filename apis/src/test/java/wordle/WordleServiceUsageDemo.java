@@ -24,14 +24,14 @@ public class WordleServiceUsageDemo {
     WordleGuess firstGuess = new WordleGuess("Cargo");
     logger.info("create WordleGuess with parameter: Cargo");
 
-    demo.validateWordleGuess(); // System validates the user's guess
+    demo.validateWordleGuess(firstGuess); // System validates the user's guess
 
     WordleGuess secondGuess = new WordleGuess("Grac");
     logger.info("create WordleGuess with parameter: Grac");
 
-    demo.validateWordleGuess(); // throws IllegalGuessException, because Guess is too short
+    demo.validateWordleGuess(secondGuess); // throws IllegalGuessException, because Guess is too short
 
-    demo.validateWordleGuess(); // Player adds 'e' to his Guess "Grace"
+    demo.validateWordleGuess(secondGuess); // Player adds 'e' to his Guess "Grace"
     logger.info("GuessWord is equal to solution"); // Player wins Game
 
     demo.startAnotherGame();
@@ -44,7 +44,7 @@ public class WordleServiceUsageDemo {
     WordleGuess newGuess = new WordleGuess("Fairy");
     logger.info("create WordleGuess with parameter: Fairy");
 
-    demo.validateWordleGuess();
+    demo.validateWordleGuess(newGuess);
     logger.info("GuessWord is equal to solution"); // Player wins Game
 
     demo.quitGame();
