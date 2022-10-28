@@ -18,23 +18,31 @@ public interface BattleshipService {
 
 
     /**
+     * check if possible to place
+     * @param shipToPlace ship object
+     * @param x1 x start coordinate of the ship
+     * @param y1 y start coordinate of the ship
+     * @return placing (not)possible
+     */
+    boolean isPlacementPossible(Ship shipToPlace, int x1, int y1);
+
+
+    /**
      * places ship at given location
      * @param shipToPlace ship object
      * @param x1 x start coordinate of the ship
      * @param y1 y start coordinate of the ship
-     * @param x2 x end coordinate of the ship
-     * @param y2 y end coordinate of the ship
      * @throws IllegalPositionException if ship is not allowed to place at location
      */
-    void placeShip(Ship shipToPlace,int x1, int y1, int x2, int y2) throws IllegalPositionException;
+    void placeShip(Ship shipToPlace,int x1, int y1) throws IllegalPositionException;
+
 
     //@TODO namen ausdiskutieren
     /**
      *  allows the ship to be moved
-     * @param shipToMove
+     * @param shipToMove selected ship to be moved
      */
     void moveShip(Ship shipToMove) throws  IllegalArgumentException;
-
 
 
     /**

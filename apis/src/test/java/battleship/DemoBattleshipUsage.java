@@ -29,11 +29,11 @@ public class DemoBattleshipUsage  {
 
 
         //User places his ships
-        game.placeShip(null,1,2,1,6);
-        game.placeShip(null,2,2,2,6);
-        game.placeShip(null,3,2,3,6);
-        game.placeShip(null,4,2,4,3);
-        game.placeShip(null,6,2,6,4);
+        game.placeShip(null,1,2);
+        game.placeShip(null,2,2);
+        game.placeShip(null,3,2);
+        game.placeShip(null,4,2);
+        game.placeShip(null,6,2);
 
 
         //User starts the game by bombing the enemy panel and misses
