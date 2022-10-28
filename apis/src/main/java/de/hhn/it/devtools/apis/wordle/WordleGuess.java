@@ -4,7 +4,7 @@ package de.hhn.it.devtools.apis.wordle;
  * A class that models an entire Wordle guess, consisting of five WordlePanels.
  */
 public class WordleGuess {
-  private WordlePanel[] wordleWord = new WordlePanel[5];
+  private char[] wordleWord = new char[5];
 
   /**
    * Constructor of WordleGuess which will be entered into the WordlePanel Array.
@@ -13,15 +13,15 @@ public class WordleGuess {
    */
   public WordleGuess(String word) {
     for (int i = 0; i < wordleWord.length; i++) {
-      wordleWord[i] = new WordlePanel(word.charAt(i));
+      wordleWord[i] = word.charAt(i);
     }
   }
 
-  public WordlePanel[] getWordleWord() {
+  public char[] getWordleWord() {
     return wordleWord;
   }
 
-  public void setWordleWord(WordlePanel[] wordleWord) {
+  public void setWordleWord(char[] wordleWord) {
     this.wordleWord = wordleWord;
   }
 
@@ -32,7 +32,7 @@ public class WordleGuess {
    * @param letter The letter which will be set
    */
   public void setLetterAtIndex(int index, char letter) {
-    wordleWord[index].setLetter(letter);
+    wordleWord[index] = letter;
   }
 
   /**
@@ -41,6 +41,6 @@ public class WordleGuess {
    * @param index The index at which the letter should be deleted
    */
   public void deleteLetterAtIndex(int index) {
-    wordleWord[index].deleteLetter();
+    wordleWord[index] = ' ';
   }
 }
