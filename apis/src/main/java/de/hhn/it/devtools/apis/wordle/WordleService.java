@@ -26,6 +26,7 @@ public interface WordleService {
   /**
    * A method to ensure that the user's guess is 5 letters long. An exception is thrown if it isn't.
    *
+   * @param guess the guess which the method will validate
    * @return true if the guess is 5 letters long
    */
   boolean validateWordleGuess(WordleGuess guess) throws IllegalGuessException;
