@@ -1,7 +1,5 @@
 package de.hhn.it.devtools.apis.battleship;
 
-import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerService;
-
 import java.util.IllegalFormatException;
 
 /**
@@ -16,7 +14,7 @@ public interface BattleshipService {
      *
      * @param listener object implementing the listener interface
      */
-    void addCallback(BattleshipListener listener);
+    void addCallBack(BattleshipListener listener);
 
 
     /**
@@ -32,11 +30,10 @@ public interface BattleshipService {
 
 
     /**
-     * rotates the ship to left or right (front of the ship is the anchor point)
-     * @param shipToRotate ship object to rotate
-     * @param direction direction to turn to
+     * rotates the ship horizontal or vertical (isHorizontal changes its boolean value)
+     * @param shipToRotate ship object to rotate around the ship fieldPosition
      */
-    void rotateShip(Ship shipToRotate, RotationDirection direction);
+    void rotateShip(Ship shipToRotate);
 
 
     /**
@@ -70,15 +67,15 @@ public interface BattleshipService {
      * saves the current game.
      * @return current game state
      */
-    GameState saveGame();
+    SavedGame saveGame();
 
 
     /**
      * loads a saved game.
-     * @param gameState game state of a saved game
+     * @param  savedGame state of a saved game
      * @throws IllegalFormatException when wrong file format is loaded
      */
-    void loadGame(GameState gameState) throws IllegalFormatException;
+    void loadGame(SavedGame savedGame) throws IllegalFormatException;
 
 
     /**
@@ -89,6 +86,7 @@ public interface BattleshipService {
 
     /**
      * displays the rules.
+     * @return rules for the game
      */
     String displayRules();
 }

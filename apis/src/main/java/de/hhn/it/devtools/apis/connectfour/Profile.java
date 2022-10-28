@@ -5,7 +5,7 @@ package de.hhn.it.devtools.apis.connectfour;
  */
 public class Profile {
   // The ID of the profile
-  private final int id;
+  private final long id;
 
   /**
    * Create a new user profile.
@@ -21,7 +21,8 @@ public class Profile {
    *
    * @return ID of the profile
    */
-  public int getId() {
+  public long getId() {
     return id;
   }
 }
+
