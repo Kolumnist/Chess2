@@ -24,6 +24,9 @@ public class WordlePanel {
     this.letter = letter;
   }
 
+  /**
+   * Deletes the content of the field letter.
+   */
   public void deleteLetter() {
     this.letter = ' ';
   }
