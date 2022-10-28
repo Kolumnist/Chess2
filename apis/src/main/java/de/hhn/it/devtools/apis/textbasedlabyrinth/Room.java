@@ -63,6 +63,8 @@ public class Room {
       a = random.nextInt(0, 4);
       if (a == 1) {
         backdoor = new Door();
+        backdoor.isFake();
+        isSouthAssigned = true;
       }
     }
     if (isWestAssigned) {

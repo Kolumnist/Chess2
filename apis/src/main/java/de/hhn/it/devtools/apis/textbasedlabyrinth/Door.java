@@ -55,6 +55,7 @@ public class Door {
         } else {
             s = s + ""
                     + "You open the door.";
+
         }
         return s;
     }
@@ -65,6 +66,10 @@ public class Door {
 
     public boolean checkIfFake() {
         return fake;
+    }
+
+    public void isFake() {
+        fake = true;
     }
 
     public Puzzle getPuzzle() {
