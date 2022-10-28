@@ -32,11 +32,11 @@ public class GameSettingsDescriptor {
     this.volume = volume;
   }
 
-  public boolean isSoundOn() {
+  public boolean isSound() {
     return sound;
   }
 
-  public void setSoundOn(boolean sound) {
+  public void setSound(boolean sound) {
     this.sound = sound;
   }
 
