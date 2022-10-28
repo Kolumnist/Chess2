@@ -11,12 +11,15 @@ import de.hhn.it.devtools.apis.duckhunt.IllegalButtonId;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 
 /**
- *
+ * This usage demo is not runnable because in this module there is no possibility to access the
+ * implementation. The runnable demo is accessible in the components module.
  */
 public class DuckHuntUsageDemo {
   /**
+   * This usage demo is not runnable because in this module there is no possibility to access the
+   * implementation. The runnable demo is accessible in the components module.
    *
-   * @param args
+   * @param args no args / cant run
    */
   public static void main(String[] args) {
     DuckHuntMenuService duckHuntMenuService = null;
