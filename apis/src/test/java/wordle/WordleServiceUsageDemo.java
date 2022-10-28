@@ -43,7 +43,7 @@ public class WordleServiceUsageDemo {
     WordleGuess secondSolution = new WordleGuess("Fairy");
     logger.info("New Solution is created");
 
-    WordleGuess newGuess = new WordleGuess("Cargo");
+    WordleGuess newGuess = new WordleGuess("Fairy");
     logger.info("create WordleGuess with parameter: Fairy");
 
     demo.validateWordleGuess();
