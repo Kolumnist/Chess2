@@ -37,9 +37,14 @@ public class Game implements GameService {
         check();
       } else {
         System.out.println(message);
-        currentRoom = currentRoom.toTheSouth;
-        player.setCurrentRoomOfPlayer(currentRoom);
-        check();
+        if (checkDoor.checkIfFake()) {
+          System.out.println("The open door reveals a wall. You can not go south.");
+          check();
+        } else {
+          currentRoom = currentRoom.toTheSouth;
+          player.setCurrentRoomOfPlayer(currentRoom);
+          check();
+        }
       }
     } else {
       throw new RoomFailedException("No room found in the southern direction.");
@@ -110,7 +115,7 @@ public class Game implements GameService {
   }
 
   /**
-   * Inspects the the Room for doors.
+   * Inspects the room for doors.
    *
    * @param direction gets doors in all directions.
    * @throws IllegalArgumentException direction should not be null.
