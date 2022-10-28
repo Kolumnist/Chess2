@@ -4,7 +4,7 @@ package de.hhn.it.devtools.apis.wordle;
  * A class that models an entire Wordle guess, consisting of five WordlePanels.
  */
 public class WordleGuess {
-  private final WordlePanel[] wordleWord = new WordlePanel[5];
+  private WordlePanel[] wordleWord = new WordlePanel[5];
 
   /**
    * Constructor of WordleGuess which will be entered into the WordlePanel Array.
@@ -19,5 +19,13 @@ public class WordleGuess {
 
   public WordlePanel[] getWordleWord() {
     return wordleWord;
+  }
+
+  public void setWordleWord(WordlePanel[] wordleWord) {
+    this.wordleWord = wordleWord;
+  }
+
+  public void setLetterAtIndex(int index, char letter) {
+    wordleWord[index].setLetter(letter);
   }
 }
