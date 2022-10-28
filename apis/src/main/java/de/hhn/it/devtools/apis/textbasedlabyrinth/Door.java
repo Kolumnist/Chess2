@@ -55,7 +55,6 @@ public class Door {
         } else {
             s = s + ""
                     + "You open the door.";
-
         }
         return s;
     }
