@@ -1,12 +1,16 @@
 package CandyCrush;
 
-import de.hhn.it.devtools.apis.candycrush.CandyCrushGame;
-import de.hhn.it.devtools.apis.candycrush.CandyCrushInterface;
+import de.hhn.it.devtools.apis.candycrush.CandyCrush;
+import de.hhn.it.devtools.apis.candycrush.Profile;
 
 public class DemoCandyCrushUsage {
     public static void main(String[] args){
-        CandyCrushInterface candycrush= null;
+        /*
+        CandyCrush candycrush= null;
+        candycrush.createProfile("");
+        candycrush.chooseProfile(new Profile("hallo"));
         candycrush.startNewGame();
+         */
     }
 
 
