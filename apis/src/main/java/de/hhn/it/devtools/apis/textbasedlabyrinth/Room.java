@@ -44,7 +44,10 @@ public class Room {
     this.isWestAssigned = false;
     items = new HashMap<>();
     this.description = description;
-
+    this.leftDoor = new Door();
+    this.rightDoor = new Door();
+    this.doorStraightAhead = new Door();
+    this.backdoor = new Door();
   }
 
   public void addItem(Item item) {
@@ -157,6 +160,10 @@ public class Room {
       room.toTheNorth = this;
       room.isNorthAssigned = true;
     }
+  }
+
+  public void setExit(){
+
   }
 
 }
