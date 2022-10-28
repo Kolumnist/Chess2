@@ -17,7 +17,7 @@ public class DemoBattleshipUsage  {
 
         //Field size is set and the fields are created
         //9x9 field means that 5 ships will be generated for each player
-        game.createFields(9, GameMode.PVC);
+        game.createFields(9);
 
 
         //User wants to read the rules before he begins to play

@@ -28,6 +28,14 @@ public interface BattleshipService {
      */
     void placeShip(Ship shipToPlace,int x1, int y1, int x2, int y2) throws IllegalPositionException;
 
+    //@TODO namen ausdiskutieren
+    /**
+     *  allows the ship to be moved
+     * @param shipToMove
+     */
+    void moveShip(Ship shipToMove) throws  IllegalArgumentException;
+
+
 
     /**
      * rotates the ship horizontal or vertical (isHorizontal changes its boolean value)
@@ -49,10 +57,9 @@ public interface BattleshipService {
     /**
      * sets the size of the field chosen in the game creation menu.
      * @param size width and height of the field
-     * @param gameMode chosen game mode to see how many fields need to be created
      * @throws IllegalArgumentException if player enters something else instead of numbers
      */
-    void createFields(int size, GameMode gameMode) throws IllegalArgumentException;
+    void createFields(int size) throws IllegalArgumentException;
 
 
     /**

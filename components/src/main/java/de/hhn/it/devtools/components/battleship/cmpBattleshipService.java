@@ -57,11 +57,10 @@ public class cmpBattleshipService implements BattleshipService {
      * sets the size of the field chosen in the game creation menu.
      *
      * @param size     width and height of the field
-     * @param gameMode chosen game mode to see how many fields need to be created
      * @throws IllegalArgumentException if player enters something else instead of numbers
      */
     @Override
-    public void createFields(int size, GameMode gameMode) throws IllegalArgumentException {
+    public void createFields(int size) throws IllegalArgumentException {
 
     }
 
