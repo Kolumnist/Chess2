@@ -2,21 +2,23 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 
 /**
- * Item.
+ * Creates Items which can be found in Rooms and can be used to open doors.
  */
 public class Item {
 
   private final int itemId;
   private final String name;
+  private final String info;
 
   /**
-   * Item.
+   * Every Item has an Item id, a name and a information.
    *
    */
-  public Item(int id, String name) {
+  public Item(int id, String name, String info) {
 
     this.itemId = id;
     this.name = name;
+    this.info = info;
   }
 
   public String getName() {
@@ -27,6 +29,11 @@ public class Item {
   public int getItemId() {
     return itemId;
   }
+
+  public String getInfo() {
+    return info;
+  }
+
 
 
 

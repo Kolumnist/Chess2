@@ -5,7 +5,7 @@ import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundExce
 import java.util.HashMap;
 
 /**
- * Player Class for the Game, the Player can move to other Rooms and interact with environment
+ * Player Class for the Game, the Player can move to other Rooms and interact with environment.
  */
 public class Player {
 
@@ -14,7 +14,8 @@ public class Player {
   public Room currentRoomOfPlayer;
 
   /**
-   * Constructor of Player
+   * Constructor of Player.
+   *
    * @param name name of the Player
    */
   public Player(String name) {
@@ -67,7 +68,8 @@ public class Player {
   }
 
   /**
-   * Getter for currentRoomOfPlayer
+   * Getter for currentRoomOfPlayer.
+   *
    * @return Room where the Player is inside right now
    */
   public Room getCurrentRoomOfPlayer() {
@@ -77,6 +79,7 @@ public class Player {
   /**
    * Setter for currentRoomOfPlayer.
    * Sets the selected Room as the Room the Player is in
+   *
    * @param currentRoomOfPlayer Room with the Player inside
    */
   public void setCurrentRoomOfPlayer(Room currentRoomOfPlayer) {
