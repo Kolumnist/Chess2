@@ -7,34 +7,36 @@ import java.util.ArrayList;
  */
 public class Seed {
 
-  private final int Seed;
+  private final int seed;
 
   public ArrayList<Integer> floorLength;
   public ArrayList<Boolean> floorDir;
 
-
+  /**
+   * Gets the Seed for the actual Game.
+   *
+   * @param seedNumber gets the seed number 1,2 or 3
+   */
   public Seed(int seedNumber) {
-    this.Seed = seedNumber;
+    this.seed = seedNumber;
     floorLength = new ArrayList<>();
     floorDir = new ArrayList<>();
 
-    if (seedNumber == 1){
+    if (seedNumber == 1) {
       floorLength.add(1);
       floorLength.add(2);
       floorLength.add(3);
       floorDir.add(true);
       floorDir.add(false);
       floorDir.add(false);
-    }
-    else if (seedNumber == 2){
+    } else if (seedNumber == 2) {
       floorLength.add(2);
       floorLength.add(3);
       floorLength.add(1);
       floorDir.add(false);
       floorDir.add(true);
       floorDir.add(false);
-    }
-    else if (seedNumber == 3){
+    } else if (seedNumber == 3) {
       floorLength.add(3);
       floorLength.add(1);
       floorLength.add(2);
@@ -44,9 +46,13 @@ public class Seed {
     }
   }
 
-  public ArrayList<Integer> getFloorLength() { return floorLength; }
+  public ArrayList<Integer> getFloorLength() {
+    return floorLength;
+  }
 
-  public ArrayList<Boolean> getFloorDirections() { return floorDir; }
+  public ArrayList<Boolean> getFloorDirections() {
+    return floorDir;
+  }
 
   /**
    * Javadoc.
@@ -54,5 +60,7 @@ public class Seed {
    * @return return
    *
    */
-  public int getSeed() { return Seed; }
+  public int getSeed() {
+    return seed;
+  }
 }

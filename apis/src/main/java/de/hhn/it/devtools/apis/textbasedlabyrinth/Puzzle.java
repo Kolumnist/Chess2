@@ -14,7 +14,11 @@ public class Puzzle {
   private String unlockMessage;
   private String lockedMessage;
 
-
+  /**
+   * Gets a Puzzle or an item to solve the puzzle.
+   *
+   * @param item gets an collected item
+   */
   public Puzzle(Item item) {
     this.item = item;
     isSolved = false;
@@ -33,7 +37,12 @@ public class Puzzle {
     return description;
   }
 
-
+  /**
+   * Sets the puzzle to solved after it is done right.
+   *
+   * @param item gets item
+   * @return puzzle is solved right
+   */
   public boolean setSolved(Item item) {
     if (item == this.item) {
       isSolved = true;

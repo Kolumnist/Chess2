@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Room Class for the Game, defines the Rooms of the Game with assigned next-door Rooms and Items inside of it
+ * Room Class for the Game, defines the Rooms of the Game
+ * with assigned next-door Rooms and Items inside of it.
  */
 public class Room {
 
@@ -33,7 +34,8 @@ public class Room {
   private Door backdoor;
 
   /**
-   * Constructor of Room
+   * Constructor of Room.
+   *
    * @param id ID of the room
    */
   public Room(int id, String description) {
@@ -44,7 +46,10 @@ public class Room {
     this.isWestAssigned = false;
     items = new HashMap<>();
     this.description = description;
-
+    this.leftDoor = new Door();
+    this.rightDoor = new Door();
+    this.doorStraightAhead = new Door();
+    this.backdoor = new Door();
   }
 
   public void addItem(Item item) {
@@ -52,7 +57,9 @@ public class Room {
 
   }
 
-
+  /**
+   * Gets the doors for the new Room.
+   */
   public void setDoors() {
     Random random = new Random();
     int a = 0;
@@ -108,7 +115,12 @@ public class Room {
   }
 
 
-
+  /**
+   * Searching for an item in the room.
+   *
+   * @return item
+   * @throws NullPointerException room does not have items
+   */
   public List<Item> search() throws NullPointerException {
     if (items == null) {
       throw new NullPointerException("Room could not hold items.");
@@ -118,9 +130,9 @@ public class Room {
     List<Item> items1 = items.values().stream().toList();
 
     if (items1.isEmpty()) {
-      Item item = new Item(10077001, "NoItem");
+      Item item = new Item(10077001, "NoItem", "opens door");
       ArrayList<Item> items2 = new ArrayList<>();
-              items2.add(item);
+      items2.add(item);
       return items2;
     } else {
       return items1;
@@ -129,36 +141,38 @@ public class Room {
 
   /**
    * Set a Room as the Room next door for the current Room and vis versa.
+   *
    * @param room Room to be assigned as the next door Room
    * @param isEast Boolean check to see if the new Room will be to the east of current room
    * @param isWest Boolean check to see if the new Room will be to the west of current room
    * @param isNorth Boolean check to see if the new Room will be to the north of current room
    */
-  public void setNextDoorRoom(Room room, Boolean isEast, Boolean isWest, Boolean isNorth){
-    if(isEast && !isWest && !isNorth) {
+  public void setNextDoorRoom(Room room, Boolean isEast, Boolean isWest, Boolean isNorth) {
+    if (isEast && !isWest && !isNorth) {
       this.toTheEast = room;
       this.isEastAssigned = true;
       room.toTheWest = this;
       room.isWestAssigned = true;
-    }
-    else if(isWest && !isEast && !isNorth) {
+    } else if (isWest && !isEast && !isNorth) {
       this.toTheWest = room;
       this.isWestAssigned = true;
       room.toTheWest = this;
       room.isEastAssigned = true;
-    }
-    else if(isNorth && !isEast && !isWest) {
+    } else if (isNorth && !isEast && !isWest) {
       this.toTheNorth = room;
       this.isNorthAssigned = true;
       room.toTheSouth = this;
       room.isSouthAssigned = true;
-    }
-    else {
+    } else {
       this.toTheSouth = room;
       this.isSouthAssigned = true;
       room.toTheNorth = this;
       room.isNorthAssigned = true;
     }
+  }
+
+  public void setExit(){
+
   }
 
 }

@@ -51,6 +51,7 @@ public class Layout {
             roomCount++;
             if(seed.getFloorLength().get(0) > 2){
                 allRooms.get(roomCount - 1).setNextDoorRoom(allRooms.get(roomCount), seed.floorDir.get(1), seed.floorDir.get(2), false);
+                //allRooms.get(roomCount).getSouthDoor().setPuzzle();
                 roomCount++;
             }
         }
@@ -62,6 +63,7 @@ public class Layout {
             roomCount++;
             if(seed.getFloorLength().get(1) > 2){
                 allRooms.get(roomCount - 1).setNextDoorRoom(allRooms.get(roomCount), seed.floorDir.get(0), false, seed.floorDir.get(1));
+                //allRooms.get(roomCount).getSouthDoor().setPuzzle();
                 roomCount++;
             }
         }
@@ -73,7 +75,9 @@ public class Layout {
             roomCount++;
             if(seed.getFloorLength().get(2) > 2){
                 allRooms.get(roomCount - 1).setNextDoorRoom(allRooms.get(roomCount), seed.floorDir.get(1), seed.floorDir.get(2), false);
+                //allRooms.get(roomCount).getSouthDoor().setPuzzle();
                 roomCount++;
+
             }
         }
     }
