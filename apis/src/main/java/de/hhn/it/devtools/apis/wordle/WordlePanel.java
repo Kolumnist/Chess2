@@ -24,4 +24,8 @@ public class WordlePanel {
     this.letter = letter;
   }
 
+  public void deleteLetter() {
+    this.letter = ' ';
+  }
+
 }
