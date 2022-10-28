@@ -28,7 +28,7 @@ public interface WordleService {
    *
    * @return true if the guess is 5 letters long
    */
-  boolean validateWordleGuess() throws IllegalGuessException;
+  boolean validateWordleGuess(WordleGuess guess) throws IllegalGuessException;
 
   /**
    * Quits the game and closes all Wordle windows.
