@@ -54,10 +54,16 @@ public class Room {
 
 
   public void setDoors() {
-
+    Random random = new Random();
+    int a = 0;
 
     if (isSouthAssigned) {
       backdoor = new Door();
+    } else {
+      a = random.nextInt(0, 4);
+      if (a == 1) {
+        backdoor = new Door();
+      }
     }
     if (isWestAssigned) {
       leftDoor = new Door();

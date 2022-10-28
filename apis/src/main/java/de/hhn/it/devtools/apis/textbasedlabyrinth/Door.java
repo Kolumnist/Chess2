@@ -9,6 +9,7 @@ public class Door {
 
     private Puzzle puzzle;
     private boolean locked;
+    private boolean fake;
     private String inspectMessage;
 
 
@@ -16,6 +17,7 @@ public class Door {
     public Door() {
         inspectMessage = "This door is open";
         locked = false;
+        fake = false;
     }
 
 
@@ -59,6 +61,10 @@ public class Door {
 
     public boolean checkIfLocked() {
         return locked;
+    }
+
+    public boolean checkIfFake() {
+        return fake;
     }
 
     public Puzzle getPuzzle() {
