@@ -28,4 +28,8 @@ public class WordleGuess {
   public void setLetterAtIndex(int index, char letter) {
     wordleWord[index].setLetter(letter);
   }
+
+  public void deleteLetterAtIndex(int index) {
+    wordleWord[index].deleteLetter();
+  }
 }
