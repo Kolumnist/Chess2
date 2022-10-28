@@ -25,10 +25,21 @@ public class WordleGuess {
     this.wordleWord = wordleWord;
   }
 
+  /**
+   * Sets the letter at the given index to the given char.
+   *
+   * @param index The index at which the letter should be set
+   * @param letter The letter which will be set
+   */
   public void setLetterAtIndex(int index, char letter) {
     wordleWord[index].setLetter(letter);
   }
 
+  /**
+   * Deletes the letter at the given index.
+   *
+   * @param index The index at which the letter should be deleted
+   */
   public void deleteLetterAtIndex(int index) {
     wordleWord[index].deleteLetter();
   }
