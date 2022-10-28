@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.apis.duckhunt;
 
 /**
- * Callback to notify observers about the change of GameState.
+ * Callback to notify observers about the change of GameSettings.
  */
 public interface DuckHuntMenuListener {
   /**

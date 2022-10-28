@@ -1,7 +1,9 @@
 package de.hhn.it.devtools.apis.duckhunt;
 
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+
 /**
- * Allows ui interaction.
+ * Allows game interaction.
  */
 public interface DuckHuntService {
   /**
@@ -14,7 +16,19 @@ public interface DuckHuntService {
    */
   void onClicked(int x, int y, GunButton gunButton);
 
-  void addCallback(DuckHuntListener listener);
+  /**
+   * Adds a listener to get updates for the game.
+   *
+   * @param listener object implementing the listener interface
+   * @throws IllegalParameterException if the listener is a null reference.
+   */
+  void addCallback(DuckHuntListener listener) throws IllegalParameterException;
 
-  void removeCallback(DuckHuntListener listener);
+  /**
+   * Removes a listener.
+   *
+   * @param listener object implementing the listener interface
+   * @throws IllegalParameterException if the listener is a null reference.
+   */
+  void removeCallback(DuckHuntListener listener) throws IllegalParameterException;
 }
