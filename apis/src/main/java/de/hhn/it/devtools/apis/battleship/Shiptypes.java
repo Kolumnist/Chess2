@@ -18,7 +18,10 @@ public enum ShipTypes {
 
     final private int shipSize;
 
-
+    /**
+     *
+     * @param shipSize
+     */
     ShipTypes(int shipSize) {
         this.shipSize = shipSize;
     }
