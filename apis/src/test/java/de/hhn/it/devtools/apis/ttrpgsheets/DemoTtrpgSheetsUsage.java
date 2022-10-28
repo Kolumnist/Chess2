@@ -1,11 +1,5 @@
-package de.hhn.it.devtools.apis.examples.ttrpgsheets;
+package de.hhn.it.devtools.apis.ttrpgsheets;
 
-import de.hhn.it.devtools.apis.ttrpgsheets.CharacterDescriptor;
-import de.hhn.it.devtools.apis.ttrpgsheets.CharacterSheet;
-import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionType;
-import de.hhn.it.devtools.apis.ttrpgsheets.DiceType;
-import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
-import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
