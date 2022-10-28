@@ -7,7 +7,7 @@ package de.hhn.it.devtools.apis.duckhunt;
 public class GameSettingsDescriptor {
 
   private boolean sound;
-  private double volume;
+  private float volume;
 
   /**
    * Standard Constructor leaving soundON and volume at first Null.
@@ -25,7 +25,7 @@ public class GameSettingsDescriptor {
    * @param volume the volume to be set (range: 0.0 - 100.0)
    * @throws IllegalStateException is thrown when parameter volume out of range
    */
-  public void setVolume(double volume) throws IllegalStateException {
+  public void setVolume(float volume) throws IllegalStateException {
     if (volume > 100.0 || volume < 0.0) {
       throw new IllegalStateException("Volume not in acceptable range");
     }
