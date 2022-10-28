@@ -15,25 +15,18 @@ public interface CharacterSheet {
   void addCallback(CharacterSheetListener listener) throws IllegalArgumentException;
 
   /**
-   * Imports {@link CharacterDescriptor} of character.
+   * Unwraps (imports) the {@link CharacterDescriptor} into a character.
    *
    * @param character the CharacterDescriptor
    */
-  void importCharacter(CharacterDescriptor character);
+  void unwrapCharacter(CharacterDescriptor character);
 
   /**
-   * Exports {@link CharacterDescriptor} of character.
+   * Wraps (exports) the character into a {@link CharacterDescriptor}.
    *
    * @return the CharacterDescriptor
    */
-  CharacterDescriptor exportCharacter();
-
-  /**
-   * Returns {@link CharacterDescriptor} of character.
-   *
-   * @return the CharacterDescriptor
-   */
-  CharacterDescriptor getCharacter();
+  CharacterDescriptor wrapCharacter();
 
   /**
    * increments the given {@link StatType} based upon the {@link OriginType}.

@@ -1,6 +1,11 @@
 package de.hhn.it.devtools.apis.examples.ttrpgsheets;
 
-import de.hhn.it.devtools.apis.ttrpgsheets.*;
+import de.hhn.it.devtools.apis.ttrpgsheets.CharacterDescriptor;
+import de.hhn.it.devtools.apis.ttrpgsheets.CharacterSheet;
+import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionType;
+import de.hhn.it.devtools.apis.ttrpgsheets.DiceType;
+import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
+import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +26,8 @@ public class DemoTtrpgSheetsUsage {
     CharacterDescriptor characterDescriptor = null;
 
     logger.info(">>> Import CharacterDescriptor");
-    characterSheet.importCharacter(characterDescriptor);
-    logger.debug("" + characterSheet.getCharacter());
+    characterSheet.unwrapCharacter(characterDescriptor);
+    logger.debug("" + characterSheet.wrapCharacter());
 
     // change the character weight, because he ate too much cake
     logger.info(">>> Setup character description");
@@ -94,8 +99,7 @@ public class DemoTtrpgSheetsUsage {
 
     // The character gets exported
     logger.info(">>> Export character");
-    characterSheet.exportCharacter();
-    logger.debug("" + characterSheet.getCharacter());
-
+    characterSheet.wrapCharacter();
+    logger.debug("" + characterSheet.wrapCharacter());
   }
 }
