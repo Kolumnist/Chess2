@@ -46,7 +46,10 @@ public class Room {
     this.isWestAssigned = false;
     items = new HashMap<>();
     this.description = description;
-
+    this.leftDoor = new Door();
+    this.rightDoor = new Door();
+    this.doorStraightAhead = new Door();
+    this.backdoor = new Door();
   }
 
   public void addItem(Item item) {
@@ -58,10 +61,16 @@ public class Room {
    * Gets the doors for the new Room.
    */
   public void setDoors() {
-
+    Random random = new Random();
+    int a = 0;
 
     if (isSouthAssigned) {
       backdoor = new Door();
+    } else {
+      a = random.nextInt(0, 4);
+      if (a == 1) {
+        backdoor = new Door();
+      }
     }
     if (isWestAssigned) {
       leftDoor = new Door();
@@ -158,6 +167,10 @@ public class Room {
       room.toTheNorth = this;
       room.isNorthAssigned = true;
     }
+  }
+
+  public void setExit(){
+
   }
 
 }
