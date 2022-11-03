@@ -1,6 +1,7 @@
 package chess2;
 
 import de.hhn.it.devtools.apis.chess2.Chess2Service;
+import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.Piece;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * This demo uses all methods and shows 2 different scenarios
  *
  * @author Collin, Lara, Michel
- * @version 1.0
+ * @version 1.1
  */
 
 public class DemoChess2Usage {
@@ -20,16 +21,19 @@ public class DemoChess2Usage {
     service.startNewGame();
 
     ArrayList<int[]> piecePos = new ArrayList<>();
+    ArrayList<int[]> possibleMoves = new ArrayList<>();
     Piece piece = null;
+    FieldState fieldState = null;
 
     /* Starting player picks piece and moves it:
-     * 1. We have to activate all current pieceFieldButtons
+     * 1. We have to activate all current Buttons
      * 2. The GUI gets the FieldState
      * 3. Piece is moved on new position
      * More: Players get switched and all fields get their states updated */
-    service.activatePieceButton(piecePos);
-    service.getFieldState();
-    service.moveSelectedPiece(new int[2]);
+    piecePos = service.getCurrentFields();
+    possibleMoves = service.getPossibleMoves(piecePos.get(1));
+    fieldState = service.getFieldState(piecePos.get(2));
+    service.moveSelectedPiece(possibleMoves.get(2));
     piecePos = new ArrayList<>();
 
     /* Second players turn:
@@ -38,10 +42,11 @@ public class DemoChess2Usage {
      * 3. Piece is moved on new position
      * 4. A king/queen gets send to jail before the players switch
      * More: Players get switched and all fields get their states updated */
-    service.activatePieceButton(piecePos);
-    service.getFieldState();
-    service.moveSelectedPiece(new int[2]);
-    service.setPieceInJail(piece, new int[2]);
+    piecePos = service.getCurrentFields();
+    possibleMoves = service.getPossibleMoves(piecePos.get(8));
+    fieldState = service.getFieldState(piecePos.get(10));
+    service.setPieceInJail(possibleMoves.get(10), piecePos.get(67));
+    service.moveSelectedPiece(possibleMoves.get(10));
     piecePos = new ArrayList<>();
 
     /* Starting players turn:
@@ -51,7 +56,7 @@ public class DemoChess2Usage {
      *   #End
      * 3. Pressed on Play again, game resets */
     service.giveUp();
-    service.showWinningPlayer();
+    service.getWinningPlayer();
     service.reset();
 
     //.......a couple standard turns are made
@@ -67,15 +72,15 @@ public class DemoChess2Usage {
      * 5. Monkey is moved on new position that has a king on it
      * 6. The king gets send to jail before the players switch
      * More: A player loses, player ends the game completely */
-    service.activatePieceButton(piecePos);
-    service.getFieldState();
-    service.moveSelectedPiece(new int[2]);
-    service.activatePieceButton(piecePos);
-    service.getFieldState();
-    service.moveSelectedPiece(new int[2]);
-    service.setPieceInJail(piece, new int[2]);
-    service.showWinningPlayer();
+    piecePos = service.getCurrentFields();
+    possibleMoves = service.getPossibleMoves(piecePos.get(21));
+    fieldState = service.getFieldState(piecePos.get(37));
+    service.moveSelectedPiece(possibleMoves.get(37));
+    possibleMoves = service.getPossibleMoves(piecePos.get(37));
+    fieldState = service.getFieldState(piecePos.get(53));
+    service.setPieceInJail(possibleMoves.get(53), piecePos.get(67));
+    service.moveSelectedPiece(possibleMoves.get(53));
+    service.getWinningPlayer();
     service.endGame();
-
   }
 }
