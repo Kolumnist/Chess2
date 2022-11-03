@@ -43,6 +43,14 @@ public class cmpBattleshipService implements BattleshipService {
 
     }
 
+    /**
+     * computer places all his ships at valid positions
+     */
+    @Override
+    public void computerPlaceShips() {
+
+    }
+
 
     /**
      * allows the ship to be moved
@@ -76,6 +84,14 @@ public class cmpBattleshipService implements BattleshipService {
      */
     @Override
     public boolean bombPanel(int x, int y) throws IllegalArgumentException {
+        return false;
+    }
+
+    /**
+     * computer bombs a panel using reactive AI
+     */
+    @Override
+    public boolean computerBombPanel() {
         return false;
     }
 

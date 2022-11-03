@@ -36,6 +36,10 @@ public interface BattleshipService {
      */
     void placeShip(Ship shipToPlace,int x1, int y1) throws IllegalPositionException;
 
+    /**
+     * computer places all his ships at valid positions
+     */
+    void computerPlaceShips();
 
     //@TODO namen ausdiskutieren
     /**
@@ -60,6 +64,12 @@ public interface BattleshipService {
      * @throws IllegalArgumentException if field does not exist
      */
     boolean bombPanel(int x, int y) throws IllegalArgumentException;
+
+
+    /**
+     * computer bombs a panel using reactive AI
+     */
+    boolean computerBombPanel();
 
 
     /**
