@@ -12,10 +12,16 @@ public class Ship {
     private boolean isHorizontal = true;
     //fieldPosition is always the panel at the top or at the left of the ship
     private Position fieldPosition;
+    private boolean placed;
+    private Spieler besitzer;
 
 
-    //constructor
-    Ship (Shiptypes ShipSize, Position fieldPosition){
+    /**
+     * Constructor
+     * @param ShipSize sets the size
+     * @param fieldPosition sets the Position on the field
+     */
+    Ship (ShipTypes ShipSize, Position fieldPosition){
         this.size = ShipSize.getShipSize();
         this.fieldPosition = fieldPosition;
     }

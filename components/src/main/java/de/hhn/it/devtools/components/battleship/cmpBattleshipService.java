@@ -15,20 +15,53 @@ public class cmpBattleshipService implements BattleshipService {
 
     }
 
+
+    /**
+     * check if possible to place
+     *
+     * @param shipToPlace ship object
+     * @param x1          x start coordinate of the ship
+     * @param y1          y start coordinate of the ship
+     * @return placing (not)possible
+     */
+    @Override
+    public boolean isPlacementPossible(Ship shipToPlace, int x1, int y1) {
+        return false;
+    }
+
+
     /**
      * places ship at given location
      *
      * @param shipToPlace ship object
      * @param x1          x start coordinate of the ship
      * @param y1          y start coordinate of the ship
-     * @param x2          x end coordinate of the ship
-     * @param y2          y end coordinate of the ship
      * @throws IllegalPositionException if ship is not allowed to place at location
      */
     @Override
-    public void placeShip(Ship shipToPlace, int x1, int y1, int x2, int y2) throws IllegalPositionException {
+    public void placeShip(Ship shipToPlace, int x1, int y1) throws IllegalPositionException {
 
     }
+
+    /**
+     * computer places all his ships at valid positions
+     */
+    @Override
+    public void computerPlaceShips() {
+
+    }
+
+
+    /**
+     * allows the ship to be moved
+     *
+     * @param shipToMove selected ship to be moved
+     */
+    @Override
+    public void moveShip(Ship shipToMove) throws IllegalArgumentException {
+
+    }
+
 
     /**
      * rotates the ship to left or right (front of the ship is the anchor point)
@@ -39,6 +72,7 @@ public class cmpBattleshipService implements BattleshipService {
     public void rotateShip(Ship shipToRotate) {
 
     }
+
 
     /**
      * Bombs selected panel
@@ -54,16 +88,25 @@ public class cmpBattleshipService implements BattleshipService {
     }
 
     /**
+     * computer bombs a panel using reactive AI
+     */
+    @Override
+    public boolean computerBombPanel() {
+        return false;
+    }
+
+
+    /**
      * sets the size of the field chosen in the game creation menu.
      *
      * @param size     width and height of the field
-     * @param gameMode chosen game mode to see how many fields need to be created
      * @throws IllegalArgumentException if player enters something else instead of numbers
      */
     @Override
-    public void createFields(int size, GameMode gameMode) throws IllegalArgumentException {
+    public void createFields(int size) throws IllegalArgumentException {
 
     }
+
 
     /**
      * sets the game volume to newVolume.
@@ -76,6 +119,7 @@ public class cmpBattleshipService implements BattleshipService {
 
     }
 
+
     /**
      * saves the current game.
      *
@@ -85,6 +129,7 @@ public class cmpBattleshipService implements BattleshipService {
     public SavedGame saveGame() {
         return null;
     }
+
 
     /**
      * loads a saved game.
@@ -97,6 +142,7 @@ public class cmpBattleshipService implements BattleshipService {
 
     }
 
+
     /**
      * player concedes.
      */
@@ -104,6 +150,7 @@ public class cmpBattleshipService implements BattleshipService {
     public void concede() {
 
     }
+
 
     /**
      * displays the rules.

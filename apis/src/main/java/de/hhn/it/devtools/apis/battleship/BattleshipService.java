@@ -18,15 +18,35 @@ public interface BattleshipService {
 
 
     /**
+     * check if possible to place
+     * @param shipToPlace ship object
+     * @param x1 x start coordinate of the ship
+     * @param y1 y start coordinate of the ship
+     * @return placing (not)possible
+     */
+    boolean isPlacementPossible(Ship shipToPlace, int x1, int y1);
+
+
+    /**
      * places ship at given location
      * @param shipToPlace ship object
      * @param x1 x start coordinate of the ship
      * @param y1 y start coordinate of the ship
-     * @param x2 x end coordinate of the ship
-     * @param y2 y end coordinate of the ship
      * @throws IllegalPositionException if ship is not allowed to place at location
      */
-    void placeShip(Ship shipToPlace,int x1, int y1, int x2, int y2) throws IllegalPositionException;
+    void placeShip(Ship shipToPlace,int x1, int y1) throws IllegalPositionException;
+
+    /**
+     * computer places all his ships at valid positions
+     */
+    void computerPlaceShips();
+
+    //@TODO namen ausdiskutieren
+    /**
+     *  allows the ship to be moved
+     * @param shipToMove selected ship to be moved
+     */
+    void moveShip(Ship shipToMove) throws  IllegalArgumentException;
 
 
     /**
@@ -47,12 +67,17 @@ public interface BattleshipService {
 
 
     /**
+     * computer bombs a panel using reactive AI
+     */
+    boolean computerBombPanel();
+
+
+    /**
      * sets the size of the field chosen in the game creation menu.
      * @param size width and height of the field
-     * @param gameMode chosen game mode to see how many fields need to be created
      * @throws IllegalArgumentException if player enters something else instead of numbers
      */
-    void createFields(int size, GameMode gameMode) throws IllegalArgumentException;
+    void createFields(int size) throws IllegalArgumentException;
 
 
     /**
