@@ -1,5 +1,7 @@
 package de.hhn.it.devtools.apis.wordle;
 
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+
 /**
  * An interface that provides methods for our Wordle micro-project.
  */
@@ -35,5 +37,23 @@ public interface WordleService {
    * Quits the game and closes all Wordle windows.
    */
   void quitGame();
+
+  /**
+   * Adds a listener in order to get information on the state of a WordlePanel.
+   *
+   * @param id ID of the WordlePanel which will have a callback added to it
+   * @param listener WordlePanelListener which will be added to the panel
+   * @throws IllegalParameterException if the given ID or listener do not exist
+   */
+  void addCallback(int id, WordlePanelListener listener) throws IllegalParameterException;
+
+  /**
+   * Removes a listener from a WordlePanel.
+   *
+   * @param id ID of the WordlePanel which will have its Listener removed
+   * @param listener Listener which is to be removed
+   * @throws IllegalParameterException if the given ID or listener do not exist
+   */
+  void removeCallback(int id, WordlePanelListener listener) throws IllegalParameterException;
 
 }
