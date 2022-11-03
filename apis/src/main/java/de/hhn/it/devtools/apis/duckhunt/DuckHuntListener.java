@@ -9,5 +9,5 @@ public interface DuckHuntListener {
    *
    * @param gameState hands over game-information
    */
-  void newState(GameState gameState);
+  void newState(GameState gameState) throws IllegalGameStateException;
 }
