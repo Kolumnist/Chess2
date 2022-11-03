@@ -1,50 +1,68 @@
 package de.hhn.it.devtools.apis.duckhunt;
 
 /**
- * Describes the games Settings
- * Describes games sound (ON/OFF), volume.
+ * Describes the games Settings.
  */
 public class GameSettingsDescriptor {
 
-  private boolean sound;
-  private double volume;
+  private int duckAmount;
+  private int ammoAmount;
 
   /**
-   * Standard Constructor leaving soundON and volume at first Null.
+   * Standard Constructor setting default duckAmount and ammoAmount.
    */
-  public GameSettingsDescriptor(){
-  }
-
-  public double getVolume() {
-    return volume;
+  public GameSettingsDescriptor() {
+    duckAmount = 1;
+    ammoAmount = 3;
   }
 
   /**
-   * Volume setter with parameter range check.
+   * Constructor setting given duckAmount and ammoAmount.
+   */
+  public GameSettingsDescriptor(int duckAmount, int ammoAmount) {
+    this.duckAmount = duckAmount;
+    this.ammoAmount = ammoAmount;
+  }
+
+  public int getduckAmount() {
+    return duckAmount;
+  }
+
+  /**
+   * Duck Amount setter with parameter range check.
    *
-   * @param volume the volume to be set (range: 0.0 - 100.0)
+   * @param duckAmount the duckAmount to be set (range: 1 - 4)
    * @throws IllegalStateException is thrown when parameter volume out of range
    */
-  public void setVolume(double volume) throws IllegalStateException {
-    if (volume > 100.0 || volume < 0.0) {
-      throw new IllegalStateException("Volume not in acceptable range");
+  public void setDuckAmount(int duckAmount) throws IllegalStateException {
+    if (duckAmount > 5 || duckAmount <= 0) {
+      throw new IllegalStateException("Duck amount not in acceptable range");
     }
-    this.volume = volume;
+    this.duckAmount = duckAmount;
   }
 
-  public boolean isSound() {
-    return sound;
+  public int getAmmoAmount() {
+    return ammoAmount;
   }
 
-  public void setSound(boolean sound) {
-    this.sound = sound;
+  /**
+   * AmmoAmount setter with parameter range check.
+   *
+   * @param ammoAmount the ammoAmount to be set (range: 1 - (maxInteger-1))
+   * @throws IllegalStateException is thrown when parameter volume out of range
+   */
+  public void setAmmoAmount(int ammoAmount) {
+    if (ammoAmount > Integer.MAX_VALUE - 1 || ammoAmount <= 0) {
+      throw new IllegalStateException("Ammo amount not in acceptable range");
+    }
+    this.ammoAmount = ammoAmount;
   }
 
   @Override
   public String toString() {
     return "GameSettingsDescriptor{"
-         + "Sound=" + sound
-         + ", volume=" + volume
+         + "duckAmount=" + duckAmount
+         + ", ammoAmount=" + ammoAmount
          + '}';
   }
 
