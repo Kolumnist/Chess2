@@ -4,7 +4,5 @@ module devtools.apis{
         exports de.hhn.it.devtools.apis.exceptions;
         exports de.hhn.it.devtools.apis.chess2;
         exports de.hhn.it.devtools.apis.battleship;
+        exports de.hhn.it.devtools.apis.duckhunt;
         }
-
-
-
