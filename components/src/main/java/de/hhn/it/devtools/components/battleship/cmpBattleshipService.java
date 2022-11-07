@@ -1,6 +1,8 @@
 package de.hhn.it.devtools.components.battleship;
 
 import de.hhn.it.devtools.apis.battleship.*;
+import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerListener;
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 
 import java.util.IllegalFormatException;
 
@@ -12,6 +14,18 @@ public class cmpBattleshipService implements BattleshipService {
      */
     @Override
     public void addCallBack(BattleshipListener listener) {
+
+    }
+
+    /**
+     * Removes a listener.
+     *
+     * @param id
+     * @param listener listener to be removed
+     * @throws IllegalParameterException if the the listener is null
+     */
+    @Override
+    public void removeCallback(int id, CoffeeMakerListener listener) throws IllegalParameterException {
 
     }
 
@@ -40,14 +54,6 @@ public class cmpBattleshipService implements BattleshipService {
      */
     @Override
     public void placeShip(Ship shipToPlace, int x1, int y1) throws IllegalPositionException {
-
-    }
-
-    /**
-     * computer places all his ships at valid positions
-     */
-    @Override
-    public void computerPlaceShips() {
 
     }
 
@@ -84,14 +90,6 @@ public class cmpBattleshipService implements BattleshipService {
      */
     @Override
     public boolean bombPanel(int x, int y) throws IllegalArgumentException {
-        return false;
-    }
-
-    /**
-     * computer bombs a panel using reactive AI
-     */
-    @Override
-    public boolean computerBombPanel() {
         return false;
     }
 

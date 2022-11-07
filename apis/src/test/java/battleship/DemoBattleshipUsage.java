@@ -27,9 +27,6 @@ public class DemoBattleshipUsage  {
         //User wants to rotate ship before placing it
         game.rotateShip(null);
 
-        //Enemy randomly places all his ships to valid positions
-        game.computerPlaceShips();
-
 
         //User places his ships
         game.placeShip(null,1,2);
@@ -45,11 +42,6 @@ public class DemoBattleshipUsage  {
         //Sound volume was too loud, user wants to adjust it
         game.adjustSoundVolume(30);
 
-        //Enemy (here: computer) bombs the users panel and hits
-        game.computerBombPanel();
-
-        //Enemy bombs the users panel and hits
-        game.computerBombPanel();
 
         //User wants to save the current game state
         game.saveGame();
