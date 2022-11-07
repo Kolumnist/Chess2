@@ -1,5 +1,8 @@
 package de.hhn.it.devtools.apis.battleship;
 
+import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerListener;
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+
 import java.util.IllegalFormatException;
 
 /**
@@ -13,8 +16,17 @@ public interface BattleshipService {
      * Adds a listener to get updates on the state of the game.
      *
      * @param listener object implementing the listener interface
+     * @throws IllegalParameterException if the the listener is null
      */
-    void addCallBack(BattleshipListener listener);
+    void addCallBack(BattleshipListener listener) throws IllegalParameterException;
+
+
+    /**
+     * Removes a listener.
+     * @param listener listener to be removed
+     * @throws IllegalParameterException if the the listener is null
+     */
+    void removeCallback(int id, CoffeeMakerListener listener) throws IllegalParameterException;
 
 
     /**
