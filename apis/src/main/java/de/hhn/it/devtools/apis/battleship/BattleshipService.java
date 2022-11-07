@@ -109,7 +109,7 @@ public interface BattleshipService {
     /**
      * saves the current game.
      * @return current game state
-     * @throws if the gameState is PREGAME or GAMEOVER
+     * @throws IllegalGameStateException if the gameState is PREGAME or GAMEOVER
      */
     SavedGame saveGame() throws IllegalGameStateException;
 
