@@ -1,8 +1,6 @@
 package de.hhn.it.devtools.apis.battleship;
 
-import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerListener;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-
 import java.util.IllegalFormatException;
 
 /**
@@ -23,45 +21,61 @@ public interface BattleshipService {
 
     /**
      * Removes a listener.
+     *
      * @param listener listener to be removed
      * @throws IllegalParameterException if the the listener is null
      */
-    void removeCallback(int id, CoffeeMakerListener listener) throws IllegalParameterException;
+    void removeCallback(BattleshipListener listener) throws IllegalParameterException;
 
 
     /**
      * check if possible to place
+     *
      * @param shipToPlace ship object
-     * @param x1 x start coordinate of the ship
-     * @param y1 y start coordinate of the ship
+     * @param x1          x start coordinate of the ship
+     * @param y1          y start coordinate of the ship
      * @return placing (not)possible
+     * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
-    boolean isPlacementPossible(Ship shipToPlace, int x1, int y1);
+    boolean isPlacementPossible(Ship shipToPlace, int x1, int y1) throws IllegalGameStateException;
 
 
     /**
      * places ship at given location
+     *
      * @param shipToPlace ship object
-     * @param x1 x start coordinate of the ship
-     * @param y1 y start coordinate of the ship
-     * @throws IllegalPositionException if ship is not allowed to place at location
+     * @param x1          x start coordinate of the ship
+     * @param y1          y start coordinate of the ship
+     * @throws IllegalPositionException  if ship is not allowed to place at location
+     * @throws IllegalShipStateException if the ship is already placed
+     * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
-    void placeShip(Ship shipToPlace,int x1, int y1) throws IllegalPositionException;
+    void placeShip(Ship shipToPlace, int x1, int y1)
+            throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException
+    ;
 
 
     //@TODO namen ausdiskutieren
+
     /**
-     *  allows the ship to be moved
+     * allows the ship to be moved
+     *
      * @param shipToMove selected ship to be moved
+     * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
-    void moveShip(Ship shipToMove) throws  IllegalArgumentException;
+    void moveShip(Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException;
 
 
     /**
      * rotates the ship horizontal or vertical (isHorizontal changes its boolean value)
+     *
      * @param shipToRotate ship object to rotate around the ship fieldPosition
+     * @throws IllegalPositionException  if ship is not allowed to rotate to certain location
+     * @throws IllegalShipStateException ship cant be rotated if it's placed
+     * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
-    void rotateShip(Ship shipToRotate);
+    void rotateShip(Ship shipToRotate)
+            throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException;
 
 
     /**
@@ -70,16 +84,18 @@ public interface BattleshipService {
      * @param x x coordinate of the target panel
      * @param y y coordinate of the target panel
      * @throws IllegalArgumentException if field does not exist
+     * @throws  IllegalGameStateException if the GameState is not FIRINGSHOTS
      */
-    boolean bombPanel(int x, int y) throws IllegalArgumentException;
+    boolean bombPanel(int x, int y) throws IllegalArgumentException, IllegalGameStateException;
 
 
     /**
      * sets the size of the field chosen in the game creation menu.
      * @param size width and height of the field
      * @throws IllegalArgumentException if player enters something else instead of numbers
+     * @throws IllegalGameStateException if the Gamestate is not PREGAME
      */
-    void createFields(int size) throws IllegalArgumentException;
+    void createFields(int size) throws IllegalArgumentException, IllegalGameStateException;
 
 
     /**
@@ -93,8 +109,9 @@ public interface BattleshipService {
     /**
      * saves the current game.
      * @return current game state
+     * @throws if the gameState is PREGAME or GAMEOVER
      */
-    SavedGame saveGame();
+    SavedGame saveGame() throws IllegalGameStateException;
 
 
     /**
@@ -107,8 +124,10 @@ public interface BattleshipService {
 
     /**
      * player concedes.
+     *
+     * @throws  IllegalGameStateException if the GAMESTATE is GAMEOVER
      */
-    void concede();
+    void concede() throws IllegalGameStateException;
 
 
     /**
