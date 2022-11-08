@@ -3,7 +3,7 @@ package de.hhn.it.devtools.apis.chess2;
 import java.util.ArrayList;
 
 /**
- * This interface defines attributes of every piece
+ * This interface defines attributes of every piece.
  *
  * @author Collin, Lara, Michel
  * @version 1.0
@@ -11,24 +11,27 @@ import java.util.ArrayList;
 
 public interface Piece {
 
-  /** Holds all possible x,y coordinates of the piece where it can move */
-  ArrayList<int[]> possibleMoves = new ArrayList<>();
+  /** Holds all possible x,y coordinates of the piece where it can move. */
+  Coordinate[] possibleMoves = new Coordinate[0];
 
-  /** Current position of the piece */
-  int[] pos = new int[2];
+  /** Current position of the piece. */
+  Coordinate coordinate = new Coordinate();
 
   /**
-   * All possible moves are returned as a List of x, y coordinates
+   * All possible moves are returned as a List of x, y coordinates.
+   *
    * @return possibleMoves of the current piece
    */
-  ArrayList<int[]> getPossibleMove();
+  Coordinate[] getPossibleMove();
 
   /*private void calculate() {
 
   }*/
 
   /**
-   * @param pos is the new position
+   *  Sets the new coordinate.
+   *
+   * @param coordinate is the new coordinate
    */
-  void setPos(int[] pos);
+  void setCoordinate(Coordinate coordinate);
 }
