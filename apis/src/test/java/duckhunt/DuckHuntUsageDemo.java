@@ -1,9 +1,13 @@
 package duckhunt;
 
+import de.hhn.it.devtools.apis.duckhunt.DuckData;
 import de.hhn.it.devtools.apis.duckhunt.DuckHuntListener;
 import de.hhn.it.devtools.apis.duckhunt.DuckHuntService;
+import de.hhn.it.devtools.apis.duckhunt.DucksState;
 import de.hhn.it.devtools.apis.duckhunt.GameSettingsDescriptor;
 import de.hhn.it.devtools.apis.duckhunt.GameState;
+import de.hhn.it.devtools.apis.duckhunt.IllegalDuckIdException;
+import de.hhn.it.devtools.apis.duckhunt.IllegalDuckPositionException;
 import de.hhn.it.devtools.apis.duckhunt.IllegalGameStateException;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 
@@ -22,6 +26,7 @@ public class DuckHuntUsageDemo {
     DuckHuntService duckHuntService = null;
     GameSettingsDescriptor gameSettingsDescriptor = new GameSettingsDescriptor();
     DuckHuntListener duckHuntListener = null;
+    DuckData[] duckDatas = null;
 
     try {
       // adding Callback in service
@@ -35,6 +40,9 @@ public class DuckHuntUsageDemo {
 
       // is called when there is an update of the game (every game tick)
       duckHuntListener.newState(new GameState(100, 3, 5));
+      duckHuntListener.newDuckPosition(new DucksState(duckDatas));
+      // is called when a duck was hit
+      duckHuntListener.duckHit(1);
 
       // is called when shoot mouse button is clicked in the game
       duckHuntService.shoot(1, 1);
@@ -51,6 +59,10 @@ public class DuckHuntUsageDemo {
     } catch (IllegalParameterException e) {
       throw new RuntimeException(e);
     } catch (IllegalGameStateException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalDuckIdException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalDuckPositionException e) {
       throw new RuntimeException(e);
     }
 

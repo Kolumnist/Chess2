@@ -3,18 +3,18 @@ package de.hhn.it.devtools.apis.duckhunt;
 import java.security.PrivilegedActionException;
 
 /**
- *  Is thrown when the game state is not valid.
+ *  Is thrown when the duck position is not valid.
  */
-public class IllegalGameStateException extends Exception {
+public class IllegalDuckPositionException extends Exception {
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(IllegalGameStateException.class);
+          org.slf4j.LoggerFactory.getLogger(IllegalDuckPositionException.class);
 
   /**
    * Constructs a new exception with {@code null} as its detail message.
    * The cause is not initialized, and may subsequently be initialized by a
    * call to {@link #initCause}.
    */
-  public IllegalGameStateException() {
+  public IllegalDuckPositionException() {
   }
 
   /**
@@ -25,7 +25,7 @@ public class IllegalGameStateException extends Exception {
    * @param message the detail message. The detail message is saved for
    *                later retrieval by the {@link #getMessage()} method.
    */
-  public IllegalGameStateException(final String message) {
+  public IllegalDuckPositionException(final String message) {
     super(message);
   }
 
@@ -45,7 +45,7 @@ public class IllegalGameStateException extends Exception {
    *                unknown.)
    * @since 1.4
    */
-  public IllegalGameStateException(final String message, final Throwable cause) {
+  public IllegalDuckPositionException(final String message, final Throwable cause) {
     super(message, cause);
   }
 
@@ -63,7 +63,7 @@ public class IllegalGameStateException extends Exception {
    *              unknown.)
    * @since 1.4
    */
-  public IllegalGameStateException(final Throwable cause) {
+  public IllegalDuckPositionException(final Throwable cause) {
     super(cause);
   }
 }

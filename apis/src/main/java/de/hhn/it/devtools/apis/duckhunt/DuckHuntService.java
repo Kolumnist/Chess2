@@ -30,6 +30,11 @@ public interface DuckHuntService {
   void stopGame();
 
   /**
+   * Is called when the game shall be stopped.
+   */
+  void pauseGame();
+
+  /**
    * Changes the game settings.
    *
    * @param gameSettings object with the chosen game settings
