@@ -1,5 +1,6 @@
 package reactiongame;
 
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.reactiongame.Difficulty;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameService;
 
@@ -10,7 +11,7 @@ public class DemoReactiongameUsage {
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(DemoReactiongameUsage.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IllegalParameterException {
 
         ReactiongameService reactiongameService = null;
 
