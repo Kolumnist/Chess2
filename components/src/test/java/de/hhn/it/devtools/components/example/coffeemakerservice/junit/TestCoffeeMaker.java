@@ -5,7 +5,7 @@ import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerListener;
 import de.hhn.it.devtools.apis.examples.coffeemakerservice.State;
 import de.hhn.it.devtools.components.example.coffeemakerservice.provider.WnckCoffeeMaker;
 import de.hhn.it.devtools.components.example.coffeemakerservice.provider.makerstates.HeatingState;
-import de.hhn.it.devtools.apis.ttrpgsheets.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

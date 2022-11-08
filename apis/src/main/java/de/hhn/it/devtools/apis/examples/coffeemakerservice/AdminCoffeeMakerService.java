@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.apis.examples.coffeemakerservice;
 
 
-import de.hhn.it.devtools.apis.ttrpgsheets.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 
 /**
  * Admin interface to the WnckCoffeMakerService to add / remove CoffeeMakers to / from the service.

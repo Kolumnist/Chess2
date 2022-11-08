@@ -11,7 +11,7 @@ public interface ReactiongameService {
    * @param difficulty sets the difficulty of the starting run.
    * @throws IllegalParameterException if the difficulty does not exist.
    */
-  void newRun(Difficulty difficulty) throws IllegalParameterException;
+  void newRun(Difficulty difficulty);
 
   /**
    * Pauses the run and the timer.
