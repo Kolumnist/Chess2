@@ -1,10 +1,9 @@
 package de.hhn.it.devtools.apis.chess2;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import java.util.ArrayList;
 
 /**
- * This class handles all communication between player and components
+ * This class handles all communication between player and components.
  *
  * @author Collin, Lara, Michel
  * @version 1.1
@@ -12,81 +11,78 @@ import java.util.ArrayList;
 public interface Chess2Service {
 
   /**
-   * build board with all fields, place pieces on the board, sets fields,
+   * Build board with all fields, place pieces on the board, sets fields,
    * set the starting player and inform the players about who starts.
    */
   void startNewGame();
 
   /**
-   * resets the board and pieces and the kings bananas. Assigns the pieces to their players
-   * and sets the starting player, informs the players about who starts
+   * Resets the board and pieces and the kings bananas. Assigns the pieces to their players
+   * and sets the starting player, informs the players about who starts.
    */
   void reset();
 
   /**
-   * destroys an instance of ChessGame and
-   * brings scene back to main menu
+   * Destroys an instance of ChessGame and brings scene back to main menu.
    */
   void endGame();
 
   /**
-   * calls the method showWinningPlayer and after that calls reset or returns to the main menu
+   * Calls the method showWinningPlayer and after that calls reset or returns to the main menu.
    */
   void giveUp();
 
   /**
-   * creates a window and displays the rules as text
-   */
-  void openRules();
-
-  /**
-   * Returns 'b', 'w', 'r' as a char that defines which player won or red for no one
+   * Returns 'b', 'w', 'r' as a char that defines which player won or red for no one.
    *
    * @return char which defines the player won or no player won
    */
   char getWinningPlayer();
 
   /**
-   * Returns all positions with the state "HAS_CURRENT_PIECE"
+   * Returns all positions with the state "HAS_CURRENT_PIECE".
    *
-   * @return ArrayList<int[]> all positions with the state "HAS_CURRENT_PIECE"
+   * @return Coordinate[] all positions with the state "HAS_CURRENT_PIECE"
    */
-  ArrayList<int[]> getCurrentFields();
+  Coordinate[] getCurrentFields();
 
   /**
-   * Returns all positions that the selected Piece can move to
+   * Returns all positions that the selected Piece can move to.
    *
-   * @return ArrayList<int[]> all positions that the selected Piece can move to
-   * @param selectedPiecePos Integer Array of the positions of the selected Pieces
-   * @throws IllegalParameterException if piecePos is a null reference or incomplete.
+   * @return Coordinate[] all positions that the selected Piece can move to
+   * @param selectedPieceCoordinate Coordinate of the position of the selected Piece
+   * @throws IllegalParameterException if piecePos is a null reference or incomplete
    */
-  ArrayList<int[]> getPossibleMoves(int[] selectedPiecePos) throws IllegalParameterException;
+  Coordinate[] getPossibleMoves(Coordinate selectedPieceCoordinate)
+      throws IllegalParameterException;
 
   /**
    * The king/queen gets send to jail upon defeat, the jail field is chosen
-   * by the player who defeated the piece
+   * by the player who defeated the piece.
    *
-   * @param newPos of the selected piece
-   * @param jailPos for the position of the jail on the board
-   * @throws IllegalParameterException if piece or pos is a null reference or incomplete.
+   * @param otherCoordinate of the king or queen piece that stands on a field, which has the
+   *                        FieldState "HAS_OTHER_PIECE"  that got selected
+   * @param jailCoordinate for the position of the jail on the board
+   * @throws IllegalParameterException if piece or pos is a null reference or incomplete
    */
-  void setPieceInJail(int[] newPos, int[] jailPos) throws IllegalParameterException;
+  void setPieceInJail(Coordinate otherCoordinate, Coordinate jailCoordinate)
+      throws IllegalParameterException;
 
   /**
-   * changes the position of the current piece
+   * Changes the position of the selected piece.
    *
-   * @param newPos the new position of the piece
+   * @param newCoordinate the new position of the piece
    * @throws IllegalParameterException if newPos is a null reference or incomplete
    */
-  void moveSelectedPiece(int[] newPos) throws IllegalParameterException;
+  void moveSelectedPiece(Coordinate newCoordinate) throws IllegalParameterException;
 
   /**
-   * Returns the FieldState of the selected field
+   * Returns the FieldState of the selected field.
    *
-   * @return FieldState of the chosen field
-   * @param pos the position of the selected Field
+   * @param selectedCoordinate the position of the selected Field
+   * @return FieldState of the selected field
    * @throws IllegalParameterException if pos is a null reference or incomplete
    */
-  FieldState getFieldState(int[] pos) throws IllegalParameterException;
+  FieldState getFieldState(Coordinate selectedCoordinate) throws IllegalParameterException;
 
 }
