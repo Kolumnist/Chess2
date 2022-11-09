@@ -2,7 +2,6 @@ package de.hhn.it.devtools.components.memory.provider;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.memory.*;
-import de.hhn.it.devtools.components.example.coffeemakerservice.provider.WnckCoffeeMakerService;
 
 import java.util.*;
 
@@ -11,7 +10,7 @@ import java.util.*;
  */
 public class SfsMemoryService implements MemoryService {
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(WnckCoffeeMakerService.class);
+          org.slf4j.LoggerFactory.getLogger(SfsMemoryService.class);
 
   private Map<Integer, PictureCard> cards;
 
