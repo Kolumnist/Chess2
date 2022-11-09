@@ -1,9 +1,11 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
-import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
+
 import java.util.ArrayList;
 import java.util.List;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
+
 
 /**
  * Game class.
@@ -38,6 +40,7 @@ public class Game implements GameService {
       } else {
         System.out.println(message);
         if (checkDoor.checkIfFake()) {
+          //This is part of the demo for a fake door.
           System.out.println("The open door reveals a wall. You can not go south.");
           check();
         } else {
@@ -149,7 +152,7 @@ public class Game implements GameService {
   }
 
   /**
-   * Checkt which door is the next to interact with.
+   * Check which door is the next to interact with.
    *
    * @param direction gets the direction to the next door.
    * @param item gets item if need
@@ -219,7 +222,7 @@ public class Game implements GameService {
   }
 
   /**
-   * Gets the next Room.
+   * Gets the next room.
    *
    * @throws RoomFailedException description to room
    *
@@ -285,10 +288,17 @@ public class Game implements GameService {
    * Prints out what is currently going on.
    */
   public void check() {
-    System.out.println("You are " + player.getName());
-    System.out.println("You are in " + currentRoom.getDescription());
-    System.out.println("You are alone.");
+    System.out.println("You find yourself in " + currentRoom.getDescription());
     System.out.println("You can search the room or move on.");
+  }
+
+  /**
+   * Text to be given to the player at the start of the game.
+   */
+  public void startText() {
+    System.out.println("You are " + player.getName()
+            + " and you are in the depths of a labyrinth.");
+    check();
   }
 
 

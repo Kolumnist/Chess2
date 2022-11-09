@@ -2,6 +2,7 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
 
+
 /**
  * Interface for the game.
  */

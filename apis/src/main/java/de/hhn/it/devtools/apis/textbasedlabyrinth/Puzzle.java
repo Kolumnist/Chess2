@@ -30,10 +30,12 @@ public class Puzzle {
 
 
   public boolean checkIfSolved() {
+
     return isSolved;
   }
 
   public String getDescription() {
+
     return description;
   }
 

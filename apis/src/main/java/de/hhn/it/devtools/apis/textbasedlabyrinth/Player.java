@@ -1,8 +1,8 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 
-import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 import java.util.HashMap;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 
 /**
  * Player Class for the Game, the Player can move to other Rooms and interact with environment.
