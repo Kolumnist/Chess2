@@ -1,0 +1,28 @@
+
+    public void dropItem(String name) throws NoSuchItemFoundException,
+            NullPointerException {
+
+        if (name.isBlank() || name.isEmpty()) {
+            throw new NullPointerException("ItemName was empty.");
+        }
+        List<Item> items = new ArrayList<>();
+        Item searchItem = null;
+        boolean foundItem = false;
+
+        try {
+            items = ;
+        } catch (NullPointerException n) {
+            throw new NoSuchItemFoundException(n.getMessage());
+        }
+        for (Item item : items) {
+            if (item.getName().equals(name)) {
+                searchItem = item;
+                foundItem = true;
+            }
+
+            if (foundItem) {
+
+            }
+        }
+
+    }
