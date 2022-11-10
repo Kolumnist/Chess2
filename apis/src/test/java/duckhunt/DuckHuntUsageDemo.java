@@ -39,6 +39,10 @@ public class DuckHuntUsageDemo {
       // is called when shoot mouse button is clicked in the game
       duckHuntService.shoot(1, 1);
 
+      // pause and continue game
+      duckHuntService.pauseGame();
+      duckHuntService.continueGame();
+
       // is called when reload mouse button is clicked in the game
       duckHuntService.reload();
 
