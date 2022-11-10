@@ -7,12 +7,28 @@ package de.hhn.it.devtools.apis.battleship;
 public enum ShipTypes {
 
     /**
-     * name of the certain battleship with its size
+     * type: Carrier, size: 5
      */
     CARRIER(5),
+
+    /**
+     * type: Battleship, size: 4
+     */
     BATTLESHIP(4),
+
+    /**
+     * type: Cruiser, size: 3
+     */
     CRUISER(3),
+
+    /**
+     * type: Submarine, size: 3
+     */
     SUBMARINE(3),
+
+    /**
+     * type: Destroyer, size: 2
+     */
     DESTROYER(2);
 
 

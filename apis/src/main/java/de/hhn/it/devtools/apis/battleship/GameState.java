@@ -9,7 +9,7 @@ public enum GameState {
     PREGAME,
     /** Players are placing their ships */
     PLACINGSHIPS,
-    /** Players are shooting at each others fields */
+    /** Players are shooting at each other's fields */
     FIRINGSHOTS,
     /** One player has no remaining ships */
     GAMEOVER;
