@@ -16,7 +16,7 @@ public interface DuckHuntListener {
    *
    * @param duckPosition hands over array of duck data
    */
-  void newDuckPosition(DucksState duckPosition) throws IllegalDuckPositionException;
+  void newDuckPosition(DucksInfo duckPosition) throws IllegalDuckPositionException;
 
   /**
    * Informs the listener that a duck was hit.

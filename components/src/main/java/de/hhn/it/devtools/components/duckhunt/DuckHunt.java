@@ -30,7 +30,7 @@ public class DuckHunt implements Runnable, DuckHuntService {
     int duckCount = 2;
     this.ducks = new DuckData[duckCount];
     for (int i = 0; i < duckCount; i++) {
-      ducks[i] = (new DuckData(i, 0, 0));
+      ducks[i] = (new DuckData(i, 0, 0, DuckState.FLYING));
     }
   }
 
@@ -38,8 +38,19 @@ public class DuckHunt implements Runnable, DuckHuntService {
   public void shoot(int x, int y) {
     for (DuckData duck : ducks) {
       // if amount of the vector between duck and shoot <= 5
-      if (Math.sqrt(Math.pow(duck.x() - x, 2) + Math.pow(duck.y() - y, 2)) <= 5) {
+      if (Math.sqrt(Math.pow(duck.getX() - x, 2) + Math.pow(duck.getY() - y, 2)) <= 5 &&
+              duck.getStatus() == DuckState.FLYING && gameSettings.getAmmoAmount() > 0) {
+        duck.setStatus(DuckState.FALLING);
 
+
+      }
+    }
+  }
+
+  public void dropDuck() {
+    for (DuckData duck : ducks) {
+      if (duck.getStatus() == DuckState.FALLING){
+        duck.setY(duck.getY() + 1);
       }
     }
   }
@@ -84,7 +95,7 @@ public class DuckHunt implements Runnable, DuckHuntService {
           listener -> {
             try {
               listener.newState(gameState);
-              listener.newDuckPosition(new DucksState(ducks));
+              listener.newDuckPosition(new DucksInfo(ducks));
             } catch (IllegalGameStateException e) {
               throw new RuntimeException(e);
             } catch (IllegalDuckPositionException e) {
