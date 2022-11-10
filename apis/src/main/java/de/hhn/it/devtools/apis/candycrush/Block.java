@@ -3,19 +3,48 @@ package de.hhn.it.devtools.apis.candycrush;
 public class Block {
 
 
+    /**
+     * The x and y position of the Block in the BlockGrid.
+     */
+    private int xPos;
+    private int yPos;
 
-    //Methods
-    public void swapCandy(int row1, int col1, int row2, int col2) {
+
+    /**
+     * The Color of the Block.
+     */
+    private final String color;
+
+
+    /**
+     *Marks a Block as fixed, which means it´s color can0t be changed.
+     */
+
+
+
+    public Block(int xPos, int yPos, String color) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.color = color;
     }
 
-    //Scan the map for the same type of candies in 3 or more in sequence
-    public void scanMap() {
-
+    public int getxPos() {
+        return xPos;
     }
 
-    //Mark candies of the same type in 3 or more in sequence
-    public void markCandy(int row, int col) {
-
+    public int getyPos() {
+        return yPos;
     }
 
+    public void setyPos(int yPos) {
+        this.yPos = yPos;
+    }
+
+    public void setxPos(int xPos) {
+        this.xPos = xPos;
+    }
+
+    public String getColor() {
+        return color;
+    }
 }

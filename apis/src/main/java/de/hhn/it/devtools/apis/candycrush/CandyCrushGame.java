@@ -15,7 +15,7 @@ public class CandyCrushGame {
     private Profile profile3;
     private Profile currentProfile;
 
-    private Field field;
+    private BlockGrid field;
     private Block block;
 
     protected Boolean running = false;

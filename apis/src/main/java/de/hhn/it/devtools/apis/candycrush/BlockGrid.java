@@ -1,6 +1,6 @@
 package de.hhn.it.devtools.apis.candycrush;
 
-public class Field {
+public class BlockGrid {
 
     private int target;
     private int numRows;
@@ -9,7 +9,7 @@ public class Field {
 
 
     //Constructor
-    public Field(int numRows, int numCols, int target, char[][] map) {
+    public BlockGrid(int numRows, int numCols, int target, char[][] map) {
 
     }
 }
