@@ -139,6 +139,15 @@ public class SfsMemoryService implements MemoryService {
     }
   }
 
+  @Override
+  public void fetchCards(PictureCardDescriptor[] cardDescriptors) throws IllegalParameterException {
+    for (PictureCardDescriptor c: cardDescriptors) {
+      PictureCard pictureCard = new SfsPictureCard(c);
+      cards.put(pictureCard.getPictureCard().getId(), pictureCard);
+      }
+
+  }
+
   private boolean matchCards(PictureCard picture, PictureCard name) throws IllegalParameterException {
     if(pictureReferences.containsKey(picture.getPictureCard().getPictureRef())) {
       String picCard = pictureReferences.get(picture.getPictureCard().getPictureRef()).toLowerCase();

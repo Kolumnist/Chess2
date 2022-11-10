@@ -2,6 +2,8 @@ package de.hhn.it.devtools.apis.memory;
 
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 
@@ -93,6 +95,16 @@ public interface MemoryService {
    * @throws IllegalParameterException if the card does not exist
    */
   void turnCard(int id) throws IllegalParameterException;
+
+  /**
+   *
+   * Adds cards to the service.
+   *
+   * @param cardDescriptors array of descriptos of the cards
+   * @throws IllegalParameterException if the Array is incomplete
+   */
+  void fetchCards(PictureCardDescriptor[] cardDescriptors) throws IllegalParameterException;
+
 
 
 }
