@@ -2,8 +2,8 @@ package de.hhn.it.devtools.apis.duckhunt;
 
 /**
  * This Class saves information about the duck, such as an id
- * to identificate the duck, a x- and y-coordinate and
- * its current state.
+ * to identify the duck, a x- and y-coordinate and
+ * it's current state.
  */
 public class DuckData {
   private int id;
@@ -19,7 +19,7 @@ public class DuckData {
    * @param y Y position of the duck
    * @param status status of the duck
    */
-  public DuckData(int id, int x, int y, DuckState status){
+  public DuckData(int id, int x, int y, DuckState status) {
     this.id = id;
     this.x = x;
     this.y = y;
