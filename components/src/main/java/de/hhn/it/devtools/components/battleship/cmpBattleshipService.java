@@ -41,7 +41,7 @@ public class cmpBattleshipService implements BattleshipService {
      * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
     @Override
-    public boolean isPlacementPossible(Ship shipToPlace, int x1, int y1) throws IllegalGameStateException {
+    public boolean isPlacementPossible(Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException {
         return false;
     }
 
@@ -60,6 +60,7 @@ public class cmpBattleshipService implements BattleshipService {
 
     }
 
+
     /**
      * allows the ship to be moved
      *
@@ -67,7 +68,7 @@ public class cmpBattleshipService implements BattleshipService {
      * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
     @Override
-    public void moveShip(Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException {
+    public void unPlace(Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException {
 
     }
 
