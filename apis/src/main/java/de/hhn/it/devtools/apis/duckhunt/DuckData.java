@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.apis.duckhunt;
 
 /**
- * This Record saves information about the duck.
+ * This Class saves information about the duck.
  */
 public class DuckData {
   private int id;
