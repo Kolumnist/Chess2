@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class DuckHunt implements Runnable, DuckHuntService {
   private GameSettingsDescriptor gameSettings;
   private ArrayList<DuckHuntListener> listeners;
-  private GameState gameState;
+  private GameInfo gameInfo;
   private DuckData[] ducks;
 
   /** */
@@ -24,7 +24,7 @@ public class DuckHunt implements Runnable, DuckHuntService {
   }
 
   private void init() {
-    this.gameState = new GameState(0, gameSettings.getAmmoAmount(), 1);
+    this.gameInfo = new GameInfo(0, gameSettings.getAmmoAmount(), 1, GameState.RUNNING);
     this.listeners = new ArrayList<>();
 
     int duckCount = 2;
@@ -94,7 +94,7 @@ public class DuckHunt implements Runnable, DuckHuntService {
       listeners.forEach(
           listener -> {
             try {
-              listener.newState(gameState);
+              listener.newState(gameInfo);
               listener.newDuckPosition(new DucksInfo(ducks));
             } catch (IllegalGameStateException e) {
               throw new RuntimeException(e);
