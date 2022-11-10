@@ -30,7 +30,6 @@ public interface BattleshipService {
 
     /**
      * check if possible to place
-     * //TODO: Ausrichtung als Parameter hinzufügen
      *
      * @param shipToPlace ship object
      * @param x1          x start coordinate of the ship
