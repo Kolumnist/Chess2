@@ -5,16 +5,16 @@ import java.security.PrivilegedActionException;
 /**
  *  Is thrown when the game state is not valid.
  */
-public class IllegalGameStateException extends Exception {
+public class IllegalGameInfoException extends Exception {
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(IllegalGameStateException.class);
+          org.slf4j.LoggerFactory.getLogger(IllegalGameInfoException.class);
 
   /**
    * Constructs a new exception with {@code null} as its detail message.
    * The cause is not initialized, and may subsequently be initialized by a
    * call to {@link #initCause}.
    */
-  public IllegalGameStateException() {
+  public IllegalGameInfoException() {
   }
 
   /**
@@ -25,7 +25,7 @@ public class IllegalGameStateException extends Exception {
    * @param message the detail message. The detail message is saved for
    *                later retrieval by the {@link #getMessage()} method.
    */
-  public IllegalGameStateException(final String message) {
+  public IllegalGameInfoException(final String message) {
     super(message);
   }
 
@@ -45,7 +45,7 @@ public class IllegalGameStateException extends Exception {
    *                unknown.)
    * @since 1.4
    */
-  public IllegalGameStateException(final String message, final Throwable cause) {
+  public IllegalGameInfoException(final String message, final Throwable cause) {
     super(message, cause);
   }
 
@@ -63,7 +63,7 @@ public class IllegalGameStateException extends Exception {
    *              unknown.)
    * @since 1.4
    */
-  public IllegalGameStateException(final Throwable cause) {
+  public IllegalGameInfoException(final Throwable cause) {
     super(cause);
   }
 }
