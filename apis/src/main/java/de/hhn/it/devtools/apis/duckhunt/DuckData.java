@@ -1,13 +1,24 @@
 package de.hhn.it.devtools.apis.duckhunt;
 
 /**
- * This Class saves information about the duck.
+ * This Class saves information about the duck, such as an id
+ * to identificate the duck, a x- and y-coordinate and
+ * its current state.
  */
 public class DuckData {
   private int id;
   private int x;
   private int y;
   private DuckState status;
+
+  /**
+   * Constructor to create a GameInfo-Class.
+   *
+   * @param id identification-number for the duck
+   * @param x X position of the duck
+   * @param y Y position of the duck
+   * @param status status of the duck
+   */
   public DuckData(int id, int x, int y, DuckState status){
     this.id = id;
     this.x = x;
