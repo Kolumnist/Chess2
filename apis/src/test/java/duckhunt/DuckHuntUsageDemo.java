@@ -1,6 +1,15 @@
 package duckhunt;
 
-import de.hhn.it.devtools.apis.duckhunt.*;
+import de.hhn.it.devtools.apis.duckhunt.DuckData;
+import de.hhn.it.devtools.apis.duckhunt.DuckHuntListener;
+import de.hhn.it.devtools.apis.duckhunt.DuckHuntService;
+import de.hhn.it.devtools.apis.duckhunt.DucksInfo;
+import de.hhn.it.devtools.apis.duckhunt.GameInfo;
+import de.hhn.it.devtools.apis.duckhunt.GameSettingsDescriptor;
+import de.hhn.it.devtools.apis.duckhunt.GameState;
+import de.hhn.it.devtools.apis.duckhunt.IllegalDuckIdException;
+import de.hhn.it.devtools.apis.duckhunt.IllegalDuckPositionException;
+import de.hhn.it.devtools.apis.duckhunt.IllegalGameInfoException;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 
 /**

@@ -34,9 +34,9 @@ public class DuckHunt implements Runnable, DuckHuntService {
   /**
    * Default constructor with standard game settings.
    */
-  public DuckHunt(ScreenDimension screenDimension) {
+  public DuckHunt() {
     this.gameSettings = new GameSettingsDescriptor();
-    this.screenDimension = screenDimension;
+    this.screenDimension = new ScreenDimension(500, 500);
     init();
   }
 
