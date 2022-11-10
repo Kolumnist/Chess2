@@ -9,7 +9,7 @@ public interface DuckHuntListener {
    *
    * @param gameInfo hands over game-information
    */
-  void newState(GameInfo gameInfo) throws IllegalGameStateException;
+  void newState(GameInfo gameInfo) throws IllegalGameInfoException;
 
   /**
    * Informs the listener that DuckState has been updated.

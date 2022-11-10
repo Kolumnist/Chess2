@@ -50,7 +50,7 @@ public class DuckHuntUsageDemo {
 
     } catch (IllegalParameterException e) {
       throw new RuntimeException(e);
-    } catch (IllegalGameStateException e) {
+    } catch (IllegalGameInfoException e) {
       throw new RuntimeException(e);
     } catch (IllegalDuckIdException e) {
       throw new RuntimeException(e);

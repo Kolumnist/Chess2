@@ -96,7 +96,7 @@ public class DuckHunt implements Runnable, DuckHuntService {
             try {
               listener.newState(gameInfo);
               listener.newDuckPosition(new DucksInfo(ducks));
-            } catch (IllegalGameStateException e) {
+            } catch (IllegalGameInfoException e) {
               throw new RuntimeException(e);
             } catch (IllegalDuckPositionException e) {
               throw new RuntimeException(e);
