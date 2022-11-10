@@ -13,8 +13,12 @@ public class SfsMemoryService implements MemoryService {
           org.slf4j.LoggerFactory.getLogger(SfsMemoryService.class);
 
   private Map<Integer, PictureCard> cards;
+  private Map<Integer, String> pictureReferences;
 
-  public SfsMemoryService() { cards = new HashMap<>(); }
+  public SfsMemoryService() {
+    cards = new HashMap<>();
+    pictureReferences = new HashMap<>();
+  }
 
   private PictureCard getPictureCardById(int id) throws IllegalParameterException {
     logger.info("getPictureCardById: id = {}", id);
@@ -105,10 +109,12 @@ public class SfsMemoryService implements MemoryService {
     }
   }
 
-  private boolean matchCards(PictureCard a, PictureCard b) {
-    //wenn hier die Picture Reference (a.getPicRef) auf einen String verweist, der dem Namen der anderen Karte (b.Name) entspricht,
-    //beide Karten sind matched, boolean true
-    //wenn nicht boolean false
-    return false;
+  private boolean matchCards(PictureCard picture, PictureCard name) throws IllegalParameterException {
+    if(pictureReferences.containsKey(picture.getPictureCard().getPictureRef())) {
+      String picCard = pictureReferences.get(picture.getPictureCard().getPictureRef()).toLowerCase();
+      return name.getPictureCard().getName().toLowerCase().equals(picCard);
+    } else {
+      throw new IllegalParameterException("PictureCard has no appropriate picture reference.") ;
+    }
   }
 }
