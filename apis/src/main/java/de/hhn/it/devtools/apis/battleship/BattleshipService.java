@@ -30,14 +30,16 @@ public interface BattleshipService {
 
     /**
      * check if possible to place
+     * //TODO: Ausrichtung als Parameter hinzufügen
      *
      * @param shipToPlace ship object
      * @param x1          x start coordinate of the ship
      * @param y1          y start coordinate of the ship
+     * @param isVertical  true if ship is vertical, false if ship is horizontal
      * @return placing (not)possible
      * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
-    boolean isPlacementPossible(Ship shipToPlace, int x1, int y1) throws IllegalGameStateException;
+    boolean isPlacementPossible(Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException;
 
 
     /**
@@ -55,15 +57,13 @@ public interface BattleshipService {
     ;
 
 
-    //@TODO namen ausdiskutieren
-
     /**
      * allows the ship to be moved
      *
      * @param shipToMove selected ship to be moved
      * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
-    void moveShip(Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException;
+    void unPlace(Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException;
 
 
     /**
