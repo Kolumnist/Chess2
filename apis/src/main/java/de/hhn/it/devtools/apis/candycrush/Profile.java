@@ -4,20 +4,41 @@ package de.hhn.it.devtools.apis.candycrush;
  */
 public class Profile {
     // Profile ID
-    private final int id;
+    private String userName;
+    private int score;
     /**
      * Create a new user profile.
      *
-     * @param name the name of the profile
+     * @param userName the name of the profile
      */
-    public Profile(String name) {
-        id = 0;
+    public Profile(String userName) {
+        this.userName = userName;
+        score = 0;
     }
     /**
-     * Get the ID of the user profile. (return)
+     * Get the UserName of the user profile.
+     * @return userName.
      */
-    public int getId() {
-        return id;
+    public String getUserName() {
+        return userName;
     }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    /**
+     * Returns the score.
+     */
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+
+
 
 }
