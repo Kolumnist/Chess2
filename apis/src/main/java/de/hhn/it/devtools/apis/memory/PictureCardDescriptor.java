@@ -73,4 +73,11 @@ public class PictureCardDescriptor {
   public int getId() {
     return id;
   }
+
+  /**
+   * Sets the ID of of the card.
+   *
+   * @param id of the card
+   */
+  public void setId(int id) { this.id = id; }
 }
