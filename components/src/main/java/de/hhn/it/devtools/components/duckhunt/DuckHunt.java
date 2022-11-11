@@ -27,9 +27,9 @@ public class DuckHunt implements Runnable, DuckHuntService {
   private DuckData[] ducks;
   private int ammoCount;
   private int duckCount;
+  private int missedCount = 15;
   private final int gunSpread = 5;
   private final Semaphore semaphore = new Semaphore(0);
-  private boolean isRunning = false;
 
   /**
    * Default constructor with standard game settings.
@@ -70,6 +70,8 @@ public class DuckHunt implements Runnable, DuckHuntService {
    */
   @Override
   public void shoot(int x, int y) {
+    // TODO ERROR Handling shoot
+    /*if (gameInfo.getState() != GameState.RUNNING) throw new Exception();*/
     for (DuckData duck : ducks) {
       if (duck.getStatus() == DuckState.DEAD) {
         continue;
@@ -108,9 +110,8 @@ public class DuckHunt implements Runnable, DuckHuntService {
         case FLYING -> moveDuck(duck);
         case SCARRED -> duck.setStatus(DuckState.FALLING);
         case FALLING -> dropDuck(duck);
-        case FLYAWAY -> {
-          continue;
-        }
+        case FLYAWAY -> { /*flyaway is not used in this method*/ }
+        case DEAD -> { /*dead is not used in this method*/ }
         default -> throw new IllegalStateException("Unexpected value: " + duck.getStatus());
       }
     }
@@ -152,38 +153,70 @@ public class DuckHunt implements Runnable, DuckHuntService {
 
   @Override
   public void startGame() {
+    gameInfo.setState(GameState.RUNNING);
+    new Thread(this).start();
     listeners.forEach(
             listener -> {
               try {
                 listener.newState(gameInfo);
-                listener.newDuckPosition(new DucksInfo(ducks));
               } catch (IllegalGameInfoException e) {
-                throw new RuntimeException(e);
-              } catch (IllegalDuckPositionException e) {
                 throw new RuntimeException(e);
               }
             });
-    isRunning = true;
-    new Thread(this).start();
   }
 
   @Override
   public void stopGame() {
-    isRunning = false;
+    gameInfo.setState(GameState.GAMEOVER);
+    listeners.forEach(
+            listener -> {
+              try {
+                listener.newState(gameInfo);
+              } catch (IllegalGameInfoException e) {
+                throw new RuntimeException(e);
+              }
+            });
   }
 
   @Override
   public void pauseGame() {
+    gameInfo.setState(GameState.PAUSED);
     try {
       semaphore.tryAcquire(10, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
       throw new RuntimeException(e);
     }
+    listeners.forEach(
+            listener -> {
+              try {
+                listener.newState(gameInfo);
+              } catch (IllegalGameInfoException e) {
+                throw new RuntimeException(e);
+              }
+            });
   }
 
   @Override
   public void continueGame() {
+    gameInfo.setState(GameState.RUNNING);
     semaphore.release();
+    listeners.forEach(
+            listener -> {
+              try {
+                listener.newState(gameInfo);
+              } catch (IllegalGameInfoException e) {
+                throw new RuntimeException(e);
+              }
+            });
+  }
+
+  private boolean checkGameOver() {
+    for (DuckData duck : ducks) {
+      if (duck.getStatus() == DuckState.FLYAWAY) {
+        missedCount--;
+      }
+    }
+    return missedCount <= 0;
   }
 
   @Override
@@ -208,7 +241,7 @@ public class DuckHunt implements Runnable, DuckHuntService {
   @Override
   public void run() {
     // main game loop
-    while (isRunning) {
+    while (gameInfo.getState() == GameState.RUNNING || gameInfo.getState() == GameState.PAUSED) {
       try {
         // waits if game is paused
         semaphore.tryAcquire(Integer.MAX_VALUE, TimeUnit.DAYS);
@@ -231,12 +264,16 @@ public class DuckHunt implements Runnable, DuckHuntService {
           });
 
       if (checkRoundComplete()) {
-        newRound();
-        try {
-          // timeout between rounds
-          Thread.sleep(4000);
-        } catch (InterruptedException e) {
-          throw new RuntimeException(e);
+        if (checkGameOver()) {
+          stopGame();
+        } else {
+          newRound();
+          try {
+            // timeout between rounds
+            Thread.sleep(4000);
+          } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+          }
         }
       }
 
