@@ -1,6 +1,12 @@
 package de.hhn.it.devtools.apis.duckhunt;
 
 /**
- * This Record saves information about the current games state.
+ * Enum to represent the different states a DuckHunt-Game can be in.
+ * Stored in the GameInfo-Class.
  */
-public record GameState(int playerScore, int ammo, int round) {}
+public enum GameState {
+  /** The State of the DuckHunt-Game when the game is running. */
+  RUNNING,
+  /** The State of the DuckHunt-Game when the game is paused. */
+  PAUSED
+}
