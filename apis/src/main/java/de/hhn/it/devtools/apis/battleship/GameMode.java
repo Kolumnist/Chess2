@@ -5,8 +5,6 @@ package de.hhn.it.devtools.apis.battleship;
  */
 
 public enum GameMode {
-    /** Player vs player */
-    PVP,
     /** Player vs computer */
     PVC
 }

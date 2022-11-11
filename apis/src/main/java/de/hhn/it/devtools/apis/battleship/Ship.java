@@ -1,5 +1,7 @@
 package de.hhn.it.devtools.apis.battleship;
 
+import java.util.UUID;
+
 /**
  * creates ship objects.
  */
@@ -13,7 +15,8 @@ public class Ship {
     //fieldPosition is always the panel at the top or at the left of the ship
     private Position fieldPosition;
     private boolean placed;
-    private Spieler besitzer;
+    private Player besitzer;
+    //private String id;
 
 
     /**
@@ -24,6 +27,7 @@ public class Ship {
     Ship (ShipTypes ShipSize, Position fieldPosition){
         this.size = ShipSize.getShipSize();
         this.fieldPosition = fieldPosition;
+        //this.setID();
     }
 
 
@@ -34,4 +38,11 @@ public class Ship {
         return size;
     }
 
+    /*
+     * Sets the ID of the ship to a unique id (only guarantees distinctivness inside 1 jvm
+     * not sure if this is already too much of implementation for the faccade
+    private void setID(){
+        this.id = UUID.randomUUID().toString();
+    }
+     */
 }

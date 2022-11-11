@@ -1,13 +1,14 @@
 package chess2;
 
 import de.hhn.it.devtools.apis.chess2.Chess2Service;
+import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.Piece;
 
 import java.util.ArrayList;
 
 /**
- * This demo uses all methods and shows 2 different scenarios
+ * This demo uses all methods and shows 2 different scenarios.
  *
  * @author Collin, Lara, Michel
  * @version 1.1
@@ -17,11 +18,10 @@ public class DemoChess2Usage {
   public static void main(String[] args) throws Exception {
     Chess2Service service = null;
 
-    service.openRules();
     service.startNewGame();
 
-    ArrayList<int[]> piecePos = new ArrayList<>();
-    ArrayList<int[]> possibleMoves = new ArrayList<>();
+    Coordinate[] pieceCoordinates = new Coordinate[17];
+    Coordinate[] possibleMoves = new Coordinate[0]; // A piece can have 0 - 61 possible moves
     Piece piece = null;
     FieldState fieldState = null;
 
@@ -30,11 +30,10 @@ public class DemoChess2Usage {
      * 2. The GUI gets the FieldState
      * 3. Piece is moved on new position
      * More: Players get switched and all fields get their states updated */
-    piecePos = service.getCurrentFields();
-    possibleMoves = service.getPossibleMoves(piecePos.get(1));
-    fieldState = service.getFieldState(piecePos.get(2));
-    service.moveSelectedPiece(possibleMoves.get(2));
-    piecePos = new ArrayList<>();
+    pieceCoordinates = service.getCurrentFields();
+    possibleMoves = service.getPossibleMoves(pieceCoordinates[1]);
+    fieldState = service.getFieldState(pieceCoordinates[2]);
+    service.moveSelectedPiece(possibleMoves[2]);
 
     /* Second players turn:
      * 1. We have to activate all current pieceFieldButtons
@@ -42,12 +41,11 @@ public class DemoChess2Usage {
      * 3. Piece is moved on new position
      * 4. A king/queen gets send to jail before the players switch
      * More: Players get switched and all fields get their states updated */
-    piecePos = service.getCurrentFields();
-    possibleMoves = service.getPossibleMoves(piecePos.get(8));
-    fieldState = service.getFieldState(piecePos.get(10));
-    service.setPieceInJail(possibleMoves.get(10), piecePos.get(67));
-    service.moveSelectedPiece(possibleMoves.get(10));
-    piecePos = new ArrayList<>();
+    pieceCoordinates = service.getCurrentFields();
+    possibleMoves = service.getPossibleMoves(pieceCoordinates[8]);
+    fieldState = service.getFieldState(pieceCoordinates[10]);
+    service.setPieceInJail(possibleMoves[10], pieceCoordinates[67]);
+    service.moveSelectedPiece(possibleMoves[10]);
 
     /* Starting players turn:
      * 1. He gives up
@@ -72,14 +70,14 @@ public class DemoChess2Usage {
      * 5. Monkey is moved on new position that has a king on it
      * 6. The king gets send to jail before the players switch
      * More: A player loses, player ends the game completely */
-    piecePos = service.getCurrentFields();
-    possibleMoves = service.getPossibleMoves(piecePos.get(21));
-    fieldState = service.getFieldState(piecePos.get(37));
-    service.moveSelectedPiece(possibleMoves.get(37));
-    possibleMoves = service.getPossibleMoves(piecePos.get(37));
-    fieldState = service.getFieldState(piecePos.get(53));
-    service.setPieceInJail(possibleMoves.get(53), piecePos.get(67));
-    service.moveSelectedPiece(possibleMoves.get(53));
+    pieceCoordinates = service.getCurrentFields();
+    possibleMoves = service.getPossibleMoves(pieceCoordinates[21]);
+    fieldState = service.getFieldState(pieceCoordinates[37]);
+    service.moveSelectedPiece(possibleMoves[37]);
+    possibleMoves = service.getPossibleMoves(pieceCoordinates[37]);
+    fieldState = service.getFieldState(pieceCoordinates[53]);
+    service.setPieceInJail(possibleMoves[53], pieceCoordinates[67]);
+    service.moveSelectedPiece(possibleMoves[53]);
     service.getWinningPlayer();
     service.endGame();
   }

@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.apis.battleship;
 
 /**
- * to give every battleship it's own position on the field
+ * to give every battleship its own position on the field
  */
 
 public class Position {
