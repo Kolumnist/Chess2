@@ -1,12 +1,13 @@
 package de.hhn.it.devtools.apis.reactiongame;
 
 
+
 public interface ReactiongameListener {
-  void addAimTarget(AimTarget aimtarget);
+  void addAimTarget(AimTargetDescriptor aimtarget);
 
-  void removeAimTarget(int aimtargetId);
+  void removeAimTarget(int aimTargetId);
 
-  void addObstacle(Obstacle obstacle);
+  void addObstacle(ObstacleDescriptor obstacle);
 
   void removeObstacle(int obstacleId);
 
