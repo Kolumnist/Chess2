@@ -52,7 +52,7 @@ public class DuckHunt implements Runnable, DuckHuntService {
   }
 
   private void init() {
-    this.gameInfo = new GameInfo(0, gameSettings.getAmmoAmount(), 1, GameState.RUNNING);
+    this.gameInfo = new GameInfo(0, gameSettings.getAmmoAmount(), 1);
     this.listeners = new ArrayList<>();
     ammoCount = gameSettings.getAmmoAmount();
     duckCount = gameSettings.getduckAmount();
@@ -108,6 +108,9 @@ public class DuckHunt implements Runnable, DuckHuntService {
         case FLYING -> moveDuck(duck);
         case SCARRED -> duck.setStatus(DuckState.FALLING);
         case FALLING -> dropDuck(duck);
+        case FLYAWAY -> {
+          continue;
+        }
         default -> throw new IllegalStateException("Unexpected value: " + duck.getStatus());
       }
     }
@@ -149,6 +152,17 @@ public class DuckHunt implements Runnable, DuckHuntService {
 
   @Override
   public void startGame() {
+    listeners.forEach(
+            listener -> {
+              try {
+                listener.newState(gameInfo);
+                listener.newDuckPosition(new DucksInfo(ducks));
+              } catch (IllegalGameInfoException e) {
+                throw new RuntimeException(e);
+              } catch (IllegalDuckPositionException e) {
+                throw new RuntimeException(e);
+              }
+            });
     isRunning = true;
     new Thread(this).start();
   }
