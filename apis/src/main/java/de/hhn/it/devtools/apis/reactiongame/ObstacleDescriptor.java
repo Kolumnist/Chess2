@@ -1,6 +1,10 @@
 package de.hhn.it.devtools.apis.reactiongame;
 
+/**
+ * Describes an obstacle: x and y of the top left and bottom right corner.
+ */
 public class ObstacleDescriptor {
+
 
   private final int x1;
   private final int y1;
@@ -9,6 +13,14 @@ public class ObstacleDescriptor {
   private final int y2;
 
 
+  /**
+   * Basic constructor for an obstacle.
+   *
+   * @param x1 top left x
+   * @param y1 top left y
+   * @param x2 bottom right x
+   * @param y2 bottom right y
+   */
   public ObstacleDescriptor(int x1, int y1, int x2, int y2) {
     this.x1 = x1;
     this.y1 = y1;
