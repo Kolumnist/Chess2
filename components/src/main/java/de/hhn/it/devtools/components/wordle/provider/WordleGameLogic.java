@@ -5,10 +5,13 @@ import de.hhn.it.devtools.apis.wordle.IllegalGuessException;
 import de.hhn.it.devtools.apis.wordle.WordleGuess;
 import de.hhn.it.devtools.apis.wordle.WordlePanelListener;
 import de.hhn.it.devtools.apis.wordle.WordleService;
+import java.security.SecureRandom;
 
 public class WordleGameLogic implements WordleService{
 
+  private String currentWordleSolution;
   private String previousWordleSolution;
+  private SecureRandom rng = new SecureRandom();
   @Override
   public void startGame() {
     String newSolution = selectWordle();
@@ -28,7 +31,9 @@ public class WordleGameLogic implements WordleService{
   }
   @Override
   public String selectWordle() {
-    return null;
+    int randomInt = rng.nextInt(WordleSolutionSelector.getSolutionListLength());
+    currentWordleSolution = WordleSolutionSelector.accessListAtIndex(randomInt);
+    return currentWordleSolution;
   }
 
   @Override
