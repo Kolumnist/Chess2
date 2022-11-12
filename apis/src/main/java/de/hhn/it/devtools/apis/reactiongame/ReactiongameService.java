@@ -3,6 +3,9 @@ package de.hhn.it.devtools.apis.reactiongame;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 
+/**
+ * Interface for the reaction game.
+ */
 public interface ReactiongameService {
 
   /**
@@ -37,4 +40,19 @@ public interface ReactiongameService {
    * Pauses the timer when a run is paused.
    */
   void pauseTimer();
+
+  /**
+   * Adds a listener to the service.
+   *
+   * @param listener listener
+   * @param id identifier
+   */
+  void addCallback(ReactiongameListener listener, int id);
+
+  /**
+   * Removes listener with the given id.
+   *
+   * @param id identifier
+   */
+  void removeCallback(int id);
 }
