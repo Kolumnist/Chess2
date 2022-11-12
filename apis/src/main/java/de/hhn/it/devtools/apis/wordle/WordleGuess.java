@@ -43,4 +43,12 @@ public class WordleGuess {
   public void deleteLetterAtIndex(int index) {
     wordleWord[index].deleteLetter();
   }
+
+  public String getWordleGuessAsString() {
+    StringBuilder wordleGuessAsString = new StringBuilder();
+    for (WordlePanel wordlePanel : wordleWord) {
+      wordleGuessAsString.append(wordlePanel.getLetter());
+    }
+    return String.valueOf(wordleGuessAsString);
+  }
 }
