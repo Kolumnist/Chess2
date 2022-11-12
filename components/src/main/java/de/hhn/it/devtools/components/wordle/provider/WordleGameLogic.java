@@ -1,10 +1,8 @@
 package de.hhn.it.devtools.components.wordle.provider;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.apis.wordle.IllegalGuessException;
-import de.hhn.it.devtools.apis.wordle.WordleGuess;
-import de.hhn.it.devtools.apis.wordle.WordlePanelListener;
-import de.hhn.it.devtools.apis.wordle.WordleService;
+import de.hhn.it.devtools.apis.wordle.*;
+
 import java.security.SecureRandom;
 
 public class WordleGameLogic implements WordleService{
@@ -37,8 +35,36 @@ public class WordleGameLogic implements WordleService{
   }
 
   @Override
-  public boolean validateWordleGuess(WordleGuess guess) throws IllegalGuessException {
-    return false;
+  public boolean validateWordleGuess(WordleGuess guess) {
+    String enteredWordleGuess = guess.getWordleGuessAsString().toLowerCase();
+    WordlePanel[] wordlePanels = guess.getWordleWord();
+    if(enteredWordleGuess.equals(currentWordleSolution.toLowerCase())) { // checks if entered Guess is equal solution
+      for (WordlePanel panel : guess.getWordleWord()) {
+        panel.setState(State.CORRECT);
+      }
+      return true;
+    }
+    for (WordlePanel panel : guess.getWordleWord()) { // checks if entered Guess is five characters long
+      try {
+        if (panel.getLetter() == ' ')
+          throw new IllegalGuessException("Wordle guess does not contain five valid characters!");
+      } catch (IllegalGuessException exception) {
+        System.out.println(exception + " Please enter a valid Wordle Guess!");
+        return false;
+      }
+    }
+    for (int i = 0; i < guess.getWordleWord().length; i++) {
+      if (enteredWordleGuess.charAt(i) == currentWordleSolution.charAt(i)) {
+        wordlePanels[i].setState(State.CORRECT);
+      }
+      else if (currentWordleSolution.contains(Character.toString(enteredWordleGuess.charAt(i)))) {
+        wordlePanels[i].setState(State.PARTIALLY_CORRECT);
+      }
+      else {
+        wordlePanels[i].setState(State.FALSE);
+      }
+    }
+    return true;
   }
 
   @Override
