@@ -14,6 +14,7 @@ public class WordleGuess {
   public WordleGuess(String word) {
     for (int i = 0; i < wordleWord.length; i++) {
       wordleWord[i] = new WordlePanel(word.charAt(i), i);
+      wordleWord[i].setState(State.INITIAL);
     }
   }
 
@@ -33,6 +34,10 @@ public class WordleGuess {
    */
   public void setLetterAtIndex(int index, char letter) {
     wordleWord[index].setLetter(letter);
+  }
+
+  public char getLetterAtIndex(int index) {
+    return wordleWord[index].getLetter();
   }
 
   /**
