@@ -10,8 +10,9 @@ public interface ReactiongameListener {
    * Adds an aim target to the ui.
    *
    * @param aimTarget aim target
+   * @throws IllegalStateException if game is running
    */
-  void addAimTarget(AimTargetDescriptor aimTarget);
+  void addAimTarget(AimTargetDescriptor aimTarget) throws IllegalStateException;
 
   /**
    * Removes the aim target with the given id.
@@ -25,15 +26,17 @@ public interface ReactiongameListener {
    * Adds an obstacle to the ui.
    *
    * @param obstacle obstacle
+   * @throws IllegalStateException if the game is running
    */
-  void addObstacle(ObstacleDescriptor obstacle);
+  void addObstacle(ObstacleDescriptor obstacle) throws IllegalStateException;
 
   /**
    * Removes obstacle with the given id.
    *
    * @param obstacleId identifier
+   * @throws IllegalStateException if the game is running
    */
-  void removeObstacle(int obstacleId);
+  void removeObstacle(int obstacleId) throws IllegalStateException;
 
   /**
    * Player hits obstacle.
@@ -67,8 +70,4 @@ public interface ReactiongameListener {
    */
   void gameStateChanged(GameState state) throws IllegalStateException;
 
-  /**
-   * Game is finished.
-   */
-  void gameOver();
 }
