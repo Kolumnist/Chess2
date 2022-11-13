@@ -26,6 +26,22 @@ public class AimTargetDescriptor {
     this.key = key;
   }
 
+  public int getX() {
+    return x;
+  }
+
+  public int getY() {
+    return y;
+  }
+
+  public int getR() {
+    return r;
+  }
+
+  public char getKey() {
+    return key;
+  }
+
   @Override
   public String toString() {
     return "AimTargetDescriptor{" +
