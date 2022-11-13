@@ -39,7 +39,7 @@ public interface ReactiongameListener {
   void removeObstacle(int obstacleId) throws IllegalStateException;
 
   /**
-   * Player hits obstacle.
+   * Player hits an obstacle.
    *
    * @param obstacleId identifier of obstacle which is hit
    * @throws IllegalStateException if the game is running
@@ -47,7 +47,7 @@ public interface ReactiongameListener {
   void hitObstacle(int obstacleId) throws IllegalStateException;
 
   /**
-   * Player loses life.
+   * Player loses a life.
    *
    * @throws IllegalStateException if game is running
    */
@@ -77,5 +77,17 @@ public interface ReactiongameListener {
    * @param y position
    */
   void updateCourserPosition(int x, int y);
+
+  /**
+   * Reacts if the player presses a key.
+   *
+   * @param key key pressed
+   */
+  void keyPressed(char key);
+
+  /**
+   * Ends the run.
+   */
+  void endRun();
 
 }
