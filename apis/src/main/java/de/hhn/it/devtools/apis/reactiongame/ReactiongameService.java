@@ -31,7 +31,7 @@ public interface ReactiongameService {
   void continueRun();
 
   /**
-   * Exit the run, to return to the main menu.
+   * End run.
    */
   void endRun();
 
@@ -59,14 +59,4 @@ public interface ReactiongameService {
    * @param id identifier
    */
   void removeCallback(int id);
-
-
-  /**
-   * Changes the game state to given parameter.
-   *
-   * @param state new game state
-   * @return the new game state (possibility the game does not allow a change)
-   */
-  GameState setGameState(GameState state);
-
 }

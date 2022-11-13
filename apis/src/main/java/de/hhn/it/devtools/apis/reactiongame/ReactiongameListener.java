@@ -9,9 +9,9 @@ public interface ReactiongameListener {
   /**
    * Adds an aim target to the ui.
    *
-   * @param aimtarget aim target
+   * @param aimTarget aim target
    */
-  void addAimTarget(AimTargetDescriptor aimtarget);
+  void addAimTarget(AimTargetDescriptor aimTarget);
 
   /**
    * Removes the aim target with the given id.
@@ -58,4 +58,17 @@ public interface ReactiongameListener {
    * @throws IllegalStateException if the game is running
    */
   void aimTargetHit(char keyPressed, int aimTargetId) throws IllegalStateException;
+
+  /**
+   * Changes the state of the game
+   *
+   * @param state new state
+   * @throws IllegalStateException if state equals the current state
+   */
+  void gameStateChanged(GameState state) throws IllegalStateException;
+
+  /**
+   * Game is finished.
+   */
+  void gameOver();
 }
