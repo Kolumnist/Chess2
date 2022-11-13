@@ -18,11 +18,15 @@ public interface ReactiongameService {
 
   /**
    * Pauses the run and the timer.
+   *
+   * @throws IllegalStateException if the game is already paused
    */
-  void pauseRun();
+  void pauseRun() throws IllegalStateException;
 
   /**
    * Continues a paused run.
+   *
+   * @throws IllegalStateException if the game is not paused
    */
   void continueRun();
 
