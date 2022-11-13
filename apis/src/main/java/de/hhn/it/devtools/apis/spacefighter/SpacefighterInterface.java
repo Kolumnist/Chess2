@@ -1,6 +1,4 @@
 package de.hhn.it.devtools.apis.spacefighter;
-import de.hhn.it.devtools.apis.spacefighter.Exception.NoMoreRoomException;
-import de.hhn.it.devtools.apis.spacefighter.Exception.IllegalParameterExeption;
 import de.hhn.it.devtools.apis.spacefighter.Exception.MissTheEnemieException;
 import de.hhn.it.devtools.apis.spacefighter.Exception.NotReachedScoreException;
 
@@ -15,26 +13,34 @@ public interface SpacefighterInterface {
     void initializeGame();
 
     /**
-     * Lets the player move the figure.
-     * @param x is the position of the figure.
-     * @throws NoMoreRoomException if the border on the right or on the left side is reached.
+     * Pause the game
      */
-    void moveCharacter(int x) throws NoMoreRoomException;
+    void pauseGame();
 
     /**
+     * End the current game or user quiting the game
+     */
+    void endGame();
+
+    /**
+     * End the game if user lost
+     */
+    void GameOver();
+
+    /**X
      * Lets the player start or close the game.
      * @param start Lets the player start the game.
      * @param close Lets the player close the game.
      * @param options Lets the player change specific options.
      */
-    void mainMenu(String start, String close, String options);
+    //void mainMenu(String start, String close, String options);
 
     /**
      * Lets the player pause the game.
      * @param resume Lets the player resume the game.
      * @param quit Lets the player quit the game.
      */
-    void ingameMenu(String resume, String quit);
+    //void ingameMenu(String resume, String quit);
 
     /**
      * Lets the player kill the enemy.
@@ -56,4 +62,17 @@ public interface SpacefighterInterface {
      * @throws NotReachedScoreException if the given score was not reached.
      */
     void spwaningEnemies(int score) throws NotReachedScoreException;
+
+    /**
+     * adds an Callback.
+     * @param listener adds the Callback.
+     */
+    void addCallback(SpaceFighterListener listener);
+
+    /**
+     * adds can Callback.
+     * @param listener remove the Callback.
+     */
+    void removeCallback(SpaceFighterListener listener);
+
 }
