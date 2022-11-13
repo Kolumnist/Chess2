@@ -68,6 +68,14 @@ public interface ReactiongameListener {
    * @param state new state
    * @throws IllegalStateException if state equals the current state
    */
-  void gameStateChanged(GameState state) throws IllegalStateException;
+  void changeGameState(GameState state) throws IllegalStateException;
+
+  /**
+   * Changes the x, y values of the courser position
+   *
+   * @param x position
+   * @param y position
+   */
+  void updateCourserPosition(int x, int y);
 
 }
