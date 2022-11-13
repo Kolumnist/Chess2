@@ -27,9 +27,14 @@ public interface ReactiongameService {
   void continueRun();
 
   /**
-   * Exit the run, to return to the main menu.
+   * End run.
    */
   void endRun();
+
+  /**
+   * Game is finished.
+   */
+  void gameOver();
 
   /**
    * Starts the timer when a new run starts.
