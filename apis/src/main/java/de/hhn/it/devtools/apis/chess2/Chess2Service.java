@@ -13,14 +13,18 @@ public interface Chess2Service {
   /**
    * Build board with all fields, place pieces on the board, sets fields,
    * set the starting player and inform the players about who starts.
+   *
+   * @return Board of the game
    */
-  void startNewGame();
+  Board startNewGame();
 
   /**
    * Resets the board and pieces and the kings bananas. Assigns the pieces to their players
    * and sets the starting player, informs the players about who starts.
+   *
+   * @return Board of the game
    */
-  void reset();
+  Board reset();
 
   /**
    * Destroys an instance of ChessGame and brings scene back to main menu.
