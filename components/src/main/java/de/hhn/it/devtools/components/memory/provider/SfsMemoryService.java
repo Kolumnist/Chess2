@@ -15,7 +15,7 @@ public class SfsMemoryService implements MemoryService {
   private Map<Integer, PictureCard> cards;
   private Map<Integer, String> pictureReferences;
 
-  private List<TimerListener> listeners;
+  SfsTimer timer;
 
   public SfsMemoryService() {
     cards = new HashMap<>();
@@ -69,29 +69,13 @@ public class SfsMemoryService implements MemoryService {
   @Override
   public void addCallback(TimerListener listener) throws IllegalParameterException {
     logger.info("addCallback: listener = {}", listener);
-    if (listener == null) {
-      throw new IllegalParameterException("Listener was null reference.");
-    }
-
-    if (listeners.contains(listener)) {
-      throw new IllegalParameterException("Listener already registered.");
-    }
-
-    listeners.add(listener);
+    timer.addCallback(listener);
   }
 
   @Override
   public void removeCallback(TimerListener listener) throws IllegalParameterException {
-    logger.info("removeCallback: listener = {}");
-    if (listener == null) {
-      throw new IllegalParameterException("Listener was null reference.");
-    }
-
-    if (!listeners.contains(listener)) {
-      throw new IllegalParameterException("Listener is not registered:" + listener);
-    }
-
-    listeners.remove(listener);
+    logger.info("removeCallback: id = {}, listener = {}");
+    timer.removeCallback(listener);
   }
 
   @Override
