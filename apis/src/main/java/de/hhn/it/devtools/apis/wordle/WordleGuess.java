@@ -49,6 +49,10 @@ public class WordleGuess {
     wordleWord[index].deleteLetter();
   }
 
+  /**
+   * Method that returns the contents of the WordlePanel Array as a String
+   * @return String that contains the guess as a String
+   */
   public String getWordleGuessAsString() {
     StringBuilder wordleGuessAsString = new StringBuilder();
     for (WordlePanel wordlePanel : wordleWord) {
