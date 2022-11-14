@@ -3,6 +3,7 @@ package de.hhn.it.devtools.apis.memory;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import java.util.List;
+import java.util.Timer;
 
 
 /**
@@ -56,6 +57,18 @@ public interface MemoryService {
    *                                   or the listener is a null reference
    */
   void removeCallback(int id, PictureCardListener listener) throws IllegalParameterException;
+
+  /**
+   * Adds a listener to get information about the time.
+   * @param listener listener to be added
+   */
+  void addCallback(TimerListener listener);
+
+  /**
+   * Removes a listener.
+   * @param listener listener to be removed.
+   */
+  void removeCallback(TimerListener listener);
 
   /**
    * Returns a list of the cards in the current game.
