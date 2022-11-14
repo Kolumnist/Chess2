@@ -9,7 +9,7 @@ public class WordleGameLogic implements WordleService{
 
   private String currentWordleSolution;
   private String previousWordleSolution;
-  private SecureRandom rng = new SecureRandom();
+  private SecureRandom csprng = new SecureRandom();
   @Override
   public void startGame() {
     String newSolution = selectWordle();
@@ -29,7 +29,7 @@ public class WordleGameLogic implements WordleService{
   }
   @Override
   public String selectWordle() {
-    int randomInt = rng.nextInt(WordleSolutionSelector.getSolutionListLength());
+    int randomInt = csprng.nextInt(WordleSolutionSelector.getSolutionListLength());
     currentWordleSolution = WordleSolutionSelector.accessListAtIndex(randomInt);
     return currentWordleSolution;
   }
