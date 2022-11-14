@@ -31,7 +31,7 @@ public class SfsMemoryService implements MemoryService {
   }
 
   @Override
-  public void newGame(Difficulty difficulty) throws IllegalParameterException {
+  public void newGame(Difficulty difficulty, PictureCardDescriptor[] pictureCardDescriptors, HashMap<Integer, String> picReferences) throws IllegalParameterException {
 
   }
 
@@ -42,13 +42,14 @@ public class SfsMemoryService implements MemoryService {
 
   @Override
   public void closeGame() {
-
+    cards.clear();
+    pictureReferences.clear();
   }
 
   @Override
-  public void changeDifficulty(Difficulty difficulty) throws IllegalParameterException {
+  public void changeDifficulty(Difficulty difficulty, PictureCardDescriptor[] pictureCardDescriptors, HashMap<Integer, String> picReferences) throws IllegalParameterException {
     closeGame();
-    newGame(difficulty);
+    newGame(difficulty, pictureCardDescriptors,picReferences);
   }
 
   @Override
@@ -123,13 +124,17 @@ public class SfsMemoryService implements MemoryService {
     }
   }
 
-  @Override
+
   public void fetchCards(PictureCardDescriptor[] cardDescriptors) throws IllegalParameterException {
     for (PictureCardDescriptor c: cardDescriptors) {
       PictureCard pictureCard = new SfsPictureCard(c);
       cards.put(pictureCard.getPictureCard().getId(), pictureCard);
       }
 
+  }
+
+  public void fetchPicReferences(HashMap<Integer, String> picReferences) throws IllegalParameterException{
+    pictureReferences = (Map<Integer, String>) picReferences.clone();
   }
 
   private boolean matchCards(PictureCard picture, PictureCard name) throws IllegalParameterException {

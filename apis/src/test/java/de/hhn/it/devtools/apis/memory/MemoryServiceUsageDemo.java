@@ -2,6 +2,7 @@ package de.hhn.it.devtools.apis.memory;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,6 +14,11 @@ public class MemoryServiceUsageDemo {
 
   public static void main(String[] args) throws IllegalParameterException {
     MemoryService memoryService = null;
+
+    //empty picture card descriptor array and picture reference
+    PictureCardDescriptor[] pictureCardDescriptors = null;
+    HashMap<Integer, String> picReferences = null;
+
 
     //register two picture cards
     PictureCardDescriptor pictureCardDescriptor1 = new PictureCardDescriptor(1, 1, "x");
@@ -32,7 +38,7 @@ public class MemoryServiceUsageDemo {
     logger.info("turned around " + descriptor0);
 
     //create new game
-    memoryService.newGame(Difficulty.EASY);
+    memoryService.newGame(Difficulty.EASY, pictureCardDescriptors, picReferences);
     logger.info("created EASY game");
 
     //start the timer
@@ -40,7 +46,7 @@ public class MemoryServiceUsageDemo {
     logger.info("timer started");
 
     //change the difficulty
-    memoryService.changeDifficulty(Difficulty.MEDIUM);
+    memoryService.changeDifficulty(Difficulty.MEDIUM, pictureCardDescriptors, picReferences);
     logger.info("changed the difficulty to MEDIUM");
 
     //close the game
