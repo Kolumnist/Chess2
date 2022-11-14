@@ -5,7 +5,7 @@ package de.hhn.it.devtools.apis.wordle;
  */
 
 public class IllegalGuessException extends Exception {
-
+//test
   public IllegalGuessException(String message) {
     super(message);
   }
