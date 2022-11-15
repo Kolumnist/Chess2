@@ -12,17 +12,17 @@ public abstract class Piece {
   /**
    * Holds all possible x,y coordinates of the piece where it can move.
    */
-  Coordinate[] possibleMoves = new Coordinate[0];
+  protected Coordinate[] possibleMoves = new Coordinate[0];
 
   /**
    * Current position of the piece.
    */
-  Coordinate coordinate = new Coordinate();
+  protected Coordinate coordinate = new Coordinate();
 
   /**
    * gives the piece a color
    */
-  char color;
+  protected char color;
 
 
   /**
@@ -38,7 +38,7 @@ public abstract class Piece {
   /**
    * This method calculates the possible moves of the piece
    */
-  abstract void calculate();
+  protected abstract void calculate();
 
 
   /**
