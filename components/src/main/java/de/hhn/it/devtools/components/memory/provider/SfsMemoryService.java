@@ -32,7 +32,8 @@ public class SfsMemoryService implements MemoryService {
 
   @Override
   public void newGame(Difficulty difficulty, PictureCardDescriptor[] pictureCardDescriptors, HashMap<Integer, String> picReferences) throws IllegalParameterException {
-
+    fetchCards(pictureCardDescriptors);
+    fetchPicReferences(picReferences);
   }
 
   @Override
