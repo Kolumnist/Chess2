@@ -6,6 +6,23 @@ import java.util.List;
  * This is an interface to the game Connect Four.
  */
 public interface ConnectFour {
+
+  /**
+   * Adds a listener to get updates on the state of the game or the current match.
+   *
+   * @param listener object implementing the listener interface
+   * @throws IllegalArgumentException if the listener reference is null
+   */
+  void addCallback(ConnectFourListener listener) throws IllegalArgumentException;
+
+  /**
+   * Removes a listener.
+   *
+   * @param listener object implementing the listener interface
+   * @throws IllegalArgumentException if the listener reference is null
+   */
+  void removeCallback(ConnectFourListener listener) throws IllegalArgumentException;
+
   /**
    * Create a new user profile.
    *
