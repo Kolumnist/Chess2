@@ -34,9 +34,12 @@ public abstract class Piece {
     return possibleMoves;
   }
 
-  /*private void calculate() {   -> muss in die einzelnen Piece Klassen
 
-  }*/
+  /**
+   * This method calculates the possible moves of the piece
+   */
+  abstract void calculate();
+
 
   /**
    * Sets the new coordinate.
@@ -45,6 +48,24 @@ public abstract class Piece {
    */
   void setCoordinate(Coordinate coordinate) {
     this.coordinate = coordinate;
+  }
+
+  /**
+   * returned a color
+   *
+   * @return the color of the current piece
+   */
+  public char getColor() {
+    return color;
+  }
+
+  /**
+   * Sets the new color.
+   *
+   * @param color is the new color
+   */
+  public void setColor(char color) {
+    this.color = color;
   }
 }
 
