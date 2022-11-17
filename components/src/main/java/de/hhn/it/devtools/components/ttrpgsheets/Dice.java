@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.components.ttrpgsheets;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.DiceDescriptor;
+import de.hhn.it.devtools.apis.ttrpgsheets.DiceType;
 import java.util.Random;
 
 
@@ -13,13 +14,14 @@ public class Dice {
   Random generator = new Random();
 
   /**
-   * Constructor stating diceTyp of {@link DiceDescriptor} and value of the Dice throw the method getResult().
+   * Constructor stating diceTyp of {@link DiceDescriptor}
+   * and value of the Dice throw the method getResult().
    *
    * @param diceTyp type of the Dice
    *
    */
   public Dice(DiceDescriptor diceTyp) {
-    changeDiceTyp(diceTyp);
+    changeSize(diceTyp.getDiceType());
     value = diceTyp.getResult();
   }
 
@@ -31,13 +33,23 @@ public class Dice {
     return value;
   }
 
+  /**
+   * generate a new random value for the dice.
+   *
+   * @return new value for dice.
+   */
   public int rollDice() {
     value = generator.nextInt(size) + 1;
     return value;
   }
 
-  public void changeDiceTyp(DiceDescriptor diceTyp) {
-    switch (diceTyp.getDiceType()) {
+  /**
+   * changes the size of the dice .
+   *
+   * @param diceTyp type of the dice.
+   */
+  public void changeSize(DiceType diceTyp) {
+    switch (diceTyp) {
       case D2 -> size = 2;
       case D4 -> size = 4;
       case D6 -> size = 6;
