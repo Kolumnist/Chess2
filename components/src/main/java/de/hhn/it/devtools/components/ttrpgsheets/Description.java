@@ -1,17 +1,22 @@
 package de.hhn.it.devtools.components.ttrpgsheets;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
+import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionType;
 
 /**
  * A simple description for the character.
  */
 public class Description {
+  private DescriptionType type;
   private String description;
 
   /**
-   * Constructor for an empty description.
+   * Constructor for an empty description of a specified type.
+   *
+   * @param type the Type of the description
    */
-  public Description() {
+  public Description(DescriptionType type) {
+    this.type = type;
     description = "";
   }
 
@@ -21,7 +26,17 @@ public class Description {
    * @param descriptor the descriptor
    */
   public Description(DescriptionDescriptor descriptor) {
+    type = descriptor.getDescriptionType();
     description = descriptor.getText();
+  }
+
+  /**
+   * Getter for the type of the description.
+   *
+   * @return the type of the description
+   */
+  public DescriptionType getType() {
+    return type;
   }
 
   /**
@@ -31,6 +46,15 @@ public class Description {
    */
   public String getDescription() {
     return description;
+  }
+
+  /**
+   * Setter for the type of the description.
+   *
+   * @param type the new type
+   */
+  public void setType(DescriptionType type) {
+    this.type = type;
   }
 
   /**
