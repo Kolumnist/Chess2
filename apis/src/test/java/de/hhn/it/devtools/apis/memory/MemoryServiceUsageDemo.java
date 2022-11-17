@@ -15,10 +15,6 @@ public class MemoryServiceUsageDemo {
   public static void main(String[] args) throws IllegalParameterException {
     MemoryService memoryService = null;
 
-    //empty picture card descriptor array and picture reference
-    PictureCardDescriptor[] pictureCardDescriptors = null;
-    HashMap<Integer, String> picReferences = null;
-
 
     //register two picture cards
     PictureCardDescriptor pictureCardDescriptor1 = new PictureCardDescriptor(1, 1, "x");
@@ -38,7 +34,7 @@ public class MemoryServiceUsageDemo {
     logger.info("turned around " + descriptor0);
 
     //create new game
-    memoryService.newGame(Difficulty.EASY, pictureCardDescriptors, picReferences);
+    memoryService.newGame(Difficulty.EASY);
     logger.info("created EASY game");
 
     //start the timer
@@ -46,7 +42,7 @@ public class MemoryServiceUsageDemo {
     logger.info("timer started");
 
     //change the difficulty
-    memoryService.changeDifficulty(Difficulty.MEDIUM, pictureCardDescriptors, picReferences);
+    memoryService.changeDifficulty(Difficulty.MEDIUM);
     logger.info("changed the difficulty to MEDIUM");
 
     //close the game

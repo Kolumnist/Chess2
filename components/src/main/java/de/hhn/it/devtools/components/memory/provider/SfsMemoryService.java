@@ -31,9 +31,8 @@ public class SfsMemoryService implements MemoryService {
   }
 
   @Override
-  public void newGame(Difficulty difficulty, PictureCardDescriptor[] pictureCardDescriptors, HashMap<Integer, String> picReferences) throws IllegalParameterException {
-    fetchCards(pictureCardDescriptors);
-    fetchPicReferences(picReferences);
+  public void newGame(Difficulty difficulty) throws IllegalParameterException {
+
   }
 
   @Override
@@ -48,9 +47,8 @@ public class SfsMemoryService implements MemoryService {
   }
 
   @Override
-  public void changeDifficulty(Difficulty difficulty, PictureCardDescriptor[] pictureCardDescriptors, HashMap<Integer, String> picReferences) throws IllegalParameterException {
+  public void changeDifficulty(Difficulty difficulty) throws IllegalParameterException {
     closeGame();
-    newGame(difficulty, pictureCardDescriptors,picReferences);
   }
 
   @Override

@@ -18,11 +18,9 @@ public interface MemoryService {
    * If there is no current memory game, it creates a game.
    *
    * @param difficulty the difficulty of the game that should be created
-   * @param pictureCardDescriptors Array of the picture cards that are needed for the respective difficulty
-   * @param picReferences HashMap of the picture references to the respective picturecards in the array
    * @throws IllegalParameterException if the difficulty does not exist
    */
-  void newGame(Difficulty difficulty, PictureCardDescriptor[] pictureCardDescriptors, HashMap<Integer, String> picReferences) throws IllegalParameterException;
+  void newGame(Difficulty difficulty) throws IllegalParameterException;
 
   /**
    * Starts the timer of a game if the card field is set up.
@@ -38,11 +36,9 @@ public interface MemoryService {
    * Changes the game mode of the memory game to the chosen difficulty.
    *
    * @param difficulty chosen difficulty
-   * @param pictureCardDescriptors Array of the picture cards that are needed for the respective difficulty
-   * @param picReferences HashMap of the picture references to the respective picturecards in the array
    * @throws IllegalParameterException if the difficulty does not exist
    */
-  void changeDifficulty(Difficulty difficulty, PictureCardDescriptor[] pictureCardDescriptors, HashMap<Integer, String> picReferences) throws IllegalParameterException;
+  void changeDifficulty(Difficulty difficulty) throws IllegalParameterException;
 
   /**
    * Adds a listener to get information on the state of the card.
