@@ -1,7 +1,6 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -9,100 +8,46 @@ import java.util.Random;
  */
 public class Seed {
 
-  private int seed;
-
-  public ArrayList<Integer> floorLength;
-  public ArrayList<Boolean> floorDir;
+  public String[] stringParser;
+  public ArrayList<Integer> roomParser;
+  public final int minDigitNumber = 7;
 
   /**
-   * Gets the Seed for the actual Game.
-   *
-   * @param seedNumber gets the seed number 1,2 or 3
+   * Constructor for Seed Class
+   * @param seed the digit chain for the layout creation, the first 7 digits dictate the layout
    */
-  public Seed(int seedNumber) {
-    this.floorLength = new ArrayList<>();
-    this.floorDir = new ArrayList<>();
-    this.seed = seedNumber;
+  public Seed(String seed) {
 
-    if (seed > 3) {
-      seed = 3;
+    stringParser = seed.split("(?!^)");
+    ArrayList<Integer> intParser = new ArrayList<Integer>();
+
+    for (String s : stringParser) {
+      intParser.add(Integer.parseInt(s));
     }
 
-    int secondSeed = seed + 1;
-    int thirdSeed = secondSeed + 1;
-
-    if (secondSeed > 3) {
-      secondSeed = secondSeed - 3;
+    while(intParser.size() < minDigitNumber){
+      intParser.add(0);
     }
 
-    if (thirdSeed > 3) {
-      thirdSeed = thirdSeed - 3;
-    }
-
-    floorLength.add(seed);
-    floorLength.add(secondSeed);
-    floorLength.add(thirdSeed);
-    floorDir.add(true);
-    floorDir.add(false);
-    floorDir.add(false);
-
-    while (!floorDir.get(seed)) {
-      Collections.shuffle(floorDir);
-    }
+    this.roomParser = intParser;
   }
 
   /**
    * Constructor for Seed without any input.
    */
   public Seed() {
-    this.floorLength = new ArrayList<>();
-    this.floorDir = new ArrayList<>();
     Random rand = new Random();
-    this.seed = rand.nextInt() + 1;
-
-    if (seed > 3) {
-      seed = 3;
+    while(roomParser.size() < minDigitNumber){
+      roomParser.add(rand.nextInt(9));
     }
-
-    int secondSeed = seed + 1;
-    int thirdSeed = secondSeed + 1;
-
-    if (secondSeed > 3) {
-      secondSeed = secondSeed - 3;
-    }
-
-    if (thirdSeed > 3) {
-      thirdSeed = thirdSeed - 3;
-    }
-
-    floorLength.add(seed);
-    floorLength.add(secondSeed);
-    floorLength.add(thirdSeed);
-    floorDir.add(true);
-    floorDir.add(false);
-    floorDir.add(false);
-
-    while (!floorDir.get(seed)) {
-      Collections.shuffle(floorDir);
-    }
-
   }
 
-  public ArrayList<Integer> getFloorLength() {
-    return floorLength;
+  public int getTotalRoomCount(){
+    return roomParser.get(0) + roomParser.get(1) + roomParser.get(2);
   }
 
-  public ArrayList<Boolean> getFloorDirections() {
-    return floorDir;
+  public ArrayList<Integer> getRoomParser(){
+    return roomParser;
   }
 
-  /**
-   * Javadoc.
-   *
-   * @return return
-   *
-   */
-  public int getSeed() {
-    return seed;
-  }
 }
