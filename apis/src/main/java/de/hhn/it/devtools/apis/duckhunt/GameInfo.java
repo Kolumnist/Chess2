@@ -17,14 +17,12 @@ public class GameInfo {
    * @param playerScore the highscore of a Player
    * @param ammo amount of ammo a Player currently has left
    * @param round the round of the Game
-   * @param state the state of the Game
    */
-  public GameInfo(int playerScore, int ammo, int round,
-                  de.hhn.it.devtools.apis.duckhunt.GameState state) {
+  public GameInfo(int playerScore, int ammo, int round) {
     this.playerScore = playerScore;
     this.ammo = ammo;
     this.round = round;
-    this.state = state;
+    this.state = GameState.PREPARED;
   }
 
   public int getPlayerScore() {
