@@ -17,11 +17,12 @@ public class SfsMemoryService implements MemoryService {
 
   private List<CardSet> cardSetStorage = new ArrayList<>();
 
-  SfsTimer timer;
+  private SfsTimer timer;
 
   public SfsMemoryService() {
     cards = new HashMap<>();
     pictureReferences = new HashMap<>();
+    timer = new SfsTimer(new TimerDescriptor());
   }
 
   private PictureCard getPictureCardById(int id) throws IllegalParameterException {
@@ -44,7 +45,17 @@ public class SfsMemoryService implements MemoryService {
 
   @Override
   public void startTimer() {
+    timer.getTimer().startTime();
+  }
 
+  @Override
+  public void stopTimer() {
+    timer.getTimer().stopTime();
+  }
+
+  @Override
+  public void resetTimer() {
+    timer.getTimer().resetTime();
   }
 
   @Override

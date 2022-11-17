@@ -3,7 +3,7 @@ package de.hhn.it.devtools.apis.memory;
 public class TimerDescriptor implements Runnable {
 
     private int time;
-    boolean run;
+    private boolean run;
 
     public TimerDescriptor() {
         this.time = 0;

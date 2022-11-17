@@ -28,6 +28,16 @@ public interface MemoryService {
   void startTimer();
 
   /**
+   * Stops the timer of a game.
+   */
+  void stopTimer();
+
+  /**
+   * Resets the timer of a game.
+   */
+  void resetTimer();
+
+  /**
    * Closes the current memory game.
    */
   void closeGame();
