@@ -1,3 +1,4 @@
 {
-    "java.configuration.updateBuildConfiguration": "disabled"
+    "java.configuration.updateBuildConfiguration": "disabled",
+    "github-enterprise.uri": "https://git.it.hs-heilbronn.de/it/courses/seb/devtools/22ws/gaming-devtools-22-ws.git"
 }
