@@ -72,5 +72,12 @@ public interface ReactiongameService {
    *
    * @return Highscores with format: player - score
    */
-  SortedMap<String, Integer> getHighscore();
+  SortedMap<String, Integer> getHighscoreTable();
+
+  /**
+   * Sets a player name to the current highscore.
+   *
+   * @param playerName new player name
+   */
+  void setCurrentPlayerName(String playerName);
 }
