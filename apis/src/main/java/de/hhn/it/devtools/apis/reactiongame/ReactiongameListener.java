@@ -75,19 +75,30 @@ public interface ReactiongameListener {
    *
    * @param x position
    * @param y position
+   * @throws IllegalStateException if state equals the current state
    */
-  void updateCourserPosition(int x, int y);
+  void updateCourserPosition(int x, int y) throws IllegalStateException;
 
   /**
    * Reacts if the player presses a key.
    *
    * @param key key pressed
+   * @throws IllegalStateException if state equals the current state
    */
-  void keyPressed(char key);
+  void keyPressed(char key) throws IllegalStateException;
 
   /**
    * Ends the run.
    */
   void endRun();
 
+  /**
+   * Pauses the run and the timer.
+   */
+  void pauseRun();
+
+  /**
+   * Continues a paused run.
+   */
+  void continueRun();
 }
