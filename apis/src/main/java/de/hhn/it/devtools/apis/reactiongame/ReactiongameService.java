@@ -2,6 +2,7 @@ package de.hhn.it.devtools.apis.reactiongame;
 
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import java.util.SortedMap;
 
 /**
  * Interface for the reaction game.
@@ -37,16 +38,6 @@ public interface ReactiongameService {
   void gameOver();
 
   /**
-   * Starts the timer when a new run starts.
-   */
-  void startTimer();
-
-  /**
-   * Pauses the timer when a run is paused.
-   */
-  void pauseTimer();
-
-  /**
    * Adds a listener to the service.
    *
    * @param listener listener
@@ -75,4 +66,11 @@ public interface ReactiongameService {
    * @param key key
    */
   void keyPressed(char key);
+
+  /**
+   * Highscorelist.
+   *
+   * @return Highscores with format: player - score
+   */
+  SortedMap<String, Integer> getHighscore();
 }
