@@ -25,19 +25,8 @@ public class DemoReactiongameUsage {
         logger.info("> Player continues the run");
         reactiongameService.continueRun();
 
-        logger.info("> Player finishes a level");
-        logger.info("> System loads new level");
-        reactiongameService.pauseTimer();
-
-        logger.info("> System finished loading");
-        reactiongameService.startTimer();
-
         logger.info("> Time is up");
         reactiongameService.endRun();
 
-
-
-
     }
-
 }
