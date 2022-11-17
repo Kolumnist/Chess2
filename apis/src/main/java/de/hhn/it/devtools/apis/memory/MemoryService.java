@@ -73,14 +73,30 @@ public interface MemoryService {
   /**
    * Adds a listener to get information about the time.
    * @param listener listener to be added
+   * @throws IllegalParameterException if the listener is a null reference
    */
   void addCallback(TimerListener listener) throws IllegalParameterException;
 
   /**
    * Removes a listener.
    * @param listener listener to be removed.
+   * @throws IllegalParameterException if the listener is a null reference
    */
   void removeCallback(TimerListener listener) throws IllegalParameterException;
+
+  /**
+   * Adds a listener to get information about the current deck of cards.
+   * @param listener listener to be added
+   * @throws IllegalParameterException if the listener is a null reference
+   */
+  void addCallback(DeckListener listener) throws IllegalParameterException;
+
+  /**
+   * Removes a listener
+   * @param listener listener to be removed
+   * @throws IllegalParameterException if the listener is a null reference
+   */
+  void removeCallback(DeckListener listener) throws IllegalParameterException;
 
   /**
    * Returns a list of the cards in the current game.

@@ -14,6 +14,9 @@ public class SfsMemoryService implements MemoryService {
 
   private Map<Integer, PictureCard> cards;
   private Map<Integer, String> pictureReferences;
+  private PictureCardDescriptor[] deck;
+
+  private DeckListener deckListener;
 
   private List<CardSet> cardSetStorage = new ArrayList<>();
 
@@ -37,6 +40,8 @@ public class SfsMemoryService implements MemoryService {
   public void newGame(Difficulty difficulty) throws IllegalParameterException {
     for (CardSet c: cardSetStorage) {
       if(c.difficulty == difficulty) {
+        deck = (PictureCardDescriptor[]) c.pictureCardDescriptors.toArray();
+        notifyCurrentDeck();
         fetchCards((PictureCardDescriptor[]) c.pictureCardDescriptors.toArray());
         fetchPicReferences(c.pictureReferences);
       }
@@ -93,8 +98,20 @@ public class SfsMemoryService implements MemoryService {
 
   @Override
   public void removeCallback(TimerListener listener) throws IllegalParameterException {
-    logger.info("removeCallback: id = {}, listener = {}");
+    logger.info("removeCallback: listener = {}");
     timer.removeCallback(listener);
+  }
+
+  @Override
+  public void addCallback(DeckListener listener) throws IllegalParameterException {
+    logger.info("addCallback: listener = {}", listener);
+    this.deckListener = listener;
+  }
+
+  @Override
+  public void removeCallback(DeckListener listener) throws IllegalParameterException {
+    logger.info("removeCallback: listener = {}");
+    this.deckListener = null;
   }
 
   @Override
@@ -142,8 +159,17 @@ public class SfsMemoryService implements MemoryService {
     }
   }
 
-  public void addCardSet(CardSet x) {
+  public void addCardSet(CardSet x) throws IllegalParameterException {
     cardSetStorage.add(x);
+  }
+
+  /**
+   * Calls to signal the current deck update.
+   *
+   * @throws NullPointerException if the deckListener is a null reference
+   */
+  public void notifyCurrentDeck() throws NullPointerException{
+    deckListener.currentDeck(deck);
   }
 
 
