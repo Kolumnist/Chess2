@@ -1,5 +1,6 @@
 package chess2;
 
+import de.hhn.it.devtools.apis.chess2.Board;
 import de.hhn.it.devtools.apis.chess2.Chess2Service;
 import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.FieldState;
@@ -17,8 +18,9 @@ import java.util.ArrayList;
 public class DemoChess2Usage {
   public static void main(String[] args) throws Exception {
     Chess2Service service = null;
+    Board board = null;
 
-    service.startNewGame();
+    board = service.startNewGame();
 
     Coordinate[] pieceCoordinates = new Coordinate[17];
     Coordinate[] possibleMoves = new Coordinate[0]; // A piece can have 0 - 61 possible moves
@@ -55,7 +57,7 @@ public class DemoChess2Usage {
      * 3. Pressed on Play again, game resets */
     service.giveUp();
     service.getWinningPlayer();
-    service.reset();
+    board = service.reset();
 
     //.......a couple standard turns are made
 
