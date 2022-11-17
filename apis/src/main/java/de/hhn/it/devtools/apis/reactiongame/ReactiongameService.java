@@ -60,4 +60,19 @@ public interface ReactiongameService {
    * @param id identifier
    */
   void removeCallback(int id);
+
+  /**
+   * Sets the courser position.
+   *
+   * @param x position
+   * @param y position
+   */
+  void presentCourserPosition(int x, int y);
+
+  /**
+   * Player pressed a key.
+   *
+   * @param key key
+   */
+  void keyPressed(char key);
 }
