@@ -26,10 +26,10 @@ public class Board {
     }
 
     /* Jail fields get initialized */
-    fields[fields.length - 4] = new Field(new Coordinate(9, 2));
-    fields[fields.length - 2] = new Field(new Coordinate(9, 3));
-    fields[fields.length - 3] = new Field(new Coordinate(8, 3));
-    fields[fields.length - 1] = new Field(new Coordinate(8, 4));
+    fields[fields.length - 4] = new Field(new Coordinate(8, 0));
+    fields[fields.length - 2] = new Field(new Coordinate(8, 2));
+    fields[fields.length - 3] = new Field(new Coordinate(8, 1));
+    fields[fields.length - 1] = new Field(new Coordinate(8, 3));
   }
 
   /**
