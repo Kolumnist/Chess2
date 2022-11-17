@@ -15,6 +15,8 @@ public class SfsMemoryService implements MemoryService {
   private Map<Integer, PictureCard> cards;
   private Map<Integer, String> pictureReferences;
 
+  private List<CardSet> cardSetStorage = new ArrayList<>();
+
   SfsTimer timer;
 
   public SfsMemoryService() {
@@ -32,7 +34,12 @@ public class SfsMemoryService implements MemoryService {
 
   @Override
   public void newGame(Difficulty difficulty) throws IllegalParameterException {
-
+    for (CardSet c: cardSetStorage) {
+      if(c.difficulty == difficulty) {
+        fetchCards((PictureCardDescriptor[]) c.pictureCardDescriptors.toArray());
+        fetchPicReferences(c.pictureReferences);
+      }
+    }
   }
 
   @Override
@@ -49,6 +56,7 @@ public class SfsMemoryService implements MemoryService {
   @Override
   public void changeDifficulty(Difficulty difficulty) throws IllegalParameterException {
     closeGame();
+    newGame(difficulty);
   }
 
   @Override
@@ -121,6 +129,10 @@ public class SfsMemoryService implements MemoryService {
         }
       }
     }
+  }
+
+  public void addCardSet(CardSet x) {
+    cardSetStorage.add(x);
   }
 
 
