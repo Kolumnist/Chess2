@@ -10,7 +10,6 @@ public interface ReactiongameListener {
    * Adds an aim target to the ui.
    *
    * @param aimTarget aim target
-   * @throws IllegalStateException if game is running
    */
   void addAimTarget(AimTargetDescriptor aimTarget);
 
@@ -18,7 +17,6 @@ public interface ReactiongameListener {
    * Removes the aim target with the given id.
    *
    * @param aimTargetId identifier
-   * @throws IllegalStateException if game is running
    */
   void removeAimTarget(int aimTargetId);
 
@@ -26,7 +24,6 @@ public interface ReactiongameListener {
    * Adds an obstacle to the ui.
    *
    * @param obstacle obstacle
-   * @throws IllegalStateException if the game is running
    */
   void addObstacle(ObstacleDescriptor obstacle);
 
@@ -34,7 +31,6 @@ public interface ReactiongameListener {
    * Removes obstacle with the given id.
    *
    * @param obstacleId identifier
-   * @throws IllegalStateException if the game is running
    */
   void removeObstacle(int obstacleId);
 
@@ -42,14 +38,11 @@ public interface ReactiongameListener {
    * Player hits an obstacle.
    *
    * @param obstacleId identifier of obstacle which is hit
-   * @throws IllegalStateException if the game is running
    */
   void hitObstacle(int obstacleId);
 
   /**
    * Player loses a life.
-   *
-   * @throws IllegalStateException if game is running
    */
   void looseLife();
 
@@ -58,7 +51,6 @@ public interface ReactiongameListener {
    *
    * @param keyPressed key pressed by player
    * @param aimTargetId hit target
-   * @throws IllegalStateException if the game is running
    */
   void aimTargetHit(char keyPressed, int aimTargetId);
 
@@ -66,31 +58,8 @@ public interface ReactiongameListener {
    * Changes the state of the game
    *
    * @param state new state
-   * @throws IllegalStateException if state equals the current state
    */
   void changeGameState(GameState state);
-
-  /**
-   * Changes the x, y values of the courser position
-   *
-   * @param x position
-   * @param y position
-   * @throws IllegalStateException if state equals the current state
-   */
-  void updateCourserPosition(int x, int y);
-
-  /**
-   * Reacts if the player presses a key.
-   *
-   * @param key key pressed
-   * @throws IllegalStateException if state equals the current state
-   */
-  void keyPressed(char key);
-
-  /**
-   * Ends the run.
-   */
-  void endRun();
 
   /**
    * Pauses the run and the timer.
@@ -101,4 +70,9 @@ public interface ReactiongameListener {
    * Continues a paused run.
    */
   void continueRun();
+
+  /**
+   * When a player lost all lifes, the game is over and the highscore-table is shown.
+   */
+  void gameOver();
 }
