@@ -87,7 +87,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   @Override
-  public StatDescriptor getStat(StatType stat) {
+  public StatDescriptor getStatDescriptor(StatType stat) {
     // TODO Auto-generated method stub
     return null;
   }
@@ -99,7 +99,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   @Override
-  public DescriptionDescriptor getDescription(DescriptionType description) {
+  public DescriptionDescriptor getDescriptionDescriptor(DescriptionType description) {
     // TODO Auto-generated method stub
     return null;
   }
@@ -141,7 +141,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
     this.stats = stats;
   }
 
-  public Dice getDice() { //TODO - Pain weil Dopplung
+  public Dice getDiceDescriptor() { //TODO - Pain weil Dopplung
     return this.dice;
   }
 
@@ -155,6 +155,6 @@ public class DefaultCharacterSheet implements CharacterSheet {
     return "CharacterSheetListener: " + getListener()
             + "Descriptions: " + Arrays.toString(getDescriptions())
             + "Stats: " + Arrays.toString(getStats())
-            + "Dice: " + getDice();
+            + "Dice: " + getDiceDescriptor();
   }
 }

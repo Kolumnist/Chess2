@@ -75,7 +75,7 @@ public interface CharacterSheet {
    *
    * @return descriptor of the stat
    */
-  StatDescriptor getStat(StatType stat);
+  StatDescriptor getStatDescriptor(StatType stat);
 
   /**
    * Changes the description of the given {@link DescriptionType} to the String.
@@ -91,7 +91,7 @@ public interface CharacterSheet {
    *
    * @return descriptor of description
    */
-  DescriptionDescriptor getDescription(DescriptionType description);
+  DescriptionDescriptor getDescriptionDescriptor(DescriptionType description);
 
   /**
    * Rolls the dice to generate a random number according to the current dice.
@@ -114,6 +114,6 @@ public interface CharacterSheet {
    *
    * @return descriptor of the Dice
    */
-  DiceDescriptor getDice();
+  DiceDescriptor getDiceDescriptor();
 
 }
