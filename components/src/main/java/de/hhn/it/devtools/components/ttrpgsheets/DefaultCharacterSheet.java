@@ -34,10 +34,10 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   /**
-   * TODO.
+   * Converts the Description Descriptors into Description Objects.
    *
-   * @param descriptionDescriptors TODO
-   * @return TODO
+   * @param descriptionDescriptors The Descriptors that will be converted
+   * @return The converted Descriptions
    */
   private Description[] convertDescDescriptorsToDescriptions(
           DescriptionDescriptor[] descriptionDescriptors) {
@@ -49,10 +49,10 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   /**
-   * TODO.
+   * Converts the Stat Descriptors into Stat Objects.
    *
-   * @param statDescriptors TODO
-   * @return TODO
+   * @param statDescriptors The Descriptors that will be converted
+   * @return The converted Stats
    */
   private Stat[] convertStatDescriptorsToStats(StatDescriptor[] statDescriptors) {
     Stat[] stats = new Stat[statDescriptors.length];
