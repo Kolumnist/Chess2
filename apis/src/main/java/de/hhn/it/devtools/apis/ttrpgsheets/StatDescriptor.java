@@ -22,40 +22,36 @@ public class StatDescriptor {
     this.abilityPointsUsed = abilityPointsUsed;
   }
 
-  /**
-   * Returns the {@link StatType} of the Stat.
-   *
-   * @return {@link StatType} of the Stat
-   */
   public StatType getStatType() {
     return statType;
   }
 
-  /**
-   * Sets the {@link StatType} of the Stat.
-   *
-   * @param statType type of Stat
-   */
   public void setStatType(StatType statType) {
     this.statType = statType;
   }
 
-  /**
-   * Returns the value of the Stat.
-   *
-   * @return value of the Stat
-   */
-  public int getValue() {
-    return value;
+  public int getBaseValue() {
+    return baseValue;
   }
 
-  /**
-   * Sets the value of the Stat.
-   *
-   * @param value value of the Stat
-   */
-  public void setValue(int value) {
-    this.value = value;
+  public void setBaseValue(int baseValue) {
+    this.baseValue = baseValue;
+  }
+
+  public int getOffset() {
+    return offset;
+  }
+
+  public void setOffset(int offset) {
+    this.offset = offset;
+  }
+
+  public int getAbilityPointsUsed() {
+    return abilityPointsUsed;
+  }
+
+  public void setAbilityPointsUsed(int abilityPointsUsed) {
+    this.abilityPointsUsed = abilityPointsUsed;
   }
 
   @Override
