@@ -15,9 +15,11 @@ public class StatDescriptor {
    * @param statType the type of the Stat
    * @param value the value of the Stat
    */
-  public StatDescriptor(StatType statType, int value) {
+  public StatDescriptor(StatType statType, int baseValue, int offset, int abilityPointsUsed) {
     this.statType = statType;
-    this.value = value;
+    this.baseValue = baseValue;
+    this.offset = offset;
+    this.abilityPointsUsed = abilityPointsUsed;
   }
 
   /**
