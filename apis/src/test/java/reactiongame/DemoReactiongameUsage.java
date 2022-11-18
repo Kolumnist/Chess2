@@ -57,6 +57,7 @@ public class DemoReactiongameUsage {
         reactiongameService.loadHighscoreTable();
 
         logger.info("> Saved the current highscoretable");
+        reactiongameService.saveHighscoreTable(new HighScoreTableTest());
 
     }
 }
