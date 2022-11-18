@@ -6,6 +6,7 @@ import de.hhn.it.devtools.apis.reactiongame.Difficulty;
 import de.hhn.it.devtools.apis.reactiongame.ObstacleDescriptor;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameService;
+import java.io.IOException;
 
 /**
  * This is a usage demo for the ReactiongameService. It is not runnable in this module.
@@ -14,7 +15,7 @@ public class DemoReactiongameUsage {
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(DemoReactiongameUsage.class);
 
-    public static void main(String[] args) throws IllegalParameterException {
+    public static void main(String[] args) throws IllegalParameterException, IOException {
 
         ReactiongameService reactiongameService = null;
         ReactiongameListener reactiongameListener = null;
@@ -40,8 +41,22 @@ public class DemoReactiongameUsage {
         logger.info("> Player gets to aim target");
         reactiongameListener.aimTargetHit('W', 0);
 
-        logger.info("> Time is up");
+        logger.info("> Player ended the run");
         reactiongameService.endRun();
+
+        logger.info("> Current courser position is x, y");
+        reactiongameService.presentCourserPosition(0,1);
+
+        logger.info("> Player pressed the Button: a");
+        reactiongameService.keyPressed('a');
+
+        logger.info("> Seted the playername for the highscore");
+        reactiongameService.setCurrentPlayerName("Player");
+
+        logger.info("> Loaded the highscoretable with the format: player - score");
+        reactiongameService.loadHighscoreTable();
+
+        logger.info("> Saved the current highscoretable");
 
     }
 }
