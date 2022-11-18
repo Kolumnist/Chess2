@@ -1,15 +1,14 @@
 package de.hhn.it.devtools.components.ttrpgsheets;
 
+import de.hhn.it.devtools.apis.ttrpgsheets.CharacterDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.CharacterSheet;
 import de.hhn.it.devtools.apis.ttrpgsheets.CharacterSheetListener;
-import de.hhn.it.devtools.apis.ttrpgsheets.CharacterDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionType;
-import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
-import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import de.hhn.it.devtools.apis.ttrpgsheets.DiceType;
 import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
-
+import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
+import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import java.util.Arrays;
 
 /**
