@@ -3,7 +3,7 @@ package de.hhn.it.devtools.components.duckhunt;
 /**
  * Class for 2-dimensional vectors.
  */
-public class Vector2d {
+public class Vector2D {
   private int x;
   private int y;
 
