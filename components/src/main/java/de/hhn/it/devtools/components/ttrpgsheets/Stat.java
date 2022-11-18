@@ -10,13 +10,10 @@ import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
  * @version 1
  */
 public class Stat {
-  // VARIABLES
   StatType type;
   int baseValue; // Usually set to 0
   int offset; // Usually set to 1
   int abilityPointsUsed; // Negative values are possible
-
-  // CONSTRUCTORS
 
   public Stat(StatDescriptor statDescriptor) {
     setType(statDescriptor.getStatType());
@@ -24,8 +21,6 @@ public class Stat {
     setOffset(1); // TODO - Add GETTER
     setAbilityPointsUsed(0); // TODO - Add GETTER
   }
-
-  // METHODS
 
   /**
    * Returns the total value of a Stat by adding the product of the ability points
@@ -51,7 +46,6 @@ public class Stat {
     setAbilityPointsUsed(getAbilityPointsUsed() - 1);
   }
 
-  // GETTER and SETTER
   public StatType getType() {
     return type;
   }
@@ -84,7 +78,6 @@ public class Stat {
     this.offset = offset;
   }
 
-  // TO STRING
   @Override
   public String toString() {
     return "Stat Type: " + getType()
