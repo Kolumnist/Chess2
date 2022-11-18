@@ -10,7 +10,6 @@ import de.hhn.it.devtools.apis.ttrpgsheets.DiceType;
 import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
-
 import java.util.Arrays;
 
 /**
@@ -28,18 +27,20 @@ public class DefaultCharacterSheet implements CharacterSheet {
    * @param listener The callback listener for the Character Sheet
    * @param characterDescriptor The Descriptor of the Character Sheet
    */
-  public DefaultCharacterSheet(CharacterSheetListener listener, CharacterDescriptor characterDescriptor) {
+  public DefaultCharacterSheet(CharacterSheetListener listener,
+                               CharacterDescriptor characterDescriptor) {
     addCallback(listener);
     unwrapCharacter(characterDescriptor);
   }
 
   /**
-   * TODO
+   * TODO.
    *
-   * @param descriptionDescriptors
-   * @return
+   * @param descriptionDescriptors TODO
+   * @return TODO
    */
-  private Description[] convertDescDescriptorsToDescriptions(DescriptionDescriptor[] descriptionDescriptors) {
+  private Description[] convertDescDescriptorsToDescriptions(
+          DescriptionDescriptor[] descriptionDescriptors) {
     Description[] descriptions = new Description[descriptionDescriptors.length];
     for (int i = 0; i < descriptions.length; i++) {
       descriptions[i] = new Description(descriptionDescriptors[i]);
@@ -48,10 +49,10 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   /**
-   * TODO
+   * TODO.
    *
-   * @param statDescriptors
-   * @return
+   * @param statDescriptors TODO
+   * @return TODO
    */
   private Stat[] convertStatDescriptorsToStats(StatDescriptor[] statDescriptors) {
     Stat[] stats = new Stat[statDescriptors.length];
@@ -84,7 +85,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   @Override
-  public void incrementStat(StatType stat, OriginType origin, int amount) throws IllegalArgumentException {
+  public void incrementStat(StatType stat, OriginType origin, int amount)
+          throws IllegalArgumentException {
 
   }
 
@@ -94,7 +96,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   @Override
-  public void decrementStat(StatType stat, OriginType origin, int amount) throws IllegalArgumentException {
+  public void decrementStat(StatType stat, OriginType origin, int amount)
+          throws IllegalArgumentException {
 
   }
 
@@ -104,7 +107,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   @Override
-  public void changeDescription(DescriptionType description, String text) throws IllegalArgumentException {
+  public void changeDescription(DescriptionType description, String text)
+          throws IllegalArgumentException {
 
   }
 
