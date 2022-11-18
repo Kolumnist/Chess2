@@ -14,6 +14,7 @@ public class Stat {
   private int baseValue; // Usually set to 0
   private int offset; // Usually set to 1
   private int abilityPointsUsed; // Negative values are possible
+  private int miscellaneous; // For other stat-affecting things such as items
 
   /**
    * Constructor of Stat.
@@ -25,6 +26,7 @@ public class Stat {
     setBaseValue(statDescriptor.getBaseValue());
     setOffset(statDescriptor.getOffset());
     setAbilityPointsUsed(statDescriptor.getAbilityPointsUsed());
+    setMiscellaneous(statDescriptor.getMiscellaneous());
   }
 
   /**
@@ -83,11 +85,20 @@ public class Stat {
     this.offset = offset;
   }
 
+  public int getMiscellaneous() {
+    return miscellaneous;
+  }
+
+  public void setMiscellaneous(int miscellaneous) {
+    this.miscellaneous = miscellaneous;
+  }
+
   @Override
   public String toString() {
     return "Stat Type: " + getType()
             + "\nBase Value: " + getBaseValue()
             + "\nOffset: " + getOffset()
-            + "\nAbility Points Used: " + getAbilityPointsUsed();
+            + "\nAbility Points Used: " + getAbilityPointsUsed()
+            + "\nMiscellaneous: " + getMiscellaneous();
   }
 }
