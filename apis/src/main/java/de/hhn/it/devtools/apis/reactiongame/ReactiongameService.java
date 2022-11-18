@@ -2,6 +2,7 @@ package de.hhn.it.devtools.apis.reactiongame;
 
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import java.io.IOException;
 import java.util.SortedMap;
 
 /**
@@ -19,23 +20,20 @@ public interface ReactiongameService {
 
   /**
    * Pauses the run and the timer.
+   * @throws IllegalStateException if the difficulty does not exist.
    */
-  void pauseRun();
+  void pauseRun() throws IllegalStateException;
 
   /**
    * Continues a paused run.
+   * @throws IllegalStateException if the difficulty does not exist.
    */
-  void continueRun();
+  void continueRun() throws IllegalStateException;
 
   /**
    * End run.
    */
   void endRun();
-
-  /**
-   * Game is finished.
-   */
-  void gameOver();
 
   /**
    * Adds a listener to the service.
@@ -57,22 +55,17 @@ public interface ReactiongameService {
    *
    * @param x position
    * @param y position
+   * @throws IllegalStateException if state equals the current state
    */
-  void presentCourserPosition(int x, int y);
+  void presentCourserPosition(int x, int y) throws IllegalStateException;
 
   /**
    * Player pressed a key.
    *
    * @param key key
+   * @throws IllegalStateException if state equals the current state
    */
-  void keyPressed(char key);
-
-  /**
-   * Highscorelist.
-   *
-   * @return Highscores with format: player - score
-   */
-  SortedMap<String, Integer> getHighscoreTable();
+  void keyPressed(char key) throws IllegalStateException;
 
   /**
    * Sets a player name to the current highscore.
@@ -80,4 +73,20 @@ public interface ReactiongameService {
    * @param playerName new player name
    */
   void setCurrentPlayerName(String playerName);
+
+  /**
+   * Loads highscoreTable from a file.
+   *
+   * @return Highscores with format: player - score
+   * @throws IOException if IO-operation goes wrong
+   */
+  SortedMap<String, Integer> loadHighscoreTable() throws IOException;
+
+  /**
+   * Saves the current highscoreTable in a file.
+   *
+   * @throws IOException if IO-operation goes wrong
+   */
+  void saveHighscoreTable() throws IOException;
+
 }
