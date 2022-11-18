@@ -1,14 +1,7 @@
 package de.hhn.it.devtools.components.ttrpgsheets;
 
-import de.hhn.it.devtools.apis.ttrpgsheets.CharacterDescriptor;
-import de.hhn.it.devtools.apis.ttrpgsheets.CharacterSheet;
-import de.hhn.it.devtools.apis.ttrpgsheets.CharacterSheetListener;
-import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
-import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionType;
-import de.hhn.it.devtools.apis.ttrpgsheets.DiceType;
-import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
-import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
-import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
+import de.hhn.it.devtools.apis.ttrpgsheets.*;
+
 import java.util.Arrays;
 
 /**
@@ -73,65 +66,59 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public CharacterDescriptor wrapCharacter() {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public void incrementStat(StatType stat, OriginType origin) throws IllegalArgumentException {
-    // TODO Auto-generated method stub
 
   }
 
   @Override
   public void incrementStat(StatType stat, OriginType origin, int amount) throws IllegalArgumentException {
-    // TODO Auto-generated method stub
 
   }
 
   @Override
   public void decrementStat(StatType stat, OriginType origin) throws IllegalArgumentException {
-    // TODO Auto-generated method stub
 
   }
 
   @Override
   public void decrementStat(StatType stat, OriginType origin, int amount) throws IllegalArgumentException {
-    // TODO Auto-generated method stub
 
   }
 
   @Override
   public StatDescriptor getStatDescriptor(StatType stat) {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public void changeDescription(DescriptionType description, String text) throws IllegalArgumentException {
-    // TODO Auto-generated method stub
 
   }
 
   @Override
   public DescriptionDescriptor getDescriptionDescriptor(DescriptionType description) {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public void rollDice() throws NullPointerException {
-    // TODO Auto-generated method stub
 
   }
 
   @Override
   public void changeDiceType(DiceType dice) throws IllegalArgumentException {
-    // TODO Auto-generated method stub
 
   }
 
-  // GETTER and SETTER
+  @Override
+  public DiceDescriptor getDiceDescriptor() {
+    return null;
+  }
+
   public CharacterSheetListener getListener() {
     return listener;
   }
@@ -156,15 +143,14 @@ public class DefaultCharacterSheet implements CharacterSheet {
     this.stats = stats;
   }
 
-  public Dice getDiceDescriptor() { //TODO - Pain weil Dopplung
-    return this.dice;
+  public Dice getDice() {
+    return dice;
   }
 
   public void setDice(Dice dice) {
     this.dice = dice;
   }
 
-  // TO STRING
   @Override
   public String toString() {
     return "CharacterSheetListener: " + getListener()
