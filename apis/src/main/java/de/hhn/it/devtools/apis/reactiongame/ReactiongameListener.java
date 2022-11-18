@@ -42,9 +42,11 @@ public interface ReactiongameListener {
   void hitObstacle(int obstacleId);
 
   /**
-   * Player loses a life.
+   * The current amount of Player lifes.
+   *
+   * @param numberOfLifes Number of Player lifes.
    */
-  void looseLife();
+  void currentLife(int numberOfLifes);
 
   /**
    * Player hits a target.
