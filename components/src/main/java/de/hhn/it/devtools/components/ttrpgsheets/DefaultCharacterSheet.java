@@ -84,7 +84,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
     for (Stat stat : getStats()) {
       if (stat.getType() == statType) {
         if (origin == OriginType.LEVEL_POINT) {
-          stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() + 1);
+          stat.addAbilityPoint();
         } else {
           stat.setMiscellaneous(stat.getMiscellaneous() + 1);
         }
@@ -111,7 +111,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
     for (Stat stat : getStats()) {
       if (stat.getType() == statType) {
         if (origin == OriginType.LEVEL_POINT) {
-          stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() - 1);
+          stat.removeAbilityPoint();
         } else {
           stat.setMiscellaneous(stat.getMiscellaneous() - 1);
         }
