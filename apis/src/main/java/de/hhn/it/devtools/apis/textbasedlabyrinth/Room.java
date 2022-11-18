@@ -218,26 +218,48 @@ public class Room {
    * @param isNorth Boolean check to see if the new Room will be to the north of current room
    */
   public void setNextDoorRoom(Room room, Boolean isEast, Boolean isWest, Boolean isNorth) {
-    if (isEast && !isWest && !isNorth) {
+    if (isEast && !isWest && !isNorth && !isEastAssigned) {
       this.toTheEast = room;
       this.isEastAssigned = true;
       room.toTheWest = this;
       room.isWestAssigned = true;
-    } else if (isWest && !isEast && !isNorth) {
+    } else if (isWest && !isEast && !isNorth && !isWestAssigned) {
       this.toTheWest = room;
       this.isWestAssigned = true;
       room.toTheWest = this;
       room.isEastAssigned = true;
-    } else if (isNorth && !isEast && !isWest) {
+    } else if (isNorth && !isEast && !isWest && !isNorthAssigned) {
       this.toTheNorth = room;
       this.isNorthAssigned = true;
       room.toTheSouth = this;
       room.isSouthAssigned = true;
-    } else {
+    } else if (!isNorth && !isEast && !isWest && !isSouthAssigned) {
       this.toTheSouth = room;
       this.isSouthAssigned = true;
       room.toTheNorth = this;
       room.isNorthAssigned = true;
+    } else {                                        // in case something is wrong the next free slot will be assigned
+      if (!isEastAssigned && !room.isWestAssigned){
+        this.toTheEast = room;
+        this.isEastAssigned = true;
+        room.toTheWest = this;
+        room.isWestAssigned = true;
+      } else if (!isWestAssigned && !room.isEastAssigned){
+        this.toTheWest = room;
+        this.isWestAssigned = true;
+        room.toTheWest = this;
+        room.isEastAssigned = true;
+      } else if (!isNorthAssigned && !room.isSouthAssigned){
+        this.toTheNorth = room;
+        this.isNorthAssigned = true;
+        room.toTheSouth = this;
+        room.isSouthAssigned = true;
+      } else if (!isSouthAssigned && !room.isNorthAssigned){
+        this.toTheSouth = room;
+        this.isSouthAssigned = true;
+        room.toTheNorth = this;
+        room.isNorthAssigned = true;
+      }
     }
   }
 
