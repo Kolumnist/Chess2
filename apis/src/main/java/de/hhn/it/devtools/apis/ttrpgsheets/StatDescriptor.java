@@ -58,7 +58,9 @@ public class StatDescriptor {
 
   @Override
   public String toString() {
-    return "Stat type=" + getStatType()
-            + ", Value=" + getValue();
+    return "Stat Type: " + getStatType()
+            + "\nBase Value: " + getBaseValue()
+            + "\nOffset: " + getOffset()
+            + "\nAbility Points Used: " + getAbilityPointsUsed();
   }
 }
