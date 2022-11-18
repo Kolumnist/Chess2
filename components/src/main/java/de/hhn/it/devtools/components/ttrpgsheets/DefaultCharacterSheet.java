@@ -59,9 +59,9 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public void unwrapCharacter(CharacterDescriptor characterDescriptor) {
-    this.descriptions = convertDescDescriptorsToDescriptions(characterDescriptor.getDescriptions());
-    this.stats = convertStatDescriptorsToStats(characterDescriptor.getStats());
-    this.dice = new Dice(characterDescriptor.getDice());
+    setDescriptions(convertDescDescriptorsToDescriptions(characterDescriptor.getDescriptions()));
+    setStats(convertStatDescriptorsToStats(characterDescriptor.getStats()));
+    setDice(new Dice(characterDescriptor.getDice()));
   }
 
   @Override
