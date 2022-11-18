@@ -85,9 +85,8 @@ public interface ReactiongameService {
   /**
    * Saves the current highscoreTable in a file.
    *
-   * @param highscoreTable table with current highscores
    * @throws IOException if IO-operation goes wrong
    */
-  void saveHighscoreTable(SortedMap<String, Integer> highscoreTable) throws IOException;
+  void saveHighscoreTable() throws IOException;
 
 }
