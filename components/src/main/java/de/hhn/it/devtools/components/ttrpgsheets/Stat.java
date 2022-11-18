@@ -5,9 +5,6 @@ import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 
 /**
  * Representation of a Stat that is used by a character.
- *
- * @author Tristan Nußbaum, Lukas Fahrner, Gabriel Schmidlin Kitzig
- * @version 1
  */
 public class Stat {
   private StatType type;
