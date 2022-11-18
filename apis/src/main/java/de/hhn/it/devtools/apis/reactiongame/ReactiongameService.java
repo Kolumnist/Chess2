@@ -33,11 +33,6 @@ public interface ReactiongameService {
   void endRun();
 
   /**
-   * Game is finished.
-   */
-  void gameOver();
-
-  /**
    * Adds a listener to the service.
    *
    * @param listener listener
