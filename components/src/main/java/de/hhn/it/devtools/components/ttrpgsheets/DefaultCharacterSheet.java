@@ -24,7 +24,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   /**
    * Constructor of the default Character Sheet.
    *
-   * @param listener The callback listener for the Character Sheet
+   * @param listener            The callback listener for the Character Sheet
    * @param characterDescriptor The Descriptor of the Character Sheet
    */
   public DefaultCharacterSheet(CharacterSheetListener listener,
@@ -76,7 +76,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public CharacterDescriptor wrapCharacter() {
-    return null;
+    return null; //TODO create wrapper methods for stats and descriptions
   }
 
   @Override
