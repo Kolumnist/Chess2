@@ -22,9 +22,9 @@ public class Stat {
    */
   public Stat(StatDescriptor statDescriptor) {
     setType(statDescriptor.getStatType());
-    setBaseValue(statDescriptor.getValue()); // TODO - Rename to getBaseValue
-    setOffset(1); // TODO - Add GETTER
-    setAbilityPointsUsed(0); // TODO - Add GETTER
+    setBaseValue(statDescriptor.getBaseValue());
+    setOffset(statDescriptor.getOffset());
+    setAbilityPointsUsed(statDescriptor.getAbilityPointsUsed());
   }
 
   /**
