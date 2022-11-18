@@ -1,11 +1,10 @@
 package textbasedlabyrinth;
 
-import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.Direction;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Game;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.GameService;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Seed;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Direction;
-
+import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
 
 /**
  * Usage Demo for TextBasedLabyrinth.
@@ -14,9 +13,8 @@ public class TextBasedLabyrinthUsageDemo {
 
   public static void main(String[] args) throws RoomFailedException {
 
-    Seed seedOne = new Seed(1);
-    Seed seedTwo = new Seed(2);
-    Seed seedTree = new Seed(3);
+    Seed seedOne = new Seed("3212134");
+
     GameService gameService = new Game(seedOne);
     // Game creates a Layout according to the input from seedOne with a little algorithm
     // Now there should be on the west side a room that leads nowhere else(Dead-End)
