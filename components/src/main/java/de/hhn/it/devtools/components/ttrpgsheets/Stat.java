@@ -65,7 +65,7 @@ public class Stat {
 
   public void setBaseValue(int baseValue) {
     this.baseValue = baseValue;
-  }
+  } //Should probably be private as the base value should not change after creation
 
   public int getAbilityPointsUsed() {
     return abilityPointsUsed;
