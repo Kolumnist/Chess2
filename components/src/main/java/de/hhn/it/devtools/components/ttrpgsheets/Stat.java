@@ -15,6 +15,11 @@ public class Stat {
   int offset; // Usually set to 1
   int abilityPointsUsed; // Negative values are possible
 
+  /**
+   * Constructor of Stat
+   *
+   * @param statDescriptor The descriptor of a Stat
+   */
   public Stat(StatDescriptor statDescriptor) {
     setType(statDescriptor.getStatType());
     setBaseValue(statDescriptor.getValue()); // TODO - Rename to getBaseValue
