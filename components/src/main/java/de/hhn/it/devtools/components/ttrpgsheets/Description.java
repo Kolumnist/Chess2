@@ -11,16 +11,6 @@ public class Description {
   private String description;
 
   /**
-   * Constructor for an empty description of a specified type.
-   *
-   * @param type the Type of the description
-   */
-  public Description(DescriptionType type) {
-    this.type = type;
-    description = "";
-  }
-
-  /**
    * Constructor for creating a description based upon a descriptor.
    *
    * @param descriptor the descriptor
