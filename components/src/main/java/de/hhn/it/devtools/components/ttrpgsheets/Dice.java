@@ -69,4 +69,10 @@ public class Dice {
   public void setValue(int value) {
     this.value = value;
   }
+
+  @Override
+  public String toString() {
+    return "Dice Size: " + getSize()
+            + "\nDice Value: " + getValue();
+  }
 }
