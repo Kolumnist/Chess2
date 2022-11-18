@@ -12,14 +12,16 @@ public class StatDescriptor {
   /**
    * Constructor stating {@link StatType} and value of the Stat.
    *
-   * @param statType the type of the Stat
-   * @param value the value of the Stat
+   * @param statType The type of the Stat
+   * @param baseValue The base Value of the Stat
+   * @param offset The offset of the Stat
+   * @param abilityPointsUsed The ability points used in the Stat
    */
   public StatDescriptor(StatType statType, int baseValue, int offset, int abilityPointsUsed) {
-    this.statType = statType;
-    this.baseValue = baseValue;
-    this.offset = offset;
-    this.abilityPointsUsed = abilityPointsUsed;
+    setStatType(statType);
+    setBaseValue(baseValue);
+    setOffset(offset);
+    setAbilityPointsUsed(abilityPointsUsed);
   }
 
   public StatType getStatType() {
