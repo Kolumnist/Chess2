@@ -81,8 +81,8 @@ public class Stat {
   @Override
   public String toString() {
     return "Stat Type: " + getType()
-            + "Base Value: " + getBaseValue()
-            + "Offset: " + getOffset()
-            + "Ability Points Used: " + getAbilityPointsUsed();
+            + "\nBase Value: " + getBaseValue()
+            + "\nOffset: " + getOffset()
+            + "\nAbility Points Used: " + getAbilityPointsUsed();
   }
 }
