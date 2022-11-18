@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.components.ttrpgsheets;
 
-import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
+import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 
 /**
  * Representation of a Stat that is used by a character.
@@ -15,6 +15,11 @@ public class Stat {
   int offset; // Usually set to 1
   int abilityPointsUsed; // Negative values are possible
 
+  /**
+   * Constructor of Stat.
+   *
+   * @param statDescriptor The descriptor of a Stat
+   */
   public Stat(StatDescriptor statDescriptor) {
     setType(statDescriptor.getStatType());
     setBaseValue(statDescriptor.getValue()); // TODO - Rename to getBaseValue
@@ -24,7 +29,7 @@ public class Stat {
 
   /**
    * Returns the total value of a Stat by adding the product of the ability points
-   * used times the offset to the base value of the stat
+   * used times the offset to the base value of the stat.
    *
    * @return The total value of the Stat
    */
@@ -33,14 +38,14 @@ public class Stat {
   }
 
   /**
-   * Increases the ability point by one
+   * Increases the ability point by one.
    */
   public void addAbilityPoint() {
     setAbilityPointsUsed(getAbilityPointsUsed() + 1);
   }
 
   /**
-   * Decreases the ability point by one
+   * Decreases the ability point by one.
    */
   public void removeAbilityPoint() {
     setAbilityPointsUsed(getAbilityPointsUsed() - 1);
@@ -81,8 +86,8 @@ public class Stat {
   @Override
   public String toString() {
     return "Stat Type: " + getType()
-            + "Base Value: " + getBaseValue()
-            + "Offset: " + getOffset()
-            + "Ability Points Used: " + getAbilityPointsUsed();
+            + "\nBase Value: " + getBaseValue()
+            + "\nOffset: " + getOffset()
+            + "\nAbility Points Used: " + getAbilityPointsUsed();
   }
 }
