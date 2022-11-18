@@ -10,10 +10,10 @@ import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
  * @version 1
  */
 public class Stat {
-  StatType type;
-  int baseValue; // Usually set to 0
-  int offset; // Usually set to 1
-  int abilityPointsUsed; // Negative values are possible
+  private StatType type;
+  private int baseValue; // Usually set to 0
+  private int offset; // Usually set to 1
+  private int abilityPointsUsed; // Negative values are possible
 
   /**
    * Constructor of Stat.
