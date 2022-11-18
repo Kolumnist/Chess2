@@ -1,4 +1,4 @@
-package text_based_labyrinth;
+package textbasedlabyrinth;
 
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Game;
