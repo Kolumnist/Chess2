@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.components.ttrpgsheets;
 
-import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
+import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 
 /**
  * Representation of a Stat that is used by a character.
