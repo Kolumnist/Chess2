@@ -19,13 +19,15 @@ public interface ReactiongameService {
 
   /**
    * Pauses the run and the timer.
+   * @throws IllegalStateException if the difficulty does not exist.
    */
-  void pauseRun();
+  void pauseRun() throws IllegalStateException;
 
   /**
    * Continues a paused run.
+   * @throws IllegalStateException if the difficulty does not exist.
    */
-  void continueRun();
+  void continueRun() throws IllegalStateException;
 
   /**
    * End run.
@@ -52,15 +54,17 @@ public interface ReactiongameService {
    *
    * @param x position
    * @param y position
+   * @throws IllegalStateException if state equals the current state
    */
-  void presentCourserPosition(int x, int y);
+  void presentCourserPosition(int x, int y) throws IllegalStateException;
 
   /**
    * Player pressed a key.
    *
    * @param key key
+   * @throws IllegalStateException if state equals the current state
    */
-  void keyPressed(char key);
+  void keyPressed(char key) throws IllegalStateException;
 
   /**
    * Highscorelist.
