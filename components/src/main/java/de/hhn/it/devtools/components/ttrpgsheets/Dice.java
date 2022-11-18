@@ -11,26 +11,18 @@ import java.util.Random;
 public class Dice {
   private int size;
   private int value;
-  Random generator = new Random();
+  private final Random generator = new Random();
 
   /**
-   * Constructor stating diceTyp of {@link DiceDescriptor}
+   * Constructor stating diceDescriptor of {@link DiceDescriptor}
    * and value of the Dice throw the method getResult().
    *
-   * @param diceTyp type of the Dice
+   * @param diceDescriptor type of the Dice
    *
    */
-  public Dice(DiceDescriptor diceTyp) {
-    changeSize(diceTyp.getDiceType());
-    value = diceTyp.getResult();
-  }
-
-  public int getSize() {
-    return size;
-  }
-
-  public int getValue() {
-    return value;
+  public Dice(DiceDescriptor diceDescriptor) {
+    changeSize(diceDescriptor.getDiceType());
+    setValue(diceDescriptor.getResult());
   }
 
   /**
@@ -38,9 +30,9 @@ public class Dice {
    *
    * @return new value for dice.
    */
-  public int rollDice() {
-    value = generator.nextInt(size) + 1;
-    return value;
+  public int nextRoll() {
+    setValue(generator.nextInt(size) + 1);
+    return getValue();
   }
 
   /**
@@ -50,15 +42,31 @@ public class Dice {
    */
   public void changeSize(DiceType diceTyp) {
     switch (diceTyp) {
-      case D2 -> size = 2;
-      case D4 -> size = 4;
-      case D6 -> size = 6;
-      case D8 -> size = 8;
-      case D10 -> size = 10;
-      case D12 -> size = 12;
-      case D20 -> size = 20;
-      case D100 -> size = 100;
-      default -> size = 0;
+      case D2 -> setSize(2);
+      case D4 -> setSize(4);
+      case D6 -> setSize(6);
+      case D8 -> setSize(8);
+      case D10 -> setSize(10);
+      case D12 -> setSize(12);
+      case D20 -> setSize(20);
+      case D100 -> setSize(100);
+      default -> setSize(0);
     }
+  }
+
+  public int getSize() {
+    return size;
+  }
+
+  public void setSize(int size) {
+    this.size = size;
+  }
+
+  public int getValue() {
+    return value;
+  }
+
+  public void setValue(int value) {
+    this.value = value;
   }
 }
