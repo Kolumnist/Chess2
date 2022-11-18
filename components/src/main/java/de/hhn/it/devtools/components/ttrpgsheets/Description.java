@@ -7,7 +7,7 @@ import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionType;
  * A simple description for the character.
  */
 public class Description {
-  private DescriptionType type;
+  private DescriptionType type; // Should be final
   private String description;
 
   /**

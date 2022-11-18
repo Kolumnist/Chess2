@@ -7,9 +7,9 @@ import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
  * Representation of a Stat that is used by a character.
  */
 public class Stat {
-  private StatType type;
-  private int baseValue; // Usually set to 0
-  private int offset; // Usually set to 1
+  private StatType type; // Should be final
+  private int baseValue; // Usually set to 0; Should be final
+  private int offset; // Usually set to 1; Should be final
   private int abilityPointsUsed; // Negative values are possible
   private int miscellaneous; // For other stat-affecting things such as items
 
