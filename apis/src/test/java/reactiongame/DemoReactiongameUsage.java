@@ -41,22 +41,22 @@ public class DemoReactiongameUsage {
         logger.info("> Player gets to aim target");
         reactiongameListener.aimTargetHit('W', 0);
 
-        logger.info("> Player ended the run");
-        reactiongameService.endRun();
-
         logger.info("> Current courser position is x, y");
         reactiongameService.presentCourserPosition(0,1);
 
         logger.info("> Player pressed the Button: a");
         reactiongameService.keyPressed('a');
 
-        logger.info("> Seted the playername for the highscore");
-        reactiongameService.setCurrentPlayerName("Player");
-
         logger.info("> Loaded the highscoretable with the format: player - score");
         reactiongameService.loadHighscoreTable();
 
-        logger.info("> Saved the current highscoretable");
+        logger.info("> Set the playername for the highscore");
+        reactiongameService.setCurrentPlayerName("Player");
 
+        logger.info("> Saved the current highscoretable");
+        reactiongameService.saveHighscoreTable();
+
+        logger.info("> Player ended the run");
+        reactiongameService.endRun();
     }
 }
