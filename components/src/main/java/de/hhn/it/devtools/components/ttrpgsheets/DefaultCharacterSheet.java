@@ -169,6 +169,6 @@ public class DefaultCharacterSheet implements CharacterSheet {
     return "CharacterSheetListener: " + getListener()
             + "Descriptions: " + Arrays.toString(getDescriptions())
             + "Stats: " + Arrays.toString(getStats())
-            + "Dice: " + getDiceDescriptor();
+            + "Dice: " + getDice();
   }
 }
