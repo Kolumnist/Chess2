@@ -5,7 +5,9 @@ package de.hhn.it.devtools.apis.ttrpgsheets;
  */
 public class StatDescriptor {
   private StatType statType;
-  private int value;
+  private int baseValue;
+  private int offset;
+  private int abilityPointsUsed;
 
   /**
    * Constructor stating {@link StatType} and value of the Stat.
