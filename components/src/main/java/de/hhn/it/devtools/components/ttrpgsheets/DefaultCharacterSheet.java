@@ -12,20 +12,32 @@ import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
 
 import java.util.Arrays;
 
+/**
+ * The default implementation of a Character Sheet.
+ */
 public class DefaultCharacterSheet implements CharacterSheet {
-  // VARIABLES
-  CharacterSheetListener listener;
-  Description[] descriptions;
-  Stat[] stats;
-  Dice dice;
+  private CharacterSheetListener listener;
+  private Description[] descriptions;
+  private Stat[] stats;
+  private Dice dice;
 
-  // CONSTRUCTORS
+  /**
+   * Constructor of the default Character Sheet.
+   *
+   * @param listener The callback listener for the Character Sheet
+   * @param characterDescriptor The Descriptor of the Character Sheet
+   */
   public DefaultCharacterSheet(CharacterSheetListener listener, CharacterDescriptor characterDescriptor) {
     addCallback(listener);
     unwrapCharacter(characterDescriptor);
   }
 
-  // CONSTRUCTOR METHODS
+  /**
+   * TODO
+   *
+   * @param descriptionDescriptors
+   * @return
+   */
   private Description[] convertDescDescriptorsToDescriptions(DescriptionDescriptor[] descriptionDescriptors) {
     Description[] descriptions = new Description[descriptionDescriptors.length];
     for (int i = 0; i < descriptions.length; i++) {
@@ -34,6 +46,12 @@ public class DefaultCharacterSheet implements CharacterSheet {
     return descriptions;
   }
 
+  /**
+   * TODO
+   *
+   * @param statDescriptors
+   * @return
+   */
   private Stat[] convertStatDescriptorsToStats(StatDescriptor[] statDescriptors) {
     Stat[] stats = new Stat[statDescriptors.length];
     for (int i = 0; i < stats.length; i++) {
@@ -41,8 +59,6 @@ public class DefaultCharacterSheet implements CharacterSheet {
     }
     return stats;
   }
-
-  // INTERFACE METHODS
 
   @Override
   public void addCallback(CharacterSheetListener listener) throws IllegalArgumentException {
