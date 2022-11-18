@@ -16,8 +16,8 @@ public class Description {
    * @param descriptor the descriptor
    */
   public Description(DescriptionDescriptor descriptor) {
-    type = descriptor.getDescriptionType();
-    description = descriptor.getText();
+    setType(descriptor.getDescriptionType());
+    setDescription(descriptor.getText());
   }
 
   /**
