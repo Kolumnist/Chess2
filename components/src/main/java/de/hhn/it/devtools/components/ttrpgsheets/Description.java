@@ -58,6 +58,7 @@ public class Description {
 
   @Override
   public String toString() {
-    return getDescription();
-  } //TODO - ToString Formatierung überlegen
+    return "Type: " + getType()
+            + "\nDescription: " + getDescription();
+  }
 }
