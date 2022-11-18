@@ -80,25 +80,57 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   @Override
-  public void incrementStat(StatType stat, OriginType origin) throws IllegalArgumentException {
-
+  public void incrementStat(StatType statType, OriginType origin) throws IllegalArgumentException {
+    for (Stat stat : getStats()) {
+      if (stat.getType() == statType) {
+        if (origin == OriginType.LEVEL_POINT) {
+          stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() + 1);
+        } else {
+          stat.setMiscellaneous(stat.getMiscellaneous() + 1);
+        }
+      }
+    }
   }
 
   @Override
-  public void incrementStat(StatType stat, OriginType origin, int amount)
+  public void incrementStat(StatType statType, OriginType origin, int amount)
           throws IllegalArgumentException {
-
+    for (Stat stat : getStats()) {
+      if (stat.getType() == statType) {
+        if (origin == OriginType.LEVEL_POINT) {
+          stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() + amount);
+        } else {
+          stat.setMiscellaneous(stat.getMiscellaneous() + amount);
+        }
+      }
+    }
   }
 
   @Override
-  public void decrementStat(StatType stat, OriginType origin) throws IllegalArgumentException {
-
+  public void decrementStat(StatType statType, OriginType origin) throws IllegalArgumentException {
+    for (Stat stat : getStats()) {
+      if (stat.getType() == statType) {
+        if (origin == OriginType.LEVEL_POINT) {
+          stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() - 1);
+        } else {
+          stat.setMiscellaneous(stat.getMiscellaneous() - 1);
+        }
+      }
+    }
   }
 
   @Override
-  public void decrementStat(StatType stat, OriginType origin, int amount)
+  public void decrementStat(StatType statType, OriginType origin, int amount)
           throws IllegalArgumentException {
-
+    for (Stat stat : getStats()) {
+      if (stat.getType() == statType) {
+        if (origin == OriginType.LEVEL_POINT) {
+          stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() - amount);
+        } else {
+          stat.setMiscellaneous(stat.getMiscellaneous() - amount);
+        }
+      }
+    }
   }
 
   @Override
