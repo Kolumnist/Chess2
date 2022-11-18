@@ -1,66 +1,53 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * This is a unique number String.
  */
 public class Seed {
 
-  private final int seed;
-
-  public ArrayList<Integer> floorLength;
-  public ArrayList<Boolean> floorDir;
+  public String[] stringParser;
+  public ArrayList<Integer> roomParser;
+  public final int minDigitNumber = 7;
 
   /**
-   * Gets the Seed for the actual Game.
-   *
-   * @param seedNumber gets the seed number 1,2 or 3
+   * Constructor for Seed Class
+   * @param seed the digit chain for the layout creation, the first 7 digits dictate the layout
    */
-  public Seed(int seedNumber) {
-    this.seed = seedNumber;
-    floorLength = new ArrayList<>();
-    floorDir = new ArrayList<>();
+  public Seed(String seed) {
 
-    if (seedNumber == 1) {
-      floorLength.add(1);
-      floorLength.add(2);
-      floorLength.add(3);
-      floorDir.add(true);
-      floorDir.add(false);
-      floorDir.add(false);
-    } else if (seedNumber == 2) {
-      floorLength.add(2);
-      floorLength.add(3);
-      floorLength.add(1);
-      floorDir.add(false);
-      floorDir.add(true);
-      floorDir.add(false);
-    } else if (seedNumber == 3) {
-      floorLength.add(3);
-      floorLength.add(1);
-      floorLength.add(2);
-      floorDir.add(false);
-      floorDir.add(false);
-      floorDir.add(true);
+    stringParser = seed.split("(?!^)");
+    ArrayList<Integer> intParser = new ArrayList<Integer>();
+
+    for (String s : stringParser) {
+      intParser.add(Integer.parseInt(s));
+    }
+
+    while(intParser.size() < minDigitNumber){
+      intParser.add(0);
+    }
+
+    this.roomParser = intParser;
+  }
+
+  /**
+   * Constructor for Seed without any input.
+   */
+  public Seed() {
+    Random rand = new Random();
+    while(roomParser.size() < minDigitNumber){
+      roomParser.add(rand.nextInt(9));
     }
   }
 
-  public ArrayList<Integer> getFloorLength() {
-    return floorLength;
+  public int getTotalRoomCount(){
+    return roomParser.get(0) + roomParser.get(1) + roomParser.get(2);
   }
 
-  public ArrayList<Boolean> getFloorDirections() {
-    return floorDir;
+  public ArrayList<Integer> getRoomParser(){
+    return roomParser;
   }
 
-  /**
-   * Javadoc.
-   *
-   * @return return
-   *
-   */
-  public int getSeed() {
-    return seed;
-  }
 }

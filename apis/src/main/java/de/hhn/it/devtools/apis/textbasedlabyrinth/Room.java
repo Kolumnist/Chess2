@@ -28,10 +28,14 @@ public class Room {
   public Boolean isEastAssigned;
   public Boolean isWestAssigned;
 
-  private Door leftDoor;
-  private Door rightDoor;
-  private Door doorStraightAhead;
-  private Door backdoor;
+  private Door westDoor;
+  private Door eastDoor;
+  private Door northDoor;
+  private Door southDoor;
+  private boolean hasDoorN;
+  private boolean hasDoorW;
+  private boolean hasDoorE;
+  private boolean hasDoorS;
 
   /**
    * Constructor of Room.
@@ -44,12 +48,17 @@ public class Room {
     this.isSouthAssigned = false;
     this.isEastAssigned = false;
     this.isWestAssigned = false;
+    this.hasDoorS = false;
+    this.hasDoorE = false;
+    this.hasDoorN = false;
+    this.hasDoorW = false;
+
     items = new HashMap<>();
     this.description = description;
-    this.leftDoor = new Door();
-    this.rightDoor = new Door();
-    this.doorStraightAhead = new Door();
-    this.backdoor = new Door();
+    this.westDoor = new Door();
+    this.eastDoor = new Door();
+    this.northDoor = new Door();
+    this.southDoor = new Door();
   }
 
   public void addItem(Item item) {
@@ -65,23 +74,45 @@ public class Room {
     int a = 0;
 
     if (isSouthAssigned) {
-      backdoor = new Door();
+      if (toTheSouth.hasSouthDoor()) {
+        southDoor = toTheSouth.getSouthDoor();
+      } else {
+        southDoor = new Door();
+      }
+      hasDoorS = true;
     } else {
+      //This is a demo for a false door,
+      //a door that opens and reveals a wall.
       a = random.nextInt(0, 4);
       if (a == 1) {
-        backdoor = new Door();
-        backdoor.isFake();
+        southDoor = new Door();
+        southDoor.isFake();
         isSouthAssigned = true;
       }
     }
     if (isWestAssigned) {
-      leftDoor = new Door();
+      if (toTheWest.hasDoorWest()) {
+        westDoor = toTheWest.getWestDoor();
+      } else {
+        westDoor = new Door();
+      }
+      hasDoorW = true;
     }
     if (isNorthAssigned) {
-      doorStraightAhead = new Door();
+      if (toTheNorth.hasDoorNorth()) {
+        northDoor = toTheNorth.getNorthDoor();
+      } else {
+        northDoor = new Door();
+      }
+      hasDoorN = true;
     }
     if (isEastAssigned) {
-      rightDoor = new Door();
+      if (toTheEast.hasDoorEast()) {
+        eastDoor = toTheEast.getEastDoor();
+      } else {
+        eastDoor = new Door();
+      }
+      hasDoorE = true;
     }
 
   }
@@ -99,20 +130,59 @@ public class Room {
   }
 
   public Door getWestDoor() {
-    return leftDoor;
+    return westDoor;
   }
 
   public Door getEastDoor() {
-    return rightDoor;
+    return eastDoor;
   }
 
   public Door getNorthDoor() {
-    return doorStraightAhead;
+    return northDoor;
   }
 
   public Door getSouthDoor() {
-    return backdoor;
+    return southDoor;
   }
+
+  public boolean hasSouthDoor() {
+    return hasDoorS;
+  }
+
+  public boolean hasDoorNorth() {
+    return hasDoorN;
+  }
+
+  public boolean hasDoorWest() {
+    return hasDoorW;
+  }
+
+  public boolean hasDoorEast() {
+    return hasDoorE;
+  }
+
+  /**
+   * Get Number od foos.
+   *
+   * @return Number od Doors.
+   */
+  public int getNumberOfDoors() {
+    int a = 0;
+    if (hasDoorS) {
+      a++;
+    }
+    if (hasDoorW) {
+      a++;
+    }
+    if (hasDoorE) {
+      a++;
+    }
+    if (hasDoorN) {
+      a++;
+    }
+    return a;
+  }
+
 
 
   /**
@@ -148,26 +218,48 @@ public class Room {
    * @param isNorth Boolean check to see if the new Room will be to the north of current room
    */
   public void setNextDoorRoom(Room room, Boolean isEast, Boolean isWest, Boolean isNorth) {
-    if (isEast && !isWest && !isNorth) {
+    if (isEast && !isWest && !isNorth && !isEastAssigned) {
       this.toTheEast = room;
       this.isEastAssigned = true;
       room.toTheWest = this;
       room.isWestAssigned = true;
-    } else if (isWest && !isEast && !isNorth) {
+    } else if (isWest && !isEast && !isNorth && !isWestAssigned) {
       this.toTheWest = room;
       this.isWestAssigned = true;
       room.toTheWest = this;
       room.isEastAssigned = true;
-    } else if (isNorth && !isEast && !isWest) {
+    } else if (isNorth && !isEast && !isWest && !isNorthAssigned) {
       this.toTheNorth = room;
       this.isNorthAssigned = true;
       room.toTheSouth = this;
       room.isSouthAssigned = true;
-    } else {
+    } else if (!isNorth && !isEast && !isWest && !isSouthAssigned) {
       this.toTheSouth = room;
       this.isSouthAssigned = true;
       room.toTheNorth = this;
       room.isNorthAssigned = true;
+    } else {                                        // in case something is wrong the next free slot will be assigned
+      if (!isEastAssigned && !room.isWestAssigned){
+        this.toTheEast = room;
+        this.isEastAssigned = true;
+        room.toTheWest = this;
+        room.isWestAssigned = true;
+      } else if (!isWestAssigned && !room.isEastAssigned){
+        this.toTheWest = room;
+        this.isWestAssigned = true;
+        room.toTheWest = this;
+        room.isEastAssigned = true;
+      } else if (!isNorthAssigned && !room.isSouthAssigned){
+        this.toTheNorth = room;
+        this.isNorthAssigned = true;
+        room.toTheSouth = this;
+        room.isSouthAssigned = true;
+      } else if (!isSouthAssigned && !room.isNorthAssigned){
+        this.toTheSouth = room;
+        this.isSouthAssigned = true;
+        room.toTheNorth = this;
+        room.isNorthAssigned = true;
+      }
     }
   }
 

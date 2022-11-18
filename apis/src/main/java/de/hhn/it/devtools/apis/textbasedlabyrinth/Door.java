@@ -66,34 +66,38 @@ public class Door {
   /**
    * Opens the door after puzzle.
    *
-   * @return the inspect message door is open now
+   * @return message that varies, depending upon the locked status of the door .
    */
   public String open() {
     String s = inspectMessage;
 
     if (locked) {
       s = s + ""
-                    + puzzle.getDescription();
+              + puzzle.getDescription();
     } else {
       s = s + ""
-                    + "You open the door.";
+              + "You open the door.";
     }
     return s;
   }
 
   public boolean checkIfLocked() {
+
     return locked;
   }
 
   public boolean checkIfFake() {
+
     return fake;
   }
 
   public void isFake() {
+
     fake = true;
   }
 
   public Puzzle getPuzzle() {
+
     return puzzle;
   }
 
