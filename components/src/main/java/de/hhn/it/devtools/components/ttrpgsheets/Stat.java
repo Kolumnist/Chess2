@@ -16,7 +16,7 @@ public class Stat {
   int abilityPointsUsed; // Negative values are possible
 
   /**
-   * Constructor of Stat
+   * Constructor of Stat.
    *
    * @param statDescriptor The descriptor of a Stat
    */
@@ -29,7 +29,7 @@ public class Stat {
 
   /**
    * Returns the total value of a Stat by adding the product of the ability points
-   * used times the offset to the base value of the stat
+   * used times the offset to the base value of the stat.
    *
    * @return The total value of the Stat
    */
@@ -38,14 +38,14 @@ public class Stat {
   }
 
   /**
-   * Increases the ability point by one
+   * Increases the ability point by one.
    */
   public void addAbilityPoint() {
     setAbilityPointsUsed(getAbilityPointsUsed() + 1);
   }
 
   /**
-   * Decreases the ability point by one
+   * Decreases the ability point by one.
    */
   public void removeAbilityPoint() {
     setAbilityPointsUsed(getAbilityPointsUsed() - 1);
