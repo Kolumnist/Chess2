@@ -1,5 +1,7 @@
 package de.hhn.it.devtools.apis.chess2;
 
+import java.util.Optional;
+
 /**
  * Defines the Field which can have a Piece on it and always has a state.
  *
@@ -10,7 +12,7 @@ package de.hhn.it.devtools.apis.chess2;
 public class Field {
 
   private final Coordinate coordinate;
-  private Piece piece = null;
+  private Optional<Piece> piece = Optional.empty();
   private FieldState fieldState = FieldState.FREE_FIELD;
 
   /**
@@ -29,24 +31,6 @@ public class Field {
    */
   public Coordinate getCoordinate() {
     return coordinate;
-  }
-
-  /**
-   * The getter for the piece if there is one, if not return null or throw exception.
-   *
-   * @return a piece that is standing on this, can return null.
-   */
-  public Piece getPiece() {
-    return piece;
-  }
-
-  /**
-   * The setter for the piece.
-   *
-   * @param piece the piece that is now standing on this.
-   */
-  public void setPiece(Piece piece) {
-    this.piece = piece;
   }
 
   /**
