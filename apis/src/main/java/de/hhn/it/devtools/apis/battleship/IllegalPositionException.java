@@ -5,4 +5,8 @@ package de.hhn.it.devtools.apis.battleship;
  */
 
 public class IllegalPositionException extends Exception{
+
+    // Contructor
+    public IllegalPositionException(String exceptionMessage) {
+    }
 }
