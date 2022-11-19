@@ -5,8 +5,12 @@ package de.hhn.it.devtools.apis.battleship;
  */
 
 public final class Field {
-    private final int size;
+    private static int size;
     Field (int size){
         this.size= size;
+    }
+
+    public static int getSize(){
+        return size;
     }
 }
