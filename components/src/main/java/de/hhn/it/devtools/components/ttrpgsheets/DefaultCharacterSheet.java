@@ -161,7 +161,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   @Override
-  public DescriptionDescriptor getDescriptionDescriptor(DescriptionType description) {
+  public DescriptionDescriptor getDescriptionDescriptor(DescriptionType descriptionType) {
     return null;
   }
 
