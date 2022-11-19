@@ -13,4 +13,22 @@ public class Position {
         this.x = x;
         this.y = y;
     }
+
+
+    /**
+     * @return x coordinate of the ship
+     */
+    public int getX(){
+        return this.x;
+    }
+
+
+    /**
+     * @return return y coordinate of the ship
+     */
+    public int getY(){
+        return this.y;
+    }
+
+
 }

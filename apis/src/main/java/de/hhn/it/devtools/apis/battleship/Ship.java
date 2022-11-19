@@ -63,6 +63,14 @@ public class Ship {
 
 
     /**
+     * @param vertical if true: sets the ship vertical, if false: sets the ship horizontal
+     */
+    public void setIsVertical(Boolean vertical){
+        this.isVertical = vertical;
+    }
+
+
+    /**
      * @return true if ship is vertical, false if ship is horizontal
      */
     public boolean getIsVertical(){
@@ -76,6 +84,11 @@ public class Ship {
      */
     public void setFieldPosition(int x, int y){
         this.fieldPosition = new Position(x, y);
+    }
+
+
+    public Position getFieldPosition(){
+        return this.fieldPosition;
     }
 
 
