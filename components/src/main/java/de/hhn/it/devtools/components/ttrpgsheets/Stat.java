@@ -33,7 +33,7 @@ public class Stat {
    * @return The total value of the Stat
    */
   public int getTotalValue() {
-    return getBaseValue() + getAbilityPointsUsed() * getOffset();
+    return getBaseValue() + getAbilityPointsUsed() * getOffset() + getMiscellaneous();
   }
 
   /**
