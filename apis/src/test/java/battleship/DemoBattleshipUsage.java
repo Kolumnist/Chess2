@@ -3,7 +3,7 @@ package battleship;
 import de.hhn.it.devtools.apis.battleship.*;
 /**
  * This usage demo is not runnable because in this module there is no possibility to access the
- * implementation. The runnable demo is accessible in the components module.
+ * implementation. The runnable demo is accessible in the component's module.
  */
 
     // Ask Professor how to handle Gamestate parameter in loadGame

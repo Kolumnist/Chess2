@@ -13,7 +13,7 @@ public class Ship {
     //fieldPosition is always the panel at the top or at the left of the ship
     private Position fieldPosition;
     private boolean placed;
-    private Player besitzer;
+//    private Player owner;
     private static int counterId=0;
     private int id;
 
