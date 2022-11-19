@@ -86,12 +86,54 @@ public class cmpBattleshipService implements BattleshipService {
     // nedim
     @Override
     public void unPlace(Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException {
-
+        shipToMove.setPlaced(false);
     }
+
     // nedim
     @Override
     public void rotateShip(Ship shipToRotate) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException {
+        // für die neuen koordinaten vielleicht eine berechnung?
+        // wenn Schiff vertikal liegt, dann ist x wert gleich aber y zwischen front und heck verschieden,
+        // wenn Schiff horizontal liegt, dann ist y wert gleich aber x zwischen front und heck verschieden
 
+        boolean isVertical = shipToRotate.getIsVertical();
+        boolean isPlaced = shipToRotate.getPlaced();
+        Position shipPosition = shipToRotate.getFieldPosition();
+        int xCurrent = shipPosition.getX();
+        int yCurrent = shipPosition.getY();
+
+        if(isPlaced){
+            throw new IllegalShipStateException("Ship is already placed");
+        }
+
+        // check if ship is vertical and can be placed horizontally
+        else if(isVertical){
+            // wenn am heck gedreht wird zu horizontal dann bleibt y und x ändert sich
+            int xNew = xCurrent + shipToRotate.getSize();
+            if(isPlacementPossible(shipToRotate, xNew, yCurrent, false)){
+                // rotate the ship
+                shipToRotate.setIsVertical(false);
+                // place ship
+                placeShip(shipToRotate, xNew, yCurrent);
+            }
+            else{
+                throw new IllegalPositionException("Ship cannot be placed");
+            }
+        }
+
+        else if(!isVertical){
+            // wenn am heck gedreht wird zu vertikal dann bleibt x und y ändert sich
+            int yNew = yCurrent + shipToRotate.getSize();
+            if(isPlacementPossible(shipToRotate, xCurrent, yNew, true)){
+                // rotate the ship
+                shipToRotate.setPlaced(true);
+                // place ship
+                placeShip(shipToRotate, xCurrent, yNew);
+            }
+            else{
+                throw new IllegalPositionException("Ship cannot be placed");
+            }
+        }
     }
 
     // nuri
