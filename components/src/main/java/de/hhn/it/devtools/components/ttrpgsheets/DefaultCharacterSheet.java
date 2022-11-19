@@ -156,7 +156,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public void changeDiceType(DiceType dice) throws IllegalArgumentException {
-
+    getDice().changeSize(dice);
   }
 
   @Override
