@@ -151,7 +151,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public void rollDice() throws NullPointerException {
-
+    getDice().nextRoll();
   }
 
   @Override
