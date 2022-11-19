@@ -76,7 +76,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public CharacterDescriptor wrapCharacter() {
-    return null; //TODO create wrapper methods for stats and descriptions
+    return null;
   }
 
   @Override
