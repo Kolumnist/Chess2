@@ -151,9 +151,13 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   @Override
-  public void changeDescription(DescriptionType description, String text)
+  public void changeDescription(DescriptionType descriptionType, String text)
           throws IllegalArgumentException {
-
+    for (Description description : getDescriptions()) {
+      if (description.getType() == descriptionType) {
+        description.setDescription(text);
+      }
+    }
   }
 
   @Override
