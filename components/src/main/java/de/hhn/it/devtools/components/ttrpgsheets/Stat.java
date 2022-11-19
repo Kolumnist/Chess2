@@ -12,6 +12,7 @@ public class Stat {
   private int offset; // Usually set to 1; Should be final
   private int abilityPointsUsed; // Negative values are possible
   private int miscellaneous; // For other stat-affecting things such as items
+  private boolean levelStat; // True when stat can be leveled else false
 
   /**
    * Constructor of Stat.
@@ -24,6 +25,7 @@ public class Stat {
     setOffset(statDescriptor.getOffset());
     setAbilityPointsUsed(statDescriptor.getAbilityPointsUsed());
     setMiscellaneous(statDescriptor.getMiscellaneous());
+    setLevelStat(isStatTypeLevelStat(statDescriptor.getStatType()));
   }
 
   /**
@@ -48,6 +50,16 @@ public class Stat {
    */
   public void removeAbilityPoint() {
     setAbilityPointsUsed(getAbilityPointsUsed() - 1);
+  }
+
+  /**
+   * Determines whether a StatType can be leveled.
+   *
+   * @param statType The Stat Type that is checked
+   * @return TRUE when Stat Type can be leveled else false
+   */
+  private boolean isStatTypeLevelStat(StatType statType) {
+    return statType != StatType.HEALTH && statType != StatType.LEVEL;
   }
 
   public StatType getType() {
@@ -90,12 +102,21 @@ public class Stat {
     this.miscellaneous = miscellaneous;
   }
 
+  public boolean isLevelStat() {
+    return levelStat;
+  }
+
+  public void setLevelStat(boolean levelStat) {
+    this.levelStat = levelStat;
+  }
+
   @Override
   public String toString() {
     return "Stat Type: " + getType()
             + "\nBase Value: " + getBaseValue()
             + "\nOffset: " + getOffset()
             + "\nAbility Points Used: " + getAbilityPointsUsed()
-            + "\nMiscellaneous: " + getMiscellaneous();
+            + "\nMiscellaneous: " + getMiscellaneous()
+            + "\nLevel Stat: " + isLevelStat();
   }
 }
