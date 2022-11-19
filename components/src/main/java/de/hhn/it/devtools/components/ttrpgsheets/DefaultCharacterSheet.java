@@ -10,6 +10,7 @@ import de.hhn.it.devtools.apis.ttrpgsheets.DiceType;
 import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
+
 import java.util.Arrays;
 
 /**
@@ -83,6 +84,9 @@ public class DefaultCharacterSheet implements CharacterSheet {
   public void incrementStat(StatType statType, OriginType origin) throws IllegalArgumentException {
     for (Stat stat : getStats()) {
       if (stat.getType() == statType) {
+        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+          throw new IllegalArgumentException("Cannot change level of Stat of this Type");
+        }
         if (origin == OriginType.LEVEL_POINT) {
           stat.addAbilityPoint();
         } else {
@@ -97,6 +101,9 @@ public class DefaultCharacterSheet implements CharacterSheet {
           throws IllegalArgumentException {
     for (Stat stat : getStats()) {
       if (stat.getType() == statType) {
+        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+          throw new IllegalArgumentException("Cannot change level of Stat of this Type");
+        }
         if (origin == OriginType.LEVEL_POINT) {
           stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() + amount);
         } else {
@@ -110,6 +117,9 @@ public class DefaultCharacterSheet implements CharacterSheet {
   public void decrementStat(StatType statType, OriginType origin) throws IllegalArgumentException {
     for (Stat stat : getStats()) {
       if (stat.getType() == statType) {
+        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+          throw new IllegalArgumentException("Cannot change level of Stat of this Type");
+        }
         if (origin == OriginType.LEVEL_POINT) {
           stat.removeAbilityPoint();
         } else {
@@ -124,6 +134,9 @@ public class DefaultCharacterSheet implements CharacterSheet {
           throws IllegalArgumentException {
     for (Stat stat : getStats()) {
       if (stat.getType() == statType) {
+        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+          throw new IllegalArgumentException("Cannot change level of Stat of this Type");
+        }
         if (origin == OriginType.LEVEL_POINT) {
           stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() - amount);
         } else {
