@@ -64,6 +64,22 @@ public class cmpBattleshipService implements BattleshipService {
     // nedim
     @Override
     public void placeShip(Ship shipToPlace, int x1, int y1) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException {
+        boolean isPlaced = shipToPlace.getPlaced();
+        boolean isVertical = shipToPlace.getIsVertical();
+
+        if(isPlaced){
+            throw new IllegalShipStateException("Ship is already placed");
+        }
+
+        else if(!isPlacementPossible(shipToPlace, x1, y1, isVertical)){
+            throw new IllegalPositionException("Ship cannot be placed");
+        }
+
+        // set ship on field and change placed state to true
+        else if(isPlacementPossible(shipToPlace, x1, y1, isVertical)){
+            shipToPlace.setPlaced(true);
+            shipToPlace.setFieldPosition(x1, y1);
+        }
 
     }
 
