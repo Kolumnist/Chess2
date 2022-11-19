@@ -10,7 +10,6 @@ import de.hhn.it.devtools.apis.ttrpgsheets.DiceType;
 import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
-
 import java.util.Arrays;
 
 /**
