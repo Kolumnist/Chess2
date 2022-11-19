@@ -21,6 +21,43 @@ public class cmpBattleshipService implements BattleshipService {
     // nedim
     @Override
     public boolean isPlacementPossible(Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException {
+        int shipSize = shipToPlace.getSize();
+        int endX, endY;
+        int fieldSize = Field.getSize();
+
+        // Check if coordinates of ship is outside of field
+        if((x1 < 0) || (y1 < 0) || (x1 > fieldSize) || (y1 > fieldSize)){
+            //Exception schmeißen
+        }
+
+        else if(isVertical){
+            // wenn y1 der Endpunkt (unterste Punkt) des Schiffes ist dann diese Rechnung:
+            endY = y1 + shipSize;
+
+            // TODO: Vielleicht ein Attribut bei Feld um zu checken ob die Felder die das Schiff besetzen würde belegt / frei sind?
+            //Check if ship would be outside of the field if placed
+            if(endY <= fieldSize){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        else if(!isVertical) {
+            // wenn x1 der Endpunkt (linkeste Punkt) des Schiffes ist dann diese Rechnung:
+            endX = x1 + shipSize;
+
+            // TODO: Vielleicht ein Attribut bei Feld um zu checken ob die Felder die das Schiff besetzen würde belegt / frei sind?
+            //Check if ship would be outside of the field if placed
+            if (endX <= fieldSize) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        // Muss rein sonst Fehlermeldung
         return false;
     }
 
