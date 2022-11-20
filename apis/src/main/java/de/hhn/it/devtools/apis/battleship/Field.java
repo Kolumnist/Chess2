@@ -7,7 +7,7 @@ package de.hhn.it.devtools.apis.battleship;
 public final class Field {
     private static int size;
     //Index is false if no ship is on panel
-    private boolean[][] carriesShip;
+    private static boolean[][] carriesShip;
 
 
     Field (int size){
@@ -18,5 +18,9 @@ public final class Field {
 
     public static int getSize(){
         return size;
+    }
+
+    public static boolean[][] getCarriesShip(){
+        return carriesShip;
     }
 }
