@@ -9,10 +9,16 @@ package de.hhn.it.devtools.apis.chess2;
 
 public enum WinningPlayerState {
 
-  /** Is a Jail Field and has a King on it. */
+  /**
+   * gives the black player as the victor back
+   */
   BLACK_WIN,
-  /** Is a Jail Field and has a King on it. */
+  /**
+   * gives the white player as the victor back
+   */
   WHITE_WIN,
-  /** Is a Jail Field and has a King on it. */
+  /**
+   * there is no victor at the moment so the game is still running
+   */
   STILL_RUN;
-    }
+}
