@@ -2,6 +2,8 @@ package de.hhn.it.devtools.components.battleship.provider;
 
 import de.hhn.it.devtools.apis.battleship.*;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+
+import java.io.*;
 import java.util.IllegalFormatException;
 
 public class cmpBattleshipService implements BattleshipService {
@@ -157,24 +159,70 @@ public class cmpBattleshipService implements BattleshipService {
     // moutassem
     @Override
     public SavedGame saveGame() throws IllegalGameStateException {
+        //SavedGame Objekt erstellen
+        SavedGame saveData = new SavedGame();
+        //TODO: Name des files vom Spieler eingeben
+        String fileName = "X.ser";
+
+        //Serialisierung
+        try {
+            //Streams zum speichern des Objektes
+            FileOutputStream file = new FileOutputStream(fileName);
+            ObjectOutputStream out = new ObjectOutputStream(file);
+
+            //Methode zur Serialisierung
+            out.writeObject(saveData);
+
+            out.close();
+            file.close();
+        }
+        catch (IOException ex) {
+            System.out.println("IOException is caught");
+        }
+
         return null;
     }
 
     // moutassem
     @Override
     public void loadGame(SavedGame savedGame) throws IllegalFormatException {
+        //TODO: Name der ausgewählten Datei via File Chooser
+        Object saveFile = new Object();
+        //Deserialisierung
+        try
+        {
+            //Streams zum Einlesen des Files
+            FileInputStream file = new FileInputStream("saveFile");
+            ObjectInputStream in = new ObjectInputStream(file);
 
+            //Methode zur Deserialisierung des Objektes
+            savedGame = (SavedGame) in.readObject();
+
+            in.close();
+            file.close();
+        }
+        catch(IOException ex)
+        {
+            System.out.println("IOException is caught");
+        }
+
+        catch(ClassNotFoundException ex)
+        {
+            System.out.println("ClassNotFoundException is caught");
+        }
     }
 
     // moutassem
     @Override
     public void concede() throws IllegalGameStateException {
-
+        //Anzeigen, dass CPU gewinnt
+        //Unter der Anzeige Knopf für rematch und Knopf für Rückkehr zum Hauptmenü
     }
 
     // moutassem
     @Override
     public String displayRules() {
+        //Regelfenster anzeigen
         return null;
     }
 }
