@@ -188,7 +188,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public DiceDescriptor getDiceDescriptor() {
-    return null;
+    return new DiceDescriptor(getDice().getType(), getDice().getValue());
   }
 
   public CharacterSheetListener getListener() {
