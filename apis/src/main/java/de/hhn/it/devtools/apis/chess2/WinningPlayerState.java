@@ -1,7 +1,8 @@
 package de.hhn.it.devtools.apis.chess2;
 
 /**
- * Enum to describe the different fields and if there is something on it or not.
+ * Enum to describe the different winning player states
+ * is there a winning or is the game still running
  *
  * @author Collin, Lara, Michel
  * @version 1.1
