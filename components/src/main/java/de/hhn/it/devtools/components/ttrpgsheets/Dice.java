@@ -92,6 +92,14 @@ public class Dice {
     }
   }
 
+  /**
+   * Getter for the size converted to a DiceType.
+   *
+   * @return The converted Size
+   */
+  public DiceType getType() {
+    return convertToDiceType(getSize());
+  }
 
   public int getSize() {
     return size;
