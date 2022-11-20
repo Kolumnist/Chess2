@@ -38,12 +38,8 @@ public class Board {
    * @param index to get the correct field.
    * @return a specific Field.
    */
-  public Field getSpecificField(int index) {
-    try {
-      return fields[index];
-    } catch (ArrayIndexOutOfBoundsException arrayException) {
-      return null;
-    }
+  public Field getSpecificField(int index) throws ArrayIndexOutOfBoundsException {
+    return fields[index];
   }
 
   /**
