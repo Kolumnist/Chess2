@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.IllegalFormatException;
 
 public class cmpBattleshipService implements BattleshipService {
+    static GameState currentGameState = GameState.PREGAME;
     Player player = new Player();
     Computer computer = new Computer();
     // nuri
@@ -27,18 +28,23 @@ public class cmpBattleshipService implements BattleshipService {
         int shipSize = shipToPlace.getSize();
         int endX, endY;
         int fieldSize = Field.getSize();
+        //TODO: MIT OWNER ERSETZEN
         boolean[][] boolField = Field.getCarriesShip();
 
         // Check if coordinates of ship is outside of field
         if((x1 < 0) || (y1 < 0) || (x1 > fieldSize) || (y1 > fieldSize)){
-            //Exception schmeißen
+            return false;
+        }
+
+        else if(currentGameState != GameState.PLACINGSHIPS){
+            throw new IllegalGameStateException();
         }
 
         else if(isVertical){
-            // wenn y1 der Endpunkt (unterste Punkt) des Schiffes ist dann diese Rechnung:
-            endY = y1 - shipSize;
+            // wenn y1 der Endpunkt (oberste Punkt) des Schiffes ist dann diese Rechnung:
+            endY = y1 + shipSize;
 
-            for(int i = y1; i > endY; i--){
+            for(int i = y1; i < endY; i++){
                 if(boolField[i][x1]){
                     return false;
                 }
@@ -58,7 +64,7 @@ public class cmpBattleshipService implements BattleshipService {
             // wenn x1 der Endpunkt (linkeste Punkt) des Schiffes ist dann diese Rechnung:
             endX = x1 + shipSize;
 
-            for(int i = x1; i < boolField[y1].length; i++){
+            for(int i = x1; i < endX; i++){
                 if(boolField[y1][i]){
                     return false;
                 }
@@ -85,10 +91,15 @@ public class cmpBattleshipService implements BattleshipService {
         int shipSize = shipToPlace.getSize();
         int endX, endY;
         int fieldSize = Field.getSize();
+        //TODO: MIT OWNER ERSETZEN
         boolean[][] boolField = Field.getCarriesShip();
 
         if(isPlaced){
             throw new IllegalShipStateException("Ship is already placed");
+        }
+
+        else if(currentGameState != GameState.PLACINGSHIPS){
+            throw new IllegalGameStateException();
         }
 
         else if(!isPlacementPossible(shipToPlace, x1, y1, isVertical)){
@@ -100,8 +111,8 @@ public class cmpBattleshipService implements BattleshipService {
             shipToPlace.setPlaced(true);
             shipToPlace.setFieldPosition(x1, y1);
             if(isVertical){
-                endY = y1 - shipSize;
-                for(int i = y1; i > endY; i--){
+                endY = y1 + shipSize;
+                for(int i = y1; i < endY; i++){
                     boolField[i][x1] = true;
                 }
             }
@@ -124,11 +135,16 @@ public class cmpBattleshipService implements BattleshipService {
         int shipSize = shipToMove.getSize();
         int endX, endY;
         boolean isVertical = shipToMove.getIsVertical();
+        //TODO: MIT OWNER ERSETZEN
         boolean[][] boolField = Field.getCarriesShip();
 
-        if(isVertical){
-            endY = y - shipSize;
-            for(int i = y; i > endY; i--){
+        if(currentGameState != GameState.PLACINGSHIPS){
+            throw new IllegalGameStateException();
+        }
+
+        else if(isVertical){
+            endY = y + shipSize;
+            for(int i = y; i < endY; i++){
                 boolField[i][x] = false;
             }
         }
@@ -155,6 +171,10 @@ public class cmpBattleshipService implements BattleshipService {
 
         if(isPlaced){
             throw new IllegalShipStateException("Ship is already placed");
+        }
+
+        else if(currentGameState != GameState.PLACINGSHIPS){
+            throw new IllegalGameStateException();
         }
 
         // check if ship is vertical and can be placed horizontally
