@@ -4,15 +4,15 @@ package de.hhn.it.devtools.apis.battleship;
  * creates field object.
  */
 
-public final class Field {
+public class Field {
     private static int size;
-    //Index is false if no ship is on panel
-    private boolean[][] carriesShip;
+    private Owner owner;
 
 
-    Field (int size){
+
+    public Field (int size, Owner owner){
+        this.owner = owner;
         Field.size= size;
-       carriesShip = new boolean[Field.size][Field.size];
     }
 
 

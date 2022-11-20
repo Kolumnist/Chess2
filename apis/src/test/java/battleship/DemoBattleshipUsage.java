@@ -1,6 +1,8 @@
 package battleship;
 
 import de.hhn.it.devtools.apis.battleship.*;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.Player;
+
 /**
  * This usage demo is not runnable because in this module there is no possibility to access the
  * implementation. The runnable demo is accessible in the component's module.
@@ -37,7 +39,7 @@ public class DemoBattleshipUsage  {
 
 
         //User starts the game by bombing the enemy panel and misses
-        game.bombPanel(4,7);
+        game.bombPanel(new Owner(),4,7);
 
         //Sound volume was too loud, user wants to adjust it
         game.adjustSoundVolume(30);
