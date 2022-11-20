@@ -5,7 +5,7 @@ package de.hhn.it.devtools.apis.chess2;
  * Is there a winning or is the game still running.
  *
  * @author Collin, Lara, Michel
- * @version 1.1
+ * @version 1.0
  */
 
 public enum WinningPlayerState {
