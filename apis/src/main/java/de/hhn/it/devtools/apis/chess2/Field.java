@@ -34,6 +34,25 @@ public class Field {
   }
 
   /**
+   * Sets the Optional piece to not be empty.
+   *
+   * @param piece that is on this field now.
+   */
+  public void setPiece(Optional<Piece> piece) {
+    this.piece = piece;
+  }
+
+  /**
+   * Get the Optional piece or a default not null value.
+   *
+   * @return piece that is on this field or is empty.
+   */
+  public Optional<Piece> getPiece() {
+    return piece;
+    /* TODO: Use of orElse and inform yourself more! */
+  }
+
+  /**
    * The getter for the fieldState.
    *
    * @return the fieldState of this.
