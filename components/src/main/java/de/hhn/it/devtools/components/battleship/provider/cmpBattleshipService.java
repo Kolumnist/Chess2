@@ -7,7 +7,8 @@ import java.io.*;
 import java.util.IllegalFormatException;
 
 public class cmpBattleshipService implements BattleshipService {
-
+    Player player = new Player();
+    Computer computer = new Computer();
     // nuri
     @Override
     public void addCallBack(BattleshipListener listener) throws IllegalParameterException {
@@ -153,14 +154,25 @@ public class cmpBattleshipService implements BattleshipService {
 
     // nuri
     @Override
-    public boolean bombPanel(int x, int y) throws IllegalArgumentException, IllegalGameStateException {
+    public boolean bombPanel(Owner attacker,int x, int y) throws IllegalArgumentException, IllegalGameStateException {
+        // get enemyShipField and check if a ship is on the position
+        // Demo code muss noch verallgemeinert werden so dass man einfach enemy benutzen kann
+        //computer.getcShipField().getCarriesShip()
+        //Owner.getEnemyShipField.
+        // mark attackers attackField at position hit / not hit
+
+        // if yes return true if no return false
         return false;
     }
 
     // nuri
     @Override
     public void createFields(int size) throws IllegalArgumentException, IllegalGameStateException {
+        player.setShipfield(new ShipField(size,player));
+        player.setAttackField(new AttackField(size,player));
 
+        computer.setShipfield(new ShipField(size,computer));
+        computer.setAttackField(new AttackField(size,computer));
     }
 
     // nuri

@@ -13,7 +13,7 @@ public class Ship {
     //fieldPosition is always the panel at the top or at the left of the ship
     private Position fieldPosition;
     private boolean placed;
-//    private Player owner;
+    private Owner owner;
     private static int counterId=0;
     private int id;
 
@@ -22,7 +22,7 @@ public class Ship {
      * @param ShipSize sets the size
      * @param fieldPosition sets the Position on the field
      */
-    Ship (ShipType ShipSize, Position fieldPosition){
+    public Ship (ShipType ShipSize, Position fieldPosition){
         this.size = ShipSize.getShipSize();
         this.fieldPosition = fieldPosition;
         this.id = counterId;
