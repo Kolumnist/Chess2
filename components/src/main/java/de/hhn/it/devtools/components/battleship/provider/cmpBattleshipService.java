@@ -107,7 +107,7 @@ public class cmpBattleshipService implements BattleshipService {
             }
             else if(!isVertical){
                 endX = x1 + shipSize;
-                for(int i = x1; i < boolField[y1].length; i++){
+                for(int i = x1; i < endX; i++){
                     boolField[y1][i] = true;
                 }
             }
@@ -134,7 +134,7 @@ public class cmpBattleshipService implements BattleshipService {
         }
         else if(!isVertical){
             endX = x + shipSize;
-            for(int i = x; i < boolField[y].length; i++){
+            for(int i = x; i < endX; i++){
                 boolField[y][i] = false;
             }
         }
@@ -164,7 +164,9 @@ public class cmpBattleshipService implements BattleshipService {
             if(isPlacementPossible(shipToRotate, xNew, yCurrent, false)){
                 // rotate the ship
                 shipToRotate.setIsVertical(false);
-                // place ship
+                // damit Felder wo das Schiff steht auf false gesetzt werden
+                unPlace(shipToRotate);
+                // place ship   hier werden die Felder, auf die das Schiff nach dem Drehen steht, wieder auf true gesetzt
                 placeShip(shipToRotate, xNew, yCurrent);
             }
             else{
@@ -173,12 +175,14 @@ public class cmpBattleshipService implements BattleshipService {
         }
 
         else if(!isVertical){
-            // wenn am heck gedreht wird zu vertikal dann bleibt x und y ändert sich
-            int yNew = yCurrent + shipToRotate.getSize();
+            // wenn am heck gedreht wird zu vertikal dann bleibt x und y ändert sich    TODO: yCurrent - shipToRotate.getSize(); oder yCurrent + shipToRotate.getSize();
+            int yNew = yCurrent - shipToRotate.getSize();
             if(isPlacementPossible(shipToRotate, xCurrent, yNew, true)){
                 // rotate the ship
-                shipToRotate.setPlaced(true);
-                // place ship
+                shipToRotate.setIsVertical(true);
+                // damit Felder wo das Schiff steht auf false gesetzt werden
+                unPlace(shipToRotate);
+                // place ship   hier werden die Felder, auf die das Schiff nach dem Drehen steht, wieder auf true gesetzt
                 placeShip(shipToRotate, xCurrent, yNew);
             }
             else{
