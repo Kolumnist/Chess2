@@ -82,6 +82,10 @@ public class cmpBattleshipService implements BattleshipService {
     public void placeShip(Ship shipToPlace, int x1, int y1) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException {
         boolean isPlaced = shipToPlace.getPlaced();
         boolean isVertical = shipToPlace.getIsVertical();
+        int shipSize = shipToPlace.getSize();
+        int endX, endY;
+        int fieldSize = Field.getSize();
+        boolean[][] boolField = Field.getCarriesShip();
 
         if(isPlaced){
             throw new IllegalShipStateException("Ship is already placed");
@@ -95,6 +99,18 @@ public class cmpBattleshipService implements BattleshipService {
         else if(isPlacementPossible(shipToPlace, x1, y1, isVertical)){
             shipToPlace.setPlaced(true);
             shipToPlace.setFieldPosition(x1, y1);
+            if(isVertical){
+                endY = y1 - shipSize;
+                for(int i = y1; i > endY; i--){
+                    boolField[i][x1] = true;
+                }
+            }
+            else if(!isVertical){
+                endX = x1 + shipSize;
+                for(int i = x1; i < boolField[y1].length; i++){
+                    boolField[y1][i] = true;
+                }
+            }
         }
 
     }
