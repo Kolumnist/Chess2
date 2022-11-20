@@ -168,6 +168,11 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public DescriptionDescriptor getDescriptionDescriptor(DescriptionType descriptionType) {
+    for (Description description : getDescriptions()) {
+      if (description.getType() == descriptionType) {
+        return new DescriptionDescriptor(description.getType(), description.getDescription());
+      }
+    }
     return null;
   }
 
