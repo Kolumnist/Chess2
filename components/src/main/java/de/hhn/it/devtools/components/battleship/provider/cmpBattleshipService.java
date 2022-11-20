@@ -119,6 +119,25 @@ public class cmpBattleshipService implements BattleshipService {
     @Override
     public void unPlace(Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException {
         shipToMove.setPlaced(false);
+        Position position = shipToMove.getFieldPosition();
+        int x = position.getX(), y = position.getY();
+        int shipSize = shipToMove.getSize();
+        int endX, endY;
+        boolean isVertical = shipToMove.getIsVertical();
+        boolean[][] boolField = Field.getCarriesShip();
+
+        if(isVertical){
+            endY = y - shipSize;
+            for(int i = y; i > endY; i--){
+                boolField[i][x] = false;
+            }
+        }
+        else if(!isVertical){
+            endX = x + shipSize;
+            for(int i = x; i < boolField[y].length; i++){
+                boolField[y][i] = false;
+            }
+        }
     }
 
     // nedim
