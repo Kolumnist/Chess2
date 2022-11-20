@@ -61,7 +61,7 @@ public interface Chess2Service {
    * @throws IllegalParameterException if newPos is a null reference or incomplete
    */
   void moveSelectedPiece(Coordinate selectedCoordinate, Coordinate newCoordinate)
-      throws IllegalParameterException;
+      throws IllegalParameterException, InvalidMoveException;
 
   /**
    * Returns the FieldState of the selected field.
