@@ -10,16 +10,11 @@ package de.hhn.it.devtools.apis.chess2;
 
 public enum WinningPlayerState {
 
-  /**
-   * Gives the black player as the victor back.
-   */
+  /** The black player is the victor. */
   BLACK_WIN,
-  /**
-   * Gives the white player as the victor back.
-   */
+  /** The white player is the victor. */
   WHITE_WIN,
-  /**
-   * There is no victor at the moment so the game is still running.
-   */
-  STILL_RUN;
+  /** There is no victor at the moment so the game is still running. */
+  STILL_RUN
+
 }
