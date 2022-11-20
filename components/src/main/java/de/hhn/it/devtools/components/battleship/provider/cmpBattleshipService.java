@@ -215,6 +215,7 @@ public class cmpBattleshipService implements BattleshipService {
     // moutassem
     @Override
     public void concede() throws IllegalGameStateException {
+        //TODO: braucht zuerst UI
         //Anzeigen, dass CPU gewinnt
         //Unter der Anzeige Knopf für rematch und Knopf für Rückkehr zum Hauptmenü
     }
@@ -222,6 +223,7 @@ public class cmpBattleshipService implements BattleshipService {
     // moutassem
     @Override
     public String displayRules() {
+        //TODO: braucht zuerst UI
         //Regelfenster anzeigen
         return null;
     }
