@@ -26,6 +26,7 @@ public class cmpBattleshipService implements BattleshipService {
         int shipSize = shipToPlace.getSize();
         int endX, endY;
         int fieldSize = Field.getSize();
+        boolean[][] boolField = Field.getCarriesShip();
 
         // Check if coordinates of ship is outside of field
         if((x1 < 0) || (y1 < 0) || (x1 > fieldSize) || (y1 > fieldSize)){
@@ -34,7 +35,13 @@ public class cmpBattleshipService implements BattleshipService {
 
         else if(isVertical){
             // wenn y1 der Endpunkt (unterste Punkt) des Schiffes ist dann diese Rechnung:
-            endY = y1 + shipSize;
+            endY = y1 - shipSize;
+
+            for(int i = y1; i > endY; i--){
+                if(boolField[i][x1]){
+                    return false;
+                }
+            }
 
             // TODO: Vielleicht ein Attribut bei Feld um zu checken ob die Felder die das Schiff besetzen würde belegt / frei sind?
             //Check if ship would be outside of the field if placed
@@ -46,9 +53,15 @@ public class cmpBattleshipService implements BattleshipService {
             }
         }
 
-        else if(!isVertical) {
+        else if(!isVertical){
             // wenn x1 der Endpunkt (linkeste Punkt) des Schiffes ist dann diese Rechnung:
             endX = x1 + shipSize;
+
+            for(int i = x1; i < boolField[y1].length; i++){
+                if(boolField[y1][i]){
+                    return false;
+                }
+            }
 
             // TODO: Vielleicht ein Attribut bei Feld um zu checken ob die Felder die das Schiff besetzen würde belegt / frei sind?
             //Check if ship would be outside of the field if placed
