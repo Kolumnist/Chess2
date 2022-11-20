@@ -76,7 +76,15 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public CharacterDescriptor wrapCharacter() {
-    return null;
+    DescriptionDescriptor[] descDescriptors = new DescriptionDescriptor[getDescriptions().length];
+    for (int i = 0; i < DescriptionType.values().length; i++) {
+      descDescriptors[i] = getDescriptionDescriptor(DescriptionType.values()[i]);
+    }
+    StatDescriptor[] statDescriptors = new StatDescriptor[getStats().length];
+    for (int i = 0; i < StatType.values().length; i++) {
+      statDescriptors[i] = getStatDescriptor(StatType.values()[i]);
+    }
+    return new CharacterDescriptor(descDescriptors, statDescriptors, getDiceDescriptor());
   }
 
   @Override
