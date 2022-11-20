@@ -54,6 +54,45 @@ public class Dice {
     }
   }
 
+  /**
+   * Converts a given Size of Dice to a DiceType. If no conversion ist possible returns null.
+   *
+   * @param size The size of the Dice
+   * @return The converted size to the DiceType. null if there is no conversion possible.
+   */
+  public DiceType convertToDiceType(int size) {
+    switch (size) {
+      case 2 -> {
+        return DiceType.D2;
+      }
+      case 4 -> {
+        return DiceType.D4;
+      }
+      case 6 -> {
+        return DiceType.D6;
+      }
+      case 8 -> {
+        return DiceType.D8;
+      }
+      case 10 -> {
+        return DiceType.D10;
+      }
+      case 12 -> {
+        return DiceType.D12;
+      }
+      case 20 -> {
+        return DiceType.D20;
+      }
+      case 100 -> {
+        return DiceType.D100;
+      }
+      default -> {
+        return null;
+      }
+    }
+  }
+
+
   public int getSize() {
     return size;
   }
