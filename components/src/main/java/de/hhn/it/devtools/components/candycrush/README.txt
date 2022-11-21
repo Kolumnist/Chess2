@@ -1,1 +1,1 @@
-https://confluence-student.it.hs-heilbronn.de/pages/viewpage.action?spaceKey=DT22WS&title=14+Candy+Crush
+https://confluence-student.it.hs-heilbronn.de/pages/viewpage.action?spaceKey=DT22WS&title=14+Candy+CrushS
