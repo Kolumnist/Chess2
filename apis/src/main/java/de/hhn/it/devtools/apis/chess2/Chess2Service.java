@@ -19,14 +19,6 @@ public interface Chess2Service {
   Board startNewGame();
 
   /**
-   * Resets the board and pieces and the kings bananas. Assigns the pieces to their players and sets
-   * the starting player, informs the players about who starts.
-   *
-   * @return Board of the game
-   */
-  Board reset();
-
-  /**
    * Destroys an instance of ChessGame and brings scene back to main menu.
    */
   void endGame();
@@ -35,13 +27,6 @@ public interface Chess2Service {
    * Calls the method showWinningPlayer and after that calls reset or returns to the main menu.
    */
   void giveUp();
-
-  /**
-   * Returns 'b', 'w', 'r' as a char that defines which player won or red for no one.
-   *
-   * @return char which defines the player won or no player won
-   */
-  char getWinningPlayer();
 
   /**
    * Returns all positions with the state "HAS_CURRENT_PIECE".
@@ -61,24 +46,14 @@ public interface Chess2Service {
       throws IllegalParameterException;
 
   /**
-   * The king/queen gets send to jail upon defeat, the jail field is chosen by the player who
-   * defeated the piece.
-   *
-   * @param otherCoordinate of the king or queen piece that stands on a field, which has the
-   *                        FieldState "HAS_OTHER_PIECE"  that got selected
-   * @param jailCoordinate  for the position of the jail on the board
-   * @throws IllegalParameterException if piece or pos is a null reference or incomplete
-   */
-  void setPieceInJail(Coordinate otherCoordinate, Coordinate jailCoordinate)
-      throws IllegalParameterException;
-
-  /**
    * Changes the position of the selected piece.
    *
-   * @param newCoordinate the new position of the piece
+   * @param selectedCoordinate the position of the selected piece
+   * @param newCoordinate      the new position of the piece
    * @throws IllegalParameterException if newPos is a null reference or incomplete
    */
-  void moveSelectedPiece(Coordinate newCoordinate) throws IllegalParameterException;
+  void moveSelectedPiece(Coordinate selectedCoordinate, Coordinate newCoordinate)
+      throws IllegalParameterException, InvalidMoveException;
 
   /**
    * Returns the FieldState of the selected field.
@@ -89,4 +64,18 @@ public interface Chess2Service {
    */
   FieldState getFieldState(Coordinate selectedCoordinate) throws IllegalParameterException;
 
+  /**
+   * Returns BLACK_WIN, WHITE_WIN, NO_WINNER as an Enum that defines which player won or if there
+   * is none.
+   *
+   * @return Enum which defines the player that won or if there is none
+   */
+  WinningPlayerState getWinningPlayer();
+
+  /**
+   * Returns RUNNING, CHECK or CHECKMATE which is the current GameState
+   *
+   * @return the current GameState
+   */
+  GameState getGameState();
 }
