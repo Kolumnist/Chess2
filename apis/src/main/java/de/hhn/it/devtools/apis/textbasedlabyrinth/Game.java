@@ -260,7 +260,7 @@ public class Game implements GameService {
    * @param itemName the name of the item to be removed.
    * @return the message, which is about the success or failure of the operation.
    */
-  public String removeItem(String itemName) {
+  public String dropItem(String itemName) {
     String message = "";
     try {
       player.removeItem(itemName);

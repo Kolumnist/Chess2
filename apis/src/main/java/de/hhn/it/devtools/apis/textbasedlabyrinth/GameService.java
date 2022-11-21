@@ -47,7 +47,7 @@ public interface GameService {
    * @param itemName the name of the item to be removed.
    * @return the message, which is about the success or failure of the operation.
    */
-  String removeItem(String itemName);
+  String dropItem(String itemName);
 
 
   /**
