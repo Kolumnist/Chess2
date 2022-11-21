@@ -15,6 +15,6 @@ public enum WinningPlayerState {
   /** The white player is the victor. */
   WHITE_WIN,
   /** There is no victor at the moment so the game is still running. */
-  STILL_RUN
+  NO_WINNER
 
 }
