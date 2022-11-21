@@ -16,7 +16,7 @@ public class ObstacleDescriptor {
   /**
    * Basic constructor for an obstacle.
    *
-   * @param x1 top left x
+   * @param x1 top left
    * @param y1 top left y
    * @param x2 bottom right x
    * @param y2 bottom right y

@@ -2,7 +2,6 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
-
 import java.util.List;
 
 /**
@@ -47,8 +46,7 @@ public interface GameService {
    * @param itemName the name of the item to be removed.
    * @return the message, which is about the success or failure of the operation.
    */
-  String removeItem(String itemName);
-
+  String dropItem(String itemName);
 
   /**
    * Inspect a door/pathway.
