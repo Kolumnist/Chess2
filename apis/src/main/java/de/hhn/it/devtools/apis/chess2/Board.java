@@ -39,11 +39,11 @@ public class Board {
    * @return a specific Field.
    */
   public Field getSpecificField(int index) {
-    try {
+    if(index < fields.length)
+    {
       return fields[index];
-    } catch (ArrayIndexOutOfBoundsException arrayException) {
-      return null;
     }
+    return fields[0];
   }
 
   /**
