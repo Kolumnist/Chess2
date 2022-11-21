@@ -29,14 +29,6 @@ public interface Chess2Service {
   void giveUp();
 
   /**
-   * Returns Black_Win, White_Win, Still_Run as an Enum that defines which player won or if the game
-   * still goes on.
-   *
-   * @return Enum which defines the player that won or if the game still goes on
-   */
-  WinningPlayerState getWinningPlayer();
-
-  /**
    * Returns all positions with the state "HAS_CURRENT_PIECE".
    *
    * @return Coordinate[] all positions with the state "HAS_CURRENT_PIECE"
@@ -72,4 +64,18 @@ public interface Chess2Service {
    */
   FieldState getFieldState(Coordinate selectedCoordinate) throws IllegalParameterException;
 
+  /**
+   * Returns BLACK_WIN, WHITE_WIN, NO_WINNER as an Enum that defines which player won or if there
+   * is none.
+   *
+   * @return Enum which defines the player that won or if there is none
+   */
+  WinningPlayerState getWinningPlayer();
+
+  /**
+   * Returns RUNNING, CHECK or CHECKMATE which is the current GameState
+   *
+   * @return the current GameState
+   */
+  GameState getGameState();
 }
