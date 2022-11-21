@@ -29,7 +29,7 @@ public class cmpBattleshipService implements BattleshipService {
         int endX, endY;
         int fieldSize = Field.getSize();
         //TODO: MIT OWNER ERSETZEN
-        boolean[][] boolField = Field.getCarriesShip();
+      //  boolean[][] boolField = Field.getCarriesShip();
 
         // Check if coordinates of ship is outside of field
         if((x1 < 0) || (y1 < 0) || (x1 > fieldSize) || (y1 > fieldSize)){
@@ -45,9 +45,9 @@ public class cmpBattleshipService implements BattleshipService {
             endY = y1 + shipSize;
 
             for(int i = y1; i < endY; i++){
-                if(boolField[i][x1]){
-                    return false;
-                }
+                //if(boolField[i][x1]){
+                //   return false;
+               // }
             }
 
             // TODO: Vielleicht ein Attribut bei Feld um zu checken ob die Felder die das Schiff besetzen würde belegt / frei sind?
@@ -65,9 +65,9 @@ public class cmpBattleshipService implements BattleshipService {
             endX = x1 + shipSize;
 
             for(int i = x1; i < endX; i++){
-                if(boolField[y1][i]){
-                    return false;
-                }
+               // if(boolField[y1][i]){
+                 //   return false;
+                //}
             }
 
             // TODO: Vielleicht ein Attribut bei Feld um zu checken ob die Felder die das Schiff besetzen würde belegt / frei sind?
@@ -92,7 +92,7 @@ public class cmpBattleshipService implements BattleshipService {
         int endX, endY;
         int fieldSize = Field.getSize();
         //TODO: MIT OWNER ERSETZEN
-        boolean[][] boolField = Field.getCarriesShip();
+        //boolean[][] boolField = Field.getCarriesShip();
 
         if(isPlaced){
             throw new IllegalShipStateException("Ship is already placed");
@@ -112,15 +112,15 @@ public class cmpBattleshipService implements BattleshipService {
             shipToPlace.setFieldPosition(x1, y1);
             if(isVertical){
                 endY = y1 + shipSize;
-                for(int i = y1; i < endY; i++){
-                    boolField[i][x1] = true;
-                }
+                //for(int i = y1; i < endY; i++){
+                  //  boolField[i][x1] = true;
+                //}
             }
             else if(!isVertical){
                 endX = x1 + shipSize;
-                for(int i = x1; i < endX; i++){
-                    boolField[y1][i] = true;
-                }
+                //for(int i = x1; i < endX; i++){
+                  //  boolField[y1][i] = true;
+                //}
             }
         }
 
@@ -136,7 +136,7 @@ public class cmpBattleshipService implements BattleshipService {
         int endX, endY;
         boolean isVertical = shipToMove.getIsVertical();
         //TODO: MIT OWNER ERSETZEN
-        boolean[][] boolField = Field.getCarriesShip();
+        //boolean[][] boolField = Field.getCarriesShip();
 
         if(currentGameState != GameState.PLACINGSHIPS){
             throw new IllegalGameStateException();
@@ -145,13 +145,13 @@ public class cmpBattleshipService implements BattleshipService {
         else if(isVertical){
             endY = y + shipSize;
             for(int i = y; i < endY; i++){
-                boolField[i][x] = false;
+                //boolField[i][x] = false;
             }
         }
         else if(!isVertical){
             endX = x + shipSize;
             for(int i = x; i < endX; i++){
-                boolField[y][i] = false;
+               // boolField[y][i] = false;
             }
         }
     }
@@ -214,13 +214,49 @@ public class cmpBattleshipService implements BattleshipService {
     // nuri
     @Override
     public boolean bombPanel(Owner attacker,int x, int y) throws IllegalArgumentException, IllegalGameStateException {
-        // get enemyShipField and check if a ship is on the position
-        // Demo code muss noch verallgemeinert werden so dass man einfach enemy benutzen kann
-        //computer.getcShipField().getCarriesShip()
-        //Owner.getEnemyShipField.
-        // mark attackers attackField at position hit / not hit
 
-        // if yes return true if no return false
+        // need to test if I can just use .equals or need to cast in some way
+
+        if (attacker.equals(player)){
+
+            boolean isShipOnPosition = computer.getcShipField().getPanelMarker(x,y);
+
+            if (isShipOnPosition){
+                // set ship part on position to bombed
+                computer.getcShipField().setPanelMarker(x, y,false);
+
+                player.getpAttackField().setPanelMarker(x, y,true);
+                return true;
+            }
+            else {
+                //set position to bombed (not necessary hit)
+                player.getpAttackField().setPanelMarker(x,y,true);
+                return false;
+            }
+
+        }
+
+
+        else if (attacker.equals(computer)){
+
+            boolean isShipOnPosition = player.getpShipField().getPanelMarker(x,y);
+
+            if(isShipOnPosition){
+                // set ship part on position to bombed
+                player.getpShipField().setPanelMarker(x,y,false);
+                //set position to bombed (not necessary hit)
+                computer.getcAttackField().setPanelMarker(x,y,true);
+                return true;
+            }
+            else {
+                // set position to bombed (not necessary hit)
+                computer.getcAttackField().setPanelMarker(x,y,true);
+                return false;
+            }
+
+        }
+
+        // necessary but should'nt be executed
         return false;
     }
 
@@ -229,7 +265,7 @@ public class cmpBattleshipService implements BattleshipService {
     public void createFields(int size) throws IllegalArgumentException, IllegalGameStateException {
         player.setShipfield(new ShipField(size,player));
         player.setAttackField(new AttackField(size,player));
-
+        
         computer.setShipfield(new ShipField(size,computer));
         computer.setAttackField(new AttackField(size,computer));
     }

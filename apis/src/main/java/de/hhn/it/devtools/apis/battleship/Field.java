@@ -5,11 +5,11 @@ package de.hhn.it.devtools.apis.battleship;
  */
 
 public class Field {
+
     private static int size;
     //Index is false if no ship is on panel
-    private static boolean[][] carriesShip;
+    protected boolean[][] panelMarker;
     private Owner owner;
-
 
 
     public Field (int size, Owner owner){
@@ -22,7 +22,14 @@ public class Field {
         return size;
     }
 
-    public static boolean[][] getCarriesShip(){
-        return carriesShip;
+
+    public boolean getPanelMarker(int x, int y){
+        return panelMarker[x][y];
     }
+
+
+    public void setPanelMarker(int x, int y, boolean newPanelState){
+        panelMarker[x][y] = newPanelState;
+    }
+
 }

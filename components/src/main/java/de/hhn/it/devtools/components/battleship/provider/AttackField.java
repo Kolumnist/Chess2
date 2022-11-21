@@ -5,10 +5,8 @@ import de.hhn.it.devtools.apis.battleship.Owner;
 
 public class AttackField extends Field {
 
-    private boolean[][] bombMarker;
 
     public AttackField(int size, Owner owner) {
         super(size, owner);
-        bombMarker = new boolean[size][size];
     }
 }

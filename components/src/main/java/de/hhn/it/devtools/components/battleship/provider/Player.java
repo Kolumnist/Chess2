@@ -18,6 +18,7 @@ public class Player extends Owner {
         this.pShipField = shipField;
     }
 
+
     public AttackField getpAttackField(){
         return this.pAttackField;
     }
