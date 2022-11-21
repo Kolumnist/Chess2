@@ -4,6 +4,7 @@ import de.hhn.it.devtools.apis.chess2.Board;
 import de.hhn.it.devtools.apis.chess2.Chess2Service;
 import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.FieldState;
+import de.hhn.it.devtools.apis.chess2.GameState;
 import de.hhn.it.devtools.apis.chess2.WinningPlayerState;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 
@@ -40,6 +41,11 @@ public class ChessGame implements Chess2Service {
 
   @Override
   public WinningPlayerState getWinningPlayer() {
+    return null;
+  }
+
+  @Override
+  public GameState getGameState() {
     return null;
   }
 
