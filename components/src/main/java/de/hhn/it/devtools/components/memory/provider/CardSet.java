@@ -10,14 +10,13 @@ import java.util.List;
 
 public class CardSet {
     Difficulty difficulty;
-    List<PictureCardDescriptor> pictureCardDescriptors = new ArrayList<>();
-    HashMap<Integer, String> pictureReferences = new HashMap<Integer, String>();
+    List<PictureCardDescriptor> pictureCardDescriptors;
+    HashMap<Integer, String> pictureReferences;
 
-    /**
-     * Fills the CardSet with data from local storage.
-     */
-    public void fillCardSet() {
-
+    public CardSet(Difficulty difficulty, List<PictureCardDescriptor> pictureCardDescriptors, HashMap<Integer, String> pictureReferences){
+        this.difficulty = difficulty;
+        this.pictureCardDescriptors = pictureCardDescriptors;
+        this.pictureReferences = pictureReferences;
     }
 
 }
