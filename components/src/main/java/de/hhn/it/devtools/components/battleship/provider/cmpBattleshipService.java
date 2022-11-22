@@ -24,141 +24,139 @@ public class cmpBattleshipService implements BattleshipService {
 
     // nedim
     @Override
-    public boolean isPlacementPossible(Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException {
+    public boolean isPlacementPossible(Owner owner, Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException {
         int shipSize = shipToPlace.getSize();
-        int endX, endY;
+        // wenn x1 der Endpunkt (linkeste Punkt) des Schiffes ist dann diese Rechnung:
+        int endX = x1 + shipSize;
+        // wenn y1 der Endpunkt (oberste Punkt) des Schiffes ist dann diese Rechnung:
+        int endY = y1 + shipSize;
         int fieldSize = Field.getSize();
-        //TODO: MIT OWNER ERSETZEN
-      //  boolean[][] boolField = Field.getCarriesShip();
+        boolean[][] boolField;
 
         // Check if coordinates of ship is outside of field
         if((x1 < 0) || (y1 < 0) || (x1 > fieldSize) || (y1 > fieldSize)){
             return false;
         }
-
         else if(currentGameState != GameState.PLACINGSHIPS){
             throw new IllegalGameStateException();
         }
-
-        else if(isVertical){
-            // wenn y1 der Endpunkt (oberste Punkt) des Schiffes ist dann diese Rechnung:
-            endY = y1 + shipSize;
-
+        if(owner.equals(player)) {
+            boolField = player.getpShipField().getPanelMarkerMat();
+        }
+        else{
+            boolField = computer.getcShipField().getPanelMarkerMat();
+        }
+        if(isVertical){
             for(int i = y1; i < endY; i++){
-                //if(boolField[i][x1]){
-                //   return false;
-               // }
+                if(boolField[i][x1]){
+                    return false;
+                }
             }
-
-            // TODO: Vielleicht ein Attribut bei Feld um zu checken ob die Felder die das Schiff besetzen würde belegt / frei sind?
-            //Check if ship would be outside of the field if placed
-            if(endY <= fieldSize){
+            if(endY < fieldSize){  // < fieldSize, da wenn fielSize = 5 -> 0 bis 4
                 return true;
             }
             else{
                 return false;
             }
         }
-
         else if(!isVertical){
-            // wenn x1 der Endpunkt (linkeste Punkt) des Schiffes ist dann diese Rechnung:
-            endX = x1 + shipSize;
-
             for(int i = x1; i < endX; i++){
-               // if(boolField[y1][i]){
-                 //   return false;
-                //}
+                if(boolField[y1][i]){
+                    return false;
+                }
             }
-
-            // TODO: Vielleicht ein Attribut bei Feld um zu checken ob die Felder die das Schiff besetzen würde belegt / frei sind?
-            //Check if ship would be outside of the field if placed
-            if (endX <= fieldSize) {
+            if (endX < fieldSize){  // < fieldSize, da wenn fielSize = 5 -> 0 bis 4
                 return true;
-            } else {
+            }
+            else{
                 return false;
             }
         }
-
         // Muss rein sonst Fehlermeldung
         return false;
     }
 
     // nedim
     @Override
-    public void placeShip(Ship shipToPlace, int x1, int y1) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException {
+    public void placeShip(Owner owner, Ship shipToPlace, int x1, int y1) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException {
         boolean isPlaced = shipToPlace.getPlaced();
         boolean isVertical = shipToPlace.getIsVertical();
         int shipSize = shipToPlace.getSize();
         int endX, endY;
-        int fieldSize = Field.getSize();
-        //TODO: MIT OWNER ERSETZEN
-        //boolean[][] boolField = Field.getCarriesShip();
+        boolean[][] boolField;
 
         if(isPlaced){
             throw new IllegalShipStateException("Ship is already placed");
         }
-
         else if(currentGameState != GameState.PLACINGSHIPS){
             throw new IllegalGameStateException();
         }
-
-        else if(!isPlacementPossible(shipToPlace, x1, y1, isVertical)){
+        else if(!isPlacementPossible(owner, shipToPlace, x1, y1, isVertical)){
             throw new IllegalPositionException("Ship cannot be placed");
         }
-
-        // set ship on field and change placed state to true
-        else if(isPlacementPossible(shipToPlace, x1, y1, isVertical)){
+        else if(isPlacementPossible(owner, shipToPlace, x1, y1, isVertical)){
+            if(owner.equals(player)){
+                boolField = player.getpShipField().getPanelMarkerMat();
+            }
+            // Diese Statement ging nicht ka wieso: else if(owner.equals(computer)){
+            else{
+                boolField = computer.getcShipField().getPanelMarkerMat();
+            }
+            // set ship on field and change placed state to true
             shipToPlace.setPlaced(true);
             shipToPlace.setFieldPosition(x1, y1);
             if(isVertical){
                 endY = y1 + shipSize;
-                //for(int i = y1; i < endY; i++){
-                  //  boolField[i][x1] = true;
-                //}
+                for(int i = y1; i < endY; i++){
+                    boolField[i][x1] = true;
+                }
             }
             else if(!isVertical){
                 endX = x1 + shipSize;
-                //for(int i = x1; i < endX; i++){
-                  //  boolField[y1][i] = true;
-                //}
+                for(int i = x1; i < endX; i++){
+                    boolField[y1][i] = true;
+                }
             }
         }
-
     }
 
     // nedim
     @Override
-    public void unPlace(Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException {
+    public void unPlace(Owner owner, Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException {
         shipToMove.setPlaced(false);
         Position position = shipToMove.getFieldPosition();
         int x = position.getX(), y = position.getY();
         int shipSize = shipToMove.getSize();
         int endX, endY;
         boolean isVertical = shipToMove.getIsVertical();
-        //TODO: MIT OWNER ERSETZEN
-        //boolean[][] boolField = Field.getCarriesShip();
+        boolean[][] boolField;
 
         if(currentGameState != GameState.PLACINGSHIPS){
             throw new IllegalGameStateException();
         }
-
-        else if(isVertical){
+        else if(owner.equals(player)){
+            boolField = player.getpShipField().getPanelMarkerMat();
+        }
+        else{
+            boolField = computer.getcShipField().getPanelMarkerMat();
+        }
+        if(isVertical){
             endY = y + shipSize;
             for(int i = y; i < endY; i++){
-                //boolField[i][x] = false;
+                boolField[i][x] = false;
             }
         }
         else if(!isVertical){
             endX = x + shipSize;
             for(int i = x; i < endX; i++){
-               // boolField[y][i] = false;
+                boolField[y][i] = false;
             }
         }
     }
 
     // nedim
     @Override
-    public void rotateShip(Ship shipToRotate) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException {
+    public void rotateShip(Owner owner, Ship shipToRotate) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException {
         // für die neuen koordinaten vielleicht eine berechnung?
         // wenn Schiff vertikal liegt, dann ist x wert gleich aber y zwischen front und heck verschieden,
         // wenn Schiff horizontal liegt, dann ist y wert gleich aber x zwischen front und heck verschieden
@@ -172,38 +170,35 @@ public class cmpBattleshipService implements BattleshipService {
         if(isPlaced){
             throw new IllegalShipStateException("Ship is already placed");
         }
-
         else if(currentGameState != GameState.PLACINGSHIPS){
             throw new IllegalGameStateException();
         }
-
         // check if ship is vertical and can be placed horizontally
         else if(isVertical){
-            // wenn am heck gedreht wird zu horizontal dann bleibt y und x ändert sich
+            // wenn am heck gedreht wird zu horizontal dann bleibt y und x ändert sich -> Drehung: im Uhrzeigersinn
             int xNew = xCurrent + shipToRotate.getSize();
-            if(isPlacementPossible(shipToRotate, xNew, yCurrent, false)){
+            if(isPlacementPossible(owner, shipToRotate, xNew, yCurrent, false)){
                 // rotate the ship
                 shipToRotate.setIsVertical(false);
                 // damit Felder wo das Schiff steht auf false gesetzt werden
-                unPlace(shipToRotate);
+                unPlace(owner, shipToRotate);
                 // place ship   hier werden die Felder, auf die das Schiff nach dem Drehen steht, wieder auf true gesetzt
-                placeShip(shipToRotate, xNew, yCurrent);
+                placeShip(owner, shipToRotate, xNew, yCurrent);
             }
             else{
                 throw new IllegalPositionException("Ship cannot be placed");
             }
         }
-
         else if(!isVertical){
-            // wenn am heck gedreht wird zu vertikal dann bleibt x und y ändert sich    TODO: yCurrent - shipToRotate.getSize(); oder yCurrent + shipToRotate.getSize();
+            // wenn am heck gedreht wird zu vertikal dann bleibt x und y ändert sich -> Drehung: gegen Uhrzeigersinn
             int yNew = yCurrent - shipToRotate.getSize();
-            if(isPlacementPossible(shipToRotate, xCurrent, yNew, true)){
+            if(isPlacementPossible(owner, shipToRotate, xCurrent, yNew, true)){
                 // rotate the ship
                 shipToRotate.setIsVertical(true);
                 // damit Felder wo das Schiff steht auf false gesetzt werden
-                unPlace(shipToRotate);
+                unPlace(owner, shipToRotate);
                 // place ship   hier werden die Felder, auf die das Schiff nach dem Drehen steht, wieder auf true gesetzt
-                placeShip(shipToRotate, xCurrent, yNew);
+                placeShip(owner, shipToRotate, xCurrent, yNew);
             }
             else{
                 throw new IllegalPositionException("Ship cannot be placed");
