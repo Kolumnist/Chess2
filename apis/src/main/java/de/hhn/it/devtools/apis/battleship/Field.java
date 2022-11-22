@@ -8,7 +8,7 @@ public class Field {
 
     private static int size;
     //Index is false if no ship is on panel
-    protected boolean[][] panelMarker;
+    protected boolean[][] panelMarkerMat;
     private Owner owner;
 
 
@@ -23,13 +23,18 @@ public class Field {
     }
 
 
+    public boolean[][] getPanelMarkerMat(){
+        return panelMarkerMat;
+    }
+
+
     public boolean getPanelMarker(int x, int y){
-        return panelMarker[x][y];
+        return panelMarkerMat[x][y];
     }
 
 
     public void setPanelMarker(int x, int y, boolean newPanelState){
-        panelMarker[x][y] = newPanelState;
+        panelMarkerMat[x][y] = newPanelState;
     }
 
 }
