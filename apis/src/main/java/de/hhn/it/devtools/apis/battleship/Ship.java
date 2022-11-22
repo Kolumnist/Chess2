@@ -12,12 +12,21 @@ public class Ship {
     private boolean isHorizontal = true;
     //fieldPosition is always the panel at the top or at the left of the ship
     private Position fieldPosition;
+    private boolean placed;
+    private Player besitzer;
+    private static int counterId=0;
+    private int id;
 
-
-    //constructor
-    Ship (Shiptypes ShipSize, Position fieldPosition){
+    /**
+     * Constructor
+     * @param ShipSize sets the size
+     * @param fieldPosition sets the Position on the field
+     */
+    Ship (ShipType ShipSize, Position fieldPosition){
         this.size = ShipSize.getShipSize();
         this.fieldPosition = fieldPosition;
+        this.id = counterId;
+        counterId++;
     }
 
 
@@ -25,7 +34,13 @@ public class Ship {
      * @return the ship size of the respective ship
      */
     public int getSize(){
-        return size;
+        return this.size;
     }
 
+    /**
+     * @return the id of the ship
+     */
+    public int getId(){
+        return this.id;
+    }
 }

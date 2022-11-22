@@ -6,7 +6,13 @@ package de.hhn.it.devtools.apis.minesweeper;
  * @version 0.1
  */
 
-public interface Handler {
+public interface MinesweeperService {
+    
+    /**
+     * 
+     * @param minesweeperActionListener
+     */
+    void setMinesweeperActionListener(MinesweeperActionListener minesweeperActionListener);
     
     /**
      * Creates a field with given size, time and mineCount.
@@ -21,7 +27,7 @@ public interface Handler {
      * fills customizable size, time and minecount with static values
      * @param difficulty first letter of which difficulty get selected (e,m,h)
      */
-    void chooseDifficulty(char difficulty);
+    void chooseDifficulty(Difficulty difficulty);
 
     /**
      * Closes the current game and return to the menu
@@ -32,11 +38,6 @@ public interface Handler {
      * Restarts the current game with different mine positions
      */
     void restart();
-
-    /**
-     * Open window to let player choose between different Colors
-     */
-    void changeColor();
 
     /**
      * Reveals if the clicked field is a mine or not.

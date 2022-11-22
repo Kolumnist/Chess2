@@ -1,80 +1,81 @@
 package de.hhn.it.devtools.apis.chess2;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import java.util.ArrayList;
 
 /**
- * This class handles all communication between player and components
+ * This class handles all communication between player and components.
  *
  * @author Collin, Lara, Michel
- * @version 1.0
+ * @version 1.1
  */
 public interface Chess2Service {
 
   /**
-   * build board with all fields, place pieces on the board, sets fields,
-   * set the starting player and inform the players about who starts.
+   * Build board with all fields, place pieces on the board, sets fields, set the starting player
+   * and inform the players about who starts.
+   *
+   * @return Board of the game
    */
-  void startNewGame();
+  Board startNewGame();
 
   /**
-   * resets the board and pieces and the kings bananas. Assigns the pieces to their players
-   * and sets the starting player, informs the players about who starts
-   */
-  void reset();
-
-  /**
-   * destroys an instance of ChessGame and
-   * brings scene back to main menu
+   * Destroys an instance of ChessGame and brings scene back to main menu.
    */
   void endGame();
 
   /**
-   * calls the method showWinningPlayer and after that calls reset or returns to the main menu
+   * Calls the method showWinningPlayer and after that calls reset or returns to the main menu.
    */
   void giveUp();
 
   /**
-   * creates a window and shows which player has won and
-   * calls reset or returns to the main menu after that
-   */
-  void showWinningPlayer();
-
-  /**
-   * creates a window and displays the rules as text
-   */
-  void openRules();
-
-  /**
-   * activates all fields with the state "HAS_CURRENT_PIECE"
+   * Returns all positions with the state "HAS_CURRENT_PIECE".
    *
-   * @param piecePos ArrayList of the positions of all Pieces
-   * @throws IllegalParameterException if piecePos is a null reference or incomplete.
+   * @return Coordinate[] all positions with the state "HAS_CURRENT_PIECE"
    */
-  void activatePieceButton(ArrayList<int[]> piecePos) throws IllegalParameterException;
+  Coordinate[] getCurrentFields();
 
   /**
-   * The king/queen gets send to jail upon defeat, the jail field is chosen
-   * by the player who defeated the piece
+   * Returns all positions that the selected Piece can move to.
    *
-   * @param piece gets placed in the
-   * @param pos for the position of the jail on the board
-   * @throws IllegalParameterException if piece or pos is a null reference or incomplete.
+   * @param selectedPieceCoordinate Coordinate of the position of the selected Piece
+   * @return Coordinate[] all positions that the selected Piece can move to
+   * @throws IllegalParameterException if piecePos is a null reference or incomplete
    */
-  void setPieceInJail(Piece piece, int[] pos) throws IllegalParameterException;
+  Coordinate[] getPossibleMoves(Coordinate selectedPieceCoordinate)
+      throws IllegalParameterException;
 
   /**
-   * changes the position of the current piece
+   * Changes the position of the selected piece.
    *
-   * @param pos the new position of the piece
-   * @throws IllegalParameterException if pos is a null reference or incomplete.
+   * @param selectedCoordinate the position of the selected piece
+   * @param newCoordinate      the new position of the piece
+   * @throws IllegalParameterException if newPos is a null reference or incomplete
    */
-  void moveSelectedPiece(int[] pos) throws IllegalParameterException;
+  void moveSelectedPiece(Coordinate selectedCoordinate, Coordinate newCoordinate)
+      throws IllegalParameterException, InvalidMoveException;
 
   /**
-   * Returns the FieldState of the chosen field
+   * Returns the FieldState of the selected field.
    *
-   * @return FieldState of the chosen field
+   * @param selectedCoordinate the position of the selected Field
+   * @return FieldState of the selected field
+   * @throws IllegalParameterException if pos is a null reference or incomplete
    */
-  FieldState getFieldState();
+  FieldState getFieldState(Coordinate selectedCoordinate) throws IllegalParameterException;
+
+  /**
+   * Returns BLACK_WIN, WHITE_WIN, NO_WINNER as an Enum that defines which player won or if there
+   * is none.
+   *
+   * @return Enum which defines the player that won or if there is none
+   */
+  WinningPlayerState getWinningPlayer();
+
+  /**
+   * Returns RUNNING, CHECK or CHECKMATE which is the current GameState
+   *
+   * @return the current GameState
+   */
+  GameState getGameState();
 }

@@ -17,7 +17,7 @@ public class DemoBattleshipUsage  {
 
         //Field size is set and the fields are created
         //9x9 field means that 5 ships will be generated for each player
-        game.createFields(9, GameMode.PVC);
+        game.createFields(9);
 
 
         //User wants to read the rules before he begins to play
@@ -29,11 +29,11 @@ public class DemoBattleshipUsage  {
 
 
         //User places his ships
-        game.placeShip(null,1,2,1,6);
-        game.placeShip(null,2,2,2,6);
-        game.placeShip(null,3,2,3,6);
-        game.placeShip(null,4,2,4,3);
-        game.placeShip(null,6,2,6,4);
+        game.placeShip(null,1,2);
+        game.placeShip(null,2,2);
+        game.placeShip(null,3,2);
+        game.placeShip(null,4,2);
+        game.placeShip(null,6,2);
 
 
         //User starts the game by bombing the enemy panel and misses
@@ -42,11 +42,6 @@ public class DemoBattleshipUsage  {
         //Sound volume was too loud, user wants to adjust it
         game.adjustSoundVolume(30);
 
-        //Enemy (here: computer) bombs the users panel and hits
-        game.bombPanel(4,8);
-
-        //Enemy bombs the users panel and hits
-        game.bombPanel(3,6);
 
         //User wants to save the current game state
         game.saveGame();
