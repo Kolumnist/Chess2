@@ -1,6 +1,17 @@
 package de.hhn.it.devtools.components.duckhunt;
 
-import de.hhn.it.devtools.apis.duckhunt.*;
+import de.hhn.it.devtools.apis.duckhunt.DuckData;
+import de.hhn.it.devtools.apis.duckhunt.DuckHuntListener;
+import de.hhn.it.devtools.apis.duckhunt.DuckHuntService;
+import de.hhn.it.devtools.apis.duckhunt.DuckOrientation;
+import de.hhn.it.devtools.apis.duckhunt.DuckState;
+import de.hhn.it.devtools.apis.duckhunt.DucksInfo;
+import de.hhn.it.devtools.apis.duckhunt.GameInfo;
+import de.hhn.it.devtools.apis.duckhunt.GameSettingsDescriptor;
+import de.hhn.it.devtools.apis.duckhunt.GameState;
+import de.hhn.it.devtools.apis.duckhunt.IllegalDuckIdException;
+import de.hhn.it.devtools.apis.duckhunt.IllegalDuckPositionException;
+import de.hhn.it.devtools.apis.duckhunt.IllegalGameInfoException;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
@@ -91,6 +102,11 @@ public class DuckHunt implements Runnable, DuckHuntService {
   }
 
   @Override
+  public void shootObstacle() {
+    gameInfo.setAmmo(gameInfo.getAmmo() - 1);
+  }
+
+  @Override
   public void reload() {
     ammoCount = gameSettings.getAmmoAmount();
   }
@@ -101,7 +117,8 @@ public class DuckHunt implements Runnable, DuckHuntService {
   private void updateDucks() {
     for (DuckData duck : ducks) {
       if (duck.getStatus() == DuckState.FLYING || duck.getStatus() == DuckState.FALLING) {
-        float newVelocity = 0.3f * duckSpeed * deltaTime; // resolutionCoefficient * speed * deltaTime
+        // velocity = resolutionCoefficient * speed * deltaTime
+        float newVelocity = 0.3f * duckSpeed * deltaTime;
         duck.setVelocity(duck.getVelocity() + newVelocity);
       }
       switch (duck.getStatus()) {
@@ -263,7 +280,7 @@ public class DuckHunt implements Runnable, DuckHuntService {
       } catch (InterruptedException e) {
         throw new RuntimeException(e);
       }
-      long startTime = System.currentTimeMillis();
+      final long startTime = System.currentTimeMillis();
 
       updateDucks();
 
