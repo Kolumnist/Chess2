@@ -1,5 +1,7 @@
 package de.hhn.it.devtools.apis.chess2;
 
+import java.security.InvalidParameterException;
+
 /**
  * Defines the board and lets you get all fields or a specific field.
  *
@@ -38,12 +40,8 @@ public class Board {
    * @param index to get the correct field.
    * @return a specific Field.
    */
-  public Field getSpecificField(int index) {
-    if(index < fields.length)
-    {
-      return fields[index];
-    }
-    return fields[0];
+  public Field getSpecificField(int index) throws InvalidParameterException {
+    return fields[index];
   }
 
   /**
