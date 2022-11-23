@@ -5,7 +5,7 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 /**
  * This class handles all communication between player and components.
  *
- * @author Collin, Lara, Michel
+ * @author Collin Hoss, Lara Mangi, Michel Jouaux
  * @version 1.1
  */
 public interface Chess2Service {
@@ -73,7 +73,7 @@ public interface Chess2Service {
   WinningPlayerState getWinningPlayer();
 
   /**
-   * Returns RUNNING, CHECK or CHECKMATE which is the current GameState
+   * Returns RUNNING, CHECK or CHECKMATE which is the current GameState.
    *
    * @return the current GameState
    */
