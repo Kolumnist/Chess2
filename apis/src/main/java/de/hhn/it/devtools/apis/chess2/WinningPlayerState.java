@@ -4,7 +4,7 @@ package de.hhn.it.devtools.apis.chess2;
  * Enum to describe the different winning player states.
  * Is there a winning or is the game still running.
  *
- * @author Collin, Lara, Michel
+ * @author Collin Hoss, Michel Jouaux, Lara Mangi
  * @version 1.0
  */
 
@@ -18,5 +18,5 @@ public enum WinningPlayerState {
   NO_WINNER,
 
   /** There is no victor at the moment so the game is still running. */
-  STILL_RUNNING
+  STILL_RUNNING;
 }
