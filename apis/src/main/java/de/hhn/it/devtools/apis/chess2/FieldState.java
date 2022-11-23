@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.apis.chess2;
 
 /**
- * Enum to describe the different fields and if there is something on it or not.
+ * Enum to describe the different fields and their states.
  *
  * @author Collin, Lara, Michel
  * @version 1.1
@@ -16,7 +16,7 @@ public enum FieldState {
   /** Is a Jail without any piece on it. */
   JAIL,
 
-  /**(NO JAIL) The selected field where a current Piece stands on. */
+  /** (NO JAIL) The selected field where a current Piece stands on. */
   SELECTED,
 
   /** (NO JAIL) A Piece (besides bear) of the current Player is on the Field. */

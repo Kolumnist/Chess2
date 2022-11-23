@@ -3,10 +3,10 @@ package de.hhn.it.devtools.apis.chess2;
 import java.util.Optional;
 
 /**
- * Defines the Field which can have a Piece on it and always has a state.
+ * Defines the Field which has a state, a coordinate and optionally a Piece.
  *
  * @author Collin Hoss, Michel Jouaux, Lara Mangi
- * @version 1.0
+ * @version 1.1
  */
 
 public class Field {
@@ -16,7 +16,7 @@ public class Field {
   private FieldState fieldState = FieldState.FREE_FIELD;
 
   /**
-   * Constructor of Field.
+   * Constructor of Field, it initializes the coordinate.
    *
    * @param coordinate where the Field is placed.
    */
@@ -27,7 +27,7 @@ public class Field {
   /**
    * The getter for the Coordinate.
    *
-   * @return the fields Coordinate.
+   * @return this coordinate.
    */
   public Coordinate getCoordinate() {
     return coordinate;
