@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.apis.chess2;
 
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import java.security.InvalidParameterException;
 
 /**
@@ -40,8 +41,9 @@ public class Board {
    *
    * @param index to get the correct field.
    * @return a specific Field.
+   * @throws IllegalArgumentException so that no ArrayIndexOutOfBoundsException will occur.
    */
-  public Field getSpecificField(int index) throws InvalidParameterException {
+  public Field getSpecificField(int index) throws IllegalArgumentException {
     return fields[index];
   }
 
