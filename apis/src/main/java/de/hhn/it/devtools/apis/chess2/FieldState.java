@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.apis.chess2;
 
 /**
- * Enum to describe the different fields and their states.
+ * Enum for a field that has a state in which different things happen.
  *
  * @author Collin, Lara, Michel
  * @version 1.1
