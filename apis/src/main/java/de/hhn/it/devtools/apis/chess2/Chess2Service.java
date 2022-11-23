@@ -12,7 +12,7 @@ public interface Chess2Service {
 
   /**
    * Build board with all fields, place pieces on the board, sets fields, set the starting player
-   * and inform the players about who starts.
+   * and inform the players about who starts. The Board gets updated over the time of the game.
    *
    * @return Board of the game
    */
