@@ -4,6 +4,7 @@ import java.security.InvalidParameterException;
 
 /**
  * Defines the board and lets you get all fields or a specific field.
+ * An Object of Board updates while the game is running.
  *
  * @author Collin Hoss, Michel Jouaux, Lara Mangi
  * @version 1.0
