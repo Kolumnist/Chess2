@@ -1,14 +1,11 @@
 package de.hhn.it.devtools.apis.chess2;
 
-import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import java.security.InvalidParameterException;
-
 /**
  * Defines the board and lets you get all fields or a specific field.
  * An Object of Board updates while the game is running.
  *
  * @author Collin Hoss, Michel Jouaux, Lara Mangi
- * @version 1.0
+ * @version 1.1
  */
 
 public class Board {
@@ -16,8 +13,8 @@ public class Board {
   private final Field[] fields = new Field[68];
 
   /**
-   * Constructor of board. Initializes the fields. (It starts left bottom with 0/0 and goes to the
-   * right)
+   * Constructor of board.
+   * Initializes the fields. (It starts left bottom with 0/0 and goes to the right)
    */
   public Board() {
 
@@ -40,7 +37,7 @@ public class Board {
    * A getter for a specific Field.
    *
    * @param index to get the correct field.
-   * @return a specific Field.
+   * @return the Field on index.
    * @throws IllegalArgumentException so that no ArrayIndexOutOfBoundsException will occur.
    */
   public Field getSpecificField(int index) throws IllegalArgumentException {
@@ -48,7 +45,7 @@ public class Board {
   }
 
   /**
-   * A getter for all fields.
+   * A getter for all fields as array.
    *
    * @return all fields.
    */
