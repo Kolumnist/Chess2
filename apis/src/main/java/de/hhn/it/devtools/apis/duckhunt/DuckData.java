@@ -10,6 +10,8 @@ public class DuckData {
   private int x;
   private int y;
   private DuckState status;
+  private float velocity;
+  private DuckOrientation orientation;
 
   /**
    * Constructor to create a GameInfo-Class.
@@ -24,6 +26,7 @@ public class DuckData {
     this.x = x;
     this.y = y;
     this.status  = status;
+    this.velocity = 0f;
   }
 
   public int getId() {
@@ -56,6 +59,22 @@ public class DuckData {
 
   public void setStatus(DuckState status) {
     this.status = status;
+  }
+
+  public float getVelocity() {
+    return velocity;
+  }
+
+  public void setVelocity(float velocity) {
+    this.velocity = velocity;
+  }
+
+  public DuckOrientation getOrientation() {
+    return orientation;
+  }
+
+  public void setOrientation(DuckOrientation orientation) {
+    this.orientation = orientation;
   }
 }
 

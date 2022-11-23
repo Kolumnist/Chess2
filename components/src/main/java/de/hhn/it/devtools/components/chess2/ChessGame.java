@@ -4,7 +4,16 @@ import de.hhn.it.devtools.apis.chess2.Board;
 import de.hhn.it.devtools.apis.chess2.Chess2Service;
 import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.FieldState;
+import de.hhn.it.devtools.apis.chess2.GameState;
+import de.hhn.it.devtools.apis.chess2.WinningPlayerState;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+
+/**
+ * The main Controller class.
+ *
+ * @author Collin, Lara, Michel
+ * @version 1.0
+ */
 
 public class ChessGame implements Chess2Service {
 
@@ -21,11 +30,6 @@ public class ChessGame implements Chess2Service {
   }
 
   @Override
-  public Board reset() {
-    return null;
-  }
-
-  @Override
   public void endGame() {
 
   }
@@ -36,8 +40,13 @@ public class ChessGame implements Chess2Service {
   }
 
   @Override
-  public char getWinningPlayer() {
-    return 0;
+  public WinningPlayerState getWinningPlayer() {
+    return null;
+  }
+
+  @Override
+  public GameState getGameState() {
+    return null;
   }
 
   @Override
@@ -52,13 +61,8 @@ public class ChessGame implements Chess2Service {
   }
 
   @Override
-  public void setPieceInJail(Coordinate otherCoordinate, Coordinate jailCoordinate)
+  public void moveSelectedPiece(Coordinate selectedCoordinate, Coordinate newCoordinate)
       throws IllegalParameterException {
-
-  }
-
-  @Override
-  public void moveSelectedPiece(Coordinate newCoordinate) throws IllegalParameterException {
 
   }
 
