@@ -2,6 +2,7 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
+
 import java.util.List;
 
 /**

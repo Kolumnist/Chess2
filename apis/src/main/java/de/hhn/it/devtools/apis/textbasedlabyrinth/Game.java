@@ -3,6 +3,7 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +15,15 @@ public class Game implements GameService {
   public Room currentRoom;
   public Player player;
   public Layout layout;
-  public Seed seed;
+  public Map map;
 
   /**
    * Constructor for game.
    */
-  public Game(Seed seed) {
-    this.seed = seed;
+  public Game(Map map, Seed seed) {
+    this.map = map;
     this.player = new Player("Placeholder");
-    this.layout = new Layout(player, seed);
+    this.layout = new Layout(player, map, seed);
     this.currentRoom = layout.startRoom;
   }
 
@@ -113,19 +114,19 @@ public class Game implements GameService {
     boolean succeeded = false;
     String message = "";
 
-    if (direction == Direction.NORTH) {
+    if (direction.equals(Direction.NORTH)) {
       message = currentRoom.getNorthDoor().getInspectMessage();
       succeeded = true;
     }
-    if (direction == Direction.WEST) {
+    if (direction.equals(Direction.WEST)) {
       message = currentRoom.getWestDoor().getInspectMessage();
       succeeded = true;
     }
-    if (direction == Direction.EAST) {
+    if (direction.equals(Direction.EAST)) {
       message = currentRoom.getEastDoor().getInspectMessage();
       succeeded = true;
     }
-    if (direction == Direction.SOUTH) {
+    if (direction.equals(Direction.SOUTH)) {
       message = currentRoom.getSouthDoor().getInspectMessage();
       succeeded = true;
     }
@@ -153,7 +154,7 @@ public class Game implements GameService {
     boolean succeeded = false;
     String successMessage = "";
 
-    if (direction == Direction.NORTH) {
+    if (direction.equals(Direction.NORTH)) {
       boolean unlocked = currentRoom.getNorthDoor().unlock(item);
       succeeded = true;
       Door door = currentRoom.getNorthDoor();
@@ -164,7 +165,7 @@ public class Game implements GameService {
 
       }
     }
-    if (direction == Direction.WEST) {
+    if (direction.equals(Direction.WEST)) {
       boolean unlocked = currentRoom.getWestDoor().unlock(item);
       succeeded = true;
       Door door = currentRoom.getWestDoor();
@@ -174,7 +175,7 @@ public class Game implements GameService {
         successMessage = door.getPuzzle().getLockedMessage();
       }
     }
-    if (direction == Direction.EAST) {
+    if (direction.equals(Direction.EAST)) {
       boolean unlocked = currentRoom.getEastDoor().unlock(item);
       succeeded = true;
       Door door = currentRoom.getEastDoor();
@@ -184,7 +185,7 @@ public class Game implements GameService {
         successMessage = door.getPuzzle().getLockedMessage();
       }
     }
-    if (direction == Direction.SOUTH) {
+    if (direction.equals(Direction.SOUTH)) {
       boolean unlocked = currentRoom.getSouthDoor().unlock(item);
       succeeded = true;
       Door door = currentRoom.getSouthDoor();
