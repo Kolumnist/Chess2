@@ -1,11 +1,10 @@
 package de.hhn.it.devtools.apis.minesweeper;
 
 /**
- * Observer to handle events
+ * Koordinaten
  * @author Lara Weller, Jason Herrmann
  * @version 0.1
  */
 
-public interface MinesweeperActionListener{
-    void onAction(String event);
-}
+public record MinesweeperKoordinaten(int x, int y) {}
+

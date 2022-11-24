@@ -37,6 +37,8 @@ public class Room {
   private boolean hasDoorE;
   private boolean hasDoorS;
 
+  public boolean isExit;
+
   /**
    * Constructor of Room.
    *
@@ -55,10 +57,6 @@ public class Room {
 
     items = new HashMap<>();
     this.description = description;
-    this.westDoor = new Door();
-    this.eastDoor = new Door();
-    this.northDoor = new Door();
-    this.southDoor = new Door();
   }
 
   public void addItem(Item item) {
@@ -238,28 +236,6 @@ public class Room {
       this.isSouthAssigned = true;
       room.toTheNorth = this;
       room.isNorthAssigned = true;
-    } else {                                        // in case something is wrong the next free slot will be assigned
-      if (!isEastAssigned && !room.isWestAssigned){
-        this.toTheEast = room;
-        this.isEastAssigned = true;
-        room.toTheWest = this;
-        room.isWestAssigned = true;
-      } else if (!isWestAssigned && !room.isEastAssigned){
-        this.toTheWest = room;
-        this.isWestAssigned = true;
-        room.toTheWest = this;
-        room.isEastAssigned = true;
-      } else if (!isNorthAssigned && !room.isSouthAssigned){
-        this.toTheNorth = room;
-        this.isNorthAssigned = true;
-        room.toTheSouth = this;
-        room.isSouthAssigned = true;
-      } else if (!isSouthAssigned && !room.isNorthAssigned){
-        this.toTheSouth = room;
-        this.isSouthAssigned = true;
-        room.toTheNorth = this;
-        room.isNorthAssigned = true;
-      }
     }
   }
 

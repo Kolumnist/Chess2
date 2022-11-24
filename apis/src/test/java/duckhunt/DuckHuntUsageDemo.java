@@ -46,6 +46,8 @@ public class DuckHuntUsageDemo {
 
       // is called when shoot mouse button is clicked in the game
       duckHuntService.shoot(1, 1);
+      // is called when an obstacle is hit
+      duckHuntService.shootObstacle();
 
       // pause and continue game
       duckHuntService.pauseGame();

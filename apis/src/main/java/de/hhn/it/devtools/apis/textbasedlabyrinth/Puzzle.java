@@ -9,21 +9,21 @@ public class Puzzle {
   //private final int puzzleId;
   private boolean isSolved;
   private boolean isBeingWorkedOn;
-  private Item item;
+  private int keyId;
   private String description;
   private String unlockMessage;
   private String lockedMessage;
 
   /**
-   * Gets a Puzzle or an item to solve the puzzle.
+   * Gets a puzzle or an item to solve the puzzle.
    *
-   * @param item gets an collected item
+   * @param keyId is the id of the fitting key.
    */
-  public Puzzle(Item item) {
-    this.item = item;
+  public Puzzle(int keyId) {
+    this.keyId = keyId;
     isSolved = false;
     isBeingWorkedOn = false;
-    description = "A key is needed.";
+    description = "The door seems locked. A key is needed.";
     unlockMessage = "The key turns, the lock clicks. It is open.";
     lockedMessage = "The door does not unlock.";
   }
@@ -42,11 +42,11 @@ public class Puzzle {
   /**
    * Sets the puzzle to solved after it is done right.
    *
-   * @param item gets item
-   * @return puzzle is solved right
+   * @param keyId the keyId of the Item that is attempting to solve the puzzle.
+   * @return puzzle is solved right.
    */
-  public boolean setSolved(Item item) {
-    if (item == this.item) {
+  public boolean setSolved(int keyId) {
+    if (this.keyId == keyId) {
       isSolved = true;
     }
     return isSolved;
