@@ -4,7 +4,7 @@ package de.hhn.it.devtools.apis.chess2;
  * Enum to describe the different game states.
  * Is the game still running, in check or is it at the end (in checkmate).
  *
- * @author Collin, Lara, Michel
+ * @author Collin Hoss, Michel Jouaux, Lara Mangi
  * @version 1.0
  */
 
