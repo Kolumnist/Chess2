@@ -39,6 +39,9 @@ public class SfsMemoryService implements MemoryService {
   @Override
   public void newGame(Difficulty difficulty) throws IllegalParameterException {
     logger.info("newGame: difficulty = {}", difficulty);
+    if(!(difficulty instanceof Difficulty)) {
+      throw new IllegalParameterException("Difficulty does not exist.");
+    }
     for (CardSet c: cardSetStorage) {
       if(c.difficulty == difficulty) {
         deck = (PictureCardDescriptor[]) c.pictureCardDescriptors.toArray();
@@ -111,12 +114,24 @@ public class SfsMemoryService implements MemoryService {
   @Override
   public void addCallback(DeckListener listener) throws IllegalParameterException {
     logger.info("addCallback: listener = {}", listener);
+    if (listener == null) {
+      throw new IllegalParameterException("Listener was null reference.");
+    }
+    if (this.deckListener == listener) {
+      throw new IllegalParameterException("Listener already registered.");
+    }
     this.deckListener = listener;
   }
 
   @Override
   public void removeCallback(DeckListener listener) throws IllegalParameterException {
     logger.info("removeCallback: listener = {}");
+    if (listener == null) {
+      throw new IllegalParameterException("Listener was null reference.");
+    }
+    if (deckListener != listener) {
+      throw new IllegalParameterException("Listener is not registered.");
+    }
     this.deckListener = null;
   }
 
@@ -169,6 +184,12 @@ public class SfsMemoryService implements MemoryService {
 
   public void addCardSet(CardSet set) throws IllegalParameterException {
     logger.info("addCardSet: set = {}", set);
+    if (set == null) {
+      throw new IllegalParameterException("CardSet is a null references");
+    }
+    if (cardSetStorage.contains(set)) {
+      throw new IllegalParameterException("CardSet already registered.");
+    }
     cardSetStorage.add(set);
   }
 
@@ -183,6 +204,9 @@ public class SfsMemoryService implements MemoryService {
 
   public void fetchCards(PictureCardDescriptor[] cardDescriptors) throws IllegalParameterException {
     //logger.info("fetchCards: cardDescriptors = {}", cardDescriptors);
+    if(cardDescriptors == null) {
+      throw new IllegalParameterException("The CardDescriptor Array is a null references.");
+    }
     for (PictureCardDescriptor c: cardDescriptors) {
       PictureCard pictureCard = new SfsPictureCard(c);
       cards.put(pictureCard.getPictureCard().getId(), pictureCard);
@@ -192,16 +216,22 @@ public class SfsMemoryService implements MemoryService {
 
   public void fetchPicReferences(HashMap<Integer, String> picReferences) throws IllegalParameterException{
     logger.info("fetchPicReferences: picReferences = {}", picReferences);
+    if(picReferences == null) {
+      throw new IllegalParameterException("The HashMap of PictureReferences is a null reference.");
+    }
     pictureReferences = (Map<Integer, String>) picReferences.clone();
   }
 
   private boolean matchCards(PictureCard picture, PictureCard name) throws IllegalParameterException {
     logger.info("matchCards: picture = {}, name = {}", picture, name);
-    if(pictureReferences.containsKey(picture.getPictureCard().getPictureRef())) {
+    if(picture == null || name == null) {
+      throw new IllegalParameterException("At least one of the cards is a null references.");
+    }
+    if(pictureReferences.containsKey(picture.getPictureCard().getPictureRef()) || name.getPictureCard().getName() != null) {
       String picCard = pictureReferences.get(picture.getPictureCard().getPictureRef()).toLowerCase();
       return name.getPictureCard().getName().toLowerCase().equals(picCard);
     } else {
-      throw new IllegalParameterException("PictureCard has no appropriate picture reference.") ;
+      throw new IllegalParameterException("PictureCard has no appropriate picture reference or name is a null reference.") ;
     }
   }
 }
