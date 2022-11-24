@@ -37,6 +37,8 @@ public class Room {
   private boolean hasDoorE;
   private boolean hasDoorS;
 
+  public boolean isExit;
+
   /**
    * Constructor of Room.
    *
