@@ -15,6 +15,11 @@ public interface DuckHuntService {
   void shoot(int x, int y);
 
   /**
+   * Is called when shoot button is clicked and an obstacle was hit.
+   */
+  void shootObstacle();
+
+  /**
    * Is called when reload button is clicked reloads the gun.
    */
   void reload();

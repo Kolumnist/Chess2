@@ -1,53 +1,79 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
+import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.InvalidSeedException;
+
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * This is a unique number String.
  */
 public class Seed {
 
-  public String[] stringParser;
-  public ArrayList<Integer> roomParser;
-  public final int minDigitNumber = 7;
+  private ArrayList<Integer> seed;
+
 
   /**
-   * Constructor for Seed Class
-   * @param seed the digit chain for the layout creation, the first 7 digits dictate the layout
+   * The seed should be an array list with integer values of the length 2.
+   * @param seedInteger
+   * @throws InvalidSeedException
    */
-  public Seed(String seed) {
-
-    stringParser = seed.split("(?!^)");
-    ArrayList<Integer> intParser = new ArrayList<Integer>();
-
-    for (String s : stringParser) {
-      intParser.add(Integer.parseInt(s));
+  public Seed(ArrayList<Integer> seedInteger) throws InvalidSeedException {
+    if (seedInteger.size() < 1) {
+      throw new InvalidSeedException("Array is too small.");
+    }
+    if (seedInteger.size() > 2) {
+      throw new InvalidSeedException("Array is longer than permitted.");
     }
 
-    while(intParser.size() < minDigitNumber){
-      intParser.add(0);
+    seed = seedInteger;
+
+    if (seed.size() < 2) {
+      while (seed.size() < 2) {
+        seed.add(seed.size() - 1, 0);
+      }
     }
 
-    this.roomParser = intParser;
   }
 
-  /**
-   * Constructor for Seed without any input.
-   */
-  public Seed() {
-    Random rand = new Random();
-    while(roomParser.size() < minDigitNumber){
-      roomParser.add(rand.nextInt(9));
-    }
-  }
 
-  public int getTotalRoomCount(){
-    return roomParser.get(0) + roomParser.get(1) + roomParser.get(2);
+  public ArrayList<Integer> getSeed() {
+    return seed;
   }
-
-  public ArrayList<Integer> getRoomParser(){
-    return roomParser;
-  }
-
 }
+
+
+
+
+/**
+ * stringParser = seed.split("(?!^)");
+ *     ArrayList<Integer> intParser = new ArrayList<Integer>();
+ *
+ *     for (String s : stringParser) {
+ *       intParser.add(Integer.parseInt(s));
+ *     }
+ *
+ *     while(intParser.size() < minDigitNumber){
+ *       intParser.add(0);
+ *     }
+ *
+ *     this.roomParser = intParser;
+ *   }
+ *
+ *   /**
+ *    * Constructor for Seed without any input.
+ *    *
+ * public Seed(){
+        *Random rand=new Random();
+        *while(roomParser.size()<minDigitNumber){
+        *roomParser.add(rand.nextInt(9));
+        *}
+        *}
+        *
+        *public int getTotalRoomCount(){
+        *return roomParser.get(0)+roomParser.get(1)+roomParser.get(2);
+        *}
+        *
+        *public ArrayList<Integer> getRoomParser(){
+        *return roomParser;
+        *}
+ */
