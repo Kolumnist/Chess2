@@ -39,7 +39,7 @@ public class SfsMemoryService implements MemoryService {
   @Override
   public void newGame(Difficulty difficulty) throws IllegalParameterException {
     logger.info("newGame: difficulty = {}", difficulty);
-    if(!(difficulty instanceof Difficulty)) {
+    if(difficulty == null) {
       throw new IllegalParameterException("Difficulty does not exist.");
     }
     for (CardSet c: cardSetStorage) {
@@ -94,7 +94,7 @@ public class SfsMemoryService implements MemoryService {
 
   @Override
   public void removeCallback(int id, PictureCardListener listener) throws IllegalParameterException {
-    logger.info("removeCallback: id = {}, listener = {}");
+    logger.info("removeCallback: id = {}, listener = {}", id, listener);
     PictureCard card = getPictureCardById(id);
     card.removeCallback(listener);
   }
@@ -107,7 +107,7 @@ public class SfsMemoryService implements MemoryService {
 
   @Override
   public void removeCallback(TimerListener listener) throws IllegalParameterException {
-    logger.info("removeCallback: listener = {}");
+    logger.info("removeCallback: listener = {}", listener);
     timer.removeCallback(listener);
   }
 
@@ -125,7 +125,7 @@ public class SfsMemoryService implements MemoryService {
 
   @Override
   public void removeCallback(DeckListener listener) throws IllegalParameterException {
-    logger.info("removeCallback: listener = {}");
+    logger.info("removeCallback: listener = {}", listener);
     if (listener == null) {
       throw new IllegalParameterException("Listener was null reference.");
     }
@@ -153,6 +153,9 @@ public class SfsMemoryService implements MemoryService {
   @Override
   public void turnCard(int id) throws IllegalParameterException {
     logger.info("turnCard: id = {}", id);
+    if (!cards.containsKey(id)) {
+      throw new IllegalParameterException("PictureCard with id " + id + " does not exist.");
+    }
     for (PictureCard c : cards.values()) {
       if (c.getPictureCard().getState().equals(State.VISIBLE)) {
         if (c.getPictureCard().getId() == id) {
@@ -167,12 +170,12 @@ public class SfsMemoryService implements MemoryService {
           card.turnCard();
         } else {
           if (c.getPictureCard().getPictureRef() == -1) {
-            if (!matchCards(card, c)) {
+            if (matchCards(card, c)) {
               card.turnCard();
               c.turnCard();
             }
           } else if (card.getPictureCard().getPictureRef() == -1) {
-            if (!matchCards(c, card)) {
+            if (matchCards(c, card)) {
               card.turnCard();
               c.turnCard();
             }
@@ -229,7 +232,7 @@ public class SfsMemoryService implements MemoryService {
     }
     if(pictureReferences.containsKey(picture.getPictureCard().getPictureRef()) || name.getPictureCard().getName() != null) {
       String picCard = pictureReferences.get(picture.getPictureCard().getPictureRef()).toLowerCase();
-      return name.getPictureCard().getName().toLowerCase().equals(picCard);
+      return !(name.getPictureCard().getName().toLowerCase().equals(picCard));
     } else {
       throw new IllegalParameterException("PictureCard has no appropriate picture reference or name is a null reference.") ;
     }
