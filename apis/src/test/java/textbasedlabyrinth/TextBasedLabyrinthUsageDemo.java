@@ -1,11 +1,6 @@
 package textbasedlabyrinth;
 
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Direction;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Game;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.GameService;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Item;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Map;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Seed;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.*;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.InvalidSeedException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
