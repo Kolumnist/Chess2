@@ -10,43 +10,28 @@ import java.util.List;
 public interface GameService {
 
   /**
-   * Let the user move the room to the south(if possible).
+   * Let the user move the room in the given direction (if possible).
    */
-  String moveSouth() throws RoomFailedException;
-
-  /**
-   * Let the user move the room to the north(if possible).
-   */
-  String moveNorth() throws RoomFailedException;
-
-  /**
-   * Let the user move the room to the west(if possible).
-   */
-  String moveWest() throws RoomFailedException;
-
-  /**
-   * Let the user move the room to the east(if possible).
-   */
-  String moveEast() throws RoomFailedException;
+  void move(Direction direction) throws RoomFailedException;
 
 
   /**
-   * Gets Item for player.
+   * Gets item for player.
    *
-   * @param item gets an item
+   * @param itemId gets an item
    * @return gives item to player
    * @throws NoSuchItemFoundException if item not found.
    * @throws NullPointerException if item cant be null.
    */
-  Item pickUpItem(Item item) throws NoSuchItemFoundException;
+  Item pickUpItem(int itemId) throws NoSuchItemFoundException;
 
   /**
    * Method to remove an item from the player inventory.
    *
-   * @param itemName the name of the item to be removed.
+   * @param itemId the id of the item to be removed.
    * @return the message, which is about the success or failure of the operation.
    */
-  String dropItem(String itemName);
+  String dropItem(int itemId);
 
   /**
    * Inspect a door/pathway.
@@ -63,6 +48,15 @@ public interface GameService {
    * Let the user search through the room.
    */
   List<Item> searchRoom() throws RoomFailedException;
+
+  /**
+   * Setter for current layout
+   * @param newMap Map to be selected
+   * @param newSeed Seed for the Map
+   */
+  void setCurrentLayout(Map newMap, Seed newSeed);
+
+
 
 
   /**

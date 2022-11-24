@@ -14,90 +14,77 @@ public class Game implements GameService {
 
   public Room currentRoom;
   public Player player;
-  public Layout layout;
+  public Layout currentLayout;
+  public ArrayList<Layout> layouts;
   public Map map;
 
   /**
    * Constructor for game.
    */
-  public Game(Map map, Seed seed) {
-    this.map = map;
+  public Game() {
     this.player = new Player("Placeholder");
-    this.layout = new Layout(player, map, seed);
-    this.currentRoom = layout.startRoom;
+
   }
 
-  /**
-   * Command the player to move to the room to the south.
-   */
-  public String moveSouth() throws RoomFailedException {
-    if (currentRoom.isSouthAssigned.equals(true)) {
-      Door checkDoor = currentRoom.getSouthDoor();
-      String message = checkDoor.open();
-      if (!checkDoor.checkIfLocked()) {
-        if (checkDoor.checkIfFake()) {
-          //This is part of the demo for a fake door.
-          message = message + "The open door reveals a wall. You can not go south.";
+  public void move(Direction direction) throws RoomFailedException {
+    if (direction == null) {
+      throw new IllegalArgumentException("Direction should not be null.");
+    }
+    boolean succeeded = false;
+    String message = "";
+
+    if (direction.equals(Direction.SOUTH)) {
+      if (currentRoom.isSouthAssigned.equals(true)) {
+        Door checkDoor = currentRoom.getSouthDoor();
+        message = checkDoor.open();
+        if (!checkDoor.checkIfLocked()) {
+            currentRoom = currentRoom.toTheSouth;
+            player.setCurrentRoomOfPlayer(currentRoom);
+          }
         } else {
-          currentRoom = currentRoom.toTheSouth;
+        throw new RoomFailedException("No room found in the southern direction.");
+      }
+      succeeded = true;
+    }
+    if (direction.equals(Direction.WEST)) {
+      if (currentRoom.isWestAssigned.equals(true)) {
+        Door checkDoor = currentRoom.getWestDoor();
+        message = checkDoor.open();
+        if (!checkDoor.checkIfLocked()) {
+          currentRoom = currentRoom.toTheWest;
           player.setCurrentRoomOfPlayer(currentRoom);
         }
+      } else {
+        throw new RoomFailedException("No room found in the western direction.");
       }
-      return message;
-
-    } else {
-      throw new RoomFailedException("No room found in the southern direction.");
     }
-  }
-
-  /**
-   * Command the player to move to the room to the north.
-   */
-  public String moveNorth() throws RoomFailedException {
-    if (currentRoom.isNorthAssigned.equals(true)) {
-      Door checkDoor = currentRoom.getNorthDoor();
-      String message = checkDoor.open();
-      if (!checkDoor.checkIfLocked()) {
-        currentRoom = currentRoom.toTheNorth;
-        player.setCurrentRoomOfPlayer(currentRoom);
+    if (direction.equals(Direction.EAST)) {
+      if (currentRoom.isEastAssigned.equals(true)) {
+        Door checkDoor = currentRoom.getEastDoor();
+        message = checkDoor.open();
+        if (checkDoor.checkIfLocked()) {
+          currentRoom = currentRoom.toTheEast;
+          player.setCurrentRoomOfPlayer(currentRoom);
+        }
+      } else {
+        throw new RoomFailedException("No room found in the eastern direction.");
       }
-      return message;
-    } else {
-      throw new RoomFailedException("No room found in the northern direction.");
     }
-  }
-
-  /**
-   * Command the player to move to the room to the west.
-   */
-  public String moveWest() throws RoomFailedException {
-    if (currentRoom.isWestAssigned.equals(true)) {
-      Door checkDoor = currentRoom.getWestDoor();
-      String message = checkDoor.open();
-      if (!checkDoor.checkIfLocked()) {
-        currentRoom = currentRoom.toTheWest;
-        player.setCurrentRoomOfPlayer(currentRoom);
+    if (direction.equals(Direction.NORTH)) {
+      if (currentRoom.isNorthAssigned.equals(true)) {
+        Door checkDoor = currentRoom.getNorthDoor();
+        message = checkDoor.open();
+        if (!checkDoor.checkIfLocked()) {
+          currentRoom = currentRoom.toTheNorth;
+          player.setCurrentRoomOfPlayer(currentRoom);
+        }
+      } else {
+        throw new RoomFailedException("No room found in the northern direction.");
       }
-      return message;
-    } else {
-      throw new RoomFailedException("No room found in the western direction.");
     }
-  }
 
-  /**
-   * Command the player to move to the room to the east.
-   */
-  public String moveEast() throws RoomFailedException {
-    if (currentRoom.isEastAssigned.equals(true)) {
-      Door checkDoor = currentRoom.getEastDoor();
-      String message = checkDoor.open();
-      if (checkDoor.checkIfLocked()) {
-        currentRoom = currentRoom.toTheEast;
-        player.setCurrentRoomOfPlayer(currentRoom);
-      }
-      return message;
-    } else {
-      throw new RoomFailedException("No room found in the eastern direction.");
+    if (!succeeded) {
+      throw new IllegalArgumentException("Direction was not valid.");
     }
   }
 
@@ -230,12 +217,12 @@ public class Game implements GameService {
   /**
    * Gets Item for player.
    *
-   * @param item gets an item
+   * @param itemId gets an item
    * @return gives item to player
    * @throws NoSuchItemFoundException if item not found.
    * @throws NullPointerException if item cant be null.
    */
-  public Item pickUpItem(Item item) throws NoSuchItemFoundException {
+  public Item pickUpItem(int itemId) throws NoSuchItemFoundException {
 
     List<Item> items = new ArrayList<>();
 
@@ -245,33 +232,38 @@ public class Game implements GameService {
     } catch (NullPointerException n) {
       throw new NoSuchItemFoundException(n.getMessage());
     }
-    if (!items.contains(item)) {
-      throw new NoSuchItemFoundException("The item " + item.getName() + " was not found.");
-    } else {
-      return item;
+   Item searchedItem = null;
+    for (Item item : items) {
+      if (item.getItemId() == itemId) {
+        searchedItem = item;
+      }
     }
 
+    if (searchedItem == null) {
+      throw new NoSuchItemFoundException("The item was not found.");
+    } else {
+      player.addItem(searchedItem);
+      return searchedItem;
+    }
   }
 
 
   /**
    * Method to remove an item from the player inventory.
    *
-   * @param itemName the name of the item to be removed.
+   * @param itemId the id of the item to be removed.
    * @return the message, which is about the success or failure of the operation.
    */
-  public String dropItem(String itemName) {
+  public String dropItem(int itemId) {
     String message = "";
     try {
-      player.removeItem(itemName);
+      player.removeItem(itemId);
       message = "You lay the item carefully on the ground.";
     } catch (NoSuchItemFoundException n) {
       message = n.getMessage();
     }
     return message;
   }
-
-
 
   /**
    * Message to be given to the player after (probably) every action
@@ -303,5 +295,19 @@ public class Game implements GameService {
     }
 
     return items;
+  }
+
+  public void setMap(Map map) {
+    this.map = map;
+  }
+
+  /**
+   * Setter for current Layout
+   * @param newMap Map to be selected
+   * @param newSeed Seed for the Map
+   */
+  public void setCurrentLayout(Map newMap, Seed newSeed){
+    this.currentLayout = new Layout(player, newMap, newSeed);
+    this.currentRoom = currentLayout.startRoom;
   }
 }

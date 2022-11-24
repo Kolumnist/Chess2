@@ -10,7 +10,7 @@ import java.util.List;
 public class Layout {
 
   public List<Room> allRooms;
-  public int maxRoomCount = 12;
+  public int maxRoomCount = 13;
   public List<Layout> allLayouts;
   public Room startRoom;
   public Player player;
@@ -55,8 +55,8 @@ public class Layout {
       allRooms.get(5).setNextDoorRoom(allRooms.get(6), false, false, true);
       allRooms.get(6).setNextDoorRoom(allRooms.get(7), true, false, false);
       allRooms.get(7).setNextDoorRoom(allRooms.get(8), false, false, false);
-      startRoom.setNextDoorRoom(allRooms.get(3), true, false, false);
-      allRooms.get(3).setNextDoorRoom(allRooms.get(10), true, false, false);
+      startRoom.setNextDoorRoom(allRooms.get(9), true, false, false);
+      allRooms.get(9).setNextDoorRoom(allRooms.get(10), true, false, false);
       allRooms.get(10).setNextDoorRoom(allRooms.get(11), true, false, false);
       allRooms.get(11).setNextDoorRoom(allRooms.get(12), false, false, true);
     }
