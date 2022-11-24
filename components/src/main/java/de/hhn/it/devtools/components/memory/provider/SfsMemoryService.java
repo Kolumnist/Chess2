@@ -38,6 +38,7 @@ public class SfsMemoryService implements MemoryService {
 
   @Override
   public void newGame(Difficulty difficulty) throws IllegalParameterException {
+    logger.info("newGame: difficulty = {}", difficulty);
     for (CardSet c: cardSetStorage) {
       if(c.difficulty == difficulty) {
         deck = (PictureCardDescriptor[]) c.pictureCardDescriptors.toArray();
@@ -50,27 +51,32 @@ public class SfsMemoryService implements MemoryService {
 
   @Override
   public void startTimer() {
+    logger.info("startTimer: no params");
     timer.getTimer().startTime();
   }
 
   @Override
   public void stopTimer() {
+    logger.info("stopTimer: no params");
     timer.getTimer().stopTime();
   }
 
   @Override
   public void resetTimer() {
+    logger.info("resetTimer: no params");
     timer.getTimer().resetTime();
   }
 
   @Override
   public void closeGame() {
+    logger.info("closeGame: no params");
     cards.clear();
     pictureReferences.clear();
   }
 
   @Override
   public void changeDifficulty(Difficulty difficulty) throws IllegalParameterException {
+    logger.info("changeDifficulty: difficulty = {}", difficulty);
     closeGame();
     newGame(difficulty);
   }
@@ -116,6 +122,7 @@ public class SfsMemoryService implements MemoryService {
 
   @Override
   public List<PictureCardDescriptor> getPictureCards() {
+    logger.info("getPictureCards: no params");
     List<PictureCardDescriptor> descriptors = new ArrayList<>();
     cards.values().forEach((pictureCard -> descriptors.add(pictureCard.getPictureCard())));
     return descriptors;
@@ -123,6 +130,7 @@ public class SfsMemoryService implements MemoryService {
 
   @Override
   public PictureCardDescriptor getPictureCard(int id) throws IllegalParameterException {
+    logger.info("getPictureCard: id = {}", id);
     PictureCard card = getPictureCardById(id);
     return card.getPictureCard();
   }
@@ -159,21 +167,22 @@ public class SfsMemoryService implements MemoryService {
     }
   }
 
-  public void addCardSet(CardSet x) throws IllegalParameterException {
-    cardSetStorage.add(x);
+  public void addCardSet(CardSet set) throws IllegalParameterException {
+    logger.info("addCardSet: set = {}", set);
+    cardSetStorage.add(set);
   }
 
   /**
    * Calls to signal the current deck update.
-   *
-   * @throws NullPointerException if the deckListener is a null reference
    */
-  public void notifyCurrentDeck() throws NullPointerException{
+  public void notifyCurrentDeck() {
+    logger.info("notifyCurrentDeck: no params");
     deckListener.currentDeck(deck);
   }
 
 
   public void fetchCards(PictureCardDescriptor[] cardDescriptors) throws IllegalParameterException {
+    //logger.info("fetchCards: cardDescriptors = {}", cardDescriptors);
     for (PictureCardDescriptor c: cardDescriptors) {
       PictureCard pictureCard = new SfsPictureCard(c);
       cards.put(pictureCard.getPictureCard().getId(), pictureCard);
@@ -182,10 +191,12 @@ public class SfsMemoryService implements MemoryService {
   }
 
   public void fetchPicReferences(HashMap<Integer, String> picReferences) throws IllegalParameterException{
+    logger.info("fetchPicReferences: picReferences = {}", picReferences);
     pictureReferences = (Map<Integer, String>) picReferences.clone();
   }
 
   private boolean matchCards(PictureCard picture, PictureCard name) throws IllegalParameterException {
+    logger.info("matchCards: picture = {}, name = {}", picture, name);
     if(pictureReferences.containsKey(picture.getPictureCard().getPictureRef())) {
       String picCard = pictureReferences.get(picture.getPictureCard().getPictureRef()).toLowerCase();
       return name.getPictureCard().getName().toLowerCase().equals(picCard);
