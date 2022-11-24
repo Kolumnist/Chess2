@@ -24,7 +24,7 @@ public class cmpBattleshipService implements BattleshipService {
 
     // nedim
     @Override
-    public boolean isPlacementPossible(Owner owner, Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException {
+    public boolean isPlacementPossible(Owner owner, Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException, IllegalArgumentException {
         int shipSize = shipToPlace.getSize();
         // wenn x1 der Endpunkt (linkeste Punkt) des Schiffes ist dann diese Rechnung:
         int endX = x1 + shipSize;
@@ -43,8 +43,11 @@ public class cmpBattleshipService implements BattleshipService {
         if(owner.equals(player)) {
             boolField = player.getpShipField().getPanelMarkerMat();
         }
-        else{
+        else if(owner.equals(computer)){
             boolField = computer.getcShipField().getPanelMarkerMat();
+        }
+        else{
+            throw new IllegalArgumentException();
         }
         if(isVertical){
             for(int i = y1; i < endY; i++){
@@ -78,7 +81,7 @@ public class cmpBattleshipService implements BattleshipService {
 
     // nedim
     @Override
-    public void placeShip(Owner owner, Ship shipToPlace, int x1, int y1) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException {
+    public void placeShip(Owner owner, Ship shipToPlace, int x1, int y1) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException, IllegalArgumentException{
         boolean isPlaced = shipToPlace.getPlaced();
         boolean isVertical = shipToPlace.getIsVertical();
         int shipSize = shipToPlace.getSize();
@@ -99,8 +102,11 @@ public class cmpBattleshipService implements BattleshipService {
                 boolField = player.getpShipField().getPanelMarkerMat();
             }
             // Diese Statement ging nicht ka wieso: else if(owner.equals(computer)){
-            else{
+            else if(owner.equals(computer)){
                 boolField = computer.getcShipField().getPanelMarkerMat();
+            }
+            else{
+                throw new IllegalArgumentException();
             }
             // set ship on field and change placed state to true
             shipToPlace.setPlaced(true);
@@ -137,8 +143,11 @@ public class cmpBattleshipService implements BattleshipService {
         else if(owner.equals(player)){
             boolField = player.getpShipField().getPanelMarkerMat();
         }
-        else{
+        else if(owner.equals(computer)){
             boolField = computer.getcShipField().getPanelMarkerMat();
+        }
+        else{
+            throw new IllegalArgumentException();
         }
         if(isVertical){
             endY = y + shipSize;
