@@ -2,11 +2,14 @@ package de.hhn.it.devtools.components.ttrpgsheets;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Representation of a Stat that is used by a character.
  */
 public class Stat {
+  private static final Logger logger = LoggerFactory.getLogger(Stat.class);
   private StatType type; // Should be final
   private int baseValue; // Usually set to 0; Should be final
   private int offset; // Usually set to 1; Should be final
