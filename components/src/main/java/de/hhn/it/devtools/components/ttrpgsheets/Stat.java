@@ -2,14 +2,17 @@ package de.hhn.it.devtools.components.ttrpgsheets;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Representation of a Stat that is used by a character.
  */
 public class Stat {
-  private StatType type; // Should be final
-  private int baseValue; // Usually set to 0; Should be final
-  private int offset; // Usually set to 1; Should be final
+  private static final Logger logger = LoggerFactory.getLogger(Stat.class);
+  private final StatType type;
+  private final int baseValue; // Usually set to 0
+  private final int offset; // Usually set to 1
   private int abilityPointsUsed; // Negative values are possible
   private int miscellaneous; // For other stat-affecting things such as items
   private boolean levelStat; // True when stat can be leveled else false
@@ -20,9 +23,10 @@ public class Stat {
    * @param statDescriptor The descriptor of a Stat
    */
   public Stat(StatDescriptor statDescriptor) {
-    setType(statDescriptor.getStatType());
-    setBaseValue(statDescriptor.getBaseValue());
-    setOffset(statDescriptor.getOffset());
+    logger.debug("Constructor is called. Parameter: statDescriptor = " + statDescriptor);
+    this.type = statDescriptor.getStatType();
+    this.baseValue = statDescriptor.getBaseValue();
+    this.offset = statDescriptor.getOffset();
     setAbilityPointsUsed(statDescriptor.getAbilityPointsUsed());
     setMiscellaneous(statDescriptor.getMiscellaneous());
     setLevelStat(isStatTypeLevelStat(statDescriptor.getStatType()));
@@ -35,6 +39,7 @@ public class Stat {
    * @return The total value of the Stat
    */
   public int getTotalValue() {
+    logger.debug("getTotalValue() is called");
     return getBaseValue() + getAbilityPointsUsed() * getOffset() + getMiscellaneous();
   }
 
@@ -42,6 +47,7 @@ public class Stat {
    * Increases the ability point by one.
    */
   public void addAbilityPoint() {
+    logger.debug("addAbilityPoint() is called");
     setAbilityPointsUsed(getAbilityPointsUsed() + 1);
   }
 
@@ -49,6 +55,7 @@ public class Stat {
    * Decreases the ability point by one.
    */
   public void removeAbilityPoint() {
+    logger.debug("removeAbilityPoint() is called");
     setAbilityPointsUsed(getAbilityPointsUsed() - 1);
   }
 
@@ -59,6 +66,7 @@ public class Stat {
    * @return TRUE when Stat Type can be leveled else false
    */
   private boolean isStatTypeLevelStat(StatType statType) {
+    logger.debug("isStatTypeLevelStat is called. Parameter: statType = " + statType);
     return statType != StatType.HEALTH && statType != StatType.LEVEL;
   }
 
@@ -66,17 +74,9 @@ public class Stat {
     return type;
   }
 
-  public void setType(StatType type) {
-    this.type = type;
-  }
-
   public int getBaseValue() {
     return baseValue;
   }
-
-  public void setBaseValue(int baseValue) {
-    this.baseValue = baseValue;
-  } //Should probably be private as the base value should not change after creation
 
   public int getAbilityPointsUsed() {
     return abilityPointsUsed;
@@ -88,10 +88,6 @@ public class Stat {
 
   public int getOffset() {
     return offset;
-  }
-
-  public void setOffset(int offset) {
-    this.offset = offset;
   }
 
   public int getMiscellaneous() {
