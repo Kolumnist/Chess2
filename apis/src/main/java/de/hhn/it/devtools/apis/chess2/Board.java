@@ -36,12 +36,18 @@ public class Board {
   /**
    * A getter for a specific Field.
    *
-   * @param index to get the correct field.
+   * @param coordinate to get the correct field.
    * @return the Field on index.
    * @throws IllegalArgumentException so that no ArrayIndexOutOfBoundsException will occur.
    */
-  public Field getSpecificField(int index) throws IllegalArgumentException {
-    return fields[index];
+  public Field getSpecificField(Coordinate coordinate) throws IllegalArgumentException {
+    for (Field field : fields) {
+      if (field.getCoordinate().getX() == coordinate.getX()
+          && field.getCoordinate().getY() == coordinate.getY()) {
+        return field;
+      }
+    }
+    return fields[fields.length-1];
   }
 
   /**
