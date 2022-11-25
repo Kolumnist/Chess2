@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 public class Stat {
   private static final Logger logger = LoggerFactory.getLogger(Stat.class);
   private final StatType type;
-  private int baseValue; // Usually set to 0; Should be final
+  private final int baseValue; // Usually set to 0; Should be final
   private int offset; // Usually set to 1; Should be final
   private int abilityPointsUsed; // Negative values are possible
   private int miscellaneous; // For other stat-affecting things such as items
@@ -24,7 +24,7 @@ public class Stat {
    */
   public Stat(StatDescriptor statDescriptor) {
     this.type = statDescriptor.getStatType();
-    setBaseValue(statDescriptor.getBaseValue());
+    this.baseValue = statDescriptor.getBaseValue();
     setOffset(statDescriptor.getOffset());
     setAbilityPointsUsed(statDescriptor.getAbilityPointsUsed());
     setMiscellaneous(statDescriptor.getMiscellaneous());
@@ -72,10 +72,6 @@ public class Stat {
   public int getBaseValue() {
     return baseValue;
   }
-
-  public void setBaseValue(int baseValue) {
-    this.baseValue = baseValue;
-  } //Should probably be private as the base value should not change after creation
 
   public int getAbilityPointsUsed() {
     return abilityPointsUsed;
