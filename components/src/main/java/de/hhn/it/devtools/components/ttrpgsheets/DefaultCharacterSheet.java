@@ -154,6 +154,16 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   @Override
+  public int getStatDisplayValue(StatType statType) throws IllegalArgumentException {
+    for (Stat stat : getStats()) {
+      if (stat.getType() == statType) {
+        return stat.getTotalValue();
+      }
+    }
+    throw new IllegalArgumentException("No Stat of this type is found");
+  }
+
+  @Override
   public StatDescriptor getStatDescriptor(StatType statType) {
     for (Stat stat : getStats()) {
       if (stat.getType() == statType) {
