@@ -99,7 +99,7 @@ public interface CharacterSheet {
    * @throws NullPointerException if the Dice Type hasn't yet been changed
    *     with {@link CharacterSheet#changeDiceType(DiceType)}
    */
-  void rollDice() throws NullPointerException;
+  int rollDice() throws NullPointerException;
 
   /**
    * Changes the dice to the give {@link DiceType}.
