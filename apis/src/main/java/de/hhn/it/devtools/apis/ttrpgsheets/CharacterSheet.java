@@ -96,8 +96,9 @@ public interface CharacterSheet {
   /**
    * Rolls the dice to generate a random number according to the current dice.
    *
+   * @return The result of the dice throw
    * @throws NullPointerException if the Dice Type hasn't yet been changed
-   *     with {@link CharacterSheet#changeDiceType(DiceType)}
+   *      with {@link CharacterSheet#changeDiceType(DiceType)}
    */
   int rollDice() throws NullPointerException;
 
