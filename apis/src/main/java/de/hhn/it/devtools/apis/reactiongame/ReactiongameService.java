@@ -2,7 +2,6 @@ package de.hhn.it.devtools.apis.reactiongame;
 
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import java.io.IOException;
 import java.util.IllegalFormatException;
 import java.util.SortedMap;
 
@@ -80,17 +79,16 @@ public interface ReactiongameService {
   /**
    * Loads highscoreTable from a file.
    *
-   * @return Highscores with format: player - score.
+   * @param newHighScoreTable updated highscore list.
    */
-  SortedMap<String, Integer> loadHighscoreTable();
+  void loadHighscoreTable(SortedMap<String, Integer> newHighScoreTable);
 
   /**
    * Saves the current highscoreTable in a file.
    *
-   * @param newHighScoreTable updated highscore list.
    * @throws IllegalFormatException when format is not in line.
+   * @return Highscores with format: player - score.
    */
-  void saveHighscoreTable(SortedMap<String, Integer> newHighScoreTable)
-      throws IllegalFormatException;
+  SortedMap<String, Integer> saveHighscoreTable() throws IllegalFormatException;
 
 }
