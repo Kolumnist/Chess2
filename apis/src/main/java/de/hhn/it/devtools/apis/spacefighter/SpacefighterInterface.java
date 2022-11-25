@@ -2,6 +2,7 @@ package de.hhn.it.devtools.apis.spacefighter;
 import de.hhn.it.devtools.apis.spacefighter.Exception.MissTheEnemieException;
 import de.hhn.it.devtools.apis.spacefighter.Exception.NotReachedScoreException;
 
+
 /*
  *  Interface for Game.
  */
@@ -18,29 +19,9 @@ public interface SpacefighterInterface {
     void pauseGame();
 
     /**
-     * End the current game or user quiting the game
-     */
-    void endGame();
-
-    /**
      * End the game if user lost
      */
     void GameOver();
-
-    /**X
-     * Lets the player start or close the game.
-     * @param start Lets the player start the game.
-     * @param close Lets the player close the game.
-     * @param options Lets the player change specific options.
-     */
-    //void mainMenu(String start, String close, String options);
-
-    /**
-     * Lets the player pause the game.
-     * @param resume Lets the player resume the game.
-     * @param quit Lets the player quit the game.
-     */
-    //void ingameMenu(String resume, String quit);
 
     /**
      * Lets the player kill the enemy.
@@ -51,10 +32,8 @@ public interface SpacefighterInterface {
 
     /**
      * Calculates the amount of killed enemies.
-     * @param amount The amount of killed enemies.
-     * @throws MissTheEnemieException if the player misses an enemy.
      */
-    void score(int amount) throws MissTheEnemieException;
+    void score();
 
     /**
      * Spawns the enemy based on the current high score.
@@ -75,4 +54,13 @@ public interface SpacefighterInterface {
      */
     void removeCallback(SpaceFighterListener listener);
 
+    /**
+     * gives the player the ability to move
+     */
+    void move(int position);
+
+    /**
+     * End the current game or user quiting the game
+     */
+    void endGame();
 }

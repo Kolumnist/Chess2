@@ -1,6 +1,8 @@
 package de.hhn.it.devtools.apis.spacefighter;
 
-    public interface SpaceFighterListener {
+import de.hhn.it.devtools.apis.spacefighter.Exception.MissTheEnemieException;
+
+public interface SpaceFighterListener {
 
         void changeScore();
 
@@ -10,7 +12,7 @@ package de.hhn.it.devtools.apis.spacefighter;
 
         void hittedEnemy(Enemy amount);
 
-        void updateScore(CurrentScore score);
+        void updateScore(CurrentScore score)throws MissTheEnemieException;
 
         void gameOver();
     }
