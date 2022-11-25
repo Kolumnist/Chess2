@@ -3,7 +3,8 @@ package de.hhn.it.devtools.components.ttrpgsheets;
 import de.hhn.it.devtools.apis.ttrpgsheets.DiceDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.DiceType;
 import java.util.Random;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The class Dice for the default Character Sheet.
@@ -12,6 +13,7 @@ public class Dice {
   private int size;
   private int value;
   private final Random generator = new Random();
+  private static final Logger logger = LoggerFactory.getLogger(Dice.class);
 
   /**
    * Constructor stating diceDescriptor of {@link DiceDescriptor}
@@ -21,6 +23,7 @@ public class Dice {
    *
    */
   public Dice(DiceDescriptor diceDescriptor) {
+    logger.debug("Constructor is called. Parameter: diceDescriptor = " + diceDescriptor);
     changeSize(diceDescriptor.getDiceType());
     setValue(diceDescriptor.getResult());
   }
@@ -31,6 +34,7 @@ public class Dice {
    * @return new value for dice.
    */
   public int nextRoll() {
+    logger.debug("nextRoll() method is called");
     setValue(generator.nextInt(size) + 1);
     return getValue();
   }
@@ -41,6 +45,7 @@ public class Dice {
    * @param diceTyp type of the dice.
    */
   public void changeSize(DiceType diceTyp) {
+    logger.debug("changeSize() methode is called. Parameter: diceTyp = " + diceTyp);
     switch (diceTyp) {
       case D2 -> setSize(2);
       case D4 -> setSize(4);
@@ -61,6 +66,7 @@ public class Dice {
    * @return The converted size to the DiceType. null if there is no conversion possible.
    */
   public DiceType convertToDiceType(int size) {
+    logger.debug("convertToDiceType method is called. Parameter: size = " + size);
     switch (size) {
       case 2 -> {
         return DiceType.D2;
