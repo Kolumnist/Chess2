@@ -35,36 +35,73 @@ public class WordleGameLogic implements WordleService{
   }
 
   @Override
-  public boolean validateWordleGuess(WordleGuess guess) {
+  public void validateWordleGuess(WordleGuess guess) throws IllegalGuessException {
+    checkIfGuessIsLongEnough(guess);
+  }
+
+  /**
+   * A method that checks whether the guess is entirely correct or only partially.
+   *
+   * @param guess The WordleGuess entered by the player
+   * @return true if guess is equal to solution and false otherwise
+   */
+  public boolean checkIfGuessIsEqualToSolution(WordleGuess guess){
     String enteredWordleGuess = guess.getWordleGuessAsString().toLowerCase();
     WordlePanel[] wordlePanels = guess.getWordleWord();
-    if(enteredWordleGuess.equals(currentWordleSolution.toLowerCase())) { // checks if entered Guess is equal solution
+    return checkIfGuessIsCorrect(enteredWordleGuess, guess) ||
+        checkPanelsIndividually(enteredWordleGuess, wordlePanels, guess);
+  }
+
+
+  /**
+   * A method that checks if the WordleGuess is equal to the solution.
+   *
+   * @param enteredWordleGuess The String value of the entered WordleGuess
+   * @param guess The WordleGuess that the player entered
+   * @return true if guess is equal to solution and false otherwise
+   */
+  public boolean checkIfGuessIsCorrect(String enteredWordleGuess, WordleGuess guess) {
+    if (enteredWordleGuess.equals(currentWordleSolution.toLowerCase())) {
       for (WordlePanel panel : guess.getWordleWord()) {
         panel.setState(State.CORRECT);
-      }
-      return true;
-    }
-    for (WordlePanel panel : guess.getWordleWord()) { // checks if entered Guess is five characters long
-      try {
-        if (panel.getLetter() == ' ')
-          throw new IllegalGuessException("Wordle guess does not contain five valid characters!");
-      } catch (IllegalGuessException exception) {
-        System.out.println(exception + " Please enter a valid Wordle Guess!");
-        return false;
+        return true;
       }
     }
+    return false;
+  }
+
+  /**
+   * A method that checks if the given guess is long enough.
+   *
+   * @param guess The guess entered by the player
+   * @throws IllegalGuessException is thrown if guess is not long enough
+   */
+  public void checkIfGuessIsLongEnough (WordleGuess guess) throws IllegalGuessException {
+    for (WordlePanel panel : guess.getWordleWord()) {
+      if (panel.getLetter() == ' ')
+        throw new IllegalGuessException("Wordle guess does not contain five valid characters!");
+    }
+  }
+
+  /**
+   * A method that checks and updates each WordlePanel within the players guess individually according to game rules.
+   *
+   * @param enteredWordleGuess The String value of the entered WordleGuess
+   * @param wordlePanels The WordlePanels Array of the given guess
+   * @param guess The WordleGuess made by the player
+   * @return always returns false since given guess is not the solution
+   */
+  public boolean checkPanelsIndividually(String enteredWordleGuess, WordlePanel[] wordlePanels, WordleGuess guess) {
     for (int i = 0; i < guess.getWordleWord().length; i++) {
       if (enteredWordleGuess.charAt(i) == currentWordleSolution.charAt(i)) {
         wordlePanels[i].setState(State.CORRECT);
-      }
-      else if (currentWordleSolution.contains(Character.toString(enteredWordleGuess.charAt(i)))) {
+      } else if (currentWordleSolution.contains(Character.toString(enteredWordleGuess.charAt(i)))) {
         wordlePanels[i].setState(State.PARTIALLY_CORRECT);
-      }
-      else {
+      } else {
         wordlePanels[i].setState(State.FALSE);
       }
     }
-    return true;
+    return false;
   }
 
   @Override
