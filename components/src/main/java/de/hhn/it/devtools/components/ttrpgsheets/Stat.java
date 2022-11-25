@@ -23,6 +23,7 @@ public class Stat {
    * @param statDescriptor The descriptor of a Stat
    */
   public Stat(StatDescriptor statDescriptor) {
+    logger.debug("Constructor is called. Parameter: statDescriptor = " + statDescriptor);
     this.type = statDescriptor.getStatType();
     this.baseValue = statDescriptor.getBaseValue();
     this.offset = statDescriptor.getOffset();
@@ -38,6 +39,7 @@ public class Stat {
    * @return The total value of the Stat
    */
   public int getTotalValue() {
+    logger.debug("getTotalValue() is called");
     return getBaseValue() + getAbilityPointsUsed() * getOffset() + getMiscellaneous();
   }
 
@@ -45,6 +47,7 @@ public class Stat {
    * Increases the ability point by one.
    */
   public void addAbilityPoint() {
+    logger.debug("addAbilityPoint() is called");
     setAbilityPointsUsed(getAbilityPointsUsed() + 1);
   }
 
@@ -52,6 +55,7 @@ public class Stat {
    * Decreases the ability point by one.
    */
   public void removeAbilityPoint() {
+    logger.debug("removeAbilityPoint() is called");
     setAbilityPointsUsed(getAbilityPointsUsed() - 1);
   }
 
@@ -62,6 +66,7 @@ public class Stat {
    * @return TRUE when Stat Type can be leveled else false
    */
   private boolean isStatTypeLevelStat(StatType statType) {
+    logger.debug("isStatTypeLevelStat is called. Parameter: statType = " + statType);
     return statType != StatType.HEALTH && statType != StatType.LEVEL;
   }
 
