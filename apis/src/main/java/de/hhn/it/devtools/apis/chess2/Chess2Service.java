@@ -46,7 +46,7 @@ public interface Chess2Service {
    * @throws IllegalStateException     if the method gets called during a wrong state
    */
   Coordinate[] getPossibleMoves(Coordinate selectedPieceCoordinate)
-      throws IllegalParameterException, IllegalParameterException;
+      throws IllegalParameterException, IllegalStateException;
 
   /**
    * Changes the position of the selected piece.
