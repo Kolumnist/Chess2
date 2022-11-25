@@ -12,7 +12,7 @@ public class Stat {
   private static final Logger logger = LoggerFactory.getLogger(Stat.class);
   private final StatType type;
   private final int baseValue; // Usually set to 0
-  private int offset; // Usually set to 1; Should be final
+  private final int offset; // Usually set to 1
   private int abilityPointsUsed; // Negative values are possible
   private int miscellaneous; // For other stat-affecting things such as items
   private boolean levelStat; // True when stat can be leveled else false
@@ -25,7 +25,7 @@ public class Stat {
   public Stat(StatDescriptor statDescriptor) {
     this.type = statDescriptor.getStatType();
     this.baseValue = statDescriptor.getBaseValue();
-    setOffset(statDescriptor.getOffset());
+    this.offset = statDescriptor.getOffset();
     setAbilityPointsUsed(statDescriptor.getAbilityPointsUsed());
     setMiscellaneous(statDescriptor.getMiscellaneous());
     setLevelStat(isStatTypeLevelStat(statDescriptor.getStatType()));
@@ -83,10 +83,6 @@ public class Stat {
 
   public int getOffset() {
     return offset;
-  }
-
-  public void setOffset(int offset) {
-    this.offset = offset;
   }
 
   public int getMiscellaneous() {
