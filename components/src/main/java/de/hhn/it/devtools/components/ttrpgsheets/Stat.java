@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 public class Stat {
   private static final Logger logger = LoggerFactory.getLogger(Stat.class);
   private final StatType type;
-  private final int baseValue; // Usually set to 0; Should be final
+  private final int baseValue; // Usually set to 0
   private int offset; // Usually set to 1; Should be final
   private int abilityPointsUsed; // Negative values are possible
   private int miscellaneous; // For other stat-affecting things such as items
