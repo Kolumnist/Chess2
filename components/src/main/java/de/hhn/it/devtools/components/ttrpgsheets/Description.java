@@ -2,22 +2,27 @@ package de.hhn.it.devtools.components.ttrpgsheets;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A simple description for the character.
  */
 public class Description {
-  private DescriptionType type; // Should be final
+  private static final Logger logger = LoggerFactory.getLogger(Description.class);
+  private final DescriptionType type;
   private String description;
 
   /**
    * Constructor for creating a description based upon a descriptor.
    *
-   * @param descriptor the descriptor
+   * @param descriptionDescriptor the descriptor
    */
-  public Description(DescriptionDescriptor descriptor) {
-    setType(descriptor.getDescriptionType());
-    setDescription(descriptor.getText());
+  public Description(DescriptionDescriptor descriptionDescriptor) {
+    logger.debug("Constructor is called. Parameter: descriptionDescriptor = "
+            + descriptionDescriptor);
+    type = (descriptionDescriptor.getDescriptionType());
+    setDescription(descriptionDescriptor.getText());
   }
 
   /**
@@ -36,15 +41,6 @@ public class Description {
    */
   public String getDescription() {
     return description;
-  }
-
-  /**
-   * Setter for the type of the description.
-   *
-   * @param type the new type
-   */
-  public void setType(DescriptionType type) {
-    this.type = type;
   }
 
   /**
