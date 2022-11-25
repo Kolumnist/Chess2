@@ -71,7 +71,7 @@ public interface CharacterSheet {
   void decrementStat(StatType stat, OriginType origin, int amount) throws IllegalArgumentException;
 
   /**
-   * Returns the total value of the given Stat
+   * Returns the total value of the given Stat.
    *
    * @param statType the Type of Stat from which the display value is from
    * @return the value that is supposed to be displayed
