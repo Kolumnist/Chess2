@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Stat {
   private static final Logger logger = LoggerFactory.getLogger(Stat.class);
-  private StatType type; // Should be final
+  private final StatType type;
   private int baseValue; // Usually set to 0; Should be final
   private int offset; // Usually set to 1; Should be final
   private int abilityPointsUsed; // Negative values are possible
@@ -23,7 +23,7 @@ public class Stat {
    * @param statDescriptor The descriptor of a Stat
    */
   public Stat(StatDescriptor statDescriptor) {
-    setType(statDescriptor.getStatType());
+    this.type = statDescriptor.getStatType();
     setBaseValue(statDescriptor.getBaseValue());
     setOffset(statDescriptor.getOffset());
     setAbilityPointsUsed(statDescriptor.getAbilityPointsUsed());
@@ -67,10 +67,6 @@ public class Stat {
 
   public StatType getType() {
     return type;
-  }
-
-  public void setType(StatType type) {
-    this.type = type;
   }
 
   public int getBaseValue() {
