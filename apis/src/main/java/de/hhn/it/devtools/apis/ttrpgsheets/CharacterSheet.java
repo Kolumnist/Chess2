@@ -75,8 +75,9 @@ public interface CharacterSheet {
    *
    * @param statType the Type of Stat from which the display value is from
    * @return the value that is supposed to be displayed
+   * @throws IllegalArgumentException if StatType is invalid
    */
-  int getStatDisplayValue(StatType statType);
+  int getStatDisplayValue(StatType statType) throws IllegalArgumentException;
 
   /**
    * Returns descriptor of the stat.
