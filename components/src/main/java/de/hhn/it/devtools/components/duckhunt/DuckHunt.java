@@ -65,6 +65,7 @@ public class DuckHunt implements Runnable, DuckHuntService {
       ducks[i] = (new DuckData(i, 0, 0, DuckState.FLYING));
     }
     this.pathGenerator = new MpatternGenerator(50, screenDimension);
+    calculateNewDuckPaths();
   }
 
   /**
@@ -153,7 +154,11 @@ public class DuckHunt implements Runnable, DuckHuntService {
 
   private void calculateNewDuckPaths() {
     pathGenerator.clearPaths();
-    pathGenerator.generatePaths(ducks);
+    try {
+      pathGenerator.generatePaths(ducks);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   /**
