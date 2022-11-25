@@ -29,10 +29,9 @@ public interface WordleService {
    * A method to ensure that the user's guess is 5 letters long. An exception is thrown if it isn't.
    *
    * @param guess the guess which the method will validate
-   * @return true if the guess is 5 letters long
    * @throws IllegalGuessException if the given guess is too short
    */
-  boolean validateWordleGuess(WordleGuess guess) throws IllegalGuessException;
+  void validateWordleGuess(WordleGuess guess) throws IllegalGuessException;
 
   /**
    * Quits the game and closes all Wordle windows.
