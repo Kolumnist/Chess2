@@ -6,13 +6,13 @@ public class WordleGame {
 
   private String solution;
   private WordleGuess[] playerGuesses;
-  private int playerGuessesIndex;
-  private int currentGuessIndex;
+  private int wordleGuessIndex;
+  private int wordlePanelIndex;
 
   public WordleGame(String solution) {
     this.solution = solution;
     this.playerGuesses = new WordleGuess[6];
-    this.playerGuessesIndex = 0;
-    this.currentGuessIndex = 0;
+    this.wordleGuessIndex = 0;
+    this.wordlePanelIndex = 0;
   }
 }
