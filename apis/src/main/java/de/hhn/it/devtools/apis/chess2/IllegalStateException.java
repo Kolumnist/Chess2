@@ -1,21 +1,22 @@
 package de.hhn.it.devtools.apis.chess2;
 
 /**
- * Gets thrown when a player makes a move that is not possible.
+ * Gets thrown when a method gets called in a state in which it should not be called.
  *
  * @author Collin, Lara, Michel
  * @version 1.0
  */
-public class InvalidMoveException extends Exception {
+
+public class IllegalStateException extends Exception {
 
   private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(InvalidMoveException.class);
+      org.slf4j.LoggerFactory.getLogger(IllegalStateException.class);
 
   /**
    * Constructs a new exception with {@code null} as its detail message. The cause is not
    * initialized, and may subsequently be initialized by a call to {@link #initCause}.
    */
-  public InvalidMoveException() {
+  public IllegalStateException() {
   }
 
   /**
@@ -25,7 +26,7 @@ public class InvalidMoveException extends Exception {
    * @param message the detail message. The detail message is saved for later retrieval by the
    *                {@link #getMessage()} method.
    */
-  public InvalidMoveException(final String message) {
+  public IllegalStateException(final String message) {
     super(message);
   }
 
@@ -39,7 +40,7 @@ public class InvalidMoveException extends Exception {
    *              (A <code>null</code> value is permitted, and indicates that the cause is
    *              nonexistent or unknown.)
    */
-  public InvalidMoveException(final Throwable cause) {
+  public IllegalStateException(final Throwable cause) {
     super(cause);
   }
 
@@ -55,7 +56,7 @@ public class InvalidMoveException extends Exception {
    *                method).  (A <code>null</code> value is permitted, and indicates that the cause
    *                is nonexistent or unknown.)
    */
-  public InvalidMoveException(final String message, final Throwable cause) {
+  public IllegalStateException(final String message, final Throwable cause) {
     super(message, cause);
   }
 }

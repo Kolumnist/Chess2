@@ -1,13 +1,11 @@
 package textbasedlabyrinth;
 
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Direction;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Game;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.GameService;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Map;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Seed;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.*;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.InvalidSeedException;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Usage Demo for TextBasedLabyrinth.
@@ -28,36 +26,57 @@ public class TextBasedLabyrinthUsageDemo {
       throw new RuntimeException(e);
     }
     // Game creates a Layout according selected map
-    GameService gameService = new Game(Map.Ancient_Dungeon, seed);
+    GameService gameService = new Game();
+    gameService.setCurrentLayout(Map.Grave_of_the_Mad_King, seed);
     // we can check now where we can go
     gameService.inspect(Direction.WEST);
     // West seems fine, so lets go this way
-    gameService.moveWest();
+    gameService.move(Direction.WEST);
     // Lets check the surroundings
     gameService.inspect(Direction.SOUTH);
     gameService.inspect(Direction.NORTH);
     gameService.inspect(Direction.WEST);
     // We can go either West or North it seems
-    gameService.moveWest();
+    gameService.move(Direction.WEST);
     gameService.inspect(Direction.WEST);
     gameService.inspect(Direction.SOUTH);
     gameService.inspect(Direction.NORTH);
+    gameService.searchRoom();
+
+    List<Item> items = gameService.searchRoom();
+
+    int i = 1;
+    for(Item item : items){
+      System.out.println(i + ". :" + item.getName() + " " + item.getItemId());
+      i++;
+    }
+
+    try {
+      gameService.pickUpItem(1);
+    } catch (NoSuchItemFoundException e) {
+      throw new RuntimeException(e);
+    }
+
     // seems to be an dead-end, lets go back
-    gameService.moveEast();
-    gameService.moveNorth();
+    gameService.move(Direction.EAST);
+    gameService.move(Direction.NORTH);
     gameService.inspect(Direction.WEST);
     gameService.inspect(Direction.EAST);
     gameService.inspect(Direction.NORTH);
     // an dead-end again!! lets search the room before we go
     gameService.searchRoom();
-    gameService.moveSouth();
-    gameService.moveEast();
+    gameService.move(Direction.SOUTH);
+    gameService.move(Direction.EAST);
     // lets go to the exit now
+    gameService.move(Direction.NORTH);
+    gameService.move(Direction.NORTH);
+    gameService.move(Direction.NORTH);
+    gameService.move(Direction.EAST);
+    //there should be a locked door now to stop us from moving south...
+    gameService.inspect(Direction.SOUTH);
+    gameService.interaction(Direction.SOUTH, items.get(0));
+    gameService.move(Direction.SOUTH);
 
-    gameService.moveEast();
-    gameService.moveEast();
-    gameService.moveEast();
-    gameService.moveNorth();
 
 
 
