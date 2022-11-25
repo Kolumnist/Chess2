@@ -54,7 +54,7 @@ public class DemoReactiongameUsage {
         reactiongameService.setCurrentPlayerName("Player");
 
         logger.info("> Saved the current highscoretable");
-        reactiongameService.saveHighscoreTable();
+        reactiongameService.saveHighscoreTable(null);
 
         logger.info("> Player ended the run");
         reactiongameService.endRun();
