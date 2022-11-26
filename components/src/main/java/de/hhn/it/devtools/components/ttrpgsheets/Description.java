@@ -19,9 +19,9 @@ public class Description {
    * @param descriptionDescriptor the descriptor
    */
   public Description(DescriptionDescriptor descriptionDescriptor) {
-    logger.debug("Constructor is called. Parameter: descriptionDescriptor = "
+    logger.info("Constructor is called. Parameter: descriptionDescriptor = "
             + descriptionDescriptor);
-    type = (descriptionDescriptor.getDescriptionType());
+    type = descriptionDescriptor.getDescriptionType();
     setDescription(descriptionDescriptor.getText());
   }
 
