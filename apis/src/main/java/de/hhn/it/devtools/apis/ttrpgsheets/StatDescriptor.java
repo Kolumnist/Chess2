@@ -9,6 +9,7 @@ public class StatDescriptor {
   private int offset;
   private int abilityPointsUsed;
   private int miscellaneous;
+  private boolean levelStat;
 
   /**
    * Constructor stating {@link StatType} and value of the Stat.
@@ -20,12 +21,13 @@ public class StatDescriptor {
    * @param miscellaneous The miscellaneous additions to the Stat
    */
   public StatDescriptor(StatType statType, int baseValue, int offset, int abilityPointsUsed,
-                        int miscellaneous) {
+                        int miscellaneous, boolean levelStat) {
     setStatType(statType);
     setBaseValue(baseValue);
     setOffset(offset);
     setAbilityPointsUsed(abilityPointsUsed);
     setMiscellaneous(miscellaneous);
+    setLevelStat(levelStat);
   }
 
   public StatType getStatType() {
@@ -68,12 +70,21 @@ public class StatDescriptor {
     this.miscellaneous = miscellaneous;
   }
 
+  public boolean isLevelStat() {
+    return levelStat;
+  }
+
+  public void setLevelStat(boolean levelStat) {
+    this.levelStat = levelStat;
+  }
+
   @Override
   public String toString() {
     return "Stat Type: " + getStatType()
             + "\nBase Value: " + getBaseValue()
             + "\nOffset: " + getOffset()
             + "\nAbility Points Used: " + getAbilityPointsUsed()
-            + "\nMiscellaneous: " + getMiscellaneous();
+            + "\nMiscellaneous: " + getMiscellaneous()
+            + "\nLevel Stat: " + isLevelStat();
   }
 }
