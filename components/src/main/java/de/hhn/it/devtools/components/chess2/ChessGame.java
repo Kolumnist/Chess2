@@ -28,7 +28,9 @@ public class ChessGame implements Chess2Service {
   public WinningPlayerState winState;
   public GameState gameState;
 
-  /* TODO: Write Javadocs*/
+  /**
+   * The Constructor that initializes every needed object.
+   */
   public ChessGame() {
     gameBoard = new Board();
     whitePlayer = new Player('w');
@@ -67,7 +69,6 @@ public class ChessGame implements Chess2Service {
     } else if (currentPlayer == blackPlayer) {
       winState = WinningPlayerState.WHITE_WIN;
     }
-
   }
 
   @Override
@@ -98,6 +99,7 @@ public class ChessGame implements Chess2Service {
     return currentCoordinates;
   }
 
+  /* TODO: Next two methods with Michel */
   @Override
   public Coordinate[] getPossibleMoves(Coordinate selectedPieceCoordinate)
       throws IllegalParameterException {
