@@ -1,14 +1,10 @@
 package textbasedlabyrinth;
 
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Direction;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Game;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.GameService;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Item;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Map;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Seed;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.*;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.InvalidSeedException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +26,9 @@ public class TextBasedLabyrinthUsageDemo {
     } catch (InvalidSeedException e) {
       throw new RuntimeException(e);
     }
+    OutputNotifier notifier = new OutputNotifier();
     // Game creates a Layout according selected map
-    GameService gameService = new Game();
+    GameService gameService = new Game(notifier);
     gameService.setCurrentLayout(Map.Grave_of_the_Mad_King, seed);
     // we can check now where we can go
     gameService.inspect(Direction.WEST);
