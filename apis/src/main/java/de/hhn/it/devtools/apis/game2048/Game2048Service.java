@@ -13,7 +13,7 @@ public interface Game2048Service {
    * This methode will be called to start a new game.
    * It happens when the Application starts to run or when the reset Button in the Frontend gets
    * pressed. This Button will be used after a game is won or if an unfinished game should be restarted.
-   *
+   * <p>
    * It checks if there are Blocks on the Game board, they will be deleted.
    * Afterwards 2 Blocks will be placed on the Game board.
    */
@@ -34,6 +34,9 @@ public interface Game2048Service {
 
   /**
    * Adds a listener to updates on the state of the game 2048.
+   * When the Application gets started, a Listener will be added
+   * too ensure that the Frontend (Package javafx) gets informed, how the new
+   * Data (game-board, current Score and high Score) look like.
    *
    * @param listener object implementing the listener interface.
    * @throws IllegalParameterException if the listener is a null reference.
@@ -41,7 +44,7 @@ public interface Game2048Service {
   void addCallback(Game2048Listener listener) throws IllegalParameterException;
 
   /**
-   * Adds a listener to updates on the state of the game 2048.
+   * Removes a listener to updates on the state of the game 2048.
    *
    * @param listener listener to be removed.
    * @throws IllegalParameterException if the listener is a null reference.
