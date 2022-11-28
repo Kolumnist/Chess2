@@ -15,16 +15,18 @@ public class Game implements GameService {
   public Room currentRoom;
   public Player player;
   public Layout currentLayout;
+  public OutputListener outputListener;
   public ArrayList<Layout> layouts;
   public Map map;
 
   /**
    * Constructor for game.
    */
-  public Game() {
+  public Game(OutputListener listener) {
     this.player = new Player("Placeholder");
-
+    outputListener = listener;
   }
+
 
   public void move(Direction direction) throws RoomFailedException {
     if (direction == null) {
@@ -82,6 +84,7 @@ public class Game implements GameService {
         throw new RoomFailedException("No room found in the northern direction.");
       }
     }
+    outputListener.sendOutput(message);
 
     if (!succeeded) {
       throw new IllegalArgumentException("Direction was not valid.");
@@ -117,6 +120,7 @@ public class Game implements GameService {
       message = currentRoom.getSouthDoor().getInspectMessage();
       succeeded = true;
     }
+    outputListener.sendOutput(message);
 
     if (!succeeded) {
       throw new IllegalArgumentException("Direction was not valid.");
@@ -182,6 +186,7 @@ public class Game implements GameService {
         successMessage = door.getPuzzle().getLockedMessage();
       }
     }
+    outputListener.sendOutput(successMessage);
 
     if (!succeeded) {
       throw new IllegalArgumentException("Direction was not valid.");
@@ -243,6 +248,7 @@ public class Game implements GameService {
       throw new NoSuchItemFoundException("The item was not found.");
     } else {
       player.addItem(searchedItem);
+      outputListener.sendOutput(searchedItem.getName());
       return searchedItem;
     }
   }
@@ -262,6 +268,7 @@ public class Game implements GameService {
     } catch (NoSuchItemFoundException n) {
       message = n.getMessage();
     }
+    outputListener.sendOutput(message);
     return message;
   }
 
@@ -272,6 +279,7 @@ public class Game implements GameService {
   public String check() {
     String message = "You find yourself in " + currentRoom.getDescription();
     message = message + ("You can search the room or move on.");
+    outputListener.sendOutput(message);
     return message;
   }
 
@@ -281,6 +289,7 @@ public class Game implements GameService {
   public String startText() {
     String message = "You are " + player.getName()
             + " and you are in the depths of a labyrinth.";
+    outputListener.sendOutput(message);
     return message;
   }
 
@@ -295,10 +304,6 @@ public class Game implements GameService {
     }
 
     return items;
-  }
-
-  public void setMap(Map map) {
-    this.map = map;
   }
 
   /**
