@@ -33,6 +33,9 @@ public interface GameService {
    */
   String dropItem(int itemId);
 
+
+  void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException;
+
   /**
    * Inspect a door/pathway.
    */
@@ -57,7 +60,12 @@ public interface GameService {
   void setCurrentLayout(Map newMap, Seed newSeed);
 
 
-
+  /**
+   * Sets the current player name to the new String given if it is not null.
+   * @param name the new name.
+   * @return if it changed the name, true, else false.
+   */
+  boolean setPlayerName(String name);
 
   /**
    * Text to be given to the player at the start of the game.
