@@ -102,12 +102,24 @@ public class SfsMemoryService implements MemoryService {
   @Override
   public void addCallback(TimerListener listener) throws IllegalParameterException {
     logger.info("addCallback: listener = {}", listener);
+    if (listener == null) {
+      throw new IllegalParameterException("Listener was null reference.");
+    }
+    if (this.timer == listener) {
+      throw new IllegalParameterException("Listener already registered.");
+    }
     timer.addCallback(listener);
   }
 
   @Override
   public void removeCallback(TimerListener listener) throws IllegalParameterException {
     logger.info("removeCallback: listener = {}", listener);
+    if (listener == null) {
+      throw new IllegalParameterException("Listener was null reference.");
+    }
+    if (deckListener != listener) {
+      throw new IllegalParameterException("Listener is not registered.");
+    }
     timer.removeCallback(listener);
   }
 
@@ -225,7 +237,7 @@ public class SfsMemoryService implements MemoryService {
     pictureReferences = (Map<Integer, String>) picReferences.clone();
   }
 
-  private boolean matchCards(PictureCard picture, PictureCard name) throws IllegalParameterException {
+  public boolean matchCards(PictureCard picture, PictureCard name) throws IllegalParameterException {
     logger.info("matchCards: picture = {}, name = {}", picture, name);
     if(picture == null || name == null) {
       throw new IllegalParameterException("At least one of the cards is a null references.");
