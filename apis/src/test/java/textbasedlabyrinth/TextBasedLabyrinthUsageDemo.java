@@ -28,7 +28,7 @@ public class TextBasedLabyrinthUsageDemo {
     }
     OutputNotifier notifier = new OutputNotifier();
     // Game creates a Layout according selected map
-    GameService gameService = new Game(notifier);
+    GameService gameService = null;
     gameService.setCurrentLayout(Map.Grave_of_the_Mad_King, seed);
     // we can check now where we can go
     gameService.inspect(Direction.WEST);
