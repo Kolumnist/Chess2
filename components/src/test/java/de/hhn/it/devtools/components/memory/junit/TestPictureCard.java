@@ -85,6 +85,13 @@ public class TestPictureCard {
                 () -> pictureCard.addCallback(null));
     }
 
+    @Test
+    @DisplayName("Null references cannot be removed as listener.")
+    void tryRemoveNullReferenceAsListener() {
+        IllegalParameterException exception = assertThrows(IllegalParameterException.class,
+                () -> pictureCard.removeCallback(null));
+    }
+
 
     /**
      * Inner class as a PictureCardListener.
