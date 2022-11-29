@@ -25,4 +25,14 @@ public class OutputNotifier implements OutputListener{
         System.out.println(output);
 
     }
+
+    @Override
+    public void sendOutputNavigation(String output) {
+        sendOutputPlayer(output);
+    }
+
+    @Override
+    public void sendOutputPlayerInteract(String output) {
+        sendOutputPlayer(output);
+    }
 }

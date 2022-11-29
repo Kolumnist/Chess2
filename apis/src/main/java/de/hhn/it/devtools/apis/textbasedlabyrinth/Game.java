@@ -120,7 +120,7 @@ public class Game implements GameService {
       message = currentRoom.getSouthDoor().getInspectMessage();
       succeeded = true;
     }
-    outputListener.sendOutputPlayer(message);
+    outputListener.sendOutputNavigation(message);
 
     if (!succeeded) {
       throw new IllegalArgumentException("Direction was not valid.");
@@ -186,7 +186,7 @@ public class Game implements GameService {
         successMessage = door.getPuzzle().getLockedMessage();
       }
     }
-    outputListener.sendOutputPlayer(successMessage);
+    outputListener.sendOutputPlayerInteract(successMessage);
 
     if (!succeeded) {
       throw new IllegalArgumentException("Direction was not valid.");
