@@ -5,7 +5,9 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
  */
 public class OutputNotifier implements OutputListener{
 
-    public OutputNotifier(){ }
+    public OutputNotifier(){
+        
+    }
 
 
     @Override
