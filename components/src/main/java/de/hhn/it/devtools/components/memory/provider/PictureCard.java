@@ -15,6 +15,8 @@ public interface PictureCard {
 
   void removeCallback(PictureCardListener listener) throws IllegalParameterException;
 
+  void matchCard();
+
   PictureCardDescriptor getPictureCard();
 
 }

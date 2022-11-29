@@ -182,14 +182,20 @@ public class SfsMemoryService implements MemoryService {
           card.turnCard();
         } else {
           if (c.getPictureCard().getPictureRef() == -1) {
-            if (matchCards(card, c)) {
-              card.turnCard();
+            if(matchCards(card, c)) {
+              c.matchCard();
+              card.matchCard();
+            } else {
+              c.turnCard();
               c.turnCard();
             }
           } else if (card.getPictureCard().getPictureRef() == -1) {
-            if (matchCards(c, card)) {
-              card.turnCard();
+            if(matchCards(c, card)) {
+              c.matchCard();
+              card.matchCard();
+            } else {
               c.turnCard();
+              card.turnCard();
             }
           }
         }
@@ -244,7 +250,7 @@ public class SfsMemoryService implements MemoryService {
     }
     if(pictureReferences.containsKey(picture.getPictureCard().getPictureRef()) || name.getPictureCard().getName() != null) {
       String picCard = pictureReferences.get(picture.getPictureCard().getPictureRef()).toLowerCase();
-      return !(name.getPictureCard().getName().toLowerCase().equals(picCard));
+      return (name.getPictureCard().getName().toLowerCase().equals(picCard));
     } else {
       throw new IllegalParameterException("PictureCard has no appropriate picture reference or name is a null reference.") ;
     }

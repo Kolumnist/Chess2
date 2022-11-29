@@ -81,6 +81,7 @@ public class SfsPictureCard implements PictureCard {
     return descriptor;
   }
 
+  @Override
   public void matchCard() {
     descriptor.setState(State.MATCHED);
     notifyListeners(State.MATCHED);
