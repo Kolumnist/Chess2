@@ -27,8 +27,25 @@ public class TestPictureCard {
     }
 
     @Test
+    @DisplayName("Test turning a card.")
+    void checkTurningACard() throws IllegalParameterException {
+        pictureCard.turnCard();
+        assertEquals(State.VISIBLE, pictureCard.getPictureCard().getState());
+        pictureCard.turnCard();
+        assertEquals(State.HIDDEN, pictureCard.getPictureCard().getState());
+    }
+
+    @Test
+    @DisplayName("Matched card cannot be turned.")
+    void checkMatchedCardCannotBeTurned() throws  IllegalParameterException {
+        pictureCard.getPictureCard().setState(State.MATCHED);
+        IllegalStateException exception = assertThrows(IllegalStateException.class,
+                () -> pictureCard.turnCard());
+    }
+
+    @Test
     @DisplayName("Test registration of callback listener.")
-    void CheckSuccessfulRegistrationOfCallback() throws IllegalParameterException,
+    void checkSuccessfulRegistrationOfCallback() throws IllegalParameterException,
             InterruptedException {
         SimplePictureCardListener listener = new SimplePictureCardListener();
         pictureCard.addCallback(listener);
@@ -39,7 +56,7 @@ public class TestPictureCard {
 
     @Test
     @DisplayName("Test registration of two listeners which both get notified.")
-    void CheckRegistrationTwoListeners() throws IllegalParameterException, InterruptedException {
+    void checkRegistrationTwoListeners() throws IllegalParameterException, InterruptedException {
         SimplePictureCardListener listener0 = new SimplePictureCardListener();
         SimplePictureCardListener listener1 = new SimplePictureCardListener();
         pictureCard.addCallback(listener0);
@@ -56,9 +73,15 @@ public class TestPictureCard {
     void registerAndRemoveOneListener() throws IllegalParameterException, InterruptedException {
         SimplePictureCardListener listener = new SimplePictureCardListener();
         pictureCard.addCallback(listener);
+        pictureCard.turnCard();
+        int stateNum1 = listener.states.size();
         pictureCard.removeCallback(listener);
         pictureCard.turnCard();
-        assertEquals(0, listener.states.size()); //should be 0, because removed before new state
+        int stateNum2 = listener.states.size();     //should still be 1, because it was removed
+        assertAll(
+                () -> assertEquals(1, stateNum1),
+                () -> assertEquals(1, stateNum2)
+        );
     }
 
     @Test
