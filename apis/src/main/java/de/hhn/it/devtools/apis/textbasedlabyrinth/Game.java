@@ -84,7 +84,7 @@ public class Game implements GameService {
         throw new RoomFailedException("No room found in the northern direction.");
       }
     }
-    outputListener.sendOutputToMainField(message);
+    outputListener.sendOutputPlayer(message);
 
     if (!succeeded) {
       throw new IllegalArgumentException("Direction was not valid.");
@@ -120,7 +120,7 @@ public class Game implements GameService {
       message = currentRoom.getSouthDoor().getInspectMessage();
       succeeded = true;
     }
-    outputListener.sendOutputToMainField(message);
+    outputListener.sendOutputPlayer(message);
 
     if (!succeeded) {
       throw new IllegalArgumentException("Direction was not valid.");
@@ -129,10 +129,10 @@ public class Game implements GameService {
   }
 
   /**
-   * Check which door is the next to interact with.
+   * Player tries to interact with a door/direction.
    *
    * @param direction gets the direction to the next door.
-   * @param item gets item if need
+   * @param item item player uses.
    * @throws IllegalArgumentException direction not null.
    */
   public String interaction(Direction direction, Item item) throws IllegalArgumentException {
@@ -186,7 +186,7 @@ public class Game implements GameService {
         successMessage = door.getPuzzle().getLockedMessage();
       }
     }
-    outputListener.sendOutputToMainField(successMessage);
+    outputListener.sendOutputPlayer(successMessage);
 
     if (!succeeded) {
       throw new IllegalArgumentException("Direction was not valid.");
@@ -197,6 +197,8 @@ public class Game implements GameService {
 
   /**
    * Gets the next room.
+   * It gives a list. Whether this list will be given to the main field in the ui or appear as a popup
+   * is not decided yet.
    *
    * @throws RoomFailedException description to room
    *
@@ -248,7 +250,7 @@ public class Game implements GameService {
       throw new NoSuchItemFoundException("The item was not found.");
     } else {
       player.addItem(searchedItem);
-      outputListener.sendOutputToMainField(searchedItem.getName());
+      outputListener.sendOutputPlayer(searchedItem.getName());
       return searchedItem;
     }
   }
@@ -268,7 +270,7 @@ public class Game implements GameService {
     } catch (NoSuchItemFoundException n) {
       message = n.getMessage();
     }
-    outputListener.sendOutputToMainField(message);
+    outputListener.sendOutputPlayer(message);
     return message;
   }
 
@@ -283,7 +285,7 @@ public class Game implements GameService {
       throw new NoSuchItemFoundException(i.getMessage());
     }
 
-    outputListener.sendOutputToInventoryField(message);
+    outputListener.sendOutputInventory(message);
   }
 
   @Override
@@ -307,7 +309,7 @@ public class Game implements GameService {
   public String check() {
     String message = "You find yourself in " + currentRoom.getDescription();
     message = message + ("You can search the room or move on.");
-    outputListener.sendOutputToMainField(message);
+    outputListener.sendOutputRoom(message);
     return message;
   }
 
@@ -317,7 +319,7 @@ public class Game implements GameService {
   public String startText() {
     String message = "You are " + player.getName()
             + " and you are in the depths of a labyrinth.";
-    outputListener.sendOutputToMainField(message);
+    outputListener.sendOutputRoom(message);
     return message;
   }
 
