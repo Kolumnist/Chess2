@@ -26,4 +26,18 @@ public interface OutputListener {
      * @param output String to be output.
      */
     void sendOutputInventory(String output);
+
+
+    /**
+     * Output about where the player can go.
+     * @param output string to be output.
+     */
+    void sendOutputNavigation(String output);
+
+
+    /**
+     * Output collected when player interacts with a door or obstacle.
+     * @param output string to be output.
+     */
+    void sendOutputPlayerInteract(String output);
 }
