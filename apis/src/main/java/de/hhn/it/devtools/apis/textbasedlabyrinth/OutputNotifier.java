@@ -8,7 +8,13 @@ public class OutputNotifier implements OutputListener{
     public OutputNotifier(){ }
 
     @Override
-    public void sendOutput(String output) {
+    public void sendOutputToMainField(String output) {
+        System.out.println(output);
+    }
+
+
+    @Override
+    public void sendOutputToInventoryField(String output) {
         System.out.println(output);
     }
 }

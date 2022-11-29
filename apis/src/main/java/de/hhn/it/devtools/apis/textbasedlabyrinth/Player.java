@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 public class Player {
 
-  private final String name;
+  private String name;
   private HashMap<Integer, Item> inventory;
   public Room currentRoomOfPlayer;
 
@@ -62,6 +62,10 @@ public class Player {
     return name;
   }
 
+  public void setName(String name) {
+    this.name = name;
+  }
+
   /**
    * Getter for currentRoomOfPlayer.
    *
@@ -79,5 +83,9 @@ public class Player {
    */
   public void setCurrentRoomOfPlayer(Room currentRoomOfPlayer) {
     this.currentRoomOfPlayer = currentRoomOfPlayer;
+  }
+
+  public void reset() {
+    inventory.clear();
   }
 }

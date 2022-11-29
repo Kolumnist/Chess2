@@ -84,7 +84,7 @@ public class Game implements GameService {
         throw new RoomFailedException("No room found in the northern direction.");
       }
     }
-    outputListener.sendOutput(message);
+    outputListener.sendOutputToMainField(message);
 
     if (!succeeded) {
       throw new IllegalArgumentException("Direction was not valid.");
@@ -120,7 +120,7 @@ public class Game implements GameService {
       message = currentRoom.getSouthDoor().getInspectMessage();
       succeeded = true;
     }
-    outputListener.sendOutput(message);
+    outputListener.sendOutputToMainField(message);
 
     if (!succeeded) {
       throw new IllegalArgumentException("Direction was not valid.");
@@ -186,7 +186,7 @@ public class Game implements GameService {
         successMessage = door.getPuzzle().getLockedMessage();
       }
     }
-    outputListener.sendOutput(successMessage);
+    outputListener.sendOutputToMainField(successMessage);
 
     if (!succeeded) {
       throw new IllegalArgumentException("Direction was not valid.");
@@ -248,7 +248,7 @@ public class Game implements GameService {
       throw new NoSuchItemFoundException("The item was not found.");
     } else {
       player.addItem(searchedItem);
-      outputListener.sendOutput(searchedItem.getName());
+      outputListener.sendOutputToMainField(searchedItem.getName());
       return searchedItem;
     }
   }
@@ -268,8 +268,36 @@ public class Game implements GameService {
     } catch (NoSuchItemFoundException n) {
       message = n.getMessage();
     }
-    outputListener.sendOutput(message);
+    outputListener.sendOutputToMainField(message);
     return message;
+  }
+
+
+  @Override
+  public void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException {
+    String message = null;
+
+    try {
+      message = player.getItem(itemId).getInfo();
+    } catch (NoSuchItemFoundException i) {
+      throw new NoSuchItemFoundException(i.getMessage());
+    }
+
+    outputListener.sendOutputToInventoryField(message);
+  }
+
+  @Override
+  public boolean setPlayerName(String name) {
+    boolean success = true;
+    if (name.isEmpty() || name.isBlank()) {
+      success = false;
+    }
+
+    if (success) {
+      player.setName(name);
+    }
+
+    return success;
   }
 
   /**
@@ -279,7 +307,7 @@ public class Game implements GameService {
   public String check() {
     String message = "You find yourself in " + currentRoom.getDescription();
     message = message + ("You can search the room or move on.");
-    outputListener.sendOutput(message);
+    outputListener.sendOutputToMainField(message);
     return message;
   }
 
@@ -289,7 +317,7 @@ public class Game implements GameService {
   public String startText() {
     String message = "You are " + player.getName()
             + " and you are in the depths of a labyrinth.";
-    outputListener.sendOutput(message);
+    outputListener.sendOutputToMainField(message);
     return message;
   }
 

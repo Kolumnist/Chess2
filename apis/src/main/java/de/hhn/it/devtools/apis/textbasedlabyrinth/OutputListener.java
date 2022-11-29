@@ -5,5 +5,8 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
  */
 public interface OutputListener {
 
-    public void sendOutput(String output);
+    public void sendOutputToMainField(String output);
+
+
+    void sendOutputToInventoryField(String output);
 }
