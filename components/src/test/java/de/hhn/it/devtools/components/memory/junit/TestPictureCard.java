@@ -56,7 +56,7 @@ public class TestPictureCard {
 
     @Test
     @DisplayName("Test registration of two listeners which both get notified.")
-    void checkRegistrationTwoListeners() throws IllegalParameterException, InterruptedException {
+    void checkRegistrationTwoListeners() throws IllegalParameterException {
         SimplePictureCardListener listener0 = new SimplePictureCardListener();
         SimplePictureCardListener listener1 = new SimplePictureCardListener();
         pictureCard.addCallback(listener0);
@@ -69,8 +69,8 @@ public class TestPictureCard {
     }
 
     @Test
-    @DisplayName("Register one listener, remove the listener, provoke a new state.")
-    void registerAndRemoveOneListener() throws IllegalParameterException, InterruptedException {
+    @DisplayName("Register one listener, get a state, remove the listener, provoke a new state.")
+    void registerAndRemoveOneListener() throws IllegalParameterException {
         SimplePictureCardListener listener = new SimplePictureCardListener();
         pictureCard.addCallback(listener);
         pictureCard.turnCard();
