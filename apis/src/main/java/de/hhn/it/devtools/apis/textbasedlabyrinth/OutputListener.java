@@ -40,4 +40,8 @@ public interface OutputListener {
      * @param output string to be output.
      */
     void sendOutputPlayerInteract(String output);
+
+    void sendOutputPickUpItem(Item item);
+
+    void sendOutputDropItem(Item item);
 }
