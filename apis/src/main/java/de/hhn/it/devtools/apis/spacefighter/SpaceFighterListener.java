@@ -1,10 +1,9 @@
 package de.hhn.it.devtools.apis.spacefighter;
 
 import de.hhn.it.devtools.apis.spacefighter.Exception.MissTheEnemieException;
+import de.hhn.it.devtools.apis.spacefighter.Exception.NotReachedScoreException;
 
 public interface SpaceFighterListener {
-
-        void changeScore();
 
         void spaceFighterPosition(int xPos) ;
 
@@ -15,5 +14,9 @@ public interface SpaceFighterListener {
         void updateScore(CurrentScore score)throws MissTheEnemieException;
 
         void gameOver();
+
+        void spwaningEnemies(int score) throws NotReachedScoreException;
+
+        void score();
     }
 
