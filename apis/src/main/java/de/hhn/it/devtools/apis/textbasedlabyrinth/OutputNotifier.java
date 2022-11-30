@@ -37,4 +37,16 @@ public class OutputNotifier implements OutputListener{
     public void sendOutputPlayerInteract(String output) {
         sendOutputPlayer(output);
     }
+
+    @Override
+    public void sendOutputPickUpItem(Item item) {
+        String message = item.getName() + " was picked up.";
+        sendOutputPlayer(message);
+    }
+
+    @Override
+    public void sendOutputDropItem(Item item) {
+        String message = "You put " + item.getName() + " on the ground.";
+        sendOutputInventory(message);
+    }
 }
