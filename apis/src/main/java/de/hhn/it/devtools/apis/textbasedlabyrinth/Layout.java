@@ -122,6 +122,11 @@ public class Layout {
         }
       }
 
+      int treasureId = 100;
+      int amountOfTreasure = 1;
+
+      allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
+
     } else if (map.equals(Map.Ancient_Dungeon)) {
       int amountOfPuzzles = 1;
       if (seed.getSeed().get(0) > 4) {
@@ -163,6 +168,10 @@ public class Layout {
 
       }
 
+      int treasureId = 100;
+      int amountOfTreasure = 1;
+
+      allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
 
 
     } else if (map.equals(Map.Unknown_Sewers)) {
@@ -189,6 +198,10 @@ public class Layout {
         }
       }
 
+      int treasureId = 100;
+      int amountOfTreasure = 1;
+
+      allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
     }
   }
 
