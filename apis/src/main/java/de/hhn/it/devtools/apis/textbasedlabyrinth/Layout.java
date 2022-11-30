@@ -122,8 +122,6 @@ public class Layout {
         }
       }
 
-
-
     } else if (map.equals(Map.Ancient_Dungeon)) {
       int amountOfPuzzles = 1;
       if (seed.getSeed().get(0) > 4) {
