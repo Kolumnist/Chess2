@@ -7,18 +7,19 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
 public class Item {
 
   private final int itemId;
-  private final String name;
+  private String name;
   private final String info;
+  protected boolean isTreasure;
 
   /**
    * Every Item has an Item id, a name and a information.
    *
    */
   public Item(int id, String name, String info) {
-
     this.itemId = id;
     this.name = name;
     this.info = info;
+    this.isTreasure = false;
   }
 
   public String getName() {
@@ -35,6 +36,10 @@ public class Item {
   public String getInfo() {
 
     return info;
+  }
+
+  public boolean getIsTreasure(){
+    return isTreasure;
   }
 
 }
