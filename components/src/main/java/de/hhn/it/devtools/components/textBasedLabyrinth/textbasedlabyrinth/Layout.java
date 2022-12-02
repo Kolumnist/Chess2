@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.apis.textbasedlabyrinth;
+package de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,8 @@ public class Layout {
   private List<Room> allRooms;
   private Room startRoom;
   private Player player;
+  private Map map;
+  private Seed seed;
 
   /**
    * Constructor of Layout Class
@@ -23,22 +25,133 @@ public class Layout {
     this.allRooms = new ArrayList<>();
     }
 
-  public void setStartRoom() {
+  public void setLayout(Map map, Seed seed) {
+    this.map = map;
+    this.seed = seed;
+    String exampleDescription = "A dark, cold room.";
+
+    LayoutGenerator layoutGenerator = new LayoutGenerator(map);
+    this.allRooms = layoutGenerator.setMapLayout();
+
     // set the startroom up and place player inside
     this.startRoom = allRooms.get(0);
     player.setCurrentRoomOfPlayer(startRoom);
+
+    for (Room room : allRooms) {
+      room.setDoors();
+    }
+
+    if (map.equals(Map.Grave_of_the_Mad_King)) {
+      int amountOfPuzzles = 1;
+      if (seed.getSeed().get(0) < 5) {
+        amountOfPuzzles = 2;
+      }
+
+      Item key1 = new Item(1, "ExitKey", "A big, old metal key.");
+      allRooms.get(7).getSouthDoor().setPuzzle(key1);
+      if (seed.getSeed().get(1) < 5) {
+        allRooms.get(3).addItem(key1);
+      } else {
+        allRooms.get(2).addItem(key1);
+      }
+
+      if (amountOfPuzzles >= 2) {
+        Item key2 = new Item(2, "Small rusty key", "A small, rusty key.");
+        allRooms.get(4).getSouthDoor().setPuzzle(key2);
+        if (seed.getSeed().get(1) < 3) {
+          allRooms.get(9).addItem(key2);
+        } else if (seed.getSeed().get(1) < 7 && seed.getSeed().get(1) > 3) {
+          allRooms.get(2).addItem(key2);
+        } else {
+          allRooms.get(12).addItem(key2);
+        }
+      }
+
+      int treasureId = 100;
+      int amountOfTreasure = 1;
+
+      allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
+
+    } else if (map.equals(Map.Ancient_Dungeon)) {
+      int amountOfPuzzles = 1;
+      if (seed.getSeed().get(0) > 4) {
+        amountOfPuzzles = 2;
+      }
+      if (seed.getSeed().get(0) > 8) {
+        amountOfPuzzles = 3;
+      }
+
+      Item key1 = new Item(1, "ExitKey", "A metal key. It fits into your hand well.");
+      allRooms.get(11).getWestDoor().setPuzzle(key1);
+      if (seed.getSeed().get(1) < 5) {
+        allRooms.get(4).addItem(key1);
+      } else {
+        allRooms.get(9).addItem(key1);
+      }
+
+      if (amountOfPuzzles >= 2) {
+        Item key2 = new Item(2, "Small blue key", "Though clearly metal, this key has a blue tint");
+        allRooms.get(1).getWestDoor().setPuzzle(key2);
+        if (seed.getSeed().get(1) == 0) {
+          allRooms.get(0).addItem(key2);
+        } else if (seed.getSeed().get(1) < 5) {
+          allRooms.get(10).addItem(key2);
+        } else {
+          allRooms.get(9).addItem(key2);
+        }
+      }
+
+      if (amountOfPuzzles >= 3) {
+        Item key3 = new Item(3, "Metal key",
+                "On closer inspection, this key has a 10 itched into its metal.");
+        allRooms.get(10).getEastDoor().setPuzzle(key3);
+        if (seed.getSeed().get(1) < 5) {
+          allRooms.get(7).addItem(key3);
+        } else {
+          allRooms.get(9).addItem(key3);
+        }
+
+      }
+
+      int treasureId = 100;
+      int amountOfTreasure = 1;
+
+      allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
+
+
+    } else if (map.equals(Map.Unknown_Sewers)) {
+      int amountOfPuzzles = 1;
+      if (seed.getSeed().get(0) < 5) {
+        amountOfPuzzles = 2;
+      }
+
+      Item key1 = new Item(1, "ExitKey", "A big, old metal key. It feels wet.");
+      allRooms.get(7).getNorthDoor().setPuzzle(key1);
+      if (seed.getSeed().get(1) < 5) {
+        allRooms.get(3).addItem(key1);
+      } else {
+        allRooms.get(5).addItem(key1);
+      }
+
+      if (amountOfPuzzles >= 2) {
+        Item key2 = new Item(2, "Small rusty key", "A small, rusty key.");
+        allRooms.get(7).getSouthDoor().setPuzzle(key2);
+        if (seed.getSeed().get(1) < 5) {
+          allRooms.get(4).addItem(key2);
+        } else {
+          allRooms.get(3).addItem(key2);
+        }
+      }
+
+      int treasureId = 100;
+      int amountOfTreasure = 1;
+
+      allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
+    }
   }
 
-  public void setAllRooms(List<Room> allRooms) {
-    this.allRooms = allRooms;
-  }
-
-  public List<Room> getAllRooms() {
+  public List<Room> getAllRooms () {
     return allRooms;
-  }
-
-  public Room getStartRoom() {
-    return startRoom;
   }
 }
 

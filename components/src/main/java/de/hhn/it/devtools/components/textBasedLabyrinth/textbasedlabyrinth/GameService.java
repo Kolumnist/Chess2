@@ -1,7 +1,10 @@
-package de.hhn.it.devtools.apis.textbasedlabyrinth;
+package de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
 
-import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
+
+
+import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
+import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.RoomFailedException;
+
 import java.util.List;
 
 /**
@@ -64,7 +67,7 @@ public interface GameService {
   void setLayout(Layout layout);
 
   /**
-   * Setter for current layout. This will invoke the layoutGenerator, then the setLayout(Layout layout).
+   * Setter for current layout
    * @param newMap Map to be selected
    * @param newSeed Seed for the Map
    */
