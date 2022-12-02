@@ -32,63 +32,20 @@ public class Game implements GameService {
     if (direction == null) {
       throw new IllegalArgumentException("Direction should not be null.");
     }
-    boolean succeeded = false;
-    String message = "";
 
-    if (direction.equals(Direction.SOUTH)) {
-      if (currentRoom.isSouthAssigned.equals(true)) {
-        Door checkDoor = currentRoom.getSouthDoor();
-        message = checkDoor.open();
-        if (!checkDoor.checkIfLocked()) {
-            currentRoom = currentRoom.toTheSouth;
-            player.setCurrentRoomOfPlayer(currentRoom);
-          }
-        } else {
-        throw new RoomFailedException("No room found in the southern direction.");
-      }
-      succeeded = true;
+    Door checkDoor = null;
+    String message = "";
+    try {
+      checkDoor = currentRoom.getDoor(direction);
+    } catch (RoomFailedException e) {
+      throw new RoomFailedException(e.getMessage());
     }
-    if (direction.equals(Direction.WEST)) {
-      if (currentRoom.isWestAssigned.equals(true)) {
-        Door checkDoor = currentRoom.getWestDoor();
-        message = checkDoor.open();
-        if (!checkDoor.checkIfLocked()) {
-          currentRoom = currentRoom.toTheWest;
-          player.setCurrentRoomOfPlayer(currentRoom);
-        }
-      } else {
-        throw new RoomFailedException("No room found in the western direction.");
-      }
-    }
-    if (direction.equals(Direction.EAST)) {
-      if (currentRoom.isEastAssigned.equals(true)) {
-        Door checkDoor = currentRoom.getEastDoor();
-        message = checkDoor.open();
-        if (checkDoor.checkIfLocked()) {
-          currentRoom = currentRoom.toTheEast;
-          player.setCurrentRoomOfPlayer(currentRoom);
-        }
-      } else {
-        throw new RoomFailedException("No room found in the eastern direction.");
-      }
-    }
-    if (direction.equals(Direction.NORTH)) {
-      if (currentRoom.isNorthAssigned.equals(true)) {
-        Door checkDoor = currentRoom.getNorthDoor();
-        message = checkDoor.open();
-        if (!checkDoor.checkIfLocked()) {
-          currentRoom = currentRoom.toTheNorth;
-          player.setCurrentRoomOfPlayer(currentRoom);
-        }
-      } else {
-        throw new RoomFailedException("No room found in the northern direction.");
-      }
+    message = checkDoor.open();
+    if (!checkDoor.checkIfLocked()) {
+      currentRoom = currentRoom.getRoom(direction);
+      player.setCurrentRoomOfPlayer(currentRoom);
     }
     outputListener.sendOutputPlayer(message);
-
-    if (!succeeded) {
-      throw new IllegalArgumentException("Direction was not valid.");
-    }
   }
 
   /**
@@ -101,30 +58,13 @@ public class Game implements GameService {
     if (direction == null) {
       throw new IllegalArgumentException("Direction should not be null.");
     }
-    boolean succeeded = false;
     String message = "";
-
-    if (direction.equals(Direction.NORTH)) {
-      message = currentRoom.getNorthDoor().getInspectMessage();
-      succeeded = true;
-    }
-    if (direction.equals(Direction.WEST)) {
-      message = currentRoom.getWestDoor().getInspectMessage();
-      succeeded = true;
-    }
-    if (direction.equals(Direction.EAST)) {
-      message = currentRoom.getEastDoor().getInspectMessage();
-      succeeded = true;
-    }
-    if (direction.equals(Direction.SOUTH)) {
-      message = currentRoom.getSouthDoor().getInspectMessage();
-      succeeded = true;
+    try {
+      message = currentRoom.getDoor(direction).getInspectMessage();
+    } catch (RoomFailedException e) {
+      throw new IllegalArgumentException(e.getMessage());
     }
     outputListener.sendOutputNavigation(message);
-
-    if (!succeeded) {
-      throw new IllegalArgumentException("Direction was not valid.");
-    }
     return message;
   }
 
@@ -142,56 +82,27 @@ public class Game implements GameService {
     if (item == null) {
       throw new IllegalArgumentException("Item should not be null.");
     }
-    boolean succeeded = false;
+
     String successMessage = "";
+    boolean unlocked = false;
+    Door door = null;
 
-    if (direction.equals(Direction.NORTH)) {
-      boolean unlocked = currentRoom.getNorthDoor().unlock(item);
-      succeeded = true;
-      Door door = currentRoom.getNorthDoor();
-      if (unlocked) {
-        successMessage = door.getPuzzle().getUnlockMessage();
-      } else {
-        successMessage = door.getPuzzle().getLockedMessage();
+    try {
+      unlocked = currentRoom.getDoor(direction).unlock(item);
+    } catch (RoomFailedException e) {
+      throw new IllegalArgumentException(e.getMessage());
+    } try {
+      door = currentRoom.getDoor(direction);
+    } catch (RoomFailedException e) {
+      throw new IllegalArgumentException(e.getMessage());
+    }
+    if (unlocked) {
+      successMessage = door.getPuzzle().getUnlockMessage();
+    } else {
+      successMessage = door.getPuzzle().getLockedMessage();
 
-      }
-    }
-    if (direction.equals(Direction.WEST)) {
-      boolean unlocked = currentRoom.getWestDoor().unlock(item);
-      succeeded = true;
-      Door door = currentRoom.getWestDoor();
-      if (unlocked) {
-        successMessage = door.getPuzzle().getUnlockMessage();
-      } else {
-        successMessage = door.getPuzzle().getLockedMessage();
-      }
-    }
-    if (direction.equals(Direction.EAST)) {
-      boolean unlocked = currentRoom.getEastDoor().unlock(item);
-      succeeded = true;
-      Door door = currentRoom.getEastDoor();
-      if (unlocked) {
-        successMessage = door.getPuzzle().getUnlockMessage();
-      } else {
-        successMessage = door.getPuzzle().getLockedMessage();
-      }
-    }
-    if (direction.equals(Direction.SOUTH)) {
-      boolean unlocked = currentRoom.getSouthDoor().unlock(item);
-      succeeded = true;
-      Door door = currentRoom.getSouthDoor();
-      if (unlocked) {
-        successMessage = door.getPuzzle().getUnlockMessage();
-      } else {
-        successMessage = door.getPuzzle().getLockedMessage();
-      }
     }
     outputListener.sendOutputPlayerInteract(successMessage);
-
-    if (!succeeded) {
-      throw new IllegalArgumentException("Direction was not valid.");
-    }
-
     return successMessage;
   }
 

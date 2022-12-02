@@ -67,6 +67,23 @@ public class Room {
 
   }
 
+  public Room getRoom(Direction direction){
+    Room room = null;
+    if(direction.equals(Direction.SOUTH)){
+      room = toTheSouth;
+    }
+    else if(direction.equals(Direction.NORTH)){
+      room = toTheNorth;
+    }
+    else if(direction.equals(Direction.EAST)){
+      room = toTheEast;
+    }
+    else{
+      room = toTheSouth;
+    }
+    return room;
+  }
+
   /**
    * Gets the doors for the new Room.
    */
