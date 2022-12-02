@@ -1,20 +1,22 @@
 package de.hhn.it.devtools.apis.chess2;
 
+import java.util.Optional;
+
 /**
- * Defines the Field which can have a Piece on it and always has a state.
+ * Defines the Field which has a state, a coordinate and optionally a Piece.
  *
  * @author Collin Hoss, Michel Jouaux, Lara Mangi
- * @version 1.0
+ * @version 1.1
  */
 
 public class Field {
 
   private final Coordinate coordinate;
-  private Piece piece = null;
+  private Optional<Piece> piece = Optional.empty();
   private FieldState fieldState = FieldState.FREE_FIELD;
 
   /**
-   * Constructor of Field.
+   * Constructor of Field, it initializes the coordinate.
    *
    * @param coordinate where the Field is placed.
    */
@@ -25,28 +27,29 @@ public class Field {
   /**
    * The getter for the Coordinate.
    *
-   * @return the fields Coordinate.
+   * @return this coordinate.
    */
   public Coordinate getCoordinate() {
     return coordinate;
   }
 
   /**
-   * The getter for the piece if there is one, if not return null or throw exception.
+   * Sets the Optional piece to not be empty.
    *
-   * @return a piece that is standing on this, can return null.
+   * @param piece that is on this field now.
    */
-  public Piece getPiece() {
-    return piece;
+  public void setPiece(Optional<Piece> piece) {
+    this.piece = piece;
   }
 
   /**
-   * The setter for the piece.
+   * Get the Optional piece or a default not null value.
    *
-   * @param piece the piece that is now standing on this.
+   * @return piece that is on this field or is empty.
    */
-  public void setPiece(Piece piece) {
-    this.piece = piece;
+  public Optional<Piece> getPiece() {
+    return piece;
+    /* TODO: Use of orElse and inform yourself more! */
   }
 
   /**

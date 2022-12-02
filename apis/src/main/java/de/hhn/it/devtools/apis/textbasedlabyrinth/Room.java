@@ -1,6 +1,8 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 
+import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.Random;
 
 /**
  * Room Class for the Game, defines the Rooms of the Game
- * with assigned next-door Rooms and Items inside of it.
+ * with assigned next-door Rooms and Items inside it.
  */
 public class Room {
 
@@ -37,6 +39,8 @@ public class Room {
   private boolean hasDoorE;
   private boolean hasDoorS;
 
+  public boolean isExit;
+
   /**
    * Constructor of Room.
    *
@@ -55,15 +59,28 @@ public class Room {
 
     items = new HashMap<>();
     this.description = description;
-    this.westDoor = new Door();
-    this.eastDoor = new Door();
-    this.northDoor = new Door();
-    this.southDoor = new Door();
   }
 
   public void addItem(Item item) {
     items.put(item.getItemId(), item);
 
+  }
+
+  public Room getRoom(Direction direction){
+    Room room = null;
+    if(direction.equals(Direction.SOUTH)){
+      room = toTheSouth;
+    }
+    else if(direction.equals(Direction.NORTH)){
+      room = toTheNorth;
+    }
+    else if(direction.equals(Direction.EAST)){
+      room = toTheEast;
+    }
+    else{
+      room = toTheSouth;
+    }
+    return room;
   }
 
   /**
@@ -114,6 +131,22 @@ public class Room {
       }
       hasDoorE = true;
     }
+
+  }
+
+  public Door getDoor(Direction direction) throws RoomFailedException {
+    if (direction.equals(Direction.SOUTH) && isSouthAssigned) {
+      return southDoor;
+    } else if (direction.equals(Direction.NORTH) && isNorthAssigned) {
+      return northDoor;
+    } else if (direction.equals(Direction.EAST) && isEastAssigned) {
+      return eastDoor;
+    } else if (direction.equals(Direction.WEST) && isWestAssigned) {
+      return westDoor;
+    } else {
+      throw new RoomFailedException("No door found in this direction: " + direction.toString());
+    }
+
 
   }
 
@@ -238,28 +271,6 @@ public class Room {
       this.isSouthAssigned = true;
       room.toTheNorth = this;
       room.isNorthAssigned = true;
-    } else {                                        // in case something is wrong the next free slot will be assigned
-      if (!isEastAssigned && !room.isWestAssigned){
-        this.toTheEast = room;
-        this.isEastAssigned = true;
-        room.toTheWest = this;
-        room.isWestAssigned = true;
-      } else if (!isWestAssigned && !room.isEastAssigned){
-        this.toTheWest = room;
-        this.isWestAssigned = true;
-        room.toTheWest = this;
-        room.isEastAssigned = true;
-      } else if (!isNorthAssigned && !room.isSouthAssigned){
-        this.toTheNorth = room;
-        this.isNorthAssigned = true;
-        room.toTheSouth = this;
-        room.isSouthAssigned = true;
-      } else if (!isSouthAssigned && !room.isNorthAssigned){
-        this.toTheSouth = room;
-        this.isSouthAssigned = true;
-        room.toTheNorth = this;
-        room.isNorthAssigned = true;
-      }
     }
   }
 

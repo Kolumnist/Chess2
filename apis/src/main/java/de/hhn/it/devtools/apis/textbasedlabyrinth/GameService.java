@@ -9,45 +9,36 @@ import java.util.List;
  */
 public interface GameService {
 
+  int SCORE_BOARD = 0;
+
   /**
-   * Let the user move the room to the south(if possible).
+   * Let the user move the room in the given direction (if possible).
    */
-  String moveSouth() throws RoomFailedException;
-
-  /**
-   * Let the user move the room to the north(if possible).
-   */
-  String moveNorth() throws RoomFailedException;
-
-  /**
-   * Let the user move the room to the west(if possible).
-   */
-  String moveWest() throws RoomFailedException;
-
-  /**
-   * Let the user move the room to the east(if possible).
-   */
-  String moveEast() throws RoomFailedException;
+  void move(Direction direction) throws RoomFailedException;
 
 
   /**
-   * Gets Item for player.
+   * Gets item for player.
    *
-   * @param item gets an item
+   * if the Item is a Treasure, Scoreboard will be updated instead of being send to the inventory
+   *
+   * @param itemId gets an item
    * @return gives item to player
    * @throws NoSuchItemFoundException if item not found.
    * @throws NullPointerException if item cant be null.
    */
-  Item pickUpItem(Item item) throws NoSuchItemFoundException;
+  Item pickUpItem(int itemId) throws NoSuchItemFoundException;
 
   /**
    * Method to remove an item from the player inventory.
    *
-   * @param itemName the name of the item to be removed.
+   * @param itemId the id of the item to be removed.
    * @return the message, which is about the success or failure of the operation.
    */
-  String dropItem(String itemName);
+  String dropItem(int itemId);
 
+
+  void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException;
 
   /**
    * Inspect a door/pathway.
@@ -67,6 +58,27 @@ public interface GameService {
 
 
   /**
+   * Method for setting the layout class.
+   * @param layout the layout to be assigned.
+   */
+  void setLayout(Layout layout);
+
+  /**
+   * Setter for current layout. This will invoke the layoutGenerator, then the setLayout(Layout layout).
+   * @param newMap Map to be selected
+   * @param newSeed Seed for the Map
+   */
+  void setCurrentLayout(Map newMap, Seed newSeed);
+
+
+  /**
+   * Sets the current player name to the new String given if it is not null.
+   * @param name the new name.
+   * @return if it changed the name, true, else false.
+   */
+  boolean setPlayerName(String name);
+
+  /**
    * Text to be given to the player at the start of the game.
    */
   String startText();
@@ -76,4 +88,16 @@ public interface GameService {
    * and every time the player moves between rooms.
    */
   String check();
+
+  /**
+   * Returns current Score board
+   * @return int Score of Player
+   */
+  int getScore();
+
+  /**
+   * Update the current Scoreboard
+   * @return updated Scoreboard
+   */
+  int updateScore(int newScore);
 }

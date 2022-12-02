@@ -7,9 +7,11 @@ package de.hhn.it.devtools.apis.minesweeper;
  */
 
 public interface MinesweeperService {
-
-    MinesweeperActionListener minesweeperActionListener = null;
-     
+    
+    /**
+     * 
+     * @param minesweeperActionListener
+     */
     void setMinesweeperActionListener(MinesweeperActionListener minesweeperActionListener);
     
     /**
