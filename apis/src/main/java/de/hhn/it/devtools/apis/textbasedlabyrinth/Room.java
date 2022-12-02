@@ -1,6 +1,8 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 
+import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.Random;
 
 /**
  * Room Class for the Game, defines the Rooms of the Game
- * with assigned next-door Rooms and Items inside of it.
+ * with assigned next-door Rooms and Items inside it.
  */
 public class Room {
 
@@ -64,6 +66,23 @@ public class Room {
 
   }
 
+  public Room getRoom(Direction direction){
+    Room room = null;
+    if(direction.equals(Direction.SOUTH)){
+      room = toTheSouth;
+    }
+    else if(direction.equals(Direction.NORTH)){
+      room = toTheNorth;
+    }
+    else if(direction.equals(Direction.EAST)){
+      room = toTheEast;
+    }
+    else{
+      room = toTheSouth;
+    }
+    return room;
+  }
+
   /**
    * Gets the doors for the new Room.
    */
@@ -112,6 +131,22 @@ public class Room {
       }
       hasDoorE = true;
     }
+
+  }
+
+  public Door getDoor(Direction direction) throws RoomFailedException {
+    if (direction.equals(Direction.SOUTH) && isSouthAssigned) {
+      return southDoor;
+    } else if (direction.equals(Direction.NORTH) && isNorthAssigned) {
+      return northDoor;
+    } else if (direction.equals(Direction.EAST) && isEastAssigned) {
+      return eastDoor;
+    } else if (direction.equals(Direction.WEST) && isWestAssigned) {
+      return westDoor;
+    } else {
+      throw new RoomFailedException("No door found in this direction: " + direction.toString());
+    }
+
 
   }
 
