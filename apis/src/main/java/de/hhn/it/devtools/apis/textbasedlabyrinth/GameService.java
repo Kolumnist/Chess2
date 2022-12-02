@@ -57,6 +57,13 @@ public interface GameService {
    */
   List<Item> searchRoom() throws RoomFailedException;
 
+
+  /**
+   * Method for setting the layout class.
+   * @param layout the layout to be assigned.
+   */
+  void setLayout(Layout layout);
+
   /**
    * Setter for current layout
    * @param newMap Map to be selected

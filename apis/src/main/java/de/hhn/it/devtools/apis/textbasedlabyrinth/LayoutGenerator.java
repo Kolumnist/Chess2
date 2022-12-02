@@ -11,7 +11,7 @@ public class LayoutGenerator {
     private Room startRoom;
     public int maxRoomCount = 13;
 
-    public LayoutGenerator(Map map){
+    public LayoutGenerator(Map map) {
         this.map = map;
         this.allRooms = new ArrayList<>();
 
@@ -26,7 +26,7 @@ public class LayoutGenerator {
 
     }
 
-    public ArrayList<Room> setMapLayout(){
+    public ArrayList<Room> setMapLayout() {
         if (map.equals(Map.Grave_of_the_Mad_King)) {
             startRoom.setNextDoorRoom(allRooms.get(1), false, true, false);
             allRooms.get(1).setNextDoorRoom(allRooms.get(2), false, true, false);

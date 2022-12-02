@@ -25,7 +25,7 @@ public class Layout {
     this.allRooms = new ArrayList<>();
     }
 
-  public void setLayouts(Map map, Seed seed){
+  public void setLayout(Map map, Seed seed) {
     this.map = map;
     this.seed = seed;
     String exampleDescription = "A dark, cold room.";
