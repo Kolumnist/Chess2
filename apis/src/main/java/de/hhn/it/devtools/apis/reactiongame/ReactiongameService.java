@@ -2,7 +2,7 @@ package de.hhn.it.devtools.apis.reactiongame;
 
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import java.io.IOException;
+import java.util.IllegalFormatException;
 import java.util.SortedMap;
 
 /**
@@ -20,13 +20,15 @@ public interface ReactiongameService {
 
   /**
    * Pauses the run and the timer.
-   * @throws IllegalStateException if the difficulty does not exist.
+   *
+   * @throws IllegalStateException if run is already paused.
    */
   void pauseRun() throws IllegalStateException;
 
   /**
    * Continues a paused run.
-   * @throws IllegalStateException if the difficulty does not exist.
+   *
+   * @throws IllegalStateException if run is not paused.
    */
   void continueRun() throws IllegalStateException;
 
@@ -77,16 +79,16 @@ public interface ReactiongameService {
   /**
    * Loads highscoreTable from a file.
    *
-   * @return Highscores with format: player - score
-   * @throws IOException if IO-operation goes wrong
+   * @param newHighScoreTable updated highscore list.
    */
-  SortedMap<String, Integer> loadHighscoreTable() throws IOException;
+  void loadHighscoreTable(SortedMap<String, Integer> newHighScoreTable);
 
   /**
    * Saves the current highscoreTable in a file.
    *
-   * @throws IOException if IO-operation goes wrong
+   * @throws IllegalFormatException when format is not in line.
+   * @return Highscores with format: player - score.
    */
-  void saveHighscoreTable() throws IOException;
+  SortedMap<String, Integer> saveHighscoreTable() throws IllegalFormatException;
 
 }

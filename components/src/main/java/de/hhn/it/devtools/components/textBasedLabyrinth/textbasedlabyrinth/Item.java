@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.apis.textbasedlabyrinth;
+package de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
 
 
 /**
