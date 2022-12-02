@@ -9,88 +9,33 @@ import java.util.List;
  */
 public class Layout {
 
-  public List<Room> allRooms;
-  public int maxRoomCount = 13;
-  public List<Layout> allLayouts;
-  public Room startRoom;
-  public Player player;
-  public Map map;
-  public int roomCount;
+  private List<Room> allRooms;
+  private Room startRoom;
+  private Player player;
+  private Map map;
+  private Seed seed;
 
   /**
    * Constructor of Layout Class
    *
    * @param player the current player of the game
-   * @param map the current map design of the game
    */
-  public Layout(Player player, Map map, Seed seed) {
-
-    this.map = map;
-    roomCount = 1;
-    String exampleDescription = "A dark, cold room.";
+  public Layout(Player player) {
     this.player = player;
-
-
-    // create a List for all the Rooms generated
     this.allRooms = new ArrayList<>();
-
-    // create as many rooms as maxRoomCount allows
-    int j = 0;
-    while (allRooms.size() <= maxRoomCount) {
-      Room newRoom = new Room(j, exampleDescription);
-      this.allRooms.add(newRoom);
-      j++;
     }
+
+  public void setLayout(Map map, Seed seed) {
+    this.map = map;
+    this.seed = seed;
+    String exampleDescription = "A dark, cold room.";
+
+    LayoutGenerator layoutGenerator = new LayoutGenerator(map);
+    this.allRooms = layoutGenerator.setMapLayout();
 
     // set the startroom up and place player inside
     this.startRoom = allRooms.get(0);
     player.setCurrentRoomOfPlayer(startRoom);
-
-    if (map.equals(Map.Grave_of_the_Mad_King)) {
-      startRoom.setNextDoorRoom(allRooms.get(1), false, true, false);
-      allRooms.get(1).setNextDoorRoom(allRooms.get(2), false, true, false);
-      allRooms.get(1).setNextDoorRoom(allRooms.get(3), false, false, true);
-      startRoom.setNextDoorRoom(allRooms.get(4), false, false, true);
-      allRooms.get(4).setNextDoorRoom(allRooms.get(5), false, false, true);
-      allRooms.get(5).setNextDoorRoom(allRooms.get(6), false, false, true);
-      allRooms.get(6).setNextDoorRoom(allRooms.get(7), true, false, false);
-      allRooms.get(7).setNextDoorRoom(allRooms.get(8), false, false, false);
-      startRoom.setNextDoorRoom(allRooms.get(9), true, false, false);
-      allRooms.get(9).setNextDoorRoom(allRooms.get(10), true, false, false);
-      allRooms.get(10).setNextDoorRoom(allRooms.get(11), true, false, false);
-      allRooms.get(11).setNextDoorRoom(allRooms.get(12), false, false, true);
-    }
-    else if (map.equals(Map.Ancient_Dungeon)) {
-      startRoom.setNextDoorRoom(allRooms.get(1), false, true, false);
-      allRooms.get(1).setNextDoorRoom(allRooms.get(4),false, true, false);
-      allRooms.get(4).setNextDoorRoom(allRooms.get(5),false, false, true);
-      allRooms.get(5).setNextDoorRoom(allRooms.get(7),false, false, true);
-      allRooms.get(7).setNextDoorRoom(allRooms.get(8),true, false, false);
-      allRooms.get(8).setNextDoorRoom(allRooms.get(6),true, false, false);
-      startRoom.setNextDoorRoom(allRooms.get(2), false, false, true);
-      allRooms.get(2).setNextDoorRoom(allRooms.get(6),false, false, true);
-      allRooms.get(6).setNextDoorRoom(allRooms.get(9),true, false, false);
-      startRoom.setNextDoorRoom(allRooms.get(3),true, false, false);
-      allRooms.get(3).setNextDoorRoom(allRooms.get(10),true, false, false);
-      allRooms.get(10).setNextDoorRoom(allRooms.get(11),false, false, true);
-      allRooms.get(11).setNextDoorRoom(allRooms.get(12),true, false, false);
-
-    }
-    else if (map.equals(Map.Unknown_Sewers)) {
-      startRoom.setNextDoorRoom(allRooms.get(1), false, false, true);
-      allRooms.get(1).setNextDoorRoom(allRooms.get(2), false, false, true);
-      allRooms.get(2).setNextDoorRoom(allRooms.get(3), true, false, false);
-      allRooms.get(2).setNextDoorRoom(allRooms.get(4), false, true, false);
-      allRooms.get(2).setNextDoorRoom(allRooms.get(5), false, false, true);
-      allRooms.get(5).setNextDoorRoom(allRooms.get(6), false, false, true);
-      allRooms.get(6).setNextDoorRoom(allRooms.get(7), false, false, true);
-      allRooms.get(7).setNextDoorRoom(allRooms.get(8), false, true, false);
-      allRooms.get(7).setNextDoorRoom(allRooms.get(9), true, false, false);
-      allRooms.get(7).setNextDoorRoom(allRooms.get(10), false, false, true);
-      allRooms.get(10).setNextDoorRoom(allRooms.get(11), false, false, true);
-      allRooms.get(11).setNextDoorRoom(allRooms.get(12), false, false, true);
-    }
-
 
     for (Room room : allRooms) {
       room.setDoors();
@@ -122,7 +67,10 @@ public class Layout {
         }
       }
 
+      int treasureId = 100;
+      int amountOfTreasure = 1;
 
+      allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
 
     } else if (map.equals(Map.Ancient_Dungeon)) {
       int amountOfPuzzles = 1;
@@ -165,6 +113,10 @@ public class Layout {
 
       }
 
+      int treasureId = 100;
+      int amountOfTreasure = 1;
+
+      allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
 
 
     } else if (map.equals(Map.Unknown_Sewers)) {
@@ -191,9 +143,12 @@ public class Layout {
         }
       }
 
+      int treasureId = 100;
+      int amountOfTreasure = 1;
+
+      allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
     }
   }
-
 
   public List<Room> getAllRooms () {
     return allRooms;

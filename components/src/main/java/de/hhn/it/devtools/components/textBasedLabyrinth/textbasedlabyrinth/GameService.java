@@ -1,5 +1,7 @@
 package de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
 
+
+
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.RoomFailedException;
 
@@ -10,6 +12,8 @@ import java.util.List;
  */
 public interface GameService {
 
+  int SCORE_BOARD = 0;
+
   /**
    * Let the user move the room in the given direction (if possible).
    */
@@ -18,6 +22,8 @@ public interface GameService {
 
   /**
    * Gets item for player.
+   *
+   * if the Item is a Treasure, Scoreboard will be updated instead of being send to the inventory
    *
    * @param itemId gets an item
    * @return gives item to player
@@ -53,6 +59,13 @@ public interface GameService {
    */
   List<Item> searchRoom() throws RoomFailedException;
 
+
+  /**
+   * Method for setting the layout class.
+   * @param layout the layout to be assigned.
+   */
+  void setLayout(Layout layout);
+
   /**
    * Setter for current layout
    * @param newMap Map to be selected
@@ -78,4 +91,16 @@ public interface GameService {
    * and every time the player moves between rooms.
    */
   String check();
+
+  /**
+   * Returns current Score board
+   * @return int Score of Player
+   */
+  int getScore();
+
+  /**
+   * Update the current Scoreboard
+   * @return updated Scoreboard
+   */
+  int updateScore(int newScore);
 }

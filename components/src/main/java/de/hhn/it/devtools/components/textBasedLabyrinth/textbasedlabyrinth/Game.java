@@ -221,6 +221,11 @@ public class Game implements GameService {
 
   }
 
+  @Override
+  public void setLayout(Layout layout) {
+    this.currentLayout = layout;
+  }
+
   /**
    * Gets Item for player.
    *
@@ -313,6 +318,16 @@ public class Game implements GameService {
     return message;
   }
 
+  @Override
+  public int getScore() {
+    return SCORE_BOARD;
+  }
+
+  @Override
+  public int updateScore(int newScore) {
+    return SCORE_BOARD;
+  }
+
   /**
    * Text to be given to the player at the start of the game.
    */
@@ -342,7 +357,7 @@ public class Game implements GameService {
    * @param newSeed Seed for the Map
    */
   public void setCurrentLayout(Map newMap, Seed newSeed){
-    this.currentLayout = new Layout(player, newMap, newSeed);
-    this.currentRoom = currentLayout.startRoom;
+    this.currentLayout = new Layout(player);
+
   }
 }
