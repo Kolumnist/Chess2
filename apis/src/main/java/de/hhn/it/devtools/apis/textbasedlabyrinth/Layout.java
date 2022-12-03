@@ -10,24 +10,13 @@ import java.util.List;
 public class Layout {
 
   private List<Room> allRooms;
-  private Room startRoom;
-  private Player player;
 
   /**
-   * Constructor of Layout Class
-   *
-   * @param player the current player of the game
+   * Constructor of layout class.
    */
-  public Layout(Player player) {
-    this.player = player;
+  public Layout() {
     this.allRooms = new ArrayList<>();
     }
-
-  public void setStartRoom() {
-    // set the startroom up and place player inside
-    this.startRoom = allRooms.get(0);
-    player.setCurrentRoomOfPlayer(startRoom);
-  }
 
   public void setAllRooms(List<Room> allRooms) {
     this.allRooms = allRooms;
@@ -35,10 +24,6 @@ public class Layout {
 
   public List<Room> getAllRooms() {
     return allRooms;
-  }
-
-  public Room getStartRoom() {
-    return startRoom;
   }
 }
 
