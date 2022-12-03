@@ -2,7 +2,6 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
-
 import java.util.HashMap;
 
 /**
@@ -85,7 +84,4 @@ public class Player {
     this.currentRoomOfPlayer = currentRoomOfPlayer;
   }
 
-  public void reset() {
-    inventory.clear();
-  }
 }
