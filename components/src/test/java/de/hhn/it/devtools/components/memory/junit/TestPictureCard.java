@@ -31,7 +31,6 @@ public class TestPictureCard {
     void checkTurningACard() throws IllegalParameterException {
         pictureCard.turnCard();
         State state0 = pictureCard.getPictureCard().getState();
-        assertEquals(State.VISIBLE, pictureCard.getPictureCard().getState());
         pictureCard.turnCard();
         State state1 = pictureCard.getPictureCard().getState();
         assertAll(
