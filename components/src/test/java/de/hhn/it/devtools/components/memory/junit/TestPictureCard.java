@@ -56,8 +56,7 @@ public class TestPictureCard {
 
     @Test
     @DisplayName("Test registration of callback listener.")
-    void checkSuccessfulRegistrationOfCallback() throws IllegalParameterException,
-            InterruptedException {
+    void checkSuccessfulRegistrationOfCallback() throws IllegalParameterException {
         SimplePictureCardListener listener = new SimplePictureCardListener();
         pictureCard.addCallback(listener);
         pictureCard.turnCard();                             //changes State to Visible

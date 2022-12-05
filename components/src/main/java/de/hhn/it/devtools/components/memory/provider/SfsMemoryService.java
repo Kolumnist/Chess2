@@ -103,24 +103,12 @@ public class SfsMemoryService implements MemoryService {
   @Override
   public void addCallback(TimerListener listener) throws IllegalParameterException {
     logger.info("addCallback: listener = {}", listener);
-    if (listener == null) {
-      throw new IllegalParameterException("Listener was null reference.");
-    }
-    if (this.timer == listener) {
-      throw new IllegalParameterException("Listener already registered.");
-    }
     timer.addCallback(listener);
   }
 
   @Override
   public void removeCallback(TimerListener listener) throws IllegalParameterException {
     logger.info("removeCallback: listener = {}", listener);
-    if (listener == null) {
-      throw new IllegalParameterException("Listener was null reference.");
-    }
-    if (deckListener != listener) {
-      throw new IllegalParameterException("Listener is not registered.");
-    }
     timer.removeCallback(listener);
   }
 

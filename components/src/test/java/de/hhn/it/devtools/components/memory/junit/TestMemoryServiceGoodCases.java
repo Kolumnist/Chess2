@@ -1,8 +1,10 @@
 package de.hhn.it.devtools.components.memory.junit;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.apis.memory.DeckListener;
 import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
 import de.hhn.it.devtools.apis.memory.PictureCardListener;
+import de.hhn.it.devtools.apis.memory.TimerListener;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
 import de.hhn.it.devtools.components.memory.provider.SfsPictureCard;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,6 +53,18 @@ public class TestMemoryServiceGoodCases {
   }
 
   @Test
+  @DisplayName("Add and remove callback to a timer")
+  void addAndRemoveCallbackToTimer () throws IllegalParameterException {
+    TimerListener listener = new DummyCallbackTimer();
+    memoryService.addCallback(listener);
+    memoryService.removeCallback(listener);
+
+    IllegalParameterException exception = assertThrows(IllegalParameterException.class,
+            () -> memoryService.removeCallback(listener));
+  }
+
+
+  @Test
   @DisplayName("A new service has no PictureCards")
   void aNewServiceHasNoPictureCards() {
     List<PictureCardDescriptor> descriptors = memoryService.getPictureCards();
@@ -74,4 +88,5 @@ public class TestMemoryServiceGoodCases {
         () -> assertNotEquals(cards.get(0).getId(), cards.get(2).getId())
     );
   }
+
 }
