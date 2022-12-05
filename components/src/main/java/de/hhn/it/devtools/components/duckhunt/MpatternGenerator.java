@@ -128,16 +128,90 @@ public final class MpatternGenerator {
   private ArrayList<Vector2D> generatePath() {
     RangedRandom randomGen = new RangedRandom();
     ArrayList<Vector2D> generatedPattern = new ArrayList<>();
-    int height = screenDimension.getHeight();
-    int width = screenDimension.getWidth();
-    //Write algorithm here
+    int height = screenDimension.getHeight() - sidePadding;
+    int width = screenDimension.getWidth() - sidePadding;
+    final int maxNodes = 6;
+    final int nodeOffset = 100; //ToDO: make in relation to screen size and randomise
+    final int nodeOffsetDiag = (int) Math.sqrt(100 / 2.0);
+    Vector2D lastNode;
+    Vector2D node;
 
-    //start point
-    randomGen.randomInt(sidePadding, width - sidePadding);
+    //Algorithm start here
+    int i = 0;
+    lastNode = new Vector2D(randomGen.randomInt(sidePadding, width), 0);
+    generatedPattern.add(lastNode); //starting point
+    while (i < maxNodes) {
 
+      node = new Vector2D(); //new Node
+
+      if (randomGen.randomInt(1, 2) == 1) {
+
+        switch (randomGen.randomInt(1, 5)) {
+          case 1 -> {
+            node.setX(lastNode.getX());
+            node.setY(lastNode.getY() + nodeOffset);
+          }
+          case 2 -> {
+            node.setX(lastNode.getX() + nodeOffset);
+            node.setY(lastNode.getY());
+          }
+          case 3 -> {
+            node.setX(lastNode.getX() - nodeOffset);
+            node.setY(lastNode.getY());
+          }
+          case 4 -> {
+            node.setX(lastNode.getX() + nodeOffsetDiag);
+            node.setY(lastNode.getY() + nodeOffsetDiag);
+          }
+          case 5 -> {
+            node.setX(lastNode.getX() - nodeOffsetDiag);
+            node.setY(lastNode.getY() + nodeOffsetDiag);
+          }
+          default -> {
+          }
+        }
+
+      } else {
+        switch (randomGen.randomInt(1, 3)) {
+          case 1 -> {
+            node.setX(lastNode.getX());
+            node.setY(lastNode.getY() - nodeOffset);
+          }
+          case 2 -> {
+            node.setX(lastNode.getX() + nodeOffsetDiag);
+            node.setY(lastNode.getY() - nodeOffsetDiag);
+          }
+          case 3 -> {
+            node.setX(lastNode.getX() - nodeOffsetDiag);
+            node.setY(lastNode.getY() - nodeOffsetDiag);
+          }
+          default -> {
+          }
+        }
+      }
+
+      //check and resolve boundary violations
+      if (node.getX() > width || node.getX() < sidePadding) {
+        if (Math.abs(width - node.getX()) > Math.abs(sidePadding - node.getX())) {
+          node.setX(sidePadding + 1);
+        } else {
+          node.setX(width - 1);
+        }
+      }
+      if (node.getY() > height || node.getY() < sidePadding) {
+        if (Math.abs(height - node.getY()) > Math.abs(sidePadding - node.getY())) {
+          node.setY(sidePadding + 1);
+        } else {
+          node.setY(height - 1);
+        }
+      }
+
+      //add to List and update lastNode
+      generatedPattern.add(node);
+      lastNode = node;
+      i++;
+    }
     return generatedPattern;
-
-
   }
 
   private DuckOrientation translatePointsToMovement(Vector2D prevPoint, Vector2D point)
