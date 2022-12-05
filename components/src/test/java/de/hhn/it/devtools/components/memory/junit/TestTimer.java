@@ -42,7 +42,7 @@ public class TestTimer {
     timer.addCallback(listener0);
     timer.addCallback(listener1);
     timer.startTime();
-    Thread.sleep(2000);
+    Thread.sleep(3000);
     assertAll(
         () -> assertTrue(listener0.times.size() > 0),
         () -> assertTrue(listener1.times.size() > 0)
@@ -55,10 +55,10 @@ public class TestTimer {
     SimpleTimerListener listener = new SimpleTimerListener();
     timer.addCallback(listener);
     timer.startTime();
-    Thread.sleep(2000);
+    Thread.sleep(3000);
     int lenght0 = listener.times.size();
     timer.removeCallback(listener);
-    Thread.sleep(2000);
+    Thread.sleep(3000);
     int lenght1 = listener.times.size();
     assertAll(
         () -> assertTrue(lenght0 > 0),
