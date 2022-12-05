@@ -75,6 +75,7 @@ public class SfsMemoryService implements MemoryService {
     logger.info("closeGame: no params");
     cards.clear();
     pictureReferences.clear();
+    SfsPictureCard.resetIdCounter();
   }
 
   @Override
