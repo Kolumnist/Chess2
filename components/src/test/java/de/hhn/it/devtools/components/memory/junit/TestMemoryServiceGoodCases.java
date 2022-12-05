@@ -4,6 +4,7 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
 import de.hhn.it.devtools.apis.memory.PictureCardListener;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
+import de.hhn.it.devtools.components.memory.provider.SfsPictureCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,7 @@ public class TestMemoryServiceGoodCases {
 
   @BeforeEach
   void setup(List<PictureCardDescriptor> descriptors) {
+    SfsPictureCard.resetIdCounter();
     memoryService = new SfsMemoryService();
     this.descriptors = new ArrayList<>();
     this.descriptors.addAll(descriptors);

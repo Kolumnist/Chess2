@@ -30,9 +30,14 @@ public class TestPictureCard {
     @DisplayName("Test turning a card.")
     void checkTurningACard() throws IllegalParameterException {
         pictureCard.turnCard();
+        State state0 = pictureCard.getPictureCard().getState();
         assertEquals(State.VISIBLE, pictureCard.getPictureCard().getState());
         pictureCard.turnCard();
-        assertEquals(State.HIDDEN, pictureCard.getPictureCard().getState());
+        State state1 = pictureCard.getPictureCard().getState();
+        assertAll(
+                () -> assertEquals(State.VISIBLE, state0),
+                () -> assertEquals(State.HIDDEN, state1)
+        );
     }
 
     @Test
@@ -41,6 +46,13 @@ public class TestPictureCard {
         pictureCard.getPictureCard().setState(State.MATCHED);
         IllegalStateException exception = assertThrows(IllegalStateException.class,
                 () -> pictureCard.turnCard());
+    }
+
+    @Test
+    @DisplayName("Card is getting matched state")
+    void checkMatchCard() {
+        pictureCard.matchCard();
+        assertEquals(State.MATCHED, pictureCard.getPictureCard().getState());
     }
 
     @Test
