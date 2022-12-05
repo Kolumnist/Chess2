@@ -28,7 +28,7 @@ public class SfsMemoryService implements MemoryService {
     timer = new SfsTimer(new TimerDescriptor());
   }
 
-  private PictureCard getPictureCardById(int id) throws IllegalParameterException {
+  public PictureCard getPictureCardById(int id) throws IllegalParameterException {
     logger.info("getPictureCardById: id = {}", id);
     if (!cards.containsKey(id)) {
       throw new IllegalParameterException("PictureCard with id " + id + " does not exist.");
