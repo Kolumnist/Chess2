@@ -55,7 +55,7 @@ public class SfsMemoryService implements MemoryService {
   @Override
   public void startTimer() {
     logger.info("startTimer: no params");
-    timer.getTimer().startTime();
+    timer.startTime();
   }
 
   @Override

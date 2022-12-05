@@ -7,7 +7,7 @@ import de.hhn.it.devtools.apis.memory.TimerListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SfsTimer implements Timer {
+public class SfsTimer implements Timer, Runnable {
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(SfsTimer.class);
     private List<TimerListener> listeners;
@@ -51,8 +51,27 @@ public class SfsTimer implements Timer {
         listeners.forEach((listener) -> listener.currentTime(time));
     }
 
+
+
     @Override
     public TimerDescriptor getTimer() {
         return descriptor;
+    }
+
+    public void startTime() {
+        descriptor.startTime();
+        new Thread(this::run).start();
+    }
+
+    @Override
+    public void run() {
+        while (descriptor.run) {
+            try {
+                descriptor.time++;
+                notifyListener(descriptor.time);
+                Thread.sleep(1000);
+            } catch (InterruptedException | IllegalParameterException e) {
+            }
+        }
     }
 }

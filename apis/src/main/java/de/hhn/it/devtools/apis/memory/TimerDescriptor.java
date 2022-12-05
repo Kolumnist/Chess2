@@ -1,9 +1,9 @@
 package de.hhn.it.devtools.apis.memory;
 
-public class TimerDescriptor implements Runnable {
+public class TimerDescriptor {
 
-    private int time;
-    private boolean run;
+    public int time;
+    public boolean run;
 
     public TimerDescriptor() {
         this.time = 0;
@@ -23,21 +23,10 @@ public class TimerDescriptor implements Runnable {
 
     public void startTime() {
         run = true;
-        new Thread(this::run).start();
     }
 
     public void stopTime() {
         run = false;
     }
 
-    @Override
-    public void run() {
-        while (run) {
-            time++;
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-            }
-        }
-    }
 }
