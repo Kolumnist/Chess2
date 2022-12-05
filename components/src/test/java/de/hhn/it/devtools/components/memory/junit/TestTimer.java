@@ -35,6 +35,39 @@ public class TestTimer {
     assertTrue(listener.times.size() > 0);
   }
 
+  @Test
+  @DisplayName("Test registration of two listeners which both get notified.")
+  void checkRegistrationTwoListeners() throws IllegalParameterException, InterruptedException {
+    SimpleTimerListener listener0 = new SimpleTimerListener();
+    SimpleTimerListener listener1 = new SimpleTimerListener();
+    timer.addCallback(listener0);
+    timer.addCallback(listener1);
+    timer.startTime();
+    Thread.sleep(2000);
+    assertAll(
+        () -> assertTrue(listener0.times.size() > 0),
+        () -> assertTrue(listener1.times.size() > 0)
+    );
+  }
+
+  @Test
+  @DisplayName("Register one listener, get time, remove listener, provoke new time")
+  void registerAndRemoveOneListener() throws IllegalParameterException, InterruptedException {
+    SimpleTimerListener listener = new SimpleTimerListener();
+    timer.addCallback(listener);
+    timer.startTime();
+    Thread.sleep(2000);
+    int lenght0 = listener.times.size();
+    timer.removeCallback(listener);
+    Thread.sleep(2000);
+    int lenght1 = listener.times.size();
+    assertAll(
+        () -> assertTrue(lenght0 > 0),
+        () -> assertTrue(lenght1 > 0),
+        () -> assertEquals(lenght0, lenght1)
+    );
+  }
+
   /**
    * Inner class as a PictureCardListener.
    */
