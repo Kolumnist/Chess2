@@ -2,7 +2,6 @@ package de.hhn.it.devtools.components.memory.junit;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.memory.*;
-import de.hhn.it.devtools.components.memory.provider.SfsPictureCard;
 import de.hhn.it.devtools.components.memory.provider.SfsTimer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -68,8 +67,39 @@ public class TestTimer {
     );
   }
 
+  @Test
+  @DisplayName("The same listener cannot be registered twice.")
+  void tryRegisterSameListenerTwice() throws IllegalParameterException {
+    SimpleTimerListener listener = new SimpleTimerListener();
+    timer.addCallback(listener);
+    IllegalParameterException exception = assertThrows(IllegalParameterException.class,
+        () -> timer.addCallback(listener));
+  }
+
+  @Test
+  @DisplayName("Listener which is not registered cannot be removed.")
+  void tryRemoveNotRegisteredListener() throws  IllegalParameterException {
+    SimpleTimerListener listener = new SimpleTimerListener();
+    IllegalParameterException exception = assertThrows(IllegalParameterException.class,
+        () -> timer.removeCallback(listener));
+  }
+
+  @Test
+  @DisplayName("Null references cannot be registered as listener.")
+  void tryRegisterNullReferencesAsListener() {
+    IllegalParameterException exception = assertThrows(IllegalParameterException.class,
+        () -> timer.addCallback(null));
+  }
+
+  @Test
+  @DisplayName("Null references cannot be removed as listener.")
+  void tryRemoveNullReferenceAsListener() {
+    IllegalParameterException exception = assertThrows(IllegalParameterException.class,
+        () -> timer.removeCallback(null));
+  }
+
   /**
-   * Inner class as a PictureCardListener.
+   * Inner class as a TimerListener.
    */
   class SimpleTimerListener implements TimerListener {
 
