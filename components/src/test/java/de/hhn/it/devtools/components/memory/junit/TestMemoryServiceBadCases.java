@@ -43,6 +43,7 @@ public class TestMemoryServiceBadCases {
                 () -> memoryService.removeCallback(123456, new DummyCallbackPictureCard()));
     }
 
+    /*
     @Test
     @DisplayName("add callback for a non existing timer")
     void testExceptionWhenAddingCallbackToNonExistentTimer() {
@@ -74,6 +75,8 @@ public class TestMemoryServiceBadCases {
                 IllegalParameterException.class,
                 () -> memoryService.removeCallback(new DummyCallbackDeck())); //geht noch
     }
+
+     */
 
     /*
     @Test
