@@ -244,4 +244,8 @@ public class SfsMemoryService implements MemoryService {
       throw new IllegalParameterException("PictureCard has no appropriate picture reference or name is a null reference.") ;
     }
   }
+
+  public List<CardSet> getCardSetStorage() {
+    return cardSetStorage;
+  }
 }

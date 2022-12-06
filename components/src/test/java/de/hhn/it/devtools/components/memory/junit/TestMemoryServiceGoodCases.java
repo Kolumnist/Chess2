@@ -1,10 +1,8 @@
 package de.hhn.it.devtools.components.memory.junit;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.apis.memory.DeckListener;
-import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
-import de.hhn.it.devtools.apis.memory.PictureCardListener;
-import de.hhn.it.devtools.apis.memory.TimerListener;
+import de.hhn.it.devtools.apis.memory.*;
+import de.hhn.it.devtools.components.memory.provider.CardSet;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
 import de.hhn.it.devtools.components.memory.provider.SfsPictureCard;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,11 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("Test the MemoryServiceService with good cases.")
+@DisplayName("Test the MemoryService with good cases.")
 @ExtendWith(PictureCardParameterResolver.class)
 public class TestMemoryServiceGoodCases {
 
@@ -89,4 +88,15 @@ public class TestMemoryServiceGoodCases {
     );
   }
 
+  @Test
+  @DisplayName("Add a cardSet to memoryService")
+  public void addCardSetToMemoryService(List<PictureCardDescriptor> descriptors) throws IllegalParameterException {
+    memoryService = new SfsMemoryService();
+    HashMap<Integer, String> pictureReferences = new HashMap<>();
+    pictureReferences.put(1, "Mario");
+    CardSet cardSet = new CardSet(Difficulty.EASY, descriptors,pictureReferences);
+    memoryService.addCardSet(cardSet);
+
+    assertTrue(memoryService.getCardSetStorage().size() > 0);
+  }
 }

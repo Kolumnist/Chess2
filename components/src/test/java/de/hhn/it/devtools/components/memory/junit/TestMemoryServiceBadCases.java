@@ -1,11 +1,17 @@
 package de.hhn.it.devtools.components.memory.junit;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.apis.memory.Difficulty;
+import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
+import de.hhn.it.devtools.components.memory.provider.CardSet;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.util.HashMap;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -128,10 +134,30 @@ public class TestMemoryServiceBadCases {
   }
 
   @Test
-  @DisplayName("matching Cards for non exiting card")
+  @DisplayName("matching Cards for non existing card")
   void testExceptionWhenMatchingNonExistingCard() {
     IllegalParameterException illegalParameterException = assertThrows(
         IllegalParameterException.class, () -> memoryService.matchCards(null, null)
+    );
+  }
+
+  @Test
+  @DisplayName("addCardSet for non existing cardSet")
+  void addCardSetForNonExistingCardSet(){
+    IllegalParameterException illegalParameterException = assertThrows(
+        IllegalParameterException.class, () -> memoryService.addCardSet(null)
+    );
+  }
+
+  @Test
+  @DisplayName("adding the same cardSet twice")
+  void addCardSetTwice(List<PictureCardDescriptor> descriptors) throws IllegalParameterException {
+    HashMap<Integer, String> pictureReferences = new HashMap<>();
+    pictureReferences.put(1, "Mario");
+    CardSet cardSet = new CardSet(Difficulty.EASY, descriptors,pictureReferences);
+    memoryService.addCardSet(cardSet);
+    IllegalParameterException illegalParameterException = assertThrows(
+        IllegalParameterException.class, () -> memoryService.addCardSet(cardSet)
     );
   }
 }
