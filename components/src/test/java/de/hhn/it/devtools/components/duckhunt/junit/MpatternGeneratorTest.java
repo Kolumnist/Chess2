@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.components.duckhunt.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import de.hhn.it.devtools.apis.duckhunt.DuckData;
 import de.hhn.it.devtools.apis.duckhunt.DuckState;
@@ -10,6 +11,8 @@ import de.hhn.it.devtools.components.duckhunt.Vector2D;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Random;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,10 +21,12 @@ import org.junit.jupiter.api.Test;
 class MpatternGeneratorTest {
   MpatternGenerator patternGenerator;
   DuckData[] ducks;
+  ScreenDimension screenDimension = new ScreenDimension(100, 100);
+  int sidePadding = 10;
 
   @BeforeEach
   void setUp() {
-    patternGenerator = new MpatternGenerator(10, new ScreenDimension(100, 100));
+    patternGenerator = new MpatternGenerator(10, screenDimension);
     ducks = new DuckData[] {
       new DuckData(0, 0, 0, DuckState.FLYING),
       new DuckData(1, 0, 0, DuckState.FLYING)
@@ -86,5 +91,61 @@ class MpatternGeneratorTest {
     result2.forEach(System.out::print);
     System.out.println();
     assertEquals(result2, shouldBeCase2);
+  }
+
+  @Test
+  @DisplayName("Orientation Waypoint Algorithm Test - Specified Seed")
+  void generatePathTest1() throws NoSuchMethodException,
+          InvocationTargetException, IllegalAccessException {
+    Method indexOfMethod = MpatternGenerator.class
+            .getDeclaredMethod("generatePath", long.class);
+    indexOfMethod.setAccessible(true);
+
+    long testSeed = 3697562753721813L;
+
+    final ArrayList<Vector2D> result = (ArrayList<Vector2D>) indexOfMethod.invoke(patternGenerator, testSeed);
+
+    final ArrayList<Vector2D> shouldBeCase = new ArrayList<>();
+    shouldBeCase.add(new Vector2D(35,100));
+    shouldBeCase.add(new Vector2D(57,78));
+    shouldBeCase.add(new Vector2D(57,51));
+    shouldBeCase.add(new Vector2D(34,51));
+    shouldBeCase.add(new Vector2D(56,51));
+    shouldBeCase.add(new Vector2D(82,25));
+
+    assertEquals(result, shouldBeCase);
+  }
+
+  @Test
+  @DisplayName("Orientation Waypoint Algorithm Test - Random Seeds")
+  void generatePathTest2() throws NoSuchMethodException,
+          InvocationTargetException, IllegalAccessException {
+    Method indexOfMethod = MpatternGenerator.class
+            .getDeclaredMethod("generatePath");
+    indexOfMethod.setAccessible(true);
+
+    boolean errorFlag = false;
+
+    for (int i = 0; i < 100; i++) {
+      //long testSeed = new Random().nextLong();
+
+      final ArrayList<Vector2D> result = (ArrayList<Vector2D>) indexOfMethod.invoke(patternGenerator);
+      result.remove(0); // first point never in boundaries because duck spawn on bottom of screen
+
+      for (Vector2D v : result) {
+        // if point not in Dimension boundary
+        if (v.getX() < sidePadding || v.getX() > screenDimension.getWidth()-sidePadding ||
+                v.getY() < sidePadding || v.getY() > screenDimension.getHeight()-sidePadding) {
+          errorFlag = true;
+          break;
+        }
+      }
+
+      if (errorFlag) {
+        System.out.print("Point List where error occurred: ");
+        result.stream().forEach(System.out::print);
+        fail("Generated points not in boundaries");
+      }
+    }
   }
 }
