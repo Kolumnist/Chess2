@@ -2,10 +2,8 @@ package de.hhn.it.devtools.components.duckhunt;
 
 import de.hhn.it.devtools.apis.duckhunt.DuckData;
 import de.hhn.it.devtools.apis.duckhunt.DuckOrientation;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Stack;
+
+import java.util.*;
 
 /**
  * Allows random movement-pattern generation.
@@ -64,12 +62,12 @@ public final class MpatternGenerator {
     // clean list of all points and convert to DuckOrientations
     Vector2D prevPoint = null;
     for (Vector2D point : points) {
-      // skip points that are equal
-      if (point.equals(prevPoint)) {
-        continue;
-      }
       // skip first point because first point ist start point of duck
       if (prevPoint == null) {
+        continue;
+      }
+      // skip points that are equal
+      if (point.equals(prevPoint)) {
         continue;
       }
 
@@ -95,7 +93,7 @@ public final class MpatternGenerator {
    * @param endPoint end point of the line
    * @return ArrayList of Vector2D objects representing all points of the line
    */
-  private ArrayList<Vector2D> digitalDifferentialAnalyzer(Vector2D startPoint, Vector2D endPoint) {
+  ArrayList<Vector2D> digitalDifferentialAnalyzer(Vector2D startPoint, Vector2D endPoint) {
     ArrayList<Vector2D> resultPoints = new ArrayList<>();
 
     // calculate difference dx, dy
@@ -211,6 +209,78 @@ public final class MpatternGenerator {
       lastNode = node;
       i++;
     }
+    return generatedPattern;
+
+
+  }
+
+  /*private ArrayList<Vector2D> generatePath() {
+    return generatePath(new Random().nextLong(), 6);
+  }*/
+
+  /**
+   * Generates random(seeded) points in area defined by screen dimensions and side padding.
+   * First Point will always be at the bottom of the screen. Points follow a set probability.
+   *
+   * @param seed seed for the random functionality
+   * @param pointAmount amount of points that shall be generated
+   * @return list of generated points
+   */
+  private ArrayList<Vector2D> generatePath(long seed, int pointAmount) {
+    ArrayList<Vector2D> generatedPattern = new ArrayList<>();
+    RangedRandom random = new RangedRandom();
+    random.setSeed(seed);
+
+    // list defines probability for directions to be taken each step
+    DuckOrientation[] orientations = {
+            DuckOrientation.NORTH,
+            DuckOrientation.NORTH,
+            DuckOrientation.NORTH,
+            DuckOrientation.NORTHEAST,
+            DuckOrientation.NORTHEAST,
+            DuckOrientation.NORTHWEST,
+            DuckOrientation.NORTHWEST,
+            DuckOrientation.EAST,
+            DuckOrientation.EAST,
+            DuckOrientation.WEST,
+            DuckOrientation.WEST,
+            DuckOrientation.SOUTHEAST,
+            DuckOrientation.SOUTHWEST,
+            DuckOrientation.SOUTH
+    };
+
+    // add first point
+    generatedPattern.add(new Vector2D(
+            random.randomInt(sidePadding, screenDimension.getWidth()-sidePadding),
+            screenDimension.getHeight() // always on the bottom of screen
+    ));
+
+    for (int i = 0; i < pointAmount-1; i++) {
+      // get orientation for vector between previous and new point
+      DuckOrientation selectedOrientation = orientations[random.randomInt(0, orientations.length-1)];
+      // magnitude of the vector between previous and new point, relative to screen size
+      int vectorLength = random.randomInt(
+              (int) Math.floor(screenDimension.getHeight() * 0.1),
+              (int) Math.floor((screenDimension.getHeight() * 0.15) * 2)
+      );
+      // get previous point
+      Vector2D prevPoint = (Vector2D) generatedPattern.get(generatedPattern.size()-1).clone();
+      // calculate new point with vector
+      Vector2D newPoint = new Vector2D(
+              prevPoint.getX() + (selectedOrientation.getX() * vectorLength),
+              prevPoint.getY() + (selectedOrientation.getY() * vectorLength)
+      );
+
+      // if point not in Dimension + padding boundary try new point
+      if (newPoint.getX() < sidePadding || newPoint.getX() > screenDimension.getWidth()-sidePadding ||
+              newPoint.getY() < sidePadding || newPoint.getY() > screenDimension.getHeight()-sidePadding) {
+        i--;
+        continue;
+      }
+
+      generatedPattern.add(newPoint);
+    }
+
     return generatedPattern;
   }
 
