@@ -44,10 +44,12 @@ public class SfsMemoryService implements MemoryService {
     }
     for (CardSet c: cardSetStorage) {
       if(c.difficulty == difficulty) {
-        deck = (PictureCardDescriptor[]) c.pictureCardDescriptors.toArray();
-        notifyCurrentDeck();
-        fetchCards((PictureCardDescriptor[]) c.pictureCardDescriptors.toArray());
+        ArrayList<PictureCardDescriptor> descriptorsArrayList = (ArrayList<PictureCardDescriptor>) c.pictureCardDescriptors;
+        PictureCardDescriptor[] descriptorsArray = new PictureCardDescriptor[descriptorsArrayList.size()];
+        deck = descriptorsArrayList.toArray(descriptorsArray);
+        fetchCards(descriptorsArray);
         fetchPicReferences(c.pictureReferences);
+        notifyCurrentDeck();
       }
     }
   }
@@ -75,6 +77,7 @@ public class SfsMemoryService implements MemoryService {
     logger.info("closeGame: no params");
     cards.clear();
     pictureReferences.clear();
+    deck = null;
     SfsPictureCard.resetIdCounter();
   }
 
@@ -247,5 +250,13 @@ public class SfsMemoryService implements MemoryService {
 
   public List<CardSet> getCardSetStorage() {
     return cardSetStorage;
+  }
+
+  public PictureCardDescriptor[] getDeck() {
+    return deck;
+  }
+
+  public Map<Integer, String> getPictureReferences() {
+    return pictureReferences;
   }
 }
