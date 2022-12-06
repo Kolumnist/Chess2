@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.components.memory.junit;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.apis.memory.DeckListener;
 import de.hhn.it.devtools.apis.memory.Difficulty;
 import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
 import de.hhn.it.devtools.components.memory.provider.CardSet;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,20 +28,22 @@ public class TestMemoryServiceGameInteractions {
   @BeforeEach
   void setup(List<PictureCardDescriptor> descriptors) throws IllegalParameterException {
     memoryService = new SfsMemoryService();
+    DeckListener listener = new SimpleDeckListener();
+    memoryService.addCallback(listener);
     HashMap<Integer, String> pictureReferences = new HashMap<>();
     pictureReferences.put(1, "Mario");
     CardSet cardSet = new CardSet(Difficulty.EASY, descriptors,pictureReferences);
     memoryService.addCardSet(cardSet);
   }
 
-  /*
+
   @Test
   @DisplayName("newGame is initialized successfully")
   void newGameIsInitializedSuccessfully() throws IllegalParameterException {
     memoryService.newGame(Difficulty.EASY);
     assertTrue(memoryService.getDeck().length > 0);
   }
-  */
+
 
 
   @Test
@@ -50,14 +54,31 @@ public class TestMemoryServiceGameInteractions {
     );
   }
 
-  /*
+
   @Test
   @DisplayName("close game successfully")
   void closeGameSuccessfully() throws IllegalParameterException {
     memoryService.newGame(Difficulty.EASY);
     memoryService.closeGame();
-    assertTrue(memoryService.getDeck().equals(null));
-    assertTrue(memoryService.getPictureReferences().size() == 0);
+    assertAll(
+            () -> assertNull(memoryService.getDeck()),
+            () -> assertTrue(memoryService.getPictureReferences().size() == 0),
+            () -> assertTrue(memoryService.getPictureCards().size() == 0)
+    );
   }
-   */
+
+
+  class SimpleDeckListener implements DeckListener {
+    ArrayList<PictureCardDescriptor[]> decks;
+
+    public SimpleDeckListener() { decks = new ArrayList<>();}
+
+    @Override
+    public void currentDeck(PictureCardDescriptor[] deck) {
+      decks.add(deck);
+    }
+
+
+  }
+
 }
