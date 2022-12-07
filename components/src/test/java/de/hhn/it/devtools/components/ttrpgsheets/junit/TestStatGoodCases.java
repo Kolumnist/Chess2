@@ -37,8 +37,8 @@ class TestStatGoodCases {
   }
 
   @Test
-  void getTotalValue() {
-    logger.info("getTotalValue() is called");
+  void getTotalValueTest() {
+    logger.info("getTotalValueTest() is called");
     for (Stat stat : stats) {
       switch (stat.getType()) {
         case MAX_HEALTH -> assertEquals(30, stat.getTotalValue());
@@ -51,8 +51,8 @@ class TestStatGoodCases {
   }
 
   @Test
-  void addAbilityPoint() {
-    logger.info("addAbilityPoint() is called");
+  void addAbilityPointTest() {
+    logger.info("addAbilityPointTest() is called");
     for (Stat stat : stats) {
       stat.addAbilityPoint();
       switch (stat.getType()) {
@@ -81,8 +81,8 @@ class TestStatGoodCases {
   }
 
   @Test
-  void removeAbilityPoint() {
-    logger.info("removeAbilityPoint() is called");
+  void removeAbilityPointTest() {
+    logger.info("removeAbilityPointTest() is called");
     for (Stat stat : stats) {
       stat.removeAbilityPoint();
       switch (stat.getType()) {
@@ -111,8 +111,8 @@ class TestStatGoodCases {
   }
 
   @Test
-  void testToString() {
-    logger.info("testToString() is called");
+  void toStringTest() {
+    logger.info("toStringTest() is called");
     for (Stat stat : stats) {
       stat.addAbilityPoint();
       switch (stat.getType()) {
