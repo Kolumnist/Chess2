@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 
 public class LayoutGenerator {
+    private static final org.slf4j.Logger logger =
+            org.slf4j.LoggerFactory.getLogger(LayoutGenerator.class);
 
     private ArrayList<Room> allRooms;
     private Map map;
@@ -62,6 +64,7 @@ public class LayoutGenerator {
             allRooms.get(9).setNextDoorRoom(allRooms.get(10), true, false, false);
             allRooms.get(10).setNextDoorRoom(allRooms.get(11), true, false, false);
             allRooms.get(11).setNextDoorRoom(allRooms.get(12), false, false, true);
+            logger.info(map.toString() + "created.");
         } else if (map.equals(Map.Ancient_Dungeon)) {
             startRoom.setNextDoorRoom(allRooms.get(1), false, true, false);
             allRooms.get(1).setNextDoorRoom(allRooms.get(4), false, true, false);
@@ -76,6 +79,7 @@ public class LayoutGenerator {
             allRooms.get(3).setNextDoorRoom(allRooms.get(10), true, false, false);
             allRooms.get(10).setNextDoorRoom(allRooms.get(11), false, false, true);
             allRooms.get(11).setNextDoorRoom(allRooms.get(12), true, false, false);
+            logger.info(map.toString() + "created.");
 
         } else if (map.equals(Map.Unknown_Sewers)) {
             startRoom.setNextDoorRoom(allRooms.get(1), false, false, true);
@@ -90,8 +94,11 @@ public class LayoutGenerator {
             allRooms.get(7).setNextDoorRoom(allRooms.get(10), false, false, true);
             allRooms.get(10).setNextDoorRoom(allRooms.get(11), false, false, true);
             allRooms.get(11).setNextDoorRoom(allRooms.get(12), false, false, true);
+            logger.info(map.toString() + "created.");
+        } else if (map.equals(Map.Circle_Of_Time)) {
+
         }
-        String exampleDescription = "A dark, cold room.";
+
 
 
         for (Room room : allRooms) {
@@ -128,6 +135,8 @@ public class LayoutGenerator {
             int amountOfTreasure = 1;
 
             allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
+
+            logger.info(map.toString() + "finished.");
 
         } else if (map.equals(Map.Ancient_Dungeon)) {
             int amountOfPuzzles = 1;
@@ -175,6 +184,7 @@ public class LayoutGenerator {
 
             allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
 
+            logger.info(map.toString() + "finished.");
 
         } else if (map.equals(Map.Unknown_Sewers)) {
             int amountOfPuzzles = 1;
@@ -204,6 +214,8 @@ public class LayoutGenerator {
             int amountOfTreasure = 1;
 
             allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
+
+            logger.info(map.toString() + "finished.");
         }
     }
 

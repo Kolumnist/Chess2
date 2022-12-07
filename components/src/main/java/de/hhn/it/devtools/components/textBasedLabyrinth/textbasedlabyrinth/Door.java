@@ -14,7 +14,7 @@ public class Door {
 
 
   /**
-   * Door open.
+   * Door constructor.
    */
   public Door() {
     inspectMessage = "This door is open";
@@ -38,7 +38,7 @@ public class Door {
   }
 
   /**
-   * Get Info about the puzzle.
+   * Get info about the puzzle.
    *
    * @return puzzle
    */
@@ -94,6 +94,10 @@ public class Door {
   public void isFake() {
 
     fake = true;
+  }
+
+  public void isNotFakeAnymore() {
+    fake = false;
   }
 
   public Puzzle getPuzzle() {

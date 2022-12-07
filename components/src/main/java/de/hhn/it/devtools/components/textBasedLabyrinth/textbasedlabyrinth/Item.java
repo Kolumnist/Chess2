@@ -42,4 +42,8 @@ public class Item {
     return isTreasure;
   }
 
+  public boolean getIsTrapActivator() {
+    return false;
+  }
+
 }

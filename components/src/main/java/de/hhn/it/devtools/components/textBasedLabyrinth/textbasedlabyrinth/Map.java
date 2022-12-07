@@ -9,5 +9,7 @@ public enum Map {
 
     Ancient_Dungeon,
 
-    Unknown_Sewers
+    Unknown_Sewers,
+
+    Circle_Of_Time
 }

@@ -10,42 +10,43 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Room Class for the Game, defines the Rooms of the Game
- * with assigned next-door Rooms and Items inside it.
+ * Room class for the game, defines the rooms of the game
+ * with assigned next-door rooms and items inside it.
  */
 public class Room {
 
 
-  private HashMap<Integer, Item> items;
-  private int roomId;
+  protected HashMap<Integer, Item> items;
+  protected int roomId;
 
   private String description;
 
-  public Room toTheNorth;
-  public Room toTheSouth;
-  public Room toTheEast;
-  public Room toTheWest;
+  protected Room toTheNorth;
+  protected Room toTheSouth;
+  protected Room toTheEast;
+  protected Room toTheWest;
 
-  public Boolean isNorthAssigned;
-  public Boolean isSouthAssigned;
-  public Boolean isEastAssigned;
-  public Boolean isWestAssigned;
+  protected Boolean isNorthAssigned;
+  protected Boolean isSouthAssigned;
+  protected Boolean isEastAssigned;
+  protected Boolean isWestAssigned;
 
-  private Door westDoor;
-  private Door eastDoor;
-  private Door northDoor;
-  private Door southDoor;
+  protected Door westDoor;
+  protected Door eastDoor;
+  protected Door northDoor;
+  protected Door southDoor;
   private boolean hasDoorN;
   private boolean hasDoorW;
   private boolean hasDoorE;
   private boolean hasDoorS;
 
-  public boolean isExit;
+  protected boolean isExit;
 
   /**
-   * Constructor of Room.
+   * Constructor of room.
    *
-   * @param id ID of the room
+   * @param id ID of the room.
+   * @param description the description of the rooms' appearance.
    */
   public Room(int id, String description) {
     this.roomId = id;
@@ -85,7 +86,7 @@ public class Room {
   }
 
   /**
-   * Gets the doors for the new Room.
+   * Gets the doors for the new room.
    */
   public void setDoors() {
     Random random = new Random();
@@ -196,9 +197,9 @@ public class Room {
   }
 
   /**
-   * Get Number od foos.
+   * Get number of doors.
    *
-   * @return Number od Doors.
+   * @return number of doors.
    */
   public int getNumberOfDoors() {
     int a = 0;
@@ -244,12 +245,12 @@ public class Room {
   }
 
   /**
-   * Set a Room as the Room next door for the current Room and vis versa.
+   * Set a room as the room next door for the current room and vis versa.
    *
-   * @param room Room to be assigned as the next door Room
-   * @param isEast Boolean check to see if the new Room will be to the east of current room
-   * @param isWest Boolean check to see if the new Room will be to the west of current room
-   * @param isNorth Boolean check to see if the new Room will be to the north of current room
+   * @param room room to be assigned as the next door room
+   * @param isEast boolean check to see if the new room will be to the east of current room
+   * @param isWest boolean check to see if the new room will be to the west of current room
+   * @param isNorth boolean check to see if the new room will be to the north of current room
    */
   public void setNextDoorRoom(Room room, Boolean isEast, Boolean isWest, Boolean isNorth) {
     if (isEast && !isWest && !isNorth && !isEastAssigned) {
