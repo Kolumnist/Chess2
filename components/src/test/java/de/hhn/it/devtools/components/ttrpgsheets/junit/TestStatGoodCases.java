@@ -116,20 +116,55 @@ class TestStatGoodCases {
     for (Stat stat : stats) {
       stat.addAbilityPoint();
       switch (stat.getType()) {
-        case LEVEL -> assertEquals("Stat Type: LEVEL\nBase Value: 1\nOffset: 1\n"
-                + "Ability Points Used: 0\nMiscellaneous: 0\nLevel Stat: false", stat.toString());
-        case HEALTH -> assertEquals("Stat Type: HEALTH\nBase Value: 30\nOffset: 0\n"
-                + "Ability Points Used: 0\nMiscellaneous: -2\nLevel Stat: false", stat.toString());
-        case AGILITY -> assertEquals("Stat Type: AGILITY\nBase Value: 0\nOffset: 1\n"
-                + "Ability Points Used: 0\nMiscellaneous: 0\nLevel Stat: true", stat.toString());
-        case DEFENCE -> assertEquals("Stat Type: DEFENCE\nBase Value: 0\nOffset: 1\n"
-                + "Ability Points Used: 0\nMiscellaneous: 0\nLevel Stat: true", stat.toString());
-        case STRENGTH -> assertEquals("Stat Type: STRENGTH\nBase Value: 0\nOffset: 1\n"
-                + "Ability Points Used: 2\nMiscellaneous: 6\nLevel Stat: true", stat.toString());
-        case DEXTERITY -> assertEquals("Stat Type: DEXTERITY\nBase Value: 0\nOffset: 1\n"
-                + "Ability Points Used: 0\nMiscellaneous: 0\nLevel Stat: true", stat.toString());
-        case MAX_HEALTH -> assertEquals("Stat Type: MAX_HEALTH\nBase Value: 30\nOffset: 5\n"
-                + "Ability Points Used: 0\nMiscellaneous: 0\nLevel Stat: true", stat.toString());
+        case LEVEL -> assertEquals("""
+                Stat Type: LEVEL
+                Base Value: 1
+                Offset: 1
+                Ability Points Used: 0
+                Miscellaneous: 0
+                Level Stat: false""", stat.toString());
+        case HEALTH -> assertEquals("""
+                Stat Type: HEALTH
+                Base Value: 30
+                Offset: 0
+                Ability Points Used: 0
+                Miscellaneous: -2
+                Level Stat: false""", stat.toString());
+        case AGILITY -> assertEquals("""
+                Stat Type: AGILITY
+                Base Value: 0
+                Offset: 1
+                Ability Points Used: 0
+                Miscellaneous: 0
+                Level Stat: true""", stat.toString());
+        case DEFENCE -> assertEquals("""
+                Stat Type: DEFENCE
+                Base Value: 0
+                Offset: 1
+                Ability Points Used: 0
+                Miscellaneous: 0
+                Level Stat: true""", stat.toString());
+        case STRENGTH -> assertEquals("""
+                Stat Type: STRENGTH
+                Base Value: 0
+                Offset: 1
+                Ability Points Used: 2
+                Miscellaneous: 6
+                Level Stat: true""", stat.toString());
+        case DEXTERITY -> assertEquals("""
+                Stat Type: DEXTERITY
+                Base Value: 0
+                Offset: 1
+                Ability Points Used: 0
+                Miscellaneous: 0
+                Level Stat: true""", stat.toString());
+        case MAX_HEALTH -> assertEquals("""
+                Stat Type: MAX_HEALTH
+                Base Value: 30
+                Offset: 5
+                Ability Points Used: 0
+                Miscellaneous: 0
+                Level Stat: true""", stat.toString());
       }
     }
   }
