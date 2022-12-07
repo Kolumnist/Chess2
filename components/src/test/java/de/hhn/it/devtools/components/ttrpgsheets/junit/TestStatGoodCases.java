@@ -1,12 +1,13 @@
 package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import de.hhn.it.devtools.components.ttrpgsheets.Stat;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 class TestStatGoodCases {
   private static final org.slf4j.Logger logger
@@ -14,9 +15,9 @@ class TestStatGoodCases {
 
   private static Stat[] stats;
 
-  @BeforeAll
-  static void setup() {
-    logger.info("setup() is called");
+  @BeforeEach
+  void setupObjects() {
+    logger.info("setupObjects() is called");
     StatDescriptor[] statDescriptors = new StatDescriptor[StatType.values().length];
     stats = new Stat[StatType.values().length];
     for (int i = 0; i < stats.length; i++) {
