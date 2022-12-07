@@ -69,7 +69,7 @@ class TestStatGoodCases {
           assertEquals(1, stat.getTotalValue());
         }
         case STRENGTH -> {
-          assertEquals(1, stat.getAbilityPointsUsed());
+          assertEquals(3, stat.getAbilityPointsUsed());
           assertEquals(9, stat.getTotalValue());
         }
         default -> {
@@ -87,8 +87,8 @@ class TestStatGoodCases {
       stat.removeAbilityPoint();
       switch (stat.getType()) {
         case MAX_HEALTH -> {
-          assertEquals(1, stat.getAbilityPointsUsed());
-          assertEquals(30, stat.getTotalValue());
+          assertEquals(-1, stat.getAbilityPointsUsed());
+          assertEquals(25, stat.getTotalValue());
         }
         case HEALTH -> {
           assertEquals(0, stat.getAbilityPointsUsed());
@@ -99,12 +99,12 @@ class TestStatGoodCases {
           assertEquals(1, stat.getTotalValue());
         }
         case STRENGTH -> {
-          assertEquals(0, stat.getAbilityPointsUsed());
-          assertEquals(8, stat.getTotalValue());
+          assertEquals(1, stat.getAbilityPointsUsed());
+          assertEquals(7, stat.getTotalValue());
         }
         default -> {
-          assertEquals(0, stat.getAbilityPointsUsed());
-          assertEquals(0, stat.getTotalValue());
+          assertEquals(-1, stat.getAbilityPointsUsed());
+          assertEquals(-1, stat.getTotalValue());
         }
       }
     }
