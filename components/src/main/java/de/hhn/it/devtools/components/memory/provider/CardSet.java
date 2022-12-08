@@ -18,14 +18,27 @@ public class CardSet {
     this.pictureReferences = pictureReferences;
   }
 
+  /**
+   * Returns the difficulty of the card set.
+   *
+   * @return
+   */
   public Difficulty getDifficulty() {
     return difficulty;
   }
 
+  /**
+   * Returns the picture references stored in the card set.
+   * @return
+   */
   public HashMap<Integer, String> getPictureReferences() {
     return pictureReferences;
   }
 
+  /**
+   * Returns the picture cards stored in the card set.
+   * @return
+   */
   public List<PictureCardDescriptor> getPictureCardDescriptors() {
     return pictureCardDescriptors;
   }
