@@ -4,6 +4,7 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.memory.DeckListener;
 import de.hhn.it.devtools.apis.memory.Difficulty;
 import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
+import de.hhn.it.devtools.apis.memory.State;
 import de.hhn.it.devtools.components.memory.provider.CardSet;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
 import org.junit.jupiter.api.BeforeEach;
@@ -66,6 +67,68 @@ public class TestMemoryServiceGameInteractions {
             () -> assertTrue(memoryService.getPictureCards().size() == 0)
     );
   }
+
+  @Test
+  @DisplayName("change difficulty successfully")
+  void changeDifficultySuccessfully() throws IllegalParameterException {
+    List<PictureCardDescriptor> newList = new ArrayList<>();
+    newList.add(new PictureCardDescriptor(-1, 2, "Mario"));
+    newList.add(new PictureCardDescriptor(-1, 3, "Peach"));
+    HashMap<Integer, String> pictureReferences = new HashMap<>();
+    pictureReferences.put(1, "Mario");
+    memoryService.addCardSet(new CardSet(Difficulty.MEDIUM, newList,pictureReferences));
+    memoryService.newGame(Difficulty.MEDIUM);
+    assertTrue(memoryService.getPictureCards().size() == 2);
+  }
+
+  @Test
+  @DisplayName("turnCard for one card")
+  void turnCardForOneCard() throws IllegalParameterException {
+    memoryService.newGame(Difficulty.EASY);
+    memoryService.turnCard(1);
+    assertAll(
+            () -> assertTrue(memoryService.getPictureCard(1).getState() == State.VISIBLE)
+    );
+  }
+
+
+  @Test
+  @DisplayName("turning card for visible card")
+  void turnCardForVisibleCard() throws IllegalParameterException {
+      memoryService.newGame(Difficulty.EASY);
+      memoryService.turnCard(1);
+      IllegalParameterException illegalParameterException = assertThrows(
+              IllegalParameterException.class, () -> memoryService.turnCard(1)
+      );
+  }
+
+  @Test
+  @DisplayName("turnCard for two cards of the same type")
+  void turnCardForTheSameType() throws IllegalParameterException {
+    memoryService.newGame(Difficulty.EASY);
+    memoryService.turnCard(2);
+    memoryService.turnCard(3);
+    assertAll(
+            () -> assertTrue(memoryService.getPictureCard(2).getState() == State.HIDDEN),
+            () -> assertTrue(memoryService.getPictureCard(3).getState() == State.HIDDEN)
+    );
+  }
+
+  @Test
+  @DisplayName("turnCard for two cards that match in HashMap")
+  void turnCardsForTwoCardsThatMatch() throws IllegalParameterException {
+    memoryService.newGame(Difficulty.EASY);
+    memoryService.turnCard(1);
+    memoryService.turnCard(2);
+    assertAll(
+            () -> assertTrue(memoryService.getPictureCard(1).getState() == State.MATCHED),
+            () -> assertTrue(memoryService.getPictureCard(2).getState() == State.MATCHED)
+    );
+  }
+
+  //if c is pictureCard
+    //if
+
 
 
   class SimpleDeckListener implements DeckListener {

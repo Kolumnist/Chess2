@@ -24,7 +24,7 @@ public class SfsPictureCard implements PictureCard {
     logger.debug("Constructor - {}", descriptor);
     listeners = new ArrayList<>();
     this.descriptor = descriptor;
-    descriptor.setId(idCounter.getAndIncrement());
+    //idCounter.getAndIncrement();
   }
 
   public static int getIdCounter() {

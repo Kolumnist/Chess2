@@ -169,7 +169,7 @@ public class SfsMemoryService implements MemoryService {
         card.turnCard();
 
         if (c.getPictureCard().getPictureRef() == -1 && card.getPictureCard().getPictureRef() == -1
-                || c.getPictureCard().getName().equals("null") && card.getPictureCard().getName().equals("null")) {
+                || c.getPictureCard().getName() == null && card.getPictureCard().getName() == null) {
           c.turnCard();
           card.turnCard();
         } else {
@@ -191,8 +191,10 @@ public class SfsMemoryService implements MemoryService {
             }
           }
         }
+        return;
       }
     }
+    getPictureCardById(id).turnCard();
   }
 
   public void addCardSet(CardSet set) throws IllegalParameterException {

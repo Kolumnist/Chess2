@@ -150,6 +150,14 @@ public class TestMemoryServiceBadCases {
   }
 
   @Test
+  @DisplayName("change difficulty to null")
+  void changeDifficultyToNull() {
+    IllegalParameterException illegalParameterException = assertThrows(
+            IllegalParameterException.class, () -> memoryService.changeDifficulty(null)
+    );
+  }
+
+  @Test
   @DisplayName("adding the same cardSet twice")
   void addCardSetTwice(List<PictureCardDescriptor> descriptors) throws IllegalParameterException {
     HashMap<Integer, String> pictureReferences = new HashMap<>();

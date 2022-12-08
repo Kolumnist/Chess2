@@ -27,7 +27,7 @@ public class PictureCardParameterResolver implements ParameterResolver {
     @Override
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
             throws ParameterResolutionException {
-        PictureCardDescriptor descriptor0 = new PictureCardDescriptor(1,1,null);
+        PictureCardDescriptor descriptor0 = new PictureCardDescriptor(1,1,null);        //id setzen bei id unnötig, weil atomicinteger sie überschreibt in SFS PictureCard //atomic integer gelöscht
         PictureCardDescriptor descriptor1 = new PictureCardDescriptor(-1, 2, "Mario");
         PictureCardDescriptor descriptor2 = new PictureCardDescriptor(-1, 3, "Peach");
 
