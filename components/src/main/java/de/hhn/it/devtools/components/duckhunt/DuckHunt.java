@@ -267,11 +267,23 @@ public class DuckHunt implements Runnable, DuckHuntService {
 
   @Override
   public void addCallback(DuckHuntListener listener) throws IllegalParameterException {
+    if (listener == null) {
+      throw new IllegalParameterException("Listener cannot be null");
+    }
+    if (listeners.contains(listener)) {
+      throw new IllegalParameterException("The given listener already exist in the class");
+    }
     listeners.add(listener);
   }
 
   @Override
   public void removeCallback(DuckHuntListener listener) throws IllegalParameterException {
+    if (listener == null) {
+      throw new IllegalParameterException("Listener cannot be null");
+    }
+    if (!listeners.contains(listener)) {
+      throw new IllegalParameterException("The given listener does not exist in the class");
+    }
     listeners.remove(listener);
   }
 
