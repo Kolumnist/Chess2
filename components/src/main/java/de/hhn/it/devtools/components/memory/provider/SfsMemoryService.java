@@ -30,14 +30,6 @@ public class SfsMemoryService implements MemoryService {
     timer = new SfsTimer(new TimerDescriptor());
   }
 
-  public PictureCard getPictureCardById(int id) throws IllegalParameterException {
-    logger.info("getPictureCardById: id = {}", id);
-    if (!cards.containsKey(id)) {
-      throw new IllegalParameterException("PictureCard with id " + id + " does not exist.");
-    }
-    return cards.get(id);
-  }
-
   @Override
   public void newGame(Difficulty difficulty) throws IllegalParameterException {
     logger.info("newGame: difficulty = {}", difficulty);
@@ -181,6 +173,54 @@ public class SfsMemoryService implements MemoryService {
     getPictureCardById(id).turnCard();
   }
 
+  /**
+   * Returns the Picture Card for the give ID.
+   *
+   * @param id of the Picture Card wanted
+   * @return Picture Card with the ID
+   * @throws IllegalParameterException if the ID does not exist
+   */
+  public PictureCard getPictureCardById(int id) throws IllegalParameterException {
+    logger.info("getPictureCardById: id = {}", id);
+    if (!cards.containsKey(id)) {
+      throw new IllegalParameterException("PictureCard with id " + id + " does not exist.");
+    }
+    return cards.get(id);
+  }
+
+  /**
+   * Returns the current list of card sets in the service.
+   *
+   * @return list of cardSets in the service
+   */
+  public List<CardSet> getCardSetStorage() {
+    return cardSetStorage;
+  }
+
+  /**
+   * Returns the current deck of the service.
+   *
+   * @return Picture Card Descriptors in the current deck of the service.
+   */
+  public PictureCardDescriptor[] getDeck() {
+    return deck;
+  }
+
+  /**
+   * Returns the Map of current picture references of the service.
+   *
+   * @return map of picture references of the service
+   */
+  public Map<Integer, String> getPictureReferences() {
+    return pictureReferences;
+  }
+
+  /**
+   * Adds a card set to the service.
+   *
+   * @param set the card set that should be added
+   * @throws IllegalParameterException if the card set does not exist or is already registered
+   */
   public void addCardSet(CardSet set) throws IllegalParameterException {
     logger.info("addCardSet: set = {}", set);
     if (set == null) {
@@ -200,7 +240,12 @@ public class SfsMemoryService implements MemoryService {
     deckListener.currentDeck(deck);
   }
 
-
+  /**
+   * Fetches the cards to the service.
+   *
+   * @param cardDescriptors for the cards
+   * @throws IllegalParameterException if the card descriptors do not exist
+   */
   public void fetchCards(PictureCardDescriptor[] cardDescriptors) throws IllegalParameterException {
     //logger.info("fetchCards: cardDescriptors = {}", cardDescriptors);
     if (cardDescriptors == null) {
@@ -213,6 +258,12 @@ public class SfsMemoryService implements MemoryService {
     }
   }
 
+  /**
+   * Fetches the picture references to the service.
+   *
+   * @param picReferences references that should be fetched
+   * @throws IllegalParameterException if the picture references do not exist
+   */
   public void fetchPicReferences(HashMap<Integer, String> picReferences)
           throws IllegalParameterException {
     logger.info("fetchPicReferences: picReferences = {}", picReferences);
@@ -222,8 +273,16 @@ public class SfsMemoryService implements MemoryService {
     pictureReferences = (Map<Integer, String>) picReferences.clone();
   }
 
+  /**
+   * Checks if cards should be set to a match or should be turned back.
+   *
+   * @param a the first card
+   * @param b the second card
+   * @return true, if the cards are matched
+   * @throws IllegalParameterException if one of the cards does not exist
+   */
   public boolean checkCards(PictureCard a, PictureCard b) throws IllegalParameterException {
-    if (checkForSameType(a, b) && checkOrderForMatch(a, b)) {
+    if (checkForDifferentType(a, b) && checkOrderForMatch(a, b)) {
       a.matchCard();
       b.matchCard();
       return true;
@@ -233,18 +292,41 @@ public class SfsMemoryService implements MemoryService {
     return false;
   }
 
-  private boolean checkForSameType(PictureCard a, PictureCard b) {
+  /**
+   * Checks if two cards are from the same type (picture card or name card).
+   *
+   * @param a the first card
+   * @param b the second card
+   * @return true, if the card have different types
+   */
+  private boolean checkForDifferentType(PictureCard a, PictureCard b) {
     return (a.getPictureCard().getPictureRef() != -1
         || b.getPictureCard().getPictureRef() != -1)
         && (a.getPictureCard().getName() != null
         || b.getPictureCard().getName() != null);
   }
 
+  /**
+   * Checks which card is the picture card and therefor order of check for match.
+   *
+   * @param a the first card
+   * @param b the second card
+   * @return true, if the cards are a match
+   * @throws IllegalParameterException
+   */
   private boolean checkOrderForMatch(PictureCard a, PictureCard b) throws IllegalParameterException {
     return (a.getPictureCard().getPictureRef() == -1 && checkForMatch(b, a)
         || b.getPictureCard().getPictureRef() == -1 && checkForMatch(a, b));
   }
 
+  /**
+   * Checks if two cards are a match.
+   *
+   * @param picture the picture card
+   * @param name the name card
+   * @return true, if the cards are a match
+   * @throws IllegalParameterException
+   */
   public boolean checkForMatch(PictureCard picture, PictureCard name)
           throws IllegalParameterException {
     logger.info("matchCards: picture = {}, name = {}", picture, name);
@@ -262,15 +344,4 @@ public class SfsMemoryService implements MemoryService {
     }
   }
 
-  public List<CardSet> getCardSetStorage() {
-    return cardSetStorage;
-  }
-
-  public PictureCardDescriptor[] getDeck() {
-    return deck;
-  }
-
-  public Map<Integer, String> getPictureReferences() {
-    return pictureReferences;
-  }
 }
