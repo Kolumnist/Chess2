@@ -26,13 +26,6 @@ public class SfsPictureCard implements PictureCard {
     this.descriptor = descriptor;
   }
 
-  public static int getIdCounter() {
-    return idCounter.get();
-  }
-
-  public static void resetIdCounter() {
-    idCounter.set(0);
-  }
 
   @Override
   public void turnCard() throws IllegalStateException {
@@ -86,6 +79,27 @@ public class SfsPictureCard implements PictureCard {
     notifyListeners(State.MATCHED);
   }
 
+  /**
+   * Returns the current ID counter.
+   *
+   * @return int the current ID counter
+   */
+  public static int getIdCounter() {
+    return idCounter.get();
+  }
+
+  /**
+   * Resets the ID counter.
+   */
+  public static void resetIdCounter() {
+    idCounter.set(0);
+  }
+
+  /**
+   * Notifies the listener.
+   *
+   * @param state state that should be notified to the listener
+   */
   private void notifyListeners(State state) {
     listeners.forEach((listener) -> listener.currentState(state));
   }

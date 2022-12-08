@@ -48,6 +48,14 @@ public interface MemoryService {
   void changeDifficulty(Difficulty difficulty) throws IllegalParameterException;
 
   /**
+   * Turns a card around.
+   *
+   * @param id ID of the picture card that should be turned around
+   * @throws IllegalParameterException if the card does not exist
+   */
+  void turnCard(int id) throws IllegalParameterException;
+
+  /**
    * Adds a listener to get information on the state of the card.
    *
    * @param id       ID of the card
@@ -115,11 +123,4 @@ public interface MemoryService {
    */
   PictureCardDescriptor getPictureCard(int id) throws IllegalParameterException;
 
-  /**
-   * Turns a card around.
-   *
-   * @param id ID of the picture card that should be turned around
-   * @throws IllegalParameterException if the card does not exist
-   */
-  void turnCard(int id) throws IllegalParameterException;
 }

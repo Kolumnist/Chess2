@@ -46,10 +46,6 @@ public class SfsTimer implements Timer, Runnable {
     listeners.remove(listener);
   }
 
-  private void notifyListener(int time) throws IllegalParameterException {
-    listeners.forEach((listener) -> listener.currentTime(time));
-  }
-
 
   @Override
   public TimerDescriptor getTimer() {
@@ -73,4 +69,15 @@ public class SfsTimer implements Timer, Runnable {
       }
     }
   }
+
+  /**
+   * Notifies the listener
+   *
+   * @param time time that should be notified to the listener
+   * @throws IllegalParameterException if the time does not exist
+   */
+  private void notifyListener(int time) throws IllegalParameterException {
+    listeners.forEach((listener) -> listener.currentTime(time));
+  }
+
 }
