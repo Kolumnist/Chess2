@@ -14,6 +14,9 @@ class TestDiceGoodCases {
           = org.slf4j.LoggerFactory.getLogger(TestDiceGoodCases.class);
 
   static Dice dice;
+  static int[] sizes = {2,4,6,8,10,12,20,100};
+  static DiceType[] diceTypes = {DiceType.D2,DiceType.D4,DiceType.D6,DiceType.D8,
+          DiceType.D10,DiceType.D12,DiceType.D20,DiceType.D100};
 
   @BeforeEach
   void setUp() {
@@ -24,16 +27,18 @@ class TestDiceGoodCases {
   @Test
   void nextRollTest() {
     logger.info("nextRoll() is called");
-    for (double i = 0; i < calculateAvarageNumberOfRolls(dice.getSize()); i++) {
-      dice.nextRoll();
-      assertTrue(dice.getValue()>0 && dice.getValue() <= dice.getSize());
+    for (int size: sizes) {
+      dice.setSize(size);
+      for (double i = 0; i < calculateAvarageNumberOfRolls(dice.getSize()); i++) {
+        dice.nextRoll();
+        assertTrue(dice.getValue()>0 && dice.getValue() <= dice.getSize());
+      }
     }
   }
 
   @Test
   void changeSizeTest() {
     logger.info("changeSize() is called");
-    DiceType[] diceTypes = {DiceType.D2,DiceType.D4,DiceType.D6,DiceType.D8,DiceType.D10,DiceType.D12,DiceType.D20,DiceType.D100};
     for (DiceType diceTyp: diceTypes) {
       dice.changeSize(diceTyp);
       switch (dice.getType()){
@@ -52,7 +57,6 @@ class TestDiceGoodCases {
   @Test
   void convertToDiceTypeTest() {
     logger.info("convertToDiceType() is called");
-    int[] sizes = {2,4,6,8,10,12,20,100};
     for (int size: sizes) {
       dice.setSize(size);
       switch (dice.getSize()) {
@@ -106,8 +110,6 @@ class TestDiceGoodCases {
   @Test
   void testToStringTest() {
     logger.info("testToString() is called");
-    DiceType[] diceTypes = {DiceType.D2,DiceType.D4,DiceType.D6,DiceType.D8,
-            DiceType.D10,DiceType.D12,DiceType.D20,DiceType.D100};
     dice.setValue(3);
     for (DiceType diceTyp: diceTypes) {
       dice.changeSize(diceTyp);
