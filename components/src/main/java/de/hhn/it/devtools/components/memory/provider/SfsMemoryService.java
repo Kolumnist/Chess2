@@ -270,7 +270,7 @@ public class SfsMemoryService implements MemoryService {
     if (picReferences == null) {
       throw new IllegalParameterException("The HashMap of PictureReferences is a null reference.");
     }
-    pictureReferences = (Map<Integer, String>) picReferences.clone();
+    pictureReferences = new HashMap<>(picReferences);
   }
 
 

@@ -34,7 +34,7 @@ public class SfsTimer implements Timer, Runnable {
 
   @Override
   public void removeCallback(TimerListener listener) throws IllegalParameterException {
-    logger.info("removeCallback: listener = {}");
+    logger.info("removeCallback: listener = {}", listener);
     if (listener == null) {
       throw new IllegalParameterException("Listener was null reference.");
     }
