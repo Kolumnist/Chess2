@@ -39,7 +39,7 @@ public class SfsMemoryService implements MemoryService {
     for (CardSet c : cardSetStorage) {
       if (c.getDifficulty() == difficulty) {
         ArrayList<PictureCardDescriptor> descriptorsArrayList =
-                (ArrayList<PictureCardDescriptor>) c.getPictureCardDescriptors();
+                new ArrayList<>(c.getPictureCardDescriptors());
         PictureCardDescriptor[] descriptorsArray =
                 new PictureCardDescriptor[descriptorsArrayList.size()];
         deck = descriptorsArrayList.toArray(descriptorsArray);
@@ -174,7 +174,7 @@ public class SfsMemoryService implements MemoryService {
   }
 
   /**
-   * Returns the Picture Card for the give ID.
+   * Returns the Picture Card for the given ID.
    *
    * @param id of the Picture Card wanted
    * @return Picture Card with the ID
@@ -273,6 +273,7 @@ public class SfsMemoryService implements MemoryService {
     pictureReferences = (Map<Integer, String>) picReferences.clone();
   }
 
+
   /**
    * Checks if cards should be set to a match or should be turned back.
    *
@@ -292,32 +293,6 @@ public class SfsMemoryService implements MemoryService {
     return false;
   }
 
-  /**
-   * Checks if two cards are from the same type (picture card or name card).
-   *
-   * @param a the first card
-   * @param b the second card
-   * @return true, if the card have different types
-   */
-  private boolean checkForDifferentType(PictureCard a, PictureCard b) {
-    return (a.getPictureCard().getPictureRef() != -1
-        || b.getPictureCard().getPictureRef() != -1)
-        && (a.getPictureCard().getName() != null
-        || b.getPictureCard().getName() != null);
-  }
-
-  /**
-   * Checks which card is the picture card and therefor order of check for match.
-   *
-   * @param a the first card
-   * @param b the second card
-   * @return true, if the cards are a match
-   * @throws IllegalParameterException
-   */
-  private boolean checkOrderForMatch(PictureCard a, PictureCard b) throws IllegalParameterException {
-    return (a.getPictureCard().getPictureRef() == -1 && checkForMatch(b, a)
-        || b.getPictureCard().getPictureRef() == -1 && checkForMatch(a, b));
-  }
 
   /**
    * Checks if two cards are a match.
@@ -325,7 +300,7 @@ public class SfsMemoryService implements MemoryService {
    * @param picture the picture card
    * @param name the name card
    * @return true, if the cards are a match
-   * @throws IllegalParameterException
+   * @throws IllegalParameterException if at least one picture card does not exist
    */
   public boolean checkForMatch(PictureCard picture, PictureCard name)
           throws IllegalParameterException {
@@ -342,6 +317,33 @@ public class SfsMemoryService implements MemoryService {
       throw new IllegalParameterException("PictureCard has no appropriate picture "
               + "reference or name is a null reference.");
     }
+  }
+
+  /**
+   * Checks if two cards are from the same type (picture card or name card).
+   *
+   * @param a the first card
+   * @param b the second card
+   * @return true, if the card have different types
+   */
+  private boolean checkForDifferentType(PictureCard a, PictureCard b) {
+    return (a.getPictureCard().getPictureRef() != -1
+            || b.getPictureCard().getPictureRef() != -1)
+            && (a.getPictureCard().getName() != null
+            || b.getPictureCard().getName() != null);
+  }
+
+  /**
+   * Checks which card is the picture card and therefor order of check for match.
+   *
+   * @param a the first card
+   * @param b the second card
+   * @return true, if the cards are a match
+   * @throws IllegalParameterException if at least one picture card does not exist
+   */
+  private boolean checkOrderForMatch(PictureCard a, PictureCard b) throws IllegalParameterException {
+    return (a.getPictureCard().getPictureRef() == -1 && checkForMatch(b, a)
+            || b.getPictureCard().getPictureRef() == -1 && checkForMatch(a, b));
   }
 
 }

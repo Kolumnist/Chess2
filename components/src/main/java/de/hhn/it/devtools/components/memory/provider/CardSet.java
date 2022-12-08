@@ -21,7 +21,7 @@ public class CardSet {
   /**
    * Returns the difficulty of the card set.
    *
-   * @return
+   * @return difficulty of the card set
    */
   public Difficulty getDifficulty() {
     return difficulty;
@@ -29,7 +29,8 @@ public class CardSet {
 
   /**
    * Returns the picture references stored in the card set.
-   * @return
+   *
+   * @return HashMap that stores the picture references
    */
   public HashMap<Integer, String> getPictureReferences() {
     return pictureReferences;
@@ -37,7 +38,8 @@ public class CardSet {
 
   /**
    * Returns the picture cards stored in the card set.
-   * @return
+   *
+   * @return List of the picture cards
    */
   public List<PictureCardDescriptor> getPictureCardDescriptors() {
     return pictureCardDescriptors;
