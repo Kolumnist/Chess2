@@ -98,12 +98,12 @@ class MpatternGeneratorTest {
   void generatePathTest1() throws NoSuchMethodException,
           InvocationTargetException, IllegalAccessException {
     Method indexOfMethod = MpatternGenerator.class
-            .getDeclaredMethod("generatePath", long.class);
+            .getDeclaredMethod("generatePath", long.class, int.class);
     indexOfMethod.setAccessible(true);
 
     long testSeed = 3697562753721813L;
 
-    final ArrayList<Vector2D> result = (ArrayList<Vector2D>) indexOfMethod.invoke(patternGenerator, testSeed);
+    final ArrayList<Vector2D> result = (ArrayList<Vector2D>) indexOfMethod.invoke(patternGenerator, testSeed, 6);
 
     final ArrayList<Vector2D> shouldBeCase = new ArrayList<>();
     shouldBeCase.add(new Vector2D(35,100));
@@ -121,15 +121,15 @@ class MpatternGeneratorTest {
   void generatePathTest2() throws NoSuchMethodException,
           InvocationTargetException, IllegalAccessException {
     Method indexOfMethod = MpatternGenerator.class
-            .getDeclaredMethod("generatePath");
+            .getDeclaredMethod("generatePath", long.class, int.class);
     indexOfMethod.setAccessible(true);
 
     boolean errorFlag = false;
 
     for (int i = 0; i < 100; i++) {
-      //long testSeed = new Random().nextLong();
+      long testSeed = new Random().nextLong();
 
-      final ArrayList<Vector2D> result = (ArrayList<Vector2D>) indexOfMethod.invoke(patternGenerator);
+      final ArrayList<Vector2D> result = (ArrayList<Vector2D>) indexOfMethod.invoke(patternGenerator, testSeed, 5);
       result.remove(0); // first point never in boundaries because duck spawn on bottom of screen
 
       for (Vector2D v : result) {
