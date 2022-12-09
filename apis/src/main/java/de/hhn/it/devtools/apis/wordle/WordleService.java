@@ -31,7 +31,7 @@ public interface WordleService {
    * @param guess the guess which the method will validate
    * @throws IllegalGuessException if the given guess is too short
    */
-  void validateWordleGuess(WordleGuess guess) throws IllegalGuessException;
+  void validateWordleGuess(WordleGuessService guess) throws IllegalGuessException;
 
   /**
    * Quits the game and closes all Wordle windows.
@@ -41,19 +41,19 @@ public interface WordleService {
   /**
    * Adds a listener in order to get information on the state of a WordlePanel.
    *
-   * @param id ID of the WordlePanel which will have a callback added to it
    * @param listener WordlePanelListener which will be added to the panel
+   * @param panel Panel to which Listener will be added
    * @throws IllegalParameterException if the given ID or listener do not exist
    */
-  void addCallback(int id, WordlePanelListener listener) throws IllegalParameterException;
+  void addCallback(WordlePanelListener listener, WordlePanelService panel) throws IllegalParameterException;
 
   /**
    * Removes a listener from a WordlePanel.
    *
-   * @param id ID of the WordlePanel which will have its Listener removed
    * @param listener Listener which is to be removed
+   * @param panel Panel from which Listener is removed
    * @throws IllegalParameterException if the given ID or listener do not exist
    */
-  void removeCallback(int id, WordlePanelListener listener) throws IllegalParameterException;
+  void removeCallback(WordlePanelListener listener, WordlePanelService panel) throws IllegalParameterException;
 
 }
