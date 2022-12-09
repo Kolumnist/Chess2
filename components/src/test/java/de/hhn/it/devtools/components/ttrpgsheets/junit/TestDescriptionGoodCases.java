@@ -7,6 +7,7 @@ import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionType;
 import de.hhn.it.devtools.components.ttrpgsheets.Description;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +19,8 @@ public class TestDescriptionGoodCases {
 
   static Description ageDescription;
 
-  @BeforeAll
-  static void setup() {
+  @BeforeEach
+  void setup() {
     ageDescription = new Description(new DescriptionDescriptor(DescriptionType.AGE, "35"));
   }
 
@@ -30,7 +31,7 @@ public class TestDescriptionGoodCases {
             new DescriptionDescriptor(DescriptionType.CHARACTER_NAME, "Sylas"));
     assertNotNull(description);
     assertEquals("Sylas", description.getDescription());
-    assertEquals(DescriptionType.PLAYER_NAME, description.getType());
+    assertEquals(DescriptionType.CHARACTER_NAME, description.getType());
   }
 
   @Test
