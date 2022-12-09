@@ -1,25 +1,38 @@
 package de.hhn.it.devtools.components.battleship.provider;
 
 import de.hhn.it.devtools.apis.battleship.*;
+import de.hhn.it.devtools.apis.duckhunt.DuckHuntListener;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.IllegalFormatException;
+
+// @TODO change GameStates if necessary (No ships left to bomb, no ships left to placer ... )
+// Write Tests
+// Write Computer AI
 
 public class cmpBattleshipService implements BattleshipService {
     static GameState currentGameState = GameState.PREGAME;
     Player player = new Player();
     Computer computer = new Computer();
+    int gameVolume;
+    private ArrayList<BattleshipListener> listeners;
+
     // nuri
     @Override
     public void addCallBack(BattleshipListener listener) throws IllegalParameterException {
-
+        listeners.add(listener);
     }
 
     // nuri
     @Override
     public void removeCallback(BattleshipListener listener) throws IllegalParameterException {
-
+        if(listeners.contains(listener)) {
+            listeners.remove(listener);
+            return;
+        }
+        throw new IllegalParameterException("Listener was not added!");
     }
 
     // nedim
@@ -31,7 +44,7 @@ public class cmpBattleshipService implements BattleshipService {
         // wenn y1 der Endpunkt (oberste Punkt) des Schiffes ist dann diese Rechnung:
         int endY = y1 + shipSize;
         int fieldSize = Field.getSize();
-        boolean[][] boolField;
+        PanelState[][] shipField;
 
         // Check if coordinates of ship is outside of field
         if((x1 < 0) || (y1 < 0) || (x1 > fieldSize) || (y1 > fieldSize)){
@@ -41,17 +54,17 @@ public class cmpBattleshipService implements BattleshipService {
             throw new IllegalGameStateException();
         }
         if(owner.equals(player)) {
-            boolField = player.getpShipField().getPanelMarkerMat();
+            shipField = player.getPShipField().getPanelMarkerMat();
         }
         else if(owner.equals(computer)){
-            boolField = computer.getcShipField().getPanelMarkerMat();
+            shipField = computer.getCShipField().getPanelMarkerMat();
         }
         else{
             throw new IllegalArgumentException();
         }
         if(isVertical){
             for(int i = y1; i < endY; i++){
-                if(boolField[i][x1]){
+                if(shipField[i][x1] == PanelState.SHIP){
                     return false;
                 }
             }
@@ -64,7 +77,7 @@ public class cmpBattleshipService implements BattleshipService {
         }
         else if(!isVertical){
             for(int i = x1; i < endX; i++){
-                if(boolField[y1][i]){
+                if(shipField[y1][i] == PanelState.SHIP){
                     return false;
                 }
             }
@@ -86,7 +99,7 @@ public class cmpBattleshipService implements BattleshipService {
         boolean isVertical = shipToPlace.getIsVertical();
         int shipSize = shipToPlace.getSize();
         int endX, endY;
-        boolean[][] boolField;
+        PanelState[][] shipField;
 
         if(isPlaced){
             throw new IllegalShipStateException("Ship is already placed");
@@ -99,11 +112,11 @@ public class cmpBattleshipService implements BattleshipService {
         }
         else if(isPlacementPossible(owner, shipToPlace, x1, y1, isVertical)){
             if(owner.equals(player)){
-                boolField = player.getpShipField().getPanelMarkerMat();
+                shipField = player.getPShipField().getPanelMarkerMat();
             }
             // Diese Statement ging nicht ka wieso: else if(owner.equals(computer)){
             else if(owner.equals(computer)){
-                boolField = computer.getcShipField().getPanelMarkerMat();
+                shipField = computer.getCShipField().getPanelMarkerMat();
             }
             else{
                 throw new IllegalArgumentException();
@@ -114,13 +127,13 @@ public class cmpBattleshipService implements BattleshipService {
             if(isVertical){
                 endY = y1 + shipSize;
                 for(int i = y1; i < endY; i++){
-                    boolField[i][x1] = true;
+                    shipField[i][x1] = PanelState.SHIP;
                 }
             }
             else if(!isVertical){
                 endX = x1 + shipSize;
                 for(int i = x1; i < endX; i++){
-                    boolField[y1][i] = true;
+                    shipField[y1][i] = PanelState.SHIP;
                 }
             }
         }
@@ -135,16 +148,16 @@ public class cmpBattleshipService implements BattleshipService {
         int shipSize = shipToMove.getSize();
         int endX, endY;
         boolean isVertical = shipToMove.getIsVertical();
-        boolean[][] boolField;
+        PanelState[][] shipField;
 
         if(currentGameState != GameState.PLACINGSHIPS){
             throw new IllegalGameStateException();
         }
         else if(owner.equals(player)){
-            boolField = player.getpShipField().getPanelMarkerMat();
+            shipField = player.getPShipField().getPanelMarkerMat();
         }
         else if(owner.equals(computer)){
-            boolField = computer.getcShipField().getPanelMarkerMat();
+            shipField = computer.getCShipField().getPanelMarkerMat();
         }
         else{
             throw new IllegalArgumentException();
@@ -152,13 +165,13 @@ public class cmpBattleshipService implements BattleshipService {
         if(isVertical){
             endY = y + shipSize;
             for(int i = y; i < endY; i++){
-                boolField[i][x] = false;
+                shipField[i][x] = PanelState.NOSHIP;
             }
         }
         else if(!isVertical){
             endX = x + shipSize;
             for(int i = x; i < endX; i++){
-                boolField[y][i] = false;
+                shipField[y][i] = PanelState.NOSHIP;
             }
         }
     }
@@ -223,18 +236,20 @@ public class cmpBattleshipService implements BattleshipService {
 
         if (attacker.equals(player)){
 
-            boolean isShipOnPosition = computer.getcShipField().getPanelMarker(x,y);
+            PanelState isShipOnPosition = computer.getCShipField().getPanelMarker(x,y);
 
-            if (isShipOnPosition){
+            if (isShipOnPosition.equals(PanelState.SHIP)){
                 // set ship part on position to bombed
-                computer.getcShipField().setPanelMarker(x, y,false);
+                computer.getCShipField().setPanelMarker(x, y, PanelState.HIT);
 
-                player.getpAttackField().setPanelMarker(x, y,true);
+                player.getPAttackField().setPanelMarker(x, y,PanelState.HIT);
                 return true;
             }
             else {
                 //set position to bombed (not necessary hit)
-                player.getpAttackField().setPanelMarker(x,y,true);
+                computer.getCShipField().setPanelMarker(x, y, PanelState.MISSED);
+
+                player.getPAttackField().setPanelMarker(x,y,PanelState.MISSED);
                 return false;
             }
 
@@ -243,24 +258,26 @@ public class cmpBattleshipService implements BattleshipService {
 
         else if (attacker.equals(computer)){
 
-            boolean isShipOnPosition = player.getpShipField().getPanelMarker(x,y);
+            PanelState isShipOnPosition = player.getPShipField().getPanelMarker(x,y);
 
-            if(isShipOnPosition){
+            if(isShipOnPosition.equals(PanelState.SHIP)){
                 // set ship part on position to bombed
-                player.getpShipField().setPanelMarker(x,y,false);
+                player.getPShipField().setPanelMarker(x,y,PanelState.HIT);
                 //set position to bombed (not necessary hit)
-                computer.getcAttackField().setPanelMarker(x,y,true);
+                computer.getCAttackField().setPanelMarker(x,y,PanelState.HIT);
                 return true;
             }
             else {
                 // set position to bombed (not necessary hit)
-                computer.getcAttackField().setPanelMarker(x,y,true);
+                player.getPShipField().setPanelMarker(x,y,PanelState.MISSED);
+
+                computer.getCAttackField().setPanelMarker(x,y,PanelState.MISSED);
                 return false;
             }
 
         }
 
-        // necessary but should'nt be executed
+        // necessary but shouldn't be executed
         return false;
     }
 
@@ -277,7 +294,7 @@ public class cmpBattleshipService implements BattleshipService {
     // nuri
     @Override
     public void adjustSoundVolume(int newVolume) throws IllegalArgumentException {
-
+        gameVolume = newVolume;
     }
 
     // moutassem
@@ -340,6 +357,7 @@ public class cmpBattleshipService implements BattleshipService {
     @Override
     public void concede() throws IllegalGameStateException {
         //TODO: braucht zuerst UI
+        currentGameState = GameState.GAMEOVER;
         //Anzeigen, dass CPU gewinnt
         //Unter der Anzeige Knopf für rematch und Knopf für Rückkehr zum Hauptmenü
     }

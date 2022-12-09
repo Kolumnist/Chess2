@@ -18,12 +18,12 @@ public class Computer extends Owner {
     }
 
 
-    public AttackField getcAttackField() {
+    public AttackField getCAttackField() {
         return cAttackField;
     }
 
 
-    public ShipField getcShipField(){
+    public ShipField getCShipField(){
         return cShipField;
     }
 }

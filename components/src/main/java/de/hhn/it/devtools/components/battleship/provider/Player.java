@@ -1,6 +1,5 @@
 package de.hhn.it.devtools.components.battleship.provider;
 
-import de.hhn.it.devtools.apis.battleship.Field;
 import de.hhn.it.devtools.apis.battleship.Owner;
 
 public class Player extends Owner {
@@ -19,12 +18,12 @@ public class Player extends Owner {
     }
 
 
-    public AttackField getpAttackField(){
+    public AttackField getPAttackField(){
         return this.pAttackField;
     }
 
 
-    public ShipField getpShipField(){
+    public ShipField getPShipField(){
         return this.pShipField;
     }
 
