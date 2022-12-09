@@ -76,7 +76,7 @@ public class WordleGameLogic implements WordleService{
    * @param guess The guess entered by the player
    * @throws IllegalGuessException is thrown if guess is not long enough
    */
-  public void checkIfGuessIsLongEnough (WordleGuess guess) throws IllegalGuessException {
+  public void checkIfGuessIsLongEnough (WordleGuess guess) throws IllegalGuessException { // try catch Block will be implemented in the Controller class
     for (WordlePanel panel : guess.getWordleWord()) {
       if (panel.getLetter() == ' ')
         throw new IllegalGuessException("Wordle guess does not contain five valid characters!");
