@@ -35,7 +35,7 @@ public class WordleGameLogic implements WordleService{
   }
 
   @Override
-  public void validateWordleGuess(WordleGuess guess) throws IllegalGuessException {
+  public void validateWordleGuess(WordleGuessService guess) throws IllegalGuessException {
     checkIfGuessIsLongEnough(guess);
   }
 
@@ -47,7 +47,7 @@ public class WordleGameLogic implements WordleService{
    */
   public boolean checkIfGuessIsEqualToSolution(WordleGuess guess){
     String enteredWordleGuess = guess.getWordleGuessAsString().toLowerCase();
-    WordlePanel[] wordlePanels = guess.getWordleWord();
+    WordlePanelService[] wordlePanels = guess.getWordleWord();
     return checkIfGuessIsCorrect(enteredWordleGuess, guess) ||
         checkPanelsIndividually(enteredWordleGuess, wordlePanels, guess);
   }
@@ -62,8 +62,9 @@ public class WordleGameLogic implements WordleService{
    */
   public boolean checkIfGuessIsCorrect(String enteredWordleGuess, WordleGuess guess) {
     if (enteredWordleGuess.equals(currentWordleSolution.toLowerCase())) {
-      for (WordlePanel panel : guess.getWordleWord()) {
+      for (WordlePanelService panel : guess.getWordleWord()) {
         panel.setState(State.CORRECT);
+        panel.notifyListeners(State.CORRECT);
         return true;
       }
     }
@@ -76,8 +77,8 @@ public class WordleGameLogic implements WordleService{
    * @param guess The guess entered by the player
    * @throws IllegalGuessException is thrown if guess is not long enough
    */
-  public void checkIfGuessIsLongEnough (WordleGuess guess) throws IllegalGuessException { // try catch Block will be implemented in the Controller class
-    for (WordlePanel panel : guess.getWordleWord()) {
+  public void checkIfGuessIsLongEnough (WordleGuessService guess) throws IllegalGuessException { // try catch Block will be implemented in the Controller class
+    for (WordlePanelService panel : guess.getWordleWord()) {
       if (panel.getLetter() == ' ')
         throw new IllegalGuessException("Wordle guess does not contain five valid characters!");
     }
@@ -91,14 +92,17 @@ public class WordleGameLogic implements WordleService{
    * @param guess The WordleGuess made by the player
    * @return always returns false since given guess is not the solution
    */
-  public boolean checkPanelsIndividually(String enteredWordleGuess, WordlePanel[] wordlePanels, WordleGuess guess) {
+  public boolean checkPanelsIndividually(String enteredWordleGuess, WordlePanelService[] wordlePanels, WordleGuess guess) {
     for (int i = 0; i < guess.getWordleWord().length; i++) {
       if (enteredWordleGuess.charAt(i) == currentWordleSolution.charAt(i)) {
         wordlePanels[i].setState(State.CORRECT);
+        wordlePanels[i].notifyListeners(State.CORRECT);
       } else if (currentWordleSolution.contains(Character.toString(enteredWordleGuess.charAt(i)))) {
         wordlePanels[i].setState(State.PARTIALLY_CORRECT);
+        wordlePanels[i].notifyListeners(State.PARTIALLY_CORRECT);
       } else {
         wordlePanels[i].setState(State.FALSE);
+        wordlePanels[i].notifyListeners(State.FALSE);
       }
     }
     return false;
@@ -106,17 +110,16 @@ public class WordleGameLogic implements WordleService{
 
   @Override
   public void quitGame() {
-
   }
 
   @Override
-  public void addCallback(int id, WordlePanelListener listener) throws IllegalParameterException {
-
+  public void addCallback(WordlePanelListener listener, WordlePanelService panel) throws IllegalParameterException {
+    panel.addCallback(listener);
   }
 
   @Override
-  public void removeCallback(int id, WordlePanelListener listener) throws IllegalParameterException {
-
+  public void removeCallback(WordlePanelListener listener, WordlePanelService panel) throws IllegalParameterException {
+    panel.removeCallback(listener);
   }
 
   public String getPreviousWordleSolution() {
