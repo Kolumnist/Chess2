@@ -3,6 +3,7 @@ package de.hhn.it.devtools.components.duckhunt;
 import de.hhn.it.devtools.apis.duckhunt.DuckData;
 import de.hhn.it.devtools.apis.duckhunt.DuckHuntListener;
 import de.hhn.it.devtools.apis.duckhunt.DuckHuntService;
+import de.hhn.it.devtools.apis.duckhunt.DuckOrientation;
 import de.hhn.it.devtools.apis.duckhunt.DuckState;
 import de.hhn.it.devtools.apis.duckhunt.DucksInfo;
 import de.hhn.it.devtools.apis.duckhunt.GameInfo;
@@ -27,9 +28,12 @@ public class DuckHunt implements Runnable, DuckHuntService {
   private DuckData[] ducks;
   private int ammoCount;
   private int duckCount;
+  private int missedCount = 15;
   private final int gunSpread = 5;
   private final Semaphore semaphore = new Semaphore(0);
-  private boolean isRunning = false;
+  private MpatternGenerator pathGenerator;
+  private float deltaTime = 0.016f;
+  private final float duckSpeed = 10f;
 
   /**
    * Default constructor with standard game settings.
@@ -52,7 +56,7 @@ public class DuckHunt implements Runnable, DuckHuntService {
   }
 
   private void init() {
-    this.gameInfo = new GameInfo(0, gameSettings.getAmmoAmount(), 1, GameState.RUNNING);
+    this.gameInfo = new GameInfo(0, gameSettings.getAmmoAmount(), 1);
     this.listeners = new ArrayList<>();
     ammoCount = gameSettings.getAmmoAmount();
     duckCount = gameSettings.getduckAmount();
@@ -60,6 +64,7 @@ public class DuckHunt implements Runnable, DuckHuntService {
     for (int i = 0; i < duckCount; i++) {
       ducks[i] = (new DuckData(i, 0, 0, DuckState.FLYING));
     }
+    this.pathGenerator = new MpatternGenerator(50, screenDimension);
   }
 
   /**
@@ -70,6 +75,8 @@ public class DuckHunt implements Runnable, DuckHuntService {
    */
   @Override
   public void shoot(int x, int y) {
+    // TODO ERROR Handling shoot
+    /*if (gameInfo.getState() != GameState.RUNNING) throw new Exception();*/
     for (DuckData duck : ducks) {
       if (duck.getStatus() == DuckState.DEAD) {
         continue;
@@ -95,6 +102,11 @@ public class DuckHunt implements Runnable, DuckHuntService {
   }
 
   @Override
+  public void shootObstacle() {
+    gameInfo.setAmmo(gameInfo.getAmmo() - 1);
+  }
+
+  @Override
   public void reload() {
     ammoCount = gameSettings.getAmmoAmount();
   }
@@ -104,21 +116,44 @@ public class DuckHunt implements Runnable, DuckHuntService {
    */
   private void updateDucks() {
     for (DuckData duck : ducks) {
+      if (duck.getStatus() == DuckState.FLYING || duck.getStatus() == DuckState.FALLING) {
+        // velocity = resolutionCoefficient * speed * deltaTime
+        float newVelocity = 0.3f * duckSpeed * deltaTime;
+        duck.setVelocity(duck.getVelocity() + newVelocity);
+      }
       switch (duck.getStatus()) {
         case FLYING -> moveDuck(duck);
         case SCARRED -> duck.setStatus(DuckState.FALLING);
         case FALLING -> dropDuck(duck);
+        case FLYAWAY -> { /*flyaway is not used in this method*/ }
+        case DEAD -> { /*dead is not used in this method*/ }
         default -> throw new IllegalStateException("Unexpected value: " + duck.getStatus());
       }
     }
   }
 
   private void dropDuck(DuckData duck) {
-    duck.setY(duck.getY() + 1);
+    float velocity = duck.getVelocity();
+    if (velocity > 1f) { // if true duck can be moved to next position
+      duck.setY(duck.getY() + 1);
+      duck.setVelocity(velocity - 1f);
+    }
   }
 
   private void moveDuck(DuckData duck) {
-    // TODO implement duck movement
+    float velocity = duck.getVelocity();
+    if (velocity > 1f) { // if true duck can be moved to next position
+      DuckOrientation newOrientation = pathGenerator.getNextMove(duck.getId());
+      duck.setOrientation(newOrientation);
+      duck.setX(duck.getX() + newOrientation.getX());
+      duck.setY(duck.getY() + newOrientation.getY());
+      duck.setVelocity(velocity - 1f);
+    }
+  }
+
+  private void calculateNewDuckPaths() {
+    pathGenerator.clearPaths();
+    pathGenerator.generatePaths(ducks);
   }
 
   /**
@@ -145,31 +180,75 @@ public class DuckHunt implements Runnable, DuckHuntService {
     for (DuckData duck : ducks) {
       duck.setStatus(DuckState.FLYING);
     }
+    calculateNewDuckPaths();
   }
 
   @Override
   public void startGame() {
-    isRunning = true;
+    gameInfo.setState(GameState.RUNNING);
     new Thread(this).start();
+    listeners.forEach(
+            listener -> {
+              try {
+                listener.newState(gameInfo);
+              } catch (IllegalGameInfoException e) {
+                throw new RuntimeException(e);
+              }
+            });
   }
 
   @Override
   public void stopGame() {
-    isRunning = false;
+    gameInfo.setState(GameState.GAMEOVER);
+    listeners.forEach(
+            listener -> {
+              try {
+                listener.newState(gameInfo);
+              } catch (IllegalGameInfoException e) {
+                throw new RuntimeException(e);
+              }
+            });
   }
 
   @Override
   public void pauseGame() {
+    gameInfo.setState(GameState.PAUSED);
     try {
       semaphore.tryAcquire(10, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
       throw new RuntimeException(e);
     }
+    listeners.forEach(
+            listener -> {
+              try {
+                listener.newState(gameInfo);
+              } catch (IllegalGameInfoException e) {
+                throw new RuntimeException(e);
+              }
+            });
   }
 
   @Override
   public void continueGame() {
+    gameInfo.setState(GameState.RUNNING);
     semaphore.release();
+    listeners.forEach(
+            listener -> {
+              try {
+                listener.newState(gameInfo);
+              } catch (IllegalGameInfoException e) {
+                throw new RuntimeException(e);
+              }
+            });
+  }
+
+  private boolean checkGameOver() {
+    for (DuckData duck : ducks) {
+      if (duck.getStatus() == DuckState.FLYAWAY) {
+        missedCount--;
+      }
+    }
+    return missedCount <= 0;
   }
 
   @Override
@@ -194,13 +273,14 @@ public class DuckHunt implements Runnable, DuckHuntService {
   @Override
   public void run() {
     // main game loop
-    while (isRunning) {
+    while (gameInfo.getState() == GameState.RUNNING || gameInfo.getState() == GameState.PAUSED) {
       try {
         // waits if game is paused
         semaphore.tryAcquire(Integer.MAX_VALUE, TimeUnit.DAYS);
       } catch (InterruptedException e) {
         throw new RuntimeException(e);
       }
+      final long startTime = System.currentTimeMillis();
 
       updateDucks();
 
@@ -217,16 +297,21 @@ public class DuckHunt implements Runnable, DuckHuntService {
           });
 
       if (checkRoundComplete()) {
-        newRound();
-        try {
-          // timeout between rounds
-          Thread.sleep(4000);
-        } catch (InterruptedException e) {
-          throw new RuntimeException(e);
+        if (checkGameOver()) {
+          stopGame();
+        } else {
+          newRound();
+          try {
+            // timeout between rounds
+            Thread.sleep(4000);
+          } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+          }
         }
       }
 
       semaphore.release();
+      deltaTime = (System.currentTimeMillis() - startTime) / 1000.0f;
     }
   }
 }

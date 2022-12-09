@@ -7,5 +7,5 @@ package de.hhn.it.devtools.apis.minesweeper;
  */
 
 public interface MinesweeperActionListener{
-    public void onAction(String event);
+    void onAction(String event);
 }

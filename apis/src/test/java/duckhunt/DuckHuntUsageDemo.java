@@ -6,7 +6,6 @@ import de.hhn.it.devtools.apis.duckhunt.DuckHuntService;
 import de.hhn.it.devtools.apis.duckhunt.DucksInfo;
 import de.hhn.it.devtools.apis.duckhunt.GameInfo;
 import de.hhn.it.devtools.apis.duckhunt.GameSettingsDescriptor;
-import de.hhn.it.devtools.apis.duckhunt.GameState;
 import de.hhn.it.devtools.apis.duckhunt.IllegalDuckIdException;
 import de.hhn.it.devtools.apis.duckhunt.IllegalDuckPositionException;
 import de.hhn.it.devtools.apis.duckhunt.IllegalGameInfoException;
@@ -40,13 +39,15 @@ public class DuckHuntUsageDemo {
       duckHuntService.startGame();
 
       // is called when there is an update of the game (every game tick)
-      duckHuntListener.newState(new GameInfo(100, 3, 5, GameState.RUNNING));
+      duckHuntListener.newState(new GameInfo(100, 3, 5));
       duckHuntListener.newDuckPosition(new DucksInfo(duckDatas));
       // is called when a duck was hit
       duckHuntListener.duckHit(1);
 
       // is called when shoot mouse button is clicked in the game
       duckHuntService.shoot(1, 1);
+      // is called when an obstacle is hit
+      duckHuntService.shootObstacle();
 
       // pause and continue game
       duckHuntService.pauseGame();

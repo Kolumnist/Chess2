@@ -5,8 +5,12 @@ package de.hhn.it.devtools.apis.duckhunt;
  * Stored in the GameInfo-Class.
  */
 public enum GameState {
+  /** The State of the DuckHunt-Game when the game is in the menu. */
+  PREPARED,
   /** The State of the DuckHunt-Game when the game is running. */
   RUNNING,
   /** The State of the DuckHunt-Game when the game is paused. */
-  PAUSED
+  PAUSED,
+  /** The State of the DuckHunt-Game when the game is over. */
+  GAMEOVER
 }

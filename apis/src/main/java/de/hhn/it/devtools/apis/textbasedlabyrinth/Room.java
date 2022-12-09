@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 
+import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Random;
 
 /**
  * Room Class for the Game, defines the Rooms of the Game
- * with assigned next-door Rooms and Items inside of it.
+ * with assigned next-door Rooms and Items inside it.
  */
 public class Room {
 
@@ -37,6 +38,8 @@ public class Room {
   private boolean hasDoorE;
   private boolean hasDoorS;
 
+  public boolean isExit;
+
   /**
    * Constructor of Room.
    *
@@ -55,15 +58,28 @@ public class Room {
 
     items = new HashMap<>();
     this.description = description;
-    this.westDoor = new Door();
-    this.eastDoor = new Door();
-    this.northDoor = new Door();
-    this.southDoor = new Door();
   }
 
   public void addItem(Item item) {
     items.put(item.getItemId(), item);
 
+  }
+
+  public Room getRoom(Direction direction){
+    Room room = null;
+    if(direction.equals(Direction.SOUTH)){
+      room = toTheSouth;
+    }
+    else if(direction.equals(Direction.NORTH)){
+      room = toTheNorth;
+    }
+    else if(direction.equals(Direction.EAST)){
+      room = toTheEast;
+    }
+    else{
+      room = toTheSouth;
+    }
+    return room;
   }
 
   /**
@@ -117,6 +133,22 @@ public class Room {
 
   }
 
+  public Door getDoor(Direction direction) throws RoomFailedException {
+    if (direction.equals(Direction.SOUTH) && isSouthAssigned) {
+      return southDoor;
+    } else if (direction.equals(Direction.NORTH) && isNorthAssigned) {
+      return northDoor;
+    } else if (direction.equals(Direction.EAST) && isEastAssigned) {
+      return eastDoor;
+    } else if (direction.equals(Direction.WEST) && isWestAssigned) {
+      return westDoor;
+    } else {
+      throw new RoomFailedException("No door found in this direction: " + direction.toString());
+    }
+
+
+  }
+
   public void removeItem(int itemId) {
     items.remove(itemId);
   }
@@ -161,28 +193,6 @@ public class Room {
     return hasDoorE;
   }
 
-  /**
-   * Get Number od foos.
-   *
-   * @return Number od Doors.
-   */
-  public int getNumberOfDoors() {
-    int a = 0;
-    if (hasDoorS) {
-      a++;
-    }
-    if (hasDoorW) {
-      a++;
-    }
-    if (hasDoorE) {
-      a++;
-    }
-    if (hasDoorN) {
-      a++;
-    }
-    return a;
-  }
-
 
 
   /**
@@ -218,22 +228,22 @@ public class Room {
    * @param isNorth Boolean check to see if the new Room will be to the north of current room
    */
   public void setNextDoorRoom(Room room, Boolean isEast, Boolean isWest, Boolean isNorth) {
-    if (isEast && !isWest && !isNorth) {
+    if (isEast && !isWest && !isNorth && !isEastAssigned) {
       this.toTheEast = room;
       this.isEastAssigned = true;
       room.toTheWest = this;
       room.isWestAssigned = true;
-    } else if (isWest && !isEast && !isNorth) {
+    } else if (isWest && !isEast && !isNorth && !isWestAssigned) {
       this.toTheWest = room;
       this.isWestAssigned = true;
       room.toTheWest = this;
       room.isEastAssigned = true;
-    } else if (isNorth && !isEast && !isWest) {
+    } else if (isNorth && !isEast && !isWest && !isNorthAssigned) {
       this.toTheNorth = room;
       this.isNorthAssigned = true;
       room.toTheSouth = this;
       room.isSouthAssigned = true;
-    } else {
+    } else if (!isNorth && !isEast && !isWest && !isSouthAssigned) {
       this.toTheSouth = room;
       this.isSouthAssigned = true;
       room.toTheNorth = this;
@@ -241,8 +251,5 @@ public class Room {
     }
   }
 
-  public void setExit(){
-
-  }
 
 }
