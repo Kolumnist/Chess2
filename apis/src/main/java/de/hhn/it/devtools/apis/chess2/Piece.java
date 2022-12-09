@@ -37,6 +37,15 @@ public abstract class Piece {
   }
 
   /**
+   * The coordinate were the current piece stands is returned.
+   *
+   * @return coordinate of the current piece.
+   */
+  public Coordinate getCoordinate() {
+    return coordinate;
+  }
+
+  /**
    * Sets the new coordinate.
    *
    * @param coordinate is the new coordinate.
@@ -92,7 +101,6 @@ public abstract class Piece {
       shortedArray[k] = possibleMoves[i];
       k++;
     }
-
     return shortedArray;
   }
 }
