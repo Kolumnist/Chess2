@@ -1,7 +1,5 @@
 package de.hhn.it.devtools.components.wordle.provider;
 
-import de.hhn.it.devtools.apis.wordle.WordleGuess;
-
 public class WordleGame {
 
   private String solution;
