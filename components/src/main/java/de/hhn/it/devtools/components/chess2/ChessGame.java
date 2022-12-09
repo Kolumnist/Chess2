@@ -5,8 +5,12 @@ import de.hhn.it.devtools.apis.chess2.Chess2Service;
 import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.GameState;
+import de.hhn.it.devtools.apis.chess2.Piece;
 import de.hhn.it.devtools.apis.chess2.WinningPlayerState;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.components.chess2.pieces.Elephant;
+import de.hhn.it.devtools.components.chess2.pieces.Fish;
+import java.util.Optional;
 
 /**
  * The main Controller class.
@@ -38,9 +42,22 @@ public class ChessGame implements Chess2Service {
     currentPlayer = whitePlayer;
   }
 
+  private void initializeBoard() {
+    for (int i = 0; i < whitePlayer.myPieces.length; i++) {
+      Piece whitePiece = whitePlayer.myPieces[i];
+      gameBoard.getSpecificField(whitePiece.getCoordinate()).setPiece(Optional.of(whitePiece));
+
+      Piece blackPiece = blackPlayer.myPieces[i];
+      gameBoard.getSpecificField(blackPiece.getCoordinate()).setPiece(Optional.of(blackPiece));
+    }
+  }
+
   @Override
   public Board startNewGame() {
     logger.info("startNewGame");
+
+    /* TODO: Set Pieces on Fields*/
+    initializeBoard();
 
     gameState = GameState.RUNNING;
     winState = WinningPlayerState.STILL_RUNNING;
@@ -93,7 +110,7 @@ public class ChessGame implements Chess2Service {
 
     /* TODO: Ask team -> can the Player have less pieces when some of em are defeated? */
     for (int i = 0; i < currentPlayer.myPieces.length; i++) {
-      currentPlayer.myPieces[i].getCoordinate();
+      currentCoordinates[i] = currentPlayer.myPieces[i].getCoordinate();
     }
 
     return currentCoordinates;

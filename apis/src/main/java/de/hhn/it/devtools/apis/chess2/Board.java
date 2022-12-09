@@ -46,8 +46,7 @@ public class Board {
           && field.getCoordinate().getY() == coordinate.getY()) {
         return field;
       }
-    }
-    return fields[fields.length-1];
+    }return fields[fields.length - 1];
   }
 
   /**
