@@ -3,7 +3,11 @@ package de.hhn.it.devtools.components.duckhunt;
 import de.hhn.it.devtools.apis.duckhunt.DuckData;
 import de.hhn.it.devtools.apis.duckhunt.DuckOrientation;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Stack;
+import java.util.LinkedList;
+import java.time.ZonedDateTime;
 
 /**
  * Allows random movement-pattern generation.
@@ -124,7 +128,7 @@ public final class MpatternGenerator {
    * Ths method generates a movement pattern.
    **/
   private ArrayList<Vector2D> generatePath() {
-    RangedRandom randomGen = new RangedRandom();
+    RangedRandom randomGen = new RangedRandom(ZonedDateTime.now().toInstant().toEpochMilli());
     ArrayList<Vector2D> generatedPattern = new ArrayList<>();
     int height = screenDimension.getHeight() - sidePadding;
     int width = screenDimension.getWidth() - sidePadding;
@@ -210,8 +214,6 @@ public final class MpatternGenerator {
       i++;
     }
     return generatedPattern;
-
-
   }
 
   /*private ArrayList<Vector2D> generatePath() {
@@ -228,7 +230,7 @@ public final class MpatternGenerator {
    */
   private ArrayList<Vector2D> generatePath(long seed, int pointAmount) {
     ArrayList<Vector2D> generatedPattern = new ArrayList<>();
-    RangedRandom random = new RangedRandom();
+    RangedRandom random = new RangedRandom(seed);
     random.setSeed(seed);
 
     // list defines probability for directions to be taken each step

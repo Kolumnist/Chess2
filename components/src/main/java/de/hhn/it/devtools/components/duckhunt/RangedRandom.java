@@ -7,6 +7,10 @@ import java.util.Random;
  */
 public class RangedRandom extends Random {
 
+  public RangedRandom(long seed) {
+    super(seed);
+  }
+
   public int randomInt(int min, int max) {
     return nextInt(max - min) + min;
   }
