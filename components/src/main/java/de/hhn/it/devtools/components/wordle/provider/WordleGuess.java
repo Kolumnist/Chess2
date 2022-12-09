@@ -1,10 +1,14 @@
-package de.hhn.it.devtools.apis.wordle;
+package de.hhn.it.devtools.components.wordle.provider;
+
+import de.hhn.it.devtools.apis.wordle.State;
+import de.hhn.it.devtools.apis.wordle.WordleGuessService;
+import de.hhn.it.devtools.apis.wordle.WordlePanelService;
 
 /**
  * A class that models an entire Wordle guess, consisting of five WordlePanels.
  */
-public class WordleGuess {
-  private WordlePanel[] wordleWord = new WordlePanel[5];
+public class WordleGuess implements WordleGuessService {
+  private WordlePanelService[] wordleWord = new WordlePanel[5];
 
   /**
    * Constructor of WordleGuess which will be entered into the WordlePanel Array.
@@ -18,11 +22,12 @@ public class WordleGuess {
     }
   }
 
-  public WordlePanel[] getWordleWord() {
+  public WordlePanelService[] getWordleWord() {
     return wordleWord;
   }
 
-  public void setWordleWord(WordlePanel[] wordleWord) {
+  @Override
+  public void setWordleWord(WordlePanelService[] wordleWord) {
     this.wordleWord = wordleWord;
   }
 
@@ -55,7 +60,7 @@ public class WordleGuess {
    */
   public String getWordleGuessAsString() {
     StringBuilder wordleGuessAsString = new StringBuilder();
-    for (WordlePanel wordlePanel : wordleWord) {
+    for (WordlePanelService wordlePanel : wordleWord) {
       wordleGuessAsString.append(wordlePanel.getLetter());
     }
     return String.valueOf(wordleGuessAsString);
