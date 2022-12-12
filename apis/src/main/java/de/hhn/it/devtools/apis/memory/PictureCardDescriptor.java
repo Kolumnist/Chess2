@@ -74,7 +74,7 @@ public class PictureCardDescriptor {
   }
 
   /**
-   * Sets the ID of of the card.
+   * Sets the ID of the card.
    *
    * @param id of the card
    */
