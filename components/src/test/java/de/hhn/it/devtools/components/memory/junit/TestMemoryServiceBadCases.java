@@ -132,7 +132,7 @@ public class TestMemoryServiceBadCases {
   @DisplayName("matching Cards for non existing card")
   void testExceptionWhenMatchingNonExistingCard() {
     assertThrows(IllegalParameterException.class,
-            () -> memoryService.matchCards(null, null)
+            () -> memoryService.checkForMatch(null, null)
     );
   }
 

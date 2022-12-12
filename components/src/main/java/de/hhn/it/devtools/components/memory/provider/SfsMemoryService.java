@@ -165,41 +165,19 @@ public class SfsMemoryService implements MemoryService {
     if (!cards.containsKey(id)) {
       throw new IllegalParameterException("PictureCard with id " + id + " does not exist.");
     }
+    if (cards.get(id).getPictureCard().getState().equals(State.VISIBLE)) {
+      throw new IllegalParameterException("Card is already visible.");
+    }
+    //checks if another card is already visible
     for (PictureCard c : cards.values()) {
       if (c.getPictureCard().getState().equals(State.VISIBLE)) {
-        if (c.getPictureCard().getId() == id) {
-          throw new IllegalParameterException("Card is already visible.");
-        }
         PictureCard card = getPictureCardById(id);
         card.turnCard();
-
-        if (c.getPictureCard().getPictureRef() == -1 && card.getPictureCard().getPictureRef() == -1
-                || c.getPictureCard().getName() == null
-                && card.getPictureCard().getName() == null) {
-          c.turnCard();
-          card.turnCard();
-        } else {
-          if (c.getPictureCard().getPictureRef() == -1) {
-            if (matchCards(card, c)) {
-              c.matchCard();
-              card.matchCard();
-            } else {
-              c.turnCard();
-              card.turnCard();
-            }
-          } else if (card.getPictureCard().getPictureRef() == -1) {
-            if (matchCards(c, card)) {
-              c.matchCard();
-              card.matchCard();
-            } else {
-              c.turnCard();
-              card.turnCard();
-            }
-          }
-        }
+        checkCards(c, card);
         return;
       }
     }
+    //if no other card is visible
     getPictureCardById(id).turnCard();
   }
 
@@ -244,7 +222,30 @@ public class SfsMemoryService implements MemoryService {
     pictureReferences = (Map<Integer, String>) picReferences.clone();
   }
 
-  public boolean matchCards(PictureCard picture, PictureCard name)
+  public boolean checkCards(PictureCard a, PictureCard b) throws IllegalParameterException {
+    if (checkForSameType(a, b) && checkOrderForMatch(a, b)) {
+      a.matchCard();
+      b.matchCard();
+      return true;
+    }
+    a.turnCard();
+    b.turnCard();
+    return false;
+  }
+
+  private boolean checkForSameType(PictureCard a, PictureCard b) {
+    return (a.getPictureCard().getPictureRef() != -1
+        || b.getPictureCard().getPictureRef() != -1)
+        && (a.getPictureCard().getName() != null
+        || b.getPictureCard().getName() != null);
+  }
+
+  private boolean checkOrderForMatch(PictureCard a, PictureCard b) throws IllegalParameterException {
+    return (a.getPictureCard().getPictureRef() == -1 && checkForMatch(b, a)
+        || b.getPictureCard().getPictureRef() == -1 && checkForMatch(a, b));
+  }
+
+  public boolean checkForMatch(PictureCard picture, PictureCard name)
           throws IllegalParameterException {
     logger.info("matchCards: picture = {}, name = {}", picture, name);
     if (picture == null || name == null) {
