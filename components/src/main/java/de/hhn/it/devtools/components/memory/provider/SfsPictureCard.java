@@ -4,7 +4,6 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
 import de.hhn.it.devtools.apis.memory.PictureCardListener;
 import de.hhn.it.devtools.apis.memory.State;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -18,13 +17,13 @@ public class SfsPictureCard implements PictureCard {
           org.slf4j.LoggerFactory.getLogger(SfsPictureCard.class);
   private List<PictureCardListener> listeners;
   private PictureCardDescriptor descriptor;
-  private static AtomicInteger idCounter = new AtomicInteger();
+  private static AtomicInteger idCounter = new AtomicInteger(0);
 
   public SfsPictureCard(PictureCardDescriptor descriptor) {
     logger.debug("Constructor - {}", descriptor);
     listeners = new ArrayList<>();
+    descriptor.setId(idCounter.getAndIncrement());
     this.descriptor = descriptor;
-    //idCounter.getAndIncrement();
   }
 
   public static int getIdCounter() {
@@ -32,7 +31,7 @@ public class SfsPictureCard implements PictureCard {
   }
 
   public static void resetIdCounter() {
-    SfsPictureCard.idCounter.set(0);
+    idCounter.set(0);
   }
 
   @Override

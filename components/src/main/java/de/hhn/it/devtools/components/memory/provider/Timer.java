@@ -6,9 +6,9 @@ import de.hhn.it.devtools.apis.memory.TimerListener;
 
 public interface Timer {
 
-    void addCallback(TimerListener listener) throws IllegalParameterException;
+  void addCallback(TimerListener listener) throws IllegalParameterException;
 
-    void removeCallback(TimerListener listener) throws IllegalParameterException;
+  void removeCallback(TimerListener listener) throws IllegalParameterException;
 
-    TimerDescriptor getTimer();
+  TimerDescriptor getTimer();
 }

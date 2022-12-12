@@ -1,20 +1,19 @@
 package de.hhn.it.devtools.components.memory.junit;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.apis.memory.*;
+import de.hhn.it.devtools.apis.memory.TimerDescriptor;
+import de.hhn.it.devtools.apis.memory.TimerListener;
 import de.hhn.it.devtools.components.memory.provider.SfsTimer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestTimer {
   private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(TestTimer.class);
+          org.slf4j.LoggerFactory.getLogger(TestTimer.class);
 
   private SfsTimer timer;
 
@@ -26,7 +25,7 @@ public class TestTimer {
   @Test
   @DisplayName("Test registration of callback listener.")
   void CheckSuccessfulRegistrationOfCallback() throws IllegalParameterException,
-      InterruptedException {
+          InterruptedException {
     TestTimer.SimpleTimerListener listener = new SimpleTimerListener();
     timer.addCallback(listener);
     timer.startTime();
@@ -44,8 +43,8 @@ public class TestTimer {
     timer.startTime();
     Thread.sleep(5000);
     assertAll(
-        () -> assertTrue(listener0.times.size() > 0),
-        () -> assertTrue(listener1.times.size() > 0)
+            () -> assertTrue(listener0.times.size() > 0),
+            () -> assertTrue(listener1.times.size() > 0)
     );
   }
 
@@ -61,9 +60,9 @@ public class TestTimer {
     Thread.sleep(5000);
     int lenght1 = listener.times.size();
     assertAll(
-        () -> assertTrue(lenght0 > 0),
-        () -> assertTrue(lenght1 > 0),
-        () -> assertEquals(lenght0, lenght1)
+            () -> assertTrue(lenght0 > 0),
+            () -> assertTrue(lenght1 > 0),
+            () -> assertEquals(lenght0, lenght1)
     );
   }
 
@@ -73,29 +72,29 @@ public class TestTimer {
     SimpleTimerListener listener = new SimpleTimerListener();
     timer.addCallback(listener);
     IllegalParameterException exception = assertThrows(IllegalParameterException.class,
-        () -> timer.addCallback(listener));
+            () -> timer.addCallback(listener));
   }
 
   @Test
   @DisplayName("Listener which is not registered cannot be removed.")
-  void tryRemoveNotRegisteredListener() throws  IllegalParameterException {
+  void tryRemoveNotRegisteredListener() throws IllegalParameterException {
     SimpleTimerListener listener = new SimpleTimerListener();
     IllegalParameterException exception = assertThrows(IllegalParameterException.class,
-        () -> timer.removeCallback(listener));
+            () -> timer.removeCallback(listener));
   }
 
   @Test
   @DisplayName("Null references cannot be registered as listener.")
   void tryRegisterNullReferencesAsListener() {
     IllegalParameterException exception = assertThrows(IllegalParameterException.class,
-        () -> timer.addCallback(null));
+            () -> timer.addCallback(null));
   }
 
   @Test
   @DisplayName("Null references cannot be removed as listener.")
   void tryRemoveNullReferenceAsListener() {
     IllegalParameterException exception = assertThrows(IllegalParameterException.class,
-        () -> timer.removeCallback(null));
+            () -> timer.removeCallback(null));
   }
 
   /**
@@ -105,7 +104,9 @@ public class TestTimer {
 
     public List<Integer> times;
 
-    public SimpleTimerListener() {times = new ArrayList<>(); }
+    public SimpleTimerListener() {
+      times = new ArrayList<>();
+    }
 
 
     @Override

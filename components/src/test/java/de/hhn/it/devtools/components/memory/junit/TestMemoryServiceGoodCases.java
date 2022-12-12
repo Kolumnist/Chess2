@@ -9,11 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Test the MemoryService with good cases.")
@@ -21,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestMemoryServiceGoodCases {
 
   private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(TestMemoryServiceGoodCases.class);
+          org.slf4j.LoggerFactory.getLogger(TestMemoryServiceGoodCases.class);
 
   SfsMemoryService memoryService;
   ArrayList<PictureCardDescriptor> descriptors;
@@ -47,18 +45,45 @@ public class TestMemoryServiceGoodCases {
     memoryService.addCallback(card.getId(), listener);
     memoryService.removeCallback(card.getId(), listener);
 
-    IllegalParameterException exception = assertThrows(IllegalParameterException.class,
-        () -> memoryService.removeCallback(card.getId(), listener));
+    assertThrows(IllegalParameterException.class,
+            () -> memoryService.removeCallback(card.getId(), listener));
   }
 
   @Test
   @DisplayName("Add and remove callback to a timer")
-  void addAndRemoveCallbackToTimer () throws IllegalParameterException {
+  void addAndRemoveCallbackToTimer() throws IllegalParameterException {
     TimerListener listener = new DummyCallbackTimer();
     memoryService.addCallback(listener);
     memoryService.removeCallback(listener);
 
-    IllegalParameterException exception = assertThrows(IllegalParameterException.class,
+    assertThrows(IllegalParameterException.class,
+            () -> memoryService.removeCallback(listener));
+  }
+
+  @Test
+  @DisplayName("start, stop and reset timer")
+  void startStopResetTimer() throws InterruptedException, IllegalParameterException {
+    ArrayList<Integer> times = new ArrayList<>();
+    memoryService.addCallback(new TimerListener() {
+      @Override
+      public void currentTime(int time) {
+        times.add(time);
+      }
+    });
+    memoryService.startTimer();
+    Thread.sleep(3000);
+    memoryService.stopTimer();
+    assertTrue(times.size() > 0);
+  }
+
+  @Test
+  @DisplayName("Add and remove callback deck listener")
+  void addAndRemoveCallbackDeckListener() throws IllegalParameterException {
+    DeckListener listener = new DummyCallbackDeck();
+    memoryService.addCallback(listener);
+    memoryService.removeCallback(listener);
+
+    assertThrows(IllegalParameterException.class,
             () -> memoryService.removeCallback(listener));
   }
 
@@ -80,11 +105,11 @@ public class TestMemoryServiceGoodCases {
 
     List<PictureCardDescriptor> cards = memoryService.getPictureCards();
     assertAll(
-        () -> assertEquals(3, cards.size(), "Now we should " +
-            "have three pictureCards."),
-        () -> assertNotEquals(cards.get(0).getId(), cards.get(1).getId()),
-        () -> assertNotEquals(cards.get(1).getId(), cards.get(2).getId()),
-        () -> assertNotEquals(cards.get(0).getId(), cards.get(2).getId())
+            () -> assertEquals(3, cards.size(), "Now we should " +
+                    "have three pictureCards."),
+            () -> assertNotEquals(cards.get(0).getId(), cards.get(1).getId()),
+            () -> assertNotEquals(cards.get(1).getId(), cards.get(2).getId()),
+            () -> assertNotEquals(cards.get(0).getId(), cards.get(2).getId())
     );
   }
 
@@ -94,7 +119,7 @@ public class TestMemoryServiceGoodCases {
     memoryService = new SfsMemoryService();
     HashMap<Integer, String> pictureReferences = new HashMap<>();
     pictureReferences.put(1, "Mario");
-    CardSet cardSet = new CardSet(Difficulty.EASY, descriptors,pictureReferences);
+    CardSet cardSet = new CardSet(Difficulty.EASY, descriptors, pictureReferences);
     memoryService.addCardSet(cardSet);
 
     assertTrue(memoryService.getCardSetStorage().size() > 0);

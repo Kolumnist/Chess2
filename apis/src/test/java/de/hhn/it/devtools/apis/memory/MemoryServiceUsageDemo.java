@@ -1,8 +1,6 @@
 package de.hhn.it.devtools.apis.memory;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -17,8 +15,8 @@ public class MemoryServiceUsageDemo {
 
 
     //register two picture cards
-    PictureCardDescriptor pictureCardDescriptor1 = new PictureCardDescriptor(1, 1, "x");
-    PictureCardDescriptor pictureCardDescriptor2 = new PictureCardDescriptor(0, 2, "Mario");
+    PictureCardDescriptor pictureCardDescriptor1 = new PictureCardDescriptor(1, null);
+    PictureCardDescriptor pictureCardDescriptor2 = new PictureCardDescriptor(-1, "Mario");
 
     //use the client interface
     List<PictureCardDescriptor> cardDescriptors = memoryService.getPictureCards();

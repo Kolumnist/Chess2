@@ -2,10 +2,7 @@ package de.hhn.it.devtools.apis.memory;
 
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
 
 
 /**
@@ -61,6 +58,22 @@ public interface MemoryService {
   void addCallback(int id, PictureCardListener listener) throws IllegalParameterException;
 
   /**
+   * Adds a listener to get information about the time.
+   *
+   * @param listener listener to be added
+   * @throws IllegalParameterException if the listener is a null reference
+   */
+  void addCallback(TimerListener listener) throws IllegalParameterException;
+
+  /**
+   * Adds a listener to get information about the current deck of cards.
+   *
+   * @param listener listener to be added
+   * @throws IllegalParameterException if the listener is a null reference
+   */
+  void addCallback(DeckListener listener) throws IllegalParameterException;
+
+  /**
    * Removes a listener.
    *
    * @param id       ID of the card
@@ -71,28 +84,16 @@ public interface MemoryService {
   void removeCallback(int id, PictureCardListener listener) throws IllegalParameterException;
 
   /**
-   * Adds a listener to get information about the time.
-   * @param listener listener to be added
-   * @throws IllegalParameterException if the listener is a null reference
-   */
-  void addCallback(TimerListener listener) throws IllegalParameterException;
-
-  /**
    * Removes a listener.
+   *
    * @param listener listener to be removed.
    * @throws IllegalParameterException if the listener is a null reference
    */
   void removeCallback(TimerListener listener) throws IllegalParameterException;
 
   /**
-   * Adds a listener to get information about the current deck of cards.
-   * @param listener listener to be added
-   * @throws IllegalParameterException if the listener is a null reference
-   */
-  void addCallback(DeckListener listener) throws IllegalParameterException;
-
-  /**
-   * Removes a listener
+   * Removes a listener.
+   *
    * @param listener listener to be removed
    * @throws IllegalParameterException if the listener is a null reference
    */
@@ -121,8 +122,4 @@ public interface MemoryService {
    * @throws IllegalParameterException if the card does not exist
    */
   void turnCard(int id) throws IllegalParameterException;
-
-
-
-
 }
