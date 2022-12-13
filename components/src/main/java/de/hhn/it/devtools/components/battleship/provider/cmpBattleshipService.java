@@ -1,7 +1,6 @@
 package de.hhn.it.devtools.components.battleship.provider;
 
 import de.hhn.it.devtools.apis.battleship.*;
-import de.hhn.it.devtools.apis.duckhunt.DuckHuntListener;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 
 import java.io.*;
