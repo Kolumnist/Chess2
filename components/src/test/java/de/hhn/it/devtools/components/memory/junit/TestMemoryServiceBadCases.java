@@ -97,6 +97,14 @@ public class TestMemoryServiceBadCases {
   }
 
   @Test
+  @DisplayName("ask for a negative pictureCardDescriptor")
+  void testExceptionWhenRequestingNegativePictureCard() {
+    assertThrows(IllegalParameterException.class,
+        () -> memoryService.getPictureCard(-24)
+    );
+  }
+
+  @Test
   @DisplayName("turnCard for non existing pictureCard")
   void testExceptionWhenTurningNonExistentPictureCard() {
     assertThrows(IllegalParameterException.class,

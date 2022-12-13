@@ -109,7 +109,10 @@ public class TestMemoryServiceGoodCases {
                     "have three pictureCards."),
             () -> assertNotEquals(cards.get(0).getId(), cards.get(1).getId()),
             () -> assertNotEquals(cards.get(1).getId(), cards.get(2).getId()),
-            () -> assertNotEquals(cards.get(0).getId(), cards.get(2).getId())
+            () -> assertNotEquals(cards.get(0).getId(), cards.get(2).getId()),
+            () -> assertEquals(descriptorsArray[0], cards.get(0) ),
+            () -> assertEquals(descriptorsArray[1], cards.get(1) ),
+            () -> assertEquals(descriptorsArray[2], cards.get(2) )
     );
   }
 
