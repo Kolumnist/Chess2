@@ -47,4 +47,14 @@ public class Block {
     public String getColor() {
         return color;
     }
+
+    /**
+     * Checks the state of the Blocks.
+     *
+     * @param gameBoard
+     * @return
+     */
+    public boolean checkBlocks(GameBoard gameBoard) {
+        return false;
+    }
 }
