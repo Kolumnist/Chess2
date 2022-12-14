@@ -19,6 +19,7 @@ public class Game implements GameService {
   public ArrayList<Layout> layouts;
   public Map map;
 
+
   /**
    * Constructor for game.
    */
