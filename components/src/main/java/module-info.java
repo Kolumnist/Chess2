@@ -1,5 +1,3 @@
-import de.hhn.it.devtools.components.battleship.cmpBattleshipService;
-
 module devtools.components {
   exports de.hhn.it.devtools.components.example.coffeemakerservice.provider;
   exports de.hhn.it.devtools.components.battleship;
