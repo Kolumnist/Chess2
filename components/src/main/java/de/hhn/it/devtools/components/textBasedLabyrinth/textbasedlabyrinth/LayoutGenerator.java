@@ -35,7 +35,7 @@ public class LayoutGenerator {
         allRooms.clear();
         String exampleDescription = "A dark, cold room.";
         int j = 0;
-        while (allRooms.size() <= maxRoomCount) {
+        while (allRooms.size() < maxRoomCount) {
             Room newRoom = new Room(j, exampleDescription);
             this.allRooms.add(newRoom);
             j++;
@@ -49,6 +49,7 @@ public class LayoutGenerator {
         if (!isPrepared) {
             reset();
         }
+        int specialRoomId = 1000;
 
 
         if (map.equals(Map.Grave_of_the_Mad_King)) {
@@ -96,7 +97,31 @@ public class LayoutGenerator {
             allRooms.get(11).setNextDoorRoom(allRooms.get(12), false, false, true);
             logger.info(map.toString() + "created.");
         } else if (map.equals(Map.Circle_Of_Time)) {
+            startRoom.setNextDoorRoom(allRooms.get(2), false, false, true);
+            allRooms.get(2).setNextDoorRoom(allRooms.get(1), false, true, false);
+            allRooms.get(2).setNextDoorRoom(allRooms.get(3), true, false, false);
+            allRooms.get(1).setNextDoorRoom(allRooms.get(4), false, false, true);
+            allRooms.get(3).setNextDoorRoom(allRooms.get(6), false, false, true);
+            allRooms.get(4).setNextDoorRoom(allRooms.get(7), false, false, true);
+            allRooms.get(6).setNextDoorRoom(allRooms.get(9), false, false, true);
+            allRooms.get(8).setNextDoorRoom(allRooms.get(7), false, true, false);
+            allRooms.get(8).setNextDoorRoom(allRooms.get(9), true, false, false);
+            Hallway rotate1 = new Hallway(specialRoomId, "A hallway. " +
+                    "The walls touch your arms when you stretch too much.");
+            specialRoomId++;
+            CircleCenterRoom centerOfTime = new CircleCenterRoom(specialRoomId, "A large, circular room. " +
+                    "A statue of an owl stands in the center, watching you from a pedestal.");
+            SpecialTrapTriggerItem owlStatue = new SpecialTrapTriggerItem(specialRoomId * 2, "Owl-statue",
+                    "The statue looks at you, as if judging you. It is finely made and will look well in" +
+                            "a museum, or your own desk, if you can pass it´s judgement.");
+            specialRoomId++;
 
+            rotate1.setNextDoorRoom(centerOfTime, false,false,false);
+            rotate1.setNextDoorRoom(allRooms.get(8), false, false, true);
+
+
+
+            logger.info(map.toString() + "created.");
         }
 
 

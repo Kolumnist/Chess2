@@ -1,6 +1,6 @@
 package de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
 
-public class CircleCenterRoom extends Room {
+public class CircleCenterRoom extends TrapRoom {
 
 
     /**
@@ -15,6 +15,11 @@ public class CircleCenterRoom extends Room {
 
 
     @Override
+    public void setTrap() {
+
+    }
+
+    @Override
     public void removeItem(int itemId) {
         if (items.get(itemId).getIsTrapActivator() == true) {
             rotate();
@@ -23,5 +28,6 @@ public class CircleCenterRoom extends Room {
 
 
     private void rotate() {
+
     }
 }

@@ -40,6 +40,11 @@ public class Room {
   private boolean hasDoorE;
   private boolean hasDoorS;
 
+  private boolean setFakeNorth;
+  private boolean setFakeSouth;
+  private boolean setFakeWest;
+  private boolean setFakeEast;
+
   protected boolean isExit;
 
   /**
@@ -99,15 +104,6 @@ public class Room {
         southDoor = new Door();
       }
       hasDoorS = true;
-    } else {
-      //This is a demo for a false door,
-      //a door that opens and reveals a wall.
-      a = random.nextInt(0, 4);
-      if (a == 1) {
-        southDoor = new Door();
-        southDoor.isFake();
-        isSouthAssigned = true;
-      }
     }
     if (isWestAssigned) {
       if (toTheWest.hasDoorWest()) {
@@ -134,6 +130,21 @@ public class Room {
       hasDoorE = true;
     }
 
+  }
+
+
+  public void setFakeInDirection(Direction direction) {
+    if (direction.equals(Direction.SOUTH) && !isSouthAssigned) {
+
+    } else if (direction.equals(Direction.NORTH) && !isNorthAssigned) {
+
+    } else if (direction.equals(Direction.EAST) && !isEastAssigned) {
+
+    } else if (direction.equals(Direction.WEST) && !isWestAssigned) {
+
+    } else {
+      throw new IllegalArgumentException("Direction was invalid for a fake door: " + direction.toString());
+    }
   }
 
   public Door getDoor(Direction direction) throws RoomFailedException {

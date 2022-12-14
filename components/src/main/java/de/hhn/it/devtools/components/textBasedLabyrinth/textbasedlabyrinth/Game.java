@@ -271,4 +271,9 @@ public class Game implements GameService {
     this.currentLayout = new Layout(player);
 
   }
+
+
+  public String getPlayerName() {
+    return player.getName();
+  }
 }
