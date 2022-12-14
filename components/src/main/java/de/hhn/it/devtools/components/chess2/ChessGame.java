@@ -36,19 +36,39 @@ public class ChessGame implements Chess2Service {
    * The Constructor that initializes every needed object.
    */
   public ChessGame() {
+    logger.info("ChessGame Constructor");
+
     gameBoard = new Board();
     whitePlayer = new Player('w');
     blackPlayer = new Player('b');
     currentPlayer = whitePlayer;
   }
 
+  /**
+   * All Player pieces get "set" on the Board
+   * and the fieldStates get set.
+   */
   private void initializeBoard() {
-    for (int i = 0; i < whitePlayer.myPieces.length; i++) {
-      Piece whitePiece = whitePlayer.myPieces[i];
-      gameBoard.getSpecificField(whitePiece.getCoordinate()).setPiece(Optional.of(whitePiece));
+    logger.info("initializeBoard");
 
-      Piece blackPiece = blackPlayer.myPieces[i];
-      gameBoard.getSpecificField(blackPiece.getCoordinate()).setPiece(Optional.of(blackPiece));
+    Piece whitePiece;
+    Piece blackPiece;
+
+    for (int i = 0; i < whitePlayer.myPieces.length; i++) {
+      whitePiece = whitePlayer.myPieces[i];
+      blackPiece = blackPlayer.myPieces[i];
+
+      /* Set Optional Piece of Field */
+      gameBoard.getSpecificField(whitePiece.getCoordinate())
+          .setPiece(Optional.of(whitePiece));
+      gameBoard.getSpecificField(blackPiece.getCoordinate())
+          .setPiece(Optional.of(blackPiece));
+
+      /* Set FieldState of Field */
+      gameBoard.getSpecificField(whitePiece.getCoordinate())
+          .setFieldState(FieldState.HAS_CURRENT_PIECE);
+      gameBoard.getSpecificField(blackPiece.getCoordinate())
+          .setFieldState(FieldState.HAS_OTHER_PIECE);
     }
   }
 
