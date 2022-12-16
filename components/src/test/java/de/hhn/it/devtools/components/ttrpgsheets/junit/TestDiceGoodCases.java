@@ -16,7 +16,7 @@ class TestDiceGoodCases {
   static Dice dice;
   static int[] sizes = {2,4,6,8,10,12,20,100};
   static DiceType[] diceTypes = {DiceType.D2,DiceType.D4,DiceType.D6,DiceType.D8,
-          DiceType.D10,DiceType.D12,DiceType.D20,DiceType.D100};
+          DiceType.D10,DiceType.D12,DiceType.D20,DiceType.D100, null};
 
   @BeforeEach
   void setUp() {
