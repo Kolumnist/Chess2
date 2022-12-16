@@ -1,11 +1,7 @@
 package de.hhn.it.devtools.components.memory.junit;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.apis.memory.DeckListener;
-import de.hhn.it.devtools.apis.memory.Difficulty;
-import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
-import de.hhn.it.devtools.apis.memory.State;
-import de.hhn.it.devtools.components.memory.provider.CardSet;
+import de.hhn.it.devtools.apis.memory.*;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +19,8 @@ public class TestMemoryServiceGameInteractions {
           org.slf4j.LoggerFactory.getLogger(TestMemoryServiceGameInteractions.class);
 
   SfsMemoryService memoryService;
+  List<PictureCardDescriptor> descriptors;
+  PictureCardDescriptor[] descriptorsArray;
 
   @BeforeEach
   void setup(List<PictureCardDescriptor> descriptors) throws IllegalParameterException {
@@ -31,8 +29,12 @@ public class TestMemoryServiceGameInteractions {
     memoryService.addCallback(listener);
     HashMap<Integer, String> pictureReferences = new HashMap<>();
     pictureReferences.put(1, "Mario");
-    CardSet cardSet = new CardSet(Difficulty.EASY, descriptors, pictureReferences);
-    memoryService.addCardSet(cardSet);
+    this.descriptors = new ArrayList<>();
+    this.descriptors.addAll(descriptors);
+    descriptorsArray = new PictureCardDescriptor[this.descriptors.size()];
+    this.descriptors.toArray(descriptorsArray);
+    CardSetDescriptor cardSetDescriptor = new CardSetDescriptor(Difficulty.EASY, this.descriptorsArray, pictureReferences);
+    memoryService.addCardSet(cardSetDescriptor);
   }
 
 
@@ -40,7 +42,7 @@ public class TestMemoryServiceGameInteractions {
   @DisplayName("newGame is initialized successfully")
   void newGameIsInitializedSuccessfully() throws IllegalParameterException {
     memoryService.newGame(Difficulty.EASY);
-    assertTrue(memoryService.getDeck().length > 0);
+    assertTrue(memoryService.getCurrentCardSet().getDescriptor().getPictureCardDescriptors().length > 0);
   }
 
 
@@ -59,23 +61,20 @@ public class TestMemoryServiceGameInteractions {
     memoryService.newGame(Difficulty.EASY);
     memoryService.closeGame();
     assertAll(
-            () -> assertNull(memoryService.getDeck()),
-            () -> assertTrue(memoryService.getPictureReferences().size() == 0),
-            () -> assertTrue(memoryService.getPictureCards().size() == 0)
+            () -> assertNull(memoryService.getCurrentCardSet())
     );
   }
 
   @Test
   @DisplayName("change difficulty successfully")
   void changeDifficultySuccessfully() throws IllegalParameterException {
-    List<PictureCardDescriptor> newList = new ArrayList<>();
-    newList.add(new PictureCardDescriptor(-1, "Mario"));
-    newList.add(new PictureCardDescriptor(-1, "Peach"));
+    PictureCardDescriptor[] newList = {new PictureCardDescriptor(-1, "Mario"),
+        new PictureCardDescriptor(-1, "Peach")};
     HashMap<Integer, String> pictureReferences = new HashMap<>();
     pictureReferences.put(1, "Mario");
-    memoryService.addCardSet(new CardSet(Difficulty.MEDIUM, newList, pictureReferences));
+    memoryService.addCardSet(new CardSetDescriptor(Difficulty.MEDIUM, newList, pictureReferences));
     memoryService.newGame(Difficulty.MEDIUM);
-    assertTrue(memoryService.getPictureCards().size() == 2);
+    assertTrue(memoryService.getPictureCardDescriptors().size() == 2);
   }
 
   @Test
@@ -84,7 +83,7 @@ public class TestMemoryServiceGameInteractions {
     memoryService.newGame(Difficulty.EASY);
     memoryService.turnCard(1);
     assertAll(
-            () -> assertTrue(memoryService.getPictureCard(1).getState() == State.VISIBLE)
+            () -> assertTrue(memoryService.getPictureCardDescriptor(1).getState() == State.VISIBLE)
     );
   }
 
@@ -106,8 +105,8 @@ public class TestMemoryServiceGameInteractions {
     memoryService.turnCard(1);
     memoryService.turnCard(2);
     assertAll(
-            () -> assertTrue(memoryService.getPictureCard(1).getState() == State.HIDDEN),
-            () -> assertTrue(memoryService.getPictureCard(2).getState() == State.HIDDEN)
+            () -> assertTrue(memoryService.getPictureCardDescriptor(1).getState() == State.HIDDEN),
+            () -> assertTrue(memoryService.getPictureCardDescriptor(2).getState() == State.HIDDEN)
     );
   }
 
@@ -118,8 +117,8 @@ public class TestMemoryServiceGameInteractions {
     memoryService.turnCard(0);
     memoryService.turnCard(1);
     assertAll(
-            () -> assertTrue(memoryService.getPictureCard(0).getState() == State.MATCHED),
-            () -> assertTrue(memoryService.getPictureCard(1).getState() == State.MATCHED)
+            () -> assertTrue(memoryService.getPictureCardDescriptor(0).getState() == State.MATCHED),
+            () -> assertTrue(memoryService.getPictureCardDescriptor(1).getState() == State.MATCHED)
     );
   }
 
@@ -130,8 +129,8 @@ public class TestMemoryServiceGameInteractions {
     memoryService.turnCard(1);
     memoryService.turnCard(0);
     assertAll(
-            () -> assertTrue(memoryService.getPictureCard(1).getState() == State.MATCHED),
-            () -> assertTrue(memoryService.getPictureCard(0).getState() == State.MATCHED)
+            () -> assertTrue(memoryService.getPictureCardDescriptor(1).getState() == State.MATCHED),
+            () -> assertTrue(memoryService.getPictureCardDescriptor(0).getState() == State.MATCHED)
     );
   }
 
@@ -142,8 +141,8 @@ public class TestMemoryServiceGameInteractions {
     memoryService.turnCard(0);
     memoryService.turnCard(2);
     assertAll(
-            () -> assertTrue(memoryService.getPictureCard(0).getState() == State.HIDDEN),
-            () -> assertTrue(memoryService.getPictureCard(2).getState() == State.HIDDEN)
+            () -> assertTrue(memoryService.getPictureCardDescriptor(0).getState() == State.HIDDEN),
+            () -> assertTrue(memoryService.getPictureCardDescriptor(2).getState() == State.HIDDEN)
     );
   }
 
@@ -155,8 +154,8 @@ public class TestMemoryServiceGameInteractions {
     memoryService.turnCard(2);
     memoryService.turnCard(0);
     assertAll(
-            () -> assertTrue(memoryService.getPictureCard(0).getState() == State.HIDDEN),
-            () -> assertTrue(memoryService.getPictureCard(2).getState() == State.HIDDEN)
+            () -> assertTrue(memoryService.getPictureCardDescriptor(0).getState() == State.HIDDEN),
+            () -> assertTrue(memoryService.getPictureCardDescriptor(2).getState() == State.HIDDEN)
     );
   }
 

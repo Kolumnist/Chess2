@@ -19,7 +19,7 @@ public class MemoryServiceUsageDemo {
     PictureCardDescriptor pictureCardDescriptor2 = new PictureCardDescriptor(-1, "Mario");
 
     //use the client interface
-    List<PictureCardDescriptor> cardDescriptors = memoryService.getPictureCards();
+    List<PictureCardDescriptor> cardDescriptors = memoryService.getPictureCardDescriptors();
     PictureCardDescriptor descriptor0 = cardDescriptors.get(0);
 
     int cardId0 = descriptor0.getId();

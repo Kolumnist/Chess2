@@ -112,7 +112,7 @@ public interface MemoryService {
    *
    * @return list of cards in the current game
    */
-  List<PictureCardDescriptor> getPictureCards();
+  List<PictureCardDescriptor> getPictureCardDescriptors();
 
   /**
    * Returns the descriptor of the picture card with the corresponding ID.
@@ -121,6 +121,14 @@ public interface MemoryService {
    * @return descriptor of the picture card
    * @throws IllegalParameterException if the ID of the card does not exist
    */
-  PictureCardDescriptor getPictureCard(int id) throws IllegalParameterException;
+  PictureCardDescriptor getPictureCardDescriptor(int id) throws IllegalParameterException;
+
+  /**
+   * Adds a card set to the service.
+   *
+   * @param set the card set descriptor that should be added
+   * @throws IllegalParameterException if the card set does not exist or is already registered
+   */
+  public void addCardSet(CardSetDescriptor set) throws IllegalParameterException;
 
 }
