@@ -50,6 +50,7 @@ class TestDiceGoodCases {
         case D12 -> assertEquals(12, dice.getSize());
         case D20 -> assertEquals(20, dice.getSize());
         case D100 -> assertEquals(100, dice.getSize());
+        default -> assertEquals(0, dice.getSize());
       }
     }
   }
