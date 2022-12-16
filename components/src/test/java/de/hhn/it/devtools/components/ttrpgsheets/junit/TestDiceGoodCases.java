@@ -69,6 +69,7 @@ class TestDiceGoodCases {
         case 12 -> assertEquals(DiceType.D12, dice.getType());
         case 20 -> assertEquals(DiceType.D20, dice.getType());
         case 100 -> assertEquals(DiceType.D100, dice.getType());
+        default -> assertNull(dice.getType());
       }
     }
   }
