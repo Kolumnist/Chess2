@@ -26,6 +26,15 @@ public class Description {
   }
 
   /**
+   * Converts this Description to a {@link DescriptionDescriptor}.
+   *
+   * @return the {@link DescriptionDescriptor} of this description
+   */
+  public DescriptionDescriptor toDescriptionDescriptor() {
+    return new DescriptionDescriptor(type, description);
+  }
+
+  /**
    * Getter for the type of the description.
    *
    * @return the type of the description
