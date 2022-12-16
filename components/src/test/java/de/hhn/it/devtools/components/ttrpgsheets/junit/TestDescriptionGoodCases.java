@@ -34,6 +34,14 @@ public class TestDescriptionGoodCases {
   }
 
   @Test
+  @DisplayName("Description to DescriptionDescriptor")
+  void toDescriptionDescriptor() {
+    DescriptionDescriptor descriptor = ageDescription.toDescriptionDescriptor();
+    assertEquals(ageDescription.getType(), descriptor.getDescriptionType());
+    assertEquals(ageDescription.getDescription(), descriptor.getText());
+  }
+
+  @Test
   @DisplayName("Get the type of the description.")
   void getType() {
     assertEquals(DescriptionType.AGE, ageDescription.getType());

@@ -1,12 +1,12 @@
 package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import de.hhn.it.devtools.components.ttrpgsheets.Stat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class TestStatGoodCases {
@@ -165,6 +165,8 @@ class TestStatGoodCases {
                 Ability Points Used: 0
                 Miscellaneous: 0
                 Level Stat: true""", stat.toString());
+        default -> {
+        }
       }
     }
   }
