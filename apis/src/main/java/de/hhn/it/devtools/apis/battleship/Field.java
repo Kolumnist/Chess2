@@ -8,13 +8,14 @@ public class Field {
 
     private static int size;
     //Index is false if no ship is on panel
-    protected PanelState[][] panelMarkerMat;
+    PanelState[][] panelMarkerMat;
     private Owner owner;
 
 
     public Field (int size, Owner owner){
         this.owner = owner;
         Field.size= size;
+        panelMarkerMat = new PanelState[size][size];
     }
 
 

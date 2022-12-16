@@ -19,12 +19,18 @@ import java.util.IllegalFormatException;
 
 public class cmpBattleshipService implements BattleshipService {
     static GameState currentGameState = GameState.PREGAME;
+//    static GameState currentGameState = GameState.PLACINGSHIPS;
+//    static GameState currentGameState = GameState.PREGAME;
     Player player = new Player();
     Computer computer = new Computer();
     int gameVolume;
     private ArrayList<BattleshipListener> listeners;
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(cmpBattleshipService.class);
+
+    public void setCurrentGameState(GameState state){
+        currentGameState = state;
+    }
 
     // nuri
     @Override
@@ -49,27 +55,29 @@ public class cmpBattleshipService implements BattleshipService {
     // nedim
     @Override
     public boolean isPlacementPossible(Owner owner, Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException, IllegalArgumentException {
-        logger.info("isPlacementPossible: owner = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}", owner, shipToPlace, x1, y1, isVertical);
+//        logger.info("isPlacementPossible: owner = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}", owner, shipToPlace, x1, y1, isVertical);
         int shipSize = shipToPlace.getSize();
         // wenn x1 der Endpunkt (linkeste Punkt) des Schiffes ist dann diese Rechnung:
-        int endX = x1 + shipSize;
+        int endX = (x1 + shipSize) - 1;
         // wenn y1 der Endpunkt (oberste Punkt) des Schiffes ist dann diese Rechnung:
-        int endY = y1 + shipSize;
+        int endY = (y1 + shipSize) - 1;
         int fieldSize = Field.getSize();
         PanelState[][] shipField;
 
+        logger.info("isPlacementPossible: owner = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}, endX = {}, endY = {}, currentGameState = {}", owner, shipToPlace, x1, y1, isVertical, endX, endY, currentGameState);
+
         // Check if coordinates of ship is outside of field
-        if((x1 < 0) || (y1 < 0) || (x1 > fieldSize) || (y1 > fieldSize)){
+        if((x1 < 0) || (y1 < 0) || (x1 >= fieldSize) || (y1 >= fieldSize)){
             return false;
         }
         else if(currentGameState != GameState.PLACINGSHIPS){
             throw new IllegalGameStateException("Wrong GameState! Required GameState is PlacingShips");
         }
-        if(owner.equals(player)) {
-            shipField = player.getPShipField().getPanelMarkerMat();
+        if(owner instanceof Player) {
+            shipField = ((Player) owner).getPShipField().getPanelMarkerMat();
         }
-        else if(owner.equals(computer)){
-            shipField = computer.getCShipField().getPanelMarkerMat();
+        else if(owner instanceof Computer){
+            shipField = ((Computer) owner).getCShipField().getPanelMarkerMat();
         }
         else{
             throw new IllegalArgumentException();
