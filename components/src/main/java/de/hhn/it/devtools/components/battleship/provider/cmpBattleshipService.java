@@ -17,6 +17,8 @@ public class cmpBattleshipService implements BattleshipService {
     Computer computer = new Computer();
     int gameVolume;
     private ArrayList<BattleshipListener> listeners;
+    private static final org.slf4j.Logger logger =
+            org.slf4j.LoggerFactory.getLogger(cmpBattleshipService.class);
 
     // nuri
     @Override
@@ -37,6 +39,7 @@ public class cmpBattleshipService implements BattleshipService {
     // nedim
     @Override
     public boolean isPlacementPossible(Owner owner, Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException, IllegalArgumentException {
+        logger.info("isPlacementPossible: owner = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}", owner, shipToPlace, x1, y1, isVertical);
         int shipSize = shipToPlace.getSize();
         // wenn x1 der Endpunkt (linkeste Punkt) des Schiffes ist dann diese Rechnung:
         int endX = x1 + shipSize;
@@ -94,6 +97,7 @@ public class cmpBattleshipService implements BattleshipService {
     // nedim
     @Override
     public void placeShip(Owner owner, Ship shipToPlace, int x1, int y1) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException, IllegalArgumentException{
+        logger.info("placeShip: owner = {}, ship = {}, x-value = {}, y-value = {}", owner, shipToPlace, x1, y1);
         boolean isPlaced = shipToPlace.getPlaced();
         boolean isVertical = shipToPlace.getIsVertical();
         int shipSize = shipToPlace.getSize();
@@ -141,6 +145,7 @@ public class cmpBattleshipService implements BattleshipService {
     // nedim
     @Override
     public void unPlace(Owner owner, Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException {
+        logger.info("unPlace: owner = {}, ship = {}", owner, shipToMove);
         shipToMove.setPlaced(false);
         Position position = shipToMove.getFieldPosition();
         int x = position.getX(), y = position.getY();
@@ -182,6 +187,7 @@ public class cmpBattleshipService implements BattleshipService {
         // wenn Schiff vertikal liegt, dann ist x wert gleich aber y zwischen front und heck verschieden,
         // wenn Schiff horizontal liegt, dann ist y wert gleich aber x zwischen front und heck verschieden
 
+        logger.info("rotateShip: owner = {}, ship = {}", owner, shipToRotate);
         boolean isVertical = shipToRotate.getIsVertical();
         boolean isPlaced = shipToRotate.getPlaced();
         Position shipPosition = shipToRotate.getFieldPosition();
