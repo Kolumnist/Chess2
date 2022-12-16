@@ -77,6 +77,11 @@ public abstract class Piece {
    */
   protected abstract void calculate();
 
+  public Piece(char color, Coordinate coordinate){
+    this.color = color;
+    this.coordinate = coordinate;
+  }
+
   /**
    * This method takes a Coordinate[] and a ArrayList of invalid index and returns the shortened
    * Coordinate[].
