@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionType;
 import de.hhn.it.devtools.components.ttrpgsheets.Description;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,5 +50,11 @@ public class TestDescriptionGoodCases {
   void setDescription() {
     ageDescription.setDescription("36");
     assertEquals("36", ageDescription.getDescription());
+  }
+
+  @Test
+  @DisplayName("To String")
+  void toStringTest() {
+    assertEquals("Type: AGE\nDescription: 35", ageDescription.toString());
   }
 }
