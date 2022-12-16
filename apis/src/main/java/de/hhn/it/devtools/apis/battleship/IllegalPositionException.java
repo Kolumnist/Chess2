@@ -8,5 +8,6 @@ public class IllegalPositionException extends Exception{
 
     // Contructor
     public IllegalPositionException(String exceptionMessage) {
+        super(exceptionMessage);
     }
 }

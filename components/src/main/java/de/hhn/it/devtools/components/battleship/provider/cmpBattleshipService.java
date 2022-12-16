@@ -2,14 +2,20 @@ package de.hhn.it.devtools.components.battleship.provider;
 
 import de.hhn.it.devtools.apis.battleship.*;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.Game;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.IllegalFormatException;
 
-// @TODO change GameStates if necessary (No ships left to bomb, no ships left to placer ... )
+// TODO createFields kann nur aufgerufen werden wenn GameState = PREGAME
+// TODO durchs Feld durch iterieren und gucken ob es Schiffs-Felder gibt, die nicht gebombt wurden, falls nein -> gegner gewinnt & GameState zu GameOver
+// TODO Button, der kommt (isVisible zu true in dem Fenster, wo "Ships left to place", davor ist der Button isVisible = false), wenn alle Schiffe platziert sind, wenn gedrückt wird -> GameState zu FiringShots
+// TODO check at createFields that the inputed size is not to small
+// TODO createFields size: max größe 50x50, Anzahl der Schiffe verändert sich alle 10 Size-Größen (for-Schleife)
 // Write Tests
 // Write Computer AI
+// How many ships every player gets after a field is created
 
 public class cmpBattleshipService implements BattleshipService {
     static GameState currentGameState = GameState.PREGAME;
@@ -23,12 +29,16 @@ public class cmpBattleshipService implements BattleshipService {
     // nuri
     @Override
     public void addCallBack(BattleshipListener listener) throws IllegalParameterException {
+        logger.info("addCallBack: listener = {}", listener);
+
         listeners.add(listener);
     }
 
     // nuri
     @Override
     public void removeCallback(BattleshipListener listener) throws IllegalParameterException {
+        logger.info("removeCallback: listener = {}", listener);
+
         if(listeners.contains(listener)) {
             listeners.remove(listener);
             return;
@@ -53,7 +63,7 @@ public class cmpBattleshipService implements BattleshipService {
             return false;
         }
         else if(currentGameState != GameState.PLACINGSHIPS){
-            throw new IllegalGameStateException();
+            throw new IllegalGameStateException("Wrong GameState! Required GameState is PlacingShips");
         }
         if(owner.equals(player)) {
             shipField = player.getPShipField().getPanelMarkerMat();
@@ -108,7 +118,7 @@ public class cmpBattleshipService implements BattleshipService {
             throw new IllegalShipStateException("Ship is already placed");
         }
         else if(currentGameState != GameState.PLACINGSHIPS){
-            throw new IllegalGameStateException();
+            throw new IllegalGameStateException("Wrong GameState! Required GameState is PlacingShips");
         }
         else if(!isPlacementPossible(owner, shipToPlace, x1, y1, isVertical)){
             throw new IllegalPositionException("Ship cannot be placed");
@@ -155,7 +165,7 @@ public class cmpBattleshipService implements BattleshipService {
         PanelState[][] shipField;
 
         if(currentGameState != GameState.PLACINGSHIPS){
-            throw new IllegalGameStateException();
+            throw new IllegalGameStateException("Wrong GameState! Required GameState is PlacingShips");
         }
         else if(owner.equals(player)){
             shipField = player.getPShipField().getPanelMarkerMat();
@@ -198,7 +208,7 @@ public class cmpBattleshipService implements BattleshipService {
             throw new IllegalShipStateException("Ship is already placed");
         }
         else if(currentGameState != GameState.PLACINGSHIPS){
-            throw new IllegalGameStateException();
+            throw new IllegalGameStateException("Wrong GameState! Required GameState is PlacingShips");
         }
         // check if ship is vertical and can be placed horizontally
         else if(isVertical){
@@ -237,7 +247,13 @@ public class cmpBattleshipService implements BattleshipService {
     @Override
     public boolean bombPanel(Owner attacker,int x, int y) throws IllegalArgumentException, IllegalGameStateException {
 
-        // need to test if I can just use .equals or need to cast in some way
+        logger.info("bombPanel: owner = {}, x = {}, y = {}", attacker , x, y);
+
+        if(currentGameState != GameState.FIRINGSHOTS){
+            throw  new IllegalGameStateException("Wrong GameState! Required GameState is FiringShots");
+        }
+
+        // need to test if I can just use .equals or need to change .equals() method
 
         if (attacker.equals(player)){
 
@@ -289,16 +305,30 @@ public class cmpBattleshipService implements BattleshipService {
     // nuri
     @Override
     public void createFields(int size) throws IllegalArgumentException, IllegalGameStateException {
+
+        if(currentGameState != GameState.PREGAME){
+            throw  new IllegalGameStateException("Wrong GameState! Required GameState is PreGame");
+        }
+
+        logger.info("createFields: size = {}", size);
+
         player.setShipfield(new ShipField(size,player));
         player.setAttackField(new AttackField(size,player));
         
         computer.setShipfield(new ShipField(size,computer));
         computer.setAttackField(new AttackField(size,computer));
+
+        // @TODO moutassem macht verteilung von ships abhängig von der Feldgröße
+        // 1x5er, 2x4er, 3er Variabel, 1x2er
+        player.setOwnedShips(new Ship(ShipType.BATTLESHIP, null ));
+
+        currentGameState = GameState.PLACINGSHIPS;
     }
 
     // nuri
     @Override
     public void adjustSoundVolume(int newVolume) throws IllegalArgumentException {
+        logger.info("adjustSoundVolume: newVolume = {}", newVolume);
         gameVolume = newVolume;
     }
 
