@@ -7,5 +7,6 @@ public class IllegalShipStateException extends Exception {
 
     // Contructor
     public IllegalShipStateException(String exceptionMessage) {
+        super(exceptionMessage);
     }
 }
