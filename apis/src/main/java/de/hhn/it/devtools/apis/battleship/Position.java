@@ -5,11 +5,11 @@ package de.hhn.it.devtools.apis.battleship;
  */
 
 public class Position {
-    int x;
-    int y;
+    Integer x;
+    Integer y;
 
 
-    public Position(int x, int y){
+    public Position(Integer x, Integer y){
         this.x = x;
         this.y = y;
     }
