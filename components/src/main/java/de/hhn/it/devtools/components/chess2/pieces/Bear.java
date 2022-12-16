@@ -7,8 +7,7 @@ import java.util.ArrayList;
 public class Bear extends Piece {
 
   Bear(char color, Coordinate coordinate) {
-    this.color = color;
-    this.coordinate = coordinate;
+    super(color, coordinate);
   }
 
   @Override
