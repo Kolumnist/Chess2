@@ -6,8 +6,7 @@ import de.hhn.it.devtools.apis.chess2.Piece;
 public class Elephant extends Piece {
 
   public Elephant(char color, Coordinate coordinate) {
-    this.color = color;
-    this.coordinate = coordinate;
+    super(color, coordinate);
   }
   public void calculate() {
   }
