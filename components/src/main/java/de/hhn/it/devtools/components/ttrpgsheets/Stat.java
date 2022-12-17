@@ -2,9 +2,9 @@ package de.hhn.it.devtools.components.ttrpgsheets;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
+import java.math.BigInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.math.BigInteger;
 
 /**
  * Representation of a Stat that is used by a character.
