@@ -291,7 +291,7 @@ public class cmpBattleshipService implements BattleshipService {
     // nuri
     @Override
     public boolean bombPanel(Owner attacker, Owner target, int x, int y) throws IllegalArgumentException, IllegalGameStateException {
-        logger.info("bombPanel: attacker = {}, attacked = {}, x = {}, y = {}", attacker, victim, x, y);
+        logger.info("bombPanel: attacker = {}, attacked = {}, x = {}, y = {}", attacker, target, x, y);
         if(currentGameState != GameState.FIRINGSHOTS){
             throw  new IllegalGameStateException("Wrong GameState! Required GameState is FiringShots");
         }
@@ -300,33 +300,33 @@ public class cmpBattleshipService implements BattleshipService {
         }
         PanelState isShipOnPosition;
         if (attacker instanceof Player){
-            isShipOnPosition = ((Computer) victim).getCShipField().getPanelMarker(x,y);
+            isShipOnPosition = ((Computer) target).getCShipField().getPanelMarker(x,y);
             if (isShipOnPosition == PanelState.SHIP){
                 // set ship part on position to bombed
-                ((Computer) victim).getCShipField().setPanelMarker(x, y, PanelState.HIT);
+                ((Computer) target).getCShipField().setPanelMarker(x, y, PanelState.HIT);
                 ((Player) attacker).getPAttackField().setPanelMarker(x, y,PanelState.HIT);
                 return true;
             }
             else {
                 //set position to bombed (not necessary hit)
-                ((Computer) victim).getCShipField().setPanelMarker(x, y, PanelState.MISSED);
+                ((Computer) target).getCShipField().setPanelMarker(x, y, PanelState.MISSED);
                 ((Player) attacker).getPAttackField().setPanelMarker(x,y,PanelState.MISSED);
                 return false;
             }
         }
 
         else if (attacker instanceof Computer){
-            isShipOnPosition = ((Player) victim).getPShipField().getPanelMarker(x,y);
+            isShipOnPosition = ((Player) target).getPShipField().getPanelMarker(x,y);
             if(isShipOnPosition == PanelState.SHIP){
                 // set ship part on position to bombed
-                ((Player) victim).getPShipField().setPanelMarker(x,y,PanelState.HIT);
+                ((Player) target).getPShipField().setPanelMarker(x,y,PanelState.HIT);
                 //set position to bombed (not necessary hit)
                 ((Computer) attacker).getCAttackField().setPanelMarker(x,y,PanelState.HIT);
                 return true;
             }
             else {
                 // set position to bombed (not necessary hit)
-                ((Player) victim).getPShipField().setPanelMarker(x,y,PanelState.MISSED);
+                ((Player) target).getPShipField().setPanelMarker(x,y,PanelState.MISSED);
                 ((Computer) attacker).getCAttackField().setPanelMarker(x,y,PanelState.MISSED);
                 return false;
             }
