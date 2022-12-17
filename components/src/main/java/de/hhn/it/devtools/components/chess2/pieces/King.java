@@ -6,8 +6,11 @@ import java.util.ArrayList;
 
 public class King extends Piece {
 
-  public King(char color, Coordinate coordinate) {
+  boolean hasBanana;
+
+  public King(char color, Coordinate coordinate, boolean hasBanana) {
     super(color, coordinate);
+    this.hasBanana = hasBanana;
   }
 
   @Override
