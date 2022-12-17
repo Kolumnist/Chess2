@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@DisplayName("Test unPlace")
 public class TestUnPlace {
 
     // Field size for tests set to 9
@@ -37,6 +38,8 @@ public class TestUnPlace {
         player.setShipfield(playerField);
         computer.setShipfield(computerField);
     }
+
+    // Bad Cases
 
     @Test
     @DisplayName("Test check unPLace a ship with wrong GameState")
@@ -66,9 +69,12 @@ public class TestUnPlace {
                 () -> bs.unPlace(notAllowedOwner, ship));
     }
 
+    // Good Cases
+
     @Test
     @DisplayName("Test check unPlace a ship - vertical")
     public void unPlaceVertical() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
+        // false should be returned
         bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
@@ -81,6 +87,7 @@ public class TestUnPlace {
     @Test
     @DisplayName("Test check unPlace a ship - horizontal")
     public void unPlaceHorizontal() throws IllegalGameStateException, IllegalShipStateException, IllegalPositionException {
+        // false should be returned
         bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);

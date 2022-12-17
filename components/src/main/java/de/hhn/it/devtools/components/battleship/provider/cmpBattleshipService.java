@@ -206,17 +206,19 @@ public class cmpBattleshipService implements BattleshipService {
 
     // nedim
     @Override
-    public void rotateShip(Owner owner, Ship shipToRotate) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException {
+    public void rotateShip(Owner owner, Ship shipToRotate) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException, IllegalArgumentException {
         // für die neuen koordinaten vielleicht eine berechnung?
         // wenn Schiff vertikal liegt, dann ist x wert gleich aber y zwischen front und heck verschieden,
         // wenn Schiff horizontal liegt, dann ist y wert gleich aber x zwischen front und heck verschieden
 
-        logger.info("rotateShip: owner = {}, ship = {}", owner, shipToRotate);
+//        logger.info("rotateShip: owner = {}, ship = {}", owner, shipToRotate);
         boolean isVertical = shipToRotate.getIsVertical();
         boolean isPlaced = shipToRotate.getPlaced();
         Position shipPosition = shipToRotate.getFieldPosition();
         int xCurrent = shipPosition.getX();
         int yCurrent = shipPosition.getY();
+
+        logger.info("rotateShip: owner = {}, ship = {}, xCurrent = {}, yCurrent = {}", owner, shipToRotate, xCurrent, yCurrent);
 
         if(isPlaced){
             throw new IllegalShipStateException("Ship is already placed");
@@ -224,17 +226,20 @@ public class cmpBattleshipService implements BattleshipService {
         else if(currentGameState != GameState.PLACINGSHIPS){
             throw new IllegalGameStateException("Wrong GameState! Required GameState is PlacingShips");
         }
+        else if(!(owner instanceof Player) && !(owner instanceof Computer)){
+            throw new IllegalArgumentException();
+        }
+
         // check if ship is vertical and can be placed horizontally
-        else if(isVertical){
+        if(isVertical){
             // wenn am heck gedreht wird zu horizontal dann bleibt y und x ändert sich -> Drehung: im Uhrzeigersinn
-            int xNew = xCurrent + shipToRotate.getSize();
-            if(isPlacementPossible(owner, shipToRotate, xNew, yCurrent, false)){
+            int xEnd = (xCurrent + shipToRotate.getSize()) - 1;
+            logger.info("xEnd = {}", xEnd);
+            if(isPlacementPossible(owner, shipToRotate, xCurrent, yCurrent, false)){
                 // rotate the ship
                 shipToRotate.setIsVertical(false);
-                // damit Felder wo das Schiff steht auf false gesetzt werden
-                unPlace(owner, shipToRotate);
                 // place ship   hier werden die Felder, auf die das Schiff nach dem Drehen steht, wieder auf true gesetzt
-                placeShip(owner, shipToRotate, xNew, yCurrent);
+                placeShip(owner, shipToRotate, xCurrent, yCurrent);
             }
             else{
                 throw new IllegalPositionException("Ship cannot be placed");
@@ -242,14 +247,15 @@ public class cmpBattleshipService implements BattleshipService {
         }
         else if(!isVertical){
             // wenn am heck gedreht wird zu vertikal dann bleibt x und y ändert sich -> Drehung: gegen Uhrzeigersinn
-            int yNew = yCurrent - shipToRotate.getSize();
-            if(isPlacementPossible(owner, shipToRotate, xCurrent, yNew, true)){
+            int yEnd = (yCurrent - shipToRotate.getSize()) + 1;
+            logger.info("yEnd = {}", yEnd);
+            // wenn IM UHRZEIGERSINN gedreht wird, dann statt "yEnd" -> "yCurrent"
+            if(isPlacementPossible(owner, shipToRotate, xCurrent, yEnd, true)){
                 // rotate the ship
                 shipToRotate.setIsVertical(true);
-                // damit Felder wo das Schiff steht auf false gesetzt werden
-                unPlace(owner, shipToRotate);
                 // place ship   hier werden die Felder, auf die das Schiff nach dem Drehen steht, wieder auf true gesetzt
-                placeShip(owner, shipToRotate, xCurrent, yNew);
+                // wenn IM UHRZEIGERSINN gedreht wird, dann statt "yEnd" -> "yCurrent"
+                placeShip(owner, shipToRotate, xCurrent, yEnd);
             }
             else{
                 throw new IllegalPositionException("Ship cannot be placed");
