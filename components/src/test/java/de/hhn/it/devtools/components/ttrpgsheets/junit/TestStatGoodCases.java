@@ -58,7 +58,7 @@ class TestStatGoodCases {
     assertEquals(Integer.MAX_VALUE, edgeStat.getTotalValue());
 
     edgeStat.setMiscellaneous(Integer.MIN_VALUE);
-    assertEquals(0, edgeStat.getTotalValue());
+    assertEquals(-1, edgeStat.getTotalValue());
 
     edgeStat.setAbilityPointsUsed(0);
     assertEquals(Integer.MIN_VALUE, edgeStat.getTotalValue());
@@ -68,7 +68,7 @@ class TestStatGoodCases {
     assertEquals(Integer.MIN_VALUE, edgeStat.getTotalValue());
 
     edgeStat.setMiscellaneous(Integer.MAX_VALUE);
-    assertEquals(0, edgeStat.getTotalValue());
+    assertEquals(-1, edgeStat.getTotalValue());
   }
 
   @Test
