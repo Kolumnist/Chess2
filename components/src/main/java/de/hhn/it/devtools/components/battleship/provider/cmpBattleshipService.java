@@ -166,35 +166,38 @@ public class cmpBattleshipService implements BattleshipService {
     // nedim
     @Override
     public void unPlace(Owner owner, Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException {
-        logger.info("unPlace: owner = {}, ship = {}", owner, shipToMove);
+//        logger.info("unPlace: owner = {}, ship = {}", owner, shipToMove);
         shipToMove.setPlaced(false);
         Position position = shipToMove.getFieldPosition();
         int x = position.getX(), y = position.getY();
         int shipSize = shipToMove.getSize();
-        int endX, endY;
+        // wenn x1 der Endpunkt (linkeste Punkt) des Schiffes ist dann diese Rechnung:
+        int endX = (x + shipSize) - 1;
+        // wenn y1 der Endpunkt (oberste Punkt) des Schiffes ist dann diese Rechnung:
+        int endY = (y + shipSize) - 1;
         boolean isVertical = shipToMove.getIsVertical();
         PanelState[][] shipField;
+
+        logger.info("unPlace: owner = {}, ship = {}, x = {}, y = {}, endX = {}, endY = {}", owner, shipToMove, x, y, endX, endY);
 
         if(currentGameState != GameState.PLACINGSHIPS){
             throw new IllegalGameStateException("Wrong GameState! Required GameState is PlacingShips");
         }
-        else if(owner.equals(player)){
-            shipField = player.getPShipField().getPanelMarkerMat();
+        else if(owner instanceof Player){
+            shipField = ((Player) owner).getPShipField().getPanelMarkerMat();
         }
-        else if(owner.equals(computer)){
-            shipField = computer.getCShipField().getPanelMarkerMat();
+        else if(owner instanceof Computer){
+            shipField = ((Computer) owner).getCShipField().getPanelMarkerMat();
         }
         else{
             throw new IllegalArgumentException();
         }
         if(isVertical){
-            endY = y + shipSize;
             for(int i = y; i < endY; i++){
                 shipField[i][x] = PanelState.NOSHIP;
             }
         }
         else if(!isVertical){
-            endX = x + shipSize;
             for(int i = x; i < endX; i++){
                 shipField[y][i] = PanelState.NOSHIP;
             }
