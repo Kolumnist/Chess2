@@ -4,6 +4,7 @@ import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.math.BigInteger;
 
 /**
  * Representation of a Stat that is used by a character.
@@ -35,12 +36,24 @@ public class Stat {
   /**
    * Returns the total value of a Stat by adding the product of the ability points
    * used times the offset to the base value of the stat.
+   * Calculation is as follows:
+   * Base Value + Ability Points Used * Offset + Miscellaneous
    *
    * @return The total value of the Stat
    */
   public int getTotalValue() {
     logger.info("getTotalValue() is called");
-    return getBaseValue() + getAbilityPointsUsed() * getOffset() + getMiscellaneous();
+    BigInteger totalValue = BigInteger.valueOf(getBaseValue())
+            .add(BigInteger.valueOf(getAbilityPointsUsed())
+                    .multiply(BigInteger.valueOf(getOffset())))
+            .add(BigInteger.valueOf(getMiscellaneous()));
+    if (totalValue.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0) {
+      return Integer.MAX_VALUE;
+    }
+    if (totalValue.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) < 0) {
+      return Integer.MIN_VALUE;
+    }
+    return totalValue.intValue();
   }
 
   /**
