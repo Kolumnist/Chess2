@@ -1,10 +1,13 @@
 package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
+import de.hhn.it.devtools.components.ttrpgsheets.DefaultCharacterSheet;
 import org.junit.jupiter.api.Test;
 
 class TestDefaultCharacterSheetGoodCases {
   private static final org.slf4j.Logger logger
           = org.slf4j.LoggerFactory.getLogger(TestStatGoodCases.class);
+
+  DefaultCharacterSheet characterSheet = null; //TODO - Add Constructor
 
   @Test
   void addCallbackTest() {
