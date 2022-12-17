@@ -16,7 +16,7 @@ public class Stat {
   private final int offset; // Usually set to 1
   private int abilityPointsUsed; // Negative values are possible
   private int miscellaneous; // For other stat-affecting things such as items
-  private boolean levelStat; // True when stat can be leveled else false
+  private final boolean levelStat; // True when stat can be leveled else false
 
   /**
    * Constructor of Stat.
@@ -30,7 +30,7 @@ public class Stat {
     this.offset = statDescriptor.getOffset();
     setAbilityPointsUsed(statDescriptor.getAbilityPointsUsed());
     setMiscellaneous(statDescriptor.getMiscellaneous());
-    setLevelStat(statDescriptor.isLevelStat());
+    this.levelStat = statDescriptor.isLevelStat();
   }
 
   /**
@@ -106,10 +106,6 @@ public class Stat {
 
   public boolean isLevelStat() {
     return levelStat;
-  }
-
-  public void setLevelStat(boolean levelStat) {
-    this.levelStat = levelStat;
   }
 
   @Override
