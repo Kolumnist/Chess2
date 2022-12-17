@@ -290,7 +290,7 @@ public class cmpBattleshipService implements BattleshipService {
 
     // nuri
     @Override
-    public boolean bombPanel(Owner attacker, Owner victim, int x, int y) throws IllegalArgumentException, IllegalGameStateException {
+    public boolean bombPanel(Owner attacker, Owner target, int x, int y) throws IllegalArgumentException, IllegalGameStateException {
         logger.info("bombPanel: attacker = {}, attacked = {}, x = {}, y = {}", attacker, victim, x, y);
         if(currentGameState != GameState.FIRINGSHOTS){
             throw  new IllegalGameStateException("Wrong GameState! Required GameState is FiringShots");
