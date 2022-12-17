@@ -48,7 +48,9 @@ public class Stat {
    */
   public void addAbilityPoint() {
     logger.info("addAbilityPoint() is called");
-    setAbilityPointsUsed(getAbilityPointsUsed() + 1);
+    if (isLevelStat()) {
+      setAbilityPointsUsed(getAbilityPointsUsed() + 1);
+    }
   }
 
   /**
@@ -56,7 +58,9 @@ public class Stat {
    */
   public void removeAbilityPoint() {
     logger.info("removeAbilityPoint() is called");
-    setAbilityPointsUsed(getAbilityPointsUsed() - 1);
+    if (isLevelStat()) {
+      setAbilityPointsUsed(getAbilityPointsUsed() - 1);
+    }
   }
 
   public StatType getType() {
