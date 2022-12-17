@@ -38,6 +38,10 @@ public class cmpBattleshipService implements BattleshipService {
         return currentGameState;
     }
 
+    public ArrayList<BattleshipListener> getListeners() {
+        return listeners;
+    }
+
     // nuri
     @Override
     public void addCallBack(BattleshipListener listener) throws IllegalParameterException {
@@ -436,7 +440,7 @@ public class cmpBattleshipService implements BattleshipService {
         if(currentGameState == GameState.PREGAME || currentGameState == GameState.GAMEOVER){
             throw new IllegalGameStateException("You can not give up when the game is not going");
         }
-        if(currentGameState == GameState.PLACINGSHIPS || currentGameState == GameState.FIRINGSHOTS {
+        if(currentGameState == GameState.PLACINGSHIPS || currentGameState == GameState.FIRINGSHOTS) {
             currentGameState = GameState.GAMEOVER;
         }
         //Anzeigen, dass CPU gewinnt

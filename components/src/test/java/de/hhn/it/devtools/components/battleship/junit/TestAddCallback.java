@@ -71,6 +71,7 @@ public class TestAddCallback {
         listener.newState(GameState.GAMEOVER);
         bs.addCallBack(listener);
         assertEquals(4, listener.states.size());
+        // Wenn man hier mit bsService.getListeners().size() bekommt man nur 1 als Wert zurück da nur einmal geadded wird (Zeile 72), aber der eine geaddede listener hat die 4 GameStates drin
     }
 
     @Test
