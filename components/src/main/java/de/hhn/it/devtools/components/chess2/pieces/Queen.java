@@ -15,8 +15,8 @@ public class Queen extends Piece {
     possibleMoves = new Coordinate[64];
     int k = 0;
     for (int g = 1; g <= 7; g++) {
-      for (int i = coordinate.getX() - g; i < coordinate.getX() + g; i += g) {
-        for (int j = coordinate.getY() - g; j < coordinate.getY() + g; j += g) {
+      for (int i = coordinate.getX() - g; i <= coordinate.getX() + g; i += g) {
+        for (int j = coordinate.getY() - g; j <= coordinate.getY() + g; j += g) {
           possibleMoves[k++] = new Coordinate(i, j);
         }
       }
