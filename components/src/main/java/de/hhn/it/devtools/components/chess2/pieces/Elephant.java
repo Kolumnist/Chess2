@@ -17,7 +17,6 @@ public class Elephant extends Piece {
     for (int i = coordinate.getX() - 2; i < coordinate.getX() + 2; i += 2) {
       for (int j = coordinate.getY() - 2; j < coordinate.getY() + 2; j += 2) {
         possibleMoves[k++] = new Coordinate(i, j);
-        // darf nicht hin zu coordinate.getX() & coordinate.getY()+1
       }
     }
 
@@ -25,10 +24,10 @@ public class Elephant extends Piece {
     for (int i = 0; i < possibleMoves.length; i++) {
       if ((possibleMoves[i].getX() == coordinate.getX()
           && possibleMoves[i].getY() == coordinate.getY())
-          || possibleMoves[i].getY() < 0     //steht der Bear am Rand
-          || possibleMoves[i].getX() < 0     //steht der Bear am Rand
-          || possibleMoves[i].getY() > 7     //steht der Bear am Rand
-          || possibleMoves[i].getX() > 7) {  //steht der Bear am Rand
+          || possibleMoves[i].getY() < 0
+          || possibleMoves[i].getX() < 0
+          || possibleMoves[i].getY() > 7
+          || possibleMoves[i].getX() > 7) {
         index.add(i);
       }
     }
