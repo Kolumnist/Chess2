@@ -62,7 +62,7 @@ class TestStatGoodCases {
         }
         case HEALTH -> {
           assertEquals(0, stat.getAbilityPointsUsed());
-          assertEquals(0, stat.getTotalValue());
+          assertEquals(28, stat.getTotalValue());
         }
         case LEVEL -> {
           assertEquals(0, stat.getAbilityPointsUsed());
