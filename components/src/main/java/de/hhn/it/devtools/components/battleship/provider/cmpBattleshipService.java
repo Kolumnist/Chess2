@@ -19,23 +19,36 @@ import java.util.IllegalFormatException;
 
 public class cmpBattleshipService implements BattleshipService {
     static GameState currentGameState = GameState.PREGAME;
-//    static GameState currentGameState = GameState.PLACINGSHIPS;
-//    static GameState currentGameState = GameState.PREGAME;
     Player player = new Player();
     Computer computer = new Computer();
-    int gameVolume;
+    static int gameVolume;
     private ArrayList<BattleshipListener> listeners;
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(cmpBattleshipService.class);
 
+    public cmpBattleshipService(){
+        listeners = new ArrayList<>();
+    }
+
     public void setCurrentGameState(GameState state){
         currentGameState = state;
+    }
+
+    public GameState getCurrentGameState() {
+        return currentGameState;
     }
 
     // nuri
     @Override
     public void addCallBack(BattleshipListener listener) throws IllegalParameterException {
         logger.info("addCallBack: listener = {}", listener);
+        if(listener == null){
+            throw new IllegalParameterException("Listener was null");
+        }
+
+        if(listeners.contains(listener)){
+            throw new IllegalParameterException("Listener already registered");
+        }
 
         listeners.add(listener);
     }
@@ -349,6 +362,9 @@ public class cmpBattleshipService implements BattleshipService {
     @Override
     public void adjustSoundVolume(int newVolume) throws IllegalArgumentException {
         logger.info("adjustSoundVolume: newVolume = {}", newVolume);
+        if(newVolume < 0){
+            throw new IllegalArgumentException("Volume can't be negative");
+        }
         gameVolume = newVolume;
     }
 
