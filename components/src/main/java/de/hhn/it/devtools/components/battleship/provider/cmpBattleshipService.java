@@ -373,6 +373,9 @@ public class cmpBattleshipService implements BattleshipService {
     // moutassem
     @Override
     public SavedGame saveGame() throws IllegalGameStateException {
+        if(currentGameState == GameState.GAMEOVER || currentGameState == GameState.PREGAME){
+            throw new IllegalGameStateException("You can not save when the game is not going");
+        }
         //SavedGame Objekt erstellen
         SavedGame saveData = new SavedGame();
         //TODO: Name des files vom Spieler eingeben
@@ -419,7 +422,6 @@ public class cmpBattleshipService implements BattleshipService {
         {
             System.out.println("IOException is caught");
         }
-
         catch(ClassNotFoundException ex)
         {
             System.out.println("ClassNotFoundException is caught");
