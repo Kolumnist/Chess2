@@ -2,99 +2,117 @@ package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class TestDefaultCharacterSheetGoodCases {
+  private static final org.slf4j.Logger logger
+          = org.slf4j.LoggerFactory.getLogger(TestStatGoodCases.class);
 
   @Test
-  void addCallback() {
+  void addCallbackTest() {
+    logger.info("addCallbackTest() is called");
   }
 
   @Test
-  void unwrapCharacter() {
+  void unwrapCharacterTest() {
+    logger.info("unwrapCharacterTest() is called");
   }
 
   @Test
-  void wrapCharacter() {
+  void wrapCharacterTest() {
+    logger.info("wrapCharacterTest() is called");
   }
 
   @Test
-  void incrementStat() {
+  void incrementStatTest() {
+    logger.info("incrementStatTest() is called");
   }
 
   @Test
-  void testIncrementStat() {
+  void decrementStatTest() {
+    logger.info("decrementStatTest() is called");
   }
 
   @Test
-  void decrementStat() {
+  void testDecrementStatTest() {
+    logger.info("testDecrementStatTest() is called");
   }
 
   @Test
-  void testDecrementStat() {
+  void getStatDisplayValueTest() {
+    logger.info("getStatDisplayValueTest() is called");
   }
 
   @Test
-  void getStatDisplayValue() {
+  void getStatDescriptorTest() {
+    logger.info("getStatDescriptorTest() is called");
   }
 
   @Test
-  void getStatDescriptor() {
+  void changeDescriptionTest() {
+    logger.info("changeDescriptionTest() is called");
   }
 
   @Test
-  void changeDescription() {
+  void getDescriptionDescriptorTest() {
+    logger.info("getDescriptionDescriptorTest() is called");
   }
 
   @Test
-  void getDescriptionDescriptor() {
+  void rollDiceTest() {
+    logger.info("rollDiceTest() is called");
   }
 
   @Test
-  void rollDice() {
+  void changeDiceTypeTest() {
+    logger.info("changeDiceTypeTest() is called");
   }
 
   @Test
-  void changeDiceType() {
+  void getDiceDescriptorTest() {
+    logger.info("getDiceDescriptorTest() is called");
   }
 
   @Test
-  void getDiceDescriptor() {
+  void getListenerTest() {
+    logger.info("getListenerTest() is called");
   }
 
   @Test
-  void getListener() {
+  void setListenerTest() {
+    logger.info("setListenerTest() is called");
   }
 
   @Test
-  void setListener() {
+  void getDescriptionsTest() {
+    logger.info("getDescriptionsTest() is called");
   }
 
   @Test
-  void getDescriptions() {
+  void setDescriptionsTest() {
+    logger.info("setDescriptionsTest() is called");
   }
 
   @Test
-  void setDescriptions() {
+  void getStatsTest() {
+    logger.info("getStatsTest() is called");
   }
 
   @Test
-  void getStats() {
+  void setStatsTest() {
+    logger.info("setStatsTest() is called");
   }
 
   @Test
-  void setStats() {
+  void getDiceTest() {
+    logger.info("getDiceTest() is called");
   }
 
   @Test
-  void getDice() {
+  void setDiceTest() {
+    logger.info("setDiceTest() is called");
   }
 
   @Test
-  void setDice() {
-  }
-
-  @Test
-  void testToString() {
+  void toStringTest() {
+    logger.info("toStringTest() is called");
   }
 }
