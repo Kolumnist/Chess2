@@ -23,8 +23,11 @@ public class Stat {
    *
    * @param statDescriptor The descriptor of a Stat
    */
-  public Stat(StatDescriptor statDescriptor) {
+  public Stat(StatDescriptor statDescriptor) throws IllegalArgumentException {
     logger.info("Constructor is called. Parameter: statDescriptor = " + statDescriptor);
+    if (statDescriptor == null) {
+      throw new IllegalArgumentException("Parameter is null");
+    }
     this.type = statDescriptor.getStatType();
     this.baseValue = statDescriptor.getBaseValue();
     this.offset = statDescriptor.getOffset();
