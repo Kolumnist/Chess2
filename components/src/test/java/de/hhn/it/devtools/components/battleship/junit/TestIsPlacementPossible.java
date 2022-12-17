@@ -15,8 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DisplayName("Test isPlacementPossible")
 public class TestIsPlacementPossible {
 
-    //TODO: Position auf NULL setzen???
-
     // Field size for tests set to 9
 
     cmpBattleshipService bsService = new cmpBattleshipService();
@@ -93,7 +91,7 @@ public class TestIsPlacementPossible {
         bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        assertEquals(false, bs.isPlacementPossible(player, ship, 1, 6, true));
+        assertEquals(false, bs.isPlacementPossible(player, ship, 1, 8, true));
     }
 
     @Test

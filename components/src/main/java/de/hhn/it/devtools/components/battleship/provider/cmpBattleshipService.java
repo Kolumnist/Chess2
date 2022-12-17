@@ -67,7 +67,7 @@ public class cmpBattleshipService implements BattleshipService {
         logger.info("isPlacementPossible: owner = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}, endX = {}, endY = {}, currentGameState = {}", owner, shipToPlace, x1, y1, isVertical, endX, endY, currentGameState);
 
         // Check if coordinates of ship is outside of field
-        if((x1 < 0) || (y1 < 0) || (x1 >= fieldSize) || (y1 >= fieldSize) || (endX > fieldSize) || (endY > fieldSize)){
+        if((x1 < 0) || (y1 < 0) || (x1 >= fieldSize) || (y1 >= fieldSize) || (endX > fieldSize && !isVertical) || (endY > fieldSize && isVertical)){
             return false;
         }
         else if(currentGameState != GameState.PLACINGSHIPS){
