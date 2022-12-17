@@ -67,7 +67,7 @@ public class cmpBattleshipService implements BattleshipService {
         logger.info("isPlacementPossible: owner = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}, endX = {}, endY = {}, currentGameState = {}", owner, shipToPlace, x1, y1, isVertical, endX, endY, currentGameState);
 
         // Check if coordinates of ship is outside of field
-        if((x1 < 0) || (y1 < 0) || (x1 >= fieldSize) || (y1 >= fieldSize)){
+        if((x1 < 0) || (y1 < 0) || (x1 >= fieldSize) || (y1 >= fieldSize) || (endX > fieldSize) || (endY > fieldSize)){
             return false;
         }
         else if(currentGameState != GameState.PLACINGSHIPS){
@@ -115,12 +115,17 @@ public class cmpBattleshipService implements BattleshipService {
     // nedim
     @Override
     public void placeShip(Owner owner, Ship shipToPlace, int x1, int y1) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException, IllegalArgumentException{
-        logger.info("placeShip: owner = {}, ship = {}, x-value = {}, y-value = {}", owner, shipToPlace, x1, y1);
+//        logger.info("placeShip: owner = {}, ship = {}, x-value = {}, y-value = {}", owner, shipToPlace, x1, y1);
         boolean isPlaced = shipToPlace.getPlaced();
         boolean isVertical = shipToPlace.getIsVertical();
         int shipSize = shipToPlace.getSize();
-        int endX, endY;
+        // wenn x1 der Endpunkt (linkeste Punkt) des Schiffes ist dann diese Rechnung:
+        int endX = (x1 + shipSize) - 1;
+        // wenn y1 der Endpunkt (oberste Punkt) des Schiffes ist dann diese Rechnung:
+        int endY = (y1 + shipSize) - 1;
         PanelState[][] shipField;
+
+        logger.info("placeShip: owner = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}, endX = {}, endY = {}, isPlaced = {}, currentGameState = {}, isPlacementPossible = {}", owner, shipToPlace, x1, y1, isVertical, endX, endY, isPlaced, currentGameState, isPlacementPossible(owner, shipToPlace, x1, y1, isVertical));
 
         if(isPlaced){
             throw new IllegalShipStateException("Ship is already placed");
@@ -132,12 +137,12 @@ public class cmpBattleshipService implements BattleshipService {
             throw new IllegalPositionException("Ship cannot be placed");
         }
         else if(isPlacementPossible(owner, shipToPlace, x1, y1, isVertical)){
-            if(owner.equals(player)){
-                shipField = player.getPShipField().getPanelMarkerMat();
+            if(owner instanceof Player){
+                shipField = ((Player) owner).getPShipField().getPanelMarkerMat();
             }
             // Diese Statement ging nicht ka wieso: else if(owner.equals(computer)){
-            else if(owner.equals(computer)){
-                shipField = computer.getCShipField().getPanelMarkerMat();
+            else if(owner instanceof Computer){
+                shipField = ((Computer) owner).getCShipField().getPanelMarkerMat();
             }
             else{
                 throw new IllegalArgumentException();
@@ -146,13 +151,11 @@ public class cmpBattleshipService implements BattleshipService {
             shipToPlace.setPlaced(true);
             shipToPlace.setFieldPosition(x1, y1);
             if(isVertical){
-                endY = y1 + shipSize;
                 for(int i = y1; i < endY; i++){
                     shipField[i][x1] = PanelState.SHIP;
                 }
             }
             else if(!isVertical){
-                endX = x1 + shipSize;
                 for(int i = x1; i < endX; i++){
                     shipField[y1][i] = PanelState.SHIP;
                 }

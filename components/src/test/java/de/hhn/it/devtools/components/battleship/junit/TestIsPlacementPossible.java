@@ -15,6 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DisplayName("Test isPlacementPossible")
 public class TestIsPlacementPossible {
 
+    //TODO: Position auf NULL setzen???
+
     // Field size for tests set to 9
 
     cmpBattleshipService bsService = new cmpBattleshipService();
@@ -46,8 +48,7 @@ public class TestIsPlacementPossible {
     public void checkNegativeCoordinates() throws IllegalGameStateException {
         // false should be returned
         bsService.setCurrentGameState(GameState.PLACINGSHIPS);
-        // false should be returned
-        Position pos = new Position(1, 1);
+        Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         assertEquals(false, bs.isPlacementPossible(player, ship, -1, -1, true));
     }
@@ -57,7 +58,7 @@ public class TestIsPlacementPossible {
     public void checkToBigCoordinates() throws IllegalGameStateException {
         // false should be returned
         bsService.setCurrentGameState(GameState.PLACINGSHIPS);
-        Position pos = new Position(1, 1);
+        Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         assertEquals(false, bs.isPlacementPossible(player, ship, 9, 9, false));
     }
@@ -67,7 +68,7 @@ public class TestIsPlacementPossible {
     public void checkWithWrongGameState() {
         // IllegalGameStateException should be thrown
         bsService.setCurrentGameState(GameState.PREGAME);
-        Position pos = new Position(1, 1);
+        Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         IllegalGameStateException exception = assertThrows(IllegalGameStateException.class,
                 () -> bs.isPlacementPossible(player,ship, 2, 4, false));
@@ -76,33 +77,33 @@ public class TestIsPlacementPossible {
     @Test
     @DisplayName("Test check isPlacementPossible for no player or computer")
     public void checkWithNoAllowedPlayer() throws IllegalArgumentException {
-        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         // IllegalArgumentException should be thrown
+        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         Owner notAllowedPlayer = new Owner();
-        Position pos = new Position(1, 1);
+        Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 () -> bs.isPlacementPossible(notAllowedPlayer, ship, 2, 2, true));
     }
 
     @Test
-    @DisplayName("Test check isPlacementPossible for ship that would protrude outside the field - vertical")
+    @DisplayName("Test check isPlacementPossible for ship that would stand out of the field - vertical")
     public void checkShipIsVerticalOutOfField() throws IllegalGameStateException {
-        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         // false should be returned
-        Position pos = new Position(1, 1);
+        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
+        Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         assertEquals(false, bs.isPlacementPossible(player, ship, 1, 6, true));
     }
 
     @Test
-    @DisplayName("Test check isPlacementPossible for ship that would protrude outside the field - horizontal")
+    @DisplayName("Test check isPlacementPossible for ship that would stand out of the the field - horizontal")
     public void checkShipIsHorizontalOutOfField() throws IllegalGameStateException {
-        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         // false should be returned
-        Position pos = new Position(1, 1);
+        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
+        Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        assertEquals(false, bs.isPlacementPossible(player, ship, 6, 2, false));
+        assertEquals(false, bs.isPlacementPossible(player, ship, 7, 2, false));
     }
 
     // Good Cases
@@ -110,9 +111,9 @@ public class TestIsPlacementPossible {
     @Test
     @DisplayName("Test check isPlacementPossible for ships set into the field - vertical")
     public void checkShipVerticalInField() throws IllegalGameStateException {
-        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         // true should be returned
-        Position pos = new Position(1, 1);
+        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
+        Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         assertEquals(true, bs.isPlacementPossible(player, ship, 7, 5, true));
     }
@@ -120,9 +121,9 @@ public class TestIsPlacementPossible {
     @Test
     @DisplayName("Test check isPlacementPossible for ships set into the field - horizontal")
     public void checkShipHorizontalInField() throws IllegalGameStateException {
-        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         // true should be returned
-        Position pos = new Position(1, 1);
+        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
+        Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         assertEquals(true, bs.isPlacementPossible(player, ship, 5, 0, false));
     }
