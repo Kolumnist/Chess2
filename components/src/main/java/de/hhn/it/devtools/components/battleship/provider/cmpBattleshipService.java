@@ -2,8 +2,6 @@ package de.hhn.it.devtools.components.battleship.provider;
 
 import de.hhn.it.devtools.apis.battleship.*;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.Game;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.IllegalFormatException;
