@@ -78,6 +78,15 @@ class TestStatGoodCases {
         }
       }
     }
+
+    Stat edgeStat = stats[3];
+    edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
+    edgeStat.addAbilityPoint();
+    assertEquals(Integer.MAX_VALUE, edgeStat.getAbilityPointsUsed());
+
+    edgeStat.setAbilityPointsUsed(Integer.MIN_VALUE);
+    edgeStat.addAbilityPoint();
+    assertEquals(Integer.MIN_VALUE + 1, edgeStat.getAbilityPointsUsed());
   }
 
   @Test
@@ -108,6 +117,15 @@ class TestStatGoodCases {
         }
       }
     }
+
+    Stat edgeStat = stats[3];
+    edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
+    edgeStat.removeAbilityPoint();
+    assertEquals(Integer.MAX_VALUE - 1, edgeStat.getAbilityPointsUsed());
+
+    edgeStat.setAbilityPointsUsed(Integer.MIN_VALUE);
+    edgeStat.removeAbilityPoint();
+    assertEquals(Integer.MIN_VALUE, edgeStat.getAbilityPointsUsed());
   }
 
   @Test
