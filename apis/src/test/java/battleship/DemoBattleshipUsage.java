@@ -39,7 +39,7 @@ public class DemoBattleshipUsage  {
 
 
         //User starts the game by bombing the enemy panel and misses
-        game.bombPanel(new Owner(),4,7);
+        game.bombPanel(new Owner(), new Owner(),4, 7);
 
         //Sound volume was too loud, user wants to adjust it
         game.adjustSoundVolume(30);
