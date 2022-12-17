@@ -114,12 +114,11 @@ class TestStatGoodCases {
   void toStringTest() {
     logger.info("toStringTest() is called");
     for (Stat stat : stats) {
-      stat.addAbilityPoint();
       switch (stat.getType()) {
         case LEVEL -> assertEquals("""
                 Stat Type: LEVEL
                 Base Value: 1
-                Offset: 1
+                Offset: 0
                 Ability Points Used: 0
                 Miscellaneous: 0
                 Level Stat: false""", stat.toString());
