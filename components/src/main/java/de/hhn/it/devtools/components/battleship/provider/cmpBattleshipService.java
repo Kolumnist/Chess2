@@ -40,6 +40,10 @@ public class cmpBattleshipService implements BattleshipService {
         return listeners;
     }
 
+    public int getGameVolume(){
+        return gameVolume;
+    }
+
     // nuri
     @Override
     public void addCallBack(BattleshipListener listener) throws IllegalParameterException {
