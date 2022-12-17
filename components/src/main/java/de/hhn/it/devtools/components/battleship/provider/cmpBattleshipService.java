@@ -137,7 +137,6 @@ public class cmpBattleshipService implements BattleshipService {
     // nedim
     @Override
     public void placeShip(Owner owner, Ship shipToPlace, int x1, int y1) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException, IllegalArgumentException{
-//        logger.info("placeShip: owner = {}, ship = {}, x-value = {}, y-value = {}", owner, shipToPlace, x1, y1);
         boolean isPlaced = shipToPlace.getPlaced();
         boolean isVertical = shipToPlace.getIsVertical();
         int shipSize = shipToPlace.getSize();
@@ -145,7 +144,8 @@ public class cmpBattleshipService implements BattleshipService {
         int endX = (x1 + shipSize) - 1;
         // wenn y1 der Endpunkt (oberste Punkt) des Schiffes ist dann diese Rechnung:
         int endY = (y1 + shipSize) - 1;
-        PanelState[][] shipField;
+        PanelState[][] panelStateField;
+        ShipField shipField;
 
         logger.info("placeShip: owner = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}, endX = {}, endY = {}, isPlaced = {}, currentGameState = {}, isPlacementPossible = {}", owner, shipToPlace, x1, y1, isVertical, endX, endY, isPlaced, currentGameState, isPlacementPossible(owner, shipToPlace, x1, y1, isVertical));
 
@@ -160,11 +160,12 @@ public class cmpBattleshipService implements BattleshipService {
         }
         else if(isPlacementPossible(owner, shipToPlace, x1, y1, isVertical)){
             if(owner instanceof Player){
-                shipField = ((Player) owner).getPShipField().getPanelMarkerMat();
+                panelStateField = ((Player) owner).getPShipField().getPanelMarkerMat();
+                shipField = ((Player) owner).getPShipField();
             }
-            // Diese Statement ging nicht ka wieso: else if(owner.equals(computer)){
             else if(owner instanceof Computer){
-                shipField = ((Computer) owner).getCShipField().getPanelMarkerMat();
+                panelStateField = ((Computer) owner).getCShipField().getPanelMarkerMat();
+                shipField = ((Computer) owner).getCShipField();
             }
             else{
                 throw new IllegalArgumentException();
@@ -174,12 +175,14 @@ public class cmpBattleshipService implements BattleshipService {
             shipToPlace.setFieldPosition(x1, y1);
             if(isVertical){
                 for(int i = y1; i < endY; i++){
-                    shipField[i][x1] = PanelState.SHIP;
+                    panelStateField[i][x1] = PanelState.SHIP;
+                    shipField.setPanelMarker(x1, i, PanelState.SHIP);
                 }
             }
             else if(!isVertical){
                 for(int i = x1; i < endX; i++){
-                    shipField[y1][i] = PanelState.SHIP;
+                    panelStateField[y1][i] = PanelState.SHIP;
+                    shipField.setPanelMarker(i, y1, PanelState.SHIP);
                 }
             }
         }
@@ -287,61 +290,51 @@ public class cmpBattleshipService implements BattleshipService {
 
     // nuri
     @Override
-    public boolean bombPanel(Owner attacker,int x, int y) throws IllegalArgumentException, IllegalGameStateException {
-
-        logger.info("bombPanel: owner = {}, x = {}, y = {}", attacker , x, y);
-
+    public boolean bombPanel(Owner attacker, Owner victim, int x, int y) throws IllegalArgumentException, IllegalGameStateException {
+        logger.info("bombPanel: attacker = {}, attacked = {}, x = {}, y = {}", attacker, victim, x, y);
         if(currentGameState != GameState.FIRINGSHOTS){
             throw  new IllegalGameStateException("Wrong GameState! Required GameState is FiringShots");
         }
-
-        // need to test if I can just use .equals or need to change .equals() method
-
-        if (attacker.equals(player)){
-
-            PanelState isShipOnPosition = computer.getCShipField().getPanelMarker(x,y);
-
-            if (isShipOnPosition.equals(PanelState.SHIP)){
+        if((x < 0) || (y < 0) || (x > Field.getSize()) || (y > Field.getSize())){
+            throw new IllegalArgumentException();
+        }
+        PanelState isShipOnPosition;
+        if (attacker instanceof Player){
+            isShipOnPosition = ((Computer) victim).getCShipField().getPanelMarker(x,y);
+            if (isShipOnPosition == PanelState.SHIP){
                 // set ship part on position to bombed
-                computer.getCShipField().setPanelMarker(x, y, PanelState.HIT);
-
-                player.getPAttackField().setPanelMarker(x, y,PanelState.HIT);
+                ((Computer) victim).getCShipField().setPanelMarker(x, y, PanelState.HIT);
+                ((Player) attacker).getPAttackField().setPanelMarker(x, y,PanelState.HIT);
                 return true;
             }
             else {
                 //set position to bombed (not necessary hit)
-                computer.getCShipField().setPanelMarker(x, y, PanelState.MISSED);
-
-                player.getPAttackField().setPanelMarker(x,y,PanelState.MISSED);
+                ((Computer) victim).getCShipField().setPanelMarker(x, y, PanelState.MISSED);
+                ((Player) attacker).getPAttackField().setPanelMarker(x,y,PanelState.MISSED);
                 return false;
             }
-
         }
 
-
-        else if (attacker.equals(computer)){
-
-            PanelState isShipOnPosition = player.getPShipField().getPanelMarker(x,y);
-
-            if(isShipOnPosition.equals(PanelState.SHIP)){
+        else if (attacker instanceof Computer){
+            isShipOnPosition = ((Player) victim).getPShipField().getPanelMarker(x,y);
+            if(isShipOnPosition == PanelState.SHIP){
                 // set ship part on position to bombed
-                player.getPShipField().setPanelMarker(x,y,PanelState.HIT);
+                ((Player) victim).getPShipField().setPanelMarker(x,y,PanelState.HIT);
                 //set position to bombed (not necessary hit)
-                computer.getCAttackField().setPanelMarker(x,y,PanelState.HIT);
+                ((Computer) attacker).getCAttackField().setPanelMarker(x,y,PanelState.HIT);
                 return true;
             }
             else {
                 // set position to bombed (not necessary hit)
-                player.getPShipField().setPanelMarker(x,y,PanelState.MISSED);
-
-                computer.getCAttackField().setPanelMarker(x,y,PanelState.MISSED);
+                ((Player) victim).getPShipField().setPanelMarker(x,y,PanelState.MISSED);
+                ((Computer) attacker).getCAttackField().setPanelMarker(x,y,PanelState.MISSED);
                 return false;
             }
-
         }
 
-        // necessary but shouldn't be executed
-        return false;
+        else {
+            throw new IllegalArgumentException();
+        }
     }
 
     // nuri

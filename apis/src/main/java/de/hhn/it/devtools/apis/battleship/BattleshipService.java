@@ -83,10 +83,11 @@ public interface BattleshipService {
      * @param x x coordinate of the target panel
      * @param y y coordinate of the target panel
      * @param attacker player that performs the bombing
+     * @param victim player on whose field is shot
      * @throws IllegalArgumentException if field does not exist
-     * @throws  IllegalGameStateException if the GameState is not FIRINGSHOTS
+     * @throws IllegalGameStateException if the GameState is not FIRINGSHOTS
      */
-    boolean bombPanel(Owner attacker,int x, int y) throws IllegalArgumentException, IllegalGameStateException;
+    boolean bombPanel(Owner attacker, Owner victim, int x, int y) throws IllegalArgumentException, IllegalGameStateException;
 
 
     /**

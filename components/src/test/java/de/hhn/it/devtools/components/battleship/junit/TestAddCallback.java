@@ -53,6 +53,7 @@ public class TestAddCallback {
     @Test
     @DisplayName("Test addCallback but two times the same listener")
     public void addCallbackWithTheSameListenerTwice() throws IllegalParameterException {
+        // IllegalParameterException should be thrown
         BattleshipListenerInner listener = new BattleshipListenerInner();
         bs.addCallBack(listener);
         IllegalParameterException exception = assertThrows(IllegalParameterException.class,
