@@ -48,6 +48,27 @@ class TestStatGoodCases {
         default -> assertEquals(0, stat.getTotalValue());
       }
     }
+
+    Stat edgeStat = stats[3];
+    edgeStat.setMiscellaneous(Integer.MAX_VALUE);
+    assertEquals(Integer.MAX_VALUE, edgeStat.getTotalValue());
+    edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
+    assertEquals(Integer.MAX_VALUE, edgeStat.getTotalValue());
+    edgeStat.setMiscellaneous(0);
+    assertEquals(Integer.MAX_VALUE, edgeStat.getTotalValue());
+
+    edgeStat.setMiscellaneous(Integer.MIN_VALUE);
+    assertEquals(0, edgeStat.getTotalValue());
+
+    edgeStat.setAbilityPointsUsed(0);
+    assertEquals(Integer.MIN_VALUE, edgeStat.getTotalValue());
+    edgeStat.setAbilityPointsUsed(Integer.MIN_VALUE);
+    assertEquals(Integer.MIN_VALUE, edgeStat.getTotalValue());
+    edgeStat.setMiscellaneous(0);
+    assertEquals(Integer.MIN_VALUE, edgeStat.getTotalValue());
+
+    edgeStat.setMiscellaneous(Integer.MAX_VALUE);
+    assertEquals(0, edgeStat.getTotalValue());
   }
 
   @Test
