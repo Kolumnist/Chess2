@@ -29,7 +29,7 @@ public class Stat {
     this.offset = statDescriptor.getOffset();
     setAbilityPointsUsed(statDescriptor.getAbilityPointsUsed());
     setMiscellaneous(statDescriptor.getMiscellaneous());
-    setLevelStat(isStatTypeLevelStat(statDescriptor.getStatType()));
+    setLevelStat(statDescriptor.isLevelStat());
   }
 
   /**
@@ -57,17 +57,6 @@ public class Stat {
   public void removeAbilityPoint() {
     logger.info("removeAbilityPoint() is called");
     setAbilityPointsUsed(getAbilityPointsUsed() - 1);
-  }
-
-  /**
-   * Determines whether a StatType can be leveled.
-   *
-   * @param statType The Stat Type that is checked
-   * @return TRUE when Stat Type can be leveled else false
-   */
-  private boolean isStatTypeLevelStat(StatType statType) {
-    logger.info("isStatTypeLevelStat is called. Parameter: statType = " + statType);
-    return statType != StatType.HEALTH && statType != StatType.LEVEL;
   }
 
   public StatType getType() {
