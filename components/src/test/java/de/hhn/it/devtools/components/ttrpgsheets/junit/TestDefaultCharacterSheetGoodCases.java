@@ -75,46 +75,6 @@ class TestDefaultCharacterSheetGoodCases {
   }
 
   @Test
-  void getListenerTest() {
-    logger.info("getListenerTest() is called");
-  }
-
-  @Test
-  void setListenerTest() {
-    logger.info("setListenerTest() is called");
-  }
-
-  @Test
-  void getDescriptionsTest() {
-    logger.info("getDescriptionsTest() is called");
-  }
-
-  @Test
-  void setDescriptionsTest() {
-    logger.info("setDescriptionsTest() is called");
-  }
-
-  @Test
-  void getStatsTest() {
-    logger.info("getStatsTest() is called");
-  }
-
-  @Test
-  void setStatsTest() {
-    logger.info("setStatsTest() is called");
-  }
-
-  @Test
-  void getDiceTest() {
-    logger.info("getDiceTest() is called");
-  }
-
-  @Test
-  void setDiceTest() {
-    logger.info("setDiceTest() is called");
-  }
-
-  @Test
   void toStringTest() {
     logger.info("toStringTest() is called");
   }
