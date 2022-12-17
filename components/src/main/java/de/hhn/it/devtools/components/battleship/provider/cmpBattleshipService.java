@@ -58,10 +58,15 @@ public class cmpBattleshipService implements BattleshipService {
     public void removeCallback(BattleshipListener listener) throws IllegalParameterException {
         logger.info("removeCallback: listener = {}", listener);
 
+        if(listener == null){
+            throw new IllegalParameterException("Listener was null");
+        }
+
         if(listeners.contains(listener)) {
             listeners.remove(listener);
             return;
         }
+
         throw new IllegalParameterException("Listener was not added!");
     }
 
@@ -428,7 +433,12 @@ public class cmpBattleshipService implements BattleshipService {
     @Override
     public void concede() throws IllegalGameStateException {
         //TODO: braucht zuerst UI
-        currentGameState = GameState.GAMEOVER;
+        if(currentGameState == GameState.PREGAME || currentGameState == GameState.GAMEOVER){
+            throw new IllegalGameStateException("You can not give up when the game is not going");
+        }
+        if(currentGameState == GameState.PLACINGSHIPS || currentGameState == GameState.FIRINGSHOTS {
+            currentGameState = GameState.GAMEOVER;
+        }
         //Anzeigen, dass CPU gewinnt
         //Unter der Anzeige Knopf für rematch und Knopf für Rückkehr zum Hauptmenü
     }
