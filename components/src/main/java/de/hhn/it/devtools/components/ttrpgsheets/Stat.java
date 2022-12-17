@@ -48,7 +48,7 @@ public class Stat {
    */
   public void addAbilityPoint() {
     logger.info("addAbilityPoint() is called");
-    if (isLevelStat()) {
+    if (isLevelStat() && getAbilityPointsUsed() < Integer.MAX_VALUE) {
       setAbilityPointsUsed(getAbilityPointsUsed() + 1);
     }
   }
@@ -58,7 +58,7 @@ public class Stat {
    */
   public void removeAbilityPoint() {
     logger.info("removeAbilityPoint() is called");
-    if (isLevelStat()) {
+    if (isLevelStat() && getAbilityPointsUsed() > Integer.MIN_VALUE) {
       setAbilityPointsUsed(getAbilityPointsUsed() - 1);
     }
   }
