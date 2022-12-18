@@ -35,11 +35,6 @@ class TestDefaultCharacterSheetGoodCases {
   }
 
   @Test
-  void testDecrementStatTest() {
-    logger.info("testDecrementStatTest() is called");
-  }
-
-  @Test
   void getStatDisplayValueTest() {
     logger.info("getStatDisplayValueTest() is called");
   }
