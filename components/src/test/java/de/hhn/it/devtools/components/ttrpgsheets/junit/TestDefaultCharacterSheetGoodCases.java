@@ -3,10 +3,17 @@ package de.hhn.it.devtools.components.ttrpgsheets.junit;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import de.hhn.it.devtools.apis.ttrpgsheets.CharacterDescriptor;
+import de.hhn.it.devtools.apis.ttrpgsheets.CharacterSheetListener;
+import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
+import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionType;
+import de.hhn.it.devtools.apis.ttrpgsheets.DiceDescriptor;
+import de.hhn.it.devtools.apis.ttrpgsheets.DiceType;
 import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import de.hhn.it.devtools.components.ttrpgsheets.DefaultCharacterSheet;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class TestDefaultCharacterSheetGoodCases {
@@ -14,6 +21,90 @@ class TestDefaultCharacterSheetGoodCases {
           = org.slf4j.LoggerFactory.getLogger(TestStatGoodCases.class);
 
   DefaultCharacterSheet characterSheet = null; //TODO - Add Constructor
+
+  @BeforeEach
+  void setupObjects() {
+    logger.info("setupObjects() is called");
+    characterSheet = new DefaultCharacterSheet(new CharacterSheetListener() {
+      @Override
+      public void statChanged(StatDescriptor stat) {
+
+      }
+
+      @Override
+      public void diceChanged(DiceDescriptor dice) {
+
+      }
+
+      @Override
+      public void descriptionChanged(DescriptionDescriptor description) {
+
+      }
+    }, setupCharacterDescriptor());
+  }
+
+  CharacterDescriptor setupCharacterDescriptor() {
+    logger.info("setupCharacterDescriptor() is called");
+    return new CharacterDescriptor(setupDescriptions(), setupStats(),
+            new DiceDescriptor(DiceType.D6, 1));
+  }
+
+  StatDescriptor[] setupStats() {
+    logger.info("setupStats() is called");
+    StatDescriptor[] statDescriptors = new StatDescriptor[StatType.values().length];
+    for (int i = 0; i < StatType.values().length; i++) {
+      switch (StatType.values()[i]) {
+        case MAX_HEALTH -> statDescriptors[i]
+                = new StatDescriptor(StatType.values()[i], 30, 5, 0, 0, true);
+        case HEALTH -> statDescriptors[i]
+                = new StatDescriptor(StatType.values()[i], 30, 0, 0, -2, false);
+        case LEVEL -> statDescriptors[i]
+                = new StatDescriptor(StatType.values()[i], 1, 0, 0, 0, false);
+        case STRENGTH -> statDescriptors[i]
+                = new StatDescriptor(StatType.values()[i], 0, 1, 2, 6, true);
+        default -> statDescriptors[i] = new StatDescriptor(StatType.values()[i], 0, 1, 0, 0, true);
+      }
+    }
+    return statDescriptors;
+  }
+
+  DescriptionDescriptor[] setupDescriptions() {
+    logger.info("setupDescriptions() is called");
+    DescriptionDescriptor[] descriptionDescriptors = new DescriptionDescriptor[
+            DescriptionType.values().length];
+    for (int i = 0; i < DescriptionType.values().length; i++) {
+      switch (DescriptionType.values()[i]) {
+        case CHARACTER_CLASS -> descriptionDescriptors[i] = new DescriptionDescriptor(
+                DescriptionType.values()[i], "Warrior");
+        case CHARACTER_NAME -> descriptionDescriptors[i] = new DescriptionDescriptor(
+                DescriptionType.values()[i], "Sylas Thatcher");
+        case PLAYER_NAME -> descriptionDescriptors[i] = new DescriptionDescriptor(
+                DescriptionType.values()[i], "Peter");
+        case SKIN_COLOR -> descriptionDescriptors[i] = new DescriptionDescriptor(
+                DescriptionType.values()[i], "White");
+        case HAIR_COLOR -> descriptionDescriptors[i] = new DescriptionDescriptor(
+                DescriptionType.values()[i], "Pink");
+        case EYE_COLOR -> descriptionDescriptors[i] = new DescriptionDescriptor(
+                DescriptionType.values()[i], "Blue");
+        case NICKNAME -> descriptionDescriptors[i] = new DescriptionDescriptor(
+                DescriptionType.values()[i], "Sy");
+        case WEIGHT -> descriptionDescriptors[i] = new DescriptionDescriptor(
+                DescriptionType.values()[i], "72 kg");
+        case HEIGHT -> descriptionDescriptors[i] = new DescriptionDescriptor(
+                DescriptionType.values()[i], "160 cm");
+        case RACE -> descriptionDescriptors[i] = new DescriptionDescriptor(
+                DescriptionType.values()[i], "Human");
+        case AGE -> descriptionDescriptors[i] = new DescriptionDescriptor(
+                DescriptionType.values()[i], "52");
+        case OTHER -> descriptionDescriptors[i] = new DescriptionDescriptor(
+                DescriptionType.values()[i], "He is a funny guy.");
+        default -> {
+
+        }
+      }
+    }
+    return descriptionDescriptors;
+  }
 
   @Test
   void addCallbackTest() {
