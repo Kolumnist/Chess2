@@ -203,7 +203,8 @@ public class cmpBattleshipService implements BattleshipService {
         // wenn y1 der Endpunkt (oberste Punkt) des Schiffes ist dann diese Rechnung:
         int endY = (y + shipSize) - 1;
         boolean isVertical = shipToMove.getIsVertical();
-        PanelState[][] shipField;
+        PanelState[][] panelStateField;
+        ShipField shipField;
 
         logger.info("unPlace: owner = {}, ship = {}, x = {}, y = {}, endX = {}, endY = {}", owner, shipToMove, x, y, endX, endY);
 
@@ -211,22 +212,26 @@ public class cmpBattleshipService implements BattleshipService {
             throw new IllegalGameStateException("Wrong GameState! Required GameState is PlacingShips");
         }
         else if(owner instanceof Player){
-            shipField = ((Player) owner).getPShipField().getPanelMarkerMat();
+            panelStateField = ((Player) owner).getPShipField().getPanelMarkerMat();
+            shipField = ((Player) owner).getPShipField();
         }
         else if(owner instanceof Computer){
-            shipField = ((Computer) owner).getCShipField().getPanelMarkerMat();
+            panelStateField = ((Computer) owner).getCShipField().getPanelMarkerMat();
+            shipField = ((Computer) owner).getCShipField();
         }
         else{
             throw new IllegalArgumentException();
         }
         if(isVertical){
             for(int i = y; i < endY; i++){
-                shipField[i][x] = PanelState.NOSHIP;
+                panelStateField[i][x] = PanelState.NOSHIP;
+                shipField.setPanelMarker(x, i, PanelState.NOSHIP);
             }
         }
         else if(!isVertical){
             for(int i = x; i < endX; i++){
-                shipField[y][i] = PanelState.NOSHIP;
+                panelStateField[y][i] = PanelState.NOSHIP;
+                shipField.setPanelMarker(i, y, PanelState.NOSHIP);
             }
         }
     }
