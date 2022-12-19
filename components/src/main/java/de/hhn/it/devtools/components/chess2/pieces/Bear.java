@@ -28,8 +28,7 @@ public class Bear extends Piece {
 
     ArrayList<Integer> index = new ArrayList<>();
     for (int i = 0; i < possibleMoves.length; i++) {
-      if ((possibleMoves[i].getX() == coordinate.getX()
-          && possibleMoves[i].getY() == coordinate.getY())
+      if ((possibleMoves[i].compareCoordinates(coordinate))
           || possibleMoves[i].getY() < 0
           || possibleMoves[i].getX() < 0
           || possibleMoves[i].getY() > 7
