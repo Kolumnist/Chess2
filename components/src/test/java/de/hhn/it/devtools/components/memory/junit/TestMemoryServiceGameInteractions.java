@@ -112,14 +112,26 @@ public class TestMemoryServiceGameInteractions {
   }
 
   @Test
-  @DisplayName("turnCard for two cards of the same type")
-  void turnCardForTheSameType() throws IllegalParameterException {
+  @DisplayName("turnCard for two cards of the same type name card")
+  void turnCardForTheSameTypeNameCard() throws IllegalParameterException {
     memoryService.newGame(Difficulty.EASY);
     memoryService.turnCard(1);
     memoryService.turnCard(2);
     assertAll(
             () -> assertSame(memoryService.getPictureCardDescriptor(1).getState(), State.HIDDEN),
             () -> assertSame(memoryService.getPictureCardDescriptor(2).getState(), State.HIDDEN)
+    );
+  }
+
+  @Test
+  @DisplayName("turnCard for two cards of the same type picture card")
+  void turnCardForTheSameTypePictureCard() throws IllegalParameterException {
+    memoryService.newGame(Difficulty.EASY);
+    memoryService.turnCard(0);
+    memoryService.turnCard(3);
+    assertAll(
+            () -> assertSame(memoryService.getPictureCardDescriptor(0).getState(), State.HIDDEN),
+            () -> assertSame(memoryService.getPictureCardDescriptor(3).getState(), State.HIDDEN)
     );
   }
 

@@ -29,11 +29,13 @@ public class PictureCardParameterResolver implements ParameterResolver {
     PictureCardDescriptor descriptor0 = new PictureCardDescriptor(1, null);
     PictureCardDescriptor descriptor1 = new PictureCardDescriptor(-1, "Mario");
     PictureCardDescriptor descriptor2 = new PictureCardDescriptor(-1, "Peach");
+    PictureCardDescriptor descriptor3 = new PictureCardDescriptor(2, null);
 
     List<PictureCardDescriptor> descriptors = new ArrayList<>();
     descriptors.add(descriptor0);
     descriptors.add(descriptor1);
     descriptors.add(descriptor2);
+    descriptors.add(descriptor3);
 
     return descriptors;
   }

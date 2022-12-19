@@ -109,7 +109,7 @@ public class TestMemoryServiceGoodCases {
 
     List<PictureCardDescriptor> cards = memoryService.getPictureCardDescriptors();
     assertAll(
-            () -> assertEquals(3, cards.size(), "Now we should " +
+            () -> assertEquals(4, cards.size(), "Now we should " +
                     "have three pictureCards."),
             () -> assertNotEquals(cards.get(0).getId(), cards.get(1).getId()),
             () -> assertNotEquals(cards.get(1).getId(), cards.get(2).getId()),
