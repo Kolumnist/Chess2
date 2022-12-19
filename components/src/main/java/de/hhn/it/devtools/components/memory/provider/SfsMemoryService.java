@@ -38,8 +38,10 @@ public class SfsMemoryService implements MemoryService {
         currentCardSet = c;
         fetchCards(c.getDescriptor().getPictureCardDescriptors());
         notifyCurrentDeck();
+        return;
       }
     }
+    throw new IllegalParameterException("There is no cardSet for this difficulty.");
   }
 
   @Override

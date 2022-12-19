@@ -21,11 +21,12 @@ public class TestMemoryServiceGameInteractions {
   SfsMemoryService memoryService;
   List<PictureCardDescriptor> descriptors;
   PictureCardDescriptor[] descriptorsArray;
+  SimpleDeckListener listener;
 
   @BeforeEach
   void setup(List<PictureCardDescriptor> descriptors) throws IllegalParameterException {
     memoryService = new SfsMemoryService();
-    DeckListener listener = new SimpleDeckListener();
+    this.listener = new SimpleDeckListener();
     memoryService.addCallback(listener);
     HashMap<Integer, String> pictureReferences = new HashMap<>();
     pictureReferences.put(1, "Mario");
@@ -42,7 +43,14 @@ public class TestMemoryServiceGameInteractions {
   @DisplayName("newGame is initialized successfully")
   void newGameIsInitializedSuccessfully() throws IllegalParameterException {
     memoryService.newGame(Difficulty.EASY);
-    assertTrue(memoryService.getCurrentCardSet().getDescriptor().getPictureCardDescriptors().length > 0);
+
+    assertAll(
+
+        () -> assertTrue(memoryService.getCurrentCardSet().getDescriptor().getPictureCardDescriptors().length > 0),
+        () -> assertEquals(memoryService.getCurrentCardSet().getDescriptor().getDifficulty(), Difficulty.EASY),
+        () -> assertEquals(memoryService.getPictureCardDescriptors(), descriptors),
+        () -> assertTrue(listener.decks.size() > 0)
+    );
   }
 
 
@@ -158,6 +166,7 @@ public class TestMemoryServiceGameInteractions {
             () -> assertTrue(memoryService.getPictureCardDescriptor(2).getState() == State.HIDDEN)
     );
   }
+
 
 
   class SimpleDeckListener implements DeckListener {
