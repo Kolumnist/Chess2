@@ -120,26 +120,19 @@ public class TestMemoryServiceBadCases {
     );
   }
 
-  /*
+
   @Test
   @DisplayName("fetchCards for non existing cardDescriptors")
-  void testExceptionWhenFetchingNonExistingDescriptors() {
+  void testExceptionWhenFetchingNonExistingDescriptors() throws IllegalParameterException {
+    HashMap<Integer, String> pictureReferences = new HashMap<>();
+    pictureReferences.put(1, "Mario");
+    CardSetDescriptor cardSetDescriptor = new CardSetDescriptor(Difficulty.EASY, null, pictureReferences);
+    memoryService.addCardSet(cardSetDescriptor);
     assertThrows(IllegalParameterException.class,
-            () -> memoryService.fetchCards(null)
+            () -> memoryService.newGame(Difficulty.EASY)
     );
   }
 
-   */
-
- /*
-  @Test
-  @DisplayName("matching Cards for non existing card")
-  void testExceptionWhenMatchingNonExistingCard() {
-    assertThrows(IllegalParameterException.class,
-            () -> memoryService.checkForMatch(null, null)
-    );
-  }
-  */
 
   @Test
   @DisplayName("addCardSet for non existing cardSet")
@@ -157,19 +150,39 @@ public class TestMemoryServiceBadCases {
     );
   }
 
-  /*
   @Test
-  @DisplayName("adding the same cardSet twice")
-  void addCardSetTwice(PictureCardDescriptor[] descriptors) throws IllegalParameterException {
+  @DisplayName("newGame with difficulty null")
+  void testExceptionForNewGameWithDifficultyNull() {
+    assertThrows(
+        IllegalParameterException.class,
+        () -> memoryService.newGame(null)
+    );
+  }
+
+  @Test
+  @DisplayName("test exception when there is no cardSet for that difficulty.")
+  void noCardSetForThisDifficulty() {
+    assertThrows(
+        IllegalParameterException.class,
+        () -> memoryService.newGame(Difficulty.EASY)
+    );
+  }
+
+
+  @Test
+  @DisplayName("adding cardSet with same difficulty.")
+  void addCardWithSameDifficulty(List<PictureCardDescriptor> descriptors) throws IllegalParameterException {
     HashMap<Integer, String> pictureReferences = new HashMap<>();
     pictureReferences.put(1, "Mario");
-    CardSetDescriptor cardSetDescriptor = new CardSetDescriptor(Difficulty.EASY, descriptors, pictureReferences);
+    PictureCardDescriptor[] descriptorsArray = new PictureCardDescriptor[descriptors.size()];
+    descriptors.toArray(descriptorsArray);
+    CardSetDescriptor cardSetDescriptor = new CardSetDescriptor(Difficulty.EASY, descriptorsArray, pictureReferences);
     memoryService.addCardSet(cardSetDescriptor);
     assertThrows(IllegalParameterException.class,
             () -> memoryService.addCardSet(cardSetDescriptor)
     );
   }
-  */
+
 
   @Test
   @DisplayName("Add a deck listener twice")

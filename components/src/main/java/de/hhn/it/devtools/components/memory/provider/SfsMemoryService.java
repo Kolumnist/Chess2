@@ -168,13 +168,15 @@ public class SfsMemoryService implements MemoryService {
   @Override
   public void addCardSet(CardSetDescriptor set) throws IllegalParameterException {
     logger.info("addCardSet: set = {}", set);
+    SfsCardSet cardSet = new SfsCardSet(set);
     if (set == null) {
       throw new IllegalParameterException("CardSet is a null references");
     }
-    if (cardSetStorage.contains(set)) {
-      throw new IllegalParameterException("CardSet already registered.");
+    for (SfsCardSet c: cardSetStorage) {
+      if (c.getDescriptor().getDifficulty() == cardSet.getDescriptor().getDifficulty()) {
+        throw new IllegalParameterException("CardSet already registered.");
+      }
     }
-    SfsCardSet cardSet = new SfsCardSet(set);
     cardSetStorage.add(cardSet);
   }
 
