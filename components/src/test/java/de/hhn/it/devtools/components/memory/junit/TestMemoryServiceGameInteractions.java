@@ -30,6 +30,7 @@ public class TestMemoryServiceGameInteractions {
     memoryService.addCallback(listener);
     HashMap<Integer, String> pictureReferences = new HashMap<>();
     pictureReferences.put(1, "Mario");
+    pictureReferences.put(2, "Peach");
     this.descriptors = new ArrayList<>();
     this.descriptors.addAll(descriptors);
     descriptorsArray = new PictureCardDescriptor[this.descriptors.size()];
@@ -136,28 +137,22 @@ public class TestMemoryServiceGameInteractions {
   }
 
   @Test
-  @DisplayName("turnCard for two cards that match in HashMap")
-  void turnCardsForTwoCardsThatMatch() throws IllegalParameterException {
+  @DisplayName("turnCard for two pairs of cards that matchin different order  in HashMap")
+  void turnCardsForTwoPairsThatMatchInDifferentOrder() throws IllegalParameterException {
     memoryService.newGame(Difficulty.EASY);
     memoryService.turnCard(0);
     memoryService.turnCard(1);
+    memoryService.turnCard(3);
+    memoryService.turnCard(2);
     assertAll(
             () -> assertSame(memoryService.getPictureCardDescriptor(0).getState(), State.MATCHED),
-            () -> assertSame(memoryService.getPictureCardDescriptor(1).getState(), State.MATCHED)
+            () -> assertSame(memoryService.getPictureCardDescriptor(1).getState(), State.MATCHED),
+            () -> assertSame(memoryService.getPictureCardDescriptor(2).getState(), State.MATCHED),
+            () -> assertSame(memoryService.getPictureCardDescriptor(3).getState(), State.MATCHED)
     );
   }
 
-  @Test
-  @DisplayName("turnCard for two cards that match in HashMap second case")
-  void turnCardsForTwoCardsThatMatchSecondCase() throws IllegalParameterException {
-    memoryService.newGame(Difficulty.EASY);
-    memoryService.turnCard(1);
-    memoryService.turnCard(0);
-    assertAll(
-            () -> assertSame(memoryService.getPictureCardDescriptor(1).getState(), State.MATCHED),
-            () -> assertSame(memoryService.getPictureCardDescriptor(0).getState(), State.MATCHED)
-    );
-  }
+
 
   @Test
   @DisplayName("turnCard for two cards that dont match in HashMap")
