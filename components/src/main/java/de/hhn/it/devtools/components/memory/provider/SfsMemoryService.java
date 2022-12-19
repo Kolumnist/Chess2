@@ -252,9 +252,6 @@ public class SfsMemoryService implements MemoryService {
    * @throws IllegalParameterException if one of the cards does not exist
    */
   private boolean checkCards(PictureCard a, PictureCard b) throws IllegalParameterException {
-    if(a == null || b == null) {
-      throw new IllegalParameterException("At least one of the cards is a null references");
-    }
     if (checkForDifferentType(a, b) && checkOrderForMatch(a, b)) {
       a.matchCard();
       b.matchCard();
@@ -276,11 +273,8 @@ public class SfsMemoryService implements MemoryService {
    */
   private boolean checkForMatch(PictureCard picture, PictureCard name) throws IllegalParameterException {
     logger.info("matchCards: picture = {}, name = {}", picture, name);
-    if (picture == null || name == null) {
-      throw new IllegalParameterException("At least one of the cards is a null references.");
-    }
     if (currentCardSet.getDescriptor().getPictureReferences().containsKey(picture.getPictureCard().getPictureRef())
-            || name.getPictureCard().getName() != null) {
+            && name.getPictureCard().getName() != null) {
       String picCard = currentCardSet.getDescriptor().getPictureReferences().get(picture.getPictureCard()
               .getPictureRef()).toLowerCase();
       return (name.getPictureCard().getName().toLowerCase().equals(picCard));
@@ -304,14 +298,12 @@ public class SfsMemoryService implements MemoryService {
       } else {
         return true;
       }
-    } else if(a.getPictureCard().getName() != null) {
+    } else {
       if(b.getPictureCard().getName() != null) {
         return false;
       } else {
         return true;
       }
-    } else {
-      return false;
     }
   }
 
@@ -326,10 +318,8 @@ public class SfsMemoryService implements MemoryService {
   private boolean checkOrderForMatch(PictureCard a, PictureCard b) throws IllegalParameterException {
     if(a.getPictureCard().getPictureRef() == -1) {
       return checkForMatch(b,a);
-    } else if(b.getPictureCard().getPictureRef() == -1) {
-      return checkForMatch(a,b);
     } else {
-      return false;
+      return checkForMatch(a,b);
     }
   }
 

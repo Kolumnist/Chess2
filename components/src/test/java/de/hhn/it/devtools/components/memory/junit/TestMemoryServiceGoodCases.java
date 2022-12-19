@@ -23,22 +23,28 @@ public class TestMemoryServiceGoodCases {
   SfsMemoryService memoryService;
   List<PictureCardDescriptor> descriptors;
   PictureCardDescriptor[] descriptorsArray;
+  HashMap<Integer, String> pictureReferences;
 
   @BeforeEach
-  void setup(List<PictureCardDescriptor> descriptors) {
+  void setup(List<PictureCardDescriptor> descriptors) throws IllegalParameterException {
     SfsPictureCard.resetIdCounter();
     memoryService = new SfsMemoryService();
     this.descriptors = new ArrayList<>();
     this.descriptors.addAll(descriptors);
     descriptorsArray = new PictureCardDescriptor[this.descriptors.size()];
     this.descriptors.toArray(descriptorsArray);
+    this.pictureReferences = new HashMap<>();
+    pictureReferences.put(1, "Mario");
+    CardSetDescriptor cardSetDescriptor = new CardSetDescriptor(Difficulty.EASY, descriptorsArray, pictureReferences);
+    memoryService.addCardSet(cardSetDescriptor);
+    memoryService.addCallback(new DummyCallbackDeck());
   }
 
-  /*
+
   @Test
   @DisplayName("add and remove callback to known pictureCard")
   void addAndRemoveCallbacksToKnownPictureCard() throws IllegalParameterException {
-    memoryService.fetchCards(descriptorsArray);
+    memoryService.newGame(Difficulty.EASY);
     List<PictureCardDescriptor> cards = memoryService.getPictureCardDescriptors();
     PictureCardDescriptor card = cards.get(0);
     PictureCardListener listener = new DummyCallbackPictureCard();
@@ -48,7 +54,7 @@ public class TestMemoryServiceGoodCases {
     assertThrows(IllegalParameterException.class,
             () -> memoryService.removeCallback(card.getId(), listener));
   }
-   */
+
 
   @Test
   @DisplayName("Add and remove callback to a timer")
@@ -97,12 +103,12 @@ public class TestMemoryServiceGoodCases {
     assertEquals(0, descriptors.size(), "The list should be empty.");
   }
 
-  /*
+
   @Test
   @DisplayName("Add multiple pictureCards and check the result")
   public void addMultiplePictureCards() throws IllegalParameterException {
+    memoryService.newGame(Difficulty.EASY);
 
-    memoryService.fetchCards(descriptorsArray);
 
     List<PictureCardDescriptor> cards = memoryService.getPictureCardDescriptors();
     assertAll(
@@ -116,19 +122,19 @@ public class TestMemoryServiceGoodCases {
             () -> assertEquals(descriptorsArray[2], cards.get(2) )
     );
   }
-  */
 
-  /*
+
+
   @Test
   @DisplayName("Add a cardSet to memoryService")
-  public void addCardSetToMemoryService(PictureCardDescriptor[] descriptors) throws IllegalParameterException {
+  public void addCardSetToMemoryService() throws IllegalParameterException {
     memoryService = new SfsMemoryService();
     HashMap<Integer, String> pictureReferences = new HashMap<>();
     pictureReferences.put(1, "Mario");
-    CardSetDescriptor cardSetDescriptor = new CardSetDescriptor(Difficulty.EASY, descriptors, pictureReferences);
+    CardSetDescriptor cardSetDescriptor = new CardSetDescriptor(Difficulty.EASY, descriptorsArray, pictureReferences);
     memoryService.addCardSet(cardSetDescriptor);
 
     assertTrue(memoryService.getCardSetStorage().size() > 0);
   }
-  */
+
 }

@@ -5,11 +5,16 @@ import de.hhn.it.devtools.apis.memory.CardSetDescriptor;
 import de.hhn.it.devtools.apis.memory.DeckListener;
 import de.hhn.it.devtools.apis.memory.Difficulty;
 import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
+import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
+import de.hhn.it.devtools.components.memory.provider.PictureCard;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
+import de.hhn.it.devtools.components.memory.provider.SfsPictureCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -192,6 +197,23 @@ public class TestMemoryServiceBadCases {
     assertThrows(IllegalParameterException.class,
             () -> memoryService.addCallback(listener)
     );
+  }
+
+  @Test
+  @DisplayName("check for non existent pictureReference")
+  void checkForNonExistentPictureReference(List<PictureCardDescriptor> descriptors) throws IllegalParameterException {
+    PictureCardDescriptor[] descriptorsArray = new PictureCardDescriptor[descriptors.size()];
+    descriptors.toArray(descriptorsArray);
+    HashMap<Integer, String> pictureReferences = new HashMap<>();
+    pictureReferences.put(6, "Mario");
+    CardSetDescriptor cardSetDescriptor = new CardSetDescriptor(Difficulty.EASY, descriptorsArray, pictureReferences);
+    memoryService.addCardSet(cardSetDescriptor);
+    memoryService.addCallback(new DummyCallbackDeck());
+
+    memoryService.newGame(Difficulty.EASY);
+    memoryService.turnCard(0);
+
+    assertThrows(IllegalParameterException.class, () -> memoryService.turnCard(1));
   }
 
   @Test
