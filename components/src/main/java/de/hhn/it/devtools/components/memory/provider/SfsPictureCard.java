@@ -79,14 +79,6 @@ public class SfsPictureCard implements PictureCard {
     notifyListeners(State.MATCHED);
   }
 
-  /**
-   * Returns the current ID counter.
-   *
-   * @return int the current ID counter
-   */
-  public static int getIdCounter() {
-    return idCounter.get();
-  }
 
   /**
    * Resets the ID counter.
