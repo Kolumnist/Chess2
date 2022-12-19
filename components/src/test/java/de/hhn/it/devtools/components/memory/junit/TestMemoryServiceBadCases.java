@@ -5,16 +5,11 @@ import de.hhn.it.devtools.apis.memory.CardSetDescriptor;
 import de.hhn.it.devtools.apis.memory.DeckListener;
 import de.hhn.it.devtools.apis.memory.Difficulty;
 import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
-import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
-import de.hhn.it.devtools.components.memory.provider.PictureCard;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
-import de.hhn.it.devtools.components.memory.provider.SfsPictureCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -30,7 +25,7 @@ public class TestMemoryServiceBadCases {
   private DummyCallbackTimer dummyCallbackTimer;
   private DummyCallbackDeck dummyCallbackDeck;
 
-  private int failureInteger = 123456;
+  private final int failureInteger = 123456;
 
   @BeforeEach
   void setup() {
@@ -118,7 +113,7 @@ public class TestMemoryServiceBadCases {
   }
 
   @Test
-  @DisplayName("addCardset for non existing set")
+  @DisplayName("addCards for non existing set")
   void testExceptionWhenAddingNonExistingCardSet() {
     assertThrows(IllegalParameterException.class,
             () -> memoryService.addCardSet(null)

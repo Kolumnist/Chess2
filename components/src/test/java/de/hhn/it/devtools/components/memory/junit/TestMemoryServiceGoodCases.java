@@ -71,16 +71,13 @@ public class TestMemoryServiceGoodCases {
   @DisplayName("start, stop and reset timer")
   void startStopResetTimer() throws InterruptedException, IllegalParameterException {
     ArrayList<Integer> times = new ArrayList<>();
-    memoryService.addCallback(new TimerListener() {
-      @Override
-      public void currentTime(int time) {
-        times.add(time);
-      }
-    });
+    memoryService.addCallback((TimerListener) times::add);
     memoryService.startTimer();
     Thread.sleep(3000);
     memoryService.stopTimer();
     assertTrue(times.size() > 0);
+    memoryService.resetTimer();
+    assertEquals(times.get(times.size()-1), 0);
   }
 
   @Test

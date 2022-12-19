@@ -55,14 +55,14 @@ public class TestTimer {
     timer.addCallback(listener);
     timer.startTime();
     Thread.sleep(5000);
-    int lenght0 = listener.times.size();
+    int length0 = listener.times.size();
     timer.removeCallback(listener);
     Thread.sleep(5000);
-    int lenght1 = listener.times.size();
+    int length1 = listener.times.size();
     assertAll(
-            () -> assertTrue(lenght0 > 0),
-            () -> assertTrue(lenght1 > 0),
-            () -> assertEquals(lenght0, lenght1)
+            () -> assertTrue(length0 > 0),
+            () -> assertTrue(length1 > 0),
+            () -> assertEquals(length0, length1)
     );
   }
 
@@ -71,36 +71,36 @@ public class TestTimer {
   void tryRegisterSameListenerTwice() throws IllegalParameterException {
     SimpleTimerListener listener = new SimpleTimerListener();
     timer.addCallback(listener);
-    IllegalParameterException exception = assertThrows(IllegalParameterException.class,
+    assertThrows(IllegalParameterException.class,
             () -> timer.addCallback(listener));
   }
 
   @Test
   @DisplayName("Listener which is not registered cannot be removed.")
-  void tryRemoveNotRegisteredListener() throws IllegalParameterException {
+  void tryRemoveNotRegisteredListener() {
     SimpleTimerListener listener = new SimpleTimerListener();
-    IllegalParameterException exception = assertThrows(IllegalParameterException.class,
+    assertThrows(IllegalParameterException.class,
             () -> timer.removeCallback(listener));
   }
 
   @Test
   @DisplayName("Null references cannot be registered as listener.")
   void tryRegisterNullReferencesAsListener() {
-    IllegalParameterException exception = assertThrows(IllegalParameterException.class,
+    assertThrows(IllegalParameterException.class,
             () -> timer.addCallback(null));
   }
 
   @Test
   @DisplayName("Null references cannot be removed as listener.")
   void tryRemoveNullReferenceAsListener() {
-    IllegalParameterException exception = assertThrows(IllegalParameterException.class,
+    assertThrows(IllegalParameterException.class,
             () -> timer.removeCallback(null));
   }
 
   /**
    * Inner class as a TimerListener.
    */
-  class SimpleTimerListener implements TimerListener {
+  static class SimpleTimerListener implements TimerListener {
 
     public List<Integer> times;
 

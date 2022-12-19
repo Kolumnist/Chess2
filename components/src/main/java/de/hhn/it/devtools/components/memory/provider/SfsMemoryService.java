@@ -59,7 +59,7 @@ public class SfsMemoryService implements MemoryService {
   @Override
   public void resetTimer() {
     logger.info("resetTimer: no params");
-    timer.getTimer().resetTime();
+    timer.resetTime();
   }
 
   @Override

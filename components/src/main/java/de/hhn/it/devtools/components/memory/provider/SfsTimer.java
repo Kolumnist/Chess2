@@ -57,6 +57,15 @@ public class SfsTimer implements Timer, Runnable {
     new Thread(this::run).start();
   }
 
+  public void resetTime() {
+    descriptor.resetTime();
+    try {
+      notifyListener(descriptor.time);
+    } catch (IllegalParameterException e) {
+      e.printStackTrace();
+    }
+  }
+
   @Override
   public void run() {
     while (descriptor.run) {

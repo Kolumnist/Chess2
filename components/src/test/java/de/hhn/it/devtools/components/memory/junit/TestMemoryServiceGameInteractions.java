@@ -82,7 +82,7 @@ public class TestMemoryServiceGameInteractions {
     pictureReferences.put(1, "Mario");
     memoryService.addCardSet(new CardSetDescriptor(Difficulty.MEDIUM, newList, pictureReferences));
     memoryService.newGame(Difficulty.MEDIUM);
-    assertTrue(memoryService.getPictureCardDescriptors().size() == 2);
+    assertEquals(2, memoryService.getPictureCardDescriptors().size());
   }
 
   @Test
@@ -91,7 +91,7 @@ public class TestMemoryServiceGameInteractions {
     memoryService.newGame(Difficulty.EASY);
     memoryService.turnCard(1);
     assertAll(
-            () -> assertTrue(memoryService.getPictureCardDescriptor(1).getState() == State.VISIBLE)
+            () -> assertSame(memoryService.getPictureCardDescriptor(1).getState(), State.VISIBLE)
     );
   }
 
@@ -113,8 +113,8 @@ public class TestMemoryServiceGameInteractions {
     memoryService.turnCard(1);
     memoryService.turnCard(2);
     assertAll(
-            () -> assertTrue(memoryService.getPictureCardDescriptor(1).getState() == State.HIDDEN),
-            () -> assertTrue(memoryService.getPictureCardDescriptor(2).getState() == State.HIDDEN)
+            () -> assertSame(memoryService.getPictureCardDescriptor(1).getState(), State.HIDDEN),
+            () -> assertSame(memoryService.getPictureCardDescriptor(2).getState(), State.HIDDEN)
     );
   }
 
@@ -125,8 +125,8 @@ public class TestMemoryServiceGameInteractions {
     memoryService.turnCard(0);
     memoryService.turnCard(1);
     assertAll(
-            () -> assertTrue(memoryService.getPictureCardDescriptor(0).getState() == State.MATCHED),
-            () -> assertTrue(memoryService.getPictureCardDescriptor(1).getState() == State.MATCHED)
+            () -> assertSame(memoryService.getPictureCardDescriptor(0).getState(), State.MATCHED),
+            () -> assertSame(memoryService.getPictureCardDescriptor(1).getState(), State.MATCHED)
     );
   }
 
@@ -137,8 +137,8 @@ public class TestMemoryServiceGameInteractions {
     memoryService.turnCard(1);
     memoryService.turnCard(0);
     assertAll(
-            () -> assertTrue(memoryService.getPictureCardDescriptor(1).getState() == State.MATCHED),
-            () -> assertTrue(memoryService.getPictureCardDescriptor(0).getState() == State.MATCHED)
+            () -> assertSame(memoryService.getPictureCardDescriptor(1).getState(), State.MATCHED),
+            () -> assertSame(memoryService.getPictureCardDescriptor(0).getState(), State.MATCHED)
     );
   }
 
@@ -149,8 +149,8 @@ public class TestMemoryServiceGameInteractions {
     memoryService.turnCard(0);
     memoryService.turnCard(2);
     assertAll(
-            () -> assertTrue(memoryService.getPictureCardDescriptor(0).getState() == State.HIDDEN),
-            () -> assertTrue(memoryService.getPictureCardDescriptor(2).getState() == State.HIDDEN)
+            () -> assertSame(memoryService.getPictureCardDescriptor(0).getState(), State.HIDDEN),
+            () -> assertSame(memoryService.getPictureCardDescriptor(2).getState(), State.HIDDEN)
     );
   }
 
@@ -162,14 +162,14 @@ public class TestMemoryServiceGameInteractions {
     memoryService.turnCard(2);
     memoryService.turnCard(0);
     assertAll(
-            () -> assertTrue(memoryService.getPictureCardDescriptor(0).getState() == State.HIDDEN),
-            () -> assertTrue(memoryService.getPictureCardDescriptor(2).getState() == State.HIDDEN)
+            () -> assertSame(memoryService.getPictureCardDescriptor(0).getState(), State.HIDDEN),
+            () -> assertSame(memoryService.getPictureCardDescriptor(2).getState(), State.HIDDEN)
     );
   }
 
 
 
-  class SimpleDeckListener implements DeckListener {
+  static class SimpleDeckListener implements DeckListener {
     ArrayList<PictureCardDescriptor[]> decks;
 
     public SimpleDeckListener() {

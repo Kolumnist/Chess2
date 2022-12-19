@@ -26,7 +26,7 @@ public class TestPictureCard {
 
   @Test
   @DisplayName("Test turning a card.")
-  void checkTurningACard() throws IllegalParameterException {
+  void checkTurningACard() {
     pictureCard.turnCard();
     State state0 = pictureCard.getPictureCard().getState();
     pictureCard.turnCard();
@@ -39,9 +39,9 @@ public class TestPictureCard {
 
   @Test
   @DisplayName("Matched card cannot be turned.")
-  void checkMatchedCardCannotBeTurned() throws IllegalParameterException {
+  void checkMatchedCardCannotBeTurned() {
     pictureCard.getPictureCard().setState(State.MATCHED);
-    IllegalStateException exception = assertThrows(IllegalStateException.class,
+    assertThrows(IllegalStateException.class,
             () -> pictureCard.turnCard());
   }
 
@@ -97,29 +97,29 @@ public class TestPictureCard {
   void tryRegisterSameListenerTwice() throws IllegalParameterException {
     SimplePictureCardListener listener = new SimplePictureCardListener();
     pictureCard.addCallback(listener);
-    IllegalParameterException exception = assertThrows(IllegalParameterException.class,
+    assertThrows(IllegalParameterException.class,
             () -> pictureCard.addCallback(listener));
   }
 
   @Test
   @DisplayName("Listener which is not registered cannot be removed.")
-  void tryRemoveNotRegisteredListener() throws IllegalParameterException {
+  void tryRemoveNotRegisteredListener() {
     SimplePictureCardListener listener = new SimplePictureCardListener();
-    IllegalParameterException exception = assertThrows(IllegalParameterException.class,
+    assertThrows(IllegalParameterException.class,
             () -> pictureCard.removeCallback(listener));
   }
 
   @Test
   @DisplayName("Null references cannot be registered as listener.")
   void tryRegisterNullReferencesAsListener() {
-    IllegalParameterException exception = assertThrows(IllegalParameterException.class,
+    assertThrows(IllegalParameterException.class,
             () -> pictureCard.addCallback(null));
   }
 
   @Test
   @DisplayName("Null references cannot be removed as listener.")
   void tryRemoveNullReferenceAsListener() {
-    IllegalParameterException exception = assertThrows(IllegalParameterException.class,
+    assertThrows(IllegalParameterException.class,
             () -> pictureCard.removeCallback(null));
   }
 
@@ -127,7 +127,7 @@ public class TestPictureCard {
   /**
    * Inner class as a PictureCardListener.
    */
-  class SimplePictureCardListener implements PictureCardListener {
+  static class SimplePictureCardListener implements PictureCardListener {
 
     public List<State> states;
 
