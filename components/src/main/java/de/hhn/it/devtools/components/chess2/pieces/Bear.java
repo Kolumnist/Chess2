@@ -4,6 +4,12 @@ import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.Piece;
 import java.util.ArrayList;
 
+/**
+ * This class implements the Bear which inherits from Piece.
+ *
+ * @author Collin Hoss, Lara Mangi, Michel Jouaux
+ * @version 1.0
+ */
 public class Bear extends Piece {
 
   Bear(char color, Coordinate coordinate) {
@@ -22,7 +28,8 @@ public class Bear extends Piece {
 
     ArrayList<Integer> index = new ArrayList<>();
     for (int i = 0; i < possibleMoves.length; i++) {
-      if ((possibleMoves[i].getX() == coordinate.getX() && possibleMoves[i].getY() == coordinate.getY())
+      if ((possibleMoves[i].getX() == coordinate.getX()
+          && possibleMoves[i].getY() == coordinate.getY())
           || possibleMoves[i].getY() < 0
           || possibleMoves[i].getX() < 0
           || possibleMoves[i].getY() > 7
