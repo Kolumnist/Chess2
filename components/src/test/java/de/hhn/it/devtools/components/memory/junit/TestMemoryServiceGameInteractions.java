@@ -76,13 +76,18 @@ public class TestMemoryServiceGameInteractions {
   @Test
   @DisplayName("change difficulty successfully")
   void changeDifficultySuccessfully() throws IllegalParameterException {
+    memoryService.newGame(Difficulty.EASY);
     PictureCardDescriptor[] newList = {new PictureCardDescriptor(-1, "Mario"),
         new PictureCardDescriptor(-1, "Peach")};
     HashMap<Integer, String> pictureReferences = new HashMap<>();
     pictureReferences.put(1, "Mario");
-    memoryService.addCardSet(new CardSetDescriptor(Difficulty.MEDIUM, newList, pictureReferences));
-    memoryService.newGame(Difficulty.MEDIUM);
-    assertEquals(2, memoryService.getPictureCardDescriptors().size());
+    CardSetDescriptor cardSetDescriptor = new CardSetDescriptor(Difficulty.MEDIUM, newList, pictureReferences);
+    memoryService.addCardSet(cardSetDescriptor);
+    memoryService.changeDifficulty(Difficulty.MEDIUM);
+    assertAll(
+        () ->     assertEquals(2, memoryService.getPictureCardDescriptors().size()),
+        () ->     assertEquals(memoryService.getCurrentCardSet().getDescriptor(), cardSetDescriptor)
+    );
   }
 
   @Test
