@@ -15,12 +15,20 @@ import java.util.ArrayList;
 
 public class Crow extends Piece {
 
+  Coordinate[] movement;
+
   public Crow(char color, Coordinate coordinate) {
     super(color, coordinate);
   }
 
   @Override
   protected void calculate() {
+    int k = 0;
+    for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
+      for (int j = coordinate.getY() - 1; j <= coordinate.getY() + 1; j++) {
+        movement[k++] = new Coordinate(i, j);
+      }
+    }
   }
 
   protected void calculate(Board board, boolean pieceGotDefeated) {
@@ -28,50 +36,9 @@ public class Crow extends Piece {
     int k = 0;
     boolean nearEnemy = false;
 
-    Coordinate[] temp = defeatPieceMovement(board);
-    for (int i = 0; i < temp.length; i++) {
-      if (board.getSpecificField(temp[i]).getFieldState() == FieldState.HAS_OTHER_PIECE) {
-        nearEnemy = true;
-        break;
-      }
-    }
+    movement = new Coordinate[9];
+    calculate();
 
-    if (pieceGotDefeated && nearEnemy) {
-      possibleMoves = defeatPieceMovement(board);
-    } else {
-      possibleMoves = new Coordinate[64];
-      for (int i = 0; i <= 7; i++) {
-        for (int j = 0; j <= 7; j++) {
-          possibleMoves[k++] = new Coordinate(i, j);
-        }
-      }
-
-      for (int i = 0; i < possibleMoves.length; i++) {
-        if (possibleMoves[i].compareCoordinates(coordinate)
-            ||
-            board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.HAS_OTHER_PIECE
-            ||
-            board.getSpecificField(possibleMoves[i]).getFieldState()
-                == FieldState.HAS_CURRENT_PIECE) {
-          index.add(i);
-        }
-      }
-      possibleMoves = shortenCoordinateArray(possibleMoves, index);
-    }
-  }
-
-  // TODO: Daran denken noch auf Figuren zu prüfen, wenn es übernommen wird
-  private Coordinate[] defeatPieceMovement(Board board) {
-    Coordinate[] movement = new Coordinate[9];
-
-    int k = 0;
-    for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
-      for (int j = coordinate.getY() - 1; j <= coordinate.getY() + 1; j++) {
-        movement[k++] = new Coordinate(i, j);
-      }
-    }
-
-    ArrayList<Integer> index = new ArrayList<>();
     for (int i = 0; i < possibleMoves.length; i++) {
       if ((possibleMoves[i].compareCoordinates(coordinate))
           || possibleMoves[i].getY() < 0
@@ -84,7 +51,36 @@ public class Crow extends Piece {
       }
     }
 
-    return shortenCoordinateArray(movement, index);
-  }
+    movement = shortenCoordinateArray(movement, index);
 
+    for (int i = 0; i < movement.length; i++) {
+      if (board.getSpecificField(movement[i]).getFieldState() == FieldState.HAS_OTHER_PIECE) {
+        nearEnemy = true;
+        break;
+      }
+    }
+
+    if (pieceGotDefeated && nearEnemy) {
+      possibleMoves = movement;
+    } else {
+      possibleMoves = new Coordinate[64];
+      for (int i = 0; i <= 7; i++) {
+        for (int j = 0; j <= 7; j++) {
+          possibleMoves[k++] = new Coordinate(i, j);
+        }
+      }
+
+      index = new ArrayList<>();
+      for (int i = 0; i < possibleMoves.length; i++) {
+        if (possibleMoves[i].compareCoordinates(coordinate)
+            || board.getSpecificField(possibleMoves[i]).getFieldState()
+            == FieldState.HAS_OTHER_PIECE
+            || board.getSpecificField(possibleMoves[i]).getFieldState()
+            == FieldState.HAS_CURRENT_PIECE) {
+          index.add(i);
+        }
+      }
+      possibleMoves = shortenCoordinateArray(possibleMoves, index);
+    }
+  }
 }
