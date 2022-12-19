@@ -17,6 +17,10 @@ public class Monkey extends Piece {
 
   Coordinate[] possibleJump;
 
+  public Monkey(char color, Coordinate coordinate){
+    super(color, coordinate);
+  }
+
   @Override
   protected void calculate() {
     int k = 0;
