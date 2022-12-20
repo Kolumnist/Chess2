@@ -6,8 +6,10 @@ import de.hhn.it.devtools.components.ttrpgsheets.Description;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TestDescriptionBadCases {
 
@@ -17,6 +19,12 @@ class TestDescriptionBadCases {
   void setup() {
     characterClassDescription = new Description(
             new DescriptionDescriptor(DescriptionType.CHARACTER_CLASS, "Warrior"));
+  }
+
+  @Test
+  @DisplayName("Create Description with null Description descriptor")
+  void createDescriptionWithNull() {
+    assertThrows(IllegalArgumentException.class, () -> new Description(null));
   }
 
   @Test

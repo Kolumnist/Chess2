@@ -18,9 +18,12 @@ public class Description {
    *
    * @param descriptionDescriptor the descriptor
    */
-  public Description(DescriptionDescriptor descriptionDescriptor) {
+  public Description(DescriptionDescriptor descriptionDescriptor) throws IllegalArgumentException {
     logger.info("Constructor is called. Parameter: descriptionDescriptor = "
             + descriptionDescriptor);
+    if (descriptionDescriptor == null) {
+      throw new IllegalArgumentException("Description descriptor is null");
+    }
     type = descriptionDescriptor.getDescriptionType();
     setDescription(descriptionDescriptor.getText());
   }
@@ -31,6 +34,7 @@ public class Description {
    * @return the {@link DescriptionDescriptor} of this description
    */
   public DescriptionDescriptor toDescriptionDescriptor() {
+    logger.info("toDescriptionDescriptor() is called");
     return new DescriptionDescriptor(type, description);
   }
 
