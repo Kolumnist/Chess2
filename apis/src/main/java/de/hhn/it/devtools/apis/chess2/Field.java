@@ -47,9 +47,8 @@ public class Field {
    *
    * @return piece that is on this field or is empty.
    */
-  public Optional<Piece> getPiece() {
-    return piece;
-    /* TODO: Use of orElse and inform yourself more! */
+  public Piece getPiece() {
+    return piece.orElse(null);
   }
 
   /**
