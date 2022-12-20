@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.components.chess2;
 
+import de.hhn.it.devtools.apis.chess2.Board;
 import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.Piece;
 import de.hhn.it.devtools.components.chess2.pieces.Crow;
@@ -11,23 +12,24 @@ import de.hhn.it.devtools.components.chess2.pieces.Queen;
 
 public class Player {
 
-  char color;
-  Piece[] myPieces = new Piece[16];
+  protected char color;
+  protected Piece[] myPieces = new Piece[16];
+  protected boolean lostPiece = false;
 
   /**
    * The Constructor for a player participating on a ChessGame
    *
    * @param color
    */
-  public Player(char color) {//Could do a string instead of char for name or smth
+  public Player(char color, Board board) {//Could do a string instead of char for name or smth
     this.color = color;
-    initializeMyPieces();
+    initializeMyPieces(board);
     for(Piece piece : myPieces) {
       piece.setColor(color);
     }
   }
 
-  private void initializeMyPieces() {
+  private void initializeMyPieces(Board board) {
     int yOffset;
     if(color == 'w') {
       yOffset = -1;
