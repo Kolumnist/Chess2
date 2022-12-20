@@ -28,9 +28,11 @@ public class ChessGame implements Chess2Service {
   private final Player blackPlayer;
   private Player currentPlayer;
 
-  private Board gameBoard;
-  public WinningPlayerState winState;
-  public GameState gameState;
+  protected Board gameBoard;
+  protected WinningPlayerState winState;
+  protected GameState gameState;
+
+  protected boolean currentKingInJail;
 
   /**
    * The Constructor that initializes every needed object.
@@ -39,8 +41,8 @@ public class ChessGame implements Chess2Service {
     logger.info("ChessGame Constructor");
 
     gameBoard = new Board();
-    whitePlayer = new Player('w');
-    blackPlayer = new Player('b');
+    whitePlayer = new Player('w', gameBoard);
+    blackPlayer = new Player('b', gameBoard);
     currentPlayer = whitePlayer;
   }
 
@@ -70,6 +72,7 @@ public class ChessGame implements Chess2Service {
       gameBoard.getSpecificField(blackPiece.getCoordinate())
           .setFieldState(FieldState.HAS_OTHER_PIECE);
     }
+    /*TODO: Place bear on random field*/
   }
 
   @Override
@@ -81,6 +84,7 @@ public class ChessGame implements Chess2Service {
 
     gameState = GameState.RUNNING;
     winState = WinningPlayerState.STILL_RUNNING;
+    currentKingInJail = false;
 
     return gameBoard;
   }
