@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class Crow extends Piece {
 
-  Coordinate[] movement;
+  private Coordinate[] movement;
 
   public Crow(char color, Coordinate coordinate) {
     super(color, coordinate);
