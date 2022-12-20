@@ -15,10 +15,14 @@ import java.util.ArrayList;
 
 public class Monkey extends Piece {
 
-  Coordinate[] possibleJump;
+  private Coordinate[] possibleJump;
 
-  public Monkey(char color, Coordinate coordinate){
+  public Monkey(char color, Coordinate coordinate) {
     super(color, coordinate);
+  }
+
+  public Coordinate[] getPossibleJump() {
+    return possibleJump;
   }
 
   @Override
@@ -56,13 +60,6 @@ public class Monkey extends Piece {
     calculateJump(board, kingInJail);
   }
 
-  private Coordinate calculateJumpCoordinate(Coordinate otherPieceCoordinate) {
-    int newXValue = otherPieceCoordinate.getX() + (otherPieceCoordinate.getX() - coordinate.getX());
-    int newYValue = otherPieceCoordinate.getY() + (otherPieceCoordinate.getY() - coordinate.getY());
-
-    return new Coordinate(newXValue, newYValue);
-  }
-
   protected void calculateJump(Board board, boolean kingInJail) {
     possibleJump = new Coordinate[possibleMoves.length];
     int k = 0;
@@ -75,12 +72,55 @@ public class Monkey extends Piece {
       }
     }
 
+    if (kingInJail) {
+      Coordinate kingCoordinate = jailKingCoordinate(board);
+      if (kingCoordinate.getX() == 9) {
+        replaceJumpCoordinate(5, kingCoordinate);
+      } else {
+        replaceJumpCoordinate(2, kingCoordinate);
+      }
+    }
+
     ArrayList<Integer> index = new ArrayList<>();
     for (int i = 0; i < possibleJump.length; i++) {
-      if (possibleJump[i] == null) {
+      if (possibleJump[i] == null
+          || board.getSpecificField(possibleJump[i]).getFieldState()
+          == FieldState.HAS_CURRENT_PIECE) {
         index.add(i);
       }
     }
     possibleJump = shortenCoordinateArray(possibleJump, index);
+  }
+
+  private Coordinate calculateJumpCoordinate(Coordinate otherPieceCoordinate) {
+    int newXValue = otherPieceCoordinate.getX() + (otherPieceCoordinate.getX() - coordinate.getX());
+    int newYValue = otherPieceCoordinate.getY() + (otherPieceCoordinate.getY() - coordinate.getY());
+
+    return new Coordinate(newXValue, newYValue);
+  }
+
+  private Coordinate jailKingCoordinate(Board board) {
+    if (color == 'w') {
+      if (board.getSpecificField(new Coordinate(9, 4)).getFieldState() == FieldState.JAIL_KING) {
+        return new Coordinate(9, 4);
+      } else {
+        return new Coordinate(9, 3);
+      }
+    } else {
+      if (board.getSpecificField(new Coordinate(8, 4)).getFieldState() == FieldState.JAIL_KING) {
+        return new Coordinate(8, 4);
+      } else {
+        return new Coordinate(8, 3);
+      }
+    }
+  }
+
+  private void replaceJumpCoordinate(int xValue, Coordinate jailCoordinate) {
+    for (int i = 0; i < possibleJump.length; i++) {
+      if (possibleJump[i].compareCoordinates(new Coordinate(xValue, jailCoordinate.getY()))) {
+        possibleJump[i] = jailCoordinate;
+        return;
+      }
+    }
   }
 }
