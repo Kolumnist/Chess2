@@ -10,6 +10,13 @@ import de.hhn.it.devtools.components.chess2.pieces.King;
 import de.hhn.it.devtools.components.chess2.pieces.Monkey;
 import de.hhn.it.devtools.components.chess2.pieces.Queen;
 
+/**
+ * The Player class should display a player that has his pieces
+ * and a color.
+ *
+ * @author Collin Hoss, Lara Mangi, Michel Jouaux
+ * @version 1.2
+ */
 public class Player {
 
   protected char color;
@@ -17,47 +24,53 @@ public class Player {
   protected boolean lostPiece = false;
 
   /**
-   * The Constructor for a player participating on a ChessGame
+   * The Constructor for a player participating on a ChessGame.
    *
-   * @param color
+   * @param color of the player who is playing
+   * @param board is needed to view fields and to give the board to the pieces
    */
-  public Player(char color, Board board) {//Could do a string instead of char for name or smth
+  public Player(char color, Board board) { //Could do a string instead of char for name or smth
     this.color = color;
     initializeMyPieces(board);
-    for(Piece piece : myPieces) {
+    for (Piece piece : myPieces) {
       piece.setColor(color);
     }
   }
 
+  /**
+   * All pieces that the players has get initialized here it works with a offset to check
+   * which color the player has.
+   *
+   * @param board is needed for the pieces
+   */
   private void initializeMyPieces(Board board) {
-    int yOffset;
-    if(color == 'w') {
-      yOffset = -1;
+    int coordOffset;
+    if (color == 'w') {
+      coordOffset = -1;
       myPieces[14] = new Queen(color, new Coordinate(3, 0));
       myPieces[15] = new King(color, new Coordinate(4, 0));
-    }
-    else {
-      yOffset = 6;
+    } else {
+      coordOffset = 6;
       myPieces[14] = new Queen(color, new Coordinate(4, 7));
       myPieces[15] = new King(color, new Coordinate(3, 7));
     }
 
-    myPieces[0] = new Fish(color, new Coordinate(0, yOffset+2));
-    myPieces[1] = new Fish(color, new Coordinate(1, yOffset+2));
-    myPieces[2] = new Fish(color, new Coordinate(2, yOffset+1));
-    myPieces[3] = new Fish(color, new Coordinate(3, yOffset+2));
-    myPieces[4] = new Fish(color, new Coordinate(4, yOffset+2));
-    myPieces[5] = new Fish(color, new Coordinate(5, yOffset+1));
-    myPieces[6] = new Fish(color, new Coordinate(6, yOffset+2));
-    myPieces[7] = new Fish(color, new Coordinate(7, yOffset+2));
+    myPieces[0] = new Fish(color, new Coordinate(0, coordOffset + 2));
+    myPieces[1] = new Fish(color, new Coordinate(1, coordOffset + 2));
+    myPieces[2] = new Fish(color, new Coordinate(2, coordOffset + 1));
+    myPieces[3] = new Fish(color, new Coordinate(3, coordOffset + 2));
+    myPieces[4] = new Fish(color, new Coordinate(4, coordOffset + 2));
+    myPieces[5] = new Fish(color, new Coordinate(5, coordOffset + 1));
+    myPieces[6] = new Fish(color, new Coordinate(6, coordOffset + 2));
+    myPieces[7] = new Fish(color, new Coordinate(7, coordOffset + 2));
 
-    myPieces[8] = new Crow(color, new Coordinate(0, yOffset+1));
-    myPieces[9] = new Crow(color, new Coordinate(7, yOffset+1));
+    myPieces[8] = new Crow(color, new Coordinate(0, coordOffset + 1));
+    myPieces[9] = new Crow(color, new Coordinate(7, coordOffset + 1));
 
-    myPieces[10] = new Monkey(color, new Coordinate(1, yOffset+1));
-    myPieces[11] = new Monkey(color, new Coordinate(6, yOffset+1));
+    myPieces[10] = new Monkey(color, new Coordinate(1, coordOffset + 1));
+    myPieces[11] = new Monkey(color, new Coordinate(6, coordOffset + 1));
 
-    myPieces[12] = new Elephant(color, new Coordinate(2, yOffset+2));
-    myPieces[13] = new Elephant(color, new Coordinate(5, yOffset+2));
+    myPieces[12] = new Elephant(color, new Coordinate(2, coordOffset + 2));
+    myPieces[13] = new Elephant(color, new Coordinate(5, coordOffset + 2));
   }
 }
