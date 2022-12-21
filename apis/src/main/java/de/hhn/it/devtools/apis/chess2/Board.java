@@ -31,6 +31,10 @@ public class Board {
     fields[fields.length - 2] = new Field(new Coordinate(9, 3));
     fields[fields.length - 3] = new Field(new Coordinate(8, 3));
     fields[fields.length - 1] = new Field(new Coordinate(8, 4));
+    fields[fields.length - 4].setFieldState(FieldState.JAIL);
+    fields[fields.length - 2].setFieldState(FieldState.JAIL);
+    fields[fields.length - 3].setFieldState(FieldState.JAIL);
+    fields[fields.length - 1].setFieldState(FieldState.JAIL);
   }
 
   /**
