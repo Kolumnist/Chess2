@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,6 +18,7 @@ import de.hhn.it.devtools.components.ttrpgsheets.DefaultCharacterSheet;
 import de.hhn.it.devtools.components.ttrpgsheets.Stat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,13 +26,14 @@ class DefaultCharacterSheetTest {
   private static final org.slf4j.Logger logger
           = org.slf4j.LoggerFactory.getLogger(DefaultCharacterSheetTest.class);
 
+  SimpleCharacterSheetListener listener = null;
   DefaultCharacterSheet characterSheet = null;
 
   @BeforeEach
   void setupObjects() {
     logger.info("setupObjects() is called");
-    characterSheet = new DefaultCharacterSheet(new SimpleCharacterSheetListener(),
-            setupCharacterDescriptor());
+    listener = new SimpleCharacterSheetListener();
+    characterSheet = new DefaultCharacterSheet(listener, setupCharacterDescriptor());
   }
 
   CharacterDescriptor setupCharacterDescriptor() {
@@ -98,7 +101,10 @@ class DefaultCharacterSheetTest {
 
   @Test
   void addCallbackTest() {
-    logger.info("addCallbackTest() is called");
+    SimpleCharacterSheetListener newListener = new SimpleCharacterSheetListener();
+    characterSheet.addCallback(newListener);
+    characterSheet.incrementStat(StatType.AGILITY, OriginType.LEVEL_POINT);
+    assertEquals(1, newListener.stats.size());
   }
 
   @Test
@@ -204,12 +210,21 @@ class DefaultCharacterSheetTest {
 
   @Test
   void changeDescriptionTest() {
-    logger.info("changeDescriptionTest() is called");
+    characterSheet.changeDescription(DescriptionType.CHARACTER_NAME, "Boris");
+    assertEquals(characterSheet.getDescriptionDescriptor(DescriptionType.CHARACTER_NAME).getText(),
+            "Boris");
+
+    characterSheet.changeDescription(DescriptionType.HAIR_COLOR, "Red");
+    assertEquals(characterSheet.getDescriptionDescriptor(DescriptionType.HAIR_COLOR).getText(),
+            "Red");
+
+    assertEquals(2, listener.descriptions.size());
   }
 
   @Test
   void getDescriptionDescriptorTest() {
-    logger.info("getDescriptionDescriptorTest() is called");
+    assertEquals(new DescriptionDescriptor(DescriptionType.CHARACTER_CLASS, "Warrior"),
+            characterSheet.getDescriptionDescriptor(DescriptionType.CHARACTER_CLASS));
   }
 
   @Test
