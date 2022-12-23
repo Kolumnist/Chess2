@@ -7,4 +7,6 @@ module devtools.components {
           with de.hhn.it.devtools.components.example.coffeemakerservice.provider.WnckCoffeeMakerService;
   provides  de.hhn.it.devtools.apis.examples.coffeemakerservice.AdminCoffeeMakerService
           with de.hhn.it.devtools.components.example.coffeemakerservice.provider.WnckCoffeeMakerService;
+  provides de.hhn.it.devtools.apis.chess2.Chess2Service
+      with de.hhn.it.devtools.components.chess2.ChessGame;
         }

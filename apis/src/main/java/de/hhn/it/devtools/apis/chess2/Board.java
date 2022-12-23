@@ -27,21 +27,30 @@ public class Board {
     }
 
     /* Jail fields get initialized */
-    fields[fields.length - 4] = new Field(new Coordinate(9, 2));
+    fields[fields.length - 4] = new Field(new Coordinate(9, 4));
     fields[fields.length - 2] = new Field(new Coordinate(9, 3));
     fields[fields.length - 3] = new Field(new Coordinate(8, 3));
     fields[fields.length - 1] = new Field(new Coordinate(8, 4));
+    fields[fields.length - 4].setFieldState(FieldState.JAIL);
+    fields[fields.length - 2].setFieldState(FieldState.JAIL);
+    fields[fields.length - 3].setFieldState(FieldState.JAIL);
+    fields[fields.length - 1].setFieldState(FieldState.JAIL);
   }
 
   /**
    * A getter for a specific Field.
    *
-   * @param index to get the correct field.
+   * @param coordinate to get the correct field.
    * @return the Field on index.
    * @throws IllegalArgumentException so that no ArrayIndexOutOfBoundsException will occur.
    */
-  public Field getSpecificField(int index) throws IllegalArgumentException {
-    return fields[index];
+  public Field getSpecificField(Coordinate coordinate) throws IllegalArgumentException {
+    for (Field field : fields) {
+      if (field.getCoordinate().getX() == coordinate.getX()
+          && field.getCoordinate().getY() == coordinate.getY()) {
+        return field;
+      }
+    }return fields[fields.length - 1];
   }
 
   /**
