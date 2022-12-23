@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 
 class DefaultCharacterSheetTest {
   private static final org.slf4j.Logger logger
-          = org.slf4j.LoggerFactory.getLogger(TestStatGoodCases.class);
+          = org.slf4j.LoggerFactory.getLogger(DefaultCharacterSheetTest.class);
 
   DefaultCharacterSheet characterSheet = null;
 
