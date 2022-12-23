@@ -5,39 +5,30 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 /**
  * This class handles all communication between player and components.
  *
- * @author Collin, Lara, Michel
+ * @author Collin Hoss, Lara Mangi, Michel Jouaux
  * @version 1.1
  */
 public interface Chess2Service {
 
   /**
-   * Build board with all fields, place pieces on the board, sets fields,
-   * set the starting player and inform the players about who starts.
+   * Build board with all fields, place pieces on the board, sets fields, set the starting player
+   * and inform the players about who starts. The Board gets updated over the time of the game.
+   *
+   * @return Board of the game
    */
-  void startNewGame();
-
-  /**
-   * Resets the board and pieces and the kings bananas. Assigns the pieces to their players
-   * and sets the starting player, informs the players about who starts.
-   */
-  void reset();
+  Board startNewGame();
 
   /**
    * Destroys an instance of ChessGame and brings scene back to main menu.
+   *
+   * @throws IllegalStateException if the method gets called during a wrong state
    */
-  void endGame();
+  void endGame() throws IllegalStateException;
 
   /**
    * Calls the method showWinningPlayer and after that calls reset or returns to the main menu.
    */
   void giveUp();
-
-  /**
-   * Returns 'b', 'w', 'r' as a char that defines which player won or red for no one.
-   *
-   * @return char which defines the player won or no player won
-   */
-  char getWinningPlayer();
 
   /**
    * Returns all positions with the state "HAS_CURRENT_PIECE".
@@ -49,32 +40,24 @@ public interface Chess2Service {
   /**
    * Returns all positions that the selected Piece can move to.
    *
-   * @return Coordinate[] all positions that the selected Piece can move to
    * @param selectedPieceCoordinate Coordinate of the position of the selected Piece
+   * @return Coordinate[] all positions that the selected Piece can move to
    * @throws IllegalParameterException if piecePos is a null reference or incomplete
+   * @throws IllegalStateException     if the method gets called during a wrong state
    */
   Coordinate[] getPossibleMoves(Coordinate selectedPieceCoordinate)
-      throws IllegalParameterException;
-
-  /**
-   * The king/queen gets send to jail upon defeat, the jail field is chosen
-   * by the player who defeated the piece.
-   *
-   * @param otherCoordinate of the king or queen piece that stands on a field, which has the
-   *                        FieldState "HAS_OTHER_PIECE"  that got selected
-   * @param jailCoordinate for the position of the jail on the board
-   * @throws IllegalParameterException if piece or pos is a null reference or incomplete
-   */
-  void setPieceInJail(Coordinate otherCoordinate, Coordinate jailCoordinate)
-      throws IllegalParameterException;
+      throws IllegalParameterException, IllegalParameterException;
 
   /**
    * Changes the position of the selected piece.
    *
-   * @param newCoordinate the new position of the piece
+   * @param selectedCoordinate the position of the selected piece
+   * @param newCoordinate      the new position of the piece
    * @throws IllegalParameterException if newPos is a null reference or incomplete
+   * @throws IllegalStateException     if the method gets called during a wrong state
    */
-  void moveSelectedPiece(Coordinate newCoordinate) throws IllegalParameterException;
+  void moveSelectedPiece(Coordinate selectedCoordinate, Coordinate newCoordinate)
+      throws IllegalParameterException, InvalidMoveException, IllegalStateException;
 
   /**
    * Returns the FieldState of the selected field.
@@ -82,7 +65,23 @@ public interface Chess2Service {
    * @param selectedCoordinate the position of the selected Field
    * @return FieldState of the selected field
    * @throws IllegalParameterException if pos is a null reference or incomplete
+   * @throws IllegalStateException     if the method gets called during a wrong state
    */
-  FieldState getFieldState(Coordinate selectedCoordinate) throws IllegalParameterException;
+  FieldState getFieldState(Coordinate selectedCoordinate)
+      throws IllegalParameterException, IllegalStateException;
 
+  /**
+   * Returns BLACK_WIN, WHITE_WIN, NO_WINNER, STILL_RUNNING as an Enum that defines which player won
+   * or if there is none.
+   *
+   * @return Enum which defines the player that won or if there is none
+   */
+  WinningPlayerState getWinningPlayer();
+
+  /**
+   * Returns RUNNING, CHECK or CHECKMATE which is the current GameState.
+   *
+   * @return the current GameState
+   */
+  GameState getGameState();
 }

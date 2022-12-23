@@ -15,6 +15,11 @@ public interface DuckHuntService {
   void shoot(int x, int y);
 
   /**
+   * Is called when shoot button is clicked and an obstacle was hit.
+   */
+  void shootObstacle();
+
+  /**
    * Is called when reload button is clicked reloads the gun.
    */
   void reload();
@@ -28,6 +33,16 @@ public interface DuckHuntService {
    * Is called when the game shall be stopped.
    */
   void stopGame();
+
+  /**
+   * Is called when the game shall be paused.
+   */
+  void pauseGame();
+
+  /**
+   * Is called when the game shall be continued.
+   */
+  void continueGame();
 
   /**
    * Changes the game settings.
