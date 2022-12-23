@@ -10,9 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-class TestStatGoodCases {
+class StatTest {
   private static final org.slf4j.Logger logger
-          = org.slf4j.LoggerFactory.getLogger(TestStatGoodCases.class);
+          = org.slf4j.LoggerFactory.getLogger(StatTest.class);
 
   private static Stat[] stats;
 
