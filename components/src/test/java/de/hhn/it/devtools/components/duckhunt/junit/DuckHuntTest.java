@@ -8,30 +8,35 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DuckHuntTest {
     DuckHunt game;
-    DuckHuntListener testListener;
+    DuckHuntListenerTest testListener;
 
     @BeforeEach
     void setUp() {
-      game = new DuckHunt();
-      testListener = new DuckHuntListenerTest();
+        game = new DuckHunt();
+        testListener = new DuckHuntListenerTest();
     }
 
     @AfterEach
     void tearDown() {
+        game.stopGame();
     }
 
-    @Test @Order(0)
+    @Test
+    @Order(0)
     void addCallbackTest() {
         assertDoesNotThrow(() -> game.addCallback(testListener));
 
         assertThrowsExactly(IllegalParameterException.class, () -> game.addCallback(null));
     }
 
-    @Test @Order(1)
+    @Test
+    @Order(1)
     void removeCallbackTest() throws IllegalParameterException {
         game.addCallback(testListener);
 
@@ -49,24 +54,72 @@ class DuckHuntTest {
     }
 
     @Test
-    void reloadTest() {
+    void reloadTest() throws IllegalParameterException, InterruptedException {
+        game.addCallback(testListener);
+        game.shootObstacle();
+        game.reload();
+        Thread.sleep(1000);
+        assertEquals(3, testListener.gameInfo.getAmmo());
     }
 
     @Test
-    void startGameTest() {
-
+    void startGameTest() throws IllegalParameterException, InterruptedException {
+        game.addCallback(testListener);
+        game.startGame();
+        int callCount = testListener.newStateCallCount;
+        Thread.sleep(1000);
+        assertNotNull(testListener.gameInfo);
+        assertNotNull(testListener.duckPosition);
+        assertEquals(1, testListener.duckPosition.duckData().length);
+        assertTrue(callCount < testListener.newStateCallCount);
     }
 
     @Test
-    void stopGameTest() {
+    void stopGameTest() throws IllegalParameterException, InterruptedException {
+        game.addCallback(testListener);
+        game.startGame();
+        Thread.sleep(1000);
+        game.stopGame();
+        Thread.sleep(1000);
+        int callCount = testListener.newStateCallCount;
+        Thread.sleep(1000);
+        assertEquals(callCount, testListener.newStateCallCount);
     }
 
     @Test
-    void pauseGameTest() {
+    void pauseGameTest() throws IllegalParameterException, InterruptedException {
+        game.addCallback(testListener);
+        game.startGame();
+        Thread.sleep(1000);
+        game.pauseGame();
+        Thread.sleep(1000);
+        int callCount = testListener.newStateCallCount;
+        Thread.sleep(1000);
+        assertEquals(callCount, testListener.newStateCallCount);
+        game.continueGame();
+        Thread.sleep(1000);
+        game.pauseGame();
+        Thread.sleep(1000);
+        callCount = testListener.newStateCallCount;
+        Thread.sleep(1000);
+        assertEquals(callCount, testListener.newStateCallCount);
     }
 
     @Test
-    void continueGameTest() {
+    void continueGameTest() throws IllegalParameterException, InterruptedException {
+        game.addCallback(testListener);
+        game.startGame();
+        Thread.sleep(1000);
+        game.pauseGame();
+        Thread.sleep(1000);
+        int callCount = testListener.newStateCallCount;
+        Thread.sleep(1000);
+        assertEquals(callCount, testListener.newStateCallCount);
+        game.continueGame();
+        Thread.sleep(1000);
+        game.pauseGame();
+        Thread.sleep(1000);
+        assertTrue(callCount < testListener.newStateCallCount);
     }
 
     @Test
@@ -78,16 +131,21 @@ class DuckHuntTest {
 
 class DuckHuntListenerTest implements DuckHuntListener {
     public GameInfo gameInfo;
+    public int newStateCallCount = 0;
     public DucksInfo duckPosition;
+    public int newDuckPositionCallCount = 0;
 
     @Override
     public void newState(GameInfo gameInfo) throws IllegalGameInfoException {
         this.gameInfo = gameInfo;
+        newStateCallCount++;
     }
 
     @Override
     public void newDuckPosition(DucksInfo duckPosition) throws IllegalDuckPositionException {
         this.duckPosition = duckPosition;
+        System.out.println(duckPosition.duckData()[0]);
+        newDuckPositionCallCount++;
     }
 
     @Override
