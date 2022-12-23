@@ -109,10 +109,12 @@ public class DefaultCharacterSheet implements CharacterSheet {
     if (origin == OriginType.LEVEL_POINT) {
       if (stat.getAbilityPointsUsed() < Integer.MAX_VALUE) {
         stat.addAbilityPoint();
+        getListener().statChanged(stat.toStatDescriptor()); // Callback
       }
     } else {
       if (stat.getMiscellaneous() < Integer.MAX_VALUE) {
         stat.setMiscellaneous(stat.getMiscellaneous() + 1);
+        getListener().statChanged(stat.toStatDescriptor()); // Callback
       }
     }
   }
@@ -134,14 +136,18 @@ public class DefaultCharacterSheet implements CharacterSheet {
     if (origin == OriginType.LEVEL_POINT) {
       if (stat.getAbilityPointsUsed() + amount > stat.getAbilityPointsUsed()) {
         stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() + amount);
+        getListener().statChanged(stat.toStatDescriptor()); // Callback
       } else {
         stat.setAbilityPointsUsed(Integer.MAX_VALUE);
+        getListener().statChanged(stat.toStatDescriptor()); // Callback
       }
     } else {
       if (stat.getMiscellaneous() + amount > stat.getMiscellaneous()) {
         stat.setMiscellaneous(stat.getMiscellaneous() + amount);
+        getListener().statChanged(stat.toStatDescriptor()); // Callback
       } else {
         stat.setMiscellaneous(Integer.MAX_VALUE);
+        getListener().statChanged(stat.toStatDescriptor()); // Callback
       }
     }
   }
@@ -155,10 +161,12 @@ public class DefaultCharacterSheet implements CharacterSheet {
     if (origin == OriginType.LEVEL_POINT) {
       if (stat.getAbilityPointsUsed() > Integer.MIN_VALUE) {
         stat.removeAbilityPoint();
+        getListener().statChanged(stat.toStatDescriptor()); // Callback
       }
     } else {
       if (stat.getMiscellaneous() > Integer.MIN_VALUE) {
         stat.setMiscellaneous(stat.getMiscellaneous() - 1);
+        getListener().statChanged(stat.toStatDescriptor()); // Callback
       }
     }
   }
@@ -180,14 +188,18 @@ public class DefaultCharacterSheet implements CharacterSheet {
     if (origin == OriginType.LEVEL_POINT) {
       if (stat.getAbilityPointsUsed() - amount < stat.getAbilityPointsUsed()) {
         stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() - amount);
+        getListener().statChanged(stat.toStatDescriptor()); // Callback
       } else {
         stat.setAbilityPointsUsed(Integer.MIN_VALUE);
+        getListener().statChanged(stat.toStatDescriptor()); // Callback
       }
     } else {
       if (stat.getMiscellaneous() - amount < stat.getMiscellaneous()) {
         stat.setMiscellaneous(stat.getMiscellaneous() - amount);
+        getListener().statChanged(stat.toStatDescriptor()); // Callback
       } else {
         stat.setMiscellaneous(Integer.MIN_VALUE);
+        getListener().statChanged(stat.toStatDescriptor()); // Callback
       }
     }
   }
@@ -217,6 +229,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
     for (Description description : getDescriptions()) {
       if (description.getType() == descriptionType) {
         description.setDescription(text);
+        getListener().descriptionChanged(description.toDescriptionDescriptor()); // Callback
       }
     }
   }
@@ -235,19 +248,22 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public int rollDice() throws NullPointerException {
     logger.info("rollDice : no params");
-    return getDice().nextRoll();
+    int result = getDice().nextRoll();
+    getListener().diceChanged(getDice().toDiceDescriptor()); // Callback
+    return result;
   }
 
   @Override
   public void changeDiceType(DiceType dice) throws IllegalArgumentException {
     logger.info("changeDiceType : dice = {}", dice);
     getDice().changeSize(dice);
+    getListener().diceChanged(getDice().toDiceDescriptor()); // Callback
   }
 
   @Override
   public DiceDescriptor getDiceDescriptor() {
     logger.info("getDiceDescriptor : no params");
-    return dice.toDiceDescriptor();
+    return getDice().toDiceDescriptor();
   }
 
   /**
