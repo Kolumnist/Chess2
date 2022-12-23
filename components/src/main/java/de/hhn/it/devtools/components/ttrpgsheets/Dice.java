@@ -131,9 +131,9 @@ public class Dice {
   }
 
   /**
-   * Converts this Description to a {@link DiceDescriptor}.
+   * Converts this dice to a {@link DiceDescriptor}.
    *
-   * @return the {@link DiceDescriptor} of this description
+   * @return the {@link DiceDescriptor} of this dice
    */
   public DiceDescriptor toDiceDescriptor() {
     logger.info("toDiceDescriptor : no params");
