@@ -7,7 +7,7 @@ build/
 logs/
 
 # IntelliJ specific files
-.idea
+.idea/
 *.iml
 *.ipr
 *.iws
