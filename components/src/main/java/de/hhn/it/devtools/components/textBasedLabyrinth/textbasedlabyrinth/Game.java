@@ -42,11 +42,17 @@ public class Game implements GameService {
       throw new RoomFailedException(e.getMessage());
     }
     message = checkDoor.open();
-    if (!checkDoor.checkIfLocked()) {
-      currentRoom = currentRoom.getRoom(direction);
-      player.setCurrentRoomOfPlayer(currentRoom);
-    }
     outputListener.sendOutputPlayer(message);
+    if (!checkDoor.checkIfLocked()) {
+      if (checkDoor.checkIfFake()) {
+        String fake = "The door reveals no path, but a wall. You cannot move in this direction.";
+        outputListener.sendOutputNavigation(fake);
+      } else {
+        currentRoom = currentRoom.getRoom(direction);
+        player.setCurrentRoomOfPlayer(currentRoom);
+      }
+    }
+
   }
 
   /**
@@ -55,7 +61,7 @@ public class Game implements GameService {
    * @param direction gets doors in all directions.
    * @throws IllegalArgumentException direction should not be null.
    */
-  public String inspect(Direction direction) throws IllegalArgumentException {
+  public String inspect(Direction direction) {
     if (direction == null) {
       throw new IllegalArgumentException("Direction should not be null.");
     }
@@ -167,6 +173,7 @@ public class Game implements GameService {
       throw new NoSuchItemFoundException("The item was not found.");
     } else {
       player.addItem(searchedItem);
+      player.getCurrentRoomOfPlayer().removeItem(searchedItem.getItemId());
       outputListener.sendOutputPlayer(searchedItem.getName());
       return searchedItem;
     }

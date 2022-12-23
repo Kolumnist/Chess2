@@ -3,7 +3,6 @@ package de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
 
 
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.RoomFailedException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -94,8 +93,6 @@ public class Room {
    * Gets the doors for the new room.
    */
   public void setDoors() {
-    Random random = new Random();
-    int a = 0;
 
     if (isSouthAssigned) {
       if (toTheSouth.hasSouthDoor()) {
@@ -133,15 +130,23 @@ public class Room {
   }
 
 
-  public void setFakeInDirection(Direction direction) {
+  protected void setFakeInDirection(Direction direction) throws IllegalArgumentException {
     if (direction.equals(Direction.SOUTH) && !isSouthAssigned) {
-
+      southDoor = new Door();
+      isSouthAssigned = true;
+      southDoor.isFake();
     } else if (direction.equals(Direction.NORTH) && !isNorthAssigned) {
-
+      northDoor = new Door();
+      isNorthAssigned = true;
+      northDoor.isFake();
     } else if (direction.equals(Direction.EAST) && !isEastAssigned) {
-
+      eastDoor = new Door();
+      isEastAssigned = true;
+      eastDoor.isFake();
     } else if (direction.equals(Direction.WEST) && !isWestAssigned) {
-
+      westDoor = new Door();
+      isWestAssigned = true;
+      westDoor.isFake();
     } else {
       throw new IllegalArgumentException("Direction was invalid for a fake door: " + direction.toString());
     }

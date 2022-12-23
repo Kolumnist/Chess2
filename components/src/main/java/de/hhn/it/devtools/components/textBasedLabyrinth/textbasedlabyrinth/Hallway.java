@@ -16,7 +16,7 @@ public class Hallway extends Room {
     }
 
 
-    public Door getOppositeDoor(Direction direction) {
+    public Door getOppositeDoor(Direction direction) throws IllegalArgumentException {
         Door target = null;
         if (direction.equals(Direction.NORTH)) {
             target = getSouthDoor();
