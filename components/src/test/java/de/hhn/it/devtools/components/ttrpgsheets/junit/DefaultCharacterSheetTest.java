@@ -175,6 +175,24 @@ class DefaultCharacterSheetTest {
         characterSheet.decrementStat(statType, origin, 5);
       }
     }
+    Stat edgeStat = characterSheet.getStatOfType(StatType.STRENGTH);
+    edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
+    edgeStat.setMiscellaneous(Integer.MAX_VALUE);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT);
+    assertEquals(Integer.MAX_VALUE, edgeStat.getAbilityPointsUsed());
+    assertEquals(Integer.MAX_VALUE, edgeStat.getMiscellaneous());
+
+    edgeStat.setAbilityPointsUsed(5);
+    edgeStat.setMiscellaneous(5);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, Integer.MAX_VALUE);
+    assertEquals(Integer.MAX_VALUE, edgeStat.getAbilityPointsUsed());
+    assertEquals(Integer.MAX_VALUE, edgeStat.getMiscellaneous());
+
+    edgeStat.setAbilityPointsUsed(-5);
+    edgeStat.setMiscellaneous(-5);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, Integer.MIN_VALUE);
+    assertEquals(Integer.MIN_VALUE, edgeStat.getAbilityPointsUsed());
+    assertEquals(Integer.MIN_VALUE, edgeStat.getMiscellaneous());
   }
 
   @Test
