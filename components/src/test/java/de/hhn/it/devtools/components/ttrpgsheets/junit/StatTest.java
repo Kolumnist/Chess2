@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
@@ -9,9 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-class TestStatGoodCases {
+class StatTest {
   private static final org.slf4j.Logger logger
-          = org.slf4j.LoggerFactory.getLogger(TestStatGoodCases.class);
+          = org.slf4j.LoggerFactory.getLogger(StatTest.class);
 
   private static Stat[] stats;
 
@@ -34,6 +35,12 @@ class TestStatGoodCases {
       }
       stats[i] = new Stat(statDescriptors[i]);
     }
+  }
+
+  @Test
+  void constructorTest() {
+    logger.info("constructorTest() is called");
+    assertThrows(IllegalArgumentException.class, () -> new Stat(null));
   }
 
   @Test
