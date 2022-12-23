@@ -1,34 +1,35 @@
 package de.hhn.it.devtools.components.battleship.provider;
 
+import de.hhn.it.devtools.apis.battleship.Field;
 import de.hhn.it.devtools.apis.battleship.Owner;
 
-public class Player extends Owner {
-    AttackField pAttackField;
-    ShipField pShipField;
+public class Player {
+    protected Field attackField;
+    protected Field shipField;
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(Player.class);
 
 
-    public void setAttackField(AttackField attackField){
+    public void setAttackField(Field attackField){
         logger.debug("setAttackField: - {}", attackField);
-        this.pAttackField = attackField;
+        this.attackField = attackField;
 
     }
 
 
-    public void setShipfield(ShipField shipField){
+    public void setShipfield(Field shipField){
         logger.debug("setShipField: - {}", shipField);
-        this.pShipField = shipField;
+        this.shipField = shipField;
     }
 
 
-    public AttackField getPAttackField(){
-        return this.pAttackField;
+    public Field getAttackField(){
+        return this.attackField;
     }
 
 
-    public ShipField getPShipField(){
-        return this.pShipField;
+    public Field getShipField(){
+        return this.shipField;
     }
 
 

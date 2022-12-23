@@ -2,7 +2,7 @@ package de.hhn.it.devtools.components.battleship.junit;
 
 import de.hhn.it.devtools.apis.battleship.*;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.components.battleship.provider.cmpBattleshipService;
+import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Test removeCallback")
 public class TestRemoveCallback {
 
-    cmpBattleshipService bsService = new cmpBattleshipService();
+    CmpBattleshipService bsService = new CmpBattleshipService();
     BattleshipService bs = bsService;
 
     // Bad Cases

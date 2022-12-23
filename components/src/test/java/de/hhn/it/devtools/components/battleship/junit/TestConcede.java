@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Test concede")
 public class TestConcede {
 
-    cmpBattleshipService bsService = new cmpBattleshipService();
+    CmpBattleshipService bsService = new CmpBattleshipService();
     BattleshipService bs = bsService;
 
     @Test

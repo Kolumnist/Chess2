@@ -13,7 +13,7 @@ public class TestBombPanel {
 
     // Field size for tests set to 9
 
-    cmpBattleshipService bsService = new cmpBattleshipService();
+    CmpBattleshipService bsService = new CmpBattleshipService();
     BattleshipService bs = bsService;
     Player player = new Player();
     ShipField playerSField = new ShipField(9, player);

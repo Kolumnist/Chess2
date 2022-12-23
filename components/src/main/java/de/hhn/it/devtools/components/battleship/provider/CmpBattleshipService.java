@@ -4,7 +4,9 @@ import de.hhn.it.devtools.apis.battleship.*;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.IllegalFormatException;
+import java.util.Map;
 
 // TODO createFields kann nur aufgerufen werden wenn GameState = PREGAME
 // TODO durchs Feld durch iterieren und gucken ob es Schiffs-Felder gibt, die nicht gebombt wurden, falls nein -> gegner gewinnt & GameState zu GameOver
@@ -15,17 +17,23 @@ import java.util.IllegalFormatException;
 // Write Computer AI
 // How many ships every player gets after a field is created
 
-public class cmpBattleshipService implements BattleshipService {
+public class CmpBattleshipService implements BattleshipService {
     static GameState currentGameState = GameState.PREGAME;
-    Player player = new Player();
-    Computer computer = new Computer();
     static int gameVolume;
+    private final Player player;
+    private final Computer computer;
     private ArrayList<BattleshipListener> listeners;
     private static final org.slf4j.Logger logger =
-            org.slf4j.LoggerFactory.getLogger(cmpBattleshipService.class);
+            org.slf4j.LoggerFactory.getLogger(CmpBattleshipService.class);
+    private final Map<Owner, Player> owner2PlayerMap;
 
-    public cmpBattleshipService(){
+    public CmpBattleshipService(){
         listeners = new ArrayList<>();
+        owner2PlayerMap = new HashMap<>();
+        player = new Player();
+        computer = new Computer();
+        owner2PlayerMap.put(Owner.PLAYER, player);
+        owner2PlayerMap.put(Owner.COMPUTER, computer);
     }
 
     public void setCurrentGameState(GameState state){
@@ -79,7 +87,8 @@ public class cmpBattleshipService implements BattleshipService {
     // nedim
     @Override
     public boolean isPlacementPossible(Owner owner, Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException, IllegalArgumentException {
-//        logger.info("isPlacementPossible: owner = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}", owner, shipToPlace, x1, y1, isVertical);
+        logger.info("isPlacementPossible: owner = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}", owner, shipToPlace, x1, y1, isVertical);
+        Player player = owner2PlayerMap.get(owner);
         int shipSize = shipToPlace.getSize();
         // wenn x1 der Endpunkt (linkeste Punkt) des Schiffes ist dann diese Rechnung:
         int endX = (x1 + shipSize) - 1;
@@ -97,15 +106,8 @@ public class cmpBattleshipService implements BattleshipService {
         else if(currentGameState != GameState.PLACINGSHIPS){
             throw new IllegalGameStateException("Wrong GameState! Required GameState is PlacingShips");
         }
-        if(owner instanceof Player) {
-            shipField = ((Player) owner).getPShipField().getPanelMarkerMat();
-        }
-        else if(owner instanceof Computer){
-            shipField = ((Computer) owner).getCShipField().getPanelMarkerMat();
-        }
-        else{
-            throw new IllegalArgumentException();
-        }
+        shipField = player.getShipField().getPanelMarkerMat();
+
         if(isVertical){
             for(int i = y1; i < endY; i++){
                 if(shipField[i][x1] == PanelState.SHIP){
@@ -162,8 +164,8 @@ public class cmpBattleshipService implements BattleshipService {
         }
         else if(isPlacementPossible(owner, shipToPlace, x1, y1, isVertical)){
             if(owner instanceof Player){
-                panelStateField = ((Player) owner).getPShipField().getPanelMarkerMat();
-                shipField = ((Player) owner).getPShipField();
+                panelStateField = ((Player) owner).getShipField().getPanelMarkerMat();
+                shipField = ((Player) owner).getShipField();
             }
             else if(owner instanceof Computer){
                 panelStateField = ((Computer) owner).getCShipField().getPanelMarkerMat();
@@ -212,8 +214,8 @@ public class cmpBattleshipService implements BattleshipService {
             throw new IllegalGameStateException("Wrong GameState! Required GameState is PlacingShips");
         }
         else if(owner instanceof Player){
-            panelStateField = ((Player) owner).getPShipField().getPanelMarkerMat();
-            shipField = ((Player) owner).getPShipField();
+            panelStateField = ((Player) owner).getShipField().getPanelMarkerMat();
+            shipField = ((Player) owner).getShipField();
         }
         else if(owner instanceof Computer){
             panelStateField = ((Computer) owner).getCShipField().getPanelMarkerMat();
@@ -323,17 +325,17 @@ public class cmpBattleshipService implements BattleshipService {
         }
 
         else if (attacker instanceof Computer){
-            isShipOnPosition = ((Player) target).getPShipField().getPanelMarker(x,y);
+            isShipOnPosition = ((Player) target).getShipField().getPanelMarker(x,y);
             if(isShipOnPosition == PanelState.SHIP){
                 // set ship part on position to bombed
-                ((Player) target).getPShipField().setPanelMarker(x,y,PanelState.HIT);
+                ((Player) target).getShipField().setPanelMarker(x,y,PanelState.HIT);
                 //set position to bombed (not necessary hit)
                 ((Computer) attacker).getCAttackField().setPanelMarker(x,y,PanelState.HIT);
                 return true;
             }
             else {
                 // set position to bombed (not necessary hit)
-                ((Player) target).getPShipField().setPanelMarker(x,y,PanelState.MISSED);
+                ((Player) target).getShipField().setPanelMarker(x,y,PanelState.MISSED);
                 ((Computer) attacker).getCAttackField().setPanelMarker(x,y,PanelState.MISSED);
                 return false;
             }
@@ -354,11 +356,11 @@ public class cmpBattleshipService implements BattleshipService {
 
         logger.info("createFields: size = {}", size);
 
-        player.setShipfield(new ShipField(size,player));
-        player.setAttackField(new AttackField(size,player));
+        player.setShipfield(new Field(size,player));
+        player.setAttackField(new Field(size,player));
         
-        computer.setShipfield(new ShipField(size,computer));
-        computer.setAttackField(new AttackField(size,computer));
+        computer.setShipfield(new Field(size,computer));
+        computer.setAttackField(new Field(size,computer));
 
         // @TODO moutassem macht verteilung von ships abhängig von der Feldgröße
         // 1x5er, 2x4er, 3er Variabel, 1x2er

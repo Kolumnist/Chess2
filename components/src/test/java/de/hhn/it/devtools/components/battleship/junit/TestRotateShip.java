@@ -4,7 +4,7 @@ import de.hhn.it.devtools.apis.battleship.*;
 import de.hhn.it.devtools.components.battleship.provider.Computer;
 import de.hhn.it.devtools.components.battleship.provider.Player;
 import de.hhn.it.devtools.components.battleship.provider.ShipField;
-import de.hhn.it.devtools.components.battleship.provider.cmpBattleshipService;
+import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ public class TestRotateShip {
 
     // Field size for tests set to 9
 
-    cmpBattleshipService bsService = new cmpBattleshipService();
+    CmpBattleshipService bsService = new CmpBattleshipService();
     BattleshipService bs = bsService;
     Player player = new Player();
     ShipField playerField = new ShipField(9, player);

@@ -5,7 +5,7 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.components.battleship.provider.Computer;
 import de.hhn.it.devtools.components.battleship.provider.Player;
 import de.hhn.it.devtools.components.battleship.provider.ShipField;
-import de.hhn.it.devtools.components.battleship.provider.cmpBattleshipService;
+import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Test addCallback")
 public class TestAddCallback {
 
-    cmpBattleshipService bsService = new cmpBattleshipService();
+    CmpBattleshipService bsService = new CmpBattleshipService();
     BattleshipService bs = bsService;
     Player player = new Player();
     ShipField playerField = new ShipField(9, player);

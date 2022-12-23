@@ -1,3 +1,4 @@
+import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
 
 module devtools.components {
   exports de.hhn.it.devtools.components.example.coffeemakerservice.provider;
@@ -11,7 +12,7 @@ module devtools.components {
   provides  de.hhn.it.devtools.apis.examples.coffeemakerservice.AdminCoffeeMakerService
           with de.hhn.it.devtools.components.example.coffeemakerservice.provider.WnckCoffeeMakerService;
   provides  de.hhn.it.devtools.apis.battleship.BattleshipService
-          with de.hhn.it.devtools.components.battleship.provider.cmpBattleshipService;
+          with CmpBattleshipService;
   provides de.hhn.it.devtools.apis.duckhunt.DuckHuntService
           with de.hhn.it.devtools.components.duckhunt.DuckHunt;
   provides de.hhn.it.devtools.apis.game2048.Game2048Service
