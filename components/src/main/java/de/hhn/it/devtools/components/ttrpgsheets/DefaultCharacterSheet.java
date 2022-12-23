@@ -11,11 +11,15 @@ import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import java.util.Arrays;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The default implementation of a Character Sheet.
  */
 public class DefaultCharacterSheet implements CharacterSheet {
+
+  private static final Logger logger = LoggerFactory.getLogger(DefaultCharacterSheet.class);
   private CharacterSheetListener listener;
   private Description[] descriptions;
   private Stat[] stats;
@@ -29,6 +33,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
    */
   public DefaultCharacterSheet(CharacterSheetListener listener,
                                CharacterDescriptor characterDescriptor) {
+    logger.info("Constructor : listener = {}, characterDescriptor = {}", listener,
+            characterDescriptor);
     addCallback(listener);
     unwrapCharacter(characterDescriptor);
   }
@@ -41,6 +47,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
    */
   private Description[] convertDescDescriptorsToDescriptions(
           DescriptionDescriptor[] descriptionDescriptors) {
+    logger.info("convertDescDescriptorsToDescriptions : descriptionDescriptors = {}",
+            Arrays.toString(descriptionDescriptors));
     Description[] descriptions = new Description[descriptionDescriptors.length];
     for (int i = 0; i < descriptions.length; i++) {
       descriptions[i] = new Description(descriptionDescriptors[i]);
@@ -55,6 +63,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
    * @return The converted Stats
    */
   private Stat[] convertStatDescriptorsToStats(StatDescriptor[] statDescriptors) {
+    logger.info("convertStatDescriptorsToStats : statDescriptors = {}",
+            Arrays.toString(statDescriptors));
     Stat[] stats = new Stat[statDescriptors.length];
     for (int i = 0; i < stats.length; i++) {
       stats[i] = new Stat(statDescriptors[i]);
@@ -64,11 +74,13 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public void addCallback(CharacterSheetListener listener) throws IllegalArgumentException {
+    logger.info("addCallback : listener = {}", listener);
     setListener(listener);
   }
 
   @Override
   public void unwrapCharacter(CharacterDescriptor characterDescriptor) {
+    logger.info("unwrapCharacter : characterDescriptor = {}", characterDescriptor);
     setDescriptions(convertDescDescriptorsToDescriptions(characterDescriptor.getDescriptions()));
     setStats(convertStatDescriptorsToStats(characterDescriptor.getStats()));
     setDice(new Dice(characterDescriptor.getDice()));
@@ -76,6 +88,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public CharacterDescriptor wrapCharacter() {
+    logger.info("wrapCharacter : no params");
     DescriptionDescriptor[] descDescriptors = new DescriptionDescriptor[getDescriptions().length];
     for (int i = 0; i < DescriptionType.values().length; i++) {
       descDescriptors[i] = getDescriptionDescriptor(DescriptionType.values()[i]);
@@ -89,16 +102,17 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public void incrementStat(StatType statType, OriginType origin) throws IllegalArgumentException {
-    for (Stat stat : getStats()) {
-      if (stat.getType() == statType) {
-        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
-          throw new IllegalArgumentException("Cannot change level of Stat of this Type");
-        }
-        if (origin == OriginType.LEVEL_POINT) {
-          stat.addAbilityPoint();
-        } else {
-          stat.setMiscellaneous(stat.getMiscellaneous() + 1);
-        }
+    Stat stat = getStatOfType(statType);
+    if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+      throw new IllegalArgumentException("Cannot change level of Stat of this Type");
+    }
+    if (origin == OriginType.LEVEL_POINT) {
+      if (stat.getAbilityPointsUsed() < Integer.MAX_VALUE) {
+        stat.addAbilityPoint();
+      }
+    } else {
+      if (stat.getMiscellaneous() < Integer.MAX_VALUE) {
+        stat.setMiscellaneous(stat.getMiscellaneous() + 1);
       }
     }
   }
@@ -106,32 +120,45 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public void incrementStat(StatType statType, OriginType origin, int amount)
           throws IllegalArgumentException {
-    for (Stat stat : getStats()) {
-      if (stat.getType() == statType) {
-        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
-          throw new IllegalArgumentException("Cannot change level of Stat of this Type");
-        }
-        if (origin == OriginType.LEVEL_POINT) {
-          stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() + amount);
-        } else {
-          stat.setMiscellaneous(stat.getMiscellaneous() + amount);
-        }
+    Stat stat = getStatOfType(statType);
+    if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+      throw new IllegalArgumentException("Cannot change level of Stat of this Type");
+    }
+    if (amount < 0) {
+      if (amount == Integer.MIN_VALUE) {
+        decrementStat(statType, origin, Integer.MAX_VALUE);
+        return;
+      }
+      decrementStat(statType, origin, Math.abs(amount));
+    }
+    if (origin == OriginType.LEVEL_POINT) {
+      if (stat.getAbilityPointsUsed() + amount > stat.getAbilityPointsUsed()) {
+        stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() + amount);
+      } else {
+        stat.setAbilityPointsUsed(Integer.MAX_VALUE);
+      }
+    } else {
+      if (stat.getMiscellaneous() + amount > stat.getMiscellaneous()) {
+        stat.setMiscellaneous(stat.getMiscellaneous() + amount);
+      } else {
+        stat.setMiscellaneous(Integer.MAX_VALUE);
       }
     }
   }
 
   @Override
   public void decrementStat(StatType statType, OriginType origin) throws IllegalArgumentException {
-    for (Stat stat : getStats()) {
-      if (stat.getType() == statType) {
-        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
-          throw new IllegalArgumentException("Cannot change level of Stat of this Type");
-        }
-        if (origin == OriginType.LEVEL_POINT) {
-          stat.removeAbilityPoint();
-        } else {
-          stat.setMiscellaneous(stat.getMiscellaneous() - 1);
-        }
+    Stat stat = getStatOfType(statType);
+    if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+      throw new IllegalArgumentException("Cannot change level of Stat of this Type");
+    }
+    if (origin == OriginType.LEVEL_POINT) {
+      if (stat.getAbilityPointsUsed() > Integer.MIN_VALUE) {
+        stat.removeAbilityPoint();
+      }
+    } else {
+      if (stat.getMiscellaneous() > Integer.MIN_VALUE) {
+        stat.setMiscellaneous(stat.getMiscellaneous() - 1);
       }
     }
   }
@@ -139,43 +166,54 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public void decrementStat(StatType statType, OriginType origin, int amount)
           throws IllegalArgumentException {
-    for (Stat stat : getStats()) {
-      if (stat.getType() == statType) {
-        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
-          throw new IllegalArgumentException("Cannot change level of Stat of this Type");
-        }
-        if (origin == OriginType.LEVEL_POINT) {
-          stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() - amount);
-        } else {
-          stat.setMiscellaneous(stat.getMiscellaneous() - amount);
-        }
+    Stat stat = getStatOfType(statType);
+    if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+      throw new IllegalArgumentException("Cannot change level of Stat of this Type");
+    }
+    if (amount < 0) {
+      if (amount == Integer.MIN_VALUE) {
+        incrementStat(statType, origin, Integer.MAX_VALUE);
+        return;
+      }
+      incrementStat(statType, origin, Math.abs(amount));
+    }
+    if (origin == OriginType.LEVEL_POINT) {
+      if (stat.getAbilityPointsUsed() - amount < stat.getAbilityPointsUsed()) {
+        stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() - amount);
+      } else {
+        stat.setAbilityPointsUsed(Integer.MIN_VALUE);
+      }
+    } else {
+      if (stat.getMiscellaneous() - amount < stat.getMiscellaneous()) {
+        stat.setMiscellaneous(stat.getMiscellaneous() - amount);
+      } else {
+        stat.setMiscellaneous(Integer.MIN_VALUE);
       }
     }
   }
 
   @Override
   public int getStatDisplayValue(StatType statType) throws IllegalArgumentException {
-    for (Stat stat : getStats()) {
-      if (stat.getType() == statType) {
-        return stat.getTotalValue();
-      }
+    Stat stat = getStatOfType(statType);
+    if (stat == null) {
+      throw new IllegalArgumentException("No Stat of this type is found");
     }
-    throw new IllegalArgumentException("No Stat of this type is found");
+    return stat.getTotalValue();
   }
 
   @Override
   public StatDescriptor getStatDescriptor(StatType statType) {
-    for (Stat stat : getStats()) {
-      if (stat.getType() == statType) {
-        return stat.toStatDescriptor();
-      }
+    Stat stat = getStatOfType(statType);
+    if (stat == null) {
+      return null;
     }
-    return null;
+    return stat.toStatDescriptor();
   }
 
   @Override
   public void changeDescription(DescriptionType descriptionType, String text)
           throws IllegalArgumentException {
+    logger.info("changeDescription : descriptionType = {}, text = {}", descriptionType, text);
     for (Description description : getDescriptions()) {
       if (description.getType() == descriptionType) {
         description.setDescription(text);
@@ -185,9 +223,10 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public DescriptionDescriptor getDescriptionDescriptor(DescriptionType descriptionType) {
+    logger.info("getDescriptionDescriptor : descriptionType = {}", descriptionType);
     for (Description description : getDescriptions()) {
       if (description.getType() == descriptionType) {
-        return new DescriptionDescriptor(description.getType(), description.getDescription());
+        return description.toDescriptionDescriptor();
       }
     }
     return null;
@@ -195,17 +234,35 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public int rollDice() throws NullPointerException {
+    logger.info("rollDice : no params");
     return getDice().nextRoll();
   }
 
   @Override
   public void changeDiceType(DiceType dice) throws IllegalArgumentException {
+    logger.info("changeDiceType : dice = {}", dice);
     getDice().changeSize(dice);
   }
 
   @Override
   public DiceDescriptor getDiceDescriptor() {
-    return new DiceDescriptor(getDice().getType(), getDice().getValue());
+    logger.info("getDiceDescriptor : no params");
+    return dice.toDiceDescriptor();
+  }
+
+  /**
+   * Returns the Stat of the given type.
+   *
+   * @param statType The specific StatType
+   * @return The Stat of given StatType
+   */
+  public Stat getStatOfType(StatType statType) {
+    for (Stat stat : getStats()) {
+      if (stat.getType() == statType) {
+        return stat;
+      }
+    }
+    return null;
   }
 
   public CharacterSheetListener getListener() {

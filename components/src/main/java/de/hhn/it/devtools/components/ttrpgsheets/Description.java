@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A simple description for the character.
+ * It has a type and a description for that type.
  */
 public class Description {
   private static final Logger logger = LoggerFactory.getLogger(Description.class);
@@ -18,12 +19,8 @@ public class Description {
    *
    * @param descriptionDescriptor the descriptor
    */
-  public Description(DescriptionDescriptor descriptionDescriptor) throws IllegalArgumentException {
-    logger.info("Constructor is called. Parameter: descriptionDescriptor = "
-            + descriptionDescriptor);
-    if (descriptionDescriptor == null) {
-      throw new IllegalArgumentException("Description descriptor is null");
-    }
+  public Description(DescriptionDescriptor descriptionDescriptor) {
+    logger.info("Constructor : descriptionDescriptor = {}", descriptionDescriptor);
     type = descriptionDescriptor.getDescriptionType();
     setDescription(descriptionDescriptor.getText());
   }
@@ -34,7 +31,7 @@ public class Description {
    * @return the {@link DescriptionDescriptor} of this description
    */
   public DescriptionDescriptor toDescriptionDescriptor() {
-    logger.info("toDescriptionDescriptor() is called");
+    logger.info("toDescriptionDescriptor : no params");
     return new DescriptionDescriptor(type, description);
   }
 
@@ -67,7 +64,6 @@ public class Description {
 
   @Override
   public String toString() {
-    return "Type: " + getType()
-            + "\nDescription: " + getDescription();
+    return "Type: " + getType() + "\nDescription: " + getDescription();
   }
 }

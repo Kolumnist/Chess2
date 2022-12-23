@@ -1,7 +1,6 @@
 package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.CharacterDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.CharacterSheetListener;
@@ -13,14 +12,17 @@ import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import de.hhn.it.devtools.components.ttrpgsheets.DefaultCharacterSheet;
+import de.hhn.it.devtools.components.ttrpgsheets.Dice;
+import de.hhn.it.devtools.components.ttrpgsheets.Stat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TestDefaultCharacterSheetGoodCases {
+class DefaultCharacterSheetTest {
   private static final org.slf4j.Logger logger
-          = org.slf4j.LoggerFactory.getLogger(TestStatGoodCases.class);
+          = org.slf4j.LoggerFactory.getLogger(DefaultCharacterSheetTest.class);
 
   DefaultCharacterSheet characterSheet = null;
+
 
   @BeforeEach
   void setupObjects() {
@@ -125,8 +127,8 @@ class TestDefaultCharacterSheetGoodCases {
   void incrementStatTest() {
     logger.info("incrementStatTest() is called");
     for (StatType statType : StatType.values()) {
+      Stat stat = characterSheet.getStatOfType(statType);
       for (OriginType origin : OriginType.values()) {
-        StatDescriptor stat = characterSheet.getStatDescriptor(statType);
         if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
           assertThrows(IllegalArgumentException.class,
                   () -> characterSheet.incrementStat(statType, origin));
@@ -140,7 +142,6 @@ class TestDefaultCharacterSheetGoodCases {
             assertEquals(1, stat.getAbilityPointsUsed());
           }
         } else {
-          System.out.println(stat.toString());
           switch (statType) {
             case HEALTH -> assertEquals(-1, stat.getMiscellaneous());
             case STRENGTH -> assertEquals(7, stat.getMiscellaneous());
@@ -150,6 +151,52 @@ class TestDefaultCharacterSheetGoodCases {
         characterSheet.decrementStat(statType, origin);
       }
     }
+    for (StatType statType : StatType.values()) {
+      Stat stat = characterSheet.getStatOfType(statType);
+      for (OriginType origin : OriginType.values()) {
+        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+          assertThrows(IllegalArgumentException.class,
+                  () -> characterSheet.incrementStat(statType, origin, 5));
+          continue;
+        }
+        characterSheet.incrementStat(statType, origin, 5);
+        if (origin == OriginType.LEVEL_POINT) {
+          if (statType == StatType.STRENGTH) {
+            assertEquals(7, stat.getAbilityPointsUsed());
+          } else {
+            assertEquals(5, stat.getAbilityPointsUsed());
+          }
+        } else {
+          switch (statType) {
+            case HEALTH -> assertEquals(3, stat.getMiscellaneous());
+            case STRENGTH -> assertEquals(11, stat.getMiscellaneous());
+            default -> assertEquals(5, stat.getMiscellaneous());
+          }
+        }
+        characterSheet.decrementStat(statType, origin, 5);
+      }
+    }
+    Stat edgeStat = characterSheet.getStatOfType(StatType.STRENGTH);
+    edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
+    edgeStat.setMiscellaneous(Integer.MAX_VALUE);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY);
+    assertEquals(Integer.MAX_VALUE, edgeStat.getAbilityPointsUsed());
+    assertEquals(Integer.MAX_VALUE, edgeStat.getMiscellaneous());
+
+    edgeStat.setAbilityPointsUsed(5);
+    edgeStat.setMiscellaneous(5);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, Integer.MAX_VALUE);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MAX_VALUE);
+    assertEquals(Integer.MAX_VALUE, edgeStat.getAbilityPointsUsed());
+    assertEquals(Integer.MAX_VALUE, edgeStat.getMiscellaneous());
+
+    edgeStat.setAbilityPointsUsed(-5);
+    edgeStat.setMiscellaneous(-5);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, Integer.MIN_VALUE);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MIN_VALUE);
+    assertEquals(Integer.MIN_VALUE, edgeStat.getAbilityPointsUsed());
+    assertEquals(Integer.MIN_VALUE, edgeStat.getMiscellaneous());
   }
 
   @Test
@@ -180,11 +227,39 @@ class TestDefaultCharacterSheetGoodCases {
   @Test
   void rollDiceTest() {
     logger.info("rollDiceTest() is called");
+    DiceType[] diceTypes = {DiceType.D2, DiceType.D4, DiceType.D6, DiceType.D8,
+        DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
+    for (DiceType diceType : diceTypes) {
+      characterSheet.getDiceDescriptor().setDiceType(diceType);
+      for (double i = 0; i < calculateAvarageNumberOfRolls(
+              sizeFromDice(characterSheet.getDiceDescriptor().getDiceType())); i++) {
+        characterSheet.rollDice();
+        assertTrue(characterSheet.getDiceDescriptor().getResult() > 0
+                && characterSheet.getDiceDescriptor().getResult() <= sizeFromDice(
+                        characterSheet.getDiceDescriptor().getDiceType()));
+      }
+    }
   }
 
   @Test
   void changeDiceTypeTest() {
     logger.info("changeDiceTypeTest() is called");
+    DiceType[] diceTypes = {DiceType.D2, DiceType.D4, DiceType.D6, DiceType.D8,
+        DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
+    for (DiceType diceTyp : diceTypes) {
+      characterSheet.getDiceDescriptor().setDiceType(diceTyp);
+      switch (characterSheet.getDice().getType()) {
+        case D2 -> assertEquals(DiceType.D2, characterSheet.getDiceDescriptor().getDiceType());
+        case D4 -> assertEquals(DiceType.D4, characterSheet.getDiceDescriptor().getDiceType());
+        case D6 -> assertEquals(DiceType.D6, characterSheet.getDiceDescriptor().getDiceType());
+        case D8 -> assertEquals(DiceType.D8, characterSheet.getDiceDescriptor().getDiceType());
+        case D10 -> assertEquals(DiceType.D10, characterSheet.getDiceDescriptor().getDiceType());
+        case D12 -> assertEquals(DiceType.D12, characterSheet.getDiceDescriptor().getDiceType());
+        case D20 -> assertEquals(DiceType.D20, characterSheet.getDiceDescriptor().getDiceType());
+        case D100 -> assertEquals(DiceType.D100, characterSheet.getDiceDescriptor().getDiceType());
+        default -> { }
+      }
+    }
   }
 
   @Test
@@ -195,5 +270,45 @@ class TestDefaultCharacterSheetGoodCases {
   @Test
   void toStringTest() {
     logger.info("toStringTest() is called");
+
+  }
+
+  public static double calculateAvarageNumberOfRolls(int size) {
+    double result = 0;
+    for (double i = size; i > 0; i--) {
+      result += (double) size / i;
+    }
+    return Math.ceil(result);
+  }
+
+  public static int sizeFromDice(DiceType diceType) {
+    switch (diceType) {
+      case D2 -> {
+        return 2;
+      }
+      case D4 -> {
+        return 4;
+      }
+      case D6 -> {
+        return 6;
+      }
+      case D8 -> {
+        return 8;
+      }
+      case D10 -> {
+        return 10;
+      }
+      case D12 -> {
+        return 12;
+      }
+      case D20 -> {
+        return 20;
+      }
+      case D100 -> {
+        return 100;
+      }
+      default -> { }
+    }
+    return -1;
   }
 }
