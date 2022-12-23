@@ -89,88 +89,74 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public void incrementStat(StatType statType, OriginType origin) throws IllegalArgumentException {
-    for (Stat stat : getStats()) {
-      if (stat.getType() == statType) {
-        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
-          throw new IllegalArgumentException("Cannot change level of Stat of this Type");
-        }
-        if (origin == OriginType.LEVEL_POINT) {
-          stat.addAbilityPoint();
-        } else {
-          stat.setMiscellaneous(stat.getMiscellaneous() + 1);
-        }
-      }
+    Stat stat = getStatOfType(statType);
+    if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+      throw new IllegalArgumentException("Cannot change level of Stat of this Type");
+    }
+    if (origin == OriginType.LEVEL_POINT) {
+      stat.addAbilityPoint();
+    } else {
+      stat.setMiscellaneous(stat.getMiscellaneous() + 1);
     }
   }
 
   @Override
   public void incrementStat(StatType statType, OriginType origin, int amount)
           throws IllegalArgumentException {
-    for (Stat stat : getStats()) {
-      if (stat.getType() == statType) {
-        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
-          throw new IllegalArgumentException("Cannot change level of Stat of this Type");
-        }
-        if (origin == OriginType.LEVEL_POINT) {
-          stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() + amount);
-        } else {
-          stat.setMiscellaneous(stat.getMiscellaneous() + amount);
-        }
-      }
+    Stat stat = getStatOfType(statType);
+    if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+      throw new IllegalArgumentException("Cannot change level of Stat of this Type");
+    }
+    if (origin == OriginType.LEVEL_POINT) {
+      stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() + amount);
+    } else {
+      stat.setMiscellaneous(stat.getMiscellaneous() + amount);
     }
   }
 
   @Override
   public void decrementStat(StatType statType, OriginType origin) throws IllegalArgumentException {
-    for (Stat stat : getStats()) {
-      if (stat.getType() == statType) {
-        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
-          throw new IllegalArgumentException("Cannot change level of Stat of this Type");
-        }
-        if (origin == OriginType.LEVEL_POINT) {
-          stat.removeAbilityPoint();
-        } else {
-          stat.setMiscellaneous(stat.getMiscellaneous() - 1);
-        }
-      }
+    Stat stat = getStatOfType(statType);
+    if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+      throw new IllegalArgumentException("Cannot change level of Stat of this Type");
+    }
+    if (origin == OriginType.LEVEL_POINT) {
+      stat.removeAbilityPoint();
+    } else {
+      stat.setMiscellaneous(stat.getMiscellaneous() - 1);
     }
   }
 
   @Override
   public void decrementStat(StatType statType, OriginType origin, int amount)
           throws IllegalArgumentException {
-    for (Stat stat : getStats()) {
-      if (stat.getType() == statType) {
-        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
-          throw new IllegalArgumentException("Cannot change level of Stat of this Type");
-        }
-        if (origin == OriginType.LEVEL_POINT) {
-          stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() - amount);
-        } else {
-          stat.setMiscellaneous(stat.getMiscellaneous() - amount);
-        }
-      }
+    Stat stat = getStatOfType(statType);
+    if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+      throw new IllegalArgumentException("Cannot change level of Stat of this Type");
+    }
+    if (origin == OriginType.LEVEL_POINT) {
+      stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() - amount);
+    } else {
+      stat.setMiscellaneous(stat.getMiscellaneous() - amount);
     }
   }
 
   @Override
   public int getStatDisplayValue(StatType statType) throws IllegalArgumentException {
-    for (Stat stat : getStats()) {
-      if (stat.getType() == statType) {
-        return stat.getTotalValue();
-      }
+    Stat stat = getStatOfType(statType);
+    if (stat == null) {
+      throw new IllegalArgumentException("No Stat of this type is found");
     }
-    throw new IllegalArgumentException("No Stat of this type is found");
+    return stat.getTotalValue();
   }
 
   @Override
   public StatDescriptor getStatDescriptor(StatType statType) {
-    for (Stat stat : getStats()) {
-      if (stat.getType() == statType) {
-        return stat.toStatDescriptor();
-      }
+    Stat stat = getStatOfType(statType);
+    if (stat == null) {
+      return null;
     }
-    return null;
+    return stat.toStatDescriptor();
   }
 
   @Override
@@ -206,6 +192,21 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public DiceDescriptor getDiceDescriptor() {
     return new DiceDescriptor(getDice().getType(), getDice().getValue());
+  }
+
+  /**
+   * Returns the Stat of the given type.
+   *
+   * @param statType The specific StatType
+   * @return The Stat of given StatType
+   */
+  public Stat getStatOfType(StatType statType) {
+    for (Stat stat : getStats()) {
+      if (stat.getType() == statType) {
+        return stat;
+      }
+    }
+    return null;
   }
 
   public CharacterSheetListener getListener() {
