@@ -20,8 +20,8 @@ import java.util.Map;
 public class CmpBattleshipService implements BattleshipService {
     static GameState currentGameState = GameState.PREGAME;
     static int gameVolume;
-    private final Player player;
-    private final Computer computer;
+    private final Player player = new Player();
+    private final Computer computer = new Computer();;
     private ArrayList<BattleshipListener> listeners;
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(CmpBattleshipService.class);
@@ -30,10 +30,18 @@ public class CmpBattleshipService implements BattleshipService {
     public CmpBattleshipService(){
         listeners = new ArrayList<>();
         owner2PlayerMap = new HashMap<>();
-        player = new Player();
-        computer = new Computer();
+//        player = new Player();
+//        computer = new Computer();
         owner2PlayerMap.put(Owner.PLAYER, player);
         owner2PlayerMap.put(Owner.COMPUTER, computer);
+    }
+
+    public Player getPlayer(){
+        return player;
+    }
+
+    public Computer getComputer(){
+        return computer;
     }
 
     public void setCurrentGameState(GameState state){

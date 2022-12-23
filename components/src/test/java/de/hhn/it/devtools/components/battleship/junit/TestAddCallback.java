@@ -2,15 +2,16 @@ package de.hhn.it.devtools.components.battleship.junit;
 
 import de.hhn.it.devtools.apis.battleship.*;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.components.battleship.provider.Computer;
-import de.hhn.it.devtools.apis.battleship.Player;
 import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
+import de.hhn.it.devtools.components.battleship.provider.Computer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,16 +20,17 @@ public class TestAddCallback {
 
     CmpBattleshipService bsService = new CmpBattleshipService();
     BattleshipService bs = bsService;
-    Player player = new Player();
-    ShipField playerField = new ShipField(9, player);
-    Field pField = new Field(9, player);
+    Player player = bsService.getPlayer();
+    Field playerField = new Field(9, player);
 
-    Computer computer = new Computer();
-    ShipField computerField = new ShipField(9, computer);
-    Field cField = new Field(9, computer);
+    Computer computer = bsService.getComputer();
+    Field computerField = new Field(9, computer);
+
+    private Map<Player, Owner> player2OwnerMap;
 
     @BeforeEach
     void setup() {
+        player2OwnerMap = new HashMap<>();
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
                 playerField.setPanelMarker(i, j, PanelState.NOSHIP);
@@ -37,6 +39,10 @@ public class TestAddCallback {
         }
         player.setShipfield(playerField);
         computer.setShipfield(computerField);
+        player.setAttackField(playerField);
+        computer.setAttackField(computerField);
+        player2OwnerMap.put(player, Owner.PLAYER);
+        player2OwnerMap.put(computer, Owner.COMPUTER);
     }
 
     // Bad Cases
@@ -81,7 +87,7 @@ public class TestAddCallback {
         BattleshipListenerInner listener = new BattleshipListenerInner();
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        listener.outputPlacingPossible(ship, bs.isPlacementPossible(player, ship, 3, 2, false));
+        listener.outputPlacingPossible(ship, bs.isPlacementPossible(player2OwnerMap.get(player), ship, 3, 2, false));
         bs.addCallBack(listener);
         assertEquals(1, listener.shipsPossible.size());
     }
@@ -93,7 +99,7 @@ public class TestAddCallback {
         BattleshipListenerInner listener = new BattleshipListenerInner();
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        listener.outputPlacingPossible(ship, bs.isPlacementPossible(player, ship, 6, 2, false));
+        listener.outputPlacingPossible(ship, bs.isPlacementPossible(player2OwnerMap.get(player), ship, 6, 2, false));
         bs.addCallBack(listener);
         assertEquals(1, listener.shipsNotPossible.size());
     }
@@ -106,7 +112,7 @@ public class TestAddCallback {
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
-        bs.placeShip(player, ship, 8, 0);
+        bs.placeShip(Owner.PLAYER, ship, 8, 0);
         listener.outputShipPlaced(ship);
         bs.addCallBack(listener);
         assertEquals(1, listener.shipsPlaced.size());
@@ -128,14 +134,36 @@ public class TestAddCallback {
 
     @Test
     @DisplayName("Test addCallback for bombed successfully")
-    public void addCallbackForSuccessfullyBombed() {
-        // TODO ERST BOMB PANEL DURCHGEHEN UND PRÜFEN DANN HIER WEITER
+    public void addCallbackForSuccessfullyBombed() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException, IllegalParameterException {
+        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
+        BattleshipListenerInner listener = new BattleshipListenerInner();
+        Position pos = new Position(null, null);
+        Ship ship = new Ship(ShipType.BATTLESHIP, pos);
+        ship.setIsVertical(false);
+        bs.placeShip(player2OwnerMap.get(computer), ship, 0, 8);
+
+        bsService.setCurrentGameState(GameState.FIRINGSHOTS);
+        Position bombing = new Position(2, 8);
+        listener.outputBombingSuccessful(bombing, bs.bombPanel(player2OwnerMap.get(player), player2OwnerMap.get(computer), 2, 8));
+        bs.addCallBack(listener);
+        assertEquals(1, listener.bombedSuccesful.size());
     }
 
     @Test
     @DisplayName("Test addCallback for bombed unsuccessfully")
-    public void addCallbackForUnsuccessfullyBombed() {
-        // TODO ERST BOMB PANEL DURCHGEHEN UND PRÜFEN DANN HIER WEITER
+    public void addCallbackForUnsuccessfullyBombed() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException, IllegalParameterException {
+        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
+        BattleshipListenerInner listener = new BattleshipListenerInner();
+        Position pos = new Position(null, null);
+        Ship ship = new Ship(ShipType.BATTLESHIP, pos);
+        ship.setIsVertical(false);
+        bs.placeShip(player2OwnerMap.get(computer), ship, 0, 8);
+
+        bsService.setCurrentGameState(GameState.FIRINGSHOTS);
+        Position bombing = new Position(4, 8);
+        listener.outputBombingSuccessful(bombing, bs.bombPanel(player2OwnerMap.get(player), player2OwnerMap.get(computer), 4, 8));
+        bs.addCallBack(listener);
+        assertEquals(1, listener.bombedUnSuccesful.size());
     }
 
     @Test
@@ -160,9 +188,7 @@ public class TestAddCallback {
         );
     }
 
-
 }
-
 
 // inner class as a BattleshipListener
 class BattleshipListenerInner implements BattleshipListener {
