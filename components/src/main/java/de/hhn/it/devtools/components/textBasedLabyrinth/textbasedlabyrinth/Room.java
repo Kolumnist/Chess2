@@ -16,6 +16,7 @@ public class Room {
 
 
   protected HashMap<Integer, Item> items;
+  private HashMap<Direction, Room> roomMap;
   protected int roomId;
 
   private String description;
@@ -72,7 +73,11 @@ public class Room {
 
   }
 
-  public Room getRoom(Direction direction){
+  public Room getRoom(Direction direction) throws RoomFailedException {
+    if(!roomMap.containsKey(direction)) {
+      throw new RoomFailedException("No Room in this direction" + direction);
+    }
+
     Room room = null;
     if(direction.equals(Direction.SOUTH)){
       room = toTheSouth;
