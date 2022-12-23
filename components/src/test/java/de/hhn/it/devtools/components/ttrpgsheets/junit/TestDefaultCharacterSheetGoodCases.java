@@ -140,12 +140,14 @@ class TestDefaultCharacterSheetGoodCases {
             assertEquals(1, stat.getAbilityPointsUsed());
           }
         } else {
+          System.out.println(stat.toString());
           switch (statType) {
             case HEALTH -> assertEquals(-1, stat.getMiscellaneous());
             case STRENGTH -> assertEquals(7, stat.getMiscellaneous());
             default -> assertEquals(1, stat.getMiscellaneous());
           }
         }
+        characterSheet.decrementStat(statType, origin);
       }
     }
   }
