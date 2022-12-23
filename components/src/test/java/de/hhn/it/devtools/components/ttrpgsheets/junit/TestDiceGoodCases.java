@@ -53,6 +53,7 @@ class TestDiceGoodCases {
         case D12 -> assertEquals(12, dice.getSize());
         case D20 -> assertEquals(20, dice.getSize());
         case D100 -> assertEquals(100, dice.getSize());
+        default -> { }
       }
     }
   }
@@ -71,6 +72,7 @@ class TestDiceGoodCases {
         case 12 -> assertEquals(DiceType.D12, dice.getType());
         case 20 -> assertEquals(DiceType.D20, dice.getType());
         case 100 -> assertEquals(DiceType.D100, dice.getType());
+        default -> { }
       }
     }
   }
@@ -133,6 +135,7 @@ class TestDiceGoodCases {
                 + "\nDice Value: 3", dice.toString());
         case D100 -> assertEquals("Dice Size: 100"
                 + "\nDice Value: 3", dice.toString());
+        default -> { }
       }
     }
   }
