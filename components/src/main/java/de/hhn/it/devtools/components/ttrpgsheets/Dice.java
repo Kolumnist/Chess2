@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.components.ttrpgsheets;
 
+import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.DiceDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.DiceType;
 import java.util.Random;
@@ -127,5 +128,15 @@ public class Dice {
   public String toString() {
     return "Dice Size: " + getSize()
             + "\nDice Value: " + getValue();
+  }
+
+  /**
+   * Converts this Description to a {@link DiceDescriptor}.
+   *
+   * @return the {@link DiceDescriptor} of this description
+   */
+  public DiceDescriptor toDiceDescriptor() {
+    logger.info("toDiceDescriptor : no params");
+    return new DiceDescriptor(this.getType(), this.getSize());
   }
 }
