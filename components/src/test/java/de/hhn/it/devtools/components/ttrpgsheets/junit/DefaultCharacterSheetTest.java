@@ -17,7 +17,7 @@ import de.hhn.it.devtools.components.ttrpgsheets.Stat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TestDefaultCharacterSheetGoodCases {
+class DefaultCharacterSheetTest {
   private static final org.slf4j.Logger logger
           = org.slf4j.LoggerFactory.getLogger(TestStatGoodCases.class);
 
