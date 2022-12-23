@@ -4,7 +4,6 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.wordle.State;
 import de.hhn.it.devtools.apis.wordle.WordlePanelListener;
 import de.hhn.it.devtools.apis.wordle.WordlePanelService;
-import de.hhn.it.devtools.components.wordle.provider.panelstates.PanelState;
 
 import java.util.ArrayList;
 import java.util.List;
