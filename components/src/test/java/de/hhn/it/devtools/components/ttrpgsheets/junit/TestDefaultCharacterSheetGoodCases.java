@@ -127,20 +127,24 @@ class TestDefaultCharacterSheetGoodCases {
     for (StatType statType : StatType.values()) {
       for (OriginType origin : OriginType.values()) {
         StatDescriptor stat = characterSheet.getStatDescriptor(statType);
-        int prevAbilityPoints = stat.getAbilityPointsUsed();
-        int prevMiscellaneous = stat.getMiscellaneous();
-
         if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
           assertThrows(IllegalArgumentException.class,
                   () -> characterSheet.incrementStat(statType, origin));
+          continue;
         }
         characterSheet.incrementStat(statType, origin);
         if (origin == OriginType.LEVEL_POINT) {
-          assertEquals(prevAbilityPoints + 1,
-                  characterSheet.getStatDescriptor(statType).getAbilityPointsUsed());
+          if (statType == StatType.STRENGTH) {
+            assertEquals(3, stat.getAbilityPointsUsed());
+          } else {
+            assertEquals(1, stat.getAbilityPointsUsed());
+          }
         } else {
-          assertEquals(prevMiscellaneous + 1,
-                  characterSheet.getStatDescriptor(statType).getMiscellaneous());
+          switch (statType) {
+            case HEALTH -> assertEquals(-1, stat.getMiscellaneous());
+            case STRENGTH -> assertEquals(7, stat.getMiscellaneous());
+            default -> assertEquals(1, stat.getMiscellaneous());
+          }
         }
       }
     }
