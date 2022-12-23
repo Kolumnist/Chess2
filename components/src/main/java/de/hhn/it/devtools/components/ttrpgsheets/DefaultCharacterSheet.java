@@ -209,7 +209,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public DiceDescriptor getDiceDescriptor() {
     logger.info("getDiceDescriptor : no params");
-    return new DiceDescriptor(getDice().getType(), getDice().getValue());
+    return dice.toDiceDescriptor();
   }
 
   /**
