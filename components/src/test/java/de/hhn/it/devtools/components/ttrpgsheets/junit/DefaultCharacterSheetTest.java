@@ -141,7 +141,6 @@ class DefaultCharacterSheetTest {
             assertEquals(1, stat.getAbilityPointsUsed());
           }
         } else {
-          System.out.println(stat.toString());
           switch (statType) {
             case HEALTH -> assertEquals(-1, stat.getMiscellaneous());
             case STRENGTH -> assertEquals(7, stat.getMiscellaneous());
@@ -149,6 +148,31 @@ class DefaultCharacterSheetTest {
           }
         }
         characterSheet.decrementStat(statType, origin);
+      }
+    }
+    for (StatType statType : StatType.values()) {
+      Stat stat = characterSheet.getStatOfType(statType);
+      for (OriginType origin : OriginType.values()) {
+        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+          assertThrows(IllegalArgumentException.class,
+                  () -> characterSheet.incrementStat(statType, origin, 5));
+          continue;
+        }
+        characterSheet.incrementStat(statType, origin, 5);
+        if (origin == OriginType.LEVEL_POINT) {
+          if (statType == StatType.STRENGTH) {
+            assertEquals(7, stat.getAbilityPointsUsed());
+          } else {
+            assertEquals(5, stat.getAbilityPointsUsed());
+          }
+        } else {
+          switch (statType) {
+            case HEALTH -> assertEquals(3, stat.getMiscellaneous());
+            case STRENGTH -> assertEquals(11, stat.getMiscellaneous());
+            default -> assertEquals(5, stat.getMiscellaneous());
+          }
+        }
+        characterSheet.decrementStat(statType, origin, 5);
       }
     }
   }
