@@ -12,9 +12,9 @@ import org.junit.jupiter.api.Test;
 
 
 
-class TestDiceGoodCases {
+class DiceTest {
   private static final org.slf4j.Logger logger
-          = org.slf4j.LoggerFactory.getLogger(TestDiceGoodCases.class);
+          = org.slf4j.LoggerFactory.getLogger(DiceTest.class);
 
   static Dice dice;
   static int[] sizes = {2, 4, 6, 8, 10, 12, 20, 100};
