@@ -2,6 +2,7 @@ package de.hhn.it.devtools.components.chess2;
 
 import de.hhn.it.devtools.apis.chess2.Board;
 import de.hhn.it.devtools.apis.chess2.Coordinate;
+import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.Piece;
 import de.hhn.it.devtools.components.chess2.pieces.Crow;
 import de.hhn.it.devtools.components.chess2.pieces.Elephant;
@@ -9,6 +10,8 @@ import de.hhn.it.devtools.components.chess2.pieces.Fish;
 import de.hhn.it.devtools.components.chess2.pieces.King;
 import de.hhn.it.devtools.components.chess2.pieces.Monkey;
 import de.hhn.it.devtools.components.chess2.pieces.Queen;
+import java.util.Optional;
+import java.util.Random;
 
 /**
  * The Player class should display a player that has his pieces
@@ -21,6 +24,7 @@ public class Player {
 
   protected char color;
   protected Piece[] myPieces = new Piece[16];
+  protected Board gameBoard;
   protected boolean lostPiece = false;
 
   /**
@@ -32,6 +36,8 @@ public class Player {
   public Player(char color, Board board) { //Could do a string instead of char for name or smth
     this.color = color;
     initializeMyPieces(board);
+    this.gameBoard = board;
+
     for (Piece piece : myPieces) {
       piece.setColor(color);
     }
@@ -72,5 +78,29 @@ public class Player {
 
     myPieces[12] = new Elephant(color, new Coordinate(2, coordOffset + 2));
     myPieces[13] = new Elephant(color, new Coordinate(5, coordOffset + 2));
+  }
+
+  /**
+   * This method puts the King/Queen in a beforehand assigned jail.
+   *
+   * @param jailPiece is the piece that gets put in the jail.
+   * @param jailCoordinate is the coordinate for the jail field.
+   * @return if it worked or didn't work to make sure the piece gets put in jail.
+   */
+  protected boolean setPieceOnJail(Piece jailPiece, Coordinate jailCoordinate) {
+
+    /*TODO: There is still an error because the jailCoordinate could be an old one */
+    if (jailPiece.getClass().equals(King.class)) {
+      gameBoard.getSpecificField(jailCoordinate).setFieldState(FieldState.JAIL_KING);
+      gameBoard.getSpecificField(jailCoordinate).setPiece(Optional.of(jailPiece));
+
+      return true;
+    } else if (jailPiece.getClass().equals(Queen.class)) {
+      gameBoard.getSpecificField(jailCoordinate).setFieldState(FieldState.JAIL_QUEEN);
+      gameBoard.getSpecificField(jailCoordinate).setPiece(Optional.of(jailPiece));
+
+      return true;
+    }
+    return false;
   }
 }

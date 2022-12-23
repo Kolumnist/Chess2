@@ -3,20 +3,23 @@ package de.hhn.it.devtools.components.chess2;
 import de.hhn.it.devtools.apis.chess2.Board;
 import de.hhn.it.devtools.apis.chess2.Chess2Service;
 import de.hhn.it.devtools.apis.chess2.Coordinate;
+import de.hhn.it.devtools.apis.chess2.Field;
 import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.GameState;
 import de.hhn.it.devtools.apis.chess2.Piece;
 import de.hhn.it.devtools.apis.chess2.WinningPlayerState;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.components.chess2.pieces.Elephant;
-import de.hhn.it.devtools.components.chess2.pieces.Fish;
+import de.hhn.it.devtools.components.chess2.pieces.Bear;
+import de.hhn.it.devtools.components.chess2.pieces.King;
+import de.hhn.it.devtools.components.chess2.pieces.Queen;
 import java.util.Optional;
+import java.util.Random;
 
 /**
  * The main Controller class.
  *
  * @author Collin Hoss, Lara Mangi, Michel Jouaux
- * @version 1.1
+ * @version 1.2
  */
 
 public class ChessGame implements Chess2Service {
@@ -27,6 +30,7 @@ public class ChessGame implements Chess2Service {
   private final Player whitePlayer;
   private final Player blackPlayer;
   private Player currentPlayer;
+  private Coordinate bearCoordinate;
 
   protected Board gameBoard;
   protected WinningPlayerState winState;
@@ -49,6 +53,7 @@ public class ChessGame implements Chess2Service {
   /**
    * All Player pieces get "set" on the Board
    * and the fieldStates get set.
+   * The bear piece get "set" on the Board.
    */
   private void initializeBoard() {
     logger.info("initializeBoard");
@@ -72,14 +77,32 @@ public class ChessGame implements Chess2Service {
       gameBoard.getSpecificField(blackPiece.getCoordinate())
           .setFieldState(FieldState.HAS_OTHER_PIECE);
     }
-    /*TODO: Place bear on random field*/
+    /* Set Optional Piece and FieldState of the Bear */
+    gameBoard.getSpecificField(bearCoordinate)
+        .setPiece(Optional.of(new Bear('g', bearCoordinate)));
+    gameBoard.getSpecificField(bearCoordinate)
+        .setFieldState(FieldState.HAS_BEAR);
+  }
+
+  private void setUpNewRound() {
+    for (Piece piece : whitePlayer.myPieces) {
+
+    }
+    for (Piece piece : blackPlayer.myPieces) {
+
+    }
+
   }
 
   @Override
   public Board startNewGame() {
     logger.info("startNewGame");
 
-    /* TODO: Set Pieces on Fields*/
+    /* "Random" coordinate for the bear */
+    int x = new Random().nextInt(1, 7);
+    int y = new Random().nextInt(3, 5);
+    bearCoordinate = new Coordinate(x, y);
+
     initializeBoard();
 
     gameState = GameState.RUNNING;
@@ -94,10 +117,9 @@ public class ChessGame implements Chess2Service {
   public void endGame() {
     logger.info("endGame");
 
-    gameBoard = null;
-    currentPlayer = null;
+    currentPlayer = whitePlayer;
     gameState = null;
-    winState = null;
+    winState = WinningPlayerState.NO_WINNER;
   }
 
   @Override
@@ -131,28 +153,60 @@ public class ChessGame implements Chess2Service {
     logger.info("getCurrentFields");
 
     Coordinate[] currentCoordinates = new Coordinate[currentPlayer.myPieces.length];
-
-    /* TODO: Ask team -> can the Player have less pieces when some of em are defeated? */
     for (int i = 0; i < currentPlayer.myPieces.length; i++) {
       currentCoordinates[i] = currentPlayer.myPieces[i].getCoordinate();
     }
-
+    //This returns all pieces also defeated once that have no coordinate on the field but it can
+    //still get checked by the UI if it is even a possible Button!
     return currentCoordinates;
   }
 
-  /* TODO: Next two methods with Michel */
   @Override
   public Coordinate[] getPossibleMoves(Coordinate selectedPieceCoordinate)
       throws IllegalParameterException {
     logger.info("getPossibleMoves", selectedPieceCoordinate);
 
+    Field field = gameBoard.getSpecificField(selectedPieceCoordinate);
+    gameBoard.getSpecificField(selectedPieceCoordinate).setFieldState(FieldState.SELECTED);
+
+    if (field.getFieldState() == FieldState.HAS_CURRENT_PIECE
+        || field.getFieldState() == FieldState.HAS_BEAR) {
+      return field.getPiece().getPossibleMove();
+    }
+
     return new Coordinate[0];
   }
 
+  /* TODO: Next method with Michel */
   @Override
   public void moveSelectedPiece(Coordinate selectedCoordinate, Coordinate newCoordinate)
       throws IllegalParameterException {
     logger.info("moveSelectedPiece", selectedCoordinate, newCoordinate);
+
+    /* TODO: Check if there is a Piece on the field two fields */
+
+    Piece currentPiece = gameBoard.getSpecificField(selectedCoordinate).getPiece();
+    Piece otherPiece = gameBoard.getSpecificField(newCoordinate).getPiece();
+
+    if (otherPiece.getClass().equals(King.class) || otherPiece.getClass().equals(Queen.class)) {
+
+      /*TODO: Doc some stuff here it is complicated*/
+      int jailOffset = new Random().nextInt(0, 2);
+      if (currentPlayer == whitePlayer) {
+        Coordinate jailCoordinate = new Coordinate(3 + jailOffset, 8 + jailOffset);
+        whitePlayer.setPieceOnJail(otherPiece, jailCoordinate);
+      } else if (currentPlayer == blackPlayer) {
+        Coordinate jailCoordinate = new Coordinate(4 - jailOffset, 8 + jailOffset);
+        blackPlayer.setPieceOnJail(otherPiece, jailCoordinate);
+      }
+    }
+
+    gameBoard.getSpecificField(selectedCoordinate).setPiece(Optional.empty());
+    gameBoard.getSpecificField(newCoordinate).setPiece(Optional.ofNullable(currentPiece));
+    gameBoard.getSpecificField(selectedCoordinate).setFieldState(FieldState.FREE_FIELD);
+    gameBoard.getSpecificField(newCoordinate).setFieldState(FieldState.HAS_CURRENT_PIECE);
+
+    setUpNewRound();
 
   }
 
