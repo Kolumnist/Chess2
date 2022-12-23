@@ -20,7 +20,7 @@ public class WordleServiceUsageDemo {
 
     demo.startGame(); // Player starts a new game
 
-    demo.selectWordle(); // System selects a Wordle for the user to guess
+    // Static component selects a solution for the user to guess
 
     WordleGuessService solution = null;
     solution.setLetterAtIndex(0, 'G'); // repeated until grace is entered
@@ -44,7 +44,7 @@ public class WordleServiceUsageDemo {
 
     demo.startAnotherGame();
 
-    demo.selectWordle(); // a new Wordle is selected for the user to guess
+    // Static component selects a new solution for the user to guess
 
     WordleGuessService secondSolution = null;
     secondSolution.setLetterAtIndex(0, 'F'); // repeated until Fairy is entered
