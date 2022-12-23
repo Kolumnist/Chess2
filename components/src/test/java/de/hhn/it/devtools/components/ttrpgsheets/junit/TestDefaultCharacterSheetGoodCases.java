@@ -13,6 +13,7 @@ import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import de.hhn.it.devtools.components.ttrpgsheets.DefaultCharacterSheet;
+import de.hhn.it.devtools.components.ttrpgsheets.Stat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -125,8 +126,8 @@ class TestDefaultCharacterSheetGoodCases {
   void incrementStatTest() {
     logger.info("incrementStatTest() is called");
     for (StatType statType : StatType.values()) {
+      Stat stat = characterSheet.getStatOfType(statType);
       for (OriginType origin : OriginType.values()) {
-        StatDescriptor stat = characterSheet.getStatDescriptor(statType);
         if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
           assertThrows(IllegalArgumentException.class,
                   () -> characterSheet.incrementStat(statType, origin));
