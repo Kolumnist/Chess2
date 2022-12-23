@@ -20,7 +20,7 @@ class TestDefaultCharacterSheetGoodCases {
   private static final org.slf4j.Logger logger
           = org.slf4j.LoggerFactory.getLogger(TestStatGoodCases.class);
 
-  DefaultCharacterSheet characterSheet = null; //TODO - Add Constructor
+  DefaultCharacterSheet characterSheet = null;
 
   @BeforeEach
   void setupObjects() {
