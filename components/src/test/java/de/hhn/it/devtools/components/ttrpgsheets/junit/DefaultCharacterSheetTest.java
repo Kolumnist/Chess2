@@ -227,13 +227,16 @@ class DefaultCharacterSheetTest {
   @Test
   void rollDiceTest() {
     logger.info("rollDiceTest() is called");
-    int[] sizes = {2, 4, 6, 8, 10, 12, 20, 100};
-    for (int size : sizes) {
-      characterSheet.getDice().setSize(size);
-      for (double i = 0; i < calculateAvarageNumberOfRolls(characterSheet.getDice().getSize()); i++) {
+    DiceType[] diceTypes = {DiceType.D2, DiceType.D4, DiceType.D6, DiceType.D8,
+        DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
+    for (DiceType diceType : diceTypes) {
+      characterSheet.getDiceDescriptor().setDiceType(diceType);
+      for (double i = 0; i < calculateAvarageNumberOfRolls(
+              sizeFromDice(characterSheet.getDiceDescriptor().getDiceType())); i++) {
         characterSheet.rollDice();
-        assertTrue(characterSheet.getDice().getValue() > 0
-                && characterSheet.getDice().getValue() <= characterSheet.getDice().getSize());
+        assertTrue(characterSheet.getDiceDescriptor().getResult() > 0
+                && characterSheet.getDiceDescriptor().getResult() <= sizeFromDice(
+                        characterSheet.getDiceDescriptor().getDiceType()));
       }
     }
   }
@@ -244,16 +247,16 @@ class DefaultCharacterSheetTest {
     DiceType[] diceTypes = {DiceType.D2, DiceType.D4, DiceType.D6, DiceType.D8,
         DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
     for (DiceType diceTyp : diceTypes) {
-      characterSheet.changeDiceType(diceTyp);
+      characterSheet.getDiceDescriptor().setDiceType(diceTyp);
       switch (characterSheet.getDice().getType()) {
-        case D2 -> assertEquals(2, characterSheet.getDice().getSize());
-        case D4 -> assertEquals(4, characterSheet.getDice().getSize());
-        case D6 -> assertEquals(6, characterSheet.getDice().getSize());
-        case D8 -> assertEquals(8, characterSheet.getDice().getSize());
-        case D10 -> assertEquals(10, characterSheet.getDice().getSize());
-        case D12 -> assertEquals(12, characterSheet.getDice().getSize());
-        case D20 -> assertEquals(20, characterSheet.getDice().getSize());
-        case D100 -> assertEquals(100, characterSheet.getDice().getSize());
+        case D2 -> assertEquals(DiceType.D2, characterSheet.getDiceDescriptor().getDiceType());
+        case D4 -> assertEquals(DiceType.D4, characterSheet.getDiceDescriptor().getDiceType());
+        case D6 -> assertEquals(DiceType.D6, characterSheet.getDiceDescriptor().getDiceType());
+        case D8 -> assertEquals(DiceType.D8, characterSheet.getDiceDescriptor().getDiceType());
+        case D10 -> assertEquals(DiceType.D10, characterSheet.getDiceDescriptor().getDiceType());
+        case D12 -> assertEquals(DiceType.D12, characterSheet.getDiceDescriptor().getDiceType());
+        case D20 -> assertEquals(DiceType.D20, characterSheet.getDiceDescriptor().getDiceType());
+        case D100 -> assertEquals(DiceType.D100, characterSheet.getDiceDescriptor().getDiceType());
         default -> { }
       }
     }
@@ -278,4 +281,34 @@ class DefaultCharacterSheetTest {
     return Math.ceil(result);
   }
 
+  public static int sizeFromDice(DiceType diceType) {
+    switch (diceType) {
+      case D2 -> {
+        return 2;
+      }
+      case D4 -> {
+        return 4;
+      }
+      case D6 -> {
+        return 6;
+      }
+      case D8 -> {
+        return 8;
+      }
+      case D10 -> {
+        return 10;
+      }
+      case D12 -> {
+        return 12;
+      }
+      case D20 -> {
+        return 20;
+      }
+      case D100 -> {
+        return 100;
+      }
+      default -> { }
+    }
+    return -1;
+  }
 }
