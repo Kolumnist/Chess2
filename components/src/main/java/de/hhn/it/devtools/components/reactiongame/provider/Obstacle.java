@@ -1,5 +1,8 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
+/**
+ * Obstacle class.
+ */
 public class Obstacle {
   private final int x1;
   private final int x2;
@@ -24,6 +27,7 @@ public class Obstacle {
     this.y2 = y2;
     this.id = id;
   }
+
   public int getX1() {
     return x1;
   }
@@ -35,6 +39,7 @@ public class Obstacle {
   public int getY1() {
     return y1;
   }
+
   public int getY2() {
     return y2;
   }
@@ -45,11 +50,15 @@ public class Obstacle {
 
   @Override
   public String toString() {
-    return "Obstacle{" +
-        "Point 1: (" + x1 +
-        "|" + y1 +
-        "), Point 2: (" + x2 +
-        "|" + y2 +
-        ")";
+    return "Obstacle{"
+        + "Point 1: ("
+        + x1
+        + "|"
+        + y1
+        + "), Point 2: ("
+        + x2
+        + "|"
+        + y2
+        + ")";
   }
 }

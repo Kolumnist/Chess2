@@ -7,6 +7,9 @@ import de.hhn.it.devtools.apis.reactiongame.ReactiongameService;
 import java.util.IllegalFormatException;
 import java.util.SortedMap;
 
+/**
+ * Realisation of ReactionGameService.
+ */
 public class CmpReactionGameService implements ReactiongameService {
 
   @Override

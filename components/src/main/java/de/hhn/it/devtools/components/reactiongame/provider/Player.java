@@ -1,5 +1,8 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
+/**
+ * Player class holds the information about the player.
+ */
 public class Player {
 
   private int currentLife;

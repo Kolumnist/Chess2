@@ -3,7 +3,10 @@ package de.hhn.it.devtools.components.reactiongame.provider;
 import de.hhn.it.devtools.apis.reactiongame.AimTargetDescriptor;
 import de.hhn.it.devtools.apis.reactiongame.ObstacleDescriptor;
 
-public class Level {
+/**
+ * GameField class which holds player, obstacles and aim targets.
+ */
+public class GameField {
 
   /**
    * Adds an obstacle to the ui.
