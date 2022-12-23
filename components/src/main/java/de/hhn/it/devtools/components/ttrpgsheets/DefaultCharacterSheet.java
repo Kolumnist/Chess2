@@ -94,9 +94,13 @@ public class DefaultCharacterSheet implements CharacterSheet {
       throw new IllegalArgumentException("Cannot change level of Stat of this Type");
     }
     if (origin == OriginType.LEVEL_POINT) {
-      stat.addAbilityPoint();
+      if (stat.getAbilityPointsUsed() < Integer.MAX_VALUE) {
+        stat.addAbilityPoint();
+      }
     } else {
-      stat.setMiscellaneous(stat.getMiscellaneous() + 1);
+      if (stat.getMiscellaneous() < Integer.MAX_VALUE) {
+        stat.setMiscellaneous(stat.getMiscellaneous() + 1);
+      }
     }
   }
 
@@ -107,10 +111,25 @@ public class DefaultCharacterSheet implements CharacterSheet {
     if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
       throw new IllegalArgumentException("Cannot change level of Stat of this Type");
     }
+    if (amount < 0) {
+      if (amount == Integer.MIN_VALUE) {
+        decrementStat(statType, origin, Integer.MAX_VALUE);
+        return;
+      }
+      decrementStat(statType, origin, Math.abs(amount));
+    }
     if (origin == OriginType.LEVEL_POINT) {
-      stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() + amount);
+      if (stat.getAbilityPointsUsed() + amount > stat.getAbilityPointsUsed()) {
+        stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() + amount);
+      } else {
+        stat.setAbilityPointsUsed(Integer.MAX_VALUE);
+      }
     } else {
-      stat.setMiscellaneous(stat.getMiscellaneous() + amount);
+      if (stat.getMiscellaneous() + amount > stat.getMiscellaneous()) {
+        stat.setMiscellaneous(stat.getMiscellaneous() + amount);
+      } else {
+        stat.setMiscellaneous(Integer.MAX_VALUE);
+      }
     }
   }
 
@@ -121,9 +140,13 @@ public class DefaultCharacterSheet implements CharacterSheet {
       throw new IllegalArgumentException("Cannot change level of Stat of this Type");
     }
     if (origin == OriginType.LEVEL_POINT) {
-      stat.removeAbilityPoint();
+      if (stat.getAbilityPointsUsed() > Integer.MIN_VALUE) {
+        stat.removeAbilityPoint();
+      }
     } else {
-      stat.setMiscellaneous(stat.getMiscellaneous() - 1);
+      if (stat.getMiscellaneous() > Integer.MIN_VALUE) {
+        stat.setMiscellaneous(stat.getMiscellaneous() - 1);
+      }
     }
   }
 
@@ -134,10 +157,25 @@ public class DefaultCharacterSheet implements CharacterSheet {
     if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
       throw new IllegalArgumentException("Cannot change level of Stat of this Type");
     }
+    if (amount < 0) {
+      if (amount == Integer.MIN_VALUE) {
+        incrementStat(statType, origin, Integer.MAX_VALUE);
+        return;
+      }
+      incrementStat(statType, origin, Math.abs(amount));
+    }
     if (origin == OriginType.LEVEL_POINT) {
-      stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() - amount);
+      if (stat.getAbilityPointsUsed() - amount < stat.getAbilityPointsUsed()) {
+        stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() - amount);
+      } else {
+        stat.setAbilityPointsUsed(Integer.MIN_VALUE);
+      }
     } else {
-      stat.setMiscellaneous(stat.getMiscellaneous() - amount);
+      if (stat.getMiscellaneous() - amount < stat.getMiscellaneous()) {
+        stat.setMiscellaneous(stat.getMiscellaneous() - amount);
+      } else {
+        stat.setMiscellaneous(Integer.MIN_VALUE);
+      }
     }
   }
 
