@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test class for {@link Description}.
  */
-@DisplayName("Test the description.")
+@DisplayName("Test the description")
 public class DescriptionTest {
 
   static Description ageDescription;
@@ -42,19 +42,19 @@ public class DescriptionTest {
   }
 
   @Test
-  @DisplayName("Get the type of the description.")
+  @DisplayName("Get the type of the description")
   void getType() {
     assertEquals(DescriptionType.AGE, ageDescription.getType());
   }
 
   @Test
-  @DisplayName("Get the description.")
+  @DisplayName("Get the description")
   void getDescription() {
     assertEquals("35", ageDescription.getDescription());
   }
 
   @Test
-  @DisplayName("Set the description.")
+  @DisplayName("Set the description")
   void setDescription() {
     ageDescription.setDescription("36");
     assertEquals("36", ageDescription.getDescription());

@@ -11,11 +11,15 @@ import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import java.util.Arrays;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The default implementation of a Character Sheet.
  */
 public class DefaultCharacterSheet implements CharacterSheet {
+
+  private static final Logger logger = LoggerFactory.getLogger(DefaultCharacterSheet.class);
   private CharacterSheetListener listener;
   private Description[] descriptions;
   private Stat[] stats;
@@ -29,6 +33,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
    */
   public DefaultCharacterSheet(CharacterSheetListener listener,
                                CharacterDescriptor characterDescriptor) {
+    logger.info("Constructor : listener = {}, characterDescriptor = {}", listener,
+            characterDescriptor);
     addCallback(listener);
     unwrapCharacter(characterDescriptor);
   }
@@ -41,6 +47,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
    */
   private Description[] convertDescDescriptorsToDescriptions(
           DescriptionDescriptor[] descriptionDescriptors) {
+    logger.info("convertDescDescriptorsToDescriptions : descriptionDescriptors = {}",
+            Arrays.toString(descriptionDescriptors));
     Description[] descriptions = new Description[descriptionDescriptors.length];
     for (int i = 0; i < descriptions.length; i++) {
       descriptions[i] = new Description(descriptionDescriptors[i]);
@@ -55,6 +63,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
    * @return The converted Stats
    */
   private Stat[] convertStatDescriptorsToStats(StatDescriptor[] statDescriptors) {
+    logger.info("convertStatDescriptorsToStats : statDescriptors = {}",
+            Arrays.toString(statDescriptors));
     Stat[] stats = new Stat[statDescriptors.length];
     for (int i = 0; i < stats.length; i++) {
       stats[i] = new Stat(statDescriptors[i]);
@@ -64,11 +74,13 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public void addCallback(CharacterSheetListener listener) throws IllegalArgumentException {
+    logger.info("addCallback : listener = {}", listener);
     setListener(listener);
   }
 
   @Override
   public void unwrapCharacter(CharacterDescriptor characterDescriptor) {
+    logger.info("unwrapCharacter : characterDescriptor = {}", characterDescriptor);
     setDescriptions(convertDescDescriptorsToDescriptions(characterDescriptor.getDescriptions()));
     setStats(convertStatDescriptorsToStats(characterDescriptor.getStats()));
     setDice(new Dice(characterDescriptor.getDice()));
@@ -76,6 +88,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public CharacterDescriptor wrapCharacter() {
+    logger.info("wrapCharacter : no params");
     DescriptionDescriptor[] descDescriptors = new DescriptionDescriptor[getDescriptions().length];
     for (int i = 0; i < DescriptionType.values().length; i++) {
       descDescriptors[i] = getDescriptionDescriptor(DescriptionType.values()[i]);
@@ -200,6 +213,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public void changeDescription(DescriptionType descriptionType, String text)
           throws IllegalArgumentException {
+    logger.info("changeDescription : descriptionType = {}, text = {}", descriptionType, text);
     for (Description description : getDescriptions()) {
       if (description.getType() == descriptionType) {
         description.setDescription(text);
@@ -209,9 +223,10 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public DescriptionDescriptor getDescriptionDescriptor(DescriptionType descriptionType) {
+    logger.info("getDescriptionDescriptor : descriptionType = {}", descriptionType);
     for (Description description : getDescriptions()) {
       if (description.getType() == descriptionType) {
-        return new DescriptionDescriptor(description.getType(), description.getDescription());
+        return description.toDescriptionDescriptor();
       }
     }
     return null;
@@ -219,17 +234,20 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public int rollDice() throws NullPointerException {
+    logger.info("rollDice : no params");
     return getDice().nextRoll();
   }
 
   @Override
   public void changeDiceType(DiceType dice) throws IllegalArgumentException {
+    logger.info("changeDiceType : dice = {}", dice);
     getDice().changeSize(dice);
   }
 
   @Override
   public DiceDescriptor getDiceDescriptor() {
-    return new DiceDescriptor(getDice().getType(), getDice().getValue());
+    logger.info("getDiceDescriptor : no params");
+    return dice.toDiceDescriptor();
   }
 
   /**
