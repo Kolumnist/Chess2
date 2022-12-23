@@ -1,7 +1,6 @@
 package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.CharacterDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.CharacterSheetListener;
@@ -13,6 +12,7 @@ import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import de.hhn.it.devtools.components.ttrpgsheets.DefaultCharacterSheet;
+import de.hhn.it.devtools.components.ttrpgsheets.Dice;
 import de.hhn.it.devtools.components.ttrpgsheets.Stat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +22,7 @@ class DefaultCharacterSheetTest {
           = org.slf4j.LoggerFactory.getLogger(DefaultCharacterSheetTest.class);
 
   DefaultCharacterSheet characterSheet = null;
+
 
   @BeforeEach
   void setupObjects() {
@@ -181,6 +182,15 @@ class DefaultCharacterSheetTest {
   @Test
   void rollDiceTest() {
     logger.info("rollDiceTest() is called");
+    int[] sizes = {2, 4, 6, 8, 10, 12, 20, 100};
+    for (int size : sizes) {
+      characterSheet.getDice().setSize(size);
+      for (double i = 0; i < calculateAvarageNumberOfRolls(characterSheet.getDice().getSize()); i++) {
+        characterSheet.rollDice();
+        assertTrue(characterSheet.getDice().getValue() > 0
+                && characterSheet.getDice().getValue() <= characterSheet.getDice().getSize());
+      }
+    }
   }
 
   @Test
@@ -196,5 +206,15 @@ class DefaultCharacterSheetTest {
   @Test
   void toStringTest() {
     logger.info("toStringTest() is called");
+
   }
+
+  public static double calculateAvarageNumberOfRolls(int size) {
+    double result = 0;
+    for (double i = size; i > 0; i--) {
+      result += (double) size / i;
+    }
+    return Math.ceil(result);
+  }
+
 }
