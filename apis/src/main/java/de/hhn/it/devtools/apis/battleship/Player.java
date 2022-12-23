@@ -1,11 +1,11 @@
-package de.hhn.it.devtools.components.battleship.provider;
+package de.hhn.it.devtools.apis.battleship;
 
-import de.hhn.it.devtools.apis.battleship.Field;
-import de.hhn.it.devtools.apis.battleship.Owner;
+import java.util.ArrayList;
 
 public class Player {
     protected Field attackField;
     protected Field shipField;
+    protected ArrayList<Ship> ownedShips = new ArrayList<>();
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(Player.class);
 
@@ -30,6 +30,11 @@ public class Player {
 
     public Field getShipField(){
         return this.shipField;
+    }
+
+
+    public void setOwnedShips(Ship addShip){
+        ownedShips.add(addShip);
     }
 
 

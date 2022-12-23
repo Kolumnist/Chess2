@@ -1,7 +1,6 @@
 package battleship;
 
 import de.hhn.it.devtools.apis.battleship.*;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.Player;
 
 /**
  * This usage demo is not runnable because in this module there is no possibility to access the
@@ -27,19 +26,19 @@ public class DemoBattleshipUsage  {
 
 
         //User wants to rotate ship before placing it
-        game.rotateShip(new Owner(), null);
+        game.rotateShip(Owner.PLAYER, null);
 
 
         //User places his ships
-        game.placeShip(new Owner(),null,1,2);
-        game.placeShip(new Owner(),null,2,2);
-        game.placeShip(new Owner(),null,3,2);
-        game.placeShip(new Owner(),null,4,2);
-        game.placeShip(new Owner(),null,6,2);
+        game.placeShip(Owner.PLAYER,null,1,2);
+        game.placeShip(Owner.PLAYER,null,2,2);
+        game.placeShip(Owner.PLAYER,null,3,2);
+        game.placeShip(Owner.PLAYER,null,4,2);
+        game.placeShip(Owner.PLAYER,null,6,2);
 
 
         //User starts the game by bombing the enemy panel and misses
-        game.bombPanel(new Owner(), new Owner(),4, 7);
+        game.bombPanel(Owner.PLAYER, Owner.COMPUTER,4, 7);
 
         //Sound volume was too loud, user wants to adjust it
         game.adjustSoundVolume(30);

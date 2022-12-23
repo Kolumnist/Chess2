@@ -1,6 +1,6 @@
 package de.hhn.it.devtools.components.battleship.provider;
 
-import de.hhn.it.devtools.apis.battleship.Owner;
+import de.hhn.it.devtools.apis.battleship.Player;
 
 public class Computer extends Player {
 

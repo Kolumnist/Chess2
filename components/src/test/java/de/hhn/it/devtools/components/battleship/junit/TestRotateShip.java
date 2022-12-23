@@ -2,7 +2,7 @@ package de.hhn.it.devtools.components.battleship.junit;
 
 import de.hhn.it.devtools.apis.battleship.*;
 import de.hhn.it.devtools.components.battleship.provider.Computer;
-import de.hhn.it.devtools.components.battleship.provider.Player;
+import de.hhn.it.devtools.apis.battleship.Player;
 import de.hhn.it.devtools.components.battleship.provider.ShipField;
 import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
 import org.junit.jupiter.api.BeforeEach;
