@@ -1,6 +1,8 @@
 package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.CharacterDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.CharacterSheetListener;
@@ -12,8 +14,9 @@ import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import de.hhn.it.devtools.components.ttrpgsheets.DefaultCharacterSheet;
-import de.hhn.it.devtools.components.ttrpgsheets.Dice;
 import de.hhn.it.devtools.components.ttrpgsheets.Stat;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,26 +26,11 @@ class DefaultCharacterSheetTest {
 
   DefaultCharacterSheet characterSheet = null;
 
-
   @BeforeEach
   void setupObjects() {
     logger.info("setupObjects() is called");
-    characterSheet = new DefaultCharacterSheet(new CharacterSheetListener() {
-      @Override
-      public void statChanged(StatDescriptor stat) {
-
-      }
-
-      @Override
-      public void diceChanged(DiceDescriptor dice) {
-
-      }
-
-      @Override
-      public void descriptionChanged(DescriptionDescriptor description) {
-
-      }
-    }, setupCharacterDescriptor());
+    characterSheet = new DefaultCharacterSheet(new SimpleCharacterSheetListener(),
+            setupCharacterDescriptor());
   }
 
   CharacterDescriptor setupCharacterDescriptor() {
@@ -310,5 +298,36 @@ class DefaultCharacterSheetTest {
       default -> { }
     }
     return -1;
+  }
+
+  /**
+   * Inner class as a simple implementation of {@link CharacterSheetListener} for testing.
+   */
+  class SimpleCharacterSheetListener implements CharacterSheetListener {
+
+    public List<StatDescriptor> stats;
+    public List<DiceDescriptor> dice;
+    public List<DescriptionDescriptor> descriptions;
+
+    public SimpleCharacterSheetListener() {
+      stats = new ArrayList<>();
+      dice = new ArrayList<>();
+      descriptions = new ArrayList<>();
+    }
+
+    @Override
+    public void statChanged(StatDescriptor stat) {
+      this.stats.add(stat);
+    }
+
+    @Override
+    public void diceChanged(DiceDescriptor dice) {
+      this.dice.add(dice);
+    }
+
+    @Override
+    public void descriptionChanged(DescriptionDescriptor description) {
+      this.descriptions.add(description);
+    }
   }
 }
