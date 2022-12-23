@@ -11,9 +11,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test class for {@link Description} with good Cases.
+ * Test class for {@link Description}.
  */
-@DisplayName("Test the description with good cases.")
+@DisplayName("Test the description.")
 public class DescriptionTest {
 
   static Description ageDescription;
