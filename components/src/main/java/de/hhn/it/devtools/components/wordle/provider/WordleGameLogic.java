@@ -3,35 +3,31 @@ package de.hhn.it.devtools.components.wordle.provider;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.wordle.*;
 
-import java.security.SecureRandom;
-
 public class WordleGameLogic implements WordleService{
 
   private String currentWordleSolution;
   private String previousWordleSolution;
-  private SecureRandom csprng = new SecureRandom();
+
+
+  private WordleGame currentWordleGame;
   @Override
   public void startGame() {
-    String newSolution = selectWordle();
-    setPreviousWordleSolution(newSolution);
-    new WordleGame(newSolution);
+    String currentSolution = WordleSolutionSelector.selectWordle();
+    setCurrentWordleSolution(currentSolution);
+    currentWordleGame = new WordleGame(currentSolution);
   }
 
   @Override
   public void startAnotherGame() {
-    String newSolution = selectWordle();
+    setPreviousWordleSolution(getCurrentWordleSolution());
+    String newSolution = WordleSolutionSelector.selectWordle();
     if(!newSolution.equals(getPreviousWordleSolution())) {
-      new WordleGame(newSolution);
+      setCurrentWordleSolution(newSolution);
+      currentWordleGame = new WordleGame(newSolution);
     }
     else {
       startAnotherGame();
     }
-  }
-  @Override
-  public String selectWordle() {
-    int randomInt = csprng.nextInt(WordleSolutionSelector.getSolutionListLength());
-    currentWordleSolution = WordleSolutionSelector.accessListAtIndex(randomInt);
-    return currentWordleSolution;
   }
 
   @Override
@@ -129,4 +125,13 @@ public class WordleGameLogic implements WordleService{
   public void setPreviousWordleSolution(String previousWordleSolution) {
     this.previousWordleSolution = previousWordleSolution;
   }
+
+  public void setCurrentWordleSolution(String currentWordleSolution) {
+    this.currentWordleSolution = currentWordleSolution;
+  }
+  public String getCurrentWordleSolution() {
+    return currentWordleSolution;
+  }
+
+
 }
