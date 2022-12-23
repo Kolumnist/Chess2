@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
  * Test class for {@link Description} with good Cases.
  */
 @DisplayName("Test the description with good cases.")
-public class TestDescriptionGoodCases {
+public class DescriptionTest {
 
   static Description ageDescription;
 
@@ -24,7 +24,7 @@ public class TestDescriptionGoodCases {
   }
 
   @Test
-  @DisplayName("A new description is created.")
+  @DisplayName("Create a new description with a description descriptor")
   void createNewDescriptionWithDescriptor() {
     Description description = new Description(
             new DescriptionDescriptor(DescriptionType.CHARACTER_NAME, "Sylas"));
