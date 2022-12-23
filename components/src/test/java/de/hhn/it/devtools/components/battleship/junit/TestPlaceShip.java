@@ -3,11 +3,13 @@ package de.hhn.it.devtools.components.battleship.junit;
 import de.hhn.it.devtools.apis.battleship.*;
 import de.hhn.it.devtools.components.battleship.provider.Computer;
 import de.hhn.it.devtools.apis.battleship.Player;
-import de.hhn.it.devtools.components.battleship.provider.ShipField;
 import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -19,16 +21,17 @@ public class TestPlaceShip {
 
     CmpBattleshipService bsService = new CmpBattleshipService();
     BattleshipService bs = bsService;
-    Player player = new Player();
-    ShipField playerField = new ShipField(9, player);
-    Field pField = new Field(9, player);
+    Player player = bsService.getPlayer();
+    Field playerField = new Field(9, player);
 
-    Computer computer = new Computer();
-    ShipField computerField = new ShipField(9, computer);
-    Field cField = new Field(9, computer);
+    Computer computer = bsService.getComputer();
+    Field computerField = new Field(9, computer);
+
+    private Map<Player, Owner> player2OwnerMap;
 
     @BeforeEach
     void setup() {
+        player2OwnerMap = new HashMap<>();
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
                 playerField.setPanelMarker(i, j, PanelState.NOSHIP);
@@ -37,6 +40,10 @@ public class TestPlaceShip {
         }
         player.setShipfield(playerField);
         computer.setShipfield(computerField);
+        player.setAttackField(playerField);
+        computer.setAttackField(computerField);
+        player2OwnerMap.put(player, Owner.PLAYER);
+        player2OwnerMap.put(computer, Owner.COMPUTER);
     }
 
     // Bad Cases
@@ -51,7 +58,7 @@ public class TestPlaceShip {
         ship.setIsVertical(false);
         ship.setPlaced(true);
         IllegalShipStateException exception = assertThrows(IllegalShipStateException.class,
-                () -> bs.placeShip(player, ship, 4, 3));
+                () -> bs.placeShip(player2OwnerMap.get(player), ship, 4, 3));
     }
 
     @Test
@@ -63,7 +70,7 @@ public class TestPlaceShip {
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
         IllegalGameStateException exception = assertThrows(IllegalGameStateException.class,
-                () -> bs.placeShip(player, ship, 2, 5));
+                () -> bs.placeShip(player2OwnerMap.get(player), ship, 2, 5));
     }
 
     @Test
@@ -75,7 +82,7 @@ public class TestPlaceShip {
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
         IllegalPositionException exception = assertThrows(IllegalPositionException.class,
-                () -> bs.placeShip(player, ship, -2, -3));
+                () -> bs.placeShip(player2OwnerMap.get(player), ship, -2, -3));
     }
 
     @Test
@@ -87,7 +94,7 @@ public class TestPlaceShip {
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
         IllegalPositionException exception = assertThrows(IllegalPositionException.class,
-                () -> bs.placeShip(player, ship, 9, 10));
+                () -> bs.placeShip(player2OwnerMap.get(player), ship, 9, 10));
     }
 
     @Test
@@ -99,7 +106,7 @@ public class TestPlaceShip {
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
         IllegalPositionException exception = assertThrows(IllegalPositionException.class,
-                () -> bs.placeShip(player, ship, 7, 7));
+                () -> bs.placeShip(player2OwnerMap.get(player), ship, 7, 7));
     }
 
     @Test
@@ -111,20 +118,7 @@ public class TestPlaceShip {
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(false);
         IllegalPositionException exception = assertThrows(IllegalPositionException.class,
-                () -> bs.placeShip(player, ship, 8, 1));
-    }
-
-    @Test
-    @DisplayName("Test check placeShip for no player or computer")
-    public void placeWithNoAllowedPlayer() throws IllegalArgumentException {
-        // IllegalArgumentException should be thrown
-        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
-        Owner notAllowedPlayer = new Owner();
-        Position pos = new Position(null, null);
-        Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        ship.setIsVertical(false);
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> bs.placeShip(notAllowedPlayer, ship, 2, 2));
+                () -> bs.placeShip(player2OwnerMap.get(player), ship, 8, 1));
     }
 
     // Good Cases
@@ -136,7 +130,7 @@ public class TestPlaceShip {
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
-        bs.placeShip(player, ship, 3, 4);
+        bs.placeShip(player2OwnerMap.get(player), ship, 3, 4);
         assertEquals(true, ship.getPlaced());
     }
 
@@ -147,7 +141,7 @@ public class TestPlaceShip {
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(false);
-        bs.placeShip(player, ship, 3, 4);
+        bs.placeShip(player2OwnerMap.get(player), ship, 3, 4);
         assertEquals(true, ship.getPlaced());
     }
 
