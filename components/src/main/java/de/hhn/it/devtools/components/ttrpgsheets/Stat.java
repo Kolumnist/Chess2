@@ -2,7 +2,9 @@ package de.hhn.it.devtools.components.ttrpgsheets;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
+
 import java.math.BigInteger;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,6 +111,11 @@ public class Stat {
 
   public boolean isLevelStat() {
     return levelStat;
+  }
+
+  public StatDescriptor toStatDescriptor() {
+    return new StatDescriptor(getType(), getBaseValue(), getOffset(),
+            getAbilityPointsUsed(), getMiscellaneous(), isLevelStat());
   }
 
   @Override

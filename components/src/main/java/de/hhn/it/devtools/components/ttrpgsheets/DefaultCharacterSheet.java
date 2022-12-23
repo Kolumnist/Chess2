@@ -167,8 +167,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   public StatDescriptor getStatDescriptor(StatType statType) {
     for (Stat stat : getStats()) {
       if (stat.getType() == statType) {
-        return new StatDescriptor(stat.getType(), stat.getBaseValue(), stat.getOffset(),
-                stat.getAbilityPointsUsed(), stat.getMiscellaneous(), stat.isLevelStat());
+        stat.toStatDescriptor();
       }
     }
     return null;
