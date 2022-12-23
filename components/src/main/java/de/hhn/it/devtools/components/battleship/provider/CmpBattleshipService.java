@@ -94,7 +94,7 @@ public class CmpBattleshipService implements BattleshipService {
 
     // nedim
     @Override
-    public boolean isPlacementPossible(Owner owner, Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException, IllegalArgumentException {
+    public boolean isPlacementPossible(Owner owner, Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException {
         logger.info("isPlacementPossible: owner = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}", owner, shipToPlace, x1, y1, isVertical);
         Player player = owner2PlayerMap.get(owner);
         int shipSize = shipToPlace.getSize();
