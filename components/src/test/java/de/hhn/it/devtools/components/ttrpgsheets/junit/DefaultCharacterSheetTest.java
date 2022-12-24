@@ -239,7 +239,7 @@ class DefaultCharacterSheetTest {
         DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
     for (DiceType diceType : diceTypes) {
       characterSheet.getDiceDescriptor().setDiceType(diceType);
-      for (double i = 0; i < calculateAvarageNumberOfRolls(
+      for (double i = 0; i < calculateAverageNumberOfRolls(
               sizeFromDice(characterSheet.getDiceDescriptor().getDiceType())); i++) {
         characterSheet.rollDice();
         assertTrue(characterSheet.getDiceDescriptor().getResult() > 0
@@ -283,7 +283,7 @@ class DefaultCharacterSheetTest {
             .contains("Description: [Type: EYE_COLOR, Description: Blue"));
   }
 
-  public static double calculateAvarageNumberOfRolls(int size) {
+  public static double calculateAverageNumberOfRolls(int size) {
     double result = 0;
     for (double i = size; i > 0; i--) {
       result += (double) size / i;
