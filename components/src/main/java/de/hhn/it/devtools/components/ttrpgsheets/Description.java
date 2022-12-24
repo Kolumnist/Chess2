@@ -64,6 +64,6 @@ public class Description {
 
   @Override
   public String toString() {
-    return "Type: " + getType() + "\nDescription: " + getDescription();
+    return "Description: [Type: " + getType() + ", Description: " + getDescription() + "]";
   }
 }
