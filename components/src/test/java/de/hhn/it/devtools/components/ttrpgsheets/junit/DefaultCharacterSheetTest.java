@@ -1,7 +1,6 @@
 package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -18,7 +17,6 @@ import de.hhn.it.devtools.components.ttrpgsheets.DefaultCharacterSheet;
 import de.hhn.it.devtools.components.ttrpgsheets.Stat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -218,6 +216,13 @@ class DefaultCharacterSheetTest {
     assertEquals(characterSheet.getDescriptionDescriptor(DescriptionType.HAIR_COLOR).getText(),
             "Red");
 
+    assertThrows(IllegalArgumentException.class,
+            () -> characterSheet.changeDescription(null, "white"));
+    assertThrows(IllegalArgumentException.class,
+            () -> characterSheet.changeDescription(DescriptionType.HEIGHT, null));
+    assertThrows(IllegalArgumentException.class,
+            () -> characterSheet.changeDescription(null, null));
+
     assertEquals(2, listener.descriptions.size());
   }
 
@@ -273,7 +278,9 @@ class DefaultCharacterSheetTest {
   @Test
   void toStringTest() {
     logger.info("toStringTest() is called");
-
+    logger.info(characterSheet.toString());
+    assertTrue(characterSheet.toString()
+            .contains("Description: [Type: EYE_COLOR, Description: Blue"));
   }
 
   public static double calculateAvarageNumberOfRolls(int size) {
