@@ -226,6 +226,9 @@ public class DefaultCharacterSheet implements CharacterSheet {
   public void changeDescription(DescriptionType descriptionType, String text)
           throws IllegalArgumentException {
     logger.info("changeDescription : descriptionType = {}, text = {}", descriptionType, text);
+    if (descriptionType == null || text == null) {
+      throw new IllegalArgumentException("One or both arguments are null");
+    }
     for (Description description : getDescriptions()) {
       if (description.getType() == descriptionType) {
         description.setDescription(text);
@@ -316,8 +319,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public String toString() {
     return "CharacterSheetListener: " + getListener()
-            + "Descriptions: " + Arrays.toString(getDescriptions())
-            + "Stats: " + Arrays.toString(getStats())
-            + "Dice: " + getDice();
+            + "\nDescriptions: " + Arrays.toString(getDescriptions())
+            + "\nStats: " + Arrays.toString(getStats())
+            + "\nDice: " + getDice();
   }
 }
