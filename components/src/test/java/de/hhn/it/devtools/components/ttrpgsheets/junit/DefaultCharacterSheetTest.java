@@ -364,7 +364,7 @@ class DefaultCharacterSheetTest {
   void rollDiceTest() {
     logger.info("rollDiceTest() is called");
     DiceType[] diceTypes = {DiceType.D2, DiceType.D4, DiceType.D6, DiceType.D8,
-            DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
+                            DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
     for (DiceType diceType : diceTypes) {
       characterSheet.getDiceDescriptor().setDiceType(diceType);
       for (double i = 0; i < calculateAverageNumberOfRolls(
@@ -381,7 +381,7 @@ class DefaultCharacterSheetTest {
   void changeDiceTypeTest() {
     logger.info("changeDiceTypeTest() is called");
     DiceType[] diceTypes = {DiceType.D2, DiceType.D4, DiceType.D6, DiceType.D8,
-            DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
+                            DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
     for (DiceType diceTyp : diceTypes) {
       characterSheet.getDiceDescriptor().setDiceType(diceTyp);
       switch (characterSheet.getDice().getType()) {
