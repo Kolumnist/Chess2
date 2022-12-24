@@ -63,6 +63,6 @@ public class DescriptionTest {
   @Test
   @DisplayName("To String")
   void toStringTest() {
-    assertEquals("Type: AGE\nDescription: 35", ageDescription.toString());
+    assertEquals("Description: [Type: AGE, Description: 35]", ageDescription.toString());
   }
 }
