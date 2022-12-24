@@ -218,6 +218,101 @@ class DefaultCharacterSheetTest {
   @Test
   void decrementStatTest() {
     logger.info("decrementStatTest() is called");
+    for (StatType statType : StatType.values()) {
+      StatDescriptor stat = characterSheet.getStatDescriptor(statType);
+      for (OriginType origin : OriginType.values()) {
+        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+          assertThrows(IllegalArgumentException.class,
+                  () -> characterSheet.decrementStat(statType, origin));
+          continue;
+        }
+        characterSheet.decrementStat(statType, origin);
+        stat = characterSheet.getStatDescriptor(statType);
+        if (origin == OriginType.LEVEL_POINT) {
+          if (statType == StatType.STRENGTH) {
+            assertEquals(1, stat.getAbilityPointsUsed());
+          } else {
+            assertEquals(-1, stat.getAbilityPointsUsed());
+          }
+          for (Stat csStat : characterSheet.getStats()) {
+            if (csStat.getType() == statType) {
+              csStat.setAbilityPointsUsed(csStat.getAbilityPointsUsed() + 1);
+            }
+          }
+        } else {
+          switch (statType) {
+            case HEALTH -> assertEquals(-3, stat.getMiscellaneous());
+            case STRENGTH -> assertEquals(5, stat.getMiscellaneous());
+            default -> assertEquals(-1, stat.getMiscellaneous());
+          }
+          for (Stat csStat : characterSheet.getStats()) {
+            if (csStat.getType() == statType) {
+              csStat.setMiscellaneous(csStat.getMiscellaneous() + 1);
+            }
+          }
+        }
+      }
+    }
+    for (StatType statType : StatType.values()) {
+      Stat stat = characterSheet.getStatOfType(statType);
+      for (OriginType origin : OriginType.values()) {
+        if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
+          assertThrows(IllegalArgumentException.class,
+                  () -> characterSheet.decrementStat(statType, origin, 5));
+          continue;
+        }
+        characterSheet.decrementStat(statType, origin, 5);
+        if (origin == OriginType.LEVEL_POINT) {
+          if (statType == StatType.STRENGTH) {
+            assertEquals(-3, stat.getAbilityPointsUsed());
+          } else {
+            assertEquals(-5, stat.getAbilityPointsUsed());
+          }
+          for (Stat csStat : characterSheet.getStats()) {
+            if (csStat.getType() == statType) {
+              csStat.setAbilityPointsUsed(csStat.getAbilityPointsUsed() + 5);
+            }
+          }
+        } else {
+          switch (statType) {
+            case HEALTH -> assertEquals(-7, stat.getMiscellaneous());
+            case STRENGTH -> assertEquals(1, stat.getMiscellaneous());
+            default -> assertEquals(-5, stat.getMiscellaneous());
+          }
+          for (Stat csStat : characterSheet.getStats()) {
+            if (csStat.getType() == statType) {
+              csStat.setMiscellaneous(csStat.getMiscellaneous() + 5);
+            }
+          }
+        }
+      }
+    }
+    Stat edgeStat = new Stat(characterSheet.getStatDescriptor(StatType.STRENGTH));
+    for (Stat csStat : characterSheet.getStats()) {
+      if (csStat.getType() == StatType.STRENGTH) {
+        edgeStat = csStat;
+      }
+    }
+    edgeStat.setAbilityPointsUsed(Integer.MIN_VALUE);
+    edgeStat.setMiscellaneous(Integer.MIN_VALUE);
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT);
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY);
+    assertEquals(Integer.MIN_VALUE, edgeStat.getAbilityPointsUsed());
+    assertEquals(Integer.MIN_VALUE, edgeStat.getMiscellaneous());
+
+    edgeStat.setAbilityPointsUsed(-5);
+    edgeStat.setMiscellaneous(-5);
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, Integer.MAX_VALUE);
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MAX_VALUE);
+    assertEquals(Integer.MIN_VALUE, edgeStat.getAbilityPointsUsed());
+    assertEquals(Integer.MIN_VALUE, edgeStat.getMiscellaneous());
+
+    edgeStat.setAbilityPointsUsed(5);
+    edgeStat.setMiscellaneous(5);
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, Integer.MIN_VALUE);
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MIN_VALUE);
+    assertEquals(Integer.MAX_VALUE, edgeStat.getAbilityPointsUsed());
+    assertEquals(Integer.MAX_VALUE, edgeStat.getMiscellaneous());
   }
 
   @Test
