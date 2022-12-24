@@ -455,7 +455,7 @@ class DefaultCharacterSheetTest {
   /**
    * Inner class as a simple implementation of {@link CharacterSheetListener} for testing.
    */
-  class SimpleCharacterSheetListener implements CharacterSheetListener {
+  static class SimpleCharacterSheetListener implements CharacterSheetListener {
 
     public List<StatDescriptor> stats;
     public List<DiceDescriptor> dice;
