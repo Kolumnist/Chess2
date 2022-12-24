@@ -318,6 +318,15 @@ class DefaultCharacterSheetTest {
   @Test
   void getStatDisplayValueTest() {
     logger.info("getStatDisplayValueTest() is called");
+    for (Stat stat : characterSheet.getStats()) {
+      switch (stat.getType()) {
+        case MAX_HEALTH -> assertEquals(30, characterSheet.getStatDisplayValue(stat.getType()));
+        case HEALTH -> assertEquals(28, characterSheet.getStatDisplayValue(stat.getType()));
+        case LEVEL -> assertEquals(1, characterSheet.getStatDisplayValue(stat.getType()));
+        case STRENGTH -> assertEquals(8, characterSheet.getStatDisplayValue(stat.getType()));
+        default -> assertEquals(0, characterSheet.getStatDisplayValue(stat.getType()));
+      }
+    }
   }
 
   @Test
