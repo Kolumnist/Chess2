@@ -46,13 +46,13 @@ class DefaultCharacterSheetTest {
     for (int i = 0; i < StatType.values().length; i++) {
       switch (StatType.values()[i]) {
         case MAX_HEALTH -> statDescriptors[i]
-                = new StatDescriptor(StatType.values()[i], 30, 5, 0, 0, true);
+                                   = new StatDescriptor(StatType.values()[i], 30, 5, 0, 0, true);
         case HEALTH -> statDescriptors[i]
-                = new StatDescriptor(StatType.values()[i], 30, 0, 0, -2, false);
+                               = new StatDescriptor(StatType.values()[i], 30, 0, 0, -2, false);
         case LEVEL -> statDescriptors[i]
-                = new StatDescriptor(StatType.values()[i], 1, 0, 0, 0, false);
+                              = new StatDescriptor(StatType.values()[i], 1, 0, 0, 0, false);
         case STRENGTH -> statDescriptors[i]
-                = new StatDescriptor(StatType.values()[i], 0, 1, 2, 6, true);
+                                 = new StatDescriptor(StatType.values()[i], 0, 1, 2, 6, true);
         default -> statDescriptors[i] = new StatDescriptor(StatType.values()[i], 0, 1, 0, 0, true);
       }
     }
@@ -62,7 +62,7 @@ class DefaultCharacterSheetTest {
   DescriptionDescriptor[] setupDescriptions() {
     logger.info("setupDescriptions() is called");
     DescriptionDescriptor[] descriptionDescriptors = new DescriptionDescriptor[
-            DescriptionType.values().length];
+                                                             DescriptionType.values().length];
     for (int i = 0; i < DescriptionType.values().length; i++) {
       switch (DescriptionType.values()[i]) {
         case CHARACTER_CLASS -> descriptionDescriptors[i] = new DescriptionDescriptor(
@@ -187,7 +187,12 @@ class DefaultCharacterSheetTest {
         }
       }
     }
-    Stat edgeStat = characterSheet.getStatOfType(StatType.STRENGTH);
+    Stat edgeStat = new Stat(characterSheet.getStatDescriptor(StatType.STRENGTH));
+    for (Stat csStat : characterSheet.getStats()) {
+      if (csStat.getType() == StatType.STRENGTH) {
+        edgeStat = csStat;
+      }
+    }
     edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
     edgeStat.setMiscellaneous(Integer.MAX_VALUE);
     characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT);
@@ -262,7 +267,7 @@ class DefaultCharacterSheetTest {
               sizeFromDice(characterSheet.getDiceDescriptor().getDiceType())); i++) {
         characterSheet.rollDice();
         assertTrue(characterSheet.getDiceDescriptor().getResult() > 0
-                && characterSheet.getDiceDescriptor().getResult() <= sizeFromDice(
+                           && characterSheet.getDiceDescriptor().getResult() <= sizeFromDice(
                 characterSheet.getDiceDescriptor().getDiceType()));
       }
     }
@@ -300,7 +305,7 @@ class DefaultCharacterSheetTest {
     logger.info("toStringTest() is called");
     logger.info(characterSheet.toString());
     assertTrue(characterSheet.toString()
-            .contains("Description: [Type: EYE_COLOR, Description: Blue"));
+                       .contains("Description: [Type: EYE_COLOR, Description: Blue"));
   }
 
   public static double calculateAverageNumberOfRolls(int size) {
