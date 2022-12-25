@@ -3,99 +3,77 @@ package de.hhn.it.devtools.components.reactiongame.provider;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.reactiongame.*;
 
-import java.util.ArrayList;
 import java.util.IllegalFormatException;
 import java.util.SortedMap;
+
+
+import javax.swing.Timer;
 
 /**
  * Realisation of ReactionGameService.
  */
-public class CmpReactionGameService implements ReactiongameService {
+public class RelReactionGameService implements ReactiongameService {
 
-  private Game game;
-  private ArrayList<ReactiongameListener> callbacks;
-
-
-
-  public ArrayList<ReactiongameListener> getCallbacks() {
-    return callbacks;
-  }
-
-  public void setCallbacks(ArrayList<ReactiongameListener> callbacks) {
-    this.callbacks = callbacks;
-  }
+  private GameLogic gameLogic;
 
   @Override
   public void newRun(Difficulty difficulty) throws IllegalParameterException {
-    game = new Game(this, difficulty);
-
-    for (ReactiongameListener l:
-        callbacks) {
-      // ?
-    }
+    gameLogic = new GameLogic(difficulty);
+    gameLogic.getTimer().start();
   }
 
   @Override
   public void pauseRun() throws IllegalStateException {
-    if (game.getState() != GameState.RUNNING) {
+    if (gameLogic.getState() == GameState.PAUSED) {
       throw new IllegalStateException();
     }
-
-    for (ReactiongameListener l:
-         callbacks) {
-      l.pauseRun();
-    }
-
-    game.setState(GameState.PAUSED);
+    gameLogic.getTimer().stop();
+    gameLogic.setState(GameState.PAUSED);
   }
 
   @Override
   public void continueRun() throws IllegalStateException {
-    if (game.getState() != GameState.PAUSED) {
+    if (gameLogic.getState() != GameState.PAUSED) {
       throw new IllegalStateException();
     }
-
-    for (ReactiongameListener l:
-            callbacks) {
-      l.continueRun();
-    }
-
-    game.setState(GameState.PAUSED);
+    gameLogic.getTimer().restart();
+    gameLogic.setState(GameState.RUNNING);
   }
 
   @Override
   public void endRun() {
-    if (game.getState() == GameState.FINISHED) {
-      throw new IllegalStateException();
-    }
 
-    for (ReactiongameListener l:
-            callbacks) {
-      l.gameOver();
-    }
-
-
-    game.setState(GameState.PAUSED);
-  }
-
-  @Override
-  public void addCallback(int id, ReactiongameListener listener) {
-    callbacks.add(id, listener);
-  }
-
-  @Override
-  public void removeCallback(int id) {
-    callbacks.remove(id);
   }
 
   @Override
   public void keyPressed(char key) throws IllegalStateException {
+    gameLogic.setpKey(key);
+    gameLogic.checkForTargetHit();
+  }
 
+  @Override
+  public void playerEnteredAimTarget(int id) throws IllegalParameterException{
+    gameLogic.setpObstacle(null);
+    gameLogic.setpAimTarget(gameLogic.getGameField().getTargets().get(id));
+  }
+
+  @Override
+  public void playerEnteredObstacle(int id) throws IllegalParameterException {
+    gameLogic.setpAimTarget(null);
+    gameLogic.setpObstacle(gameLogic.getGameField().getObstacles().get(id));
+
+    gameLogic.playerHitObstacle();
+  }
+
+  @Override
+  public void playerLeftGameObject() {
+    gameLogic.setpObstacle(null);
+    gameLogic.setpAimTarget(null);
   }
 
   @Override
   public void setCurrentPlayerName(String playerName) {
-    game.getPlayer().setName(playerName);
+    gameLogic.getPlayer().setName(playerName);
   }
 
   @Override
@@ -109,22 +87,5 @@ public class CmpReactionGameService implements ReactiongameService {
   }
 
 
-  public void addObstacle(Obstacle obstacle) {
-    ObstacleDescriptor obstacleDescriptor = new ObstacleDescriptor(obstacle.getX1(), obstacle.getY1(),
-            obstacle.getX2(), obstacle.getY2());
-
-    for (ReactiongameListener l :
-            callbacks) {
-      l.addObstacle(obstacleDescriptor);
-    }
-  }
-
-  public void removeObstacle(int id) {
-
-    for (ReactiongameListener l :
-            callbacks) {
-      l.removeObstacle(id);
-    }
-  }
 
 }

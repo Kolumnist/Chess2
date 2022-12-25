@@ -4,18 +4,21 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class StopListener implements ActionListener {
+/**
+ * Task for ingame timer. Present task: count time.
+ */
+public class TaskPerformer implements ActionListener {
 
     private final Timer timer;
-    private final RelReactionGameService service;
+    private final GameLogic gameLogic;
 
-    public StopListener(Timer timer, RelReactionGameService service) {
+    public TaskPerformer(Timer timer, GameLogic gameLogic) {
         this.timer = timer;
-        this.service = service;
+        this.gameLogic = gameLogic;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        gameLogic.timePlayed++;
     }
 }

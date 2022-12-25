@@ -1,9 +1,16 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
+import de.hhn.it.devtools.apis.reactiongame.ObstacleDescriptor;
+import de.hhn.it.devtools.apis.reactiongame.ObstacleListener;
+
+import java.util.List;
+
 /**
  * Obstacle class.
  */
-public class Obstacle {
+public class RelObstacle implements Obstacle {
+
+  private List<ObstacleListener> callbacks;
   private final int x1;
   private final int x2;
   private final int y1;
@@ -20,12 +27,12 @@ public class Obstacle {
    * @param y2 y-position
    * @param id id
    */
-  public Obstacle(int x1, int x2, int y1, int y2, int id) {
+  public RelObstacle(int id, int x1, int x2, int y1, int y2) {
+    this.id = id;
     this.x1 = x1;
     this.x2 = x2;
     this.y1 = y1;
     this.y2 = y2;
-    this.id = id;
   }
 
   public int getX1() {
@@ -44,8 +51,19 @@ public class Obstacle {
     return y2;
   }
 
+   @Override
   public int getId() {
     return id;
+  }
+
+  @Override
+  public void addCallback(ObstacleListener listener) {
+    callbacks.add(listener);
+  }
+
+  @Override
+  public void removeCallback(ObstacleListener listener) {
+    callbacks.remove(listener);
   }
 
   @Override
@@ -61,4 +79,9 @@ public class Obstacle {
         + y2
         + ")";
   }
+
+  public ObstacleDescriptor toDescriptor() {
+    return new ObstacleDescriptor(id, x1, y1, x2, y2);
+  }
+
 }

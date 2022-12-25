@@ -3,13 +3,13 @@ package de.hhn.it.devtools.components.reactiongame.provider;
 /**
  * Player class holds the information about the player.
  */
-public class Player {
+public class RelPlayer {
 
   private int currentLife;
   private String name;
 
 
-  public Player(String name) {
+  public RelPlayer(String name) {
     this.name = name;
     currentLife = 0;
   }

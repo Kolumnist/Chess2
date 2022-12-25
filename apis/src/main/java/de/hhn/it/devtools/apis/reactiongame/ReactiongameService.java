@@ -38,36 +38,18 @@ public interface ReactiongameService {
   void endRun();
 
   /**
-   * Adds a listener to the service.
-   *
-   * @param listener listener
-   * @param id identifier
-   */
-  void addCallback(ReactiongameListener listener, int id);
-
-  /**
-   * Removes listener with the given id.
-   *
-   * @param id identifier
-   */
-  void removeCallback(int id);
-
-  /**
-   * Sets the courser position.
-   *
-   * @param x position
-   * @param y position
-   * @throws IllegalStateException if state equals the current state
-   */
-  void presentCourserPosition(int x, int y) throws IllegalStateException;
-
-  /**
    * Player pressed a key.
    *
    * @param key key
    * @throws IllegalStateException if state equals the current state
    */
   void keyPressed(char key) throws IllegalStateException;
+
+  void playerEnteredAimTarget(int id) throws IllegalParameterException;
+
+  void playerEnteredObstacle(int id) throws IllegalParameterException;
+
+  void playerLeftGameObject();
 
   /**
    * Sets a player name to the current highscore.

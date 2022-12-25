@@ -3,8 +3,9 @@ package de.hhn.it.devtools.apis.reactiongame;
 /**
  * Describes an aim target: x and y position, the radius and the required key.
  */
-public class AimTargetDescriptor {
+public class AimTargetDescriptor implements GameObstacleDescriptor{
 
+  private final int id;
   private final int x;
   private final int y;
   private final int r;
@@ -19,7 +20,8 @@ public class AimTargetDescriptor {
    * @param r radius
    * @param key keyboard key
    */
-  public AimTargetDescriptor(int x, int y, int r, char key) {
+  public AimTargetDescriptor(int id, int x, int y, int r, char key) {
+    this.id = id;
     this.x = x;
     this.y = y;
     this.r = r;
@@ -49,5 +51,10 @@ public class AimTargetDescriptor {
         ", y=" + y +
         ", key=" + key +
         '}';
+  }
+
+  @Override
+  public void getId() {
+
   }
 }
