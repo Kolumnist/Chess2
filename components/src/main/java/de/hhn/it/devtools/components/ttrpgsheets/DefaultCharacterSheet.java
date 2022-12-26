@@ -132,6 +132,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
         return;
       }
       decrementStat(statType, origin, Math.abs(amount));
+      return;
     }
     if (origin == OriginType.LEVEL_POINT) {
       if (stat.getAbilityPointsUsed() + amount > stat.getAbilityPointsUsed()) {
@@ -184,6 +185,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
         return;
       }
       incrementStat(statType, origin, Math.abs(amount));
+      return;
     }
     if (origin == OriginType.LEVEL_POINT) {
       if (stat.getAbilityPointsUsed() - amount < stat.getAbilityPointsUsed()) {
