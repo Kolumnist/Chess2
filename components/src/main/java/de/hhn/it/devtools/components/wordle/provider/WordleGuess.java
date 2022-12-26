@@ -17,7 +17,7 @@ public class WordleGuess implements WordleGuessService {
    */
   public WordleGuess(String word) {
     for (int i = 0; i < wordleWord.length; i++) {
-      wordleWord[i] = new WordlePanel(word.charAt(i), i);
+      wordleWord[i] = new WordlePanel(word.toLowerCase().charAt(i), i);
       wordleWord[i].setState(State.INITIAL);
     }
   }
