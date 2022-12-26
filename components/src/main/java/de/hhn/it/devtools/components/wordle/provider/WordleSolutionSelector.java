@@ -7,7 +7,7 @@ public class WordleSolutionSelector {
 
   private static SecureRandom csprng = new SecureRandom();
 
-  private static final List<String> possibleWordleSolutions = List.of("agree", "apply","brain", "beach","cheap",
+  public static final List<String> possibleWordleSolutions = List.of("agree", "apply","brain", "beach","cheap",
       "cyber","daily", "draft", "email", "extra","facet", "fresh","yacht", "yeast", "wagon", "whack", "vague", "value",
       "udder", "uncle", "table", "taken", "stair", "spray", "react", "ramen", "quack", "qualm", "paddy", "panel",
       "oaken", "obese", "nanny", "nasty", "magma", "major", "leach", "legal", "kebab", "kitty", "jaunt", "jelly",
