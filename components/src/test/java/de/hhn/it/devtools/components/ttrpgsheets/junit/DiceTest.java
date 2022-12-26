@@ -18,8 +18,6 @@ class DiceTest {
 
   static Dice dice;
   static int[] sizes = {2, 4, 6, 8, 10, 12, 20, 100};
-  static DiceType[] diceTypes = {DiceType.D2, DiceType.D4, DiceType.D6, DiceType.D8,
-      DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
 
   @BeforeEach
   void setUp() {
@@ -42,7 +40,7 @@ class DiceTest {
   @Test
   void changeSizeTest() {
     logger.info("changeSize() is called");
-    for (DiceType diceTyp : diceTypes) {
+    for (DiceType diceTyp : DiceType.values()) {
       dice.changeSize(diceTyp);
       switch (dice.getType()) {
         case D2 -> assertEquals(2, dice.getSize());
@@ -116,7 +114,7 @@ class DiceTest {
   void testToStringTest() {
     logger.info("testToString() is called");
     dice.setValue(3);
-    for (DiceType diceTyp : diceTypes) {
+    for (DiceType diceTyp : DiceType.values()) {
       dice.changeSize(diceTyp);
       switch (dice.getType()) {
         case D2 -> assertEquals("Dice Size: 2"
