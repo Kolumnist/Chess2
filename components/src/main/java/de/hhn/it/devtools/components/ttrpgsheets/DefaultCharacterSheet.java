@@ -278,9 +278,11 @@ public class DefaultCharacterSheet implements CharacterSheet {
    * @return The Stat of given StatType
    */
   public Stat getStatOfType(StatType statType) {
-    for (Stat stat : getStats()) {
-      if (stat.getType() == statType) {
-        return stat;
+    if (getStats() != null) {
+      for (Stat stat : getStats()) {
+        if (stat.getType() == statType) {
+          return stat;
+        }
       }
     }
     return null;
@@ -321,8 +323,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public String toString() {
     return "CharacterSheetListener: " + getListener()
-            + "\nDescriptions: " + Arrays.toString(getDescriptions())
-            + "\nStats: " + Arrays.toString(getStats())
-            + "\nDice: " + getDice();
+                   + "\nDescriptions: " + Arrays.toString(getDescriptions())
+                   + "\nStats: " + Arrays.toString(getStats())
+                   + "\nDice: " + getDice();
   }
 }
