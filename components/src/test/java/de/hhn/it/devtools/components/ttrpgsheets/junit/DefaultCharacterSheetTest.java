@@ -466,22 +466,9 @@ class DefaultCharacterSheetTest {
   @Test
   void changeDiceTypeTest() {
     logger.info("changeDiceTypeTest() is called");
-    DiceType[] diceTypes = {DiceType.D2, DiceType.D4, DiceType.D6, DiceType.D8,
-            DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
-    for (DiceType diceTyp : diceTypes) {
-      characterSheet.getDiceDescriptor().setDiceType(diceTyp);
-      switch (characterSheet.getDice().getType()) {
-        case D2 -> assertEquals(DiceType.D2, characterSheet.getDiceDescriptor().getDiceType());
-        case D4 -> assertEquals(DiceType.D4, characterSheet.getDiceDescriptor().getDiceType());
-        case D6 -> assertEquals(DiceType.D6, characterSheet.getDiceDescriptor().getDiceType());
-        case D8 -> assertEquals(DiceType.D8, characterSheet.getDiceDescriptor().getDiceType());
-        case D10 -> assertEquals(DiceType.D10, characterSheet.getDiceDescriptor().getDiceType());
-        case D12 -> assertEquals(DiceType.D12, characterSheet.getDiceDescriptor().getDiceType());
-        case D20 -> assertEquals(DiceType.D20, characterSheet.getDiceDescriptor().getDiceType());
-        case D100 -> assertEquals(DiceType.D100, characterSheet.getDiceDescriptor().getDiceType());
-        default -> {
-        }
-      }
+    for (DiceType diceType : DiceType.values()) {
+      characterSheet.changeDiceType(diceType);
+      assertEquals(diceType, characterSheet.getDice().getType());
     }
   }
 
