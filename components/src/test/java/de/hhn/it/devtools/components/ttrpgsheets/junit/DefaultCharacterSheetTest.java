@@ -360,6 +360,10 @@ class DefaultCharacterSheetTest {
       characterSheet.setStats(null);
       assertNull(characterSheet.getStatOfType(statType));
     }
+    for (StatType statType : StatType.values()) {
+      characterSheet.setStats(new Stat[0]);
+      assertNull(characterSheet.getStatOfType(statType));
+    }
   }
 
   @Test
