@@ -7,6 +7,7 @@ public class WordleGameLogic implements WordleService{
 
   private String currentWordleSolution;
   private String previousWordleSolution;
+  private static boolean wasStartGameCalled = false;
 
 
   private WordleGame currentWordleGame;
@@ -15,18 +16,23 @@ public class WordleGameLogic implements WordleService{
     String currentSolution = WordleSolutionSelector.selectWordle();
     setCurrentWordleSolution(currentSolution);
     currentWordleGame = new WordleGame(currentSolution);
+    wasStartGameCalled = true;
   }
 
   @Override
   public void startAnotherGame() {
-    setPreviousWordleSolution(getCurrentWordleSolution());
-    String newSolution = WordleSolutionSelector.selectWordle();
-    if(!newSolution.equals(getPreviousWordleSolution())) {
-      setCurrentWordleSolution(newSolution);
-      currentWordleGame = new WordleGame(newSolution);
+    if(!wasStartGameCalled) {
+      throw new NullPointerException("Use the startGame method first");
     }
     else {
-      startAnotherGame();
+      setPreviousWordleSolution(getCurrentWordleSolution());
+      String newSolution = WordleSolutionSelector.selectWordle();
+      if (!newSolution.equals(getPreviousWordleSolution())) {
+        setCurrentWordleSolution(newSolution);
+        currentWordleGame = new WordleGame(newSolution);
+      } else {
+        startAnotherGame();
+      }
     }
   }
 
