@@ -449,9 +449,7 @@ class DefaultCharacterSheetTest {
   @Test
   void rollDiceTest() {
     logger.info("rollDiceTest() is called");
-    DiceType[] diceTypes = {DiceType.D2, DiceType.D4, DiceType.D6, DiceType.D8,
-            DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
-    for (DiceType diceType : diceTypes) {
+    for (DiceType diceType : DiceType.values()) {
       characterSheet.getDiceDescriptor().setDiceType(diceType);
       for (double i = 0; i < calculateAverageNumberOfRolls(
               sizeFromDice(characterSheet.getDiceDescriptor().getDiceType())); i++) {
