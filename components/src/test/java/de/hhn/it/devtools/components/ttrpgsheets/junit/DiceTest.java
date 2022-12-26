@@ -30,7 +30,7 @@ class DiceTest {
     logger.info("nextRoll() is called");
     for (int size : sizes) {
       dice.setSize(size);
-      for (double i = 0; i < calculateAvarageNumberOfRolls(dice.getSize()); i++) {
+      for (double i = 0; i < calculateAverageNumberOfRolls(dice.getSize()); i++) {
         dice.nextRoll();
         assertTrue(dice.getValue() > 0 && dice.getValue() <= dice.getSize());
       }
@@ -138,7 +138,7 @@ class DiceTest {
     }
   }
 
-  public static double calculateAvarageNumberOfRolls(int size) {
+  public static double calculateAverageNumberOfRolls(int size) {
     double result = 0;
     for (double i = size; i > 0; i--) {
       result += (double) size / i;
