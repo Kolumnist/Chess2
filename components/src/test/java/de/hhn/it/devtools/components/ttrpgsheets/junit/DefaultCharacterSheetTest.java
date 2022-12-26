@@ -15,6 +15,7 @@ import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import de.hhn.it.devtools.components.ttrpgsheets.DefaultCharacterSheet;
+import de.hhn.it.devtools.components.ttrpgsheets.Description;
 import de.hhn.it.devtools.components.ttrpgsheets.Stat;
 import java.util.ArrayList;
 import java.util.List;
@@ -430,8 +431,19 @@ class DefaultCharacterSheetTest {
 
   @Test
   void getDescriptionDescriptorTest() {
-    assertEquals(new DescriptionDescriptor(DescriptionType.CHARACTER_CLASS, "Warrior"),
-            characterSheet.getDescriptionDescriptor(DescriptionType.CHARACTER_CLASS));
+    logger.info("getDescriptionDescriptorTest() is called");
+    DescriptionDescriptor[] descArray = setupDescriptions();
+    for (DescriptionType descType : DescriptionType.values()) {
+      DescriptionDescriptor descDescriptor = characterSheet.getDescriptionDescriptor(descType);
+      DescriptionDescriptor compareDescDesc = descArray[descType.ordinal()];
+
+      assertEquals(compareDescDesc.getText(), descDescriptor.getText());
+      assertEquals(compareDescDesc.getDescriptionType(), descDescriptor.getDescriptionType());
+    }
+    for (DescriptionType descType : DescriptionType.values()) {
+      characterSheet.setDescriptions(new Description[0]);
+      assertNull(characterSheet.getDescriptionDescriptor(descType));
+    }
   }
 
   @Test
