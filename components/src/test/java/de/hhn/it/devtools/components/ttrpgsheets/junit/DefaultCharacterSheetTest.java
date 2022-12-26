@@ -213,6 +213,13 @@ class DefaultCharacterSheetTest {
     characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MIN_VALUE);
     assertEquals(Integer.MIN_VALUE, edgeStat.getAbilityPointsUsed());
     assertEquals(Integer.MIN_VALUE, edgeStat.getMiscellaneous());
+
+    edgeStat.setAbilityPointsUsed(-5);
+    edgeStat.setMiscellaneous(-5);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, -5);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, -7);
+    assertEquals(-10, edgeStat.getAbilityPointsUsed());
+    assertEquals(-12, edgeStat.getMiscellaneous());
   }
 
   @Test
@@ -313,6 +320,13 @@ class DefaultCharacterSheetTest {
     characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MIN_VALUE);
     assertEquals(Integer.MAX_VALUE, edgeStat.getAbilityPointsUsed());
     assertEquals(Integer.MAX_VALUE, edgeStat.getMiscellaneous());
+
+    edgeStat.setAbilityPointsUsed(5);
+    edgeStat.setMiscellaneous(5);
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, -5);
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, -7);
+    assertEquals(10, edgeStat.getAbilityPointsUsed());
+    assertEquals(12, edgeStat.getMiscellaneous());
   }
 
   @Test
@@ -332,6 +346,7 @@ class DefaultCharacterSheetTest {
   @Test
   void getStatDescriptorTest() {
     logger.info("getStatDescriptorTest() is called");
+
   }
 
   @Test
