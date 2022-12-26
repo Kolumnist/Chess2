@@ -347,7 +347,22 @@ class DefaultCharacterSheetTest {
   @Test
   void getStatDescriptorTest() {
     logger.info("getStatDescriptorTest() is called");
+    StatDescriptor[] descArray = setupStats();
+    for (StatType statType : StatType.values()) {
+      StatDescriptor statDescriptor = characterSheet.getStatDescriptor(statType);
+      StatDescriptor compareStatDesc = descArray[statType.ordinal()];
 
+      assertEquals(compareStatDesc.getMiscellaneous(), statDescriptor.getMiscellaneous());
+      assertEquals(compareStatDesc.getStatType(), statDescriptor.getStatType());
+      assertEquals(compareStatDesc.getOffset(), statDescriptor.getOffset());
+      assertEquals(compareStatDesc.getBaseValue(), statDescriptor.getBaseValue());
+      assertEquals(compareStatDesc.getAbilityPointsUsed(), statDescriptor.getAbilityPointsUsed());
+      assertEquals(compareStatDesc.isLevelStat(), statDescriptor.isLevelStat());
+    }
+    for (StatType statType : StatType.values()) {
+      characterSheet.setStats(new Stat[0]);
+      assertNull(characterSheet.getStatDescriptor(statType));
+    }
   }
 
   @Test
