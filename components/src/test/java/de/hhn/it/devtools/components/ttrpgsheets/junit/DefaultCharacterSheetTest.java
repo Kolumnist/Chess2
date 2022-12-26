@@ -367,6 +367,7 @@ class DefaultCharacterSheetTest {
 
   @Test
   void getStatOfTypeTest() {
+    logger.info("getStatOfTypeTest() is called");
     for (StatType statType : StatType.values()) {
       assertEquals(characterSheet.getStats()[statType.ordinal()],
               characterSheet.getStatOfType(statType));
