@@ -36,4 +36,11 @@ public class TestWordleGuess {
     wordleGuess.setLetterAtIndex(3,'g');
     assertEquals('g', wordleGuess.getLetterAtIndex(3));
   }
+
+  @Test
+  void deleteCharAtIndex4() {
+    WordleGuess wordleGuess = new WordleGuess("zebra");
+    wordleGuess.deleteLetterAtIndex(4);
+    assertEquals(' ',wordleGuess.getLetterAtIndex(4));
+  }
 }
