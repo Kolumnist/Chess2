@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -350,6 +351,18 @@ class DefaultCharacterSheetTest {
   }
 
   @Test
+  void getStatOfTypeTest() {
+    for (StatType statType : StatType.values()) {
+      assertEquals(characterSheet.getStats()[statType.ordinal()],
+              characterSheet.getStatOfType(statType));
+    }
+    for (StatType statType : StatType.values()) {
+      characterSheet.setStats(null);
+      assertNull(characterSheet.getStatOfType(statType));
+    }
+  }
+
+  @Test
   void changeDescriptionTest() {
     characterSheet.changeDescription(DescriptionType.CHARACTER_NAME, "Boris");
     assertEquals(characterSheet.getDescriptionDescriptor(DescriptionType.CHARACTER_NAME).getText(),
@@ -379,7 +392,7 @@ class DefaultCharacterSheetTest {
   void rollDiceTest() {
     logger.info("rollDiceTest() is called");
     DiceType[] diceTypes = {DiceType.D2, DiceType.D4, DiceType.D6, DiceType.D8,
-                            DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
+            DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
     for (DiceType diceType : diceTypes) {
       characterSheet.getDiceDescriptor().setDiceType(diceType);
       for (double i = 0; i < calculateAverageNumberOfRolls(
@@ -396,7 +409,7 @@ class DefaultCharacterSheetTest {
   void changeDiceTypeTest() {
     logger.info("changeDiceTypeTest() is called");
     DiceType[] diceTypes = {DiceType.D2, DiceType.D4, DiceType.D6, DiceType.D8,
-                            DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
+            DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
     for (DiceType diceTyp : diceTypes) {
       characterSheet.getDiceDescriptor().setDiceType(diceTyp);
       switch (characterSheet.getDice().getType()) {
