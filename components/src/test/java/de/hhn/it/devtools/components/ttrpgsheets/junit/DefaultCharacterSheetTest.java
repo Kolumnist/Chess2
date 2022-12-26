@@ -114,6 +114,27 @@ class DefaultCharacterSheetTest {
   @Test
   void wrapCharacterTest() {
     logger.info("wrapCharacterTest() is called");
+    CharacterDescriptor compCharDesc = setupCharacterDescriptor();
+    CharacterDescriptor testCharDesc = characterSheet.wrapCharacter();
+
+    for (int i = 0; i < compCharDesc.getDescriptions().length; i++) {
+      assertEquals(compCharDesc.getDescriptions()[i].getDescriptionType(),
+              testCharDesc.getDescriptions()[i].getDescriptionType());
+      assertEquals(compCharDesc.getDescriptions()[i].getText(),
+              testCharDesc.getDescriptions()[i].getText());
+    }
+    for (int i = 0; i < compCharDesc.getStats().length; i++) {
+      StatDescriptor compareStatDesc = compCharDesc.getStats()[i];
+      StatDescriptor statDescriptor = testCharDesc.getStats()[i];
+      assertEquals(compareStatDesc.getMiscellaneous(), statDescriptor.getMiscellaneous());
+      assertEquals(compareStatDesc.getStatType(), statDescriptor.getStatType());
+      assertEquals(compareStatDesc.getOffset(), statDescriptor.getOffset());
+      assertEquals(compareStatDesc.getBaseValue(), statDescriptor.getBaseValue());
+      assertEquals(compareStatDesc.getAbilityPointsUsed(), statDescriptor.getAbilityPointsUsed());
+      assertEquals(compareStatDesc.isLevelStat(), statDescriptor.isLevelStat());
+    }
+    assertEquals(compCharDesc.getDice().getDiceType(), testCharDesc.getDice().getDiceType());
+    assertEquals(compCharDesc.getDice().getResult(), testCharDesc.getDice().getResult());
   }
 
   @Test
