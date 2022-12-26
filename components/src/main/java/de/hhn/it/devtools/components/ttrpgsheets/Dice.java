@@ -137,6 +137,6 @@ public class Dice {
    */
   public DiceDescriptor toDiceDescriptor() {
     logger.info("toDiceDescriptor : no params");
-    return new DiceDescriptor(this.getType(), this.getSize());
+    return new DiceDescriptor(this.getType(), this.getValue());
   }
 }
