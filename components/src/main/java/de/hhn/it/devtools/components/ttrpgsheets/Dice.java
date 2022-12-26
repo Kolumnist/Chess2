@@ -1,6 +1,5 @@
 package de.hhn.it.devtools.components.ttrpgsheets;
 
-import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.DiceDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.DiceType;
 import java.util.Random;
