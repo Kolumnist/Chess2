@@ -53,59 +53,59 @@ public class LayoutGenerator {
 
 
         if (map.equals(Map.Grave_of_the_Mad_King)) {
-            startRoom.setNextDoorRoom(allRooms.get(1), false, true, false);
-            allRooms.get(1).setNextDoorRoom(allRooms.get(2), false, true, false);
-            allRooms.get(1).setNextDoorRoom(allRooms.get(3), false, false, true);
-            startRoom.setNextDoorRoom(allRooms.get(4), false, false, true);
-            allRooms.get(4).setNextDoorRoom(allRooms.get(5), false, false, true);
-            allRooms.get(5).setNextDoorRoom(allRooms.get(6), false, false, true);
-            allRooms.get(6).setNextDoorRoom(allRooms.get(7), true, false, false);
-            allRooms.get(7).setNextDoorRoom(allRooms.get(8), false, false, false);
-            startRoom.setNextDoorRoom(allRooms.get(9), true, false, false);
-            allRooms.get(9).setNextDoorRoom(allRooms.get(10), true, false, false);
-            allRooms.get(10).setNextDoorRoom(allRooms.get(11), true, false, false);
-            allRooms.get(11).setNextDoorRoom(allRooms.get(12), false, false, true);
+            startRoom.setNextDoorRoom(allRooms.get(1), Direction.WEST);
+            allRooms.get(1).setNextDoorRoom(allRooms.get(2), Direction.WEST);
+            allRooms.get(1).setNextDoorRoom(allRooms.get(3), Direction.NORTH);
+            startRoom.setNextDoorRoom(allRooms.get(4), Direction.NORTH);
+            allRooms.get(4).setNextDoorRoom(allRooms.get(5), Direction.NORTH);
+            allRooms.get(5).setNextDoorRoom(allRooms.get(6), Direction.NORTH);
+            allRooms.get(6).setNextDoorRoom(allRooms.get(7), Direction.EAST);
+            allRooms.get(7).setNextDoorRoom(allRooms.get(8), Direction.SOUTH);
+            startRoom.setNextDoorRoom(allRooms.get(9), Direction.EAST);
+            allRooms.get(9).setNextDoorRoom(allRooms.get(10), Direction.EAST);
+            allRooms.get(10).setNextDoorRoom(allRooms.get(11), Direction.EAST);
+            allRooms.get(11).setNextDoorRoom(allRooms.get(12), Direction.NORTH);
             logger.info(map.toString() + "created.");
         } else if (map.equals(Map.Ancient_Dungeon)) {
-            startRoom.setNextDoorRoom(allRooms.get(1), false, true, false);
-            allRooms.get(1).setNextDoorRoom(allRooms.get(4), false, true, false);
-            allRooms.get(4).setNextDoorRoom(allRooms.get(5), false, false, true);
-            allRooms.get(5).setNextDoorRoom(allRooms.get(7), false, false, true);
-            allRooms.get(7).setNextDoorRoom(allRooms.get(8), true, false, false);
-            allRooms.get(8).setNextDoorRoom(allRooms.get(6), true, false, false);
-            startRoom.setNextDoorRoom(allRooms.get(2), false, false, true);
-            allRooms.get(2).setNextDoorRoom(allRooms.get(6), false, false, true);
-            allRooms.get(6).setNextDoorRoom(allRooms.get(9), true, false, false);
-            startRoom.setNextDoorRoom(allRooms.get(3), true, false, false);
-            allRooms.get(3).setNextDoorRoom(allRooms.get(10), true, false, false);
-            allRooms.get(10).setNextDoorRoom(allRooms.get(11), false, false, true);
-            allRooms.get(11).setNextDoorRoom(allRooms.get(12), true, false, false);
+            startRoom.setNextDoorRoom(allRooms.get(1), Direction.WEST);
+            allRooms.get(1).setNextDoorRoom(allRooms.get(4), Direction.WEST);
+            allRooms.get(4).setNextDoorRoom(allRooms.get(5), Direction.NORTH);
+            allRooms.get(5).setNextDoorRoom(allRooms.get(7), Direction.NORTH);
+            allRooms.get(7).setNextDoorRoom(allRooms.get(8), Direction.EAST);
+            allRooms.get(8).setNextDoorRoom(allRooms.get(6), Direction.EAST);
+            startRoom.setNextDoorRoom(allRooms.get(2), Direction.NORTH);
+            allRooms.get(2).setNextDoorRoom(allRooms.get(6), Direction.NORTH);
+            allRooms.get(6).setNextDoorRoom(allRooms.get(9), Direction.EAST);
+            startRoom.setNextDoorRoom(allRooms.get(3), Direction.EAST);
+            allRooms.get(3).setNextDoorRoom(allRooms.get(10), Direction.EAST);
+            allRooms.get(10).setNextDoorRoom(allRooms.get(11), Direction.NORTH);
+            allRooms.get(11).setNextDoorRoom(allRooms.get(12), Direction.EAST);
             logger.info(map.toString() + "created.");
 
         } else if (map.equals(Map.Unknown_Sewers)) {
-            startRoom.setNextDoorRoom(allRooms.get(1), false, false, true);
-            allRooms.get(1).setNextDoorRoom(allRooms.get(2), false, false, true);
-            allRooms.get(2).setNextDoorRoom(allRooms.get(3), true, false, false);
-            allRooms.get(2).setNextDoorRoom(allRooms.get(4), false, true, false);
-            allRooms.get(2).setNextDoorRoom(allRooms.get(5), false, false, true);
-            allRooms.get(5).setNextDoorRoom(allRooms.get(6), false, false, true);
-            allRooms.get(6).setNextDoorRoom(allRooms.get(7), false, false, true);
-            allRooms.get(7).setNextDoorRoom(allRooms.get(8), false, true, false);
-            allRooms.get(7).setNextDoorRoom(allRooms.get(9), true, false, false);
-            allRooms.get(7).setNextDoorRoom(allRooms.get(10), false, false, true);
-            allRooms.get(10).setNextDoorRoom(allRooms.get(11), false, false, true);
-            allRooms.get(11).setNextDoorRoom(allRooms.get(12), false, false, true);
+            startRoom.setNextDoorRoom(allRooms.get(1), Direction.NORTH);
+            allRooms.get(1).setNextDoorRoom(allRooms.get(2), Direction.NORTH);
+            allRooms.get(2).setNextDoorRoom(allRooms.get(3), Direction.EAST);
+            allRooms.get(2).setNextDoorRoom(allRooms.get(4), Direction.WEST);
+            allRooms.get(2).setNextDoorRoom(allRooms.get(5), Direction.NORTH);
+            allRooms.get(5).setNextDoorRoom(allRooms.get(6), Direction.NORTH);
+            allRooms.get(6).setNextDoorRoom(allRooms.get(7), Direction.NORTH);
+            allRooms.get(7).setNextDoorRoom(allRooms.get(8), Direction.WEST);
+            allRooms.get(7).setNextDoorRoom(allRooms.get(9), Direction.EAST);
+            allRooms.get(7).setNextDoorRoom(allRooms.get(10), Direction.NORTH);
+            allRooms.get(10).setNextDoorRoom(allRooms.get(11), Direction.NORTH);
+            allRooms.get(11).setNextDoorRoom(allRooms.get(12), Direction.NORTH);
             logger.info(map.toString() + "created.");
         } else if (map.equals(Map.Circle_Of_Time)) {
-            startRoom.setNextDoorRoom(allRooms.get(2), false, false, true);
-            allRooms.get(2).setNextDoorRoom(allRooms.get(1), false, true, false);
-            allRooms.get(2).setNextDoorRoom(allRooms.get(3), true, false, false);
-            allRooms.get(1).setNextDoorRoom(allRooms.get(4), false, false, true);
-            allRooms.get(3).setNextDoorRoom(allRooms.get(6), false, false, true);
-            allRooms.get(4).setNextDoorRoom(allRooms.get(7), false, false, true);
-            allRooms.get(6).setNextDoorRoom(allRooms.get(9), false, false, true);
-            allRooms.get(8).setNextDoorRoom(allRooms.get(7), false, true, false);
-            allRooms.get(8).setNextDoorRoom(allRooms.get(9), true, false, false);
+            startRoom.setNextDoorRoom(allRooms.get(2), Direction.NORTH);
+            allRooms.get(2).setNextDoorRoom(allRooms.get(1), Direction.WEST);
+            allRooms.get(2).setNextDoorRoom(allRooms.get(3), Direction.EAST);
+            allRooms.get(1).setNextDoorRoom(allRooms.get(4), Direction.NORTH);
+            allRooms.get(3).setNextDoorRoom(allRooms.get(6), Direction.NORTH);
+            allRooms.get(4).setNextDoorRoom(allRooms.get(7), Direction.NORTH);
+            allRooms.get(6).setNextDoorRoom(allRooms.get(9), Direction.NORTH);
+            allRooms.get(8).setNextDoorRoom(allRooms.get(7), Direction.WEST);
+            allRooms.get(8).setNextDoorRoom(allRooms.get(9), Direction.EAST);
             Hallway rotate1 = new Hallway(specialRoomId, "A hallway. " +
                     "The walls touch your arms when you stretch too much.");
             specialRoomId++;
@@ -116,8 +116,8 @@ public class LayoutGenerator {
                             "a museum, or your own desk, if you can pass it´s judgement.");
             specialRoomId++;
 
-            rotate1.setNextDoorRoom(centerOfTime, false,false,false);
-            rotate1.setNextDoorRoom(allRooms.get(8), false, false, true);
+            rotate1.setNextDoorRoom(centerOfTime, Direction.SOUTH);
+            rotate1.setNextDoorRoom(allRooms.get(8), Direction.NORTH);
 
 
 

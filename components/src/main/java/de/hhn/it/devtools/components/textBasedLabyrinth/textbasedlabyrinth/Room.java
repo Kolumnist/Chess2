@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * Room class for the game, defines the rooms of the game
@@ -248,48 +249,33 @@ public class Room {
    * @throws NullPointerException room does not have items
    */
   public List<Item> search() throws NullPointerException {
-    if (items == null) {
-      throw new NullPointerException("Room could not hold items.");
-    }
-    boolean fail = false; // May need later.
+    List<Item> items1 = items.values().stream().collect(Collectors.toList());
+    return items1;
 
-    List<Item> items1 = items.values().stream().toList();
-
-    if (items1.isEmpty()) {
-      Item item = new Item(10077001, "NoItem", "opens door");
-      ArrayList<Item> items2 = new ArrayList<>();
-      items2.add(item);
-      return items2;
-    } else {
-      return items1;
-    }
   }
 
   /**
    * Set a room as the room next door for the current room and vis versa.
    *
    * @param room room to be assigned as the next door room
-   * @param isEast boolean check to see if the new room will be to the east of current room
-   * @param isWest boolean check to see if the new room will be to the west of current room
-   * @param isNorth boolean check to see if the new room will be to the north of current room
    */
-  public void setNextDoorRoom(Room room, Boolean isEast, Boolean isWest, Boolean isNorth) {
-    if (isEast && !isWest && !isNorth && !isEastAssigned) {
+  public void setNextDoorRoom(Room room,Direction direction) {
+    if (direction.equals(Direction.EAST)) {
       this.toTheEast = room;
       this.isEastAssigned = true;
       room.toTheWest = this;
       room.isWestAssigned = true;
-    } else if (isWest && !isEast && !isNorth && !isWestAssigned) {
+    } else if (direction.equals(Direction.WEST)) {
       this.toTheWest = room;
       this.isWestAssigned = true;
       room.toTheWest = this;
       room.isEastAssigned = true;
-    } else if (isNorth && !isEast && !isWest && !isNorthAssigned) {
+    } else if (direction.equals(Direction.NORTH)) {
       this.toTheNorth = room;
       this.isNorthAssigned = true;
       room.toTheSouth = this;
       room.isSouthAssigned = true;
-    } else if (!isNorth && !isEast && !isWest && !isSouthAssigned) {
+    } else if (direction.equals(Direction.SOUTH)) {
       this.toTheSouth = room;
       this.isSouthAssigned = true;
       room.toTheNorth = this;

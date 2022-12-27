@@ -35,7 +35,7 @@ public interface GameService {
    * @param itemId the id of the item to be removed.
    * @return the message, which is about the success or failure of the operation.
    */
-  String dropItem(int itemId);
+  String dropItem(int itemId) throws NoSuchItemFoundException;
 
 
   void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException;
@@ -43,13 +43,13 @@ public interface GameService {
   /**
    * Inspect a door/pathway.
    */
-  String inspect(Direction direction);
+  String inspect(Direction direction) throws RoomFailedException;;
 
   /**
    * Let the user interact with the environment.
    * (Solve puzzles)
    */
-  String interaction(Direction direction, Item item);
+  String interaction(Direction direction, Item item) throws RoomFailedException;;
 
   /**
    * Let the user search through the room.
@@ -100,4 +100,8 @@ public interface GameService {
    * @return updated Scoreboard
    */
   int updateScore(int newScore);
+
+  void addListener(OutputListener listener);
+
+  void removeListener(OutputListener listener);
 }
