@@ -2,6 +2,7 @@ package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.DiceDescriptor;
@@ -73,6 +74,7 @@ class DiceTest {
         default -> { }
       }
     }
+    assertNull(dice.convertToDiceType(3));
   }
 
   @Test
