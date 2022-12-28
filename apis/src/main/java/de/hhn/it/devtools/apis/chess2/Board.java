@@ -24,6 +24,7 @@ public class Board {
     for (int y = 0; y < 8; y++) {
       for (int x = 0; x < 8; x++) {
         fields[++diff] = new Field(new Coordinate(x, y));
+        fields[diff].setFieldState(FieldState.FREE_FIELD);
       }
     }
 
