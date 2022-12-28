@@ -11,7 +11,6 @@ import de.hhn.it.devtools.components.chess2.pieces.King;
 import de.hhn.it.devtools.components.chess2.pieces.Monkey;
 import de.hhn.it.devtools.components.chess2.pieces.Queen;
 import java.util.Optional;
-import java.util.Random;
 
 /**
  * The Player class should display a player that has his pieces
@@ -49,34 +48,60 @@ public class Player {
    * @param board is needed for the pieces
    */
   protected void initializeMyPieces(Board board) {
-    int coordOffset;
+    int coordOffset7 = 0;
+    int coordOffset5 = 0;
+
     if (color == 'w') {
-      coordOffset = -1;
       myPieces[14] = new Queen(color, new Coordinate(3, 0));
       myPieces[15] = new King(color, new Coordinate(4, 0));
     } else {
-      coordOffset = 5;
+      coordOffset5 = 5;
+      coordOffset7 = 7;
       myPieces[14] = new Queen(color, new Coordinate(4, 7));
       myPieces[15] = new King(color, new Coordinate(3, 7));
     }
 
-    myPieces[0] = new Fish(color, new Coordinate(0, coordOffset + 2));
-    myPieces[1] = new Fish(color, new Coordinate(1, coordOffset + 2));
-    myPieces[2] = new Fish(color, new Coordinate(2, coordOffset + 1));
-    myPieces[3] = new Fish(color, new Coordinate(3, coordOffset + 2));
-    myPieces[4] = new Fish(color, new Coordinate(4, coordOffset + 2));
-    myPieces[5] = new Fish(color, new Coordinate(5, coordOffset + 1));
-    myPieces[6] = new Fish(color, new Coordinate(6, coordOffset + 2));
-    myPieces[7] = new Fish(color, new Coordinate(7, coordOffset + 2));
+    /* 0 / 1 ____ 0 / 7*/
+    myPieces[0] = new Fish(color, new Coordinate(0, coordOffset5 + 1));
 
-    myPieces[8] = new Crow(color, new Coordinate(0, coordOffset + 1));
-    myPieces[9] = new Crow(color, new Coordinate(7, coordOffset + 1));
+    /* 1 / 1 ____ 1 / 7*/
+    myPieces[1] = new Fish(color, new Coordinate(1, coordOffset5 + 1));
 
-    myPieces[10] = new Monkey(color, new Coordinate(1, coordOffset + 1));
-    myPieces[11] = new Monkey(color, new Coordinate(6, coordOffset + 1));
+    /* 2 / 0 ____ 2 / 6*/
+    myPieces[2] = new Fish(color, new Coordinate(2, coordOffset7 + 0));
 
-    myPieces[12] = new Elephant(color, new Coordinate(2, coordOffset + 2));
-    myPieces[13] = new Elephant(color, new Coordinate(5, coordOffset + 2));
+    /* 3 / 1 ____ 3 / 7*/
+    myPieces[3] = new Fish(color, new Coordinate(3, coordOffset5 + 1));
+
+    /* 4 / 1 ____ 4 / 7*/
+    myPieces[4] = new Fish(color, new Coordinate(4, coordOffset5 + 1));
+
+    /* 5 / 0 ____ 5 / 6*/
+    myPieces[5] = new Fish(color, new Coordinate(5, coordOffset7 + 0));
+
+    /* 6 / 1 ____ 6 / 7*/
+    myPieces[6] = new Fish(color, new Coordinate(6, coordOffset5 + 1));
+
+    /* 7 / 1 ____ 7 / 7*/
+    myPieces[7] = new Fish(color, new Coordinate(7, coordOffset5 + 1));
+
+    /* 0 / 0 ____ 7 / 6*/
+    myPieces[8] = new Crow(color, new Coordinate(0, coordOffset7 + 0));
+
+    /* 7 / 0 ____ 7 / 6*/
+    myPieces[9] = new Crow(color, new Coordinate(7, coordOffset7 + 0));
+
+    /* 1 / 0 ____ 1 / 6*/
+    myPieces[10] = new Monkey(color, new Coordinate(1, coordOffset7 + 0));
+
+    /* 6 / 0 ____ 6 / 6*/
+    myPieces[11] = new Monkey(color, new Coordinate(6, coordOffset7 + 0));
+
+    /* 2 / 1 ____ 2 / 7*/
+    myPieces[12] = new Elephant(color, new Coordinate(2, coordOffset5 + 1));
+
+    /* 5 / 1 ____ 5 / 7*/
+    myPieces[13] = new Elephant(color, new Coordinate(5, coordOffset5 + 1));
   }
 
   /**
