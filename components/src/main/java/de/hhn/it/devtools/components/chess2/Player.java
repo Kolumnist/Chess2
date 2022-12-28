@@ -25,7 +25,6 @@ public class Player {
   protected char color;
   protected Piece[] myPieces = new Piece[16];
   protected Board gameBoard;
-  protected boolean lostPiece = false;
 
   /**
    * The Constructor for a player participating on a ChessGame.
@@ -49,14 +48,14 @@ public class Player {
    *
    * @param board is needed for the pieces
    */
-  private void initializeMyPieces(Board board) {
+  protected void initializeMyPieces(Board board) {
     int coordOffset;
     if (color == 'w') {
       coordOffset = -1;
       myPieces[14] = new Queen(color, new Coordinate(3, 0));
       myPieces[15] = new King(color, new Coordinate(4, 0));
     } else {
-      coordOffset = 6;
+      coordOffset = 5;
       myPieces[14] = new Queen(color, new Coordinate(4, 7));
       myPieces[15] = new King(color, new Coordinate(3, 7));
     }
@@ -81,26 +80,35 @@ public class Player {
   }
 
   /**
-   * This method puts the King/Queen in a beforehand assigned jail.
+   * This method puts the King in a beforehand assigned jail.
    *
    * @param jailPiece is the piece that gets put in the jail.
-   * @param jailCoordinate is the coordinate for the jail field.
-   * @return if it worked or didn't work to make sure the piece gets put in jail.
    */
-  protected boolean setPieceOnJail(Piece jailPiece, Coordinate jailCoordinate) {
-
-    /*TODO: There is still an error because the jailCoordinate could be an old one */
-    if (jailPiece.getClass().equals(King.class)) {
-      gameBoard.getSpecificField(jailCoordinate).setFieldState(FieldState.JAIL_KING);
-      gameBoard.getSpecificField(jailCoordinate).setPiece(Optional.of(jailPiece));
-
-      return true;
-    } else if (jailPiece.getClass().equals(Queen.class)) {
-      gameBoard.getSpecificField(jailCoordinate).setFieldState(FieldState.JAIL_QUEEN);
-      gameBoard.getSpecificField(jailCoordinate).setPiece(Optional.of(jailPiece));
-
-      return true;
+  protected void setKingOnJail(Piece jailPiece) {
+    Coordinate jailCoordinate;
+    if (this.color == 'w') {
+      jailCoordinate = new Coordinate(8, 3);
+    } else {
+      jailCoordinate = new Coordinate(9, 4);
     }
-    return false;
+    gameBoard.getSpecificField(jailCoordinate).setFieldState(FieldState.JAIL_KING);
+    gameBoard.getSpecificField(jailCoordinate).setPiece(Optional.of(jailPiece));
   }
+
+  /**
+   * This method puts the Queen in a beforehand assigned jail.
+   *
+   * @param jailPiece is the piece that gets put in the jail.
+   */
+  protected void setQueenOnJail(Piece jailPiece) {
+    Coordinate jailCoordinate;
+    if (this.color == 'w') {
+      jailCoordinate = new Coordinate(8, 4);
+    } else {
+      jailCoordinate = new Coordinate(9, 3);
+    }
+    gameBoard.getSpecificField(jailCoordinate).setFieldState(FieldState.JAIL_KING);
+    gameBoard.getSpecificField(jailCoordinate).setPiece(Optional.of(jailPiece));
+  }
+
 }
