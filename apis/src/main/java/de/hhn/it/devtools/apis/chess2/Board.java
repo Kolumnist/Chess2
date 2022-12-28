@@ -11,6 +11,7 @@ package de.hhn.it.devtools.apis.chess2;
 public class Board {
 
   private final Field[] fields = new Field[68];
+  public boolean lostPiece = false;
 
   /**
    * Constructor of board.
