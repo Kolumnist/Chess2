@@ -84,4 +84,11 @@ public interface Chess2Service {
    * @return the current GameState
    */
   GameState getGameState();
+
+  /**
+   * Returns the Board to check with the current fields and update it accordingly in the UI
+   *
+   * @return the current Board
+   */
+  Board getBoard();
 }
