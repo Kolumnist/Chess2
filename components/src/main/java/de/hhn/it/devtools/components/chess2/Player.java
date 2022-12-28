@@ -17,7 +17,7 @@ import java.util.Optional;
  * and a color.
  *
  * @author Collin Hoss, Lara Mangi, Michel Jouaux
- * @version 1.2
+ * @version 1.3
  */
 public class Player {
 

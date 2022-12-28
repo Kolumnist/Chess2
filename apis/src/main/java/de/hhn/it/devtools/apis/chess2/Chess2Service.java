@@ -6,7 +6,7 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
  * This class handles all communication between player and components.
  *
  * @author Collin Hoss, Lara Mangi, Michel Jouaux
- * @version 1.1
+ * @version 1.2
  */
 public interface Chess2Service {
 
