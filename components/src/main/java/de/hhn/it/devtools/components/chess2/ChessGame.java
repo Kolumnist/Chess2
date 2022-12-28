@@ -19,7 +19,7 @@ import java.util.Random;
  * The main Controller class.
  *
  * @author Collin Hoss, Lara Mangi, Michel Jouaux
- * @version 1.2
+ * @version 1.3
  */
 
 public class ChessGame implements Chess2Service {
@@ -32,7 +32,7 @@ public class ChessGame implements Chess2Service {
   private Player currentPlayer;
   private Coordinate bearCoordinate;
 
-  protected Board gameBoard;
+  protected final Board gameBoard;
   protected WinningPlayerState winState;
   protected GameState gameState;
 
@@ -58,9 +58,27 @@ public class ChessGame implements Chess2Service {
   private void initializeBoard() {
     logger.info("initializeBoard");
 
+    /* Set all FieldState beside the Jail to Free_Field */
+    int diff = -1;
+    for (int y = 0; y < 8; y++) {
+      for (int x = 0; x < 8; x++) {
+        gameBoard.getFields()[++diff].setFieldState(FieldState.FREE_FIELD);
+      }
+    }
+
+    /* Set the FieldState of the Jails to Jail */
+    int fieldsMax = gameBoard.getFields().length;
+    gameBoard.getFields()[fieldsMax - 4].setFieldState(FieldState.JAIL);
+    gameBoard.getFields()[fieldsMax - 2].setFieldState(FieldState.JAIL);
+    gameBoard.getFields()[fieldsMax - 3].setFieldState(FieldState.JAIL);
+    gameBoard.getFields()[fieldsMax - 1].setFieldState(FieldState.JAIL);
+
+    /* Set the Pieces back to the old position */
+    whitePlayer.initializeMyPieces(gameBoard);
+    blackPlayer.initializeMyPieces(gameBoard);
+
     Piece whitePiece;
     Piece blackPiece;
-
     for (int i = 0; i < whitePlayer.myPieces.length; i++) {
       whitePiece = whitePlayer.myPieces[i];
       blackPiece = blackPlayer.myPieces[i];
@@ -78,20 +96,41 @@ public class ChessGame implements Chess2Service {
           .setFieldState(FieldState.HAS_OTHER_PIECE);
     }
     /* Set Optional Piece and FieldState of the Bear */
-    gameBoard.getSpecificField(bearCoordinate)
-        .setPiece(Optional.of(new Bear('g', bearCoordinate)));
+    //gameBoard.getSpecificField(bearCoordinate)
+    //.setPiece(Optional.of(new Bear('g', bearCoordinate)));
     gameBoard.getSpecificField(bearCoordinate)
         .setFieldState(FieldState.HAS_BEAR);
   }
 
   private void setUpNewRound() {
+
+    if (whitePlayer == currentPlayer) {
+      currentPlayer = blackPlayer;
+    } else {
+      currentPlayer = whitePlayer;
+    }
+
+    //Could do a switch case, but I don't think it differs much
+    for (Field field : gameBoard.getFields()) {
+      if (field.getFieldState() == FieldState.HAS_CURRENT_PIECE) {
+        gameBoard.getSpecificField(field.getCoordinate())
+            .setFieldState(FieldState.HAS_OTHER_PIECE);
+        continue;
+      }
+      if (field.getFieldState() == FieldState.HAS_OTHER_PIECE) {
+        gameBoard.getSpecificField(field.getCoordinate())
+            .setFieldState(FieldState.HAS_CURRENT_PIECE);
+      }
+    }
+
+    /*TODO: test if there is a mate or checkmate*/
+
     for (Piece piece : whitePlayer.myPieces) {
 
     }
     for (Piece piece : blackPlayer.myPieces) {
 
     }
-
   }
 
   @Override
@@ -104,6 +143,7 @@ public class ChessGame implements Chess2Service {
     bearCoordinate = new Coordinate(x, y);
 
     initializeBoard();
+    gameBoard.lostPiece = false;
 
     gameState = GameState.RUNNING;
     winState = WinningPlayerState.STILL_RUNNING;
@@ -112,12 +152,11 @@ public class ChessGame implements Chess2Service {
     return gameBoard;
   }
 
-  /* TODO: think really hard about what this method should do */
   @Override
   public void endGame() {
     logger.info("endGame");
 
-    currentPlayer = whitePlayer;
+    //currentPlayer = whitePlayer;
     gameState = null;
     winState = WinningPlayerState.NO_WINNER;
   }
@@ -125,6 +164,10 @@ public class ChessGame implements Chess2Service {
   @Override
   public void giveUp() {
     logger.info("giveUp");
+
+    if (gameState == GameState.CHECKMATE) {
+      return;
+    }
 
     gameState = GameState.CHECKMATE;
     if (currentPlayer == whitePlayer) {
@@ -149,6 +192,20 @@ public class ChessGame implements Chess2Service {
   }
 
   @Override
+  public Board getBoard() {
+    logger.info("getBoard");
+
+    return gameBoard;
+  }
+
+  @Override
+  public FieldState getFieldState(Coordinate selectedCoordinate) throws IllegalParameterException {
+    logger.info("getFieldState", selectedCoordinate);
+
+    return gameBoard.getSpecificField(selectedCoordinate).getFieldState();
+  }
+
+  @Override
   public Coordinate[] getCurrentFields() {
     logger.info("getCurrentFields");
 
@@ -156,7 +213,7 @@ public class ChessGame implements Chess2Service {
     for (int i = 0; i < currentPlayer.myPieces.length; i++) {
       currentCoordinates[i] = currentPlayer.myPieces[i].getCoordinate();
     }
-    //This returns all pieces also defeated once that have no coordinate on the field but it can
+    //This returns all pieces also defeated once that have no coordinate on the field, but it can
     //still get checked by the UI if it is even a possible Button!
     return currentCoordinates;
   }
@@ -166,54 +223,69 @@ public class ChessGame implements Chess2Service {
       throws IllegalParameterException {
     logger.info("getPossibleMoves", selectedPieceCoordinate);
 
-    Field field = gameBoard.getSpecificField(selectedPieceCoordinate);
-    gameBoard.getSpecificField(selectedPieceCoordinate).setFieldState(FieldState.SELECTED);
-
-    if (field.getFieldState() == FieldState.HAS_CURRENT_PIECE
-        || field.getFieldState() == FieldState.HAS_BEAR) {
-      return field.getPiece().getPossibleMove();
+    for (int i = 0; i < gameBoard.getFields().length; i++) {
+      if (gameBoard.getFields()[i].getFieldState() == FieldState.SELECTED) {
+        gameBoard.getFields()[i].setFieldState(FieldState.HAS_CURRENT_PIECE);
+        break;
+      }
     }
 
+    Field field = gameBoard.getSpecificField(selectedPieceCoordinate);
+    if (field.getFieldState() == FieldState.HAS_CURRENT_PIECE
+        || field.getFieldState() == FieldState.HAS_BEAR) {
+
+      gameBoard.getSpecificField(selectedPieceCoordinate).setFieldState(FieldState.SELECTED);
+      return field.getPiece().getPossibleMove();
+    }
     return new Coordinate[0];
   }
 
-  /* TODO: Next method with Michel */
   @Override
   public void moveSelectedPiece(Coordinate selectedCoordinate, Coordinate newCoordinate)
       throws IllegalParameterException {
     logger.info("moveSelectedPiece", selectedCoordinate, newCoordinate);
 
-    /* TODO: Check if there is a Piece on the field two fields */
-
-    Piece currentPiece = gameBoard.getSpecificField(selectedCoordinate).getPiece();
-    Piece otherPiece = gameBoard.getSpecificField(newCoordinate).getPiece();
-
-    if (otherPiece.getClass().equals(King.class) || otherPiece.getClass().equals(Queen.class)) {
-
-      /*TODO: Doc some stuff here it is complicated*/
-      int jailOffset = new Random().nextInt(0, 2);
-      if (currentPlayer == whitePlayer) {
-        Coordinate jailCoordinate = new Coordinate(3 + jailOffset, 8 + jailOffset);
-        whitePlayer.setPieceOnJail(otherPiece, jailCoordinate);
-      } else if (currentPlayer == blackPlayer) {
-        Coordinate jailCoordinate = new Coordinate(4 - jailOffset, 8 + jailOffset);
-        blackPlayer.setPieceOnJail(otherPiece, jailCoordinate);
-      }
+    if (gameBoard.getSpecificField(selectedCoordinate).getFieldState() != FieldState.SELECTED) {
+      return;
     }
 
-    gameBoard.getSpecificField(selectedCoordinate).setPiece(Optional.empty());
-    gameBoard.getSpecificField(newCoordinate).setPiece(Optional.ofNullable(currentPiece));
-    gameBoard.getSpecificField(selectedCoordinate).setFieldState(FieldState.FREE_FIELD);
-    gameBoard.getSpecificField(newCoordinate).setFieldState(FieldState.HAS_CURRENT_PIECE);
+    /*TODO: COMMENT DUDE WTH*/
+    gameBoard.getSpecificField(newCoordinate)
+        .setPiece(Optional.of(gameBoard.getSpecificField(selectedCoordinate).getPiece()));
+    gameBoard.getSpecificField(newCoordinate)
+        .setFieldState(FieldState.HAS_CURRENT_PIECE);
+
+    gameBoard.getSpecificField(selectedCoordinate)
+        .setPiece(Optional.empty());
+    gameBoard.getSpecificField(selectedCoordinate)
+        .setFieldState(FieldState.FREE_FIELD);
+
+    FieldState oldFieldState = gameBoard.getSpecificField(newCoordinate).getFieldState();
+    Piece otherPiece = gameBoard.getSpecificField(newCoordinate).getPiece();
+
+    if (oldFieldState == FieldState.FREE_FIELD) {
+      gameBoard.lostPiece = false;
+    } else if (oldFieldState == FieldState.HAS_OTHER_PIECE) {
+
+      if (otherPiece.getClass().equals(King.class)) {
+        currentPlayer.setKingOnJail(gameBoard.getSpecificField(newCoordinate).getPiece());
+      } else if (otherPiece.getClass().equals(Queen.class)) {
+        currentPlayer.setQueenOnJail(gameBoard.getSpecificField(newCoordinate).getPiece());
+      }
+
+      gameBoard.lostPiece = true;
+
+      /*TODO: damn you industrial revolution I have to change the Pieces too I FORGOR!!!!*/
+      gameBoard.getSpecificField(newCoordinate).getPiece();
+
+
+    } else if (oldFieldState == FieldState.HAS_BEAR) {
+      gameBoard.getSpecificField(newCoordinate).setPiece(Optional.empty());
+      gameBoard.getSpecificField(newCoordinate).setFieldState(FieldState.FREE_FIELD);
+      /*TODO: does bear kill count for the crow?? I'd say yes*/
+      gameBoard.lostPiece = true;
+    }
 
     setUpNewRound();
-
-  }
-
-  @Override
-  public FieldState getFieldState(Coordinate selectedCoordinate) throws IllegalParameterException {
-    logger.info("getFieldState", selectedCoordinate);
-
-    return gameBoard.getSpecificField(selectedCoordinate).getFieldState();
   }
 }
