@@ -49,14 +49,16 @@ public interface Chess2Service {
       throws IllegalParameterException, IllegalParameterException;
 
   /**
-   * Changes the position of the selected piece.
+   * Changes the position of the selected piece and initializes a new Round if the moved piece
+   * was not a monkey.
    *
    * @param selectedCoordinate the position of the selected piece
    * @param newCoordinate      the new position of the piece
+   * @return freshly set board
    * @throws IllegalParameterException if newPos is a null reference or incomplete
    * @throws IllegalStateException     if the method gets called during a wrong state
    */
-  void moveSelectedPiece(Coordinate selectedCoordinate, Coordinate newCoordinate)
+  Board moveSelectedPiece(Coordinate selectedCoordinate, Coordinate newCoordinate)
       throws IllegalParameterException, InvalidMoveException, IllegalStateException;
 
   /**
@@ -84,11 +86,4 @@ public interface Chess2Service {
    * @return the current GameState
    */
   GameState getGameState();
-
-  /**
-   * Returns the Board to check with the current fields and update it accordingly in the UI
-   *
-   * @return the current Board
-   */
-  Board getBoard();
 }

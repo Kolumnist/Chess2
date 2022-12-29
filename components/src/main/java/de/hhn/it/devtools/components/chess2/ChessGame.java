@@ -192,13 +192,6 @@ public class ChessGame implements Chess2Service {
   }
 
   @Override
-  public Board getBoard() {
-    logger.info("getBoard");
-
-    return gameBoard;
-  }
-
-  @Override
   public FieldState getFieldState(Coordinate selectedCoordinate) throws IllegalParameterException {
     logger.info("getFieldState", selectedCoordinate);
 
@@ -241,12 +234,12 @@ public class ChessGame implements Chess2Service {
   }
 
   @Override
-  public void moveSelectedPiece(Coordinate selectedCoordinate, Coordinate newCoordinate)
+  public Board moveSelectedPiece(Coordinate selectedCoordinate, Coordinate newCoordinate)
       throws IllegalParameterException {
     logger.info("moveSelectedPiece", selectedCoordinate, newCoordinate);
 
     if (gameBoard.getSpecificField(selectedCoordinate).getFieldState() != FieldState.SELECTED) {
-      return;
+      return gameBoard;
     }
 
     /*TODO: COMMENT DUDE WTH*/
@@ -287,5 +280,6 @@ public class ChessGame implements Chess2Service {
     }
 
     setUpNewRound();
+    return gameBoard;
   }
 }
