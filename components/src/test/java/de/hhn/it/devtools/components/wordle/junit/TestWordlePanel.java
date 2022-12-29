@@ -19,6 +19,13 @@ public class TestWordlePanel {
         assertEquals(0, wordlePanelO.getId());
     }
 
+    @Test
+    void shouldDeleteLetterFromPanel() {
+        WordlePanel wordflePanelA = new WordlePanel('A');
+        wordflePanelA.deleteLetter();
+        assertEquals(' ', wordflePanelA.getLetter());
+    }
+
 
 
 }
