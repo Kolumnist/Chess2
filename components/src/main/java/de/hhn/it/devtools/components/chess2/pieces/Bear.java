@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class Bear extends Piece {
 
-  Bear(char color, Coordinate coordinate) {
+  public Bear(char color, Coordinate coordinate) {
     super(color, coordinate);
   }
 
