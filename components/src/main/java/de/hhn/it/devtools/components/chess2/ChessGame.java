@@ -19,7 +19,7 @@ import java.util.Random;
  * The main Controller class.
  *
  * @author Collin Hoss, Lara Mangi, Michel Jouaux
- * @version 1.3
+ * @version 1.4
  */
 
 public class ChessGame implements Chess2Service {
@@ -51,9 +51,8 @@ public class ChessGame implements Chess2Service {
   }
 
   /**
-   * All Player pieces get "set" on the Board
-   * and the fieldStates get set.
-   * The bear piece get "set" on the Board.
+   * All Player pieces get "set" on the Board and the fieldStates get set. The bear piece get "set"
+   * on the Board.
    */
   private void initializeBoard() {
     logger.info("initializeBoard");
@@ -102,8 +101,65 @@ public class ChessGame implements Chess2Service {
         .setFieldState(FieldState.HAS_BEAR);
   }
 
-  private void setUpNewRound() {
+  /**
+   * We check through all Jail fields if there is any Queen/King and
+   * raise the black/white counter. Should the counter hit 2 one player wins
+   *
+   * @return if a player won or not! (true = won / false = not)
+   */
+  private boolean handleWin() {
+    logger.info("handleWin");
 
+    int blackLose = 0;
+    int whiteLose = 0;
+
+    Field[] fields = gameBoard.getFields();
+
+    /* Go through all 4 Jail fields and check if there is a King or Queen on it */
+    for (int i = 1; i < 5; i++) {
+      if ((fields[fields.length - i].getFieldState() == FieldState.JAIL_KING
+          && fields[fields.length - i].getPiece().getColor() == 'b')
+          || (fields[fields.length - i].getFieldState() == FieldState.JAIL_QUEEN
+          && fields[fields.length - i].getPiece().getColor() == 'b')) {
+        blackLose++;
+        continue;
+      }
+      if ((fields[fields.length - i].getFieldState() == FieldState.JAIL_KING
+          && fields[fields.length - i].getPiece().getColor() == 'w')
+          || (fields[fields.length - i].getFieldState() == FieldState.JAIL_QUEEN
+          && fields[fields.length - i].getPiece().getColor() == 'w')) {
+        whiteLose++;
+      }
+    }
+
+    /* Should a player have both his King and Queen in Jail, return true and "end the game"*/
+    if (whiteLose == 2) {
+      gameState = GameState.CHECKMATE;
+      winState = WinningPlayerState.BLACK_WIN;
+      return true;
+    }
+    if (blackLose == 2) {
+      gameState = GameState.CHECKMATE;
+      winState = WinningPlayerState.WHITE_WIN;
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Before every new Round this method gets called.
+   * It initializes the new Round sets all fieldStates and currentPlayer to the
+   * correct value. It also TODO: tests if there is a Mate/Check
+   */
+  private void setUpNewRound() {
+    logger.info("setUpNewRound");
+
+    /* Call handleWin() if it is true yeah we do nothing */
+    if (handleWin()) {
+      return;
+    }
+
+    /* Switch currentPlayer to the otherPlayer */
     if (whitePlayer == currentPlayer) {
       currentPlayer = blackPlayer;
     } else {
@@ -111,6 +167,7 @@ public class ChessGame implements Chess2Service {
     }
 
     //Could do a switch case, but I don't think it differs much
+    /* Switch FieldStates from HAS_CURRENT_PIECE to HAS_OTHER_PIECE and the other way round */
     for (Field field : gameBoard.getFields()) {
       if (field.getFieldState() == FieldState.HAS_CURRENT_PIECE) {
         gameBoard.getSpecificField(field.getCoordinate())
@@ -123,7 +180,7 @@ public class ChessGame implements Chess2Service {
       }
     }
 
-    /*TODO: test if there is a mate or checkmate*/
+    /*TODO: test if there is a mate*/
 
     for (Piece piece : whitePlayer.myPieces) {
 
@@ -165,7 +222,7 @@ public class ChessGame implements Chess2Service {
   public void giveUp() {
     logger.info("giveUp");
 
-    if (gameState == GameState.CHECKMATE) {
+    if (gameState == GameState.CHECKMATE || winState != WinningPlayerState.STILL_RUNNING) {
       return;
     }
 
@@ -216,6 +273,11 @@ public class ChessGame implements Chess2Service {
       throws IllegalParameterException {
     logger.info("getPossibleMoves", selectedPieceCoordinate);
 
+    if (gameState == GameState.CHECKMATE || winState != WinningPlayerState.STILL_RUNNING) {
+      return new Coordinate[0];
+    }
+
+    /* Should a Piece be SELECTED already it gets the new FieldState HAS_CURRENT_PIECE */
     for (int i = 0; i < gameBoard.getFields().length; i++) {
       if (gameBoard.getFields()[i].getFieldState() == FieldState.SELECTED) {
         gameBoard.getFields()[i].setFieldState(FieldState.HAS_CURRENT_PIECE);
@@ -223,6 +285,7 @@ public class ChessGame implements Chess2Service {
       }
     }
 
+    /* When a "correct" Field gets selected the pieces possible Moves get returned */
     Field field = gameBoard.getSpecificField(selectedPieceCoordinate);
     if (field.getFieldState() == FieldState.HAS_CURRENT_PIECE
         || field.getFieldState() == FieldState.HAS_BEAR) {
@@ -230,6 +293,8 @@ public class ChessGame implements Chess2Service {
       gameBoard.getSpecificField(selectedPieceCoordinate).setFieldState(FieldState.SELECTED);
       return field.getPiece().getPossibleMove();
     }
+
+    //Should the selectedCoordinate be a "bad" value we return an empty array (length 0)
     return new Coordinate[0];
   }
 
@@ -242,42 +307,76 @@ public class ChessGame implements Chess2Service {
       return gameBoard;
     }
 
-    /*TODO: COMMENT DUDE WTH*/
-    gameBoard.getSpecificField(newCoordinate)
-        .setPiece(Optional.of(gameBoard.getSpecificField(selectedCoordinate).getPiece()));
-    gameBoard.getSpecificField(newCoordinate)
-        .setFieldState(FieldState.HAS_CURRENT_PIECE);
-
-    gameBoard.getSpecificField(selectedCoordinate)
-        .setPiece(Optional.empty());
-    gameBoard.getSpecificField(selectedCoordinate)
-        .setFieldState(FieldState.FREE_FIELD);
-
     FieldState oldFieldState = gameBoard.getSpecificField(newCoordinate).getFieldState();
-    Piece otherPiece = gameBoard.getSpecificField(newCoordinate).getPiece();
 
+    /* Selected Piece gets moved to the new Coordinate also FieldState */
     if (oldFieldState == FieldState.FREE_FIELD) {
+
+      //Piece gets new Coordinate
+      gameBoard.getSpecificField(selectedCoordinate).getPiece()
+          .setCoordinate(newCoordinate);
+
+      //New Field gets updated & lostPiece set to false
+      gameBoard.getSpecificField(newCoordinate)
+          .setPiece(Optional.of(gameBoard.getSpecificField(selectedCoordinate).getPiece()));
+      gameBoard.getSpecificField(newCoordinate)
+          .setFieldState(FieldState.HAS_CURRENT_PIECE);
       gameBoard.lostPiece = false;
+
+      /* Selected Piece gets moved to the new Coordinate also FieldState.
+      * Checks if the hit Piece is a King or Queen they get send to Jail accordingly.
+      * Lastly it sets the Coordinate of the otherPiece to -1/-1 */
     } else if (oldFieldState == FieldState.HAS_OTHER_PIECE) {
 
-      if (otherPiece.getClass().equals(King.class)) {
+      //Piece gets new Coordinate
+      gameBoard.getSpecificField(selectedCoordinate).getPiece()
+          .setCoordinate(newCoordinate);
+
+      /* Test for Queen/King and put them in Jail */
+      if (gameBoard.getSpecificField(newCoordinate).getPiece()
+          .getClass().equals(King.class)) {
         currentPlayer.setKingOnJail(gameBoard.getSpecificField(newCoordinate).getPiece());
-      } else if (otherPiece.getClass().equals(Queen.class)) {
+      } else if (gameBoard.getSpecificField(newCoordinate).getPiece()
+          .getClass().equals(Queen.class)) {
         currentPlayer.setQueenOnJail(gameBoard.getSpecificField(newCoordinate).getPiece());
+      /* Or update the destroyed Piece */
+      } else {
+        gameBoard.getSpecificField(newCoordinate).getPiece()
+            .setCoordinate(-1, -1);
+      }
+      //New Field gets updated & lostPiece set to true
+      gameBoard.getSpecificField(newCoordinate)
+          .setPiece(Optional.of(gameBoard.getSpecificField(selectedCoordinate).getPiece()));
+      gameBoard.getSpecificField(newCoordinate)
+          .setFieldState(FieldState.HAS_CURRENT_PIECE);
+      gameBoard.lostPiece = true;
+
+      /* The new Field has the Bear on it. Both Pieces get destroyed and yes King/Queen get
+      * send to Jail if they slay the bear.*/
+    } else if (oldFieldState == FieldState.HAS_BEAR) {
+
+      /* Test for Queen/King and put them in Jail */
+      if (gameBoard.getSpecificField(selectedCoordinate).getPiece()
+          .getClass().equals(King.class)) {
+        currentPlayer.setKingOnJail(gameBoard.getSpecificField(selectedCoordinate).getPiece());
+      } else if (gameBoard.getSpecificField(selectedCoordinate).getPiece()
+          .getClass().equals(Queen.class)) {
+        currentPlayer.setQueenOnJail(gameBoard.getSpecificField(selectedCoordinate).getPiece());
+      /* Or update the destroyed Piece */
+      } else {
+        gameBoard.getSpecificField(newCoordinate).getPiece()
+            .setCoordinate(-1, -1);
       }
 
-      gameBoard.lostPiece = true;
-
-      /*TODO: damn you industrial revolution I have to change the Pieces too I FORGOR!!!!*/
-      gameBoard.getSpecificField(newCoordinate).getPiece();
-
-
-    } else if (oldFieldState == FieldState.HAS_BEAR) {
+      //New Field gets updated & lostPiece set to true
       gameBoard.getSpecificField(newCoordinate).setPiece(Optional.empty());
       gameBoard.getSpecificField(newCoordinate).setFieldState(FieldState.FREE_FIELD);
-      /*TODO: does bear kill count for the crow?? I'd say yes*/
       gameBoard.lostPiece = true;
     }
+
+    //The old SELECTED Field gets updated
+    gameBoard.getSpecificField(selectedCoordinate).setPiece(Optional.empty());
+    gameBoard.getSpecificField(selectedCoordinate).setFieldState(FieldState.FREE_FIELD);
 
     setUpNewRound();
     return gameBoard;
