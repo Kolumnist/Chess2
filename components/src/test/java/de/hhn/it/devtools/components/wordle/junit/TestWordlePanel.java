@@ -12,4 +12,13 @@ public class TestWordlePanel {
         WordlePanel wordlePanelD = new WordlePanel('d');
         assertEquals('d', wordlePanelD.getLetter());
     }
+
+    @Test
+    void shouldReturnIdOfWordlePanel() {
+        WordlePanel wordlePanelO = new WordlePanel('o');
+        assertEquals(0, wordlePanelO.getId());
+    }
+
+
+
 }
