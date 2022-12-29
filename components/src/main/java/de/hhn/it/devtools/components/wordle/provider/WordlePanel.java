@@ -15,7 +15,8 @@ public class WordlePanel implements WordlePanelService {
 
   private char letter;
   private State state;
-  private static int id;
+  private static int panelCount = 0;
+  private static int panelId;
 
   private List<WordlePanelListener> listeners = new ArrayList<>();
 
@@ -23,14 +24,13 @@ public class WordlePanel implements WordlePanelService {
    * Constructor for WordlePanel which assigns a char to the field letter and an id.
    *
    * @param letter The letter that will be entered into the field letter.
-   * @param id The id given to a Wordle panel in order to identify and differentiate it.
    */
-  public WordlePanel(char letter, int id) {
+  public WordlePanel(char letter) {
 
     this.letter = letter;
     this.state = State.INITIAL;
-    this.id = id;
-    this.id++;
+    panelId = panelCount;
+    panelCount++;
   }
 
   /**
@@ -57,11 +57,11 @@ public class WordlePanel implements WordlePanelService {
   }
 
   public int getId() {
-    return id;
+    return panelId;
   }
 
   public void setId(int id) {
-    this.id = id;
+    panelId = id;
   }
 
   public void addCallback(final WordlePanelListener listener) throws IllegalParameterException {

@@ -9,7 +9,7 @@ public class TestWordlePanel {
 
     @Test
     void shouldReturnPanelLetter_d() {
-        WordlePanel wordlePanelD = new WordlePanel('d', 0);
+        WordlePanel wordlePanelD = new WordlePanel('d');
         assertEquals('d', wordlePanelD.getLetter());
     }
 }

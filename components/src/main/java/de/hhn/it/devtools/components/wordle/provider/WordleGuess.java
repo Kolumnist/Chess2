@@ -17,7 +17,8 @@ public class WordleGuess implements WordleGuessService {
    */
   public WordleGuess(String word) {
     for (int i = 0; i < wordleWord.length; i++) {
-      wordleWord[i] = new WordlePanel(word.toLowerCase().charAt(i), i);
+      // i als ID entfernt, da ID inhärent über static counter vergeben wird
+      wordleWord[i] = new WordlePanel(word.toLowerCase().charAt(i));
       wordleWord[i].setState(State.INITIAL);
     }
   }
