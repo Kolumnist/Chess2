@@ -32,7 +32,7 @@ public abstract class Piece {
    *
    * @return possibleMoves of the current piece.
    */
-  Coordinate[] getPossibleMove() {
+  public Coordinate[] getPossibleMove() {
     return possibleMoves;
   }
 
