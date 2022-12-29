@@ -21,9 +21,16 @@ public class TestWordlePanel {
 
     @Test
     void shouldDeleteLetterFromPanel() {
-        WordlePanel wordflePanelA = new WordlePanel('A');
-        wordflePanelA.deleteLetter();
-        assertEquals(' ', wordflePanelA.getLetter());
+        WordlePanel wordlePanelA = new WordlePanel('A');
+        wordlePanelA.deleteLetter();
+        assertEquals(' ', wordlePanelA.getLetter());
+    }
+
+    @Test
+    void shouldSetLetterInPanel() {
+        WordlePanel wordlePanelR = new WordlePanel('r');
+        wordlePanelR.setLetter('t');
+        assertEquals('t', wordlePanelR.getLetter());
     }
 
 
