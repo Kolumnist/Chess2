@@ -111,7 +111,7 @@ public class Player {
    */
   protected void setKingOnJail(Piece jailPiece) {
     Coordinate jailCoordinate;
-    if (this.color == 'w') {
+    if (jailPiece.getColor() == 'w') {
       jailCoordinate = new Coordinate(8, 3);
     } else {
       jailCoordinate = new Coordinate(9, 4);
@@ -127,7 +127,7 @@ public class Player {
    */
   protected void setQueenOnJail(Piece jailPiece) {
     Coordinate jailCoordinate;
-    if (this.color == 'w') {
+    if (jailPiece.getColor() == 'w') {
       jailCoordinate = new Coordinate(8, 4);
     } else {
       jailCoordinate = new Coordinate(9, 3);
