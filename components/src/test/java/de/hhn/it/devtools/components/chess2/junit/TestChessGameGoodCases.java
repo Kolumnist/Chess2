@@ -75,6 +75,7 @@ public class TestChessGameGoodCases {
   @Test
   @DisplayName("Ending a Game of Chess which sets GameState to null")
   void TestEndGame() throws IllegalStateException {
+    Board board = chess2Service.startNewGame();
     chess2Service.endGame();
     assertNull(chess2Service.getGameState());
   }
@@ -144,10 +145,32 @@ public class TestChessGameGoodCases {
   }
 
   @Test
-  @DisplayName("")
-  void TestGetCurrentFields() {
-    //TODO minimum 3
+  @DisplayName("getCurrentFields for a freshly started Game has currently the white pieces")
+  void TestStartGetCurrentFields() throws IllegalStateException, IllegalParameterException {
+    Board board = chess2Service.startNewGame();
     Coordinate[] coordinates = chess2Service.getCurrentFields();
+    for (Coordinate coordinate : coordinates) {
+      assertEquals(FieldState.HAS_CURRENT_PIECE, chess2Service.getFieldState(coordinate));
+      assertTrue(coordinate.getX() > -1 && coordinate.getX() < 8);
+      assertTrue(coordinate.getY() > -1 && coordinate.getY() < 2);
+    }
+  }
+
+  @Test
+  @DisplayName("getCurrentFields after one round for the black pieces")
+  void TestNextTurnGetCurrentFields()
+      throws IllegalStateException, IllegalParameterException, InvalidMoveException {
+    Board board = chess2Service.startNewGame();
+    Coordinate[] currentCoords = chess2Service.getCurrentFields();
+    Coordinate[] possibleMoves = chess2Service.getPossibleMoves(currentCoords[0]);
+    chess2Service.moveSelectedPiece(currentCoords[0], new Coordinate(4, 1));
+
+    currentCoords = chess2Service.getCurrentFields();
+    for (Coordinate coordinate : currentCoords) {
+      assertEquals(FieldState.HAS_CURRENT_PIECE, chess2Service.getFieldState(coordinate));
+      assertTrue(coordinate.getX() > -1 && coordinate.getX() < 8);
+      assertTrue(coordinate.getY() > 5 && coordinate.getY() < 8);
+    }
   }
 
   @Test
@@ -165,31 +188,46 @@ public class TestChessGameGoodCases {
   }
 
   @Test
-  @DisplayName("")
-  void TestGetFieldState() {
-    //TODO minimum 8
-    //FieldState fieldState = chess2Service.getFieldState();
+  @DisplayName("FieldState gives correct FieldState any Time")
+  void TestGetFieldStateAtomic() throws IllegalStateException, IllegalParameterException {
+    Board board = chess2Service.startNewGame();
+
+    FieldState fieldState = chess2Service.getFieldState(new Coordinate(0, 0));
+    FieldState fieldState2 = chess2Service.getFieldState(new Coordinate(0, 0));
+
+    assertEquals(fieldState, fieldState2);
   }
 
   @Test
-  @DisplayName("")
-  void TestGetWinningPlayerState() {
-    //TODO minimum 5
+  @DisplayName("WinninPlayerState gives correct State any Time")
+  void TestGetWinningPlayerStateAtomic() {
+    Board board = chess2Service.startNewGame();
+
     WinningPlayerState winState = chess2Service.getWinningPlayer();
+    WinningPlayerState winState2 = chess2Service.getWinningPlayer();
+
+    assertEquals(winState, winState2);
   }
 
   @Test
   @DisplayName("GameState of a not started Game has to be null or a defined value")
   void TestGetGameState_OfNotStartedGame() {
-    //TODO minimum 3
     GameState gameState = chess2Service.getGameState();
     assertNull(gameState);
   }
 
   @Test
+  @DisplayName("GameState gives correct State any Time")
+  void TestGetGameStateAtomic() {
+    chess2Service.startNewGame();
+    GameState gameState = chess2Service.getGameState();
+    GameState gameState2 = chess2Service.getGameState();
+    assertEquals(gameState2, gameState);
+  }
+
+  @Test
   @DisplayName("GameState of a freshly started Game should be RUNNING")
   void TestGetGameState_OfStartedGame() {
-    //TODO minimum 3
     chess2Service.startNewGame();
     GameState gameState = chess2Service.getGameState();
     assertEquals(GameState.RUNNING, gameState);
@@ -197,8 +235,7 @@ public class TestChessGameGoodCases {
 
   @Test
   @DisplayName("GameState after a Player gave up, should be CHECKMATE")
-  void TestGetGameState() {
-    //TODO minimum 3
+  void TestGetGameState_WhenGivenUp() {
     chess2Service.startNewGame();
     chess2Service.giveUp();
     GameState gameState = chess2Service.getGameState();
