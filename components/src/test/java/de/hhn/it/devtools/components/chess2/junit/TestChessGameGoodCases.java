@@ -181,10 +181,25 @@ public class TestChessGameGoodCases {
   }
 
   @Test
-  @DisplayName("")
-  void TestMoveSelectedPiece() {
+  @DisplayName("Selected Piece gets moved on bear both are defeated")
+  void TestMoveSelectedPieceOnBear()
+      throws IllegalParameterException, IllegalStateException, InvalidMoveException {
     //TODO minimum 12-32
-    //chess2Service.moveSelectedPiece();
+    Board board = chess2Service.startNewGame();
+
+    Coordinate[] currentCoords = chess2Service.getCurrentFields();
+    Coordinate[] possibleMoves = chess2Service.getPossibleMoves(currentCoords[0]);
+    Coordinate bear = new Coordinate();
+    for (Field field : board.getFields()) {
+      bear = field.getFieldState() == FieldState.HAS_BEAR ? field.getCoordinate() : bear;
+    }
+    board = chess2Service.moveSelectedPiece(currentCoords[0], bear);
+
+    assertEquals(FieldState.FREE_FIELD, board.getSpecificField(bear).getFieldState());
+    assertNull(board.getSpecificField(bear).getPiece());
+
+    chess2Service.giveUp();
+    assertEquals(WinningPlayerState.WHITE_WIN, chess2Service.getWinningPlayer());
   }
 
   @Test
