@@ -16,7 +16,7 @@ public class TestWordlePanel {
     @Test
     void shouldReturnIdOfWordlePanel() {
         WordlePanel wordlePanelO = new WordlePanel('o');
-        assertEquals(0, wordlePanelO.getId());
+        assertEquals(1, wordlePanelO.getId());
     }
 
     @Test
@@ -32,6 +32,14 @@ public class TestWordlePanel {
         wordlePanelR.setLetter('t');
         assertEquals('t', wordlePanelR.getLetter());
     }
+
+    @Test
+    void shouldSetIdofWordlePanel() {
+        WordlePanel wordlePanelS = new WordlePanel('s');
+        wordlePanelS.setId(5);
+        assertEquals(5,wordlePanelS.getId());
+    }
+
 
 
 
