@@ -128,9 +128,9 @@ public class Player {
   protected void setQueenOnJail(Piece jailPiece) {
     Coordinate jailCoordinate;
     if (jailPiece.getColor() == 'w') {
-      jailCoordinate = new Coordinate(8, 4);
-    } else {
       jailCoordinate = new Coordinate(9, 3);
+    } else {
+      jailCoordinate = new Coordinate(8, 4);
     }
     gameBoard.getSpecificField(jailCoordinate).setFieldState(FieldState.JAIL_KING);
     gameBoard.getSpecificField(jailCoordinate).setPiece(Optional.of(jailPiece));
