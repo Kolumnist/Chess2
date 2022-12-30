@@ -1,9 +1,15 @@
 package de.hhn.it.devtools.components.wordle.provider;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.apis.wordle.*;
+import de.hhn.it.devtools.apis.wordle.IllegalGuessException;
+import de.hhn.it.devtools.apis.wordle.State;
+import de.hhn.it.devtools.apis.wordle.WordleGuessService;
+import de.hhn.it.devtools.apis.wordle.WordlePanelListener;
+import de.hhn.it.devtools.apis.wordle.WordlePanelService;
+import de.hhn.it.devtools.apis.wordle.WordleService;
 
-public class WordleGameLogic implements WordleService{
+
+public class WordleGameLogic implements WordleService {
 
   private String currentWordleSolution;
   private String previousWordleSolution;
@@ -36,18 +42,13 @@ public class WordleGameLogic implements WordleService{
     }
   }
 
-  @Override
-  public void validateWordleGuess(WordleGuessService guess) throws IllegalGuessException {
-    checkIfGuessIsLongEnough(guess);
-  }
-
   /**
    * A method that checks whether the guess is entirely correct or only partially.
    *
    * @param guess The WordleGuess entered by the player
    * @return true if guess is equal to solution and false otherwise
    */
-  public boolean checkIfGuessIsEqualToSolution(WordleGuess guess){
+  public boolean checkIfGameIsFinished(WordleGuess guess){
     String enteredWordleGuess = guess.getWordleGuessAsString().toLowerCase();
     return checkIfGuessIsCorrect(enteredWordleGuess, guess) ||
         checkPanelsIndividually(guess);
