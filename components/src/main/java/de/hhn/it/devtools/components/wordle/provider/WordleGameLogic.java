@@ -49,9 +49,8 @@ public class WordleGameLogic implements WordleService{
    */
   public boolean checkIfGuessIsEqualToSolution(WordleGuess guess){
     String enteredWordleGuess = guess.getWordleGuessAsString().toLowerCase();
-    WordlePanelService[] wordlePanels = guess.getWordleWord();
     return checkIfGuessIsCorrect(enteredWordleGuess, guess) ||
-        checkPanelsIndividually(enteredWordleGuess, wordlePanels, guess);
+        checkPanelsIndividually(guess);
   }
 
 
@@ -94,7 +93,7 @@ public class WordleGameLogic implements WordleService{
    */
   public boolean checkPanelsIndividually(WordleGuess guess) {
     WordlePanelService[] wordlePanels = guess.getWordleWord();
-    String enteredWordleGuess = guess.getWordleGuessAsString();
+    String enteredWordleGuess = guess.getWordleGuessAsString().toLowerCase();
     for (int i = 0; i < guess.getWordleWord().length; i++) {
       if (enteredWordleGuess.charAt(i) == currentWordleSolution.charAt(i)) {
         wordlePanels[i].setState(State.CORRECT);
