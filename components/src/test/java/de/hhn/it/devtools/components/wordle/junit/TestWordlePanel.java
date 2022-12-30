@@ -3,6 +3,7 @@ package de.hhn.it.devtools.components.wordle.junit;
 import de.hhn.it.devtools.components.wordle.provider.WordlePanel;
 import org.junit.jupiter.api.Test;
 
+import static de.hhn.it.devtools.apis.wordle.State.INITIAL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestWordlePanel {
@@ -11,12 +12,6 @@ public class TestWordlePanel {
     void shouldReturnPanelLetter_d() {
         WordlePanel wordlePanelD = new WordlePanel('d');
         assertEquals('d', wordlePanelD.getLetter());
-    }
-
-    @Test
-    void shouldReturnIdOfWordlePanel() {
-        WordlePanel wordlePanelO = new WordlePanel('o');
-        assertEquals(1, wordlePanelO.getId());
     }
 
     @Test
@@ -38,6 +33,12 @@ public class TestWordlePanel {
         WordlePanel wordlePanelS = new WordlePanel('s');
         wordlePanelS.setId(5);
         assertEquals(5,wordlePanelS.getId());
+    }
+
+    @Test
+    void shouldReturnStateOfPanel() {
+        WordlePanel wordlePanelI = new WordlePanel('i');
+        assertEquals(INITIAL, wordlePanelI.getState());
     }
 
 
