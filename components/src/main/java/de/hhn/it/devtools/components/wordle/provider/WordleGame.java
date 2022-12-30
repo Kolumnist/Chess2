@@ -22,21 +22,27 @@ public class WordleGame {
     }
   }
 
-  private void typeLetter(char letter) {
-    if (wordlePanelIndex <= 4 && !isGameFinished){
+  public void typeLetter(char letter) {
+    if (wordlePanelIndex <= 4 && !isGameFinished && playerGuesses[wordleGuessIndex].
+        getLetterAtIndex(wordlePanelIndex) == ' '){
       playerGuesses[wordleGuessIndex].setLetterAtIndex(wordlePanelIndex, letter);
-      wordlePanelIndex++;
+      if (wordlePanelIndex < 4){
+        wordlePanelIndex++;
+      }
     }
   }
 
-  private void deleteLetter() {
-    if (wordlePanelIndex > 0 && !isGameFinished){
+  public void deleteLetter() {
+    if (wordlePanelIndex >= 0 && !isGameFinished){
       playerGuesses[wordleGuessIndex].deleteLetterAtIndex(wordlePanelIndex);
-      wordlePanelIndex--;
+      if (wordlePanelIndex > 0){
+        wordlePanelIndex--;
+      }
     }
   }
 
-  private void submitGuess() throws IllegalGuessException {
+
+  public void submitGuess() throws IllegalGuessException {
     if (!isGameFinished){
       backend.checkIfGuessIsLongEnough(playerGuesses[wordleGuessIndex]);
       isGameFinished = backend.checkIfGameIsFinished(playerGuesses[wordleGuessIndex]);
@@ -45,7 +51,25 @@ public class WordleGame {
         wordlePanelIndex = 0;
       }
     }
+  }
 
+  public String getSolution() {
+    return solution;
+  }
 
+  public WordleGuess[] getPlayerGuesses() {
+    return playerGuesses;
+  }
+
+  public WordleGameLogic getBackend() {
+    return backend;
+  }
+
+  public int getWordleGuessIndex() {
+    return wordleGuessIndex;
+  }
+
+  public int getWordlePanelIndex() {
+    return wordlePanelIndex;
   }
 }
