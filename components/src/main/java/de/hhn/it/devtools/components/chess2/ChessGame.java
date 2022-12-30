@@ -215,7 +215,7 @@ public class ChessGame implements Chess2Service {
     int x = new Random().nextInt(1, 7);
     int y = new Random().nextInt(3, 5);
     bearCoordinate = new Coordinate(x, y);
-    bear = new Bear('g', bearCoordinate);
+    bear = new Bear('g', bearCoordinate, gameBoard);
 
     initializeBoard();
     gameBoard.lostPiece = false;
