@@ -8,8 +8,13 @@ import de.hhn.it.devtools.components.wordle.provider.WordleGameLogic;
 import de.hhn.it.devtools.components.wordle.provider.WordleGuess;
 import de.hhn.it.devtools.components.wordle.provider.WordlePanel;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 public class TestWordleGameLogic {
 
