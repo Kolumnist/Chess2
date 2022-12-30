@@ -14,20 +14,20 @@ public class Elephant extends Piece {
     possibleMoves = new Coordinate[10];
     int k = 0;
 
-    for (int i = coordinate.getX() - 2; i < coordinate.getX() + 2; i += 2) {
-      for (int j = coordinate.getY() - 2; j < coordinate.getY() + 2; j += 2) {
+    for (int i = coordinate.getX() - 2; i <= coordinate.getX() + 2; i += 2) {
+      for (int j = coordinate.getY() - 2; j <= coordinate.getY() + 2; j += 2) {
         possibleMoves[k++] = new Coordinate(i, j);
       }
     }
 
     ArrayList<Integer> index = new ArrayList<>();
     for (int i = 0; i < possibleMoves.length; i++) {
-      if ((possibleMoves[i].getX() == coordinate.getX()
-          && possibleMoves[i].getY() == coordinate.getY())
+      if (possibleMoves[i] == null
           || possibleMoves[i].getY() < 0
           || possibleMoves[i].getX() < 0
           || possibleMoves[i].getY() > 7
-          || possibleMoves[i].getX() > 7) {
+          || possibleMoves[i].getX() > 7
+          || possibleMoves[i].compareCoordinates(coordinate)) {
         index.add(i);
       }
     }
