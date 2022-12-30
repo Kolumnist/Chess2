@@ -12,5 +12,8 @@ public class WordleGame {
     this.playerGuesses = new WordleGuess[6];
     this.wordleGuessIndex = 0;
     this.wordlePanelIndex = 0;
+    for (int i = 0; i <= 5; i++){
+      playerGuesses[i] = new WordleGuess("     ");
+    }
   }
 }
