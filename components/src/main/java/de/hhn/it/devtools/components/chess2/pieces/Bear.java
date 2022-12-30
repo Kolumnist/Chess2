@@ -17,6 +17,7 @@ public class Bear extends Piece {
 
   public Bear(char color, Coordinate coordinate, Board board) {
     super(color, coordinate);
+    this.board = board;
   }
 
   @Override
