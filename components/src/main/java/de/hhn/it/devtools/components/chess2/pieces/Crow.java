@@ -15,29 +15,22 @@ import java.util.ArrayList;
 
 public class Crow extends Piece {
 
+  Board board;
   private Coordinate[] movement;
 
-  public Crow(char color, Coordinate coordinate) {
+  public Crow(char color, Coordinate coordinate, Board board) {
     super(color, coordinate);
+    this.board = board;
   }
 
   @Override
   public void calculate() {
-    int k = 0;
-    for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
-      for (int j = coordinate.getY() - 1; j <= coordinate.getY() + 1; j++) {
-        movement[k++] = new Coordinate(i, j);
-      }
-    }
-  }
-
-  public void calculate(Board board, boolean pieceGotDefeated) {
     ArrayList<Integer> index = new ArrayList<>();
     int k = 0;
     boolean nearEnemy = false;
 
     movement = new Coordinate[9];
-    calculate();
+    defeatPieceMove();
 
     for (int i = 0; i < possibleMoves.length; i++) {
       if ((possibleMoves[i].compareCoordinates(coordinate))
@@ -60,7 +53,7 @@ public class Crow extends Piece {
       }
     }
 
-    if (pieceGotDefeated && nearEnemy) {
+    if (board.lostPiece && nearEnemy) {
       possibleMoves = movement;
     } else {
       possibleMoves = new Coordinate[64];
@@ -81,6 +74,15 @@ public class Crow extends Piece {
         }
       }
       possibleMoves = shortenCoordinateArray(possibleMoves, index);
+    }
+  }
+
+  public void defeatPieceMove() {
+    int k = 0;
+    for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
+      for (int j = coordinate.getY() - 1; j <= coordinate.getY() + 1; j++) {
+        movement[k++] = new Coordinate(i, j);
+      }
     }
   }
 }
