@@ -22,7 +22,7 @@ public class Crow extends Piece {
   }
 
   @Override
-  protected void calculate() {
+  public void calculate() {
     int k = 0;
     for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
       for (int j = coordinate.getY() - 1; j <= coordinate.getY() + 1; j++) {
@@ -31,7 +31,7 @@ public class Crow extends Piece {
     }
   }
 
-  protected void calculate(Board board, boolean pieceGotDefeated) {
+  public void calculate(Board board, boolean pieceGotDefeated) {
     ArrayList<Integer> index = new ArrayList<>();
     int k = 0;
     boolean nearEnemy = false;

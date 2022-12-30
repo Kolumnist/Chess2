@@ -26,7 +26,7 @@ public class Monkey extends Piece {
   }
 
   @Override
-  protected void calculate() {
+  public void calculate() {
     int k = 0;
     for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
       for (int j = coordinate.getY() - 1; j <= coordinate.getY() + 1; j++) {
@@ -35,7 +35,7 @@ public class Monkey extends Piece {
     }
   }
 
-  protected void calculate(Board board, boolean kingInJail) {
+  public void calculate(Board board, boolean kingInJail) {
     ArrayList<Integer> index = new ArrayList<>();
     possibleMoves = new Coordinate[9];
 
