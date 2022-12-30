@@ -27,7 +27,6 @@ public class Crow extends Piece {
     int k = 0;
     boolean nearEnemy = false;
 
-    movement = new Coordinate[9];
     defeatPieceMove();
 
     for (int i = 0; i < movement.length; i++) {
@@ -76,6 +75,7 @@ public class Crow extends Piece {
   }
 
   public void defeatPieceMove() {
+    movement = new Coordinate[9];
     int k = 0;
     for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
       for (int j = coordinate.getY() - 1; j <= coordinate.getY() + 1; j++) {
