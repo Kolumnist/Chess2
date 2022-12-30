@@ -24,6 +24,14 @@ public interface WordleService {
   void quitGame();
 
   /**
+   * Check if the given guess has exactly five characters.
+   *
+   * @param guess Guess which is due to be checked
+   * @throws IllegalGuessException is thrown if the guesss is not long enough
+   */
+  void checkIfGuessIsLongEnough(WordleGuessService guess) throws IllegalGuessException;
+
+  /**
    * Adds a listener in order to get information on the state of a WordlePanel.
    *
    * @param listener WordlePanelListener which will be added to the panel

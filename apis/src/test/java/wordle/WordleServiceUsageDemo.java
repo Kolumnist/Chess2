@@ -31,15 +31,15 @@ public class WordleServiceUsageDemo {
     firstGuess.setLetterAtIndex(0, 'C'); // repeated until grace is entered
     logger.info("create WordleGuess with parameter: Cargo");
 
-    demo.validateWordleGuess(firstGuess); // System validates the user's guess
+    demo.checkIfGuessIsLongEnough(firstGuess); // System validates the user's guess
 
     WordleGuessService secondGuess = null; // repeated until grac is entered
     secondGuess.setLetterAtIndex(0, 'G');
     logger.info("create WordleGuess with parameter: Grac");
 
-    demo.validateWordleGuess(secondGuess); // throws IllegalGuessException, because Guess is too short
+    demo.checkIfGuessIsLongEnough(secondGuess); // throws IllegalGuessException, because Guess is too short
 
-    demo.validateWordleGuess(secondGuess); // Player adds 'e' to his Guess "Grace"
+    demo.checkIfGuessIsLongEnough(secondGuess); // Player adds 'e' to his Guess "Grace"
     logger.info("GuessWord is equal to solution"); // Player wins Game
 
     demo.startAnotherGame();
@@ -54,7 +54,7 @@ public class WordleServiceUsageDemo {
     newGuess.setLetterAtIndex(0, 'F'); // repeated until Fairy is entered
     logger.info("create WordleGuess with parameter: Fairy");
 
-    demo.validateWordleGuess(newGuess);
+    demo.checkIfGuessIsLongEnough(newGuess);
     logger.info("GuessWord is equal to solution"); // Player wins Game
 
     demo.quitGame();
