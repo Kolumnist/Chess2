@@ -53,12 +53,12 @@ public class Player {
 
     if (color == 'w') {
       myPieces[14] = new Queen(color, new Coordinate(3, 0));
-      myPieces[15] = new King(color, new Coordinate(4, 0));
+      myPieces[15] = new King(color, new Coordinate(4, 0), true);
     } else {
       coordOffset5 = 5;
       coordOffset7 = 7;
       myPieces[14] = new Queen(color, new Coordinate(4, 7));
-      myPieces[15] = new King(color, new Coordinate(3, 7));
+      myPieces[15] = new King(color, new Coordinate(3, 7), true);
     }
 
     /* 0 / 1 ____ 0 / 7*/

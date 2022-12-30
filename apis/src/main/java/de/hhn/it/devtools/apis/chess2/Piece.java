@@ -50,7 +50,7 @@ public abstract class Piece {
    *
    * @param coordinate is the new coordinate.
    */
-  void setCoordinate(Coordinate coordinate) {
+  public void setCoordinate(Coordinate coordinate) {
     this.coordinate = coordinate;
   }
 
@@ -75,7 +75,7 @@ public abstract class Piece {
   /**
    * This method calculates the possible moves of the piece.
    */
-  protected abstract void calculate();
+  public abstract void calculate();
 
   public Piece(char color, Coordinate coordinate){
     this.color = color;
