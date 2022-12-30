@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.components.chess2.pieces;
 
+import de.hhn.it.devtools.apis.chess2.Board;
 import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.Piece;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class Elephant extends Piece {
     super(color, coordinate);
   }
 
-  public void calculate() {
+  public void calculate(Board board) {
     possibleMoves = new Coordinate[10];
     int k = 0;
 

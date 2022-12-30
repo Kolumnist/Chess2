@@ -15,16 +15,14 @@ import java.util.ArrayList;
 
 public class Crow extends Piece {
 
-  Board board;
   private Coordinate[] movement;
 
-  public Crow(char color, Coordinate coordinate, Board board) {
+  public Crow(char color, Coordinate coordinate) {
     super(color, coordinate);
-    this.board = board;
   }
 
   @Override
-  public void calculate() {
+  public void calculate(Board board) {
     ArrayList<Integer> index = new ArrayList<>();
     int k = 0;
     boolean nearEnemy = false;

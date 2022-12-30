@@ -15,12 +15,10 @@ import java.util.ArrayList;
 
 public class Monkey extends Piece {
 
-  private Board board;
   private Coordinate[] possibleJump;
 
-  public Monkey(char color, Coordinate coordinate, Board board) {
+  public Monkey(char color, Coordinate coordinate) {
     super(color, coordinate);
-    this.board = board;
   }
 
   public Coordinate[] getPossibleJump() {
@@ -28,14 +26,14 @@ public class Monkey extends Piece {
   }
 
   @Override
-  public void calculate() {
+  public void calculate(Board board) {
     ArrayList<Integer> indexMoves = new ArrayList<>();
     ArrayList<Integer> indexJumps = new ArrayList<>();
     possibleMoves = new Coordinate[9];
 
     standardMovement();
 
-    calculateJump();
+    calculateJump(board);
 
     int k = 0;
     for (int i = 0; i < possibleMoves.length; i++) {
@@ -88,7 +86,7 @@ public class Monkey extends Piece {
     }
   }
 
-  public void calculateJump() {
+  public void calculateJump(Board board) {
     possibleJump = new Coordinate[possibleMoves.length];
     int k = 0;
     for (int i = 0; i < possibleMoves.length; i++) {
@@ -100,7 +98,7 @@ public class Monkey extends Piece {
       }
     }
 
-    if (isKingInJail()) {
+    if (isKingInJail(board)) {
       if (color == 'b') {
         possibleJump = replaceJumpCoordinate(possibleJump,new Coordinate(5, 4));
       } else {
@@ -126,7 +124,7 @@ public class Monkey extends Piece {
   }
 
   //King: w 8,3 // b 9,4
-  private boolean isKingInJail(){
+  private boolean isKingInJail(Board board){
     if (color == 'b'){
       if (board.getSpecificField(new Coordinate(9,4)).getFieldState() == FieldState.JAIL_KING){
         return true;

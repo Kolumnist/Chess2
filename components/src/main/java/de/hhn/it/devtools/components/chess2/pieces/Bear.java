@@ -13,19 +13,17 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class Bear extends Piece {
-  Board board;
 
-  public Bear(char color, Coordinate coordinate, Board board) {
+  public Bear(char color, Coordinate coordinate) {
     super(color, coordinate);
-    this.board = board;
   }
 
   @Override
-  public void calculate() {
+  public void calculate(Board board) {
     possibleMoves = new Coordinate[9];
     int k = 0;
-    for (int i = coordinate.getX() - 1; i < coordinate.getX() + 1; i++) {
-      for (int j = coordinate.getY() - 1; j < coordinate.getY() + 1; j++) {
+    for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
+      for (int j = coordinate.getY() - 1; j <= coordinate.getY() + 1; j++) {
         possibleMoves[k++] = new Coordinate(i, j);
       }
     }

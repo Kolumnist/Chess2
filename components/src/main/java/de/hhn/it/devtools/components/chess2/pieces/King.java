@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.components.chess2.pieces;
 
+import de.hhn.it.devtools.apis.chess2.Board;
 import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.Piece;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class King extends Piece {
   }
 
   @Override
-  public void calculate() {
+  public void calculate(Board board) {
     possibleMoves = new Coordinate[9];
     int k = 0;
     for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
