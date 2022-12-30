@@ -40,6 +40,10 @@ public class WordleGame {
     if (!isGameFinished){
       backend.checkIfGuessIsLongEnough(playerGuesses[wordleGuessIndex]);
       isGameFinished = backend.checkIfGameIsFinished(playerGuesses[wordleGuessIndex]);
+      if (!isGameFinished){
+        wordleGuessIndex++;
+        wordlePanelIndex = 0;
+      }
     }
 
 
