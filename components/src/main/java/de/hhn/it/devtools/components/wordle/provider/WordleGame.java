@@ -9,6 +9,7 @@ public class WordleGame {
   private int wordleGuessIndex;
   private int wordlePanelIndex;
   private final WordleGameLogic backend;
+  private boolean isGameFinished;
 
   public WordleGame(String solution, WordleGameLogic backend) {
     this.solution = solution;
@@ -22,20 +23,25 @@ public class WordleGame {
   }
 
   private void typeLetter(char letter) {
-    if (wordlePanelIndex <= 4){
+    if (wordlePanelIndex <= 4 && !isGameFinished){
       playerGuesses[wordleGuessIndex].setLetterAtIndex(wordlePanelIndex, letter);
       wordlePanelIndex++;
     }
   }
 
   private void deleteLetter() {
-    if (wordlePanelIndex > 0){
+    if (wordlePanelIndex > 0 && !isGameFinished){
       playerGuesses[wordleGuessIndex].deleteLetterAtIndex(wordlePanelIndex);
       wordlePanelIndex--;
     }
   }
 
   private void submitGuess() throws IllegalGuessException {
-    backend.checkIfGuessIsLongEnough(playerGuesses[wordleGuessIndex]);
+    if (!isGameFinished){
+      backend.checkIfGuessIsLongEnough(playerGuesses[wordleGuessIndex]);
+      isGameFinished = backend.checkIfGameIsFinished(playerGuesses[wordleGuessIndex]);
+    }
+
+
   }
 }
