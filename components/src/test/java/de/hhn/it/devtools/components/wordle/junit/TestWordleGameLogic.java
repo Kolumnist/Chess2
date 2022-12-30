@@ -35,7 +35,8 @@ public class TestWordleGameLogic {
         wordleGameLogic::startAnotherGame);
   }
   @Test
-  void checkIfGuessIsLongEnoughShouldThrowIllegalGuessExceptionWithOneWhitespace() throws IllegalGuessException {
+  void checkIfGuessIsLongEnoughShouldThrowIllegalGuessExceptionWithOneWhitespace()
+  throws IllegalGuessException {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     WordleGuess wordleGuess = new WordleGuess("keba ");
     Throwable exception = assertThrows(
@@ -46,7 +47,8 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void checkIfGuessIsLongEnoughShouldThrowIllegalGuessExceptionWithFiveWhitespaces() throws IllegalGuessException {
+  void checkIfGuessIsLongEnoughShouldThrowIllegalGuessExceptionWithFiveWhitespaces()
+  throws IllegalGuessException {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     WordleGuess wordleGuess = new WordleGuess("     ");
     Throwable exception = assertThrows(
@@ -68,7 +70,7 @@ public class TestWordleGameLogic {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebab");
-    assertTrue(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess.getWordleGuessAsString(), wordleGuess));
+    assertTrue(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess));
   }
 
   @Test
@@ -76,7 +78,7 @@ public class TestWordleGameLogic {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("KeBaB");
-    assertTrue(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess.getWordleGuessAsString(), wordleGuess));
+    assertTrue(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess));
   }
 
   @Test
@@ -84,7 +86,7 @@ public class TestWordleGameLogic {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("nasty");
-    assertFalse(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess.getWordleGuessAsString(), wordleGuess));
+    assertFalse(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess));
   }
 
   @Test
@@ -92,7 +94,7 @@ public class TestWordleGameLogic {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebxb");
-    assertFalse(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess.getWordleGuessAsString(), wordleGuess));
+    assertFalse(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess));
   }
 
   @Test

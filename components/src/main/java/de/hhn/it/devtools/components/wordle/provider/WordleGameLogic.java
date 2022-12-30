@@ -50,7 +50,7 @@ public class WordleGameLogic implements WordleService {
    */
   public boolean checkIfGameIsFinished(WordleGuess guess){
     String enteredWordleGuess = guess.getWordleGuessAsString().toLowerCase();
-    return checkIfGuessIsCorrect(enteredWordleGuess, guess) ||
+    return checkIfGuessIsCorrect(guess) ||
         checkPanelsIndividually(guess);
   }
 
@@ -58,12 +58,11 @@ public class WordleGameLogic implements WordleService {
   /**
    * A method that checks if the WordleGuess is equal to the solution.
    *
-   * @param enteredWordleGuess The String value of the entered WordleGuess
    * @param guess The WordleGuess that the player entered
    * @return true if guess is equal to solution and false otherwise
    */
-  public boolean checkIfGuessIsCorrect(String enteredWordleGuess, WordleGuess guess) {
-    if (enteredWordleGuess.equals(currentWordleSolution.toLowerCase())) {
+  public boolean checkIfGuessIsCorrect( WordleGuess guess) {
+    if (guess.getWordleGuessAsString().equals(currentWordleSolution.toLowerCase())) {
       for (WordlePanelService panel : guess.getWordleWord()) {
         panel.setState(State.CORRECT);
         panel.notifyListeners(State.CORRECT);
