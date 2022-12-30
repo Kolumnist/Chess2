@@ -24,6 +24,14 @@ public class King extends Piece {
     }
 
     ArrayList<Integer> index = new ArrayList<>();
+
+    for (int i = 0; i < possibleMoves.length; i++) {
+      if (possibleMoves[i] == null) {
+        index.add(i);
+      }
+    }
+    possibleMoves = shortenCoordinateArray(possibleMoves, index);
+    index = new ArrayList<>();
     for (int i = 0; i < possibleMoves.length; i++) {
       if ((possibleMoves[i].getX() == coordinate.getX()
           && possibleMoves[i].getY() == coordinate.getY())
