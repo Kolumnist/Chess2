@@ -84,16 +84,16 @@ public class Player {
     myPieces[7] = new Fish(color, new Coordinate(7, coordOffset5 + 1));
 
     /* 0 / 0 ____ 7 / 7*/
-    myPieces[8] = new Crow(color, new Coordinate(0, coordOffset7 + 0), gameBoard);
+    myPieces[8] = new Crow(color, new Coordinate(0, coordOffset7 + 0));
 
     /* 7 / 0 ____ 7 / 7*/
-    myPieces[9] = new Crow(color, new Coordinate(7, coordOffset7 + 0), gameBoard);
+    myPieces[9] = new Crow(color, new Coordinate(7, coordOffset7 + 0));
 
     /* 1 / 0 ____ 1 / 7*/
-    myPieces[10] = new Monkey(color, new Coordinate(1, coordOffset7 + 0), gameBoard);
+    myPieces[10] = new Monkey(color, new Coordinate(1, coordOffset7 + 0));
 
     /* 6 / 0 ____ 6 / 7*/
-    myPieces[11] = new Monkey(color, new Coordinate(6, coordOffset7 + 0), gameBoard);
+    myPieces[11] = new Monkey(color, new Coordinate(6, coordOffset7 + 0));
 
     /* 2 / 1 ____ 2 / 6*/
     myPieces[12] = new Elephant(color, new Coordinate(2, coordOffset5 + 1));

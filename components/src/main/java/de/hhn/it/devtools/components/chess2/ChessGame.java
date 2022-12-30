@@ -104,12 +104,12 @@ public class ChessGame implements Chess2Service {
         .setFieldState(FieldState.HAS_BEAR);
 
     for (Piece piece : whitePlayer.myPieces) {
-      piece.calculate();
+      piece.calculate(gameBoard);
     }
     for (Piece piece : blackPlayer.myPieces) {
-      piece.calculate();
+      piece.calculate(gameBoard);
     }
-    gameBoard.getSpecificField(bearCoordinate).getPiece().calculate();
+    gameBoard.getSpecificField(bearCoordinate).getPiece().calculate(gameBoard);
   }
 
   /**
@@ -196,15 +196,15 @@ public class ChessGame implements Chess2Service {
       if (piece.getCoordinate().getX() == -1) {
         continue;
       }
-      piece.calculate();
+      piece.calculate(gameBoard);
     }
     for (Piece piece : blackPlayer.myPieces) {
       if (piece.getCoordinate().getY() == -1) {
         continue;
       }
-      piece.calculate();
+      piece.calculate(gameBoard);
     }
-    gameBoard.getSpecificField(bearCoordinate).getPiece().calculate();
+    gameBoard.getSpecificField(bearCoordinate).getPiece().calculate(gameBoard);
   }
 
   @Override
@@ -215,7 +215,7 @@ public class ChessGame implements Chess2Service {
     int x = new Random().nextInt(1, 7);
     int y = new Random().nextInt(3, 5);
     bearCoordinate = new Coordinate(x, y);
-    bear = new Bear('g', bearCoordinate, gameBoard);
+    bear = new Bear('g', bearCoordinate);
 
     initializeBoard();
     gameBoard.lostPiece = false;
