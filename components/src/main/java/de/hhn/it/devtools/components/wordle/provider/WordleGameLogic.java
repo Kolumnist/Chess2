@@ -89,12 +89,12 @@ public class WordleGameLogic implements WordleService{
   /**
    * A method that checks and updates each WordlePanel within the players guess individually according to game rules.
    *
-   * @param enteredWordleGuess The String value of the entered WordleGuess
-   * @param wordlePanels The WordlePanels Array of the given guess
    * @param guess The WordleGuess made by the player
    * @return always returns false since given guess is not the solution
    */
-  public boolean checkPanelsIndividually(String enteredWordleGuess, WordlePanelService[] wordlePanels, WordleGuess guess) {
+  public boolean checkPanelsIndividually(WordleGuess guess) {
+    WordlePanelService[] wordlePanels = guess.getWordleWord();
+    String enteredWordleGuess = guess.getWordleGuessAsString();
     for (int i = 0; i < guess.getWordleWord().length; i++) {
       if (enteredWordleGuess.charAt(i) == currentWordleSolution.charAt(i)) {
         wordlePanels[i].setState(State.CORRECT);
