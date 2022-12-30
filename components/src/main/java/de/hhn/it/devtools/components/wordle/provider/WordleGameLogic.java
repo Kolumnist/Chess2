@@ -15,7 +15,7 @@ public class WordleGameLogic implements WordleService{
   public void startGame() {
     String currentSolution = WordleSolutionSelector.selectWordle();
     setCurrentWordleSolution(currentSolution);
-    currentWordleGame = new WordleGame(currentSolution);
+    currentWordleGame = new WordleGame(currentSolution, this);
     wasStartGameCalled = true;
   }
 
@@ -29,7 +29,7 @@ public class WordleGameLogic implements WordleService{
       String newSolution = WordleSolutionSelector.selectWordle();
       if (!newSolution.equals(getPreviousWordleSolution())) {
         setCurrentWordleSolution(newSolution);
-        currentWordleGame = new WordleGame(newSolution);
+        currentWordleGame = new WordleGame(newSolution, this);
       } else {
         startAnotherGame();
       }
