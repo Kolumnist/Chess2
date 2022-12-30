@@ -1,12 +1,14 @@
 package de.hhn.it.devtools.components.wordle.provider;
 
+import de.hhn.it.devtools.apis.wordle.IllegalGuessException;
+
 public class WordleGame {
 
   private String solution;
-  private WordleGuess[] playerGuesses;
+  private final WordleGuess[] playerGuesses;
   private int wordleGuessIndex;
   private int wordlePanelIndex;
-  private WordleGameLogic backend;
+  private final WordleGameLogic backend;
 
   public WordleGame(String solution, WordleGameLogic backend) {
     this.solution = solution;
@@ -33,5 +35,7 @@ public class WordleGame {
     }
   }
 
-
+  private void submitGuess() throws IllegalGuessException {
+    backend.checkIfGuessIsLongEnough(playerGuesses[wordleGuessIndex]);
+  }
 }
