@@ -100,7 +100,7 @@ public class TestWordleGameLogic {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebab");
-    assertTrue(wordleGameLogic.checkIfGuessIsEqualToSolution(wordleGuess));
+    assertTrue(wordleGameLogic.checkIfGameIsFinished(wordleGuess));
   }
 
   @Test
@@ -108,7 +108,7 @@ public class TestWordleGameLogic {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("KeBAb");
-    assertTrue(wordleGameLogic.checkIfGuessIsEqualToSolution(wordleGuess));
+    assertTrue(wordleGameLogic.checkIfGameIsFinished(wordleGuess));
   }
 
   @Test
@@ -116,7 +116,7 @@ public class TestWordleGameLogic {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebas");
-    assertFalse(wordleGameLogic.checkIfGuessIsEqualToSolution(wordleGuess));
+    assertFalse(wordleGameLogic.checkIfGameIsFinished(wordleGuess));
   }
 
   @Test
