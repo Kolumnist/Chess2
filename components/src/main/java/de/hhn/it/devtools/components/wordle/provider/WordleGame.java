@@ -19,5 +19,19 @@ public class WordleGame {
     }
   }
 
+  private void typeLetter(char letter) {
+    if (wordlePanelIndex <= 4){
+      playerGuesses[wordleGuessIndex].setLetterAtIndex(wordlePanelIndex, letter);
+      wordlePanelIndex++;
+    }
+  }
+
+  private void deleteLetter() {
+    if (wordlePanelIndex > 0){
+      playerGuesses[wordleGuessIndex].deleteLetterAtIndex(wordlePanelIndex);
+      wordlePanelIndex--;
+    }
+  }
+
 
 }
