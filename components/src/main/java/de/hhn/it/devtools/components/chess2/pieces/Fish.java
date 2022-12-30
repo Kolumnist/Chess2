@@ -15,8 +15,8 @@ public class Fish extends Piece {
     possibleMoves = new Coordinate[6];
     int k = 0;
     if (color == 'w') {
-      for (int i = coordinate.getX() - 1; i < coordinate.getX() + 1; i++) {
-        for (int j = coordinate.getY(); j < coordinate.getY() + 1; j++) {
+      for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
+        for (int j = coordinate.getY(); j <= coordinate.getY() + 1; j++) {
           if ((i == coordinate.getX()) && (j == coordinate.getY() + 1)) {
             continue;
           }

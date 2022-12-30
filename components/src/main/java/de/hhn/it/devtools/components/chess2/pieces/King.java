@@ -17,8 +17,8 @@ public class King extends Piece {
   public void calculate() {
     possibleMoves = new Coordinate[9];
     int k = 0;
-    for (int i = coordinate.getX() - 1; i < coordinate.getX() + 1; i++) {
-      for (int j = coordinate.getY() - 1; j < coordinate.getY() + 1; j++) {
+    for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
+      for (int j = coordinate.getY() - 1; j <= coordinate.getY() + 1; j++) {
         possibleMoves[k++] = new Coordinate(i, j);
       }
     }
