@@ -33,7 +33,7 @@ public class Player {
    */
   public Player(char color, Board board) {
     this.color = color;
-    initializeMyPieces(board);
+    initializeMyPieces();
     this.gameBoard = board;
 
     for (Piece piece : myPieces) {
@@ -44,10 +44,8 @@ public class Player {
   /**
    * All pieces that the players has get initialized here it works with a offset to check
    * which color the player has.
-   *
-   * @param board is needed for the pieces
    */
-  protected void initializeMyPieces(Board board) {
+  protected void initializeMyPieces() {
     int coordOffset7 = 0;
     int coordOffset5 = 0;
 
@@ -86,16 +84,16 @@ public class Player {
     myPieces[7] = new Fish(color, new Coordinate(7, coordOffset5 + 1));
 
     /* 0 / 0 ____ 7 / 7*/
-    myPieces[8] = new Crow(color, new Coordinate(0, coordOffset7 + 0));
+    myPieces[8] = new Crow(color, new Coordinate(0, coordOffset7 + 0), gameBoard);
 
     /* 7 / 0 ____ 7 / 7*/
-    myPieces[9] = new Crow(color, new Coordinate(7, coordOffset7 + 0));
+    myPieces[9] = new Crow(color, new Coordinate(7, coordOffset7 + 0), gameBoard);
 
     /* 1 / 0 ____ 1 / 7*/
-    myPieces[10] = new Monkey(color, new Coordinate(1, coordOffset7 + 0));
+    myPieces[10] = new Monkey(color, new Coordinate(1, coordOffset7 + 0), gameBoard);
 
     /* 6 / 0 ____ 6 / 7*/
-    myPieces[11] = new Monkey(color, new Coordinate(6, coordOffset7 + 0));
+    myPieces[11] = new Monkey(color, new Coordinate(6, coordOffset7 + 0), gameBoard);
 
     /* 2 / 1 ____ 2 / 6*/
     myPieces[12] = new Elephant(color, new Coordinate(2, coordOffset5 + 1));
