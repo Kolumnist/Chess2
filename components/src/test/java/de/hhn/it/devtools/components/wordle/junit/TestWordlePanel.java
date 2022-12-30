@@ -4,6 +4,7 @@ import de.hhn.it.devtools.components.wordle.provider.WordlePanel;
 import org.junit.jupiter.api.Test;
 
 import static de.hhn.it.devtools.apis.wordle.State.INITIAL;
+import static de.hhn.it.devtools.apis.wordle.State.PARTIALLY_CORRECT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestWordlePanel {
@@ -39,6 +40,13 @@ public class TestWordlePanel {
     void shouldReturnStateOfPanel() {
         WordlePanel wordlePanelI = new WordlePanel('i');
         assertEquals(INITIAL, wordlePanelI.getState());
+    }
+
+    @Test
+    void shouldSetStateOfPanel() {
+        WordlePanel wordlePanelP = new WordlePanel('p');
+        wordlePanelP.setState(PARTIALLY_CORRECT);
+        assertEquals(PARTIALLY_CORRECT, wordlePanelP.getState());
     }
 
 
