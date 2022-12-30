@@ -11,7 +11,7 @@ public class Fishqueen extends Piece {
   }
 
   @Override
-  protected void calculate() {
+  public void calculate() {
     possibleMoves = new Coordinate[64];
     int k = 0;
     for (int g = 1; g <= 7; g++) {

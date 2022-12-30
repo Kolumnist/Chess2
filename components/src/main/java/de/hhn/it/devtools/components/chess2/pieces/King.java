@@ -14,7 +14,7 @@ public class King extends Piece {
   }
 
   @Override
-  protected void calculate() {
+  public void calculate() {
     possibleMoves = new Coordinate[9];
     int k = 0;
     for (int i = coordinate.getX() - 1; i < coordinate.getX() + 1; i++) {

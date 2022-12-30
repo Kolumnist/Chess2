@@ -11,7 +11,7 @@ public class Fish extends Piece {
   }
 
   @Override
-  protected void calculate() {
+  public void calculate() {
     possibleMoves = new Coordinate[6];
     int k = 0;
     if (color == 'w') {
