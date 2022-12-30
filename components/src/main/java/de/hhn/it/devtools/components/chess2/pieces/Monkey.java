@@ -76,7 +76,7 @@ public class Monkey extends Piece {
       }
     }
 
-    possibleJump = shortenCoordinateArray(possibleJump, indexMoves);
+    possibleJump = shortenCoordinateArray(possibleJump, indexJumps);
   }
 
   private void standardMovement() {
@@ -95,8 +95,8 @@ public class Monkey extends Piece {
       if (board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.HAS_OTHER_PIECE
           || board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_CURRENT_PIECE) {
-        possibleJump[k] = calculateJumpCoordinate(possibleMoves[i]);
-        k++;
+        possibleJump[k++] = calculateJumpCoordinate(possibleMoves[i]);
+        //k++;
       }
     }
 
@@ -111,8 +111,7 @@ public class Monkey extends Piece {
     ArrayList<Integer> index = new ArrayList<>();
     for (int i = 0; i < possibleJump.length; i++) {
       if (possibleJump[i] == null
-          || board.getSpecificField(possibleJump[i]).getFieldState()
-          == FieldState.HAS_CURRENT_PIECE) {
+          ) {
         index.add(i);
       }
     }

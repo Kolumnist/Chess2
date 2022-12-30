@@ -32,13 +32,13 @@ public class Crow extends Piece {
     movement = new Coordinate[9];
     defeatPieceMove();
 
-    for (int i = 0; i < possibleMoves.length; i++) {
-      if ((possibleMoves[i].compareCoordinates(coordinate))
-          || possibleMoves[i].getY() < 0
-          || possibleMoves[i].getX() < 0
-          || possibleMoves[i].getY() > 7
-          || possibleMoves[i].getX() > 7
-          || board.getSpecificField(possibleMoves[i]).getFieldState()
+    for (int i = 0; i < movement.length; i++) {
+      if ((movement[i].compareCoordinates(coordinate))
+          || movement[i].getY() < 0
+          || movement[i].getX() < 0
+          || movement[i].getY() > 7
+          || movement[i].getX() > 7
+          || board.getSpecificField(movement[i]).getFieldState()
           == FieldState.HAS_CURRENT_PIECE) {
         index.add(i);
       }
