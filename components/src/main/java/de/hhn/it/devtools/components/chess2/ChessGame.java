@@ -103,6 +103,7 @@ public class ChessGame implements Chess2Service {
     gameBoard.getSpecificField(bearCoordinate)
         .setFieldState(FieldState.HAS_BEAR);
 
+    /* Calculate all Pieces movements */
     for (Piece piece : whitePlayer.myPieces) {
       piece.calculate(gameBoard);
     }
@@ -204,7 +205,7 @@ public class ChessGame implements Chess2Service {
       }
       piece.calculate(gameBoard);
     }
-    gameBoard.getSpecificField(bearCoordinate).getPiece().calculate(gameBoard);
+    bear.calculate(gameBoard);
   }
 
   @Override
@@ -218,6 +219,7 @@ public class ChessGame implements Chess2Service {
     bear = new Bear('g', bearCoordinate);
 
     initializeBoard();
+
     gameBoard.lostPiece = false;
 
     gameState = GameState.RUNNING;
@@ -341,9 +343,10 @@ public class ChessGame implements Chess2Service {
 
       /* The SELECTED piece is Bear: FieldState -> HAS_BEAR and Coordinates get updated*/
       if (gameBoard.getSpecificField(selectedCoordinate).getPiece() == bear) {
-        gameBoard.getSpecificField(newCoordinate).setFieldState(FieldState.HAS_BEAR);
         bearCoordinate = newCoordinate;
         bear.setCoordinate(bearCoordinate);
+        gameBoard.getSpecificField(bearCoordinate).setPiece(Optional.of(bear));
+        gameBoard.getSpecificField(bearCoordinate).setFieldState(FieldState.HAS_BEAR);
 
         /* The SELECTED piece be a Monkey and is able to jump,
          * the current Player can move with the Monkey till he is not able to anymore! */
