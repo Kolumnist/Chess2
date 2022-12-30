@@ -40,7 +40,6 @@ public class ChessGame implements Chess2Service {
   protected GameState gameState;
 
   protected Coordinate bearCoordinate;
-  protected boolean currentKingInJail;
 
   /**
    * The Constructor that initializes every needed object.
@@ -77,8 +76,8 @@ public class ChessGame implements Chess2Service {
     gameBoard.getFields()[fieldsMax - 1].setFieldState(FieldState.JAIL);
 
     /* Set the Pieces back to the old position */
-    whitePlayer.initializeMyPieces(gameBoard);
-    blackPlayer.initializeMyPieces(gameBoard);
+    whitePlayer.initializeMyPieces();
+    blackPlayer.initializeMyPieces();
 
     Piece whitePiece;
     Piece blackPiece;
@@ -223,7 +222,6 @@ public class ChessGame implements Chess2Service {
 
     gameState = GameState.RUNNING;
     winState = WinningPlayerState.STILL_RUNNING;
-    currentKingInJail = false;
 
     return gameBoard;
   }
@@ -353,9 +351,11 @@ public class ChessGame implements Chess2Service {
           .getClass().equals(Monkey.class)) {
         gameBoard.getSpecificField(selectedCoordinate).setPiece(Optional.empty());
         gameBoard.getSpecificField(selectedCoordinate).setFieldState(FieldState.FREE_FIELD);
+        Monkey monkey = (Monkey) gameBoard.getSpecificField(selectedCoordinate).getPiece();
+        //monkey.calculateJump();
         monkeyChaos = true;
         return gameBoard;
-      } //TODO: Ask Michel how I can test if a monkey jumped or not and can jump or not
+      }
 
       /* Selected Piece gets moved to the new Coordinate also FieldState.
        * Checks if the hit Piece is a King or Queen they get send to Jail accordingly.
