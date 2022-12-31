@@ -26,8 +26,8 @@ public class Fish extends Piece {
       }
 
     } else if (color == 'b') {
-      for (int i = coordinate.getX() - 1; i < coordinate.getX() + 1; i++) {
-        for (int j = coordinate.getY() - 1; j < coordinate.getY() + 1; j++) {
+      for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
+        for (int j = coordinate.getY()-1; j <= coordinate.getY(); j++) {
           if ((i == coordinate.getX()) && (j == coordinate.getY() - 1)) {
             continue;
           }
@@ -45,6 +45,7 @@ public class Fish extends Piece {
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
     index = new ArrayList<>();
+
     for (int i = 0; i < possibleMoves.length; i++) {
       if ((possibleMoves[i].getX() == coordinate.getX()
           && possibleMoves[i].getY() == coordinate.getY())
@@ -58,4 +59,5 @@ public class Fish extends Piece {
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
   }
 }
+
 
