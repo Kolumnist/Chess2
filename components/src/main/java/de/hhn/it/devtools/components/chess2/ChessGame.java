@@ -205,7 +205,9 @@ public class ChessGame implements Chess2Service {
       }
       piece.calculate(gameBoard);
     }
-    bear.calculate(gameBoard);
+    if (bearCoordinate.getX() != -1) {
+      bear.calculate(gameBoard);
+    }
   }
 
   @Override

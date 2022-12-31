@@ -130,7 +130,7 @@ public class Player {
     } else {
       jailCoordinate = new Coordinate(8, 4);
     }
-    gameBoard.getSpecificField(jailCoordinate).setFieldState(FieldState.JAIL_KING);
+    gameBoard.getSpecificField(jailCoordinate).setFieldState(FieldState.JAIL_QUEEN);
     gameBoard.getSpecificField(jailCoordinate).setPiece(Optional.of(jailPiece));
   }
 
