@@ -272,7 +272,7 @@ public class TestPieces {
     }
   }
   //endregion white Fish
-  
+
   //region Crow
   @Test
   @DisplayName("Test if calculate produces the right coordinates at the beginning of the game for all crows")
