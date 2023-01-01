@@ -22,12 +22,14 @@ public class Bear extends Piece {
   public void calculate(Board board) {
     possibleMoves = new Coordinate[9];
     int k = 0;
+    //Calculating the Coordinates through off-putting the own Coordinate by one in X and Y direction.
     for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
       for (int j = coordinate.getY() - 1; j <= coordinate.getY() + 1; j++) {
         possibleMoves[k++] = new Coordinate(i, j);
       }
     }
 
+    //Testing for invalid Coordinates and adding them to a list to remove them.
     ArrayList<Integer> index = new ArrayList<>();
     for (int i = 0; i < possibleMoves.length; i++) {
       if ((possibleMoves[i].compareCoordinates(coordinate))
