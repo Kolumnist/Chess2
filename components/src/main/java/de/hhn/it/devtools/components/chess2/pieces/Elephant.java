@@ -6,6 +6,13 @@ import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.Piece;
 import java.util.ArrayList;
 
+/**
+ * This class implements the Elephant which inherits from Piece.
+ *
+ * @author Collin Hoss, Lara Mangi, Michel Jouaux
+ * @version 1.0
+ */
+
 public class Elephant extends Piece {
 
   public Elephant(char color, Coordinate coordinate) {

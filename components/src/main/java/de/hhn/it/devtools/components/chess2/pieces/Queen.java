@@ -2,11 +2,16 @@ package de.hhn.it.devtools.components.chess2.pieces;
 
 import de.hhn.it.devtools.apis.chess2.Board;
 import de.hhn.it.devtools.apis.chess2.Coordinate;
-import de.hhn.it.devtools.apis.chess2.Field;
 import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.Piece;
-import de.hhn.it.devtools.components.chess2.Player;
 import java.util.ArrayList;
+
+/**
+ * This class implements the Queen which inherits from Piece.
+ *
+ * @author Collin Hoss, Lara Mangi, Michel Jouaux
+ * @version 1.0
+ */
 
 public class Queen extends Piece {
 
