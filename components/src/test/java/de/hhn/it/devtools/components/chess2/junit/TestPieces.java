@@ -304,7 +304,7 @@ public class TestPieces {
   @DisplayName("Test if defeatPieceMove produces the right coordinates if the crow stands on the field 4, 4")
   public void testDefeatPieceMoveInTheMiddleOfTheBoard(){
     Crow crow = new Crow('b', new Coordinate(4,4));
-    crow.defeatPieceMove();
+    crow.defeatPieceMove(board);
 
     Coordinate[] expected = {new Coordinate(3,3),new Coordinate(3,4),
             new Coordinate(3,5),new Coordinate(4,3),new Coordinate(4,5),
@@ -320,7 +320,7 @@ public class TestPieces {
   @DisplayName("Test if defeatPieceMove produces the right coordinates if the crow stands on the field 0, 0")
   public void testDefeatPieceMoveInTheCornerOfTheBoard(){
     Crow crow = new Crow('b', new Coordinate(0,0));
-    crow.defeatPieceMove();
+    crow.defeatPieceMove(board);
 
     Coordinate[] expected = {new Coordinate(3,3),new Coordinate(3,4),
             new Coordinate(3,5),new Coordinate(4,3),new Coordinate(4,5),

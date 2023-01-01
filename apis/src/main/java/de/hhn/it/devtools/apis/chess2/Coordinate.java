@@ -51,7 +51,7 @@ public class Coordinate {
    * @param coordinate the coordinate you want to compare with your coordinate
    * @return the result of the comparison as a boolean
    */
-  public boolean compareCoordinates(Coordinate coordinate){
+  public boolean compareCoordinates(Coordinate coordinate) {
     if (xValue == coordinate.getX() && yValue == coordinate.getY()) {
       return true;
     }

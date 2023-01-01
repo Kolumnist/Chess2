@@ -77,7 +77,7 @@ public abstract class Piece {
    */
   public abstract void calculate(Board board);
 
-  public Piece(char color, Coordinate coordinate){
+  public Piece(char color, Coordinate coordinate) {
     this.color = color;
     this.coordinate = coordinate;
   }
