@@ -32,8 +32,17 @@ public abstract class Piece {
    *
    * @return possibleMoves of the current piece.
    */
-  Coordinate[] getPossibleMove() {
+  public Coordinate[] getPossibleMove() {
     return possibleMoves;
+  }
+
+  /**
+   * The coordinate were the current piece stands is returned.
+   *
+   * @return coordinate of the current piece.
+   */
+  public Coordinate getCoordinate() {
+    return coordinate;
   }
 
   /**
@@ -41,7 +50,7 @@ public abstract class Piece {
    *
    * @param coordinate is the new coordinate.
    */
-  void setCoordinate(Coordinate coordinate) {
+  public void setCoordinate(Coordinate coordinate) {
     this.coordinate = coordinate;
   }
 
@@ -66,7 +75,12 @@ public abstract class Piece {
   /**
    * This method calculates the possible moves of the piece.
    */
-  protected abstract void calculate();
+  public abstract void calculate(Board board);
+
+  public Piece(char color, Coordinate coordinate){
+    this.color = color;
+    this.coordinate = coordinate;
+  }
 
   /**
    * This method takes a Coordinate[] and a ArrayList of invalid index and returns the shortened
@@ -92,7 +106,6 @@ public abstract class Piece {
       shortedArray[k] = possibleMoves[i];
       k++;
     }
-
     return shortedArray;
   }
 }

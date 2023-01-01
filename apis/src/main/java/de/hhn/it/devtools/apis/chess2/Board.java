@@ -11,6 +11,7 @@ package de.hhn.it.devtools.apis.chess2;
 public class Board {
 
   private final Field[] fields = new Field[68];
+  public boolean lostPiece = false;
 
   /**
    * Constructor of board.
@@ -23,14 +24,19 @@ public class Board {
     for (int y = 0; y < 8; y++) {
       for (int x = 0; x < 8; x++) {
         fields[++diff] = new Field(new Coordinate(x, y));
+        fields[diff].setFieldState(FieldState.FREE_FIELD);
       }
     }
 
     /* Jail fields get initialized */
-    fields[fields.length - 4] = new Field(new Coordinate(8, 0));
-    fields[fields.length - 2] = new Field(new Coordinate(8, 2));
-    fields[fields.length - 3] = new Field(new Coordinate(8, 1));
-    fields[fields.length - 1] = new Field(new Coordinate(8, 3));
+    fields[fields.length - 4] = new Field(new Coordinate(9, 4));
+    fields[fields.length - 2] = new Field(new Coordinate(9, 3));
+    fields[fields.length - 3] = new Field(new Coordinate(8, 3));
+    fields[fields.length - 1] = new Field(new Coordinate(8, 4));
+    fields[fields.length - 4].setFieldState(FieldState.JAIL);
+    fields[fields.length - 2].setFieldState(FieldState.JAIL);
+    fields[fields.length - 3].setFieldState(FieldState.JAIL);
+    fields[fields.length - 1].setFieldState(FieldState.JAIL);
   }
 
   /**
@@ -47,7 +53,7 @@ public class Board {
         return field;
       }
     }
-    return fields[fields.length-1];
+    return fields[fields.length - 1];
   }
 
   /**
