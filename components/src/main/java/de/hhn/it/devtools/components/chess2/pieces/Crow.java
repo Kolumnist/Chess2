@@ -70,7 +70,8 @@ public class Crow extends Piece {
     ArrayList<Integer> index = new ArrayList<>();
     movement = new Coordinate[9];
     int k = 0;
-    //Calculating the Coordinates through off-putting the own Coordinate by one in X and Y direction.
+    //Calculating the Coordinates through off-putting the own Coordinate
+    // by one in X and Y direction.
     for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
       for (int j = coordinate.getY() - 1; j <= coordinate.getY() + 1; j++) {
         movement[k++] = new Coordinate(i, j);
@@ -80,12 +81,12 @@ public class Crow extends Piece {
     //Testing for invalid Coordinates and adding them to a list to remove them.
     for (int i = 0; i < movement.length; i++) {
       if ((movement[i].compareCoordinates(coordinate))
-              || movement[i].getY() < 0
-              || movement[i].getX() < 0
-              || movement[i].getY() > 7
-              || movement[i].getX() > 7
-              || board.getSpecificField(movement[i]).getFieldState()
-              == FieldState.HAS_CURRENT_PIECE) {
+          || movement[i].getY() < 0
+          || movement[i].getX() < 0
+          || movement[i].getY() > 7
+          || movement[i].getX() > 7
+          || board.getSpecificField(movement[i]).getFieldState()
+          == FieldState.HAS_CURRENT_PIECE) {
         index.add(i);
       }
     }
