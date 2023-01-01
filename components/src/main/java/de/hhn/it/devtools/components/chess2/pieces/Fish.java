@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 public class Fish extends Piece {
 
-  Integer[] myStepForewardCoordinate = new Integer[1];
-
   public Fish(char color, Coordinate coordinate) {
     super(color, coordinate);
   }
