@@ -2,6 +2,7 @@ package de.hhn.it.devtools.components.chess2.pieces;
 
 import de.hhn.it.devtools.apis.chess2.Board;
 import de.hhn.it.devtools.apis.chess2.Coordinate;
+import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.Piece;
 import java.util.ArrayList;
 
@@ -39,7 +40,9 @@ public class King extends Piece {
           || possibleMoves[i].getY() < 0
           || possibleMoves[i].getX() < 0
           || possibleMoves[i].getY() > 7
-          || possibleMoves[i].getX() > 7) {
+          || possibleMoves[i].getX() > 7
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_CURRENT_PIECE) {
         index.add(i);
       }
     }
