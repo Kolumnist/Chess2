@@ -2,10 +2,14 @@ package de.hhn.it.devtools.components.chess2.pieces;
 
 import de.hhn.it.devtools.apis.chess2.Board;
 import de.hhn.it.devtools.apis.chess2.Coordinate;
+import de.hhn.it.devtools.apis.chess2.Field;
+import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.Piece;
 import java.util.ArrayList;
 
 public class Fish extends Piece {
+
+  Integer[] myStepForewardCoordinate = new Integer[1];
 
   public Fish(char color, Coordinate coordinate) {
     super(color, coordinate);
@@ -25,7 +29,6 @@ public class Fish extends Piece {
           // darf nicht hin zu coordinate.getX() & coordinate.getY()+1
         }
       }
-
     } else if (color == 'b') {
       for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
         for (int j = coordinate.getY() - 1; j <= coordinate.getY(); j++) {
@@ -37,6 +40,7 @@ public class Fish extends Piece {
         }
       }
     }
+
     ArrayList<Integer> index = new ArrayList<>();
 
     for (int i = 0; i < possibleMoves.length; i++) {
@@ -53,10 +57,28 @@ public class Fish extends Piece {
           || possibleMoves[i].getY() < 0
           || possibleMoves[i].getX() < 0
           || possibleMoves[i].getY() > 7
-          || possibleMoves[i].getX() > 7) {
-        index.add(i);
+          || possibleMoves[i].getX() > 7
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_CURRENT_PIECE) {
+        if (color == 'w') {
+          if ((possibleMoves[i].getX() == coordinate.getX()
+              && possibleMoves[i].getY() == coordinate.getY() - 1)
+              && board.getSpecificField(possibleMoves[i]).getFieldState()
+              == FieldState.HAS_OTHER_PIECE) {
+            if (color == 'b') {
+              if ((possibleMoves[i].getX() == coordinate.getX()
+                  && possibleMoves[i].getY() == coordinate.getY() + 1)
+                  && board.getSpecificField(possibleMoves[i]).getFieldState()
+                  == FieldState.HAS_OTHER_PIECE) {
+              }
+            }
+          }
+        }
       }
+
+      index.add(i);
     }
+
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
   }
 }
