@@ -67,7 +67,7 @@ public class Monkey extends Piece {
   public void calculateJump(Board board) {
     calculateMovement();
 
-    possibleJump = new Coordinate[possibleMoves.length];
+    possibleJump = new Coordinate[8];
     int k = 0;
     //Testing if there is a Piece nearby to jump over and calculating the new Coordinate.
     for (int i = 0; i < possibleMoves.length; i++) {
