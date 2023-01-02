@@ -246,6 +246,42 @@ public class TestChessGameGoodCases {
   }
 
   @Test
+  @DisplayName("White wins because both the King and Queen of black are in the jail")
+  void TestWhiteWin()
+      throws IllegalParameterException, IllegalStateException, InvalidMoveException {
+    Coordinate[] possibleMoves = chess2Service.getPossibleMoves(new Coordinate(3, 0));
+    board = chess2Service.moveSelectedPiece(
+        new Coordinate(3, 0), new Coordinate(4, 7));
+
+    possibleMoves = chess2Service.getPossibleMoves(new Coordinate(3, 7));
+    Coordinate bear = new Coordinate();
+    for (Field field : board.getFields()) {
+      bear = field.getFieldState() == FieldState.HAS_BEAR ? field.getCoordinate() : bear;
+    }
+    chess2Service.moveSelectedPiece(new Coordinate(3, 7), bear);
+
+    assertEquals(GameState.CHECKMATE, chess2Service.getGameState());
+    assertEquals(WinningPlayerState.WHITE_WIN, chess2Service.getWinningPlayer());
+  }
+  @Test
+  @DisplayName("Black wins because both the King and Queen of white are in the jail")
+  void TestBlackWin()
+      throws IllegalParameterException, IllegalStateException, InvalidMoveException {
+    Coordinate[] possibleMoves = chess2Service.getPossibleMoves(new Coordinate(3, 0));
+    Coordinate bear = new Coordinate();
+    for (Field field : board.getFields()) {
+      bear = field.getFieldState() == FieldState.HAS_BEAR ? field.getCoordinate() : bear;
+    }
+    chess2Service.moveSelectedPiece(new Coordinate(3, 0), bear);
+    possibleMoves = chess2Service.getPossibleMoves(new Coordinate(3, 7));
+    board = chess2Service.moveSelectedPiece(
+        new Coordinate(3, 7), new Coordinate(4, 0));
+
+    assertEquals(GameState.CHECKMATE, chess2Service.getGameState());
+    assertEquals(WinningPlayerState.BLACK_WIN, chess2Service.getWinningPlayer());
+  }
+
+  @Test
   @DisplayName("FieldState gives correct FieldState any Time")
   void TestGetFieldStateAtomic() throws IllegalStateException, IllegalParameterException {
     FieldState fieldState = chess2Service.getFieldState(new Coordinate(0, 0));
