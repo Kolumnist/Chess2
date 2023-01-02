@@ -161,7 +161,7 @@ public class ChessGame implements Chess2Service {
   /**
    * Before every new Round this method gets called. It initializes the new Round sets all
    * fieldStates and currentPlayer to the correct value.
-   * It also TODO: tests if there is Mate/Check
+   * It also TODO: tests if there is Mate/Check we won't be getting this done it is too hard
    */
   private void setUpNewRound() {
     logger.info("setUpNewRound");
@@ -328,6 +328,19 @@ public class ChessGame implements Chess2Service {
     }
 
     FieldState oldFieldState = gameBoard.getSpecificField(newCoordinate).getFieldState();
+
+    /* Selected Piece itself is pressed */
+    if (oldFieldState == FieldState.SELECTED) {
+      /* Should monkey be pressed and monkeyChaos is true then the round ends */
+      if (gameBoard.getSpecificField(selectedCoordinate).getPiece()
+          .getClass().equals(Monkey.class) && monkeyChaos) {
+        monkeyChaos = false;
+        gameBoard.getSpecificField(newCoordinate).setFieldState(FieldState.HAS_CURRENT_PIECE);
+        setUpNewRound();
+        return gameBoard;
+      }
+      return gameBoard;
+    }
 
     /* Selected Piece gets moved to the new Coordinate also FieldState */
     if (oldFieldState == FieldState.FREE_FIELD) {
