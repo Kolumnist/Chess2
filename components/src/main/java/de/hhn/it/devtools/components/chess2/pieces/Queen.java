@@ -46,13 +46,109 @@ public class Queen extends Piece {
           || possibleMoves[i].getY() < 0
           || possibleMoves[i].getX() < 0
           || possibleMoves[i].getY() > 7
-          || possibleMoves[i].getX() > 7
-          || board.getSpecificField(possibleMoves[i]).getFieldState()
-          == FieldState.HAS_CURRENT_PIECE) {
+          || possibleMoves[i].getX() > 7) {
         index.add(i);
       }
+      //region never look at this code
+      if (board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_CURRENT_PIECE
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_OTHER_PIECE
+          || board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.HAS_BEAR) {
+        int x = possibleMoves[i].getX() - coordinate.getX();
+        int y = possibleMoves[i].getY() - coordinate.getY();
+        for (int h = 1; h <= 7; h++) {
+          for (int g = 1; g <= 7; g++) {
+
+            if (x == -h && y == -g) {
+              for (int t = 1; t <= 7; t++) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - t) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() - t)) {
+                    index.add(u);
+                  }
+                }
+              }
+            }
+            if (x == 0 && y == -g) {
+              for (int t = 1; t <= 7; t++) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX()) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() - t)) {
+                    index.add(u);
+                  }
+                }
+              }
+            }
+            if (x == -h && y == 0) {
+              for (int t = 1; t <= 7; t++) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - t) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY())) {
+                    index.add(u);
+                  }
+                }
+              }
+            }
+            if (x == h && y == g) {
+              for (int t = 1; t <= 7; t++) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + t) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() + t)) {
+                    index.add(u);
+                  }
+                }
+              }
+            }
+            if (x == 0 && y == g) {
+              for (int t = 1; t <= 7; t++) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX()) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() + t)) {
+                    index.add(u);
+                  }
+                }
+              }
+            }
+            if (x == h && y == 0) {
+              for (int t = 1; t <= 7; t++) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + t) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY())) {
+                    index.add(u);
+                  }
+                }
+              }
+            }
+            if (x == -h && y == g) {
+              for (int t = 1; t <= 7; t++) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - t) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() + t)) {
+                    index.add(u);
+                  }
+                }
+              }
+            }
+            if (x == h && y == -g) {
+              for (int t = 1; t <= 7; t++) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + t) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() - t)) {
+                    index.add(u);
+                  }
+                }
+              }
+            }
+            if (board.getSpecificField(possibleMoves[i]).getFieldState()
+                == FieldState.HAS_CURRENT_PIECE) {
+              index.add(i);
+            }
+          }
+        }
+      }
+      //endregion never look at this code
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
-
   }
 }

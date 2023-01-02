@@ -69,21 +69,24 @@ public class Fish extends Piece {
       if (color == 'w') {
         if ((possibleMoves[i].getX() == coordinate.getX()
             && possibleMoves[i].getY() == coordinate.getY() - 1)
-            && board.getSpecificField(possibleMoves[i]).getFieldState()
-            == FieldState.HAS_OTHER_PIECE) {
+            && (board.getSpecificField(possibleMoves[i]).getFieldState()
+            == FieldState.HAS_OTHER_PIECE
+            || board.getSpecificField(possibleMoves[i]).getFieldState()
+            == FieldState.HAS_BEAR)) {
           index.add(i);
         }
       }
       if (color == 'b') {
         if ((possibleMoves[i].getX() == coordinate.getX()
             && possibleMoves[i].getY() == coordinate.getY() + 1)
-            && board.getSpecificField(possibleMoves[i]).getFieldState()
-            == FieldState.HAS_OTHER_PIECE) {
+            && (board.getSpecificField(possibleMoves[i]).getFieldState()
+            == FieldState.HAS_OTHER_PIECE
+            || board.getSpecificField(possibleMoves[i]).getFieldState()
+            == FieldState.HAS_BEAR)) {
           index.add(i);
         }
       }
     }
-
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
   }
 }
