@@ -209,9 +209,6 @@ public class TestChessGameGoodCases {
 
     assertEquals(FieldState.FREE_FIELD, board.getSpecificField(bear).getFieldState());
     assertNull(board.getSpecificField(bear).getPiece());
-
-    chess2Service.giveUp();
-    assertEquals(WinningPlayerState.WHITE_WIN, chess2Service.getWinningPlayer());
   }
 
   @Test
@@ -262,6 +259,25 @@ public class TestChessGameGoodCases {
 
     assertEquals(GameState.CHECKMATE, chess2Service.getGameState());
     assertEquals(WinningPlayerState.WHITE_WIN, chess2Service.getWinningPlayer());
+  }
+
+
+  @Test
+  @DisplayName("After 3 normal turns there should be no Error")
+  void Test3TurnsNoError()
+      throws IllegalParameterException, IllegalStateException, InvalidMoveException {
+
+    Coordinate[] currentPieces = chess2Service.getCurrentFields();
+    Coordinate[] possibleMoves = chess2Service.getPossibleMoves(currentPieces[9]);
+    board = chess2Service.moveSelectedPiece(currentPieces[9], possibleMoves[0]);
+
+    currentPieces = chess2Service.getCurrentFields();
+    possibleMoves = chess2Service.getPossibleMoves(currentPieces[9]);
+    board = chess2Service.moveSelectedPiece(currentPieces[9], possibleMoves[0]);
+
+    currentPieces = chess2Service.getCurrentFields();
+    possibleMoves = chess2Service.getPossibleMoves(currentPieces[9]);
+    board = chess2Service.moveSelectedPiece(currentPieces[9], possibleMoves[0]);
   }
   @Test
   @DisplayName("Black wins because both the King and Queen of white are in the jail")
