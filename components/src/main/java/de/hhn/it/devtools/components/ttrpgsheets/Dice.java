@@ -10,10 +10,10 @@ import org.slf4j.LoggerFactory;
  * The class Dice for the default Character Sheet.
  */
 public class Dice {
+  private static final Logger logger = LoggerFactory.getLogger(Dice.class);
   private int size;
   private int value;
   private final Random generator = new Random();
-  private static final Logger logger = LoggerFactory.getLogger(Dice.class);
 
   /**
    * Constructor stating diceDescriptor of {@link DiceDescriptor}
@@ -23,7 +23,7 @@ public class Dice {
    *
    */
   public Dice(DiceDescriptor diceDescriptor) {
-    logger.debug("Constructor is called. Parameter: diceDescriptor = " + diceDescriptor);
+    logger.info("Constructor : diceDescriptor = {}", diceDescriptor);
     changeSize(diceDescriptor.getDiceType());
     setValue(diceDescriptor.getResult());
   }
@@ -34,18 +34,18 @@ public class Dice {
    * @return new value for dice.
    */
   public int nextRoll() {
-    logger.debug("nextRoll() method is called");
+    logger.info("nextRoll : no params");
     setValue(generator.nextInt(size) + 1);
     return getValue();
   }
 
   /**
-   * changes the size of the dice .
+   * changes the size of the dice.
    *
    * @param diceTyp type of the dice.
    */
   public void changeSize(DiceType diceTyp) {
-    logger.debug("changeSize() methode is called. Parameter: diceTyp = " + diceTyp);
+    logger.info("changeSize : diceTyp = {}", diceTyp);
     switch (diceTyp) {
       case D2 -> setSize(2);
       case D4 -> setSize(4);
@@ -66,7 +66,7 @@ public class Dice {
    * @return The converted size to the DiceType. null if there is no conversion possible.
    */
   public DiceType convertToDiceType(int size) {
-    logger.debug("convertToDiceType method is called. Parameter: size = " + size);
+    logger.info("convertToDiceType : size = {}", size);
     switch (size) {
       case 2 -> {
         return DiceType.D2;
@@ -99,11 +99,22 @@ public class Dice {
   }
 
   /**
+   * Converts this dice to a {@link DiceDescriptor}.
+   *
+   * @return the {@link DiceDescriptor} of this dice
+   */
+  public DiceDescriptor toDiceDescriptor() {
+    logger.info("toDiceDescriptor : no params");
+    return new DiceDescriptor(this.getType(), this.getValue());
+  }
+
+  /**
    * Getter for the size converted to a DiceType.
    *
    * @return The converted Size
    */
   public DiceType getType() {
+    logger.info("getType : no params");
     return convertToDiceType(getSize());
   }
 
@@ -125,17 +136,6 @@ public class Dice {
 
   @Override
   public String toString() {
-    return "Dice Size: " + getSize()
-            + "\nDice Value: " + getValue();
-  }
-
-  /**
-   * Converts this dice to a {@link DiceDescriptor}.
-   *
-   * @return the {@link DiceDescriptor} of this dice
-   */
-  public DiceDescriptor toDiceDescriptor() {
-    logger.info("toDiceDescriptor : no params");
-    return new DiceDescriptor(this.getType(), this.getValue());
+    return "Dice: [Size: " + getSize() + ", Dice Value: " + getValue() + "]";
   }
 }
