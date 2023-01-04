@@ -177,7 +177,7 @@ class DefaultCharacterSheetTest {
       }
     }
     for (StatType statType : StatType.values()) {
-      Stat stat = characterSheet.getStatOfType(statType);
+      StatDescriptor stat = characterSheet.getStatDescriptor(statType);
       for (OriginType origin : OriginType.values()) {
         if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
           assertThrows(IllegalArgumentException.class,
@@ -185,6 +185,7 @@ class DefaultCharacterSheetTest {
           continue;
         }
         characterSheet.incrementStat(statType, origin, 5);
+        stat = characterSheet.getStatDescriptor(statType);
         if (origin == OriginType.LEVEL_POINT) {
           if (statType == StatType.STRENGTH) {
             assertEquals(7, stat.getAbilityPointsUsed());
@@ -284,7 +285,7 @@ class DefaultCharacterSheetTest {
       }
     }
     for (StatType statType : StatType.values()) {
-      Stat stat = characterSheet.getStatOfType(statType);
+      StatDescriptor stat = characterSheet.getStatDescriptor(statType);
       for (OriginType origin : OriginType.values()) {
         if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
           assertThrows(IllegalArgumentException.class,
@@ -292,6 +293,7 @@ class DefaultCharacterSheetTest {
           continue;
         }
         characterSheet.decrementStat(statType, origin, 5);
+        stat = characterSheet.getStatDescriptor(statType);
         if (origin == OriginType.LEVEL_POINT) {
           if (statType == StatType.STRENGTH) {
             assertEquals(-3, stat.getAbilityPointsUsed());
@@ -389,23 +391,6 @@ class DefaultCharacterSheetTest {
     for (StatType statType : StatType.values()) {
       characterSheet.setStats(new Stat[0]);
       assertNull(characterSheet.getStatDescriptor(statType));
-    }
-  }
-
-  @Test
-  void getStatOfTypeTest() {
-    logger.info("getStatOfTypeTest() is called");
-    for (StatType statType : StatType.values()) {
-      assertEquals(characterSheet.getStats()[statType.ordinal()],
-              characterSheet.getStatOfType(statType));
-    }
-    for (StatType statType : StatType.values()) {
-      characterSheet.setStats(null);
-      assertNull(characterSheet.getStatOfType(statType));
-    }
-    for (StatType statType : StatType.values()) {
-      characterSheet.setStats(new Stat[0]);
-      assertNull(characterSheet.getStatOfType(statType));
     }
   }
 

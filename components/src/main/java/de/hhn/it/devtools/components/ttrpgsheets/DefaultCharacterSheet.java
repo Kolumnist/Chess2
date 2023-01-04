@@ -277,7 +277,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
    * @param statType The specific StatType
    * @return The Stat of given StatType
    */
-  public Stat getStatOfType(StatType statType) {
+  private Stat getStatOfType(StatType statType) {
     if (getStats() != null) {
       for (Stat stat : getStats()) {
         if (stat.getType() == statType) {
