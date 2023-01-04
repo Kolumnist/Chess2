@@ -437,9 +437,36 @@ class DefaultCharacterSheetTest {
 
   @Test
   void getDiceDescriptorTest() {
-    DiceDescriptor diceDescriptor = characterSheet.getDiceDescriptor();
-    assertEquals(DiceType.D6, diceDescriptor.getDiceType());
-    assertEquals(1, diceDescriptor.getResult());
+    for (DiceType diceType : DiceType.values()) {
+      characterSheet.getDice().changeSize(diceType);
+      for (int i = 1; i < 101; i++) {
+        characterSheet.getDice().setValue(i);
+        DiceDescriptor diceDescriptor = characterSheet.getDiceDescriptor();
+        assertEquals(diceType, diceDescriptor.getDiceType());
+        assertEquals(i, diceDescriptor.getResult());
+        if (diceType == DiceType.D2 && i >= 2) {
+          break;
+        }
+        if (diceType == DiceType.D4 && i >= 4) {
+          break;
+        }
+        if (diceType == DiceType.D6 && i >= 6) {
+          break;
+        }
+        if (diceType == DiceType.D8 && i >= 8) {
+          break;
+        }
+        if (diceType == DiceType.D10 && i >= 10) {
+          break;
+        }
+        if (diceType == DiceType.D12 && i >= 12) {
+          break;
+        }
+        if (diceType == DiceType.D20 && i >= 20) {
+          break;
+        }
+      }
+    }
   }
 
   @Test
