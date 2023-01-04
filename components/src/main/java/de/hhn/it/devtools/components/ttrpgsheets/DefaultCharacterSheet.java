@@ -331,7 +331,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public String toString() {
-    return "CharacterSheetListener: [" + getListener()
+    return "DefaultCharacterSheet: [CharacterSheetListener: " + getListener()
                    + ", Descriptions: " + Arrays.toString(getDescriptions())
                    + ", Stats: " + Arrays.toString(getStats())
                    + ", Dice: " + getDice() + "]";
