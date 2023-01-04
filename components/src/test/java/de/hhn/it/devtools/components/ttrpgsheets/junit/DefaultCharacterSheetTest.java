@@ -437,7 +437,9 @@ class DefaultCharacterSheetTest {
 
   @Test
   void getDiceDescriptorTest() {
-
+    DiceDescriptor diceDescriptor = characterSheet.getDiceDescriptor();
+    assertEquals(DiceType.D6, diceDescriptor.getDiceType());
+    assertEquals(1, diceDescriptor.getResult());
   }
 
   @Test
