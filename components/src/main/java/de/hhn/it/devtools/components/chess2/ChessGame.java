@@ -39,7 +39,7 @@ public class ChessGame implements Chess2Service {
   protected WinningPlayerState winState;
   protected GameState gameState;
 
-  protected Coordinate bearCoordinate;
+  public Coordinate bearCoordinate;
 
   /**
    * The Constructor that initializes every needed object.
