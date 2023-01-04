@@ -26,7 +26,7 @@ public class Description {
   }
 
   /**
-   * Converts this Description to a {@link DescriptionDescriptor}.
+   * Converts this description to a {@link DescriptionDescriptor}.
    *
    * @return the {@link DescriptionDescriptor} of this description
    */
