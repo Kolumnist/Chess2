@@ -119,22 +119,14 @@ class DiceTest {
     for (DiceType diceTyp : DiceType.values()) {
       dice.changeSize(diceTyp);
       switch (dice.getType()) {
-        case D2 -> assertEquals("Dice Size: 2"
-                + "\nDice Value: 3", dice.toString());
-        case D4 -> assertEquals("Dice Size: 4"
-                + "\nDice Value: 3", dice.toString());
-        case D6 -> assertEquals("Dice Size: 6"
-                + "\nDice Value: 3", dice.toString());
-        case D8 -> assertEquals("Dice Size: 8"
-                + "\nDice Value: 3", dice.toString());
-        case D10 -> assertEquals("Dice Size: 10"
-                + "\nDice Value: 3", dice.toString());
-        case D12 -> assertEquals("Dice Size: 12"
-                + "\nDice Value: 3", dice.toString());
-        case D20 -> assertEquals("Dice Size: 20"
-                + "\nDice Value: 3", dice.toString());
-        case D100 -> assertEquals("Dice Size: 100"
-                + "\nDice Value: 3", dice.toString());
+        case D2 -> assertEquals("Dice: [Size: 2, Dice Value: 3]", dice.toString());
+        case D4 -> assertEquals("Dice: [Size: 4, Dice Value: 3]", dice.toString());
+        case D6 -> assertEquals("Dice: [Size: 6, Dice Value: 3]", dice.toString());
+        case D8 -> assertEquals("Dice: [Size: 8, Dice Value: 3]", dice.toString());
+        case D10 -> assertEquals("Dice: [Size: 10, Dice Value: 3]", dice.toString());
+        case D12 -> assertEquals("Dice: [Size: 12, Dice Value: 3]", dice.toString());
+        case D20 -> assertEquals("Dice: [Size: 20, Dice Value: 3]", dice.toString());
+        case D100 -> assertEquals("Dice: [Size: 100, Dice Value: 3]", dice.toString());
         default -> { }
       }
     }
