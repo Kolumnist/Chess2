@@ -443,7 +443,7 @@ class DefaultCharacterSheetTest {
   @Test
   void toStringTest() {
     assertTrue(characterSheet.toString()
-                       .contains("Description: [Type: EYE_COLOR, Description: Blue"));
+                       .contains("Description: [Type: EYE_COLOR, Description: Blue]"));
   }
 
   public static double calculateAverageNumberOfRolls(int size) {
