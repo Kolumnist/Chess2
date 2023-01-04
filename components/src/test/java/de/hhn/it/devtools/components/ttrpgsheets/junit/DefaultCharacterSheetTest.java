@@ -23,27 +23,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class DefaultCharacterSheetTest {
-  private static final org.slf4j.Logger logger
-          = org.slf4j.LoggerFactory.getLogger(DefaultCharacterSheetTest.class);
-
   SimpleCharacterSheetListener listener = null;
   DefaultCharacterSheet characterSheet = null;
 
   @BeforeEach
   void setupObjects() {
-    logger.info("setupObjects() is called");
     listener = new SimpleCharacterSheetListener();
     characterSheet = new DefaultCharacterSheet(listener, setupCharacterDescriptor());
   }
 
   CharacterDescriptor setupCharacterDescriptor() {
-    logger.info("setupCharacterDescriptor() is called");
     return new CharacterDescriptor(setupDescriptions(), setupStats(),
             new DiceDescriptor(DiceType.D6, 1));
   }
 
   StatDescriptor[] setupStats() {
-    logger.info("setupStats() is called");
     StatDescriptor[] statDescriptors = new StatDescriptor[StatType.values().length];
     for (int i = 0; i < StatType.values().length; i++) {
       switch (StatType.values()[i]) {
@@ -62,7 +56,6 @@ class DefaultCharacterSheetTest {
   }
 
   DescriptionDescriptor[] setupDescriptions() {
-    logger.info("setupDescriptions() is called");
     DescriptionDescriptor[] descriptionDescriptors = new DescriptionDescriptor[
                                                              DescriptionType.values().length];
     for (int i = 0; i < DescriptionType.values().length; i++) {
@@ -109,7 +102,6 @@ class DefaultCharacterSheetTest {
 
   @Test
   void wrapCharacterTest() {
-    logger.info("wrapCharacterTest() is called");
     CharacterDescriptor compCharDesc = setupCharacterDescriptor();
     CharacterDescriptor testCharDesc = characterSheet.wrapCharacter();
 
@@ -135,7 +127,6 @@ class DefaultCharacterSheetTest {
 
   @Test
   void incrementStatTest() {
-    logger.info("incrementStatTest() is called");
     for (StatType statType : StatType.values()) {
       StatDescriptor stat = characterSheet.getStatDescriptor(statType);
       for (OriginType origin : OriginType.values()) {
@@ -243,7 +234,6 @@ class DefaultCharacterSheetTest {
 
   @Test
   void decrementStatTest() {
-    logger.info("decrementStatTest() is called");
     for (StatType statType : StatType.values()) {
       StatDescriptor stat = characterSheet.getStatDescriptor(statType);
       for (OriginType origin : OriginType.values()) {
@@ -351,7 +341,6 @@ class DefaultCharacterSheetTest {
 
   @Test
   void getStatDisplayValueTest() {
-    logger.info("getStatDisplayValueTest() is called");
     for (Stat stat : characterSheet.getStats()) {
       switch (stat.getType()) {
         case MAX_HEALTH -> assertEquals(30, characterSheet.getStatDisplayValue(stat.getType()));
@@ -370,7 +359,6 @@ class DefaultCharacterSheetTest {
 
   @Test
   void getStatDescriptorTest() {
-    logger.info("getStatDescriptorTest() is called");
     StatDescriptor[] descArray = setupStats();
     for (StatType statType : StatType.values()) {
       StatDescriptor statDescriptor = characterSheet.getStatDescriptor(statType);
@@ -411,7 +399,6 @@ class DefaultCharacterSheetTest {
 
   @Test
   void getDescriptionDescriptorTest() {
-    logger.info("getDescriptionDescriptorTest() is called");
     DescriptionDescriptor[] descArray = setupDescriptions();
     for (DescriptionType descType : DescriptionType.values()) {
       DescriptionDescriptor descDescriptor = characterSheet.getDescriptionDescriptor(descType);
@@ -428,7 +415,6 @@ class DefaultCharacterSheetTest {
 
   @Test
   void rollDiceTest() {
-    logger.info("rollDiceTest() is called");
     for (DiceType diceType : DiceType.values()) {
       characterSheet.getDiceDescriptor().setDiceType(diceType);
       for (double i = 0; i < calculateAverageNumberOfRolls(
@@ -443,7 +429,6 @@ class DefaultCharacterSheetTest {
 
   @Test
   void changeDiceTypeTest() {
-    logger.info("changeDiceTypeTest() is called");
     for (DiceType diceType : DiceType.values()) {
       characterSheet.changeDiceType(diceType);
       assertEquals(diceType, characterSheet.getDice().getType());
@@ -452,13 +437,11 @@ class DefaultCharacterSheetTest {
 
   @Test
   void getDiceDescriptorTest() {
-    logger.info("getDiceDescriptorTest() is called");
+
   }
 
   @Test
   void toStringTest() {
-    logger.info("toStringTest() is called");
-    logger.info(characterSheet.toString());
     assertTrue(characterSheet.toString()
                        .contains("Description: [Type: EYE_COLOR, Description: Blue"));
   }
