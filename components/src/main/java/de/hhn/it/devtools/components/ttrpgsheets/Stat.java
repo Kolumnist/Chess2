@@ -1,6 +1,5 @@
 package de.hhn.it.devtools.components.ttrpgsheets;
 
-import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import java.math.BigInteger;
