@@ -102,6 +102,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public void incrementStat(StatType statType, OriginType origin) throws IllegalArgumentException {
+    logger.info("incrementStat : statType = {}, origin = {}", statType, origin);
     Stat stat = getStatOfType(statType);
     if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
       throw new IllegalArgumentException("Cannot change level of Stat of this Type");
@@ -122,6 +123,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public void incrementStat(StatType statType, OriginType origin, int amount)
           throws IllegalArgumentException {
+    logger.info("incrementStat : statType = {}, origin = {}, amount = {}",
+            statType, origin, amount);
     Stat stat = getStatOfType(statType);
     if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
       throw new IllegalArgumentException("Cannot change level of Stat of this Type");
@@ -155,6 +158,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public void decrementStat(StatType statType, OriginType origin) throws IllegalArgumentException {
+    logger.info("decrementStat : statType = {}, origin = {}", statType, origin);
     Stat stat = getStatOfType(statType);
     if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
       throw new IllegalArgumentException("Cannot change level of Stat of this Type");
@@ -175,6 +179,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public void decrementStat(StatType statType, OriginType origin, int amount)
           throws IllegalArgumentException {
+    logger.info("decrementStat : statType = {}, origin = {}, amount = {}",
+            statType, origin, amount);
     Stat stat = getStatOfType(statType);
     if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
       throw new IllegalArgumentException("Cannot change level of Stat of this Type");
@@ -208,6 +214,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public int getStatDisplayValue(StatType statType) throws IllegalArgumentException {
+    logger.info("getStatDisplayValue : statType = {}", statType);
     Stat stat = getStatOfType(statType);
     if (stat == null) {
       throw new IllegalArgumentException("No Stat of this type is found");
@@ -217,6 +224,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
 
   @Override
   public StatDescriptor getStatDescriptor(StatType statType) {
+    logger.info("getStatDescriptor : statType = {}", statType);
     Stat stat = getStatOfType(statType);
     if (stat == null) {
       return null;
@@ -278,6 +286,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
    * @return The Stat of given StatType
    */
   private Stat getStatOfType(StatType statType) {
+    logger.info("getStatOfType : statType = {}", statType);
     if (getStats() != null) {
       for (Stat stat : getStats()) {
         if (stat.getType() == statType) {
