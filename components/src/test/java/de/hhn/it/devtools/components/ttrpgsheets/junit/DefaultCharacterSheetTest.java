@@ -361,7 +361,7 @@ class DefaultCharacterSheetTest {
         default -> assertEquals(0, characterSheet.getStatDisplayValue(stat.getType()));
       }
     }
-    characterSheet.setStats(new Stat[0]);
+    characterSheet.setStats(null);
     for (StatType statType : StatType.values()) {
       assertThrows(IllegalArgumentException.class,
               () -> characterSheet.getStatDisplayValue(statType));
