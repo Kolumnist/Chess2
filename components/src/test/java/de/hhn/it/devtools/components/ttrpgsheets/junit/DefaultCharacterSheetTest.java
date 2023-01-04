@@ -108,11 +108,6 @@ class DefaultCharacterSheetTest {
   }
 
   @Test
-  void unwrapCharacterTest() {
-    logger.info("unwrapCharacterTest() is called");
-  }
-
-  @Test
   void wrapCharacterTest() {
     logger.info("wrapCharacterTest() is called");
     CharacterDescriptor compCharDesc = setupCharacterDescriptor();
