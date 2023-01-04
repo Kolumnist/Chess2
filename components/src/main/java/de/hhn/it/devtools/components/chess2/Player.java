@@ -33,7 +33,7 @@ public class Player {
    */
   public Player(char color, Board board) {
     this.color = color;
-    initializeMyPieces(board);
+    initializeMyPieces();
     this.gameBoard = board;
 
     for (Piece piece : myPieces) {
@@ -44,10 +44,8 @@ public class Player {
   /**
    * All pieces that the players has get initialized here it works with a offset to check
    * which color the player has.
-   *
-   * @param board is needed for the pieces
    */
-  protected void initializeMyPieces(Board board) {
+  protected void initializeMyPieces() {
     int coordOffset7 = 0;
     int coordOffset5 = 0;
 
@@ -132,7 +130,7 @@ public class Player {
     } else {
       jailCoordinate = new Coordinate(8, 4);
     }
-    gameBoard.getSpecificField(jailCoordinate).setFieldState(FieldState.JAIL_KING);
+    gameBoard.getSpecificField(jailCoordinate).setFieldState(FieldState.JAIL_QUEEN);
     gameBoard.getSpecificField(jailCoordinate).setPiece(Optional.of(jailPiece));
   }
 

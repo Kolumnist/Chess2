@@ -39,8 +39,7 @@ public class ChessGame implements Chess2Service {
   protected WinningPlayerState winState;
   protected GameState gameState;
 
-  protected Coordinate bearCoordinate;
-  protected boolean currentKingInJail;
+  public Coordinate bearCoordinate;
 
   /**
    * The Constructor that initializes every needed object.
@@ -77,8 +76,8 @@ public class ChessGame implements Chess2Service {
     gameBoard.getFields()[fieldsMax - 1].setFieldState(FieldState.JAIL);
 
     /* Set the Pieces back to the old position */
-    whitePlayer.initializeMyPieces(gameBoard);
-    blackPlayer.initializeMyPieces(gameBoard);
+    whitePlayer.initializeMyPieces();
+    blackPlayer.initializeMyPieces();
 
     Piece whitePiece;
     Piece blackPiece;
@@ -104,13 +103,14 @@ public class ChessGame implements Chess2Service {
     gameBoard.getSpecificField(bearCoordinate)
         .setFieldState(FieldState.HAS_BEAR);
 
+    /* Calculate all Pieces movements */
     for (Piece piece : whitePlayer.myPieces) {
-      piece.calculate();
+      piece.calculate(gameBoard);
     }
     for (Piece piece : blackPlayer.myPieces) {
-      piece.calculate();
+      piece.calculate(gameBoard);
     }
-    gameBoard.getSpecificField(bearCoordinate).getPiece().calculate();
+    gameBoard.getSpecificField(bearCoordinate).getPiece().calculate(gameBoard);
   }
 
   /**
@@ -161,7 +161,7 @@ public class ChessGame implements Chess2Service {
   /**
    * Before every new Round this method gets called. It initializes the new Round sets all
    * fieldStates and currentPlayer to the correct value.
-   * It also TODO: tests if there is Mate/Check
+   * It also TODO: tests if there is Mate/Check we won't be getting this done it is too hard
    */
   private void setUpNewRound() {
     logger.info("setUpNewRound");
@@ -197,15 +197,17 @@ public class ChessGame implements Chess2Service {
       if (piece.getCoordinate().getX() == -1) {
         continue;
       }
-      piece.calculate();
+      piece.calculate(gameBoard);
     }
     for (Piece piece : blackPlayer.myPieces) {
       if (piece.getCoordinate().getY() == -1) {
         continue;
       }
-      piece.calculate();
+      piece.calculate(gameBoard);
     }
-    gameBoard.getSpecificField(bearCoordinate).getPiece().calculate();
+    if (bearCoordinate.getX() != -1) {
+      bear.calculate(gameBoard);
+    }
   }
 
   @Override
@@ -219,11 +221,11 @@ public class ChessGame implements Chess2Service {
     bear = new Bear('g', bearCoordinate);
 
     initializeBoard();
+
     gameBoard.lostPiece = false;
 
     gameState = GameState.RUNNING;
     winState = WinningPlayerState.STILL_RUNNING;
-    currentKingInJail = false;
 
     return gameBoard;
   }
@@ -327,6 +329,19 @@ public class ChessGame implements Chess2Service {
 
     FieldState oldFieldState = gameBoard.getSpecificField(newCoordinate).getFieldState();
 
+    /* Selected Piece itself is pressed */
+    if (oldFieldState == FieldState.SELECTED) {
+      /* Should monkey be pressed and monkeyChaos is true then the round ends */
+      if (gameBoard.getSpecificField(selectedCoordinate).getPiece()
+          .getClass().equals(Monkey.class) && monkeyChaos) {
+        monkeyChaos = false;
+        gameBoard.getSpecificField(newCoordinate).setFieldState(FieldState.HAS_CURRENT_PIECE);
+        setUpNewRound();
+        return gameBoard;
+      }
+      return gameBoard;
+    }
+
     /* Selected Piece gets moved to the new Coordinate also FieldState */
     if (oldFieldState == FieldState.FREE_FIELD) {
 
@@ -343,9 +358,10 @@ public class ChessGame implements Chess2Service {
 
       /* The SELECTED piece is Bear: FieldState -> HAS_BEAR and Coordinates get updated*/
       if (gameBoard.getSpecificField(selectedCoordinate).getPiece() == bear) {
-        gameBoard.getSpecificField(newCoordinate).setFieldState(FieldState.HAS_BEAR);
         bearCoordinate = newCoordinate;
         bear.setCoordinate(bearCoordinate);
+        gameBoard.getSpecificField(bearCoordinate).setPiece(Optional.of(bear));
+        gameBoard.getSpecificField(bearCoordinate).setFieldState(FieldState.HAS_BEAR);
 
         /* The SELECTED piece be a Monkey and is able to jump,
          * the current Player can move with the Monkey till he is not able to anymore! */
@@ -353,9 +369,11 @@ public class ChessGame implements Chess2Service {
           .getClass().equals(Monkey.class)) {
         gameBoard.getSpecificField(selectedCoordinate).setPiece(Optional.empty());
         gameBoard.getSpecificField(selectedCoordinate).setFieldState(FieldState.FREE_FIELD);
+        Monkey monkey = (Monkey) gameBoard.getSpecificField(selectedCoordinate).getPiece();
+        //monkey.calculateJump();
         monkeyChaos = true;
         return gameBoard;
-      } //TODO: Ask Michel how I can test if a monkey jumped or not and can jump or not
+      }
 
       /* Selected Piece gets moved to the new Coordinate also FieldState.
        * Checks if the hit Piece is a King or Queen they get send to Jail accordingly.

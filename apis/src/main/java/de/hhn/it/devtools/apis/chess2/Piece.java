@@ -75,9 +75,9 @@ public abstract class Piece {
   /**
    * This method calculates the possible moves of the piece.
    */
-  public abstract void calculate();
+  public abstract void calculate(Board board);
 
-  public Piece(char color, Coordinate coordinate){
+  public Piece(char color, Coordinate coordinate) {
     this.color = color;
     this.coordinate = coordinate;
   }

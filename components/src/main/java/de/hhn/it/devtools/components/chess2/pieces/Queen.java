@@ -1,8 +1,17 @@
 package de.hhn.it.devtools.components.chess2.pieces;
 
+import de.hhn.it.devtools.apis.chess2.Board;
 import de.hhn.it.devtools.apis.chess2.Coordinate;
+import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.Piece;
 import java.util.ArrayList;
+
+/**
+ * This class implements the Queen which inherits from Piece.
+ *
+ * @author Collin Hoss, Lara Mangi, Michel Jouaux
+ * @version 1.0
+ */
 
 public class Queen extends Piece {
 
@@ -11,7 +20,7 @@ public class Queen extends Piece {
   }
 
   @Override
-  public void calculate() {
+  public void calculate(Board board) {
     possibleMoves = new Coordinate[64];
     int k = 0;
     for (int g = 1; g <= 7; g++) {
@@ -40,6 +49,104 @@ public class Queen extends Piece {
           || possibleMoves[i].getX() > 7) {
         index.add(i);
       }
+      //region never look at this code
+      if (board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_CURRENT_PIECE
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_OTHER_PIECE
+          || board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.HAS_BEAR) {
+        int x = possibleMoves[i].getX() - coordinate.getX();
+        int y = possibleMoves[i].getY() - coordinate.getY();
+        int r = 1;
+        for (int h = 1; h <= 7; h++) {
+          for (int g = 1; g <= 7; g++) {
+
+            if (x == -h && y == -g) {
+              for (int t = 1; t <= 7; t++) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - r) && (   //davor: possibleMoves[u].getX() == possibleMoves[i].getX() - t
+                      possibleMoves[u].getY() == possibleMoves[i].getY() - r)) {
+                    r++;
+                    index.add(u);
+                  }
+                }
+              }
+            }
+            if (x == 0 && y == -g) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX()) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() - r)) {
+                    r++;
+                    index.add(u);
+                  }
+                }
+              }
+            if (x == -h && y == 0) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - r) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY())) {
+                    r++;
+                    index.add(u);
+                  }
+                }
+              }
+            if (x == h && y == g) {
+              for (int t = 1; t <= 7; t++) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + r) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() + r)) {
+                    r++;
+                    index.add(u);
+                  }
+                }
+              }
+            }
+            if (x == 0 && y == g) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX()) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() + r)) {
+                    r++;
+                    index.add(u);
+                  }
+                }
+              }
+            if (x == h && y == 0) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + r) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY())) {
+                    r++;
+                    index.add(u);
+                  }
+                }
+              }
+            if (x == -h && y == g) {
+              for (int t = 1; t <= 7; t++) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - r) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() + r)) {
+                    index.add(u);
+                  }
+                }
+              }
+            }
+            if (x == h && y == -g) {
+              for (int t = 1; t <= 7; t++) {
+                for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + r) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() - r)) {
+                    index.add(u);
+                  }
+                }
+              }
+            }
+            if (board.getSpecificField(possibleMoves[i]).getFieldState()
+                == FieldState.HAS_CURRENT_PIECE) {
+              index.add(i);
+            }
+          }
+        }
+      }
+      //endregion never look at this code
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
   }

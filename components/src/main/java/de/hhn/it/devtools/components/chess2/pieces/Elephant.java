@@ -1,8 +1,17 @@
 package de.hhn.it.devtools.components.chess2.pieces;
 
+import de.hhn.it.devtools.apis.chess2.Board;
 import de.hhn.it.devtools.apis.chess2.Coordinate;
+import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.Piece;
 import java.util.ArrayList;
+
+/**
+ * This class implements the Elephant which inherits from Piece.
+ *
+ * @author Collin Hoss, Lara Mangi, Michel Jouaux
+ * @version 1.0
+ */
 
 public class Elephant extends Piece {
 
@@ -10,7 +19,7 @@ public class Elephant extends Piece {
     super(color, coordinate);
   }
 
-  public void calculate() {
+  public void calculate(Board board) {
     possibleMoves = new Coordinate[10];
     int k = 0;
 
@@ -30,12 +39,14 @@ public class Elephant extends Piece {
     index = new ArrayList<>();
 
     for (int i = 0; i < possibleMoves.length; i++) {
-      if ((possibleMoves[i].getX() == coordinate.getX()
-          && possibleMoves[i].getY() == coordinate.getY())
+      if (possibleMoves[i] == null
           || possibleMoves[i].getY() < 0
           || possibleMoves[i].getX() < 0
           || possibleMoves[i].getY() > 7
-          || possibleMoves[i].getX() > 7) {
+          || possibleMoves[i].getX() > 7
+          || possibleMoves[i].compareCoordinates(coordinate)
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_CURRENT_PIECE) {
         index.add(i);
       }
     }
