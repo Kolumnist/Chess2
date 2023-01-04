@@ -49,6 +49,7 @@ public class Queen extends Piece {
           || possibleMoves[i].getX() > 7) {
         index.add(i);
       }
+
       //region never look at this code
       if (board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_CURRENT_PIECE
@@ -58,95 +59,171 @@ public class Queen extends Piece {
         int x = possibleMoves[i].getX() - coordinate.getX();
         int y = possibleMoves[i].getY() - coordinate.getY();
         int r = 1;
+        int rr = 1;
+        int n = 1;
+        int nn = 1;
+        int m = 1;
+        int mm = 1;
+        int d = 1;
+        int dd = 1;
         for (int h = 1; h <= 7; h++) {
           for (int g = 1; g <= 7; g++) {
 
             if (x == -h && y == -g) {
-              for (int t = 1; t <= 7; t++) {
-                for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - r) && (   //davor: possibleMoves[u].getX() == possibleMoves[i].getX() - t
-                      possibleMoves[u].getY() == possibleMoves[i].getY() - r)) {
-                    r++;
+              for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - m)
+                      && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() - m)) {
                     index.add(u);
+                    m++;
+                    System.out.println("if (x == -h && y == -g)\n");
+                    System.out.println(u);
+                    System.out.println(
+                        "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY()
+                            + "]");
+                    System.out.println(
+                        "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY()
+                            + "]");
+                    System.out.println(
+                        "_______________________________________________________________________");
                   }
                 }
               }
-            }
             if (x == 0 && y == -g) {
-                for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX()) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY() - r)) {
-                    r++;
-                    index.add(u);
-                  }
+              for (int u = 0; u < possibleMoves.length; u++) {
+                if ((possibleMoves[u].getX() == possibleMoves[i].getX()) && (
+                    possibleMoves[u].getY() == possibleMoves[i].getY() - r)) {
+                  index.add(u);
+                  r++;
+                  System.out.println("if (x == 0 && y == -g)\n");
+                  System.out.println(u);
+                  System.out.println(
+                      "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY() + "]");
+                  System.out.println(
+                      "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY() + "]");
+                  System.out.println(
+                      "_______________________________________________________________________");
                 }
               }
+            }
             if (x == -h && y == 0) {
-                for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - r) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY())) {
-                    r++;
-                    index.add(u);
-                  }
+              for (int u = 0; u < possibleMoves.length; u++) {
+                if ((possibleMoves[u].getX() == possibleMoves[i].getX() - rr) && (
+                    possibleMoves[u].getY() == possibleMoves[i].getY())) {
+                  index.add(u);
+                  rr++;
+                  System.out.println("if (x == -h && y == 0)\n");
+                  System.out.println(u);
+                  System.out.println(
+                      "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY() + "]");
+                  System.out.println(
+                      "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY() + "]");
+                  System.out.println(
+                      "_______________________________________________________________________");
                 }
               }
+            }
             if (x == h && y == g) {
-              for (int t = 1; t <= 7; t++) {
-                for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + r) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY() + r)) {
-                    r++;
+              for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + mm) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() + mm)) {
                     index.add(u);
+                    mm++;
+                    System.out.println("if (x == h && y == g)\n");
+                    System.out.println(u);
+                    System.out.println(
+                        "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY()
+                            + "]");
+                    System.out.println(
+                        "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY()
+                            + "]");
+                    System.out.println(
+                        "_______________________________________________________________________");
                   }
                 }
               }
-            }
             if (x == 0 && y == g) {
-                for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX()) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY() + r)) {
-                    r++;
-                    index.add(u);
-                  }
+              for (int u = 0; u < possibleMoves.length; u++) {
+                if ((possibleMoves[u].getX() == possibleMoves[i].getX()) && (
+                    possibleMoves[u].getY() == possibleMoves[i].getY() + n)) {
+                  index.add(u);
+                  n++;
+                  System.out.println("if (x == 0 && y == g)\n");
+                  System.out.println(u);
+                  System.out.println(
+                      "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY() + "]");
+                  System.out.println(
+                      "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY() + "]");
+                  System.out.println(
+                      "_______________________________________________________________________");
                 }
               }
+            }
             if (x == h && y == 0) {
-                for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + r) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY())) {
-                    r++;
-                    index.add(u);
-                  }
+              for (int u = 0; u < possibleMoves.length; u++) {
+                if ((possibleMoves[u].getX() == possibleMoves[i].getX() + nn) && (
+                    possibleMoves[u].getY() == possibleMoves[i].getY())) {
+                  index.add(u);
+                  nn++;
+                  System.out.println("if (x == h && y == 0)\n");
+                  System.out.println(u);
+                  System.out.println(
+                      "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY() + "]");
+                  System.out.println(
+                      "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY() + "]");
+                  System.out.println(
+                      "_______________________________________________________________________");
                 }
               }
+            }
             if (x == -h && y == g) {
-              for (int t = 1; t <= 7; t++) {
-                for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - r) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY() + r)) {
+              for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - d) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() + d)) {
                     index.add(u);
+                    System.out.println("d: "+d);
+                    d++;
+                    System.out.println("if (x == -h && y == g)\n");
+                    System.out.println(u);
+                    System.out.println(
+                        "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY()
+                            + "]");
+                    System.out.println(
+                        "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY()
+                            + "]");
+                    System.out.println(
+                        "_______________________________________________________________________");
                   }
                 }
               }
-            }
             if (x == h && y == -g) {
-              for (int t = 1; t <= 7; t++) {
-                for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + r) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY() - r)) {
+              for (int u = 0; u < possibleMoves.length; u++) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + dd) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() - dd)) {
                     index.add(u);
+                    dd++;
+                    System.out.println("if (x == h && y == -g)\n");
+                    System.out.println(u);
+                    System.out.println(
+                        "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY()
+                            + "]");
+                    System.out.println(
+                        "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY()
+                            + "]");
+                    System.out.println(
+                        "_______________________________________________________________________");
                   }
                 }
               }
-            }
             if (board.getSpecificField(possibleMoves[i]).getFieldState()
                 == FieldState.HAS_CURRENT_PIECE) {
               index.add(i);
             }
           }
+
+          //endregion never look at this code
         }
       }
-      //endregion never look at this code
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
   }

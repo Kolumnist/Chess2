@@ -92,7 +92,7 @@ public abstract class Piece {
    */
   protected Coordinate[] shortenCoordinateArray(Coordinate[] possibleMoves,
       ArrayList<Integer> index) {
-    Coordinate[] shortedArray = new Coordinate[possibleMoves.length - index.size()];
+    Coordinate[] shortedArray = new Coordinate[Math.abs(possibleMoves.length - index.size())];
     int j = 0;
     int k = 0;
 
