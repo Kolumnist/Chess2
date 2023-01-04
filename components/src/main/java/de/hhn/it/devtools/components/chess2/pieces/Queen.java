@@ -57,74 +57,73 @@ public class Queen extends Piece {
           || board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.HAS_BEAR) {
         int x = possibleMoves[i].getX() - coordinate.getX();
         int y = possibleMoves[i].getY() - coordinate.getY();
+        int r = 1;
         for (int h = 1; h <= 7; h++) {
           for (int g = 1; g <= 7; g++) {
 
             if (x == -h && y == -g) {
               for (int t = 1; t <= 7; t++) {
                 for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - t) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY() - t)) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - r) && (   //davor: possibleMoves[u].getX() == possibleMoves[i].getX() - t
+                      possibleMoves[u].getY() == possibleMoves[i].getY() - r)) {
+                    r++;
                     index.add(u);
                   }
                 }
               }
             }
             if (x == 0 && y == -g) {
-              for (int t = 1; t <= 7; t++) {
                 for (int u = 0; u < possibleMoves.length; u++) {
                   if ((possibleMoves[u].getX() == possibleMoves[i].getX()) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY() - t)) {
+                      possibleMoves[u].getY() == possibleMoves[i].getY() - r)) {
+                    r++;
                     index.add(u);
                   }
                 }
               }
-            }
             if (x == -h && y == 0) {
-              for (int t = 1; t <= 7; t++) {
                 for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - t) && (
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - r) && (
                       possibleMoves[u].getY() == possibleMoves[i].getY())) {
+                    r++;
                     index.add(u);
                   }
                 }
               }
-            }
             if (x == h && y == g) {
               for (int t = 1; t <= 7; t++) {
                 for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + t) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY() + t)) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + r) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() + r)) {
+                    r++;
                     index.add(u);
                   }
                 }
               }
             }
             if (x == 0 && y == g) {
-              for (int t = 1; t <= 7; t++) {
                 for (int u = 0; u < possibleMoves.length; u++) {
                   if ((possibleMoves[u].getX() == possibleMoves[i].getX()) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY() + t)) {
+                      possibleMoves[u].getY() == possibleMoves[i].getY() + r)) {
+                    r++;
                     index.add(u);
                   }
                 }
               }
-            }
             if (x == h && y == 0) {
-              for (int t = 1; t <= 7; t++) {
                 for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + t) && (
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + r) && (
                       possibleMoves[u].getY() == possibleMoves[i].getY())) {
+                    r++;
                     index.add(u);
                   }
                 }
               }
-            }
             if (x == -h && y == g) {
               for (int t = 1; t <= 7; t++) {
                 for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - t) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY() + t)) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - r) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() + r)) {
                     index.add(u);
                   }
                 }
@@ -133,8 +132,8 @@ public class Queen extends Piece {
             if (x == h && y == -g) {
               for (int t = 1; t <= 7; t++) {
                 for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + t) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY() - t)) {
+                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + r) && (
+                      possibleMoves[u].getY() == possibleMoves[i].getY() - r)) {
                     index.add(u);
                   }
                 }
