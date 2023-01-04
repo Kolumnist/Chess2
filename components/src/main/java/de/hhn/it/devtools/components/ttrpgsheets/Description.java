@@ -26,7 +26,7 @@ public class Description {
   }
 
   /**
-   * Converts this Description to a {@link DescriptionDescriptor}.
+   * Converts this description to a {@link DescriptionDescriptor}.
    *
    * @return the {@link DescriptionDescriptor} of this description
    */
@@ -64,6 +64,6 @@ public class Description {
 
   @Override
   public String toString() {
-    return "Type: " + getType() + "\nDescription: " + getDescription();
+    return "Description: [Type: " + getType() + ", Description: " + getDescription() + "]";
   }
 }

@@ -2,6 +2,7 @@ package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.DiceDescriptor;
@@ -18,8 +19,6 @@ class DiceTest {
 
   static Dice dice;
   static int[] sizes = {2, 4, 6, 8, 10, 12, 20, 100};
-  static DiceType[] diceTypes = {DiceType.D2, DiceType.D4, DiceType.D6, DiceType.D8,
-      DiceType.D10, DiceType.D12, DiceType.D20, DiceType.D100};
 
   @BeforeEach
   void setUp() {
@@ -32,7 +31,7 @@ class DiceTest {
     logger.info("nextRoll() is called");
     for (int size : sizes) {
       dice.setSize(size);
-      for (double i = 0; i < calculateAvarageNumberOfRolls(dice.getSize()); i++) {
+      for (double i = 0; i < calculateAverageNumberOfRolls(dice.getSize()); i++) {
         dice.nextRoll();
         assertTrue(dice.getValue() > 0 && dice.getValue() <= dice.getSize());
       }
@@ -42,7 +41,7 @@ class DiceTest {
   @Test
   void changeSizeTest() {
     logger.info("changeSize() is called");
-    for (DiceType diceTyp : diceTypes) {
+    for (DiceType diceTyp : DiceType.values()) {
       dice.changeSize(diceTyp);
       switch (dice.getType()) {
         case D2 -> assertEquals(2, dice.getSize());
@@ -75,6 +74,7 @@ class DiceTest {
         default -> { }
       }
     }
+    assertNull(dice.convertToDiceType(3));
   }
 
   @Test
@@ -116,31 +116,23 @@ class DiceTest {
   void testToStringTest() {
     logger.info("testToString() is called");
     dice.setValue(3);
-    for (DiceType diceTyp : diceTypes) {
+    for (DiceType diceTyp : DiceType.values()) {
       dice.changeSize(diceTyp);
       switch (dice.getType()) {
-        case D2 -> assertEquals("Dice Size: 2"
-                + "\nDice Value: 3", dice.toString());
-        case D4 -> assertEquals("Dice Size: 4"
-                + "\nDice Value: 3", dice.toString());
-        case D6 -> assertEquals("Dice Size: 6"
-                + "\nDice Value: 3", dice.toString());
-        case D8 -> assertEquals("Dice Size: 8"
-                + "\nDice Value: 3", dice.toString());
-        case D10 -> assertEquals("Dice Size: 10"
-                + "\nDice Value: 3", dice.toString());
-        case D12 -> assertEquals("Dice Size: 12"
-                + "\nDice Value: 3", dice.toString());
-        case D20 -> assertEquals("Dice Size: 20"
-                + "\nDice Value: 3", dice.toString());
-        case D100 -> assertEquals("Dice Size: 100"
-                + "\nDice Value: 3", dice.toString());
+        case D2 -> assertEquals("Dice: [Size: 2, Dice Value: 3]", dice.toString());
+        case D4 -> assertEquals("Dice: [Size: 4, Dice Value: 3]", dice.toString());
+        case D6 -> assertEquals("Dice: [Size: 6, Dice Value: 3]", dice.toString());
+        case D8 -> assertEquals("Dice: [Size: 8, Dice Value: 3]", dice.toString());
+        case D10 -> assertEquals("Dice: [Size: 10, Dice Value: 3]", dice.toString());
+        case D12 -> assertEquals("Dice: [Size: 12, Dice Value: 3]", dice.toString());
+        case D20 -> assertEquals("Dice: [Size: 20, Dice Value: 3]", dice.toString());
+        case D100 -> assertEquals("Dice: [Size: 100, Dice Value: 3]", dice.toString());
         default -> { }
       }
     }
   }
 
-  public static double calculateAvarageNumberOfRolls(int size) {
+  public static double calculateAverageNumberOfRolls(int size) {
     double result = 0;
     for (double i = size; i > 0; i--) {
       result += (double) size / i;

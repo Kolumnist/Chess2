@@ -2,9 +2,7 @@ package de.hhn.it.devtools.components.ttrpgsheets;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
-
 import java.math.BigInteger;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +24,7 @@ public class Stat {
    * @param statDescriptor The descriptor of a Stat
    */
   public Stat(StatDescriptor statDescriptor) throws IllegalArgumentException {
-    logger.info("Constructor is called. Parameter: statDescriptor = " + statDescriptor);
+    logger.info("Constructor : statDescriptor = {}", statDescriptor);
     if (statDescriptor == null) {
       throw new IllegalArgumentException("Parameter is null");
     }
@@ -47,7 +45,7 @@ public class Stat {
    * @return The total value of the Stat
    */
   public int getTotalValue() {
-    logger.info("getTotalValue() is called");
+    logger.info("getTotalValue : no params");
     BigInteger totalValue = BigInteger.valueOf(getBaseValue())
             .add(BigInteger.valueOf(getAbilityPointsUsed())
                     .multiply(BigInteger.valueOf(getOffset())))
@@ -65,7 +63,7 @@ public class Stat {
    * Increases the ability point by one.
    */
   public void addAbilityPoint() {
-    logger.info("addAbilityPoint() is called");
+    logger.info("addAbilityPoint : no params");
     if (isLevelStat() && getAbilityPointsUsed() < Integer.MAX_VALUE) {
       setAbilityPointsUsed(getAbilityPointsUsed() + 1);
     }
@@ -75,10 +73,21 @@ public class Stat {
    * Decreases the ability point by one.
    */
   public void removeAbilityPoint() {
-    logger.info("removeAbilityPoint() is called");
+    logger.info("removeAbilityPoint : no params");
     if (isLevelStat() && getAbilityPointsUsed() > Integer.MIN_VALUE) {
       setAbilityPointsUsed(getAbilityPointsUsed() - 1);
     }
+  }
+
+  /**
+   * Converts this stat to a {@link StatDescriptor}.
+   *
+   * @return the {@link StatDescriptor} of this stat
+   */
+  public StatDescriptor toStatDescriptor() {
+    logger.info("toStatDescriptor : no params");
+    return new StatDescriptor(getType(), getBaseValue(), getOffset(),
+            getAbilityPointsUsed(), getMiscellaneous(), isLevelStat());
   }
 
   public StatType getType() {
@@ -113,18 +122,13 @@ public class Stat {
     return levelStat;
   }
 
-  public StatDescriptor toStatDescriptor() {
-    return new StatDescriptor(getType(), getBaseValue(), getOffset(),
-            getAbilityPointsUsed(), getMiscellaneous(), isLevelStat());
-  }
-
   @Override
   public String toString() {
-    return "Stat Type: " + getType()
-            + "\nBase Value: " + getBaseValue()
-            + "\nOffset: " + getOffset()
-            + "\nAbility Points Used: " + getAbilityPointsUsed()
-            + "\nMiscellaneous: " + getMiscellaneous()
-            + "\nLevel Stat: " + isLevelStat();
+    return "Stat: [Type: " + getType()
+            + ", Base Value: " + getBaseValue()
+            + ", Offset: " + getOffset()
+            + ", Ability Points Used: " + getAbilityPointsUsed()
+            + ", Miscellaneous: " + getMiscellaneous()
+            + ", Level Stat: " + isLevelStat() + "]";
   }
 }
