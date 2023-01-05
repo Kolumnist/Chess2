@@ -193,6 +193,33 @@ public class TestChessGameGoodCases {
     assertEquals(2, coordinates.length);
   }
 
+  @Test
+  @DisplayName("Selected Bear gets moved")
+  void TestMoveBearOneField()
+      throws IllegalParameterException, IllegalStateException, InvalidMoveException {
+
+    Coordinate selectCoord = chessGame.bearCoordinate;
+    Coordinate[] possibleMoves = chess2Service.getPossibleMoves(selectCoord);
+    board = chess2Service.moveSelectedPiece(selectCoord, possibleMoves[0]);
+
+    assertEquals(FieldState.FREE_FIELD, board.getSpecificField(selectCoord).getFieldState());
+    assertEquals(FieldState.HAS_BEAR, board.getSpecificField(possibleMoves[0]).getFieldState());
+  }
+
+  @Test
+  @DisplayName("Selected Monkey gets moved and the turn gets ended")
+  void TestMoveJumpMonkeyOnce()
+      throws IllegalParameterException, IllegalStateException, InvalidMoveException {
+
+    Coordinate[] possibleMoves = chess2Service.getPossibleMoves(new Coordinate(1, 0));
+    board = chess2Service.moveSelectedPiece(new Coordinate(1, 0), possibleMoves[0]);
+    board = chess2Service.moveSelectedPiece(possibleMoves[0], possibleMoves[0]);
+
+    assertEquals(FieldState.FREE_FIELD, board.getSpecificField(
+        new Coordinate(1, 0)).getFieldState());
+    assertEquals(FieldState.HAS_OTHER_PIECE, board.getSpecificField(
+        possibleMoves[0]).getFieldState());
+  }
 
   @Test
   @DisplayName("Selected Piece gets moved on bear both are defeated")
@@ -260,25 +287,6 @@ public class TestChessGameGoodCases {
     assertEquals(GameState.CHECKMATE, chess2Service.getGameState());
     assertEquals(WinningPlayerState.WHITE_WIN, chess2Service.getWinningPlayer());
   }
-
-
-  @Test
-  @DisplayName("After 3 normal turns there should be no Error")
-  void Test3TurnsNoError()
-      throws IllegalParameterException, IllegalStateException, InvalidMoveException {
-
-    Coordinate[] currentPieces = chess2Service.getCurrentFields();
-    Coordinate[] possibleMoves = chess2Service.getPossibleMoves(currentPieces[9]);
-    board = chess2Service.moveSelectedPiece(currentPieces[9], possibleMoves[0]);
-
-    currentPieces = chess2Service.getCurrentFields();
-    possibleMoves = chess2Service.getPossibleMoves(currentPieces[9]);
-    board = chess2Service.moveSelectedPiece(currentPieces[9], possibleMoves[0]);
-
-    currentPieces = chess2Service.getCurrentFields();
-    possibleMoves = chess2Service.getPossibleMoves(currentPieces[9]);
-    board = chess2Service.moveSelectedPiece(currentPieces[9], possibleMoves[0]);
-  }
   @Test
   @DisplayName("Black wins because both the King and Queen of white are in the jail")
   void TestBlackWin()
@@ -338,4 +346,21 @@ public class TestChessGameGoodCases {
     assertEquals(GameState.CHECKMATE, gameState);
   }
 
+  @Test
+  @DisplayName("After 3 boring turns there should be no Error")
+  void Test3TurnsNoError()
+      throws IllegalParameterException, IllegalStateException, InvalidMoveException {
+
+    Coordinate[] currentPieces = chess2Service.getCurrentFields();
+    Coordinate[] possibleMoves = chess2Service.getPossibleMoves(currentPieces[9]);
+    board = chess2Service.moveSelectedPiece(currentPieces[9], possibleMoves[0]);
+
+    currentPieces = chess2Service.getCurrentFields();
+    possibleMoves = chess2Service.getPossibleMoves(currentPieces[9]);
+    board = chess2Service.moveSelectedPiece(currentPieces[9], possibleMoves[0]);
+
+    currentPieces = chess2Service.getCurrentFields();
+    possibleMoves = chess2Service.getPossibleMoves(currentPieces[9]);
+    board = chess2Service.moveSelectedPiece(currentPieces[9], possibleMoves[0]);
+  }
 }
