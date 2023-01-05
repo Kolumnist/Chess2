@@ -129,7 +129,7 @@ public class LayoutGenerator {
 
 
         for (Room room : allRooms) {
-            room.setDoors();
+            //room.setDoors();
         }
 
         if (map.equals(Map.Grave_of_the_Mad_King)) {
