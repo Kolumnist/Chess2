@@ -5,6 +5,8 @@ import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.Piece;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * This class implements the Queen which inherits from Piece.
@@ -38,7 +40,8 @@ public class Queen extends Piece {
       }
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
-    index = new ArrayList<>();
+
+    Set<Integer> indexSet = new TreeSet<>();
 
     for (int i = 0; i < possibleMoves.length; i++) {
       if ((possibleMoves[i].getX() == coordinate.getX()
@@ -47,7 +50,7 @@ public class Queen extends Piece {
           || possibleMoves[i].getX() < 0
           || possibleMoves[i].getY() > 7
           || possibleMoves[i].getX() > 7) {
-        index.add(i);
+        indexSet.add(i);
       }
 
       //region never look at this code
@@ -74,7 +77,7 @@ public class Queen extends Piece {
                   if ((possibleMoves[u].getX() == possibleMoves[i].getX() - m)
                       && (
                       possibleMoves[u].getY() == possibleMoves[i].getY() - m)) {
-                    index.add(u);
+                    indexSet.add(u);
                     m++;
                     System.out.println("if (x == -h && y == -g)\n");
                     System.out.println(u);
@@ -93,7 +96,7 @@ public class Queen extends Piece {
               for (int u = 0; u < possibleMoves.length; u++) {
                 if ((possibleMoves[u].getX() == possibleMoves[i].getX()) && (
                     possibleMoves[u].getY() == possibleMoves[i].getY() - r)) {
-                  index.add(u);
+                  indexSet.add(u);
                   r++;
                   System.out.println("if (x == 0 && y == -g)\n");
                   System.out.println(u);
@@ -110,7 +113,7 @@ public class Queen extends Piece {
               for (int u = 0; u < possibleMoves.length; u++) {
                 if ((possibleMoves[u].getX() == possibleMoves[i].getX() - rr) && (
                     possibleMoves[u].getY() == possibleMoves[i].getY())) {
-                  index.add(u);
+                  indexSet.add(u);
                   rr++;
                   System.out.println("if (x == -h && y == 0)\n");
                   System.out.println(u);
@@ -127,7 +130,7 @@ public class Queen extends Piece {
               for (int u = 0; u < possibleMoves.length; u++) {
                   if ((possibleMoves[u].getX() == possibleMoves[i].getX() + mm) && (
                       possibleMoves[u].getY() == possibleMoves[i].getY() + mm)) {
-                    index.add(u);
+                    indexSet.add(u);
                     mm++;
                     System.out.println("if (x == h && y == g)\n");
                     System.out.println(u);
@@ -146,7 +149,7 @@ public class Queen extends Piece {
               for (int u = 0; u < possibleMoves.length; u++) {
                 if ((possibleMoves[u].getX() == possibleMoves[i].getX()) && (
                     possibleMoves[u].getY() == possibleMoves[i].getY() + n)) {
-                  index.add(u);
+                  indexSet.add(u);
                   n++;
                   System.out.println("if (x == 0 && y == g)\n");
                   System.out.println(u);
@@ -163,7 +166,7 @@ public class Queen extends Piece {
               for (int u = 0; u < possibleMoves.length; u++) {
                 if ((possibleMoves[u].getX() == possibleMoves[i].getX() + nn) && (
                     possibleMoves[u].getY() == possibleMoves[i].getY())) {
-                  index.add(u);
+                  indexSet.add(u);
                   nn++;
                   System.out.println("if (x == h && y == 0)\n");
                   System.out.println(u);
@@ -180,7 +183,7 @@ public class Queen extends Piece {
               for (int u = 0; u < possibleMoves.length; u++) {
                   if ((possibleMoves[u].getX() == possibleMoves[i].getX() - d) && (
                       possibleMoves[u].getY() == possibleMoves[i].getY() + d)) {
-                    index.add(u);
+                    indexSet.add(u);
                     System.out.println("d: "+d);
                     d++;
                     System.out.println("if (x == -h && y == g)\n");
@@ -200,7 +203,7 @@ public class Queen extends Piece {
               for (int u = 0; u < possibleMoves.length; u++) {
                   if ((possibleMoves[u].getX() == possibleMoves[i].getX() + dd) && (
                       possibleMoves[u].getY() == possibleMoves[i].getY() - dd)) {
-                    index.add(u);
+                    indexSet.add(u);
                     dd++;
                     System.out.println("if (x == h && y == -g)\n");
                     System.out.println(u);
@@ -215,16 +218,16 @@ public class Queen extends Piece {
                   }
                 }
               }
-            if (board.getSpecificField(possibleMoves[i]).getFieldState()
-                == FieldState.HAS_CURRENT_PIECE) {
-              index.add(i);
-            }
-          }
 
+          }
           //endregion never look at this code
+        }
+        if (board.getSpecificField(possibleMoves[i]).getFieldState()
+            == FieldState.HAS_CURRENT_PIECE) {
+          indexSet.add(i);
         }
       }
     }
-    possibleMoves = shortenCoordinateArray(possibleMoves, index);
+    possibleMoves = shortenCoordinateArray(possibleMoves, indexSet);
   }
 }
