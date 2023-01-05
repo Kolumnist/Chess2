@@ -138,7 +138,7 @@ public abstract class Piece {
     }
 
     j = 0;
-    for (int i = 0; i < array.length; i++) {
+    for (int i = 0; i < possibleMoves.length; i++) {
       if (array[j] == i) {
         if (j < index.size() - 1) {
           j++;

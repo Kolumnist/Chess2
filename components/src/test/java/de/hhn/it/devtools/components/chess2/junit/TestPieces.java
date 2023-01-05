@@ -391,7 +391,7 @@ public class TestPieces {
   public void testCalculateBlackFishOnTheSideOfTheBoard() throws IllegalParameterException {
     Piece fish = new Fish('b', new Coordinate(0, 6));
 
-    Coordinate[] expected = {new Coordinate(1, 5), new Coordinate(1,1)};
+    Coordinate[] expected = {new Coordinate(1, 5)};
     fish.calculate(board);
     for (int i = 0; i < fish.getPossibleMove().length; i++) {
       assertEquals(expected[i].getX(), fish.getPossibleMove()[i].getX());
@@ -408,21 +408,48 @@ public class TestPieces {
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
     board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 4));
 
-    Coordinate[] expected = {new Coordinate(6, 6), new Coordinate(6, 7),new Coordinate(7, 6)};
     fish.calculate(board);
     for (int i = 0; i < fish.getPossibleMove().length; i++) {
-      assertEquals(expected[i].getX(), fish.getPossibleMove()[i].getX());
-      assertEquals(expected[i].getY(), fish.getPossibleMove()[i].getY());
+      assertEquals(null, fish.getPossibleMove()[i]);
     }
   }
   //endregion black Fish
 
   //region white Fish
   @Test
-  @DisplayName("Test if calculate produces the right coordinates if the white fish stand on the field 4, 4")
-  public void testCalculateWhiteFishInTheMiddleOfTheBoard() {
+  @DisplayName("Test if calculate produces the right coordinates if the white fish stand on the field 4, 4 and the bear stands diagonal to the black fish")
+  public void testCalculateWhiteFishInTheMiddleOfTheBoard1() throws IllegalParameterException {
     Piece fish = new Fish('w', new Coordinate(4, 4));
+    // move bear -> because of this move its Player black's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 4));
+    // move bear -> because of this move its Player black's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 5));
+
+    //because the bear stands diagonal to the fish, the fish can go to this field!
     Coordinate[] expected = {new Coordinate(3, 4), new Coordinate(3, 5), new Coordinate(5, 4),
+        new Coordinate(5, 5)};
+    fish.calculate(board);
+    for (int i = 0; i < fish.getPossibleMove().length; i++) {
+      assertEquals(expected[i].getX(), fish.getPossibleMove()[i].getX());
+      assertEquals(expected[i].getY(), fish.getPossibleMove()[i].getY());
+    }
+  }
+
+  @Test
+  @DisplayName("Test if calculate produces the right coordinates if the white fish stand on the field 4, 4 and the bear stands right to the black fish")
+  public void testCalculateWhiteFishInTheMiddleOfTheBoard2() throws IllegalParameterException {
+    Piece fish = new Fish('w', new Coordinate(4, 4));
+    // move bear -> because of this move its Player black's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 3));
+    // move bear -> because of this move its Player black's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 4));
+
+    //because the bear stands right to the fish, the fish can go to this field!
+    Coordinate[] expected = {new Coordinate(3, 4), new Coordinate(3, 5),
         new Coordinate(5, 5)};
     fish.calculate(board);
     for (int i = 0; i < fish.getPossibleMove().length; i++) {
@@ -435,7 +462,7 @@ public class TestPieces {
   @DisplayName("Test if calculate produces the right coordinates if the white fish stand on the field 0, 6")
   public void testCalculateWhiteFishOnTheSideOfTheBoard() {
     Piece fish = new Fish('w', new Coordinate(0, 6));
-    Coordinate[] expected = {new Coordinate(1, 6), new Coordinate(1, 7)};
+    Coordinate[] expected = {new Coordinate(1, 7)};
     fish.calculate(board);
     for (int i = 0; i < fish.getPossibleMove().length; i++) {
       assertEquals(expected[i].getX(), fish.getPossibleMove()[i].getX());
@@ -447,11 +474,9 @@ public class TestPieces {
   @DisplayName("Test if calculate produces the right coordinates if the white fish stand on the field 7, 7")
   public void testCalculateWhiteFishInTheCornerOfTheBoard() {
     Piece fish = new Fish('w', new Coordinate(7, 7));
-    Coordinate[] expected = {new Coordinate(6, 7)};
     fish.calculate(board);
     for (int i = 0; i < fish.getPossibleMove().length; i++) {
-      assertEquals(expected[i].getX(), fish.getPossibleMove()[i].getX());
-      assertEquals(expected[i].getY(), fish.getPossibleMove()[i].getY());
+      assertEquals(null, fish.getPossibleMove()[i]);
     }
   }
   //endregion white Fish
