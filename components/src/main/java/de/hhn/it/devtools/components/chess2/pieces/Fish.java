@@ -49,7 +49,7 @@ public class Fish extends Piece {
       }
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
-    ArrayList<Integer> index2 = new ArrayList<>();
+    Set<Integer> index2 = new TreeSet<>();
 
     for (int i = 0; i < possibleMoves.length; i++) {
       if ((possibleMoves[i].getX() == coordinate.getX()
