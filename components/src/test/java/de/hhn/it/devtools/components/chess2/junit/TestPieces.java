@@ -408,7 +408,7 @@ public class TestPieces {
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
     board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 4));
 
-    Coordinate[] expected = {new Coordinate(6, 6), new Coordinate(6, 7)};
+    Coordinate[] expected = {new Coordinate(6, 6), new Coordinate(6, 7),new Coordinate(7, 6)};
     fish.calculate(board);
     for (int i = 0; i < fish.getPossibleMove().length; i++) {
       assertEquals(expected[i].getX(), fish.getPossibleMove()[i].getX());

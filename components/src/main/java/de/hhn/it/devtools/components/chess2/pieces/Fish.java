@@ -23,14 +23,11 @@ public class Fish extends Piece {
 
   @Override
   public void calculate(Board board) {
-    possibleMoves = new Coordinate[6];
+    possibleMoves = new Coordinate[8];
     int k = 0;
     if (color == 'w') {
       for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
         for (int j = coordinate.getY(); j <= coordinate.getY() + 1; j++) {
-          if ((i == coordinate.getX()) && (j == coordinate.getY() + 1)) {
-            continue;
-          }
           possibleMoves[k++] = new Coordinate(i, j);
           // darf nicht hin zu coordinate.getX() & coordinate.getY()+1
         }
@@ -38,9 +35,6 @@ public class Fish extends Piece {
     } else if (color == 'b') {
       for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
         for (int j = coordinate.getY() - 1; j <= coordinate.getY(); j++) {
-          if ((i == coordinate.getX()) && (j == coordinate.getY() - 1)) {
-            continue;
-          }
           possibleMoves[k++] = new Coordinate(i, j);
           // darf nicht hin zu coordinate.getX() & coordinate.getY()-1
         }
@@ -55,7 +49,7 @@ public class Fish extends Piece {
       }
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
-    Set<Integer> indexSet = new TreeSet<>();
+    ArrayList<Integer> index2 = new ArrayList<>();
 
     for (int i = 0; i < possibleMoves.length; i++) {
       if ((possibleMoves[i].getX() == coordinate.getX()
@@ -66,34 +60,46 @@ public class Fish extends Piece {
           || possibleMoves[i].getX() > 7
           || board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_CURRENT_PIECE) {
-        indexSet.add(i);
+        index2.add(i);
+      }
+      if (color == 'b') {
+        if (possibleMoves[i].getX() == coordinate.getX()
+            && possibleMoves[i].getY() == coordinate.getY() - 1) {
+          index2.add(i);
+        }
+      }
+      if (color == 'w') {
+        if (possibleMoves[i].getX() == coordinate.getX()
+            && possibleMoves[i].getY() == coordinate.getY() + 1) {
+          index2.add(i);
+        }
       }
       if ((possibleMoves[i].getX() == coordinate.getX() + 1
           && possibleMoves[i].getY() == coordinate.getY())
           && (board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_OTHER_PIECE)) {
-        indexSet.add(i);
+        index2.add(i);
       }
       if ((possibleMoves[i].getX() == coordinate.getX() + 1
           && possibleMoves[i].getY() == coordinate.getY())
           && (board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_BEAR)) {
-        indexSet.add(i);
+        index2.add(i);
       }
       if ((possibleMoves[i].getX() == coordinate.getX() - 1
           && possibleMoves[i].getY() == coordinate.getY())
           && (board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_OTHER_PIECE)) {
-        indexSet.add(i);
+        index2.add(i);
       }
       if ((possibleMoves[i].getX() == coordinate.getX() - 1
           && possibleMoves[i].getY() == coordinate.getY())
           && (board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_BEAR)) {
-        indexSet.add(i);
+        index2.add(i);
       }
     }
-    possibleMoves = shortenCoordinateArray(possibleMoves, indexSet);
+    possibleMoves = shortenCoordinateArray(possibleMoves, index2);
   }
 }
 
