@@ -5,6 +5,8 @@ import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.Piece;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * This class implements the Fish which inherits from Piece.
@@ -21,7 +23,7 @@ public class Fish extends Piece {
 
   @Override
   public void calculate(Board board) {
-    possibleMoves = new Coordinate[6];
+    possibleMoves = new Coordinate[8];
     int k = 0;
     if (color == 'w') {
       for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
@@ -44,7 +46,6 @@ public class Fish extends Piece {
         }
       }
     }
-
     ArrayList<Integer> index = new ArrayList<>();
 
     for (int i = 0; i < possibleMoves.length; i++) {
@@ -53,7 +54,7 @@ public class Fish extends Piece {
       }
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
-    index = new ArrayList<>();
+    Set<Integer> IndexSet = new TreeSet<>();
 
     for (int i = 0; i < possibleMoves.length; i++) {
       if ((possibleMoves[i].getX() == coordinate.getX()
@@ -64,30 +65,24 @@ public class Fish extends Piece {
           || possibleMoves[i].getX() > 7
           || board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_CURRENT_PIECE) {
-        index.add(i);
+        IndexSet.add(i);
       }
-      if (color == 'w') {
-        if ((possibleMoves[i].getX() == coordinate.getX()
-            && possibleMoves[i].getY() == coordinate.getY() - 1)
-            && (board.getSpecificField(possibleMoves[i]).getFieldState()
-            == FieldState.HAS_OTHER_PIECE
-            || board.getSpecificField(possibleMoves[i]).getFieldState()
-            == FieldState.HAS_BEAR)) {
-          index.add(i);
-        }
-      }
-      if (color == 'b') {
-        if ((possibleMoves[i].getX() == coordinate.getX()
-            && possibleMoves[i].getY() == coordinate.getY() + 1)
-            && (board.getSpecificField(possibleMoves[i]).getFieldState()
-            == FieldState.HAS_OTHER_PIECE
-            || board.getSpecificField(possibleMoves[i]).getFieldState()
-            == FieldState.HAS_BEAR)) {
-          index.add(i);
-        }
+      if ((possibleMoves[i].getX() == coordinate.getX() + 1
+          && possibleMoves[i].getY() == coordinate.getY())
+          && (board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_OTHER_PIECE
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_BEAR)
+          || (possibleMoves[i].getX() == coordinate.getX() - 1
+          && possibleMoves[i].getY() == coordinate.getY())
+          && (board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_OTHER_PIECE
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_BEAR)) {
+        IndexSet.add(i);
       }
     }
-    possibleMoves = shortenCoordinateArray(possibleMoves, index);
+    possibleMoves = shortenCoordinateArray(possibleMoves, IndexSet);
   }
 }
 
