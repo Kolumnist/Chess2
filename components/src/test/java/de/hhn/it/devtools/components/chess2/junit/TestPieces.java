@@ -83,8 +83,8 @@ public class TestPieces {
 
   //region Queen
   @Test
-  @DisplayName("Test if calculate produces the right coordinates if the queen stand on the field 4, 4")
-  public void testCalculateQueenInTheMiddleOfTheBoard() throws IllegalParameterException {
+  @DisplayName("Test if calculate produces the right coordinates if the black queen stand on the field 4, 4")
+  public void testCalculateBlackQueenInTheMiddleOfTheBoard() throws IllegalParameterException {
 
     Piece queen = new Queen('b', new Coordinate(4, 4));
     // move bear -> because of this move its Player black's turn
@@ -94,7 +94,8 @@ public class TestPieces {
     Coordinate[] expected = {new Coordinate(3, 3), new Coordinate(3, 4), new Coordinate(3, 5),
         new Coordinate(4, 3), new Coordinate(4, 5), new Coordinate(5, 3), new Coordinate(5, 4),
         new Coordinate(5, 5), new Coordinate(2, 2), new Coordinate(2, 4),
-        new Coordinate(4, 2), new Coordinate(6, 2), new Coordinate(6, 4),new Coordinate(1, 1),new Coordinate(1, 4),
+        new Coordinate(4, 2), new Coordinate(6, 2), new Coordinate(6, 4), new Coordinate(1, 1),
+        new Coordinate(1, 4),
         new Coordinate(4, 1), new Coordinate(7, 1), new Coordinate(7, 4), new Coordinate(0, 4)};
     queen.calculate(board);
     for (int i = 0; i < queen.getPossibleMove().length; i++) {
@@ -104,8 +105,33 @@ public class TestPieces {
   }
 
   @Test
-  @DisplayName("Test if calculate produces the right coordinates if the queen stand on the field 0, 6")
-  public void testCalculateQueenOnTheSideOfTheBoard() throws IllegalParameterException {
+  @DisplayName("Test if calculate produces the right coordinates if the white queen stand on the field 4, 4")
+  public void testCalculateWhiteQueenInTheMiddleOfTheBoard() throws IllegalParameterException {
+
+    Piece queen = new Queen('w', new Coordinate(4, 4));
+    // move bear -> Player white's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(6, 3));
+    // move bear -> Player black's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(-1, -1));
+
+    Coordinate[] expected = {new Coordinate(3, 3), new Coordinate(3, 4), new Coordinate(3, 5),
+        new Coordinate(4, 3), new Coordinate(4, 5), new Coordinate(5, 3), new Coordinate(5, 4),
+        new Coordinate(5, 5), new Coordinate(2, 2), new Coordinate(2, 4), new Coordinate(2, 6),
+        new Coordinate(4, 2), new Coordinate(4, 6), new Coordinate(6, 2), new Coordinate(6, 4),
+        new Coordinate(6, 6),
+        new Coordinate(1, 4), new Coordinate(7, 4), new Coordinate(0, 4)};
+    queen.calculate(board);
+    for (int i = 0; i < queen.getPossibleMove().length; i++) {
+      assertEquals(expected[i].getX(), queen.getPossibleMove()[i].getX());
+      assertEquals(expected[i].getY(), queen.getPossibleMove()[i].getY());
+    }
+  }
+
+  @Test
+  @DisplayName("Test if calculate produces the right coordinates if the black queen stand on the field 0, 6")
+  public void testCalculateBlackQueenOnTheSideOfTheBoard() throws IllegalParameterException {
     Piece queen = new Queen('b', new Coordinate(0, 6));
     // move bear -> because of this move its Player black's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
@@ -113,22 +139,41 @@ public class TestPieces {
 
     Coordinate[] expected = {new Coordinate(0, 5), new Coordinate(1, 5),
         new Coordinate(0, 4), new Coordinate(2, 4),
-        new Coordinate(0, 3),new Coordinate(3, 3),
-        new Coordinate(0, 2), new Coordinate(4, 2),new Coordinate(0, 1), new Coordinate(5, 1)};
+        new Coordinate(0, 3), new Coordinate(3, 3),
+        new Coordinate(0, 2), new Coordinate(4, 2), new Coordinate(0, 1), new Coordinate(5, 1)};
     queen.calculate(board);
     for (int i = 0; i < queen.getPossibleMove().length; i++) {
-      System.out.println(
-          "[" + queen.getPossibleMove()[i].getX() + "]" + "[" + queen.getPossibleMove()[i].getY()
-              + "]");
-
       assertEquals(expected[i].getX(), queen.getPossibleMove()[i].getX());
       assertEquals(expected[i].getY(), queen.getPossibleMove()[i].getY());
     }
   }
 
   @Test
-  @DisplayName("Test if calculate produces the right coordinates if the queen stand on the field 7, 7")
-  public void testCalculateQueenInTheCornerOfTheBoard() throws IllegalParameterException {
+  @DisplayName("Test if calculate produces the right coordinates if the white queen stand on the field 0, 6")
+  public void testCalculateWhiteQueenOnTheSideOfTheBoard() throws IllegalParameterException {
+    Piece queen = new Queen('w', new Coordinate(0, 6));
+    // move bear -> Player white's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(6, 3));
+    // move bear -> Player black's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(-1, -1));
+
+    Coordinate[] expected = {new Coordinate(0, 5), new Coordinate(0, 7), new Coordinate(1, 5),
+        new Coordinate(1, 6), new Coordinate(1, 7),
+        new Coordinate(0, 4), new Coordinate(2, 4),
+        new Coordinate(0, 3), new Coordinate(3, 3),
+        new Coordinate(0, 2), new Coordinate(4, 2)};
+    queen.calculate(board);
+    for (int i = 0; i < queen.getPossibleMove().length; i++) {
+      assertEquals(expected[i].getX(), queen.getPossibleMove()[i].getX());
+      assertEquals(expected[i].getY(), queen.getPossibleMove()[i].getY());
+    }
+  }
+
+  @Test
+  @DisplayName("Test if calculate produces the right coordinates if the black queen stand on the field 7, 7")
+  public void testCalculateBlackQueenInTheCornerOfTheBoard() throws IllegalParameterException {
     Piece queen = new Queen('b', new Coordinate(7, 7));
     // move bear -> because of this move its Player black's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
@@ -138,20 +183,60 @@ public class TestPieces {
       assertEquals(null, queen.getPossibleMove()[i]);
     }
   }
+
+  @Test
+  @DisplayName("Test if calculate produces the right coordinates if the white queen stand on the field 7, 7")
+  public void testCalculateWhiteQueenInTheCornerOfTheBoard() {
+    Piece queen = new Queen('w', new Coordinate(7, 7));
+    Coordinate[] expected = {new Coordinate(6, 6), new Coordinate(6, 7), new Coordinate(7, 6)};
+    queen.calculate(board);
+    for (int i = 0; i < queen.getPossibleMove().length; i++) {
+      assertEquals(expected[i].getX(), queen.getPossibleMove()[i].getX());
+      assertEquals(expected[i].getY(), queen.getPossibleMove()[i].getY());
+    }
+  }
   //endregion Queen
 
   //region Fishqueen
   @Test
-  @DisplayName("Test if calculate produces the right coordinates if the fishqueen stand on the field 4, 4")
-  public void testCalculateFishqueenInTheMiddleOfTheBoard() {
+  @DisplayName("Test if calculate produces the right coordinates if the black fishqueen stand on the field 4, 4")
+  public void testCalculateBlackFishqueenInTheMiddleOfTheBoard() throws IllegalParameterException {
     Piece fishqueen = new Fishqueen('b', new Coordinate(4, 4));
+    // move bear -> because of this move its Player black's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(-1, -1));
+
+    Coordinate[] expected = {new Coordinate(3, 3), new Coordinate(3, 4), new Coordinate(3, 5),
+        new Coordinate(4, 3), new Coordinate(4, 5), new Coordinate(5, 3), new Coordinate(5, 4),
+        new Coordinate(5, 5), new Coordinate(2, 2), new Coordinate(2, 4),
+        new Coordinate(4, 2), new Coordinate(6, 2), new Coordinate(6, 4), new Coordinate(1, 1),
+        new Coordinate(1, 4),
+        new Coordinate(4, 1), new Coordinate(7, 1), new Coordinate(7, 4), new Coordinate(0, 4)};
+    fishqueen.calculate(board);
+    for (int i = 0; i < fishqueen.getPossibleMove().length; i++) {
+      assertEquals(expected[i].getX(), fishqueen.getPossibleMove()[i].getX());
+      assertEquals(expected[i].getY(), fishqueen.getPossibleMove()[i].getY());
+    }
+  }
+
+  @Test
+  @DisplayName("Test if calculate produces the right coordinates if the white fishqueen stand on the field 4, 4")
+  public void testCalculateWhiteFishqueenInTheMiddleOfTheBoard() throws IllegalParameterException {
+
+    Piece fishqueen = new Fishqueen('w', new Coordinate(4, 4));
+    // move bear -> Player white's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(6, 3));
+    // move bear -> Player black's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(-1, -1));
+
     Coordinate[] expected = {new Coordinate(3, 3), new Coordinate(3, 4), new Coordinate(3, 5),
         new Coordinate(4, 3), new Coordinate(4, 5), new Coordinate(5, 3), new Coordinate(5, 4),
         new Coordinate(5, 5), new Coordinate(2, 2), new Coordinate(2, 4), new Coordinate(2, 6),
         new Coordinate(4, 2), new Coordinate(4, 6), new Coordinate(6, 2), new Coordinate(6, 4),
-        new Coordinate(6, 6), new Coordinate(1, 1), new Coordinate(1, 4), new Coordinate(1, 7),
-        new Coordinate(4, 1), new Coordinate(4, 7), new Coordinate(7, 1), new Coordinate(7, 4),
-        new Coordinate(7, 7), new Coordinate(0, 0), new Coordinate(0, 4), new Coordinate(4, 0)};
+        new Coordinate(6, 6),
+        new Coordinate(1, 4), new Coordinate(7, 4), new Coordinate(0, 4)};
     fishqueen.calculate(board);
     for (int i = 0; i < fishqueen.getPossibleMove().length; i++) {
       assertEquals(expected[i].getX(), fishqueen.getPossibleMove()[i].getX());
@@ -160,15 +245,17 @@ public class TestPieces {
   }
 
   @Test
-  @DisplayName("Test if calculate produces the right coordinates if the fishqueen stand on the field 0, 6")
-  public void testCalculateFishqueenOnTheSideOfTheBoard() {
+  @DisplayName("Test if calculate produces the right coordinates if the black fishqueen stand on the field 0, 6")
+  public void testCalculateBlackFishqueenOnTheSideOfTheBoard() throws IllegalParameterException {
     Piece fishqueen = new Fishqueen('b', new Coordinate(0, 6));
-    Coordinate[] expected = {new Coordinate(0, 5), new Coordinate(0, 7), new Coordinate(1, 5),
-        new Coordinate(1, 6), new Coordinate(1, 7), new Coordinate(0, 4), new Coordinate(2, 4),
-        new Coordinate(2, 6), new Coordinate(0, 3), new Coordinate(3, 3), new Coordinate(3, 6),
-        new Coordinate(0, 2), new Coordinate(4, 2), new Coordinate(4, 6), new Coordinate(0, 1),
-        new Coordinate(5, 1), new Coordinate(5, 6), new Coordinate(0, 0), new Coordinate(6, 0),
-        new Coordinate(6, 6), new Coordinate(7, 6)};
+    // move bear -> because of this move its Player black's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(-1, -1));
+
+    Coordinate[] expected = {new Coordinate(0, 5), new Coordinate(1, 5),
+        new Coordinate(0, 4), new Coordinate(2, 4),
+        new Coordinate(0, 3), new Coordinate(3, 3),
+        new Coordinate(0, 2), new Coordinate(4, 2), new Coordinate(0, 1), new Coordinate(5, 1)};
     fishqueen.calculate(board);
     for (int i = 0; i < fishqueen.getPossibleMove().length; i++) {
       assertEquals(expected[i].getX(), fishqueen.getPossibleMove()[i].getX());
@@ -177,15 +264,46 @@ public class TestPieces {
   }
 
   @Test
-  @DisplayName("Test if calculate produces the right coordinates if the fishqueen stand on the field 7, 7")
-  public void testCalculateFishqueenInTheCornerOfTheBoard() {
+  @DisplayName("Test if calculate produces the right coordinates if the white fishqueen stand on the field 0, 6")
+  public void testCalculateWhiteFishqueenOnTheSideOfTheBoard() throws IllegalParameterException {
+    Piece fishqueen = new Fishqueen('w', new Coordinate(0, 6));
+    // move bear -> Player white's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(6, 3));
+    // move bear -> Player black's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(-1, -1));
+
+    Coordinate[] expected = {new Coordinate(0, 5), new Coordinate(0, 7), new Coordinate(1, 5),
+        new Coordinate(1, 6), new Coordinate(1, 7),
+        new Coordinate(0, 4), new Coordinate(2, 4),
+        new Coordinate(0, 3), new Coordinate(3, 3),
+        new Coordinate(0, 2), new Coordinate(4, 2)};
+    fishqueen.calculate(board);
+    for (int i = 0; i < fishqueen.getPossibleMove().length; i++) {
+      assertEquals(expected[i].getX(), fishqueen.getPossibleMove()[i].getX());
+      assertEquals(expected[i].getY(), fishqueen.getPossibleMove()[i].getY());
+    }
+  }
+
+  @Test
+  @DisplayName("Test if calculate produces the right coordinates if the black fishqueen stand on the field 7, 7")
+  public void testCalculateBlackFishqueenInTheCornerOfTheBoard() throws IllegalParameterException {
     Piece fishqueen = new Fishqueen('b', new Coordinate(7, 7));
-    Coordinate[] expected = {new Coordinate(6, 6), new Coordinate(6, 7), new Coordinate(7, 6),
-        new Coordinate(5, 5), new Coordinate(5, 7), new Coordinate(7, 5), new Coordinate(4, 4),
-        new Coordinate(4, 7), new Coordinate(7, 4), new Coordinate(3, 3), new Coordinate(3, 7),
-        new Coordinate(7, 3), new Coordinate(2, 2), new Coordinate(2, 7), new Coordinate(7, 2),
-        new Coordinate(1, 1), new Coordinate(1, 7), new Coordinate(7, 1), new Coordinate(0, 0),
-        new Coordinate(0, 7), new Coordinate(7, 0)};
+    // move bear -> because of this move its Player black's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(-1, -1));
+    fishqueen.calculate(board);
+    for (int i = 0; i < fishqueen.getPossibleMove().length; i++) {
+      assertEquals(null, fishqueen.getPossibleMove()[i]);
+    }
+  }
+
+  @Test
+  @DisplayName("Test if calculate produces the right coordinates if the white fishqueen stand on the field 7, 7")
+  public void testCalculateWhiteFishqueenInTheCornerOfTheBoard() {
+    Piece fishqueen = new Fishqueen('w', new Coordinate(7, 7));
+    Coordinate[] expected = {new Coordinate(6, 6), new Coordinate(6, 7), new Coordinate(7, 6)};
     fishqueen.calculate(board);
     for (int i = 0; i < fishqueen.getPossibleMove().length; i++) {
       assertEquals(expected[i].getX(), fishqueen.getPossibleMove()[i].getX());
@@ -236,9 +354,13 @@ public class TestPieces {
 
   //region black Fish
   @Test
-  @DisplayName("Test if calculate produces the right coordinates if the black fish stand on the field 4, 4")
-  public void testCalculateBlackFishInTheMiddleOfTheBoard() {
+  @DisplayName("Test if calculate produces the right coordinates if the black fish stand on the field 4, 4 and the bear stands diagonal to the black fish")
+  public void testCalculateBlackFishInTheMiddleOfTheBoard1() throws IllegalParameterException {
     Piece fish = new Fish('b', new Coordinate(4, 4));
+    // move bear -> because of this move its Player black's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 3));
+    //because the bear stands diagonal to the fish, the fish can go to this field!
     Coordinate[] expected = {new Coordinate(3, 3), new Coordinate(3, 4), new Coordinate(5, 3),
         new Coordinate(5, 4)};
     fish.calculate(board);
@@ -249,10 +371,27 @@ public class TestPieces {
   }
 
   @Test
+  @DisplayName("Test if calculate produces the right coordinates if the black fish stand on the field 4, 4 and the bear stand right next to the black fish")
+  public void testCalculateBlackFishInTheMiddleOfTheBoard2() throws IllegalParameterException {
+    Piece fish = new Fish('b', new Coordinate(4, 4));
+    // move bear -> because of this move its Player black's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 4));
+    //because the bear stands right next to the fish, the fish can't go to this field!
+    Coordinate[] expected = {new Coordinate(3, 3), new Coordinate(3, 4), new Coordinate(5, 3)};
+    fish.calculate(board);
+    for (int i = 0; i < fish.getPossibleMove().length; i++) {
+      assertEquals(expected[i].getX(), fish.getPossibleMove()[i].getX());
+      assertEquals(expected[i].getY(), fish.getPossibleMove()[i].getY());
+    }
+  }
+
+  @Test
   @DisplayName("Test if calculate produces the right coordinates if the black fish stand on the field 0, 6")
-  public void testCalculateBlackFishOnTheSideOfTheBoard() {
+  public void testCalculateBlackFishOnTheSideOfTheBoard() throws IllegalParameterException {
     Piece fish = new Fish('b', new Coordinate(0, 6));
-    Coordinate[] expected = {new Coordinate(1, 5), new Coordinate(1, 6)};
+
+    Coordinate[] expected = {new Coordinate(1, 5), new Coordinate(1,1)};
     fish.calculate(board);
     for (int i = 0; i < fish.getPossibleMove().length; i++) {
       assertEquals(expected[i].getX(), fish.getPossibleMove()[i].getX());
@@ -262,8 +401,13 @@ public class TestPieces {
 
   @Test
   @DisplayName("Test if calculate produces the right coordinates if the black fish stand on the field 7, 7")
-  public void testCalculateBlackFishInTheCornerOfTheBoard() {
+  public void testCalculateBlackFishInTheCornerOfTheBoard() throws IllegalParameterException {
     Piece fish = new Fish('b', new Coordinate(7, 7));
+
+    // move bear -> because of this move its Player black's turn
+    board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 4));
+
     Coordinate[] expected = {new Coordinate(6, 6), new Coordinate(6, 7)};
     fish.calculate(board);
     for (int i = 0; i < fish.getPossibleMove().length; i++) {

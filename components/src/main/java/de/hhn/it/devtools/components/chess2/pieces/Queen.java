@@ -74,38 +74,20 @@ public class Queen extends Piece {
 
             if (x == -h && y == -g) {
               for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - m)
-                      && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY() - m)) {
-                    indexSet.add(u);
-                    m++;
-                    System.out.println("if (x == -h && y == -g)\n");
-                    System.out.println(u);
-                    System.out.println(
-                        "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY()
-                            + "]");
-                    System.out.println(
-                        "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY()
-                            + "]");
-                    System.out.println(
-                        "_______________________________________________________________________");
-                  }
+                if ((possibleMoves[u].getX() == possibleMoves[i].getX() - m)
+                    && (
+                    possibleMoves[u].getY() == possibleMoves[i].getY() - m)) {
+                  indexSet.add(u);
+                  m++;
                 }
               }
+            }
             if (x == 0 && y == -g) {
               for (int u = 0; u < possibleMoves.length; u++) {
                 if ((possibleMoves[u].getX() == possibleMoves[i].getX()) && (
                     possibleMoves[u].getY() == possibleMoves[i].getY() - r)) {
                   indexSet.add(u);
                   r++;
-                  System.out.println("if (x == 0 && y == -g)\n");
-                  System.out.println(u);
-                  System.out.println(
-                      "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY() + "]");
-                  System.out.println(
-                      "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY() + "]");
-                  System.out.println(
-                      "_______________________________________________________________________");
                 }
               }
             }
@@ -115,50 +97,24 @@ public class Queen extends Piece {
                     possibleMoves[u].getY() == possibleMoves[i].getY())) {
                   indexSet.add(u);
                   rr++;
-                  System.out.println("if (x == -h && y == 0)\n");
-                  System.out.println(u);
-                  System.out.println(
-                      "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY() + "]");
-                  System.out.println(
-                      "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY() + "]");
-                  System.out.println(
-                      "_______________________________________________________________________");
                 }
               }
             }
             if (x == h && y == g) {
               for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + mm) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY() + mm)) {
-                    indexSet.add(u);
-                    mm++;
-                    System.out.println("if (x == h && y == g)\n");
-                    System.out.println(u);
-                    System.out.println(
-                        "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY()
-                            + "]");
-                    System.out.println(
-                        "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY()
-                            + "]");
-                    System.out.println(
-                        "_______________________________________________________________________");
-                  }
+                if ((possibleMoves[u].getX() == possibleMoves[i].getX() + mm) && (
+                    possibleMoves[u].getY() == possibleMoves[i].getY() + mm)) {
+                  indexSet.add(u);
+                  mm++;
                 }
               }
+            }
             if (x == 0 && y == g) {
               for (int u = 0; u < possibleMoves.length; u++) {
                 if ((possibleMoves[u].getX() == possibleMoves[i].getX()) && (
                     possibleMoves[u].getY() == possibleMoves[i].getY() + n)) {
                   indexSet.add(u);
                   n++;
-                  System.out.println("if (x == 0 && y == g)\n");
-                  System.out.println(u);
-                  System.out.println(
-                      "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY() + "]");
-                  System.out.println(
-                      "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY() + "]");
-                  System.out.println(
-                      "_______________________________________________________________________");
                 }
               }
             }
@@ -168,65 +124,34 @@ public class Queen extends Piece {
                     possibleMoves[u].getY() == possibleMoves[i].getY())) {
                   indexSet.add(u);
                   nn++;
-                  System.out.println("if (x == h && y == 0)\n");
-                  System.out.println(u);
-                  System.out.println(
-                      "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY() + "]");
-                  System.out.println(
-                      "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY() + "]");
-                  System.out.println(
-                      "_______________________________________________________________________");
                 }
               }
             }
             if (x == -h && y == g) {
               for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() - d) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY() + d)) {
-                    indexSet.add(u);
-                    System.out.println("d: "+d);
-                    d++;
-                    System.out.println("if (x == -h && y == g)\n");
-                    System.out.println(u);
-                    System.out.println(
-                        "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY()
-                            + "]");
-                    System.out.println(
-                        "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY()
-                            + "]");
-                    System.out.println(
-                        "_______________________________________________________________________");
-                  }
+                if ((possibleMoves[u].getX() == possibleMoves[i].getX() - d) && (
+                    possibleMoves[u].getY() == possibleMoves[i].getY() + d)) {
+                  indexSet.add(u);
+                  d++;
                 }
               }
+            }
             if (x == h && y == -g) {
               for (int u = 0; u < possibleMoves.length; u++) {
-                  if ((possibleMoves[u].getX() == possibleMoves[i].getX() + dd) && (
-                      possibleMoves[u].getY() == possibleMoves[i].getY() - dd)) {
-                    indexSet.add(u);
-                    dd++;
-                    System.out.println("if (x == h && y == -g)\n");
-                    System.out.println(u);
-                    System.out.println(
-                        "U: [" + possibleMoves[u].getX() + "]" + "[" + possibleMoves[u].getY()
-                            + "]");
-                    System.out.println(
-                        "I: [" + possibleMoves[i].getX() + "]" + "[" + possibleMoves[i].getY()
-                            + "]");
-                    System.out.println(
-                        "_______________________________________________________________________");
-                  }
+                if ((possibleMoves[u].getX() == possibleMoves[i].getX() + dd) && (
+                    possibleMoves[u].getY() == possibleMoves[i].getY() - dd)) {
+                  indexSet.add(u);
+                  dd++;
                 }
               }
-
+            }
           }
-          //endregion never look at this code
         }
         if (board.getSpecificField(possibleMoves[i]).getFieldState()
             == FieldState.HAS_CURRENT_PIECE) {
           indexSet.add(i);
         }
-      }
+      }//endregion never look at this code
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, indexSet);
   }
