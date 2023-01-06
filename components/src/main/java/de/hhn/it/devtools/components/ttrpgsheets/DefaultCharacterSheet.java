@@ -103,21 +103,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public void incrementStat(StatType statType, OriginType origin) throws IllegalArgumentException {
     logger.info("incrementStat : statType = {}, origin = {}", statType, origin);
-    Stat stat = getStatOfType(statType);
-    if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
-      throw new IllegalArgumentException("Cannot change level of Stat of this Type");
-    }
-    if (origin == OriginType.LEVEL_POINT) {
-      if (stat.getAbilityPointsUsed() < Integer.MAX_VALUE) {
-        stat.addAbilityPoint();
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
-    } else {
-      if (stat.getMiscellaneous() < Integer.MAX_VALUE) {
-        stat.setMiscellaneous(stat.getMiscellaneous() + 1);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
-    }
+    incrementStat(statType, origin, 1);
   }
 
   @Override
@@ -159,21 +145,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public void decrementStat(StatType statType, OriginType origin) throws IllegalArgumentException {
     logger.info("decrementStat : statType = {}, origin = {}", statType, origin);
-    Stat stat = getStatOfType(statType);
-    if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
-      throw new IllegalArgumentException("Cannot change level of Stat of this Type");
-    }
-    if (origin == OriginType.LEVEL_POINT) {
-      if (stat.getAbilityPointsUsed() > Integer.MIN_VALUE) {
-        stat.removeAbilityPoint();
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
-    } else {
-      if (stat.getMiscellaneous() > Integer.MIN_VALUE) {
-        stat.setMiscellaneous(stat.getMiscellaneous() - 1);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
-    }
+    decrementStat(statType, origin, 1);
   }
 
   @Override
