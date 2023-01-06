@@ -131,8 +131,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
    * Handler if incrementStat is called with a negative amount. Method calls decrementStat with the absolute value of amount
    *
    * @param statType the Type of Stat to increment
-   * @param origin the origin of the change
-   * @param amount the amount the Stat changes
+   * @param origin   the origin of the change
+   * @param amount   the amount the Stat changes
    */
   private void negativeIncrementHandler(StatType statType, OriginType origin, int amount) {
     if (amount == Integer.MIN_VALUE) {
@@ -157,34 +157,37 @@ public class DefaultCharacterSheet implements CharacterSheet {
     logger.info("decrementStat : statType = {}, origin = {}, amount = {}",
             statType, origin, amount);
     Stat stat = getStatOfType(statType);
+
     if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
       throw new IllegalArgumentException("Cannot change level of Stat of this Type");
     }
+
     if (amount < 0) {
-      if (amount == Integer.MIN_VALUE) {
-        incrementStat(statType, origin, Integer.MAX_VALUE);
-        return;
-      }
-      incrementStat(statType, origin, Math.abs(amount));
-      return;
-    }
-    if (origin == OriginType.LEVEL_POINT) {
-      if (stat.getAbilityPointsUsed() - amount < stat.getAbilityPointsUsed()) {
-        stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() - amount);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      } else {
-        stat.setAbilityPointsUsed(Integer.MIN_VALUE);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
+      negativeDecrementHandler(statType, origin, amount);
+    } else if (origin == OriginType.LEVEL_POINT) {
+      stat.setAbilityPointsUsed(underflowTest(stat.getAbilityPointsUsed(), amount));
     } else {
-      if (stat.getMiscellaneous() - amount < stat.getMiscellaneous()) {
-        stat.setMiscellaneous(stat.getMiscellaneous() - amount);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      } else {
-        stat.setMiscellaneous(Integer.MIN_VALUE);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
+      stat.setMiscellaneous(underflowTest(stat.getMiscellaneous(), amount));
     }
+    getListener().statChanged(stat.toStatDescriptor()); // Callback
+  }
+
+  /**
+   * Handler if decrementStat is called with a negative amount. Method calls incrementStat with the absolute value of amount
+   *
+   * @param statType the Type of Stat to increment
+   * @param origin   the origin of the change
+   * @param amount   the amount the Stat changes
+   */
+  private void negativeDecrementHandler(StatType statType, OriginType origin, int amount) {
+    if (amount == Integer.MIN_VALUE) {
+      amount = Integer.MAX_VALUE;
+    }
+    incrementStat(statType, origin, Math.abs(amount));
+  }
+
+  private int underflowTest(int minuend, int subtrahend) {
+    return minuend - subtrahend < minuend ? minuend - subtrahend : Integer.MIN_VALUE;
   }
 
   @Override
