@@ -97,14 +97,18 @@ public class Monkey extends Piece {
           && (board.getSpecificField(new Coordinate(5, 4)).getFieldState()
               == FieldState.SELECTED
               || board.getSpecificField(new Coordinate(5, 4)).getFieldState()
-              == FieldState.HAS_OTHER_PIECE)) {
+              == FieldState.HAS_OTHER_PIECE
+              || board.getSpecificField(new Coordinate(5, 4)).getFieldState()
+              == FieldState.HAS_CURRENT_PIECE)) {
         replaceJumpCoordinate(possibleJump, new Coordinate(7, 4),
             new Coordinate(9, 4));
       } else if (color == 'w'
           && (board.getSpecificField(new Coordinate(2, 3)).getFieldState()
-          == FieldState.SELECTED
-          || board.getSpecificField(new Coordinate(2, 3)).getFieldState()
-          == FieldState.HAS_OTHER_PIECE)) {
+              == FieldState.SELECTED
+              || board.getSpecificField(new Coordinate(2, 3)).getFieldState()
+              == FieldState.HAS_OTHER_PIECE
+              || board.getSpecificField(new Coordinate(2, 3)).getFieldState()
+              == FieldState.HAS_CURRENT_PIECE)) {
         replaceJumpCoordinate(possibleJump, new Coordinate(0, 3),
             new Coordinate(8, 3));
       }
@@ -177,12 +181,11 @@ public class Monkey extends Piece {
   }
 
   /**
-   * Returns a Coordinate[] in which a Coordinate got replaced by another one.
+   * Replaces one Coordinate with another Coordinate in the given Coordinate[].
    *
    * @param array             the Coordinate[] in which Coordinate get replaced
    * @param oldCoordinate     the Coordinate which gets be replaced
    * @param replaceCoordinate the Coordinate that replaces the other
-   * @return the Coordinate[] with the replaced Coordinates
    */
   private void replaceJumpCoordinate(Coordinate[] array, Coordinate oldCoordinate,
       Coordinate replaceCoordinate) {

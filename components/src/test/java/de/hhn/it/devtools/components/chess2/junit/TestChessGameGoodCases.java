@@ -15,12 +15,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Test ChessGame and Chess2Service interface with good cases.")
@@ -76,7 +73,6 @@ public class TestChessGameGoodCases {
   @Test
   @DisplayName("Ending a Game of Chess which sets GameState to null")
   void TestEndGame() throws IllegalStateException {
-    Board board = chess2Service.startNewGame();
     chess2Service.endGame();
     assertNull(chess2Service.getGameState());
   }
@@ -178,7 +174,7 @@ public class TestChessGameGoodCases {
   }
 
   @Test
-  @DisplayName("GetPossibleMoves of a fish in the backline to no fields")
+  @DisplayName("GetPossibleMoves of a fish in the back line to no fields")
   void TestGetPossibleMovesOfFishAtBeginning()
       throws IllegalStateException, IllegalParameterException {
     Coordinate[] coordinates = chess2Service.getPossibleMoves(new Coordinate(2, 0));
