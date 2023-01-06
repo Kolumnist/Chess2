@@ -111,15 +111,18 @@ public class LayoutGenerator {
             specialRoomId++;
             CircleCenterRoom centerOfTime = new CircleCenterRoom(specialRoomId, "A large, circular room. " +
                     "A statue of an owl stands in the center, watching you from a pedestal.");
-            SpecialTrapTriggerItem owlStatue = new SpecialTrapTriggerItem(specialRoomId * 2, "Owl-statue",
+            SpecialTrapTriggerItem owlStatue = new SpecialTrapTriggerItem(specialRoomId, "Owl-statue",
                     "The statue looks at you, as if judging you. It is finely made and will look well in" +
                             "a museum, or your own desk, if you can pass it´s judgement.");
             specialRoomId++;
 
             rotate1.setNextDoorRoom(centerOfTime, Direction.SOUTH);
             rotate1.setNextDoorRoom(allRooms.get(8), Direction.NORTH);
+            centerOfTime.setRotatingHallway(rotate1);
 
 
+            allRooms.add(rotate1);
+            allRooms.add(centerOfTime);
 
             logger.info(map.toString() + "created.");
         }
@@ -241,6 +244,15 @@ public class LayoutGenerator {
             allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
 
             logger.info(map.toString() + "finished.");
+        } else if (map == Map.Circle_Of_Time) {
+            if (seed.getSeed().get(1) < 3) {
+                ((CircleCenterRoom) allRooms.get(15)).setRotateTarget(allRooms.get(7));
+                ((CircleCenterRoom) allRooms.get(15)).setFutureDirectionOfHallway(Direction.WEST);
+
+            }
+
+            ((CircleCenterRoom) allRooms.get(15)).setTrap();
+
         }
     }
 
