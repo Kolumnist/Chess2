@@ -181,12 +181,11 @@ public class Monkey extends Piece {
   }
 
   /**
-   * Returns a Coordinate[] in which a Coordinate got replaced by another one.
+   * Replaces one Coordinate with another Coordinate in the given Coordinate[].
    *
    * @param array             the Coordinate[] in which Coordinate get replaced
    * @param oldCoordinate     the Coordinate which gets be replaced
    * @param replaceCoordinate the Coordinate that replaces the other
-   * @return the Coordinate[] with the replaced Coordinates
    */
   private void replaceJumpCoordinate(Coordinate[] array, Coordinate oldCoordinate,
       Coordinate replaceCoordinate) {

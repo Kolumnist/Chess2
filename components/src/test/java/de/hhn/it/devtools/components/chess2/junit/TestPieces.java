@@ -1,10 +1,13 @@
 package de.hhn.it.devtools.components.chess2.junit;
 
-import de.hhn.it.devtools.apis.chess2.*;
+import de.hhn.it.devtools.apis.chess2.Board;
+import de.hhn.it.devtools.apis.chess2.Chess2Service;
+import de.hhn.it.devtools.apis.chess2.Piece;
+import de.hhn.it.devtools.apis.chess2.Coordinate;
+import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.components.chess2.ChessGame;
 import de.hhn.it.devtools.components.chess2.pieces.Bear;
-import de.hhn.it.devtools.components.chess2.pieces.Crow;
 import de.hhn.it.devtools.components.chess2.pieces.Elephant;
 import de.hhn.it.devtools.components.chess2.pieces.Fish;
 import de.hhn.it.devtools.components.chess2.pieces.Fishqueen;
@@ -14,7 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestPieces {
 
@@ -31,12 +34,15 @@ public class TestPieces {
 
   //region King
   @Test
-  @DisplayName("Test if calculate produces the right coordinates if the king stands on the field 4, 4")
+  @DisplayName("Test if calculate produces the right coordinates if the king stands on the " +
+      "field 4, 4")
   public void testCalculateKingInTheMiddleOfTheBoard() {
     Piece king = new King('b', new Coordinate(4, 4), true);
     Coordinate[] expected = {new Coordinate(3, 3), new Coordinate(3, 4),
-        new Coordinate(3, 5), new Coordinate(4, 3), new Coordinate(4, 5),
-        new Coordinate(5, 3), new Coordinate(5, 4), new Coordinate(5, 5)};
+        new Coordinate(3, 5), new Coordinate(4, 3),
+        new Coordinate(4, 5),
+        new Coordinate(5, 3), new Coordinate(5, 4),
+        new Coordinate(5, 5)};
     king.calculate(board);
     for (int i = 0; i < king.getPossibleMove().length; i++) {
       assertEquals(expected[i].getX(), king.getPossibleMove()[i].getX());
@@ -45,11 +51,13 @@ public class TestPieces {
   }
 
   @Test
-  @DisplayName("Test if calculate produces the right coordinates if the king stands on the field 0, 6")
+  @DisplayName("Test if calculate produces the right coordinates if the king stands on the " +
+      "field 0, 6")
   public void testCalculateKingOnTheSideOfTheBoard() {
     Piece king = new King('b', new Coordinate(0, 6), true);
     Coordinate[] expected = {new Coordinate(0, 5), new Coordinate(0, 7),
-        new Coordinate(1, 5), new Coordinate(1, 6), new Coordinate(1, 7)};
+        new Coordinate(1, 5), new Coordinate(1, 6),
+        new Coordinate(1, 7)};
     king.calculate(board);
     for (int i = 0; i < king.getPossibleMove().length; i++) {
       assertEquals(expected[i].getX(), king.getPossibleMove()[i].getX());
@@ -58,7 +66,8 @@ public class TestPieces {
   }
 
   @Test
-  @DisplayName("Test if calculate produces the right coordinates if the king stands on the field 7, 7")
+  @DisplayName("Test if calculate produces the right coordinates if the king stands on the " +
+      "field 7, 7")
   public void testCalculateKingInTheCornerOfTheBoard() {
     Piece king = new King('b', new Coordinate(7, 7), true);
     Coordinate[] expected = {new Coordinate(6, 6), new Coordinate(6, 7),
@@ -71,7 +80,8 @@ public class TestPieces {
   }
 
   @Test
-  @DisplayName("Test if calculate produces the right coordinates if the king stands on an invalid field")
+  @DisplayName("Test if calculate produces the right coordinates if the king stands on an " +
+      "invalid field")
   public void testCalculateKingOnInvalidField() {
     Piece king = new King('b', new Coordinate(-5, 9), true);
     king.calculate(board);
@@ -83,7 +93,8 @@ public class TestPieces {
 
   //region Queen
   @Test
-  @DisplayName("Test if calculate produces the right coordinates if the black queen stand on the field 4, 4")
+  @DisplayName("Test if calculate produces the right coordinates if the black queen stand on the " +
+      "field 4, 4")
   public void testCalculateBlackQueenInTheMiddleOfTheBoard() throws IllegalParameterException {
 
     Piece queen = new Queen('b', new Coordinate(4, 4));
