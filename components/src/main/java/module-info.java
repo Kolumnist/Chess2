@@ -18,4 +18,6 @@ module devtools.components {
           with de.hhn.it.devtools.components.game2048.provider.ProviderGame2048;
   provides de.hhn.it.devtools.apis.memory.MemoryService
           with de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
+  provides de.hhn.it.devtools.apis.chess2.Chess2Service
+      with de.hhn.it.devtools.components.chess2.ChessGame;
         }

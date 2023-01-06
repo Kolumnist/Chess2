@@ -44,4 +44,17 @@ public class Coordinate {
   public int getY() {
     return yValue;
   }
+
+  /**
+   * Returns true if the coordinates are the same and false if not.
+   *
+   * @param coordinate the coordinate you want to compare with your coordinate
+   * @return the result of the comparison as a boolean
+   */
+  public boolean compareCoordinates(Coordinate coordinate) {
+    if (xValue == coordinate.getX() && yValue == coordinate.getY()) {
+      return true;
+    }
+    return false;
+  }
 }
