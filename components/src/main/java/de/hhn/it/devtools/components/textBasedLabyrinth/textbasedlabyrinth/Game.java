@@ -12,45 +12,76 @@ import java.util.List;
  */
 public class Game implements GameService {
 
+
+  private static final org.slf4j.Logger logger =
+          org.slf4j.LoggerFactory.getLogger(Game.class);
+
+
   public Room currentRoom;
   public Player player;
   public Layout currentLayout;
   public OutputListener outputListener;
   public ArrayList<Layout> layouts;
+  private ArrayList<OutputListener> listeners;
+  private ArrayList<Map> allMaps;
   public Map map;
 
 
   /**
-   * Constructor for game.
+   * This method exists to initialize the player and the lists,
+   * and other things.
+   * This method should only be done once per launch.
    */
-  public Game(OutputListener listener) {
-    this.player = new Player("Placeholder");
-    outputListener = listener;
+  public void startup() {
+    this.player = new Player("Jones");
+    layouts = new ArrayList<>();
+    listeners = new ArrayList<>();
+    allMaps = new ArrayList<>();
+    logger.info("Game initialized.");
   }
 
+
   /**
-   *
-   * @param direction
-   * @throws RoomFailedException
+   * This method deals with the player moving from room to room.
+   * @param direction the direction in which the player is moving.
    */
-  public void move(Direction direction) throws RoomFailedException {
+  public void move(Direction direction) {
     if (direction == null) {
       throw new IllegalArgumentException("Direction should not be null.");
     }
+    boolean stop = false;
 
-    Door checkDoor = currentRoom.getDoor(direction);
-    String message = checkDoor.open();
-    outputListener.sendOutputPlayer(message);
-    if (!checkDoor.checkIfLocked()) {
-      if (checkDoor.checkIfFake()) {
-        String fake = "The door reveals no path, but a wall. You cannot move in this direction.";
-        outputListener.sendOutputNavigation(fake);
-      } else {
-        currentRoom = currentRoom.getRoom(direction);
-        player.setCurrentRoomOfPlayer(currentRoom);
-      }
+    Door checkDoor = null;
+    try {
+      checkDoor = currentRoom.getDoor(direction);
+    } catch (RoomFailedException e) {
+      stop = true;
+      outputListener.sendOutputNavigation("There is no way in that direction.");
     }
 
+    if (!stop) {
+      String message = checkDoor.open();
+      outputListener.sendOutputPlayer(message);
+      if (!checkDoor.checkIfLocked()) {
+        if (checkDoor.checkIfFake()) {
+          String fake = "The door reveals no path, but a wall. You cannot move in this direction.";
+          outputListener.sendOutputNavigation(fake);
+        } else {
+          try {
+            currentRoom = currentRoom.getRoom(direction);
+          } catch (RoomFailedException e) {
+            stop = true;
+            outputListener.sendOutputNavigation("There is no room in that direction.");
+          }
+
+        }
+      }
+
+    }
+
+    if (!stop) {
+      player.setCurrentRoomOfPlayer(currentRoom);
+    }
   }
 
   /**

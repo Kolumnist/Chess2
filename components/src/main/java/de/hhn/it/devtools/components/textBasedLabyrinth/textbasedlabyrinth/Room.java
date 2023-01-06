@@ -16,9 +16,11 @@ import java.util.stream.Collectors;
 public class Room {
 
 
+
   protected HashMap<Integer, Item> items;
-  private HashMap<Direction, Room> roomMap;
-  private HashMap<Direction, Door> doorMap;
+  protected HashMap<Direction, Room> roomMap;
+  protected HashMap<Direction, Door> doorMap;
+  protected ArrayList<Direction> directions;
   protected int roomId;
 
   private final String description;
@@ -65,6 +67,12 @@ public class Room {
     items = new HashMap<>();
     roomMap = new HashMap<>();
     doorMap = new HashMap<>();
+    directions = new ArrayList<>();
+    directions.add(Direction.NORTH);
+    directions.add(Direction.EAST);
+    directions.add(Direction.SOUTH);
+    directions.add(Direction.WEST);
+
     this.description = description;
   }
 
@@ -79,63 +87,19 @@ public class Room {
     return roomMap.get(direction);
   }
 
-  /**
-   * Gets the doors for the new room.
-   *
+
+
   public void setDoors() {
-
-    if(roomMap.containsKey(Direction.SOUTH)){
-      if(roomMap.get(Direction.SOUTH).doorMap.containsKey(Direction.SOUTH)){
-        southDoor = roomMap.get(Direction.SOUTH).doorMap.get(Direction.SOUTH)
-      }
-      else {
-        southDoor = new Door();
+    for (Direction direction : directions) {
+      if (roomMap.containsKey(direction)) {
+        doorMap.put(direction, new Door());
       }
     }
-
-
-
-
-
-    if (isSouthAssigned) {
-      if (toTheSouth.hasSouthDoor()) {
-        southDoor = toTheSouth.getSouthDoor();
-      } else {
-        southDoor = new Door();
-      }
-      hasDoorS = true;
-    }
-    if (isWestAssigned) {
-      if (toTheWest.hasDoorWest()) {
-        westDoor = toTheWest.getWestDoor();
-      } else {
-        westDoor = new Door();
-      }
-      hasDoorW = true;
-    }
-    if (isNorthAssigned) {
-      if (toTheNorth.hasDoorNorth()) {
-        northDoor = toTheNorth.getNorthDoor();
-      } else {
-        northDoor = new Door();
-      }
-      hasDoorN = true;
-    }
-    if (isEastAssigned) {
-      if (toTheEast.hasDoorEast()) {
-        eastDoor = toTheEast.getEastDoor();
-      } else {
-        eastDoor = new Door();
-      }
-      hasDoorE = true;
-    }
-
-  }*/
+  }
 
 
   protected void setFakeInDirection(Direction direction) throws IllegalArgumentException {
-    if(!roomMap.containsKey(direction)){
-      doorMap.put(direction, new Door());
+    if(roomMap.containsKey(direction)){
       doorMap.get(direction).isFake();
     }
     else {
