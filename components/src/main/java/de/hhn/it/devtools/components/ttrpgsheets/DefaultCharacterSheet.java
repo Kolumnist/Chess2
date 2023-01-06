@@ -112,34 +112,37 @@ public class DefaultCharacterSheet implements CharacterSheet {
     logger.info("incrementStat : statType = {}, origin = {}, amount = {}",
             statType, origin, amount);
     Stat stat = getStatOfType(statType);
+
     if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
       throw new IllegalArgumentException("Cannot change level of Stat of this Type");
     }
+
     if (amount < 0) {
-      if (amount == Integer.MIN_VALUE) {
-        decrementStat(statType, origin, Integer.MAX_VALUE);
-        return;
-      }
-      decrementStat(statType, origin, Math.abs(amount));
-      return;
-    }
-    if (origin == OriginType.LEVEL_POINT) {
-      if (stat.getAbilityPointsUsed() + amount > stat.getAbilityPointsUsed()) {
-        stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() + amount);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      } else {
-        stat.setAbilityPointsUsed(Integer.MAX_VALUE);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
+      negativeIncrementHandler(statType, origin, amount);
+    } else if (origin == OriginType.LEVEL_POINT) {
+      stat.setAbilityPointsUsed(overflowTest(stat.getAbilityPointsUsed(), amount));
     } else {
-      if (stat.getMiscellaneous() + amount > stat.getMiscellaneous()) {
-        stat.setMiscellaneous(stat.getMiscellaneous() + amount);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      } else {
-        stat.setMiscellaneous(Integer.MAX_VALUE);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
+      stat.setMiscellaneous(overflowTest(stat.getMiscellaneous(), amount));
     }
+    getListener().statChanged(stat.toStatDescriptor()); // Callback
+  }
+
+  /**
+   * Handler if incrementStat is called with a negative amount. Method calls decrementStat with the absolute value of amount
+   *
+   * @param statType the Type of Stat to increment
+   * @param origin the origin of the change
+   * @param amount the amount the Stat changes
+   */
+  private void negativeIncrementHandler(StatType statType, OriginType origin, int amount) {
+    if (amount == Integer.MIN_VALUE) {
+      amount = Integer.MAX_VALUE;
+    }
+    decrementStat(statType, origin, Math.abs(amount));
+  }
+
+  private int overflowTest(int addend1, int addend2) {
+    return addend1 + addend2 > addend1 ? addend1 + addend2 : Integer.MAX_VALUE;
   }
 
   @Override
@@ -304,8 +307,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public String toString() {
     return "DefaultCharacterSheet: [CharacterSheetListener: " + getListener()
-                   + ", Descriptions: " + Arrays.toString(getDescriptions())
-                   + ", Stats: " + Arrays.toString(getStats())
-                   + ", Dice: " + getDice() + "]";
+            + ", Descriptions: " + Arrays.toString(getDescriptions())
+            + ", Stats: " + Arrays.toString(getStats())
+            + ", Dice: " + getDice() + "]";
   }
 }
