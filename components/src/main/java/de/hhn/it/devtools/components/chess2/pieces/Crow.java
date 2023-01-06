@@ -22,37 +22,12 @@ public class Crow extends Piece {
   }
 
   @Override
-  protected void calculate() {
-    int k = 0;
-    for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
-      for (int j = coordinate.getY() - 1; j <= coordinate.getY() + 1; j++) {
-        movement[k++] = new Coordinate(i, j);
-      }
-    }
-  }
-
-  protected void calculate(Board board, boolean pieceGotDefeated) {
-    ArrayList<Integer> index = new ArrayList<>();
-    int k = 0;
+  public void calculate(Board board) {
     boolean nearEnemy = false;
 
-    movement = new Coordinate[9];
-    calculate();
+    defeatPieceMove(board);
 
-    for (int i = 0; i < possibleMoves.length; i++) {
-      if ((possibleMoves[i].compareCoordinates(coordinate))
-          || possibleMoves[i].getY() < 0
-          || possibleMoves[i].getX() < 0
-          || possibleMoves[i].getY() > 7
-          || possibleMoves[i].getX() > 7
-          || board.getSpecificField(possibleMoves[i]).getFieldState()
-          == FieldState.HAS_CURRENT_PIECE) {
-        index.add(i);
-      }
-    }
-
-    movement = shortenCoordinateArray(movement, index);
-
+    //Testing if the Crow stands near an enemy Piece.
     for (int i = 0; i < movement.length; i++) {
       if (board.getSpecificField(movement[i]).getFieldState() == FieldState.HAS_OTHER_PIECE) {
         nearEnemy = true;
@@ -60,27 +35,61 @@ public class Crow extends Piece {
       }
     }
 
-    if (pieceGotDefeated && nearEnemy) {
+    //Testing if a Piece got defeated in the last turn and if an enemy Piece is nearby.
+    if (board.lostPiece && nearEnemy) {
       possibleMoves = movement;
     } else {
+      ArrayList<Integer> index = new ArrayList<>();
       possibleMoves = new Coordinate[64];
+      int k = 0;
+      //Calculating every possible Coordinates where the Crow can fly to.
       for (int i = 0; i <= 7; i++) {
         for (int j = 0; j <= 7; j++) {
           possibleMoves[k++] = new Coordinate(i, j);
         }
       }
 
-      index = new ArrayList<>();
+      //Testing for invalid Coordinates and adding them to a list to remove them.
       for (int i = 0; i < possibleMoves.length; i++) {
         if (possibleMoves[i].compareCoordinates(coordinate)
             || board.getSpecificField(possibleMoves[i]).getFieldState()
-            == FieldState.HAS_OTHER_PIECE
-            || board.getSpecificField(possibleMoves[i]).getFieldState()
-            == FieldState.HAS_CURRENT_PIECE) {
+            != FieldState.FREE_FIELD) {
           index.add(i);
         }
       }
       possibleMoves = shortenCoordinateArray(possibleMoves, index);
     }
+  }
+
+  /**
+   * Calculates the Coordinates wear a Piece has to stand so that the Crow can defeat it.
+   *
+   * @param board the board of the game
+   */
+  public void defeatPieceMove(Board board) {
+    ArrayList<Integer> index = new ArrayList<>();
+    movement = new Coordinate[9];
+    int k = 0;
+    //Calculating the Coordinates through off-putting the own Coordinate
+    // by one in X and Y direction.
+    for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
+      for (int j = coordinate.getY() - 1; j <= coordinate.getY() + 1; j++) {
+        movement[k++] = new Coordinate(i, j);
+      }
+    }
+
+    //Testing for invalid Coordinates and adding them to a list to remove them.
+    for (int i = 0; i < movement.length; i++) {
+      if ((movement[i].compareCoordinates(coordinate))
+          || movement[i].getY() < 0
+          || movement[i].getX() < 0
+          || movement[i].getY() > 7
+          || movement[i].getX() > 7
+          || board.getSpecificField(movement[i]).getFieldState()
+          == FieldState.HAS_CURRENT_PIECE) {
+        index.add(i);
+      }
+    }
+    movement = shortenCoordinateArray(movement, index);
   }
 }

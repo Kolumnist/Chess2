@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * This class implements the Monkey which inherits from Piece.
  *
  * @author Collin Hoss, Lara Mangi, Michel Jouaux
- * @version 1.0
+ * @version 1.4
  */
 
 public class Monkey extends Piece {
@@ -26,72 +26,132 @@ public class Monkey extends Piece {
   }
 
   @Override
-  protected void calculate() {
+  public void calculate(Board board) {
+    ArrayList<Integer> index = new ArrayList<>();
+
+    calculateJump(board);
+
     int k = 0;
+    //Replacing one Coordinate through a jumpCoordinate if a Piece stands on it
+    for (int i = 0; i < possibleMoves.length; i++) {
+      if (k < possibleJump.length
+          && (board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_OTHER_PIECE
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_CURRENT_PIECE
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_BEAR)) {
+        replaceJumpCoordinate(possibleMoves, possibleMoves[i], possibleJump[k++]);
+      }
+    }
+
+    //Testing if there are still Pieces in the way and adding them to a list to remove them.
+    for (int i = 0; i < possibleMoves.length; i++) {
+      if (board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_OTHER_PIECE
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_CURRENT_PIECE
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_BEAR) {
+        index.add(i);
+      }
+    }
+    possibleMoves = shortenCoordinateArray(possibleMoves, index);
+  }
+
+  /**
+   * Calculates the Coordinates if the Monkey jumps over a nearby Piece.
+   *
+   * @param board the board of the game
+   */
+  public void calculateJump(Board board) {
+    calculateMovement();
+
+    possibleJump = new Coordinate[8];
+    int k = 0;
+    //Testing if there is a Piece nearby to jump over and calculating the new Coordinate.
+    for (int i = 0; i < possibleMoves.length; i++) {
+      if (board.getSpecificField(possibleMoves[i]).getFieldState() != FieldState.FREE_FIELD
+          && board.getSpecificField(possibleMoves[i]).getFieldState() != FieldState.SELECTED) {
+        possibleJump[k++] = calculateJumpCoordinate(possibleMoves[i]);
+      }
+    }
+
+    //Testing for invalid Coordinates and adding them to a list to remove them.
+    ArrayList<Integer> index = new ArrayList<>();
+    for (int i = 0; i < possibleJump.length; i++) {
+      if (possibleJump[i] == null
+              || possibleJump[i].getY() < 0
+              || possibleJump[i].getX() < 0
+              || possibleJump[i].getY() > 7
+              || possibleJump[i].getX() > 7) {
+        index.add(i);
+      }
+    }
+    possibleJump = shortenCoordinateArray(possibleJump, index);
+
+    //Testing if the own King is in jail and replacing the jumpCoordinate
+    // if the Monkey stands on the right Field.
+    if (isKingInJail(board)) {
+      if (color == 'b'
+          && (board.getSpecificField(new Coordinate(5, 4)).getFieldState()
+              == FieldState.SELECTED
+              || board.getSpecificField(new Coordinate(5, 4)).getFieldState()
+              == FieldState.HAS_OTHER_PIECE
+              || board.getSpecificField(new Coordinate(5, 4)).getFieldState()
+              == FieldState.HAS_CURRENT_PIECE)) {
+        replaceJumpCoordinate(possibleJump, new Coordinate(7, 4),
+            new Coordinate(9, 4));
+      } else if (color == 'w'
+          && (board.getSpecificField(new Coordinate(2, 3)).getFieldState()
+              == FieldState.SELECTED
+              || board.getSpecificField(new Coordinate(2, 3)).getFieldState()
+              == FieldState.HAS_OTHER_PIECE
+              || board.getSpecificField(new Coordinate(2, 3)).getFieldState()
+              == FieldState.HAS_CURRENT_PIECE)) {
+        replaceJumpCoordinate(possibleJump, new Coordinate(0, 3),
+            new Coordinate(8, 3));
+      }
+    }
+
+  }
+
+  /**
+   * Calculates the normal movement of the Monkey if he does not jump over another Piece.
+   */
+  private void calculateMovement() {
+    ArrayList<Integer> index = new ArrayList<>();
+    possibleMoves = new Coordinate[9];
+    int k = 0;
+    //Calculating the Coordinates through off-putting the own Coordinate
+    // by one in X and Y direction.
     for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
       for (int j = coordinate.getY() - 1; j <= coordinate.getY() + 1; j++) {
         possibleMoves[k++] = new Coordinate(i, j);
       }
     }
-  }
 
-  protected void calculate(Board board, boolean kingInJail) {
-    ArrayList<Integer> index = new ArrayList<>();
-    possibleMoves = new Coordinate[9];
-
-    calculate();
-
+    //Testing for invalid Coordinates and adding them to a list to remove them.
     for (int i = 0; i < possibleMoves.length; i++) {
       if ((possibleMoves[i].compareCoordinates(coordinate))
           || possibleMoves[i].getY() < 0
           || possibleMoves[i].getX() < 0
           || possibleMoves[i].getY() > 7
-          || possibleMoves[i].getX() > 7
-          || board.getSpecificField(possibleMoves[i]).getFieldState()
-          == FieldState.HAS_OTHER_PIECE
-          || board.getSpecificField(possibleMoves[i]).getFieldState()
-          == FieldState.HAS_CURRENT_PIECE) {
+          || possibleMoves[i].getX() > 7) {
         index.add(i);
       }
     }
 
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
-
-    calculateJump(board, kingInJail);
   }
 
-  protected void calculateJump(Board board, boolean kingInJail) {
-    possibleJump = new Coordinate[possibleMoves.length];
-    int k = 0;
-    for (int i = 0; i < possibleMoves.length; i++) {
-      if (board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.HAS_OTHER_PIECE
-          || board.getSpecificField(possibleMoves[i]).getFieldState()
-          == FieldState.HAS_CURRENT_PIECE) {
-        possibleJump[k] = calculateJumpCoordinate(possibleMoves[i]);
-        k++;
-      }
-    }
-
-    if (kingInJail) {
-      Coordinate kingCoordinate = jailKingCoordinate(board);
-      if (kingCoordinate.getX() == 9) {
-        replaceJumpCoordinate(5, kingCoordinate);
-      } else {
-        replaceJumpCoordinate(2, kingCoordinate);
-      }
-    }
-
-    ArrayList<Integer> index = new ArrayList<>();
-    for (int i = 0; i < possibleJump.length; i++) {
-      if (possibleJump[i] == null
-          || board.getSpecificField(possibleJump[i]).getFieldState()
-          == FieldState.HAS_CURRENT_PIECE) {
-        index.add(i);
-      }
-    }
-    possibleJump = shortenCoordinateArray(possibleJump, index);
-  }
-
+  /**
+   * Returns the Coordinate of the jump destination through adding the difference of
+   * otherPieceCoordinate and the Coordinate of the Monkey to the otherPieceCoordinate.
+   *
+   * @param otherPieceCoordinate the Coordinate of the Piece over which the Monkey jumps
+   * @return the Coordinate of the Field if the Monkey jumps over another Piece
+   */
   private Coordinate calculateJumpCoordinate(Coordinate otherPieceCoordinate) {
     int newXValue = otherPieceCoordinate.getX() + (otherPieceCoordinate.getX() - coordinate.getX());
     int newYValue = otherPieceCoordinate.getY() + (otherPieceCoordinate.getY() - coordinate.getY());
@@ -99,28 +159,41 @@ public class Monkey extends Piece {
     return new Coordinate(newXValue, newYValue);
   }
 
-  private Coordinate jailKingCoordinate(Board board) {
-    if (color == 'w') {
-      if (board.getSpecificField(new Coordinate(9, 4)).getFieldState() == FieldState.JAIL_KING) {
-        return new Coordinate(9, 4);
-      } else {
-        return new Coordinate(9, 3);
+  /**
+   * Returns true if the King of the specific color is in jail.
+   *
+   * @param board the board of the game to test if the King is in jail
+   * @return a boolean if the King is in jail or not
+   */
+  private boolean isKingInJail(Board board) {
+    if (color == 'b') {
+      if (board.getSpecificField(new Coordinate(9, 4)).getFieldState()
+          == FieldState.JAIL_KING) {
+        return true;
       }
-    } else {
-      if (board.getSpecificField(new Coordinate(8, 4)).getFieldState() == FieldState.JAIL_KING) {
-        return new Coordinate(8, 4);
-      } else {
-        return new Coordinate(8, 3);
+    } else if (color == 'w') {
+      if (board.getSpecificField(new Coordinate(8, 3)).getFieldState()
+          == FieldState.JAIL_KING) {
+        return true;
       }
     }
+    return false;
   }
 
-  private void replaceJumpCoordinate(int xValue, Coordinate jailCoordinate) {
-    for (int i = 0; i < possibleJump.length; i++) {
-      if (possibleJump[i].compareCoordinates(new Coordinate(xValue, jailCoordinate.getY()))) {
-        possibleJump[i] = jailCoordinate;
-        return;
+  /**
+   * Replaces one Coordinate with another Coordinate in the given Coordinate[].
+   *
+   * @param array             the Coordinate[] in which Coordinate get replaced
+   * @param oldCoordinate     the Coordinate which gets be replaced
+   * @param replaceCoordinate the Coordinate that replaces the other
+   */
+  private void replaceJumpCoordinate(Coordinate[] array, Coordinate oldCoordinate,
+      Coordinate replaceCoordinate) {
+    for (int i = 0; i < array.length; i++) {
+      if (array[i].compareCoordinates(oldCoordinate)) {
+        array[i] = replaceCoordinate;
       }
     }
+    //return array;
   }
 }

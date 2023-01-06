@@ -11,6 +11,7 @@ package de.hhn.it.devtools.apis.chess2;
 public class Board {
 
   private final Field[] fields = new Field[68];
+  public boolean lostPiece = false;
 
   /**
    * Constructor of board.
@@ -23,6 +24,7 @@ public class Board {
     for (int y = 0; y < 8; y++) {
       for (int x = 0; x < 8; x++) {
         fields[++diff] = new Field(new Coordinate(x, y));
+        fields[diff].setFieldState(FieldState.FREE_FIELD);
       }
     }
 
@@ -39,6 +41,7 @@ public class Board {
 
   /**
    * A getter for a specific Field.
+   * MARK: Could make a Table instead of going through array
    *
    * @param coordinate to get the correct field.
    * @return the Field on index.
@@ -50,7 +53,8 @@ public class Board {
           && field.getCoordinate().getY() == coordinate.getY()) {
         return field;
       }
-    }return fields[fields.length - 1];
+    }
+    return fields[fields.length - 1];
   }
 
   /**
