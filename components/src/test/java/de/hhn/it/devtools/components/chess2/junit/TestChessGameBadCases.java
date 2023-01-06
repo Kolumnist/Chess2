@@ -41,9 +41,8 @@ public class TestChessGameBadCases {
     assertNotNull(board);
     assertEquals(WinningPlayerState.NO_WINNER, chess2Service.getWinningPlayer());
     chess2Service.giveUp();
-    //You can give up after a game ended lol xD
     assertEquals(WinningPlayerState.NO_WINNER, chess2Service.getWinningPlayer());
-    assertEquals(GameState.CHECKMATE, chess2Service.getGameState());
+    assertNull(chess2Service.getGameState());
 
     chess2Service.startNewGame();
 //Moving with a non piece field and moving to a field where I normally couldn't move

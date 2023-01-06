@@ -41,6 +41,7 @@ public class Board {
 
   /**
    * A getter for a specific Field.
+   * MARK: Could make a Table instead of going through array
    *
    * @param coordinate to get the correct field.
    * @return the Field on index.

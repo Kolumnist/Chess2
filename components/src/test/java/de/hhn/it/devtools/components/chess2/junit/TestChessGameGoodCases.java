@@ -15,12 +15,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Test ChessGame and Chess2Service interface with good cases.")
@@ -76,7 +73,6 @@ public class TestChessGameGoodCases {
   @Test
   @DisplayName("Ending a Game of Chess which sets GameState to null")
   void TestEndGame() throws IllegalStateException {
-    Board board = chess2Service.startNewGame();
     chess2Service.endGame();
     assertNull(chess2Service.getGameState());
   }
@@ -178,7 +174,7 @@ public class TestChessGameGoodCases {
   }
 
   @Test
-  @DisplayName("GetPossibleMoves of a fish in the backline to no fields")
+  @DisplayName("GetPossibleMoves of a fish in the back line to no fields")
   void TestGetPossibleMovesOfFishAtBeginning()
       throws IllegalStateException, IllegalParameterException {
     Coordinate[] coordinates = chess2Service.getPossibleMoves(new Coordinate(2, 0));
@@ -193,6 +189,33 @@ public class TestChessGameGoodCases {
     assertEquals(2, coordinates.length);
   }
 
+  @Test
+  @DisplayName("Selected Bear gets moved")
+  void TestMoveBearOneField()
+      throws IllegalParameterException, IllegalStateException, InvalidMoveException {
+
+    Coordinate selectCoord = chessGame.bearCoordinate;
+    Coordinate[] possibleMoves = chess2Service.getPossibleMoves(selectCoord);
+    board = chess2Service.moveSelectedPiece(selectCoord, possibleMoves[0]);
+
+    assertEquals(FieldState.FREE_FIELD, board.getSpecificField(selectCoord).getFieldState());
+    assertEquals(FieldState.HAS_BEAR, board.getSpecificField(possibleMoves[0]).getFieldState());
+  }
+
+  @Test
+  @DisplayName("Selected Monkey gets moved and the turn gets ended")
+  void TestMoveJumpMonkeyOnce()
+      throws IllegalParameterException, IllegalStateException, InvalidMoveException {
+
+    Coordinate[] possibleMoves = chess2Service.getPossibleMoves(new Coordinate(1, 0));
+    board = chess2Service.moveSelectedPiece(new Coordinate(1, 0), possibleMoves[0]);
+    board = chess2Service.moveSelectedPiece(possibleMoves[0], possibleMoves[0]);
+
+    assertEquals(FieldState.FREE_FIELD, board.getSpecificField(
+        new Coordinate(1, 0)).getFieldState());
+    assertEquals(FieldState.HAS_OTHER_PIECE, board.getSpecificField(
+        possibleMoves[0]).getFieldState());
+  }
 
   @Test
   @DisplayName("Selected Piece gets moved on bear both are defeated")
@@ -209,9 +232,6 @@ public class TestChessGameGoodCases {
 
     assertEquals(FieldState.FREE_FIELD, board.getSpecificField(bear).getFieldState());
     assertNull(board.getSpecificField(bear).getPiece());
-
-    chess2Service.giveUp();
-    assertEquals(WinningPlayerState.WHITE_WIN, chess2Service.getWinningPlayer());
   }
 
   @Test
@@ -243,6 +263,42 @@ public class TestChessGameGoodCases {
     assertEquals(FieldState.JAIL_QUEEN, board.getSpecificField(
         new Coordinate(9, 3)).getFieldState());
     assertNull(board.getSpecificField(bear).getPiece());
+  }
+
+  @Test
+  @DisplayName("White wins because both the King and Queen of black are in the jail")
+  void TestWhiteWin()
+      throws IllegalParameterException, IllegalStateException, InvalidMoveException {
+    Coordinate[] possibleMoves = chess2Service.getPossibleMoves(new Coordinate(3, 0));
+    board = chess2Service.moveSelectedPiece(
+        new Coordinate(3, 0), new Coordinate(4, 7));
+
+    possibleMoves = chess2Service.getPossibleMoves(new Coordinate(3, 7));
+    Coordinate bear = new Coordinate();
+    for (Field field : board.getFields()) {
+      bear = field.getFieldState() == FieldState.HAS_BEAR ? field.getCoordinate() : bear;
+    }
+    chess2Service.moveSelectedPiece(new Coordinate(3, 7), bear);
+
+    assertEquals(GameState.CHECKMATE, chess2Service.getGameState());
+    assertEquals(WinningPlayerState.WHITE_WIN, chess2Service.getWinningPlayer());
+  }
+  @Test
+  @DisplayName("Black wins because both the King and Queen of white are in the jail")
+  void TestBlackWin()
+      throws IllegalParameterException, IllegalStateException, InvalidMoveException {
+    Coordinate[] possibleMoves = chess2Service.getPossibleMoves(new Coordinate(3, 0));
+    Coordinate bear = new Coordinate();
+    for (Field field : board.getFields()) {
+      bear = field.getFieldState() == FieldState.HAS_BEAR ? field.getCoordinate() : bear;
+    }
+    chess2Service.moveSelectedPiece(new Coordinate(3, 0), bear);
+    possibleMoves = chess2Service.getPossibleMoves(new Coordinate(3, 7));
+    board = chess2Service.moveSelectedPiece(
+        new Coordinate(3, 7), new Coordinate(4, 0));
+
+    assertEquals(GameState.CHECKMATE, chess2Service.getGameState());
+    assertEquals(WinningPlayerState.BLACK_WIN, chess2Service.getWinningPlayer());
   }
 
   @Test
@@ -286,4 +342,21 @@ public class TestChessGameGoodCases {
     assertEquals(GameState.CHECKMATE, gameState);
   }
 
+  @Test
+  @DisplayName("After 3 boring turns there should be no Error")
+  void Test3TurnsNoError()
+      throws IllegalParameterException, IllegalStateException, InvalidMoveException {
+
+    Coordinate[] currentPieces = chess2Service.getCurrentFields();
+    Coordinate[] possibleMoves = chess2Service.getPossibleMoves(currentPieces[9]);
+    board = chess2Service.moveSelectedPiece(currentPieces[9], possibleMoves[0]);
+
+    currentPieces = chess2Service.getCurrentFields();
+    possibleMoves = chess2Service.getPossibleMoves(currentPieces[9]);
+    board = chess2Service.moveSelectedPiece(currentPieces[9], possibleMoves[0]);
+
+    currentPieces = chess2Service.getCurrentFields();
+    possibleMoves = chess2Service.getPossibleMoves(currentPieces[9]);
+    board = chess2Service.moveSelectedPiece(currentPieces[9], possibleMoves[0]);
+  }
 }
