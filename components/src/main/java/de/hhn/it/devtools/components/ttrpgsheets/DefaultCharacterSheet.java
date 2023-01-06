@@ -141,6 +141,13 @@ public class DefaultCharacterSheet implements CharacterSheet {
     decrementStat(statType, origin, Math.abs(amount));
   }
 
+  /**
+   * Checks whether the sum of two numbers overflows and returns the respective result
+   *
+   * @param addend1 the first number which is added
+   * @param addend2 the second number which is added
+   * @return the sum if no underflow occurs else Integer.MAX_VALUE
+   */
   private int overflowTest(int addend1, int addend2) {
     return addend1 + addend2 > addend1 ? addend1 + addend2 : Integer.MAX_VALUE;
   }
@@ -186,6 +193,13 @@ public class DefaultCharacterSheet implements CharacterSheet {
     incrementStat(statType, origin, Math.abs(amount));
   }
 
+  /**
+   * Checks whether the difference of two numbers underflows and returns the respective result
+   *
+   * @param minuend the number from which is subtracted from
+   * @param subtrahend the number which subtracts
+   * @return the difference if no underflow occurs else Integer.MIN_VALUE
+   */
   private int underflowTest(int minuend, int subtrahend) {
     return minuend - subtrahend < minuend ? minuend - subtrahend : Integer.MIN_VALUE;
   }
