@@ -46,9 +46,9 @@ public class Stat {
    */
   public int getTotalValue() {
     logger.info("getTotalValue : no params");
-    BigInteger totalValue = BigInteger.valueOf(getBaseValue())
+    BigInteger totalValue = BigInteger.valueOf(baseValue)
             .add(BigInteger.valueOf(this.abilityPointsUsed)
-                    .multiply(BigInteger.valueOf(getOffset())))
+                    .multiply(BigInteger.valueOf(offset)))
             .add(BigInteger.valueOf(this.miscellaneous));
     if (totalValue.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0) {
       return Integer.MAX_VALUE;
@@ -64,7 +64,7 @@ public class Stat {
    */
   public void addAbilityPoint() {
     logger.info("addAbilityPoint : no params");
-    if (isLevelStat() && this.abilityPointsUsed < Integer.MAX_VALUE) {
+    if (levelStat && this.abilityPointsUsed < Integer.MAX_VALUE) {
       this.abilityPointsUsed++;
     }
   }
@@ -74,7 +74,7 @@ public class Stat {
    */
   public void removeAbilityPoint() {
     logger.info("removeAbilityPoint : no params");
-    if (isLevelStat() && this.abilityPointsUsed > Integer.MIN_VALUE) {
+    if (levelStat && this.abilityPointsUsed > Integer.MIN_VALUE) {
       this.abilityPointsUsed--;
     }
   }
