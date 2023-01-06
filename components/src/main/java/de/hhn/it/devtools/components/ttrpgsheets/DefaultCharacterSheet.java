@@ -120,9 +120,9 @@ public class DefaultCharacterSheet implements CharacterSheet {
     if (amount < 0) {
       negativeIncrementHandler(statType, origin, amount);
     } else if (origin == OriginType.LEVEL_POINT) {
-      stat.setAbilityPointsUsed(overflowTest(stat.getAbilityPointsUsed(), amount));
+      stat.setAbilityPointsUsed(overflowCheck(stat.getAbilityPointsUsed(), amount));
     } else {
-      stat.setMiscellaneous(overflowTest(stat.getMiscellaneous(), amount));
+      stat.setMiscellaneous(overflowCheck(stat.getMiscellaneous(), amount));
     }
     getListener().statChanged(stat.toStatDescriptor()); // Callback
   }
@@ -148,7 +148,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
    * @param addend2 the second number which is added
    * @return the sum if no underflow occurs else Integer.MAX_VALUE
    */
-  private int overflowTest(int addend1, int addend2) {
+  private int overflowCheck(int addend1, int addend2) {
     return addend1 + addend2 > addend1 ? addend1 + addend2 : Integer.MAX_VALUE;
   }
 
@@ -172,9 +172,9 @@ public class DefaultCharacterSheet implements CharacterSheet {
     if (amount < 0) {
       negativeDecrementHandler(statType, origin, amount);
     } else if (origin == OriginType.LEVEL_POINT) {
-      stat.setAbilityPointsUsed(underflowTest(stat.getAbilityPointsUsed(), amount));
+      stat.setAbilityPointsUsed(underflowCheck(stat.getAbilityPointsUsed(), amount));
     } else {
-      stat.setMiscellaneous(underflowTest(stat.getMiscellaneous(), amount));
+      stat.setMiscellaneous(underflowCheck(stat.getMiscellaneous(), amount));
     }
     getListener().statChanged(stat.toStatDescriptor()); // Callback
   }
@@ -200,7 +200,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
    * @param subtrahend the number which subtracts
    * @return the difference if no underflow occurs else Integer.MIN_VALUE
    */
-  private int underflowTest(int minuend, int subtrahend) {
+  private int underflowCheck(int minuend, int subtrahend) {
     return minuend - subtrahend < minuend ? minuend - subtrahend : Integer.MIN_VALUE;
   }
 
