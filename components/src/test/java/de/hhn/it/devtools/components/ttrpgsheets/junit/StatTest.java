@@ -60,6 +60,7 @@ class StatTest {
 
   @Test
   void getTotalValueEdgeCasesTest() {
+    logger.info("getTotalValueEdgeCasesTest() is called");
     Stat edgeStat = stats[3];
     edgeStat.setMiscellaneous(Integer.MAX_VALUE);
     assertEquals(Integer.MAX_VALUE, edgeStat.getTotalValue());
@@ -104,6 +105,7 @@ class StatTest {
 
   @Test
   void addAbilityPointEdgeCasesTest() {
+    logger.info("addAbilityPointEdgeCasesTest() is called");
     Stat edgeStat = stats[3];
     edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
     edgeStat.addAbilityPoint();
@@ -136,6 +138,7 @@ class StatTest {
 
   @Test
   void removeAbilityPointEdgeCasesTest() {
+    logger.info("removeAbilityPointEdgeCasesTest() is called");
     Stat edgeStat = stats[3];
     edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
     edgeStat.removeAbilityPoint();
