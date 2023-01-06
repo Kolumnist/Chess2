@@ -26,7 +26,8 @@ public class Chess2PopUpRulesController {
       new Rules("Fish",
           "He can walk 1 field to the right, legft or diagonally forward. He can only "
               + "defeat enemies forward diagonal.\bThe fish becomes a fishqueen by reaching the other end of the board."),
-      new Rules("Fishqueen", "Its the same as the queen but doesn't go to jail."),
+      new Rules("Fishqueen",
+          "Its the same as the queen but doesn't go to jail."),
       new Rules("Elephant",
           "He moves 2 fields only and defeats enemies standing on the second field. "
               + "He can move in every direction."),

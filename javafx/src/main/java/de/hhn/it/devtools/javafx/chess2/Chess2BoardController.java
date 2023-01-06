@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 
 public class Chess2BoardController {
 
+  // button border color silver: #474747
+
   //region Buttons in Board
     @FXML
     private Button button00;
