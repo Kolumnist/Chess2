@@ -301,6 +301,12 @@ public class ChessGame implements Chess2Service {
 
     Field field = gameBoard.getSpecificField(selectedPieceCoordinate);
 
+    /* When monkeyChaos, the monkey can only jump no other moves */
+    if (monkeyChaos) {
+      Monkey monkey = (Monkey) gameBoard.getSpecificField(currentlySelected).getPiece();
+      return monkey.getPossibleJump();
+    }
+
     /* Should a Piece be SELECTED already it gets the new FieldState HAS_CURRENT_PIECE */
     if (currentlySelected != null) {
       gameBoard.getSpecificField(currentlySelected).setFieldState(FieldState.HAS_CURRENT_PIECE);
