@@ -65,7 +65,7 @@ public class Stat {
   public void addAbilityPoint() {
     logger.info("addAbilityPoint : no params");
     if (isLevelStat() && this.abilityPointsUsed < Integer.MAX_VALUE) {
-      this.abilityPointsUsed = (this.abilityPointsUsed + 1);
+      this.abilityPointsUsed++;
     }
   }
 
@@ -75,7 +75,7 @@ public class Stat {
   public void removeAbilityPoint() {
     logger.info("removeAbilityPoint : no params");
     if (isLevelStat() && this.abilityPointsUsed > Integer.MIN_VALUE) {
-      this.abilityPointsUsed = (this.abilityPointsUsed - 1);
+      this.abilityPointsUsed--;
     }
   }
 
