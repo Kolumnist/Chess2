@@ -86,26 +86,16 @@ class StatTest {
     for (Stat stat : stats) {
       stat.addAbilityPoint();
       switch (stat.getType()) {
-        case MAX_HEALTH -> {
-          assertEquals(1, stat.getAbilityPointsUsed());
-          assertEquals(35, stat.getTotalValue());
-        }
-        case HEALTH -> {
-          assertEquals(0, stat.getAbilityPointsUsed());
-          assertEquals(28, stat.getTotalValue());
-        }
-        case LEVEL -> {
-          assertEquals(0, stat.getAbilityPointsUsed());
-          assertEquals(1, stat.getTotalValue());
-        }
-        case STRENGTH -> {
-          assertEquals(3, stat.getAbilityPointsUsed());
-          assertEquals(9, stat.getTotalValue());
-        }
-        default -> {
-          assertEquals(1, stat.getAbilityPointsUsed());
-          assertEquals(1, stat.getTotalValue());
-        }
+        case MAX_HEALTH -> assertAll(() -> assertEquals(1, stat.getAbilityPointsUsed()),
+                () -> assertEquals(35, stat.getTotalValue()));
+        case HEALTH -> assertAll(() -> assertEquals(0, stat.getAbilityPointsUsed()),
+                () -> assertEquals(28, stat.getTotalValue()));
+        case LEVEL -> assertAll(() -> assertEquals(0, stat.getAbilityPointsUsed()),
+                () -> assertEquals(1, stat.getTotalValue()));
+        case STRENGTH -> assertAll(() -> assertEquals(3, stat.getAbilityPointsUsed()),
+                () -> assertEquals(9, stat.getTotalValue()));
+        default -> assertAll(() -> assertEquals(1, stat.getAbilityPointsUsed()),
+                () -> assertEquals(1, stat.getTotalValue()));
       }
     }
   }
@@ -170,7 +160,7 @@ class StatTest {
                         + ", Ability Points Used: 0, Miscellaneous: 0, Level Stat: false]",
                 stat.toString());
         case HEALTH -> assertEquals("Stat: [Type: HEALTH, Base Value: 30, Offset: 0"
-                + ", Ability Points Used: 0, Miscellaneous: -2, Level Stat: false]",
+                        + ", Ability Points Used: 0, Miscellaneous: -2, Level Stat: false]",
                 stat.toString());
         case AGILITY -> assertEquals("Stat: [Type: AGILITY, Base Value: 0, Offset: 1"
                 + ", Ability Points Used: 0, Miscellaneous: 0, Level Stat: true]", stat.toString());
