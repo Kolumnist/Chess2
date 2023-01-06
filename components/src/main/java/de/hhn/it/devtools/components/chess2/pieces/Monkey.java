@@ -97,14 +97,18 @@ public class Monkey extends Piece {
           && (board.getSpecificField(new Coordinate(5, 4)).getFieldState()
               == FieldState.SELECTED
               || board.getSpecificField(new Coordinate(5, 4)).getFieldState()
-              == FieldState.HAS_OTHER_PIECE)) {
+              == FieldState.HAS_OTHER_PIECE
+              || board.getSpecificField(new Coordinate(5, 4)).getFieldState()
+              == FieldState.HAS_CURRENT_PIECE)) {
         replaceJumpCoordinate(possibleJump, new Coordinate(7, 4),
             new Coordinate(9, 4));
       } else if (color == 'w'
           && (board.getSpecificField(new Coordinate(2, 3)).getFieldState()
-          == FieldState.SELECTED
-          || board.getSpecificField(new Coordinate(2, 3)).getFieldState()
-          == FieldState.HAS_OTHER_PIECE)) {
+              == FieldState.SELECTED
+              || board.getSpecificField(new Coordinate(2, 3)).getFieldState()
+              == FieldState.HAS_OTHER_PIECE
+              || board.getSpecificField(new Coordinate(2, 3)).getFieldState()
+              == FieldState.HAS_CURRENT_PIECE)) {
         replaceJumpCoordinate(possibleJump, new Coordinate(0, 3),
             new Coordinate(8, 3));
       }

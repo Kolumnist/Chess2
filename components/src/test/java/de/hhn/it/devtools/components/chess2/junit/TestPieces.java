@@ -111,7 +111,7 @@ public class TestPieces {
     Piece queen = new Queen('w', new Coordinate(4, 4));
     // move bear -> Player white's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
-    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(6, 3));
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(0, 3));
     // move bear -> Player black's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
     board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(-1, -1));
@@ -154,7 +154,7 @@ public class TestPieces {
     Piece queen = new Queen('w', new Coordinate(0, 6));
     // move bear -> Player white's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
-    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(6, 3));
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(7, 3));
     // move bear -> Player black's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
     board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(-1, -1));
@@ -226,7 +226,7 @@ public class TestPieces {
     Piece fishqueen = new Fishqueen('w', new Coordinate(4, 4));
     // move bear -> Player white's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
-    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(6, 3));
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(0, 3));
     // move bear -> Player black's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
     board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(-1, -1));
@@ -269,7 +269,7 @@ public class TestPieces {
     Piece fishqueen = new Fishqueen('w', new Coordinate(0, 6));
     // move bear -> Player white's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
-    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(6, 3));
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(7, 3));
     // move bear -> Player black's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
     board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(-1, -1));
@@ -518,38 +518,6 @@ public class TestPieces {
     }
   }
 
-  /*@Test
-  @DisplayName("Test if defeatPieceMove produces the right coordinates if the crow stands on the field 4, 4")
-  public void testDefeatPieceMoveInTheMiddleOfTheBoard(){
-    Crow crow = new Crow('b', new Coordinate(4,4));
-    crow.defeatPieceMove(board);
-
-    Coordinate[] expected = {new Coordinate(3,3),new Coordinate(3,4),
-            new Coordinate(3,5),new Coordinate(4,3),new Coordinate(4,5),
-            new Coordinate(5,3),new Coordinate(5,4),new Coordinate(5,5)};
-
-    for (int i = 0; i < crow.getPossibleMove().length; i++) {
-      assertEquals(expected[i].getX(),crow.getPossibleMove()[i].getX());
-      assertEquals(expected[i].getY(),crow.getPossibleMove()[i].getY());
-    }
-  }
-
-  @Test
-  @DisplayName("Test if defeatPieceMove produces the right coordinates if the crow stands on the field 0, 0")
-  public void testDefeatPieceMoveInTheCornerOfTheBoard(){
-    Crow crow = new Crow('b', new Coordinate(0,0));
-    crow.defeatPieceMove(board);
-
-    Coordinate[] expected = {new Coordinate(3,3),new Coordinate(3,4),
-            new Coordinate(3,5),new Coordinate(4,3),new Coordinate(4,5),
-            new Coordinate(5,3),new Coordinate(5,4),new Coordinate(5,5)};
-
-    for (int i = 0; i < crow.getPossibleMove().length; i++) {
-      assertEquals(expected[i].getX(),crow.getPossibleMove()[i].getX());
-      assertEquals(expected[i].getY(),crow.getPossibleMove()[i].getY());
-    }
-  }*/
-
   @Test
   @DisplayName("Test if calculate produces the right coordinates if a piece got defeated and the crow stands near an enemy")
   public void testCalculateWithLostPieceAndNearEnemy() throws IllegalParameterException {
@@ -674,6 +642,7 @@ public class TestPieces {
     //Move white monkey from 1,0 to 1,2
     board.getSpecificField(new Coordinate(1, 0)).setFieldState(FieldState.SELECTED);
     board = chessGame.moveSelectedPiece(new Coordinate(1, 0), new Coordinate(1, 2));
+    board = chessGame.moveSelectedPiece(new Coordinate(1, 2), new Coordinate(1, 2));
 
     //Move black fish from 5,6 to 4,5
     board.getSpecificField(new Coordinate(5, 6)).setFieldState(FieldState.SELECTED);
@@ -734,6 +703,7 @@ public class TestPieces {
     //Move black monkey from 6,7 to 6,5
     board.getSpecificField(new Coordinate(6, 7)).setFieldState(FieldState.SELECTED);
     board = chessGame.moveSelectedPiece(new Coordinate(6, 7), new Coordinate(6, 5));
+    board = chessGame.moveSelectedPiece(new Coordinate(6, 5), new Coordinate(6, 5));
 
     //Move white queen from 3,0 to 0,3
     board.getSpecificField(new Coordinate(3, 0)).setFieldState(FieldState.SELECTED);
