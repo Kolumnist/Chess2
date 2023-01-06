@@ -12,4 +12,8 @@ module devtools.javafx {
   exports de.hhn.it.devtools.javafx;
   exports de.hhn.it.devtools.javafx.controllers;
   exports de.hhn.it.devtools.javafx.controllers.coffeemaker;
-        }
+  exports de.hhn.it.devtools.javafx.chess2;
+  opens de.hhn.it.devtools.javafx.chess2 to javafx.fxml;
+  exports de.hhn.it.devtools.javafx.controllers.chess2;
+  opens de.hhn.it.devtools.javafx.controllers.chess2 to javafx.fxml;
+}
