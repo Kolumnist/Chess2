@@ -120,29 +120,22 @@ class StatTest {
     for (Stat stat : stats) {
       stat.removeAbilityPoint();
       switch (stat.getType()) {
-        case MAX_HEALTH -> {
-          assertEquals(-1, stat.getAbilityPointsUsed());
-          assertEquals(25, stat.getTotalValue());
-        }
-        case HEALTH -> {
-          assertEquals(0, stat.getAbilityPointsUsed());
-          assertEquals(28, stat.getTotalValue());
-        }
-        case LEVEL -> {
-          assertEquals(0, stat.getAbilityPointsUsed());
-          assertEquals(1, stat.getTotalValue());
-        }
-        case STRENGTH -> {
-          assertEquals(1, stat.getAbilityPointsUsed());
-          assertEquals(7, stat.getTotalValue());
-        }
-        default -> {
-          assertEquals(-1, stat.getAbilityPointsUsed());
-          assertEquals(-1, stat.getTotalValue());
-        }
+        case MAX_HEALTH -> assertAll(() -> assertEquals(-1, stat.getAbilityPointsUsed()),
+                () -> assertEquals(25, stat.getTotalValue()));
+        case HEALTH -> assertAll(() -> assertEquals(0, stat.getAbilityPointsUsed()),
+                () -> assertEquals(28, stat.getTotalValue()));
+        case LEVEL -> assertAll(() -> assertEquals(0, stat.getAbilityPointsUsed()),
+                () -> assertEquals(1, stat.getTotalValue()));
+        case STRENGTH -> assertAll(() -> assertEquals(1, stat.getAbilityPointsUsed()),
+                () -> assertEquals(7, stat.getTotalValue()));
+        default -> assertAll(() -> assertEquals(-1, stat.getAbilityPointsUsed()),
+                () -> assertEquals(-1, stat.getTotalValue()));
       }
     }
+  }
 
+  @Test
+  void removeAbilityPointEdgeCasesTest() {
     Stat edgeStat = stats[3];
     edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
     edgeStat.removeAbilityPoint();
