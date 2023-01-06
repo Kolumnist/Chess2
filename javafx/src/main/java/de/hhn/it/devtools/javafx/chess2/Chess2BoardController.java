@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.javafx.chess2;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -215,5 +216,11 @@ public class Chess2BoardController {
   public Chess2BoardController() {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/chess2"
         + "/Chess2Board.fxml"));
+
+    try {
+      loader.load();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 }
