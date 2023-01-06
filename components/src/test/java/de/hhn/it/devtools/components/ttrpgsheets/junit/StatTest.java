@@ -1,7 +1,6 @@
 package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
@@ -55,7 +54,10 @@ class StatTest {
         default -> assertEquals(0, stat.getTotalValue());
       }
     }
+  }
 
+  @Test
+  void getTotalValueTestEdgeCases() {
     Stat edgeStat = stats[3];
     edgeStat.setMiscellaneous(Integer.MAX_VALUE);
     assertEquals(Integer.MAX_VALUE, edgeStat.getTotalValue());
