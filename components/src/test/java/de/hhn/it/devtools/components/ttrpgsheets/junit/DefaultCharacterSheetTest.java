@@ -29,7 +29,8 @@ class DefaultCharacterSheetTest {
   @BeforeEach
   void setupObjects() {
     listener = new SimpleCharacterSheetListener();
-    characterSheet = new DefaultCharacterSheet(listener, setupCharacterDescriptor());
+    characterSheet = new DefaultCharacterSheet(setupCharacterDescriptor());
+    characterSheet.addCallback(listener);
   }
 
   CharacterDescriptor setupCharacterDescriptor() {

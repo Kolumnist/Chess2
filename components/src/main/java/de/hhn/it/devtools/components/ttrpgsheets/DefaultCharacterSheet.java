@@ -28,14 +28,10 @@ public class DefaultCharacterSheet implements CharacterSheet {
   /**
    * Constructor of the default Character Sheet.
    *
-   * @param listener            The callback listener for the Character Sheet
    * @param characterDescriptor The Descriptor of the Character Sheet
    */
-  public DefaultCharacterSheet(CharacterSheetListener listener,
-                               CharacterDescriptor characterDescriptor) {
-    logger.info("Constructor : listener = {}, characterDescriptor = {}", listener,
-            characterDescriptor);
-    addCallback(listener);
+  public DefaultCharacterSheet(CharacterDescriptor characterDescriptor) {
+    logger.info("Constructor : characterDescriptor = {}", characterDescriptor);
     unwrapCharacter(characterDescriptor);
   }
 
