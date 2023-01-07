@@ -56,4 +56,14 @@ public class GameInfo {
   public void setState(GameState state) {
     this.state = state;
   }
+
+  @Override
+  public String toString() {
+    return "GameInfo{" +
+            "playerScore=" + playerScore +
+            ", ammo=" + ammo +
+            ", round=" + round +
+            ", state=" + state +
+            '}';
+  }
 }
