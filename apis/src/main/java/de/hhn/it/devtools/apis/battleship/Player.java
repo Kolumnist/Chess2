@@ -37,5 +37,9 @@ public class Player {
         ownedShips.add(addShip);
     }
 
+    public ArrayList<Ship> getOwnedShips() {
+        return ownedShips;
+    }
+
 
 }

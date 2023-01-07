@@ -8,14 +8,9 @@ import java.util.HashMap;
 import java.util.IllegalFormatException;
 import java.util.Map;
 
-// TODO createFields kann nur aufgerufen werden wenn GameState = PREGAME
 // TODO durchs Feld durch iterieren und gucken ob es Schiffs-Felder gibt, die nicht gebombt wurden, falls nein -> gegner gewinnt & GameState zu GameOver
 // TODO Button, der kommt (isVisible zu true in dem Fenster, wo "Ships left to place", davor ist der Button isVisible = false), wenn alle Schiffe platziert sind, wenn gedrückt wird -> GameState zu FiringShots
-// TODO check at createFields that the inputed size is not to small
-// TODO createFields size: max größe 50x50, Anzahl der Schiffe verändert sich alle 10 Size-Größen (for-Schleife)
-// Write Tests
 // Write Computer AI
-// How many ships every player gets after a field is created
 
 public class CmpBattleshipService implements BattleshipService {
     static GameState currentGameState = GameState.PREGAME;
@@ -27,13 +22,16 @@ public class CmpBattleshipService implements BattleshipService {
             org.slf4j.LoggerFactory.getLogger(CmpBattleshipService.class);
     private final Map<Owner, Player> owner2PlayerMap;
 
+    private final Map<Player, Owner> player2OwnerMap;
+
     public CmpBattleshipService(){
         listeners = new ArrayList<>();
         owner2PlayerMap = new HashMap<>();
-//        player = new Player();
-//        computer = new Computer();
         owner2PlayerMap.put(Owner.PLAYER, player);
         owner2PlayerMap.put(Owner.COMPUTER, computer);
+        player2OwnerMap = new HashMap<>();
+        player2OwnerMap.put(player, Owner.PLAYER);
+        player2OwnerMap.put(computer, Owner.COMPUTER);
     }
 
     public Player getPlayer(){
@@ -105,7 +103,7 @@ public class CmpBattleshipService implements BattleshipService {
         int fieldSize = Field.getSize();
         PanelState[][] shipField;
 
-        logger.info("isPlacementPossible: owner = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}, endX = {}, endY = {}, currentGameState = {}", owner, shipToPlace, x1, y1, isVertical, endX, endY, currentGameState);
+        //logger.info("isPlacementPossible: owner = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}, endX = {}, endY = {}, currentGameState = {}", owner, shipToPlace, x1, y1, isVertical, endX, endY, currentGameState);
 
         // Check if coordinates of ship is outside of field
         if((x1 < 0) || (y1 < 0) || (x1 >= fieldSize) || (y1 >= fieldSize) || (endX > fieldSize && !isVertical) || (endY > fieldSize && isVertical)){
@@ -287,6 +285,17 @@ public class CmpBattleshipService implements BattleshipService {
         }
     }
 
+    @Override
+    public void comShipPlacement() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
+        int size = Field.getSize();
+        int x = 0;
+        int y = 0;
+        for(int i = 0; i < computer.getOwnedShips().size(); i++){
+            placeShip(player2OwnerMap.get(computer), computer.getOwnedShips().get(i), x, y);
+            y++;
+        }
+    }
+
     // nuri
     @Override
     public boolean bombPanel(Owner attacker, Owner target, int x, int y) throws IllegalArgumentException, IllegalGameStateException {
@@ -317,7 +326,7 @@ public class CmpBattleshipService implements BattleshipService {
 
     // nuri
     @Override
-    public void createFields(int size) throws IllegalArgumentException, IllegalGameStateException {
+    public void createFields(int size) throws IllegalArgumentException, IllegalGameStateException, IllegalShipStateException, IllegalPositionException {
 
         if(currentGameState != GameState.PREGAME){
             throw  new IllegalGameStateException("Wrong GameState! Required GameState is PreGame");
@@ -333,9 +342,55 @@ public class CmpBattleshipService implements BattleshipService {
 
         // @TODO moutassem macht verteilung von ships abhängig von der Feldgröße
         // 1x5er, 2x4er, 3er Variabel, 1x2er
-        player.setOwnedShips(new Ship(ShipType.BATTLESHIP, null ));
+        if(size == 5){
+            player.setOwnedShips(new Ship(ShipType.DESTROYER, null ));
+            player.setOwnedShips(new Ship(ShipType.DESTROYER, null ));
+
+            computer.setOwnedShips(new Ship(ShipType.DESTROYER, null ));
+            computer.setOwnedShips(new Ship(ShipType.DESTROYER, null ));
+        }
+        else if(size == 10){
+            player.setOwnedShips(new Ship(ShipType.CARRIER, null ));
+            player.setOwnedShips(new Ship(ShipType.BATTLESHIP, null ));
+            player.setOwnedShips(new Ship(ShipType.CRUISER, null ));
+            player.setOwnedShips(new Ship(ShipType.SUBMARINE, null ));
+            player.setOwnedShips(new Ship(ShipType.DESTROYER, null ));
+
+            computer.setOwnedShips(new Ship(ShipType.CARRIER, null ));
+            computer.setOwnedShips(new Ship(ShipType.BATTLESHIP, null ));
+            computer.setOwnedShips(new Ship(ShipType.CRUISER, null ));
+            computer.setOwnedShips(new Ship(ShipType.SUBMARINE, null ));
+            computer.setOwnedShips(new Ship(ShipType.DESTROYER, null ));
+        }
+        else if(size == 15){
+            player.setOwnedShips(new Ship(ShipType.CARRIER, null ));
+            player.setOwnedShips(new Ship(ShipType.CARRIER, null ));
+            player.setOwnedShips(new Ship(ShipType.BATTLESHIP, null ));
+            player.setOwnedShips(new Ship(ShipType.BATTLESHIP, null ));
+            player.setOwnedShips(new Ship(ShipType.CRUISER, null ));
+            player.setOwnedShips(new Ship(ShipType.CRUISER, null ));
+            player.setOwnedShips(new Ship(ShipType.SUBMARINE, null ));
+            player.setOwnedShips(new Ship(ShipType.SUBMARINE, null ));
+            player.setOwnedShips(new Ship(ShipType.DESTROYER, null ));
+            player.setOwnedShips(new Ship(ShipType.DESTROYER, null ));
+            player.setOwnedShips(new Ship(ShipType.DESTROYER, null ));
+
+            computer.setOwnedShips(new Ship(ShipType.CARRIER, null ));
+            computer.setOwnedShips(new Ship(ShipType.CARRIER, null ));
+            computer.setOwnedShips(new Ship(ShipType.BATTLESHIP, null ));
+            computer.setOwnedShips(new Ship(ShipType.BATTLESHIP, null ));
+            computer.setOwnedShips(new Ship(ShipType.CRUISER, null ));
+            computer.setOwnedShips(new Ship(ShipType.CRUISER, null ));
+            computer.setOwnedShips(new Ship(ShipType.SUBMARINE, null ));
+            computer.setOwnedShips(new Ship(ShipType.SUBMARINE, null ));
+            computer.setOwnedShips(new Ship(ShipType.DESTROYER, null ));
+            computer.setOwnedShips(new Ship(ShipType.DESTROYER, null ));
+            computer.setOwnedShips(new Ship(ShipType.DESTROYER, null ));
+        }
 
         currentGameState = GameState.PLACINGSHIPS;
+
+        comShipPlacement();
     }
 
     // nuri

@@ -14,7 +14,7 @@ public interface BattleshipService {
      * Adds a listener to get updates on the state of the game.
      *
      * @param listener object implementing the listener interface
-     * @throws IllegalParameterException if the the listener is null
+     * @throws IllegalParameterException if the listener is null
      */
     void addCallBack(BattleshipListener listener) throws IllegalParameterException;
 
@@ -76,6 +76,11 @@ public interface BattleshipService {
     void rotateShip(Owner owner, Ship shipToRotate)
             throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException;
 
+    /**
+     * algorithm to place the computers ships
+     */
+    void comShipPlacement() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException;
+
 
     /**
      * Bombs selected panel
@@ -96,7 +101,7 @@ public interface BattleshipService {
      * @throws IllegalArgumentException if player enters something else instead of numbers
      * @throws IllegalGameStateException if the Gamestate is not PREGAME
      */
-    void createFields(int size) throws IllegalArgumentException, IllegalGameStateException;
+    void createFields(int size) throws IllegalArgumentException, IllegalGameStateException, IllegalShipStateException, IllegalPositionException;
 
 
     /**

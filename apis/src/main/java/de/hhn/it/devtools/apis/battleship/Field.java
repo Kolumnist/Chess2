@@ -30,12 +30,12 @@ public class Field {
 
 
     public PanelState getPanelMarker(int x, int y){
-        return panelMarkerMat[x][y];
+        return panelMarkerMat[y][x];
     }
 
 
     public void setPanelMarker(int x, int y, PanelState newPanelState){
-        panelMarkerMat[x][y] = newPanelState;
+        panelMarkerMat[y][x] = newPanelState;
     }
 
 }

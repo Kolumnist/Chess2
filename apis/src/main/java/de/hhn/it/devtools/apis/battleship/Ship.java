@@ -23,6 +23,7 @@ public class Ship {
      * @param fieldPosition sets the Position on the field
      */
     public Ship (ShipType ShipSize, Position fieldPosition){
+        this.isVertical = false;
         this.size = ShipSize.getShipSize();
         this.fieldPosition = fieldPosition;
         this.id = counterId;
