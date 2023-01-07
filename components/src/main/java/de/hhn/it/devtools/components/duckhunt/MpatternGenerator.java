@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 import java.util.LinkedList;
+import java.util.Arrays;
+import java.util.EmptyStackException;
 import java.time.ZonedDateTime;
 
 /**
@@ -15,6 +17,7 @@ import java.time.ZonedDateTime;
 public final class MpatternGenerator {
 
   private HashMap<Integer, Stack<DuckOrientation>> generatedPaths;
+  private HashMap<Integer, Vector2D> duckStartingPos;
   private final int sidePadding;
   private final ScreenDimension screenDimension;
 
@@ -26,6 +29,7 @@ public final class MpatternGenerator {
    */
   public MpatternGenerator(int sidePadding, ScreenDimension screenDimension) {
     this.generatedPaths = new HashMap<>();
+    this.duckStartingPos = new HashMap<>();
     this.sidePadding = sidePadding;
     this.screenDimension = screenDimension;
   }
@@ -37,22 +41,29 @@ public final class MpatternGenerator {
    */
   public void generatePaths(DuckData[] ducks) throws DuckOrientationTranslationException {
     for (DuckData duck : ducks) {
-      generatedPaths.put(duck.getId(), generateWaypoints());
+      duckStartingPos.put(duck.getId(), new Vector2D());
+      generatedPaths.put(duck.getId(), generateWaypoints(duck.getId()));
+      System.out.println("Generated path for " + duck.getId() + Arrays.toString(generatedPaths.get(duck.getId()).toArray()));
     }
   }
 
   public void clearPaths() {
     generatedPaths.clear();
+    duckStartingPos.clear();
   }
 
-  public DuckOrientation getNextMove(int duckId) {
-    return generatedPaths.remove(duckId).pop();
+  public DuckOrientation getNextMove(int duckId) throws EmptyStackException {
+    return generatedPaths.get(duckId).pop();
+  }
+
+  public Vector2D getStartingPos(int duckId) {
+    return duckStartingPos.get(duckId);
   }
 
   /**
    * Ths method generates a movement pattern.
    **/
-  private Stack<DuckOrientation> generateWaypoints() throws DuckOrientationTranslationException {
+  private Stack<DuckOrientation> generateWaypoints(int duckId) throws DuckOrientationTranslationException {
     LinkedList<DuckOrientation> generatedPath = new LinkedList<>();
     ArrayList<Vector2D> randPointsVector = generatePath();
     ArrayList<Vector2D> points = new ArrayList<>();
@@ -63,11 +74,16 @@ public final class MpatternGenerator {
               randPointsVector.get(i - 1), randPointsVector.get(i)));
     }
 
+    // set starting point for duck
+    duckStartingPos.get(duckId).setX(points.get(0).getX());
+    duckStartingPos.get(duckId).setY(points.get(0).getY());
+
     // clean list of all points and convert to DuckOrientations
     Vector2D prevPoint = null;
     for (Vector2D point : points) {
       // skip first point because first point ist start point of duck
       if (prevPoint == null) {
+        prevPoint = point;
         continue;
       }
       // skip points that are equal
