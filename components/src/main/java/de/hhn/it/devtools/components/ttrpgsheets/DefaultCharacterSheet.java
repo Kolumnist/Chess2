@@ -71,7 +71,10 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public void addCallback(CharacterSheetListener listener) throws IllegalArgumentException {
     logger.info("addCallback : listener = {}", listener);
-    setListener(listener);
+    if (listener == null) {
+      throw new IllegalArgumentException("Listener is null");
+    }
+    this.listener = listener;
   }
 
   @Override
