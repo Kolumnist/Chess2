@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -28,17 +29,21 @@ public class DescriptionTest {
   void createNewDescriptionWithDescriptor() {
     Description description = new Description(
             new DescriptionDescriptor(DescriptionType.CHARACTER_NAME, "Sylas"));
-    assertNotNull(description);
-    assertEquals("Sylas", description.getDescription());
-    assertEquals(DescriptionType.CHARACTER_NAME, description.getType());
+    assertAll(
+            () -> assertNotNull(description),
+            () -> assertEquals("Sylas", description.getDescription()),
+            () -> assertEquals(DescriptionType.CHARACTER_NAME, description.getType())
+    );
   }
 
   @Test
   @DisplayName("Description to DescriptionDescriptor")
   void toDescriptionDescriptor() {
     DescriptionDescriptor descriptor = ageDescription.toDescriptionDescriptor();
-    assertEquals(ageDescription.getType(), descriptor.getDescriptionType());
-    assertEquals(ageDescription.getDescription(), descriptor.getText());
+    assertAll(
+            () -> assertEquals(ageDescription.getType(), descriptor.getDescriptionType()),
+            () -> assertEquals(ageDescription.getDescription(), descriptor.getText())
+    );
   }
 
   @Test
