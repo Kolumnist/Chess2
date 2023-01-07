@@ -21,6 +21,12 @@ public class Queen extends Piece {
     super(color, coordinate);
   }
 
+  /**
+   * This method calculates all the possible movements of the queen piece.
+   * It also add the movements which are not possible to go into an arraylist/ set.
+   *
+   * @param board the board of the game
+   */
   @Override
   public void calculate(Board board) {
     possibleMoves = new Coordinate[64];
@@ -43,6 +49,8 @@ public class Queen extends Piece {
 
     Set<Integer> indexSet = new TreeSet<>();
 
+    //This code checks that the queen can't go outside the board
+    //(we add this movements into a set)
     for (int i = 0; i < possibleMoves.length; i++) {
       if ((possibleMoves[i].getX() == coordinate.getX()
           && possibleMoves[i].getY() == coordinate.getY())
@@ -54,6 +62,10 @@ public class Queen extends Piece {
       }
 
       //region never look at this code
+
+      //This code checks if there are other pieces/the bear/current pieces in the possible movement of the queen
+      //because the queen can't defeat the current piece and she can also not jump over a piece or defeat a piece and walks again
+      //so we add all the movements the queen can't go into a set
       if (board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_CURRENT_PIECE
           || board.getSpecificField(possibleMoves[i]).getFieldState()

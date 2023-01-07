@@ -21,6 +21,12 @@ public class Fish extends Piece {
     super(color, coordinate);
   }
 
+  /**
+   * This method calculates all the possible movements of the fish piece.
+   * It also add the movements which are not possible to go into an arraylist/ set.
+   *
+   * @param board the board of the game
+   */
   @Override
   public void calculate(Board board) {
     possibleMoves = new Coordinate[8];
@@ -28,21 +34,21 @@ public class Fish extends Piece {
     if (color == 'w') {
       for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
         for (int j = coordinate.getY(); j <= coordinate.getY() + 1; j++) {
+          //because the fish shoudn't go straight forward
           if ((i == coordinate.getX()) && (j == coordinate.getY() + 1)) {
             continue;
           }
           possibleMoves[k++] = new Coordinate(i, j);
-          // darf nicht hin zu coordinate.getX() & coordinate.getY()+1
         }
       }
     } else if (color == 'b') {
       for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
         for (int j = coordinate.getY() - 1; j <= coordinate.getY(); j++) {
+          //because the fish shoudn't go straight forward
           if ((i == coordinate.getX()) && (j == coordinate.getY() - 1)) {
             continue;
           }
           possibleMoves[k++] = new Coordinate(i, j);
-          // darf nicht hin zu coordinate.getX() & coordinate.getY()-1
         }
       }
     }
@@ -56,6 +62,8 @@ public class Fish extends Piece {
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
     Set<Integer> IndexSet = new TreeSet<>();
 
+    //This code checks that the fish can't go outside the board
+    //(we add this movements into a set)
     for (int i = 0; i < possibleMoves.length; i++) {
       if ((possibleMoves[i].getX() == coordinate.getX()
           && possibleMoves[i].getY() == coordinate.getY())
@@ -67,6 +75,8 @@ public class Fish extends Piece {
           == FieldState.HAS_CURRENT_PIECE) {
         IndexSet.add(i);
       }
+      //This code look that the fish can't go on a field if there is another piece/ the bear on the left
+      //or right side of the fish (because the fish can only defeat other pieces on the diagonal
       if ((possibleMoves[i].getX() == coordinate.getX() + 1
           && possibleMoves[i].getY() == coordinate.getY())
           && (board.getSpecificField(possibleMoves[i]).getFieldState()
