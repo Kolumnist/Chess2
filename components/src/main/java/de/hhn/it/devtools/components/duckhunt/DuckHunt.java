@@ -13,7 +13,6 @@ import de.hhn.it.devtools.apis.duckhunt.IllegalDuckIdException;
 import de.hhn.it.devtools.apis.duckhunt.IllegalDuckPositionException;
 import de.hhn.it.devtools.apis.duckhunt.IllegalGameInfoException;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.concurrent.Semaphore;
@@ -356,8 +355,6 @@ public class DuckHunt implements Runnable, DuckHuntService {
     newRound();
     // main game loop
     while (gameInfo.getState() == GameState.RUNNING || gameInfo.getState() == GameState.PAUSED) {
-      //logger.debug("Gameloop entered - before semaphore");
-
       try {
         // waits if game is paused
         semaphore.tryAcquire(Integer.MAX_VALUE, TimeUnit.DAYS);

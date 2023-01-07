@@ -149,8 +149,11 @@ public final class MpatternGenerator {
     int height = screenDimension.getHeight() - sidePadding;
     int width = screenDimension.getWidth() - sidePadding;
     final int maxNodes = 6;
-    final int nodeOffset = 100; //ToDO: make in relation to screen size and randomise
-    final int nodeOffsetDiag = (int) Math.sqrt(100 / 2.0);
+
+    //calculate offset in relation to screen size
+    final int nodeOffset = (int) Math.floor(screenDimension.getHeight() * 0.1);
+    final int nodeOffsetDiag = (int) Math.sqrt(nodeOffset / 2.0);
+
     Vector2D lastNode;
     Vector2D node;
 
@@ -234,7 +237,7 @@ public final class MpatternGenerator {
 
   /*private ArrayList<Vector2D> generatePath() {
     return generatePath(new Random().nextLong(), 6);
-  }*/
+  }
 
   /**
    * Generates random(seeded) points in area defined by screen dimensions and side padding.
