@@ -2,12 +2,11 @@ package de.hhn.it.devtools.components.duckhunt;
 
 import de.hhn.it.devtools.apis.duckhunt.DuckData;
 import de.hhn.it.devtools.apis.duckhunt.DuckOrientation;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Stack;
 import java.util.LinkedList;
-import java.time.ZonedDateTime;
+import java.util.Stack;
+//import java.time.ZonedDateTime;
 
 /**
  * Allows random movement-pattern generation.
@@ -128,13 +127,16 @@ public final class MpatternGenerator {
    * Ths method generates a movement pattern.
    **/
   private ArrayList<Vector2D> generatePath() {
-    RangedRandom randomGen = new RangedRandom(ZonedDateTime.now().toInstant().toEpochMilli());
+    RangedRandom randomGen = new RangedRandom();
     ArrayList<Vector2D> generatedPattern = new ArrayList<>();
     int height = screenDimension.getHeight() - sidePadding;
     int width = screenDimension.getWidth() - sidePadding;
     final int maxNodes = 6;
-    final int nodeOffset = 100; //ToDO: make in relation to screen size and randomise
-    final int nodeOffsetDiag = (int) Math.sqrt(100 / 2.0);
+
+    //calculate offset in relation to screen size
+    final int nodeOffset = (int) Math.floor(screenDimension.getHeight() * 0.1);
+    final int nodeOffsetDiag = (int) Math.sqrt(nodeOffset / 2.0);
+
     Vector2D lastNode;
     Vector2D node;
 
@@ -216,10 +218,7 @@ public final class MpatternGenerator {
     return generatedPattern;
   }
 
-  /*private ArrayList<Vector2D> generatePath() {
-    return generatePath(new Random().nextLong(), 6);
-  }*/
-
+  //ToDo: remove duplicate method and update final one to fit testing
   /**
    * Generates random(seeded) points in area defined by screen dimensions and side padding.
    * First Point will always be at the bottom of the screen. Points follow a set probability.
@@ -230,7 +229,7 @@ public final class MpatternGenerator {
    */
   private ArrayList<Vector2D> generatePath(long seed, int pointAmount) {
     ArrayList<Vector2D> generatedPattern = new ArrayList<>();
-    RangedRandom random = new RangedRandom(seed);
+    RangedRandom random = new RangedRandom();
     random.setSeed(seed);
 
     // list defines probability for directions to be taken each step
@@ -266,7 +265,13 @@ public final class MpatternGenerator {
               (int) Math.floor((screenDimension.getHeight() * 0.15) * 2)
       );
       // get previous point
-      Vector2D prevPoint = (Vector2D) generatedPattern.get(generatedPattern.size()-1).clone();
+      Vector2D prevPoint;
+      try {
+        prevPoint = (Vector2D) generatedPattern.get(generatedPattern.size() - 1).clone();
+      } catch (CloneNotSupportedException e) {
+        prevPoint = new Vector2D(generatedPattern.get(generatedPattern.size() - 1).getX(),
+                generatedPattern.get(generatedPattern.size() - 1).getY());
+      }
       // calculate new point with vector
       Vector2D newPoint = new Vector2D(
               prevPoint.getX() + (selectedOrientation.getX() * vectorLength),

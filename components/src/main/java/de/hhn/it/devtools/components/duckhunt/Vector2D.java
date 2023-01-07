@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Class for 2-dimensional vectors.
  */
-public class Vector2D implements Cloneable{
+public class Vector2D implements Cloneable {
   private int x;
   private int y;
 
@@ -17,11 +17,6 @@ public class Vector2D implements Cloneable{
   public Vector2D(int x, int y) {
     this.x = x;
     this.y = y;
-  }
-
-  public void add(int scalar) {
-    x = x * scalar;
-    y = y * scalar;
   }
 
   public int getX() {
@@ -63,7 +58,8 @@ public class Vector2D implements Cloneable{
   }
 
   @Override
-  protected Object clone() {
-    return new Vector2D(x,y);
+  protected Object clone()throws CloneNotSupportedException {
+    super.clone();
+    return new Vector2D(x, y);
   }
 }

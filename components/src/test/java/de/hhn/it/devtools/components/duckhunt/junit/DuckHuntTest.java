@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,11 +47,34 @@ class DuckHuntTest {
     }
 
     @Test
-    void shootTest() {
+    void shootTest() throws IllegalParameterException, NoSuchFieldException, IllegalAccessException {
+        game.addCallback(testListener);
+        game.startGame();
+        Field ducksField = game.getClass().getDeclaredField("ducks");
+        ducksField.setAccessible(true);
+
+        DuckData[] ducks = (DuckData[]) ducksField.get(game);
+        game.shoot(ducks[0].getX(), ducks[0].getY());
+
+        Field ammoField = game.getClass().getDeclaredField("ammoCount");
+        ammoField.setAccessible(true);
+        game.pauseGame();
+
+        assertAll("shoot (hitting) Tests",
+                () -> assertEquals(ducks[0].getStatus(), DuckState.SCARRED),
+                () -> assertEquals(new GameSettingsDescriptor().getAmmoAmount()-1, ammoField.get(game))
+        );
     }
 
     @Test
-    void shootObstacleTest() {
+    void shootObstacleTest() throws IllegalParameterException, NoSuchFieldException, IllegalAccessException {
+        game.addCallback(testListener);
+        game.startGame();
+        game.shootObstacle();
+        Field ammoField = game.getClass().getDeclaredField("ammoCount");
+        ammoField.setAccessible(true);
+        game.pauseGame();
+        assertEquals(new GameSettingsDescriptor().getAmmoAmount()-1, ammoField.get(game));
     }
 
     @Test

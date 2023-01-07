@@ -105,6 +105,7 @@ public class DuckHunt implements Runnable, DuckHuntService {
   @Override
   public void shootObstacle() {
     gameInfo.setAmmo(gameInfo.getAmmo() - 1);
+    ammoCount--; //für die Tests
   }
 
   @Override
