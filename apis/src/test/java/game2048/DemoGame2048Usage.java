@@ -21,7 +21,7 @@ public class DemoGame2048Usage {
             }
 
             @Override
-            public void moveBlocks(MovingDirection direction) throws IllegalParameterException {
+            public void moveAllBlocks(MovingDirection direction) throws IllegalParameterException {
                 System.out.println("All Blocks got moved to the [ " + direction + " ] boarder");
             }
 
@@ -48,13 +48,13 @@ public class DemoGame2048Usage {
 
         game2048Service.initialisation();
         game2048Listener.newState(placeHolderState);
-        game2048Service.moveBlocks(MovingDirection.right);
+        game2048Service.moveAllBlocks(MovingDirection.right);
         game2048Listener.newState(placeHolderState);
-        game2048Service.moveBlocks(MovingDirection.up);
+        game2048Service.moveAllBlocks(MovingDirection.up);
         game2048Listener.newState(placeHolderState);
-        game2048Service.moveBlocks(MovingDirection.down);
+        game2048Service.moveAllBlocks(MovingDirection.down);
         game2048Listener.newState(placeHolderState);
-        game2048Service.moveBlocks(MovingDirection.left);
+        game2048Service.moveAllBlocks(MovingDirection.left);
         game2048Listener.newState(placeHolderState);
 
         System.out.println("A couple of moves later, the game is won and the player starts a new Game");
