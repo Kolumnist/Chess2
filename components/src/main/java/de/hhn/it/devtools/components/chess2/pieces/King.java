@@ -22,6 +22,12 @@ public class King extends Piece {
     this.hasBanana = hasBanana;
   }
 
+  /**
+   * This method calculates all the possible movements of the king piece. It also add the movements
+   * which are not possible to go into an arraylist.
+   *
+   * @param board the board of the game
+   */
   @Override
   public void calculate(Board board) {
     possibleMoves = new Coordinate[9];
@@ -34,6 +40,8 @@ public class King extends Piece {
 
     ArrayList<Integer> index = new ArrayList<>();
 
+    //This code checks that the king can't go outside the board
+    //(we add this movements into an arraylist)
     for (int i = 0; i < possibleMoves.length; i++) {
       if ((possibleMoves[i].getX() == coordinate.getX()
           && possibleMoves[i].getY() == coordinate.getY())
