@@ -36,12 +36,6 @@ public class MemoryServiceController extends Controller implements Initializable
     screenController = new MemoryScreenController(templateAnchorPane);
     SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
     singletonAttributeStore.setAttribute(SCREEN_CONTROLLER, screenController);
-    try {
-      screenController.switchTo(null, StartScreen.SCREEN);
-    } catch (UnknownTransitionException e) {
-      e.printStackTrace();
-    }
-
   }
 
   @FXML
