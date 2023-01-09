@@ -47,9 +47,9 @@ public class Stat {
   public int getTotalValue() {
     logger.info("getTotalValue : no params");
     BigInteger totalValue = BigInteger.valueOf(baseValue)
-            .add(BigInteger.valueOf(this.abilityPointsUsed)
+            .add(BigInteger.valueOf(abilityPointsUsed)
                     .multiply(BigInteger.valueOf(offset)))
-            .add(BigInteger.valueOf(this.miscellaneous));
+            .add(BigInteger.valueOf(miscellaneous));
     if (totalValue.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0) {
       return Integer.MAX_VALUE;
     }
@@ -64,8 +64,8 @@ public class Stat {
    */
   public void addAbilityPoint() {
     logger.info("addAbilityPoint : no params");
-    if (levelStat && this.abilityPointsUsed < Integer.MAX_VALUE) {
-      this.abilityPointsUsed++;
+    if (levelStat && abilityPointsUsed < Integer.MAX_VALUE) {
+      abilityPointsUsed++;
     }
   }
 
@@ -74,8 +74,8 @@ public class Stat {
    */
   public void removeAbilityPoint() {
     logger.info("removeAbilityPoint : no params");
-    if (levelStat && this.abilityPointsUsed > Integer.MIN_VALUE) {
-      this.abilityPointsUsed--;
+    if (levelStat && abilityPointsUsed > Integer.MIN_VALUE) {
+      abilityPointsUsed--;
     }
   }
 
@@ -86,8 +86,8 @@ public class Stat {
    */
   public StatDescriptor toStatDescriptor() {
     logger.info("toStatDescriptor : no params");
-    return new StatDescriptor(this.type, this.baseValue, this.offset,
-            this.abilityPointsUsed, this.miscellaneous, this.levelStat);
+    return new StatDescriptor(type, baseValue, offset,
+            abilityPointsUsed, miscellaneous, levelStat);
   }
 
   public StatType getType() {
@@ -124,11 +124,11 @@ public class Stat {
 
   @Override
   public String toString() {
-    return "Stat: [Type: " + this.type
-            + ", Base Value: " + this.baseValue
-            + ", Offset: " + this.offset
-            + ", Ability Points Used: " + this.abilityPointsUsed
-            + ", Miscellaneous: " + this.miscellaneous
-            + ", Level Stat: " + this.levelStat + "]";
+    return "Stat: [Type: " + type
+            + ", Base Value: " + baseValue
+            + ", Offset: " + offset
+            + ", Ability Points Used: " + abilityPointsUsed
+            + ", Miscellaneous: " + miscellaneous
+            + ", Level Stat: " + levelStat + "]";
   }
 }
