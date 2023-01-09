@@ -52,7 +52,7 @@ public class Board {
 
     int fieldIndex = coordinate.getX() + 8 * coordinate.getY();
 
-    if (fieldIndex < 64 && fieldIndex >= 0) {
+    if (fieldIndex < 64 && fieldIndex >= 0 && coordinate.getX() < 8) {
       return fields[fieldIndex];
     }
 
