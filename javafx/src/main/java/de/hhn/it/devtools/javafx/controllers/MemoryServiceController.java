@@ -7,6 +7,8 @@ import de.hhn.it.devtools.javafx.controllers.template.UnknownTransitionException
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
@@ -24,6 +26,22 @@ public class MemoryServiceController extends Controller implements Initializable
     logger.debug("MemoryService Controller created.");
   }
 
+  @FXML
+  void onBeenden(ActionEvent event) {
+
+  }
+
+  @FXML
+  void onOptionen(ActionEvent event) {
+
+  }
+
+  @FXML
+  void onStart(ActionEvent event) {
+
+  }
+
+
   @Override
   public void initialize(final URL location, final ResourceBundle resources) {
     // initialize screenController here because now we have the anchorPane.
@@ -37,4 +55,5 @@ public class MemoryServiceController extends Controller implements Initializable
     }
 
   }
+
 }
