@@ -13,7 +13,6 @@ import java.net.CookieHandler;
 public class Board {
 
   private final Field[] fields = new Field[68];
-  private Coordinate[] fieldTable = new Coordinate[68];
   public boolean lostPiece = false;
 
   /**
@@ -43,8 +42,7 @@ public class Board {
   }
 
   /**
-   * A getter for a specific Field.
-   * MARK: Could make a Table instead of going through array
+   * A getter for a specific Field. The index gets calculated with the x and y value of coordinate.
    *
    * @param coordinate to get the correct field.
    * @return the Field on index.
