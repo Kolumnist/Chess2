@@ -44,5 +44,19 @@ public class MemoryServiceController extends Controller implements Initializable
 
   }
 
+  @FXML
+  void onBeenden(ActionEvent event) {
+
+  }
+
+  @FXML
+  void onOptionen(ActionEvent event) {
+
+  }
+
+  @FXML
+  void onStart(ActionEvent event) {
+  }
+
 
 }
