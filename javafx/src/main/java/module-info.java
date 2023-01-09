@@ -15,4 +15,5 @@ module devtools.javafx {
   exports de.hhn.it.devtools.javafx.controllers.coffeemaker;
   exports de.hhn.it.devtools.javafx.battleship;
   exports de.hhn.it.devtools.javafx to javafx.graphics;
+  exports de.hhn.it.devtools.javafx.controllers.memory;
         }
