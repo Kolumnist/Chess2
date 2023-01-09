@@ -21,17 +21,17 @@
       </Pane>
       <VBox layoutX="390.0" layoutY="406.0" prefHeight="200.0" prefWidth="300.0" spacing="20.0" AnchorPane.leftAnchor="390.0" AnchorPane.rightAnchor="390.0">
          <children>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onStart" prefHeight="40.0" style="-fx-background-color: WHITE; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: BLACK; -fx-border-width: 3;" text="Start" textAlignment="CENTER">
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onStartButtonClicked" prefHeight="40.0" style="-fx-background-color: WHITE; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: BLACK; -fx-border-width: 3;" text="Start" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="30.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onOptionen" prefHeight="40.0" style="-fx-background-color: WHITE; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: BLACK; -fx-border-width: 3;" text="Optionen" textAlignment="CENTER">
+            <Button layoutX="10.0" layoutY="30.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onOptionButtonClicked" prefHeight="40.0" style="-fx-background-color: WHITE; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: BLACK; -fx-border-width: 3;" text="Optionen" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="117.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBeenden" prefHeight="40.0" style="-fx-background-color: WHITE; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: BLACK; -fx-border-width: 3;" text="Beenden" textAlignment="CENTER">
+            <Button layoutX="10.0" layoutY="117.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onFinishButtonClicked" prefHeight="40.0" style="-fx-background-color: WHITE; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: BLACK; -fx-border-width: 3;" text="Beenden" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
