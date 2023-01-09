@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.javafx.controllers.memory;
 
+import de.hhn.it.devtools.javafx.controllers.TemplateController;
 import de.hhn.it.devtools.javafx.controllers.template.ScreenController;
 import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
 import javafx.event.ActionEvent;
@@ -22,9 +23,10 @@ public class GameScreen implements Initializable {
   public static final String SCREEN = "game.screen";
 
 
-  public GameScreen(final MemoryScreenController screenController) {
+  public GameScreen() {
     SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
-    this.screenController = screenController;
+    //this.screenController =
+        //(MemoryScreenController) singletonAttributeStore.getAttribute(MemoryGameController.SCREEN_CONTROLLER);
   }
 
   @Override

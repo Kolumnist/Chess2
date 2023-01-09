@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.javafx.controllers;
 
+import de.hhn.it.devtools.javafx.controllers.memory.GameScreen;
 import de.hhn.it.devtools.javafx.controllers.memory.MemoryScreenController;
 import de.hhn.it.devtools.javafx.controllers.memory.StartScreen;
 import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
@@ -50,6 +51,7 @@ public class MemoryServiceController extends Controller implements Initializable
 
   @FXML
   void onStartButtonClicked(ActionEvent event) {
+    screenController.switchTo(null, GameScreen.SCREEN);
   }
 
 
