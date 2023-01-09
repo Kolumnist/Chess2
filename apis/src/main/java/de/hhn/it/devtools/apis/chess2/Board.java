@@ -1,16 +1,19 @@
 package de.hhn.it.devtools.apis.chess2;
 
+import java.net.CookieHandler;
+
 /**
  * Defines the board and lets you get all fields or a specific field.
  * An Object of Board updates while the game is running.
  *
  * @author Collin Hoss, Michel Jouaux, Lara Mangi
- * @version 1.1
+ * @version 1.2
  */
 
 public class Board {
 
   private final Field[] fields = new Field[68];
+  private Coordinate[] fieldTable = new Coordinate[68];
   public boolean lostPiece = false;
 
   /**
@@ -48,12 +51,21 @@ public class Board {
    * @throws IllegalArgumentException so that no ArrayIndexOutOfBoundsException will occur.
    */
   public Field getSpecificField(Coordinate coordinate) throws IllegalArgumentException {
-    for (Field field : fields) {
-      if (field.getCoordinate().getX() == coordinate.getX()
-          && field.getCoordinate().getY() == coordinate.getY()) {
-        return field;
+
+    int fieldIndex = coordinate.getX() + 8 * coordinate.getY();
+
+    if (fieldIndex < 64 && fieldIndex >= 0) {
+      return fields[fieldIndex];
+    }
+
+    for (int i = 1; i < 5; i++)
+    {
+      if (fields[fields.length-i].getCoordinate().getX() == coordinate.getX()
+          && fields[fields.length-i].getCoordinate().getY() == coordinate.getY()) {
+        return fields[fields.length-i];
       }
     }
+
     return fields[fields.length - 1];
   }
 
