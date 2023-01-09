@@ -4,7 +4,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<Button fx:id="cardButton" mnemonicParsing="false" onAction="#onCardButtonClicked" prefHeight="100.0" prefWidth="80.0" text="Name" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.memory.CardController">
+<Button fx:id="cardButton" mnemonicParsing="false" onAction="#onCardButtonClicked" prefHeight="100.0" prefWidth="80.0" text="Name" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.memory.CardController">
    <font>
       <Font size="14.0" />
    </font>
