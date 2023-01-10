@@ -28,7 +28,6 @@ class DiceTest {
 
   @Test
   void nextRollTest() {
-    logger.info("nextRoll() is called");
     for (int size : sizes) {
       dice.setSize(size);
       for (double i = 0; i < calculateAverageNumberOfRolls(dice.getSize()); i++) {
@@ -40,7 +39,6 @@ class DiceTest {
 
   @Test
   void changeSizeTest() {
-    logger.info("changeSize() is called");
     for (DiceType diceTyp : DiceType.values()) {
       dice.changeSize(diceTyp);
       switch (dice.getType()) {
@@ -59,7 +57,6 @@ class DiceTest {
 
   @Test
   void getTypeTest() {
-    logger.info("getType() is called");
     for (int size : sizes) {
       dice.setSize(size);
       switch (dice.getSize()) {
@@ -78,35 +75,30 @@ class DiceTest {
 
   @Test
   void getSizeTest() {
-    logger.info("getSize() is called");
     dice.setSize(4);
     assertEquals(4, dice.getSize());
   }
 
   @Test
   void setSizeTest() {
-    logger.info("setSize() is called");
     dice.setSize(6);
     assertEquals(6, dice.getSize());
   }
 
   @Test
   void getValueTest() {
-    logger.info("getValue() is called");
     dice.setValue(5);
     assertEquals(5, dice.getValue());
   }
 
   @Test
   void setValueTest() {
-    logger.info("setValue() is called");
     dice.setValue(3);
     assertEquals(3, dice.getValue());
   }
 
   @Test
   void testToStringTest() {
-    logger.info("testToString() is called");
     dice.setValue(3);
     for (DiceType diceTyp : DiceType.values()) {
       dice.changeSize(diceTyp);
