@@ -12,14 +12,11 @@ import org.junit.jupiter.api.Test;
 
 
 class StatTest {
-  private static final org.slf4j.Logger logger
-          = org.slf4j.LoggerFactory.getLogger(StatTest.class);
 
   private static Stat[] stats;
 
   @BeforeEach
   void setupObjects() {
-    logger.info("setupObjects() is called");
     StatDescriptor[] statDescriptors = new StatDescriptor[StatType.values().length];
     stats = new Stat[StatType.values().length];
     for (int i = 0; i < stats.length; i++) {
@@ -40,13 +37,11 @@ class StatTest {
 
   @Test
   void constructorTest() {
-    logger.info("constructorTest() is called");
     assertThrows(IllegalArgumentException.class, () -> new Stat(null));
   }
 
   @Test
   void getTotalValueTest() {
-    logger.info("getTotalValueTest() is called");
     for (Stat stat : stats) {
       switch (stat.getType()) {
         case MAX_HEALTH -> assertEquals(30, stat.getTotalValue());
@@ -60,7 +55,6 @@ class StatTest {
 
   @Test
   void getTotalValueEdgeCasesTest() {
-    logger.info("getTotalValueEdgeCasesTest() is called");
     Stat edgeStat = stats[3];
     edgeStat.setMiscellaneous(Integer.MAX_VALUE);
     assertEquals(Integer.MAX_VALUE, edgeStat.getTotalValue());
@@ -85,7 +79,6 @@ class StatTest {
 
   @Test
   void addAbilityPointTest() {
-    logger.info("addAbilityPointTest() is called");
     for (Stat stat : stats) {
       stat.addAbilityPoint();
       switch (stat.getType()) {
@@ -105,7 +98,6 @@ class StatTest {
 
   @Test
   void addAbilityPointEdgeCasesTest() {
-    logger.info("addAbilityPointEdgeCasesTest() is called");
     Stat edgeStat = stats[3];
     edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
     edgeStat.addAbilityPoint();
@@ -118,7 +110,6 @@ class StatTest {
 
   @Test
   void removeAbilityPointTest() {
-    logger.info("removeAbilityPointTest() is called");
     for (Stat stat : stats) {
       stat.removeAbilityPoint();
       switch (stat.getType()) {
@@ -138,7 +129,6 @@ class StatTest {
 
   @Test
   void removeAbilityPointEdgeCasesTest() {
-    logger.info("removeAbilityPointEdgeCasesTest() is called");
     Stat edgeStat = stats[3];
     edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
     edgeStat.removeAbilityPoint();
@@ -151,7 +141,6 @@ class StatTest {
 
   @Test
   void toStringTest() {
-    logger.info("toStringTest() is called");
     for (Stat stat : stats) {
       switch (stat.getType()) {
         case LEVEL -> assertEquals("Stat: [Type: LEVEL, Base Value: 1, Offset: 0"
