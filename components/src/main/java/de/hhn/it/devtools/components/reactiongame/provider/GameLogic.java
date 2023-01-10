@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
+import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerDescriptor;
 import de.hhn.it.devtools.apis.reactiongame.Difficulty;
 import de.hhn.it.devtools.apis.reactiongame.GameState;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
@@ -9,6 +10,9 @@ import javax.swing.Timer;
 import java.util.ArrayList;
 
 public class GameLogic {
+
+    private static final org.slf4j.Logger logger =
+        org.slf4j.LoggerFactory.getLogger(GameLogic.class);
 
     private ArrayList<ReactiongameListener> callbacks = new ArrayList<>();
     private RgcGameField gameField = new RgcGameField();
@@ -87,6 +91,8 @@ public class GameLogic {
             for (ReactiongameListener callback :
                     callbacks) {
                 callback.gameOver();
+
+                logger.info("!!!GAME OVER!!!");
             }
             return;
         }
@@ -94,6 +100,8 @@ public class GameLogic {
         for (ReactiongameListener callback :
                 callbacks) { // player loses a life
             callback.currentLife(player.getCurrentLife());
+
+            logger.info("Current life updated: " + player.getCurrentLife());
         }
     }
 
@@ -107,7 +115,25 @@ public class GameLogic {
             for (ReactiongameListener callback :
                     callbacks) { // raise score
                 callback.changeScore(score);
+
+                logger.info("Score updated: " + score);
             }
         }
+    }
+
+
+    public void addObstacle() {
+        gameField.addRandomObstacle(gameField.getObstacles().size() - 1);
+
+        for (ReactiongameListener callback :
+            callbacks) {
+
+            callback.addObstacle(RgcObstacle.toObstacleDescriptor(gameField.getObstacles()
+                .get(gameField.getObstacles().size() - 1)));
+
+            logger.info("Added new obstacle (" + gameField.getObstacles()
+                .get(gameField.getObstacles().size() - 1).getId() + ") ");
+        }
+
     }
 }

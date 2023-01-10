@@ -8,6 +8,12 @@ import de.hhn.it.devtools.apis.reactiongame.ObstacleDescriptor;
 public class RgcObstacle implements Obstacle, Comparable {
 
   public static int WIDTH = 70; // in px
+
+  public static ObstacleDescriptor toObstacleDescriptor(RgcObstacle rgcObstacle) {
+    return new ObstacleDescriptor(rgcObstacle.id,rgcObstacle.x1,
+        rgcObstacle.y1, rgcObstacle.x2, rgcObstacle.y2);
+  }
+
   private final int id;
   private final int x1;
   private final int y1;

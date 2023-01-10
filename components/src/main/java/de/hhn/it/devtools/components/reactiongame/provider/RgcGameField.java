@@ -45,12 +45,12 @@ public class RgcGameField {
 
 
   /**
-   * Adds an obstacle to the UI.
+   * Adds an obstacle to the UI. (Random obstacle line)
    *
    * @param id identifier
    */
   void addRandomObstacle(int id) {
-    obstacleLines.get(new Random().nextInt(3)).addRandomObstacle(id);
+    addRandomObstacle(id, new Random().nextInt(3));
   }
 
   /**
@@ -60,7 +60,8 @@ public class RgcGameField {
    * @param obstacleLineId obstacleLine identifier
    */
   void addRandomObstacle(int id, int obstacleLineId) {
-    obstacleLines.get(obstacleLineId).addRandomObstacle(id);
+    obstacles.add(id,
+        obstacleLines.get(obstacleLineId).addRandomObstacle(id));
   }
 
   /**
