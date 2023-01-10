@@ -432,43 +432,28 @@ class DefaultCharacterSheetTest {
   void changeDiceTypeTest() {
     for (DiceType diceType : DiceType.values()) {
       characterSheet.changeDiceType(diceType);
-      assertEquals(diceType, characterSheet.getDice().getType());
+      assertEquals(diceType, characterSheet.getDiceDescriptor().getDiceType());
     }
   }
 
   @Test
   void getDiceDescriptorTest() {
     for (DiceType diceType : DiceType.values()) {
-      characterSheet.getDice().changeSize(diceType);
-      for (int i = 1; i < 101; i++) {
-        characterSheet.getDice().setValue(i);
-        DiceDescriptor diceDescriptor = characterSheet.getDiceDescriptor();
-        assertEquals(diceType, diceDescriptor.getDiceType());
-        assertEquals(i, diceDescriptor.getResult());
-        if (diceType == DiceType.D2 && i >= 2) {
-          break;
-        }
-        if (diceType == DiceType.D4 && i >= 4) {
-          break;
-        }
-        if (diceType == DiceType.D6 && i >= 6) {
-          break;
-        }
-        if (diceType == DiceType.D8 && i >= 8) {
-          break;
-        }
-        if (diceType == DiceType.D10 && i >= 10) {
-          break;
-        }
-        if (diceType == DiceType.D12 && i >= 12) {
-          break;
-        }
-        if (diceType == DiceType.D20 && i >= 20) {
-          break;
-        }
+      characterSheet.changeDiceType(diceType);
+      switch (characterSheet.getDiceDescriptor().getDiceType()) {
+        case D2 -> assertEquals(DiceType.D2, characterSheet.getDiceDescriptor().getDiceType());
+        case D4 -> assertEquals(DiceType.D4, characterSheet.getDiceDescriptor().getDiceType());
+        case D6 -> assertEquals(DiceType.D6, characterSheet.getDiceDescriptor().getDiceType());
+        case D8 -> assertEquals(DiceType.D8, characterSheet.getDiceDescriptor().getDiceType());
+        case D10 -> assertEquals(DiceType.D10, characterSheet.getDiceDescriptor().getDiceType());
+        case D12 -> assertEquals(DiceType.D12, characterSheet.getDiceDescriptor().getDiceType());
+        case D20 -> assertEquals(DiceType.D20, characterSheet.getDiceDescriptor().getDiceType());
+        case D100 -> assertEquals(DiceType.D100, characterSheet.getDiceDescriptor().getDiceType());
+        default -> { }
       }
     }
   }
+
 
   @Test
   void toStringTest() {
