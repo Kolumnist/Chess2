@@ -7,8 +7,6 @@ import java.util.IllegalFormatException;
 import java.util.SortedMap;
 
 
-import javax.swing.Timer;
-
 /**
  * Realisation of ReactionGameService.
  */

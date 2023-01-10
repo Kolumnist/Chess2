@@ -1,8 +1,5 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
-import de.hhn.it.devtools.apis.reactiongame.AimTargetListener;
-import java.util.*;
-
 /**
  *
  */
@@ -13,7 +10,6 @@ public class RelAimTarget implements AimTarget {
   private final int r;
   private final char key;
   private final int id;
-  private final ArrayList<AimTargetListener> callbacks;
 
 
   /**
@@ -31,8 +27,6 @@ public class RelAimTarget implements AimTarget {
     this.y = y;
     this.r = r;
     this.key = key;
-
-    callbacks = new ArrayList<>();
   }
 
   public int getX() {
@@ -54,16 +48,6 @@ public class RelAimTarget implements AimTarget {
   @Override
   public int getId() {
     return id;
-  }
-
-  @Override
-  public void addCallback(AimTargetListener listener) {
-    callbacks.add(listener);
-  }
-
-  @Override
-  public void removeCallback(AimTargetListener listener) {
-    callbacks.remove(listener);
   }
 
   @Override

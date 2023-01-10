@@ -1,16 +1,12 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
 import de.hhn.it.devtools.apis.reactiongame.ObstacleDescriptor;
-import de.hhn.it.devtools.apis.reactiongame.ObstacleListener;
-
-import java.util.List;
 
 /**
  * Obstacle class.
  */
 public class RelObstacle implements Obstacle {
 
-  private List<ObstacleListener> callbacks;
   private final int x1;
   private final int x2;
   private final int y1;
@@ -56,15 +52,6 @@ public class RelObstacle implements Obstacle {
     return id;
   }
 
-  @Override
-  public void addCallback(ObstacleListener listener) {
-    callbacks.add(listener);
-  }
-
-  @Override
-  public void removeCallback(ObstacleListener listener) {
-    callbacks.remove(listener);
-  }
 
   @Override
   public String toString() {

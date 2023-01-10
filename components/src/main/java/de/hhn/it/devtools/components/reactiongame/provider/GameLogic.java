@@ -84,7 +84,7 @@ public class GameLogic {
         player.setCurrentLife(player.getCurrentLife() - 1);
 
 
-        if (player.getCurrentLife() > 0) { // is player game over?
+        if (player.getCurrentLife() > 1) { // is player game over?
             for (ReactiongameListener callback :
                     callbacks) {
                 callback.gameOver();
@@ -102,7 +102,7 @@ public class GameLogic {
      * Methods checks if the player is in an aimtarget and pressed the right key.
      */
     public void checkForTargetHit() {
-        if (pAimTarget.getKey() == pKey) {
+        if (pAimTarget != null && pAimTarget.getKey() == pKey) {
             score += 100;
 
             for (ReactiongameListener callback :
