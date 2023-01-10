@@ -55,7 +55,8 @@ class StatTest {
 
   @Test
   void getTotalValueEdgeCasesTest() {
-    Stat edgeStat = stats[3];
+    Stat edgeStat = stats[3]; // Strength stat used for testing
+    //Overflow
     edgeStat.setMiscellaneous(Integer.MAX_VALUE);
     assertEquals(Integer.MAX_VALUE, edgeStat.getTotalValue());
     edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
@@ -63,9 +64,11 @@ class StatTest {
     edgeStat.setMiscellaneous(0);
     assertEquals(Integer.MAX_VALUE, edgeStat.getTotalValue());
 
+    //Overflow goes back inbounds
     edgeStat.setMiscellaneous(Integer.MIN_VALUE);
     assertEquals(-1, edgeStat.getTotalValue());
 
+    // Underflow
     edgeStat.setAbilityPointsUsed(0);
     assertEquals(Integer.MIN_VALUE, edgeStat.getTotalValue());
     edgeStat.setAbilityPointsUsed(Integer.MIN_VALUE);
@@ -73,6 +76,7 @@ class StatTest {
     edgeStat.setMiscellaneous(0);
     assertEquals(Integer.MIN_VALUE, edgeStat.getTotalValue());
 
+    // Underflow goes back inbounds
     edgeStat.setMiscellaneous(Integer.MAX_VALUE);
     assertEquals(-1, edgeStat.getTotalValue());
   }
