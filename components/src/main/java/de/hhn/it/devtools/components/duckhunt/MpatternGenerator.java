@@ -2,14 +2,12 @@ package de.hhn.it.devtools.components.duckhunt;
 
 import de.hhn.it.devtools.apis.duckhunt.DuckData;
 import de.hhn.it.devtools.apis.duckhunt.DuckOrientation;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Stack;
-import java.util.LinkedList;
 import java.util.Arrays;
 import java.util.EmptyStackException;
-import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Stack;
 
 /**
  * Allows random movement-pattern generation.
@@ -43,7 +41,8 @@ public final class MpatternGenerator {
     for (DuckData duck : ducks) {
       duckStartingPos.put(duck.getId(), new Vector2D());
       generatedPaths.put(duck.getId(), generateWaypoints(duck.getId()));
-      System.out.println("Generated path for " + duck.getId() + Arrays.toString(generatedPaths.get(duck.getId()).toArray()));
+      System.out.println("Generated path for "
+          + duck.getId() + Arrays.toString(generatedPaths.get(duck.getId()).toArray()));
     }
   }
 
@@ -63,7 +62,8 @@ public final class MpatternGenerator {
   /**
    * Ths method generates a movement pattern.
    **/
-  private Stack<DuckOrientation> generateWaypoints(int duckId) throws DuckOrientationTranslationException {
+  private Stack<DuckOrientation> generateWaypoints(int duckId)
+      throws DuckOrientationTranslationException {
     LinkedList<DuckOrientation> generatedPath = new LinkedList<>();
     ArrayList<Vector2D> randPointsVector = generatePath();
     ArrayList<Vector2D> points = new ArrayList<>();
@@ -143,8 +143,8 @@ public final class MpatternGenerator {
   /**
    * Ths method generates a movement pattern.
    **/
-  private ArrayList<Vector2D> generatePath() {
-    RangedRandom randomGen = new RangedRandom(ZonedDateTime.now().toInstant().toEpochMilli());
+  /*private ArrayList<Vector2D> generatePath() {
+    RangedRandom randomGen = new RangedRandom();
     ArrayList<Vector2D> generatedPattern = new ArrayList<>();
     int height = screenDimension.getHeight() - sidePadding;
     int width = screenDimension.getWidth() - sidePadding;
@@ -233,10 +233,10 @@ public final class MpatternGenerator {
       i++;
     }
     return generatedPattern;
-  }
+  }*/
 
-  /*private ArrayList<Vector2D> generatePath() {
-    return generatePath(new Random().nextLong(), 6);
+  private ArrayList<Vector2D> generatePath() {
+    return generatePath(new RangedRandom().nextLong(), 6);
   }
 
   /**
@@ -249,43 +249,49 @@ public final class MpatternGenerator {
    */
   private ArrayList<Vector2D> generatePath(long seed, int pointAmount) {
     ArrayList<Vector2D> generatedPattern = new ArrayList<>();
-    RangedRandom random = new RangedRandom(seed);
+    RangedRandom random = new RangedRandom();
     random.setSeed(seed);
 
     // list defines probability for directions to be taken each step
     DuckOrientation[] orientations = {
-            DuckOrientation.NORTH,
-            DuckOrientation.NORTH,
-            DuckOrientation.NORTH,
-            DuckOrientation.NORTHEAST,
-            DuckOrientation.NORTHEAST,
-            DuckOrientation.NORTHWEST,
-            DuckOrientation.NORTHWEST,
-            DuckOrientation.EAST,
-            DuckOrientation.EAST,
-            DuckOrientation.WEST,
-            DuckOrientation.WEST,
-            DuckOrientation.SOUTHEAST,
-            DuckOrientation.SOUTHWEST,
-            DuckOrientation.SOUTH
+        DuckOrientation.NORTH,
+        DuckOrientation.NORTH,
+        DuckOrientation.NORTH,
+        DuckOrientation.NORTHEAST,
+        DuckOrientation.NORTHEAST,
+        DuckOrientation.NORTHWEST,
+        DuckOrientation.NORTHWEST,
+        DuckOrientation.EAST,
+        DuckOrientation.EAST,
+        DuckOrientation.WEST,
+        DuckOrientation.WEST,
+        DuckOrientation.SOUTHEAST,
+        DuckOrientation.SOUTHWEST,
+        DuckOrientation.SOUTH
     };
 
     // add first point
     generatedPattern.add(new Vector2D(
-            random.randomInt(sidePadding, screenDimension.getWidth()-sidePadding),
+            random.randomInt(sidePadding, screenDimension.getWidth() - sidePadding),
             screenDimension.getHeight() // always on the bottom of screen
     ));
 
-    for (int i = 0; i < pointAmount-1; i++) {
+    for (int i = 0; i < pointAmount - 1; i++) {
       // get orientation for vector between previous and new point
-      DuckOrientation selectedOrientation = orientations[random.randomInt(0, orientations.length-1)];
+      DuckOrientation selectedOrientation
+          = orientations[random.randomInt(0, orientations.length - 1)];
       // magnitude of the vector between previous and new point, relative to screen size
       int vectorLength = random.randomInt(
               (int) Math.floor(screenDimension.getHeight() * 0.1),
               (int) Math.floor((screenDimension.getHeight() * 0.15) * 2)
       );
       // get previous point
-      Vector2D prevPoint = (Vector2D) generatedPattern.get(generatedPattern.size()-1).clone();
+      Vector2D prevPoint;
+      try {
+        prevPoint = (Vector2D) generatedPattern.get(generatedPattern.size() - 1).clone();
+      } catch (CloneNotSupportedException e) {
+        throw new RuntimeException(e);
+      }
       // calculate new point with vector
       Vector2D newPoint = new Vector2D(
               prevPoint.getX() + (selectedOrientation.getX() * vectorLength),
@@ -293,8 +299,10 @@ public final class MpatternGenerator {
       );
 
       // if point not in Dimension + padding boundary try new point
-      if (newPoint.getX() < sidePadding || newPoint.getX() > screenDimension.getWidth()-sidePadding ||
-              newPoint.getY() < sidePadding || newPoint.getY() > screenDimension.getHeight()-sidePadding) {
+      if (newPoint.getX() < sidePadding
+          || newPoint.getX() > screenDimension.getWidth() - sidePadding
+          || newPoint.getY() < sidePadding
+          || newPoint.getY() > screenDimension.getHeight() - sidePadding) {
         i--;
         continue;
       }
