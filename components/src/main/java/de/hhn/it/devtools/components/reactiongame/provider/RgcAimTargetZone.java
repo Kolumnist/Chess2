@@ -5,11 +5,11 @@ import java.util.Random;
 
 public class RgcAimTargetZone {
 
-    private int x1; // Point A x
-    private int y1; // Point A y
+    private final int x1; // Point A x
+    private final int y1; // Point A y
 
-    private int x2; // Point B x
-    private int y2; // Point B y
+    private final int x2; // Point B x
+    private final int y2; // Point B y
 
     private ArrayList<RgcAimTarget> aimTargets;
 
@@ -27,7 +27,8 @@ public class RgcAimTargetZone {
         int x = new Random().nextInt(x1 + x2) + x2;
         int y = new Random().nextInt(y1 + y2) + y2;
 
-        RgcAimTarget aimTarget = new RgcAimTarget(id, x, y, RgcAimTarget.RADIUS, generateRandomKeyforAimTarget());
+        RgcAimTarget aimTarget = new RgcAimTarget(id, x, y, RgcAimTarget.RADIUS,
+            generateRandomKeyforAimTarget());
 
         aimTargets.add(aimTarget);
 

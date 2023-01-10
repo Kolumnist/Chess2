@@ -27,6 +27,8 @@ public class GameLogic {
     private char pKey;
     private int score;
     private boolean isInvincible = false;
+
+    private IFrameThread iFrameThread;
     int timePlayed;
 
 
@@ -34,6 +36,7 @@ public class GameLogic {
         this.difficulty = difficulty;
         player = new RgcPlayer("");
         timer = new Timer(1000, new TaskPerformer(timer, this)); // Every second: timeplayed++
+        iFrameThread = new IFrameThread(this);
     }
 
     public ArrayList<ReactiongameListener> getCallbacks() {
@@ -74,6 +77,7 @@ public class GameLogic {
 
     public void setInvincible(boolean invincible) {
         isInvincible = invincible;
+        logger.info("invis state = " + isInvincible);
     }
 
     /**
@@ -83,7 +87,11 @@ public class GameLogic {
         if (isInvincible || pObstacle == null) return; // if player is not in an object or invincible - do nothing
         // player is in iFrames OR no longer in an obstacle
 
-        new IFrameThread(this).start(); //I-Frame counter
+        logger.info("Player hit obstacle");
+
+        isInvincible = true;
+        new Thread(iFrameThread).start();
+
         player.setCurrentLife(player.getCurrentLife() - 1);
 
 
@@ -123,16 +131,16 @@ public class GameLogic {
 
 
     public void addObstacle() {
-        gameField.addRandomObstacle(gameField.getObstacles().size() - 1);
+        gameField.addRandomObstacle(gameField.getObstacles().size());
 
         for (ReactiongameListener callback :
             callbacks) {
 
             callback.addObstacle(RgcObstacle.toObstacleDescriptor(gameField.getObstacles()
-                .get(gameField.getObstacles().size() - 1)));
+                .get(gameField.getObstacles().size())));
 
             logger.info("Added new obstacle (" + gameField.getObstacles()
-                .get(gameField.getObstacles().size() - 1).getId() + ") ");
+                .get(gameField.getObstacles().size()).getId() + ") ");
         }
 
     }

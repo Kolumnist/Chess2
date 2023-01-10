@@ -16,6 +16,11 @@ public class RgcReactionGameService implements ReactiongameService {
       org.slf4j.LoggerFactory.getLogger(RgcReactionGameService.class);
   private GameLogic gameLogic;
 
+
+  public GameLogic getGameLogic() {
+    return gameLogic;
+  }
+
   @Override
   public void newRun(Difficulty difficulty) throws IllegalParameterException {
     gameLogic = new GameLogic(difficulty);
