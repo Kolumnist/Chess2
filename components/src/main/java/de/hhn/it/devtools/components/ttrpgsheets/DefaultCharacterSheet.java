@@ -68,6 +68,76 @@ public class DefaultCharacterSheet implements CharacterSheet {
     return stats;
   }
 
+  /**
+   * Handler if incrementStat is called with a negative amount.
+   * Method calls decrementStat with the absolute value of amount
+   *
+   * @param statType the Type of Stat to increment
+   * @param origin   the origin of the change
+   * @param amount   the amount the Stat changes
+   */
+  private void negativeIncrementHandler(StatType statType, OriginType origin, int amount) {
+    if (amount == Integer.MIN_VALUE) {
+      amount = Integer.MAX_VALUE;
+    }
+    decrementStat(statType, origin, Math.abs(amount));
+  }
+
+  /**
+   * Checks whether the sum of two numbers overflows and returns the respective result.
+   *
+   * @param addend1 the first number which is added
+   * @param addend2 the second number which is added
+   * @return the sum if no underflow occurs else Integer.MAX_VALUE
+   */
+  private int overflowCheck(int addend1, int addend2) {
+    return addend1 + addend2 > addend1 ? addend1 + addend2 : Integer.MAX_VALUE;
+  }
+
+  /**
+   * Handler if decrementStat is called with a negative amount.
+   * Method calls incrementStat with the absolute value of amount
+   *
+   * @param statType the Type of Stat to increment
+   * @param origin   the origin of the change
+   * @param amount   the amount the Stat changes
+   */
+  private void negativeDecrementHandler(StatType statType, OriginType origin, int amount) {
+    if (amount == Integer.MIN_VALUE) {
+      amount = Integer.MAX_VALUE;
+    }
+    incrementStat(statType, origin, Math.abs(amount));
+  }
+
+  /**
+   * Checks whether the difference of two numbers underflows and returns the respective result.
+   *
+   * @param minuend the number from which is subtracted from
+   * @param subtrahend the number which subtracts
+   * @return the difference if no underflow occurs else Integer.MIN_VALUE
+   */
+  private int underflowCheck(int minuend, int subtrahend) {
+    return minuend - subtrahend < minuend ? minuend - subtrahend : Integer.MIN_VALUE;
+  }
+
+  /**
+   * Returns the Stat of the given type.
+   *
+   * @param statType The specific StatType
+   * @return The Stat of given StatType
+   */
+  private Stat getStatOfType(StatType statType) {
+    logger.info("getStatOfType : statType = {}", statType);
+    if (stats != null) {
+      for (Stat stat : stats) {
+        if (stat.getType() == statType) {
+          return stat;
+        }
+      }
+    }
+    return null;
+  }
+
   @Override
   public void addCallback(CharacterSheetListener listener) throws IllegalArgumentException {
     logger.info("addCallback : listener = {}", listener);
@@ -126,32 +196,6 @@ public class DefaultCharacterSheet implements CharacterSheet {
     listener.statChanged(stat.toStatDescriptor()); // Callback
   }
 
-  /**
-   * Handler if incrementStat is called with a negative amount.
-   * Method calls decrementStat with the absolute value of amount
-   *
-   * @param statType the Type of Stat to increment
-   * @param origin   the origin of the change
-   * @param amount   the amount the Stat changes
-   */
-  private void negativeIncrementHandler(StatType statType, OriginType origin, int amount) {
-    if (amount == Integer.MIN_VALUE) {
-      amount = Integer.MAX_VALUE;
-    }
-    decrementStat(statType, origin, Math.abs(amount));
-  }
-
-  /**
-   * Checks whether the sum of two numbers overflows and returns the respective result.
-   *
-   * @param addend1 the first number which is added
-   * @param addend2 the second number which is added
-   * @return the sum if no underflow occurs else Integer.MAX_VALUE
-   */
-  private int overflowCheck(int addend1, int addend2) {
-    return addend1 + addend2 > addend1 ? addend1 + addend2 : Integer.MAX_VALUE;
-  }
-
   @Override
   public void decrementStat(StatType statType, OriginType origin) throws IllegalArgumentException {
     logger.info("decrementStat : statType = {}, origin = {}", statType, origin);
@@ -177,32 +221,6 @@ public class DefaultCharacterSheet implements CharacterSheet {
       stat.setMiscellaneous(underflowCheck(stat.getMiscellaneous(), amount));
     }
     listener.statChanged(stat.toStatDescriptor()); // Callback
-  }
-
-  /**
-   * Handler if decrementStat is called with a negative amount.
-   * Method calls incrementStat with the absolute value of amount
-   *
-   * @param statType the Type of Stat to increment
-   * @param origin   the origin of the change
-   * @param amount   the amount the Stat changes
-   */
-  private void negativeDecrementHandler(StatType statType, OriginType origin, int amount) {
-    if (amount == Integer.MIN_VALUE) {
-      amount = Integer.MAX_VALUE;
-    }
-    incrementStat(statType, origin, Math.abs(amount));
-  }
-
-  /**
-   * Checks whether the difference of two numbers underflows and returns the respective result.
-   *
-   * @param minuend the number from which is subtracted from
-   * @param subtrahend the number which subtracts
-   * @return the difference if no underflow occurs else Integer.MIN_VALUE
-   */
-  private int underflowCheck(int minuend, int subtrahend) {
-    return minuend - subtrahend < minuend ? minuend - subtrahend : Integer.MIN_VALUE;
   }
 
   @Override
@@ -271,26 +289,6 @@ public class DefaultCharacterSheet implements CharacterSheet {
     logger.info("getDiceDescriptor : no params");
     return dice.toDiceDescriptor();
   }
-
-
-  /**
-   * Returns the Stat of the given type.
-   *
-   * @param statType The specific StatType
-   * @return The Stat of given StatType
-   */
-  private Stat getStatOfType(StatType statType) {
-    logger.info("getStatOfType : statType = {}", statType);
-    if (stats != null) {
-      for (Stat stat : stats) {
-        if (stat.getType() == statType) {
-          return stat;
-        }
-      }
-    }
-    return null;
-  }
-
 
   @Override
   public String toString() {
