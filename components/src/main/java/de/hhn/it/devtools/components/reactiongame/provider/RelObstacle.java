@@ -5,31 +5,33 @@ import de.hhn.it.devtools.apis.reactiongame.ObstacleDescriptor;
 /**
  * Obstacle class.
  */
-public class RelObstacle implements Obstacle {
+public class RelObstacle implements Obstacle, Comparable {
 
-  private final int x1;
-  private final int x2;
-  private final int y1;
-  private final int y2;
+  public static int WIDTH = 70; // in px
   private final int id;
+  private final int x1;
+  private final int y1;
+  private final int x2;
+  private final int y2;
 
 
   /**
    * Basic constructor for an aim target.
    *
-   * @param x1 x-position
-   * @param x2 x-position
-   * @param y1 y-position
-   * @param y2 y-position
    * @param id id
+   * @param x1 x-position Point A
+   * @param y1 y-position Point A
+   * @param x2 x-position Point B
+   * @param y2 y-position Point B
    */
-  public RelObstacle(int id, int x1, int x2, int y1, int y2) {
+  public RelObstacle(int id, int x1, int y1, int x2, int y2) {
     this.id = id;
     this.x1 = x1;
-    this.x2 = x2;
     this.y1 = y1;
+    this.x2 = x2;
     this.y2 = y2;
   }
+
 
   public int getX1() {
     return x1;
@@ -71,4 +73,20 @@ public class RelObstacle implements Obstacle {
     return new ObstacleDescriptor(id, x1, y1, x2, y2);
   }
 
+  /**
+   * Compares RelObstacle about their highest y coordinate.
+   *
+   * @param o the object to be compared.
+   * @return -1, 0 and 1 - o is higher, both are equal high, this is higher
+   */
+  @Override
+  public int compareTo(Object o) {
+    if (((RelObstacle) o).getY1() == y1) {
+      return 0;
+    }
+    if (((RelObstacle) o).getY1() < y1) {
+      return 1;
+    }
+    return -1;
+  }
 }

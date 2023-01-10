@@ -3,6 +3,7 @@ package de.hhn.it.devtools.components.reactiongame.provider;
 import de.hhn.it.devtools.apis.reactiongame.AimTargetDescriptor;
 import de.hhn.it.devtools.apis.reactiongame.ObstacleDescriptor;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -10,39 +11,46 @@ import java.util.ArrayList;
  */
 public class RelGameField {
 
+  public static int NORMAL_WIDTH = 1280; // in px
+  public static int NORMAL_HEIGHT = 720; // in px
+
   private int width; // px
   private int height; // px
+
+  private ArrayList<RelObstacleLine> obstacleLines = new ArrayList<>();
   private ArrayList<RelObstacle> obstacles = new ArrayList<>();
+
+  private ArrayList<RelAimTargetZone> aimTargetZones = new ArrayList<>();
   private ArrayList<RelAimTarget> targets = new ArrayList<>();
 
   public RelGameField() {
-    width = 1600;
-    height = 900;
+    width = NORMAL_WIDTH;
+    height = NORMAL_HEIGHT;
+
+    obstacleLines.add(new RelObstacleLine(370));
+    obstacleLines.add(new RelObstacleLine(640));
+    obstacleLines.add(new RelObstacleLine(910));
+
+    aimTargetZones.add(new RelAimTargetZone(0, 0, 100, RelGameField.NORMAL_HEIGHT));
+    aimTargetZones.add(new RelAimTargetZone(RelGameField.NORMAL_WIDTH - 100, 0,
+            RelGameField.NORMAL_WIDTH, RelGameField.NORMAL_HEIGHT));
   }
 
   public ArrayList<RelObstacle> getObstacles() {
     return obstacles;
   }
 
-  public void setObstacles(ArrayList<RelObstacle> obstacles) {
-    this.obstacles = obstacles;
-  }
-
-  public ArrayList<RelAimTarget> getTargets() {
+    public ArrayList<RelAimTarget> getTargets() {
     return targets;
   }
 
-  public void setTargets(ArrayList<RelAimTarget> targets) {
-    this.targets = targets;
-  }
 
   /**
    * Adds an obstacle to the ui.
    *
-   * @param obstacle obstacle
    */
-  void addObstacle(ObstacleDescriptor obstacle) {
-
+  void addRandomObstacle() {
+    
   }
 
   /**
@@ -81,24 +89,6 @@ public class RelGameField {
 
   }
 
-  /**
-   * Player hits a target.
-   *
-   * @param keyPressed  key pressed by player
-   * @param aimTargetId hit target
-   */
-  void aimTargetHit(char keyPressed, int aimTargetId) {
 
-  }
-
-  /**
-   * Player pressed a key.
-   *
-   * @param key key
-   * @throws IllegalStateException if state equals the current state
-   */
-  void keyPressed(char key) throws IllegalStateException {
-
-  }
 
 }

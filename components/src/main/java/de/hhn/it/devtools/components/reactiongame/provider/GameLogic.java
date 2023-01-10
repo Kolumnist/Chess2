@@ -23,14 +23,13 @@ public class GameLogic {
     private char pKey;
     private int score;
     private boolean isInvincible = false;
-
     int timePlayed;
 
 
     public GameLogic(Difficulty difficulty) {
         this.difficulty = difficulty;
         player = new RelPlayer("");
-        timer = new Timer(1000, new TaskPerformer(timer, this));
+        timer = new Timer(1000, new TaskPerformer(timer, this)); // Every second: timeplayed++
     }
 
     public ArrayList<ReactiongameListener> getCallbacks() {
@@ -77,10 +76,10 @@ public class GameLogic {
      * Methods gets called when player runs into an obstacle or after his iframes end.
      */
     public void playerHitObstacle() {
-        if (isInvincible || pObstacle == null) return;
+        if (isInvincible || pObstacle == null) return; // if player is not in an object or invincible - do nothing
         // player is in iFrames OR no longer in an obstacle
 
-        new IFrameThread(this).start();
+        new IFrameThread(this).start(); //I-Frame counter
         player.setCurrentLife(player.getCurrentLife() - 1);
 
 
@@ -106,7 +105,7 @@ public class GameLogic {
             score += 100;
 
             for (ReactiongameListener callback :
-                    callbacks) { // player loses a life
+                    callbacks) { // raise score
                 callback.changeScore(score);
             }
         }

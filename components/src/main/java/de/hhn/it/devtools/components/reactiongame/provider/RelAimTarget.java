@@ -5,6 +5,8 @@ package de.hhn.it.devtools.components.reactiongame.provider;
  */
 public class RelAimTarget implements AimTarget {
 
+  public static int RADIUS = 25; // in px
+
   private final int x;
   private final int y;
   private final int r;

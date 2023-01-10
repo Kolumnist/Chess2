@@ -1,10 +1,9 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class AimTargetZone {
+public class RelAimTargetZone {
 
     private int x1; // Point A x
     private int y1; // Point A y
@@ -14,7 +13,7 @@ public class AimTargetZone {
 
     private ArrayList<RelAimTarget> aimTargets;
 
-    public AimTargetZone(int x1, int y1, int x2, int y2) {
+    public RelAimTargetZone(int x1, int y1, int x2, int y2) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
