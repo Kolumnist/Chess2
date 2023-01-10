@@ -30,8 +30,7 @@ public class DuckHunt implements DuckHuntService {
   private DuckData[] ducks;
   private int ammoCount;
   private int duckCount;
-  private int missedCount = 15;
-  private final int gunSpread = 5;
+  private final int gunSpread = 5;  // TODO configure gun spread by screenDimension
   private MpatternGenerator pathGenerator;
   private float deltaTime = 0.016f;
   private final float duckSpeed = 1f;
@@ -61,7 +60,7 @@ public class DuckHunt implements DuckHuntService {
   }
 
   private void init() {
-    this.gameInfo = new GameInfo(0, gameSettings.getAmmoAmount(), 0);
+    this.gameInfo = new GameInfo(0, gameSettings.getAmmoAmount(), 0, 15);
     this.listeners = new ArrayList<>();
     ammoCount = gameSettings.getAmmoAmount();
     duckCount = gameSettings.getduckAmount();
@@ -92,13 +91,15 @@ public class DuckHunt implements DuckHuntService {
     for (DuckData duck : ducks) {
       if (duck.getStatus() == DuckState.DEAD
           || duck.getStatus() == DuckState.FLYAWAY
-          || duck.getStatus() == DuckState.SCARRED) {
+          || duck.getStatus() == DuckState.SCARRED
+          || duck.getStatus() == DuckState.ESCAPED) {
         continue;
       }
       // if amount of the vector between duck and shoot <= gunSpread
       if (Math.sqrt(Math.pow(duck.getX() - x, 2) + Math.pow(duck.getY() - y, 2)) <= gunSpread
               && gameSettings.getAmmoAmount() > 0) {
         duck.setStatus(DuckState.SCARRED);
+        gameInfo.setPlayerScore(gameInfo.getPlayerScore() + 1);
         listeners.forEach(listener -> {
           try {
             listener.duckHit(duck.getId());
@@ -246,7 +247,8 @@ public class DuckHunt implements DuckHuntService {
    */
   public void updateDucks() {
     for (DuckData duck : ducks) {
-      if (duck.getStatus() == DuckState.FLYING || duck.getStatus() == DuckState.FALLING) {
+      if (duck.getStatus() == DuckState.FLYING || duck.getStatus() == DuckState.FALLING
+      || duck.getStatus() == DuckState.FLYAWAY) {
         // velocity = resolutionCoefficient * speed * deltaTime
         float newVelocity = 0.3f * duckSpeed * deltaTime;
         duck.setVelocity(duck.getVelocity() + newVelocity);
@@ -254,22 +256,30 @@ public class DuckHunt implements DuckHuntService {
       if (duck.getStatus() == DuckState.FALLING && duck.getY() > screenDimension.getHeight()) {
         duck.setStatus(DuckState.DEAD);
       }
+      if (duck.getStatus() == DuckState.FLYAWAY && duck.getY() < 0) {
+        duck.setStatus(DuckState.ESCAPED);
+      }
       switch (duck.getStatus()) {
         case FLYING -> moveDuck(duck);
         case SCARRED -> duck.setStatus(DuckState.FALLING);
         case FALLING -> dropDuck(duck);
         case FLYAWAY -> ascendDuck(duck);
         case DEAD -> { /*dead is not used in this method*/ }
+        case ESCAPED -> { /*escaped is not used in this method*/}
         default -> throw new IllegalStateException("Unexpected value: " + duck.getStatus());
       }
     }
     ducksInfo = new DucksInfo(ducks);
   }
 
+  /**
+   * Drops the duck after it has been shot.
+   * @param duck
+   */
   private void dropDuck(DuckData duck) {
     float velocity = duck.getVelocity();
     if (velocity > 1f) { // if true duck can be moved to next position
-      duck.setY(duck.getY() + 1);
+      duck.setY(duck.getY() + screenDimension.getHeight()/ 30); //TODO anpassen der Pixel beim Droppen
       duck.setVelocity(velocity - 1f);
     }
   }
@@ -277,7 +287,7 @@ public class DuckHunt implements DuckHuntService {
   private void ascendDuck(DuckData duck) {
     float velocity = duck.getVelocity();
     if (velocity > 1f) { // if true duck can be moved to next position
-      duck.setY(duck.getY() - 1);
+      duck.setY(duck.getY() - screenDimension.getHeight()/ 30); //TODO anpassen der Pixel beim Wegfliegen (analog drop)
       duck.setVelocity(velocity - 1f);
     }
   }
@@ -317,7 +327,7 @@ public class DuckHunt implements DuckHuntService {
   public boolean checkRoundComplete() {
     int completeCount = 0;
     for (DuckData duck : ducks) {
-      if (duck.getStatus() == DuckState.DEAD || duck.getStatus() == DuckState.FLYAWAY) {
+      if (duck.getStatus() == DuckState.DEAD || duck.getStatus() == DuckState.ESCAPED) {
         completeCount++;
       }
     }
@@ -338,13 +348,14 @@ public class DuckHunt implements DuckHuntService {
     }
   }
 
+
   public boolean checkGameOver() {
     for (DuckData duck : ducks) {
-      if (duck.getStatus() == DuckState.FLYAWAY) {
-        missedCount--;
+      if (duck.getStatus() == DuckState.ESCAPED) {
+        gameInfo.setMissedCount(gameInfo.getMissedCount() - 1);
       }
     }
-    return missedCount <= 0;
+    return gameInfo.getMissedCount() <= 0;
   }
 
   public GameInfo getGameInfo() {

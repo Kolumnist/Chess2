@@ -117,12 +117,6 @@ public class DuckHuntGameLoop extends Thread {
           game.stopGame();
         } else {
           game.newRound();
-          try {
-            // wait that animations can be completed
-            Thread.sleep(4000);
-          } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-          }
         }
       }
 
