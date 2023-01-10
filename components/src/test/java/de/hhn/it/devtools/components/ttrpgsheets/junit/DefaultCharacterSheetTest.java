@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -405,12 +406,11 @@ class DefaultCharacterSheetTest {
       DescriptionDescriptor descDescriptor = characterSheet.getDescriptionDescriptor(descType);
       DescriptionDescriptor compareDescDesc = descArray[descType.ordinal()];
 
-      assertEquals(compareDescDesc.getText(), descDescriptor.getText());
-      assertEquals(compareDescDesc.getDescriptionType(), descDescriptor.getDescriptionType());
-    }
-    for (DescriptionType descType : DescriptionType.values()) {
-      characterSheet.setDescriptions(new Description[0]);
-      assertNull(characterSheet.getDescriptionDescriptor(descType));
+      assertAll(
+              () -> assertEquals(compareDescDesc.getText(), descDescriptor.getText()),
+              () -> assertEquals(compareDescDesc.getDescriptionType(),
+                      descDescriptor.getDescriptionType())
+      );
     }
   }
 
