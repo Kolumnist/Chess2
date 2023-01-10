@@ -80,19 +80,19 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public void unwrapCharacter(CharacterDescriptor characterDescriptor) {
     logger.info("unwrapCharacter : characterDescriptor = {}", characterDescriptor);
-    setDescriptions(convertDescDescriptorsToDescriptions(characterDescriptor.getDescriptions()));
-    setStats(convertStatDescriptorsToStats(characterDescriptor.getStats()));
-    setDice(new Dice(characterDescriptor.getDice()));
+    descriptions = convertDescDescriptorsToDescriptions(characterDescriptor.getDescriptions());
+    stats = convertStatDescriptorsToStats(characterDescriptor.getStats());
+    dice = new Dice(characterDescriptor.getDice());
   }
 
   @Override
   public CharacterDescriptor wrapCharacter() {
     logger.info("wrapCharacter : no params");
-    DescriptionDescriptor[] descDescriptors = new DescriptionDescriptor[getDescriptions().length];
+    DescriptionDescriptor[] descDescriptors = new DescriptionDescriptor[descriptions.length];
     for (int i = 0; i < DescriptionType.values().length; i++) {
       descDescriptors[i] = getDescriptionDescriptor(DescriptionType.values()[i]);
     }
-    StatDescriptor[] statDescriptors = new StatDescriptor[getStats().length];
+    StatDescriptor[] statDescriptors = new StatDescriptor[stats.length];
     for (int i = 0; i < StatType.values().length; i++) {
       statDescriptors[i] = getStatDescriptor(StatType.values()[i]);
     }
@@ -123,11 +123,12 @@ public class DefaultCharacterSheet implements CharacterSheet {
     } else {
       stat.setMiscellaneous(overflowCheck(stat.getMiscellaneous(), amount));
     }
-    getListener().statChanged(stat.toStatDescriptor()); // Callback
+    listener.statChanged(stat.toStatDescriptor()); // Callback
   }
 
   /**
-   * Handler if incrementStat is called with a negative amount. Method calls decrementStat with the absolute value of amount
+   * Handler if incrementStat is called with a negative amount.
+   * Method calls decrementStat with the absolute value of amount
    *
    * @param statType the Type of Stat to increment
    * @param origin   the origin of the change
@@ -141,7 +142,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   /**
-   * Checks whether the sum of two numbers overflows and returns the respective result
+   * Checks whether the sum of two numbers overflows and returns the respective result.
    *
    * @param addend1 the first number which is added
    * @param addend2 the second number which is added
@@ -175,11 +176,12 @@ public class DefaultCharacterSheet implements CharacterSheet {
     } else {
       stat.setMiscellaneous(underflowCheck(stat.getMiscellaneous(), amount));
     }
-    getListener().statChanged(stat.toStatDescriptor()); // Callback
+    listener.statChanged(stat.toStatDescriptor()); // Callback
   }
 
   /**
-   * Handler if decrementStat is called with a negative amount. Method calls incrementStat with the absolute value of amount
+   * Handler if decrementStat is called with a negative amount.
+   * Method calls incrementStat with the absolute value of amount
    *
    * @param statType the Type of Stat to increment
    * @param origin   the origin of the change
@@ -193,7 +195,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   /**
-   * Checks whether the difference of two numbers underflows and returns the respective result
+   * Checks whether the difference of two numbers underflows and returns the respective result.
    *
    * @param minuend the number from which is subtracted from
    * @param subtrahend the number which subtracts
@@ -230,10 +232,10 @@ public class DefaultCharacterSheet implements CharacterSheet {
     if (descriptionType == null || text == null) {
       throw new IllegalArgumentException("One or both arguments are null");
     }
-    for (Description description : getDescriptions()) {
+    for (Description description : descriptions) {
       if (description.getType() == descriptionType) {
         description.setDescription(text);
-        getListener().descriptionChanged(description.toDescriptionDescriptor()); // Callback
+        listener.descriptionChanged(description.toDescriptionDescriptor()); // Callback
       }
     }
   }
@@ -241,7 +243,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public DescriptionDescriptor getDescriptionDescriptor(DescriptionType descriptionType) {
     logger.info("getDescriptionDescriptor : descriptionType = {}", descriptionType);
-    for (Description description : getDescriptions()) {
+    for (Description description : descriptions) {
       if (description.getType() == descriptionType) {
         return description.toDescriptionDescriptor();
       }
@@ -252,23 +254,24 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public int rollDice() throws NullPointerException {
     logger.info("rollDice : no params");
-    int result = getDice().nextRoll();
-    getListener().diceChanged(getDice().toDiceDescriptor()); // Callback
+    int result = dice.nextRoll();
+    listener.diceChanged(dice.toDiceDescriptor()); // Callback
     return result;
   }
 
   @Override
-  public void changeDiceType(DiceType dice) throws IllegalArgumentException {
-    logger.info("changeDiceType : dice = {}", dice);
-    getDice().changeSize(dice);
-    getListener().diceChanged(getDice().toDiceDescriptor()); // Callback
+  public void changeDiceType(DiceType diceType) throws IllegalArgumentException {
+    logger.info("changeDiceType : dice = {}", diceType);
+    dice.changeSize(diceType);
+    listener.diceChanged(dice.toDiceDescriptor()); // Callback
   }
 
   @Override
   public DiceDescriptor getDiceDescriptor() {
     logger.info("getDiceDescriptor : no params");
-    return getDice().toDiceDescriptor();
+    return dice.toDiceDescriptor();
   }
+
 
   /**
    * Returns the Stat of the given type.
@@ -278,8 +281,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
    */
   private Stat getStatOfType(StatType statType) {
     logger.info("getStatOfType : statType = {}", statType);
-    if (getStats() != null) {
-      for (Stat stat : getStats()) {
+    if (stats != null) {
+      for (Stat stat : stats) {
         if (stat.getType() == statType) {
           return stat;
         }
@@ -288,43 +291,12 @@ public class DefaultCharacterSheet implements CharacterSheet {
     return null;
   }
 
-  public CharacterSheetListener getListener() {
-    return listener;
-  }
-
-  public void setListener(CharacterSheetListener listener) {
-    this.listener = listener;
-  }
-
-  public Description[] getDescriptions() {
-    return descriptions;
-  }
-
-  public void setDescriptions(Description[] descriptions) {
-    this.descriptions = descriptions;
-  }
-
-  public Stat[] getStats() {
-    return stats;
-  }
-
-  public void setStats(Stat[] stats) {
-    this.stats = stats;
-  }
-
-  public Dice getDice() {
-    return dice;
-  }
-
-  public void setDice(Dice dice) {
-    this.dice = dice;
-  }
 
   @Override
   public String toString() {
-    return "DefaultCharacterSheet: [CharacterSheetListener: " + getListener()
-            + ", Descriptions: " + Arrays.toString(getDescriptions())
-            + ", Stats: " + Arrays.toString(getStats())
-            + ", Dice: " + getDice() + "]";
+    return "DefaultCharacterSheet: [CharacterSheetListener: " + listener
+            + ", Descriptions: " + Arrays.toString(descriptions)
+            + ", Stats: " + Arrays.toString(stats)
+            + ", Dice: " + dice + "]";
   }
 }
