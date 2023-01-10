@@ -3,18 +3,18 @@ package de.hhn.it.devtools.components.reactiongame.provider;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class RelObstacleLine {
+public class RgcObstacleLine {
 
     private final int x;
 
-    private final ArrayList<RelObstacle> obstacles;
+    private final ArrayList<RgcObstacle> obstacles;
 
-    public RelObstacleLine(int x) {
+    public RgcObstacleLine(int x) {
         this.x = x;
         obstacles = new ArrayList<>();
     }
 
-    public ArrayList<RelObstacle> getObstacles() {
+    public ArrayList<RgcObstacle> getObstacles() {
         return obstacles;
     }
 
@@ -24,13 +24,13 @@ public class RelObstacleLine {
      * @param id identifier of the new obstacle
      * @return the new obstacle
      */
-    public RelObstacle addRandomObstacle(int id) {
+    public RgcObstacle addRandomObstacle(int id) {
 
-        RelObstacle obstacle;
+        RgcObstacle obstacle;
         int[] yCoords = generateYCoordsForObstacle();
 
-        obstacle = new RelObstacle(id, x - RelObstacle.WIDTH / 2, yCoords[0],
-                x + RelObstacle.WIDTH / 2, yCoords[1]);
+        obstacle = new RgcObstacle(id, x - RgcObstacle.WIDTH / 2, yCoords[0],
+                x + RgcObstacle.WIDTH / 2, yCoords[1]);
 
         obstacles.add(obstacle);
 
@@ -50,12 +50,12 @@ public class RelObstacleLine {
     public int[] generateYCoordsForObstacle() {
         int[] out = new int[2];
 
-        out[0] = new Random().nextInt(RelGameField.NORMAL_HEIGHT - 100);
+        out[0] = new Random().nextInt(RgcGameField.NORMAL_HEIGHT - 100);
 
         do {
-            int temp = new Random().nextInt((RelGameField.NORMAL_HEIGHT / 3) + 100) + 100;
+            int temp = new Random().nextInt((RgcGameField.NORMAL_HEIGHT / 3) + 100) + 100;
             out[1] = temp + out[0];
-        } while (out[1] > RelGameField.NORMAL_HEIGHT);
+        } while (out[1] > RgcGameField.NORMAL_HEIGHT);
 
 
         return out;

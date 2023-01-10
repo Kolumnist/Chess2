@@ -5,7 +5,7 @@ import de.hhn.it.devtools.apis.reactiongame.ObstacleDescriptor;
 /**
  * Obstacle class.
  */
-public class RelObstacle implements Obstacle, Comparable {
+public class RgcObstacle implements Obstacle, Comparable {
 
   public static int WIDTH = 70; // in px
   private final int id;
@@ -24,7 +24,7 @@ public class RelObstacle implements Obstacle, Comparable {
    * @param x2 x-position Point B
    * @param y2 y-position Point B
    */
-  public RelObstacle(int id, int x1, int y1, int x2, int y2) {
+  public RgcObstacle(int id, int x1, int y1, int x2, int y2) {
     this.id = id;
     this.x1 = x1;
     this.y1 = y1;
@@ -81,10 +81,10 @@ public class RelObstacle implements Obstacle, Comparable {
    */
   @Override
   public int compareTo(Object o) {
-    if (((RelObstacle) o).getY1() == y1) {
+    if (((RgcObstacle) o).getY1() == y1) {
       return 0;
     }
-    if (((RelObstacle) o).getY1() < y1) {
+    if (((RgcObstacle) o).getY1() < y1) {
       return 1;
     }
     return -1;

@@ -10,7 +10,7 @@ import java.util.SortedMap;
 /**
  * Realisation of ReactionGameService.
  */
-public class RelReactionGameService implements ReactiongameService {
+public class RgcReactionGameService implements ReactiongameService {
 
   private GameLogic gameLogic;
 

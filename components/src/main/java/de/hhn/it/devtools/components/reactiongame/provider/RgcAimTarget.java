@@ -3,7 +3,7 @@ package de.hhn.it.devtools.components.reactiongame.provider;
 /**
  *
  */
-public class RelAimTarget implements AimTarget {
+public class RgcAimTarget implements AimTarget {
 
   public static int RADIUS = 25; // in px
 
@@ -23,7 +23,7 @@ public class RelAimTarget implements AimTarget {
    * @param r radius
    * @param key keyboard key
    */
-  public RelAimTarget(int id, int x, int y, int r, char key) {
+  public RgcAimTarget(int id, int x, int y, int r, char key) {
     this.id = id;
     this.x = x;
     this.y = y;

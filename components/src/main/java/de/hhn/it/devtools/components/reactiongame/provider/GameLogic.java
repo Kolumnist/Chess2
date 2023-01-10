@@ -11,15 +11,15 @@ import java.util.ArrayList;
 public class GameLogic {
 
     private ArrayList<ReactiongameListener> callbacks = new ArrayList<>();
-    private RelGameField gameField = new RelGameField();
-    private RelPlayer player;
+    private RgcGameField gameField = new RgcGameField();
+    private RgcPlayer player;
     private Timer timer; // 2 verschiedene Timer für front und backend?
 
     private Difficulty difficulty;
     private GameState state;
 
-    private RelObstacle pObstacle; // player is in this obstacle
-    private RelAimTarget pAimTarget; // player is in this aimtarget
+    private RgcObstacle pObstacle; // player is in this obstacle
+    private RgcAimTarget pAimTarget; // player is in this aimtarget
     private char pKey;
     private int score;
     private boolean isInvincible = false;
@@ -28,7 +28,7 @@ public class GameLogic {
 
     public GameLogic(Difficulty difficulty) {
         this.difficulty = difficulty;
-        player = new RelPlayer("");
+        player = new RgcPlayer("");
         timer = new Timer(1000, new TaskPerformer(timer, this)); // Every second: timeplayed++
     }
 
@@ -36,11 +36,11 @@ public class GameLogic {
         return callbacks;
     }
 
-    public RelGameField getGameField() {
+    public RgcGameField getGameField() {
         return gameField;
     }
 
-    public RelPlayer getPlayer() {
+    public RgcPlayer getPlayer() {
         return player;
     }
 
@@ -56,11 +56,11 @@ public class GameLogic {
         this.state = state;
     }
 
-    public void setpObstacle(RelObstacle pObstacle) {
+    public void setpObstacle(RgcObstacle pObstacle) {
         this.pObstacle = pObstacle;
     }
 
-    public void setpAimTarget(RelAimTarget pAimTarget) {
+    public void setpAimTarget(RgcAimTarget pAimTarget) {
         this.pAimTarget = pAimTarget;
     }
 
@@ -110,8 +110,4 @@ public class GameLogic {
             }
         }
     }
-
-
-
-
 }
