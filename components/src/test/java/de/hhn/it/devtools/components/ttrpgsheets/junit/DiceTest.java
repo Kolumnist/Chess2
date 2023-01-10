@@ -58,8 +58,8 @@ class DiceTest {
   }
 
   @Test
-  void convertToDiceTypeTest() {
-    logger.info("convertToDiceType() is called");
+  void getTypeTest() {
+    logger.info("getType() is called");
     for (int size : sizes) {
       dice.setSize(size);
       switch (dice.getSize()) {
@@ -74,14 +74,6 @@ class DiceTest {
         default -> { }
       }
     }
-    assertNull(dice.convertToDiceType(3));
-  }
-
-  @Test
-  void getTypeTest() {
-    logger.info("getType() is called");
-    dice.setSize(2);
-    assertEquals(DiceType.D2, dice.getType());
   }
 
   @Test
