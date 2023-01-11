@@ -94,12 +94,6 @@ public class Stat {
     return type;
   }
 
-  /*
-  public int getBaseValue() {
-    return baseValue;
-  }
-   */
-
   public int getAbilityPointsUsed() {
     return abilityPointsUsed;
   }
@@ -107,12 +101,6 @@ public class Stat {
   public void setAbilityPointsUsed(int abilityPointsUsed) {
     this.abilityPointsUsed = abilityPointsUsed;
   }
-
-  /*
-  public int getOffset() {
-    return offset;
-  }
-  */
 
   public int getMiscellaneous() {
     return miscellaneous;
