@@ -25,7 +25,8 @@ class DefaultCharacterSheetTest {
   SimpleCharacterSheetListener listener = null;
   DefaultCharacterSheet characterSheet = null;
   DefaultCharacterSheet nullSheet = new DefaultCharacterSheet(new CharacterDescriptor(
-                  new DescriptionDescriptor[0], new StatDescriptor[0], new DiceDescriptor(DiceType.D2, 0)));
+          new DescriptionDescriptor[0], new StatDescriptor[0],
+          new DiceDescriptor(DiceType.D2, 0)));
 
   @BeforeEach
   void setupObjects() {
@@ -198,8 +199,10 @@ class DefaultCharacterSheetTest {
     characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, 5);
     characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MAX_VALUE);
     assertAll(
-            () -> assertEquals(Integer.MAX_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed()),
-            () -> assertEquals(Integer.MAX_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous())
+            () -> assertEquals(Integer.MAX_VALUE,
+                    characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed()),
+            () -> assertEquals(Integer.MAX_VALUE,
+                    characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous())
     );
 
     // Negative Values
@@ -208,16 +211,20 @@ class DefaultCharacterSheetTest {
     characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, -Integer.MAX_VALUE);
     characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, -10);
     assertAll(
-            () -> assertEquals(-5, characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed()),
-            () -> assertEquals(-10, characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous())
+            () -> assertEquals(-5,
+                    characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed()),
+            () -> assertEquals(-10,
+                    characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous())
     );
 
     // Underflow
     characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, Integer.MIN_VALUE);
     characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MIN_VALUE);
     assertAll(
-            () -> assertEquals(Integer.MIN_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed()),
-            () -> assertEquals(Integer.MIN_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous())
+            () -> assertEquals(Integer.MIN_VALUE,
+                    characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed()),
+            () -> assertEquals(Integer.MIN_VALUE,
+                    characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous())
     );
   }
 
@@ -291,8 +298,10 @@ class DefaultCharacterSheetTest {
     characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, 10);
     characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MAX_VALUE);
     assertAll(
-            () -> assertEquals(Integer.MIN_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed()),
-            () -> assertEquals(Integer.MIN_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous())
+            () -> assertEquals(Integer.MIN_VALUE,
+                    characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed()),
+            () -> assertEquals(Integer.MIN_VALUE,
+                    characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous())
     );
 
     // Negative Values
@@ -301,16 +310,20 @@ class DefaultCharacterSheetTest {
     characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, -Integer.MAX_VALUE);
     characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, -11);
     assertAll(
-            () -> assertEquals(5, characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed()),
-            () -> assertEquals(10, characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous())
+            () -> assertEquals(5,
+                    characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed()),
+            () -> assertEquals(10,
+                    characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous())
     );
 
     // Overflow
     characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, Integer.MIN_VALUE);
     characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MIN_VALUE);
     assertAll(
-            () -> assertEquals(Integer.MAX_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed()),
-            () -> assertEquals(Integer.MAX_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous())
+            () -> assertEquals(Integer.MAX_VALUE,
+                    characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed()),
+            () -> assertEquals(Integer.MAX_VALUE,
+                    characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous())
     );
   }
 
@@ -339,11 +352,13 @@ class DefaultCharacterSheetTest {
       StatDescriptor statDescriptor = characterSheet.getStatDescriptor(statType);
       StatDescriptor compareStatDesc = descArray[statType.ordinal()];
       assertAll(
-              () -> assertEquals(compareStatDesc.getMiscellaneous(), statDescriptor.getMiscellaneous()),
+              () -> assertEquals(compareStatDesc.getMiscellaneous(),
+                      statDescriptor.getMiscellaneous()),
               () -> assertEquals(compareStatDesc.getStatType(), statDescriptor.getStatType()),
               () -> assertEquals(compareStatDesc.getOffset(), statDescriptor.getOffset()),
               () -> assertEquals(compareStatDesc.getBaseValue(), statDescriptor.getBaseValue()),
-              () -> assertEquals(compareStatDesc.getAbilityPointsUsed(), statDescriptor.getAbilityPointsUsed()),
+              () -> assertEquals(compareStatDesc.getAbilityPointsUsed(),
+                      statDescriptor.getAbilityPointsUsed()),
               () -> assertEquals(compareStatDesc.isLevelStat(), statDescriptor.isLevelStat()),
               () -> assertNull(nullSheet.getStatDescriptor(statType))
       );

@@ -112,7 +112,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   /**
    * Checks whether the difference of two numbers underflows and returns the respective result.
    *
-   * @param minuend the number from which is subtracted from
+   * @param minuend    the number from which is subtracted from
    * @param subtrahend the number which subtracts
    * @return the difference if no underflow occurs else Integer.MIN_VALUE
    */
@@ -128,11 +128,11 @@ public class DefaultCharacterSheet implements CharacterSheet {
    */
   private Stat getStatOfType(StatType statType) {
     logger.info("getStatOfType : statType = {}", statType);
-      for (Stat stat : stats) {
-        if (stat.getType() == statType) {
-          return stat;
-        }
+    for (Stat stat : stats) {
+      if (stat.getType() == statType) {
+        return stat;
       }
+    }
     return null;
   }
 
