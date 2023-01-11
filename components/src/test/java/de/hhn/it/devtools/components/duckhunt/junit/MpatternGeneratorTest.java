@@ -1,10 +1,13 @@
 package de.hhn.it.devtools.components.duckhunt.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import de.hhn.it.devtools.apis.duckhunt.DuckData;
+import de.hhn.it.devtools.apis.duckhunt.DuckOrientation;
 import de.hhn.it.devtools.apis.duckhunt.DuckState;
+import de.hhn.it.devtools.components.duckhunt.DuckOrientationTranslationException;
 import de.hhn.it.devtools.components.duckhunt.MpatternGenerator;
 import de.hhn.it.devtools.components.duckhunt.ScreenDimension;
 import de.hhn.it.devtools.components.duckhunt.Vector2D;
@@ -12,7 +15,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Random;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -36,6 +38,17 @@ class MpatternGeneratorTest {
   @AfterEach
   void tearDown() {
     patternGenerator.clearPaths();
+  }
+
+  @Test
+  void getNextMoveTest() throws DuckOrientationTranslationException {
+    patternGenerator.generatePaths(ducks);
+    DuckOrientation orientation = patternGenerator.getNextMove(0);
+    assertTrue(orientation == DuckOrientation.WEST
+              || orientation == DuckOrientation.NORTHWEST
+              || orientation == DuckOrientation.NORTH
+              || orientation == DuckOrientation.NORTHEAST
+              || orientation == DuckOrientation.EAST);
   }
 
   @Test
@@ -103,15 +116,16 @@ class MpatternGeneratorTest {
 
     long testSeed = 3697562753721813L;
 
-    final ArrayList<Vector2D> result = (ArrayList<Vector2D>) indexOfMethod.invoke(patternGenerator, testSeed, 6);
+    final ArrayList<Vector2D> result = (ArrayList<Vector2D>) indexOfMethod.invoke(
+        patternGenerator, testSeed, 6);
 
     final ArrayList<Vector2D> shouldBeCase = new ArrayList<>();
-    shouldBeCase.add(new Vector2D(35,100));
-    shouldBeCase.add(new Vector2D(57,78));
-    shouldBeCase.add(new Vector2D(57,51));
-    shouldBeCase.add(new Vector2D(34,51));
-    shouldBeCase.add(new Vector2D(56,51));
-    shouldBeCase.add(new Vector2D(82,25));
+    shouldBeCase.add(new Vector2D(35, 100));
+    shouldBeCase.add(new Vector2D(57, 78));
+    shouldBeCase.add(new Vector2D(57, 51));
+    shouldBeCase.add(new Vector2D(34, 51));
+    shouldBeCase.add(new Vector2D(56, 51));
+    shouldBeCase.add(new Vector2D(82, 25));
 
     assertEquals(result, shouldBeCase);
   }
@@ -129,13 +143,14 @@ class MpatternGeneratorTest {
     for (int i = 0; i < 100; i++) {
       long testSeed = new Random().nextLong();
 
-      final ArrayList<Vector2D> result = (ArrayList<Vector2D>) indexOfMethod.invoke(patternGenerator, testSeed, 5);
+      final ArrayList<Vector2D> result = (ArrayList<Vector2D>) indexOfMethod.invoke(
+          patternGenerator, testSeed, 5);
       result.remove(0); // first point never in boundaries because duck spawn on bottom of screen
 
       for (Vector2D v : result) {
         // if point not in Dimension boundary
-        if (v.getX() < sidePadding || v.getX() > screenDimension.getWidth()-sidePadding ||
-                v.getY() < sidePadding || v.getY() > screenDimension.getHeight()-sidePadding) {
+        if (v.getX() < sidePadding || v.getX() > screenDimension.getWidth() - sidePadding
+            || v.getY() < sidePadding || v.getY() > screenDimension.getHeight() - sidePadding) {
           errorFlag = true;
           break;
         }
@@ -143,7 +158,7 @@ class MpatternGeneratorTest {
 
       if (errorFlag) {
         System.out.print("Point List where error occurred: ");
-        result.stream().forEach(System.out::print);
+        result.forEach(System.out::print);
         fail("Generated points not in boundaries");
       }
     }
