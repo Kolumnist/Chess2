@@ -29,7 +29,7 @@ public class Door {
    * @return door is open
    */
   public boolean unlock(Item item) {
-    boolean isSolved = puzzle.setSolved(item);
+    boolean isSolved = puzzle.setSolved(item.getItemId());
     if (isSolved) {
       locked = false;
       inspectMessage = "This door is open. ";
@@ -57,7 +57,7 @@ public class Door {
    * @param key get item
    */
   public void setPuzzle(Item key) {
-    this.puzzle = new Puzzle(key);
+    this.puzzle = new Puzzle(key.getItemId());
 
     locked = true;
     inspectMessage = "This door is locked.";

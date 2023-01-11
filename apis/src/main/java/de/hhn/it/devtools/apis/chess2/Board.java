@@ -2,18 +2,20 @@ package de.hhn.it.devtools.apis.chess2;
 
 /**
  * Defines the board and lets you get all fields or a specific field.
+ * An Object of Board updates while the game is running.
  *
  * @author Collin Hoss, Michel Jouaux, Lara Mangi
- * @version 1.0
+ * @version 1.1
  */
 
 public class Board {
 
   private final Field[] fields = new Field[68];
+  public boolean lostPiece = false;
 
   /**
-   * Constructor of board. Initializes the fields. (It starts left bottom with 0/0 and goes to the
-   * right)
+   * Constructor of board.
+   * Initializes the fields. (It starts left bottom with 0/0 and goes to the right)
    */
   public Board() {
 
@@ -22,32 +24,41 @@ public class Board {
     for (int y = 0; y < 8; y++) {
       for (int x = 0; x < 8; x++) {
         fields[++diff] = new Field(new Coordinate(x, y));
+        fields[diff].setFieldState(FieldState.FREE_FIELD);
       }
     }
 
     /* Jail fields get initialized */
-    fields[fields.length - 4] = new Field(new Coordinate(8, 0));
-    fields[fields.length - 2] = new Field(new Coordinate(8, 2));
-    fields[fields.length - 3] = new Field(new Coordinate(8, 1));
-    fields[fields.length - 1] = new Field(new Coordinate(8, 3));
+    fields[fields.length - 4] = new Field(new Coordinate(9, 4));
+    fields[fields.length - 2] = new Field(new Coordinate(9, 3));
+    fields[fields.length - 3] = new Field(new Coordinate(8, 3));
+    fields[fields.length - 1] = new Field(new Coordinate(8, 4));
+    fields[fields.length - 4].setFieldState(FieldState.JAIL);
+    fields[fields.length - 2].setFieldState(FieldState.JAIL);
+    fields[fields.length - 3].setFieldState(FieldState.JAIL);
+    fields[fields.length - 1].setFieldState(FieldState.JAIL);
   }
 
   /**
    * A getter for a specific Field.
+   * MARK: Could make a Table instead of going through array
    *
-   * @param index to get the correct field.
-   * @return a specific Field.
+   * @param coordinate to get the correct field.
+   * @return the Field on index.
+   * @throws IllegalArgumentException so that no ArrayIndexOutOfBoundsException will occur.
    */
-  public Field getSpecificField(int index) {
-    if(index < fields.length)
-    {
-      return fields[index];
+  public Field getSpecificField(Coordinate coordinate) throws IllegalArgumentException {
+    for (Field field : fields) {
+      if (field.getCoordinate().getX() == coordinate.getX()
+          && field.getCoordinate().getY() == coordinate.getY()) {
+        return field;
+      }
     }
-    return fields[0];
+    return fields[fields.length - 1];
   }
 
   /**
-   * A getter for all fields.
+   * A getter for all fields as array.
    *
    * @return all fields.
    */

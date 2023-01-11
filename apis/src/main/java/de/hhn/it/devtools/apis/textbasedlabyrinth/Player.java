@@ -2,7 +2,6 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
-
 import java.util.HashMap;
 
 /**
@@ -10,8 +9,8 @@ import java.util.HashMap;
  */
 public class Player {
 
-  private final String name;
-  private HashMap<String, Item> inventory;
+  private String name;
+  private HashMap<Integer, Item> inventory;
   public Room currentRoomOfPlayer;
 
   /**
@@ -27,45 +26,43 @@ public class Player {
 
   public void addItem(Item item) {
 
-    inventory.put(item.getName(), item);
+    inventory.put(item.getItemId(), item);
   }
 
   /**
    * Javadoc.
    *
-   * @param itemName new Item
+   * @param itemId new Item
    * @throws NoSuchItemFoundException Exception
    */
-  public void removeItem(String itemName) throws NoSuchItemFoundException {
-    if (itemName.isEmpty() || itemName.isBlank()) {
-      throw new NoSuchItemFoundException("Name of the item cannot be zero or blank.");
-    }
-    if (!inventory.containsKey(itemName)) {
+  public void removeItem(int itemId) throws NoSuchItemFoundException {
+    if (!inventory.containsKey(itemId)) {
       throw new NoSuchItemFoundException();
     }
-    inventory.remove(itemName);
+    inventory.remove(itemId);
   }
 
   /**
    * Javadoc.
    *
-   * @param itemName Item
+   * @param itemId Item
    * @return return
    * @throws NoSuchItemFoundException exception
    */
-  public Item getItem(String itemName) throws NoSuchItemFoundException {
-    if (itemName.isEmpty() || itemName.isBlank()) {
-      throw new NoSuchItemFoundException("Name of the item cannot be zero or blank.");
-    }
-    if (!inventory.containsKey(itemName)) {
+  public Item getItem(int itemId) throws NoSuchItemFoundException {
+    if (!inventory.containsKey(itemId)) {
       throw new NoSuchItemFoundException();
     }
-    return inventory.get(itemName);
+    return inventory.get(itemId);
   }
 
   public String getName() {
 
     return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   /**
@@ -86,4 +83,5 @@ public class Player {
   public void setCurrentRoomOfPlayer(Room currentRoomOfPlayer) {
     this.currentRoomOfPlayer = currentRoomOfPlayer;
   }
+
 }

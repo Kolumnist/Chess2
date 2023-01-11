@@ -1,6 +1,5 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
-
 /**
  * Direction enum.
  */
