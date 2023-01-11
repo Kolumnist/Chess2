@@ -100,6 +100,7 @@ class DefaultCharacterSheetTest {
     characterSheet.addCallback(newListener);
     characterSheet.incrementStat(StatType.AGILITY, OriginType.LEVEL_POINT);
     assertEquals(1, newListener.stats.size());
+    assertThrows(IllegalArgumentException.class, () -> characterSheet.addCallback(null));
   }
 
   @Test
