@@ -49,35 +49,38 @@ public class RgcClock implements Runnable {
 
     boolean isHighMarkReached = false;
 
-    while (isRunning) {
+    while (true) {
+      while (isRunning) {
 
-      if (time % gameLogic.getDifficulty().obstacleIntervall == 0) { // Every intervall...
-        if (isHighMarkReached) { // HM reached -> remove an obstacle
-          deleteRandomObstacle();
+        if (time % gameLogic.getDifficulty().obstacleIntervall == 0) { // Every intervall...
+          if (isHighMarkReached) { // HM reached -> remove an obstacle
+            deleteRandomObstacle();
 
-          if (gameLogic.getGameField().getObstacles().size() ==
-              gameLogic.getDifficulty().lowWatermark) { // LM reached, add now
-            isHighMarkReached = false;
-          }
+            if (gameLogic.getGameField().getObstacles().size() ==
+                gameLogic.getDifficulty().lowWatermark) { // LM reached, add now
+              isHighMarkReached = false;
+            }
 
-        } else {
-          addNewObstacle();
+          } else {
+            addNewObstacle();
 
-          if (gameLogic.getGameField().getObstacles().size() ==
-              gameLogic.getDifficulty().highWatermark) {
-            isHighMarkReached = true;
+            if (gameLogic.getGameField().getObstacles().size() ==
+                gameLogic.getDifficulty().highWatermark) {
+              isHighMarkReached = true;
+            }
           }
         }
-      }
 
 
-      try {
-        Thread.sleep(1000); // Every second = tick
-      } catch (InterruptedException e) {
-        throw new RuntimeException(e);
+        try {
+          Thread.sleep(1000); // Every second = tick
+        } catch (InterruptedException e) {
+          throw new RuntimeException(e);
+        }
+        time++;
       }
-      time++;
     }
+
   }
 
   /**
