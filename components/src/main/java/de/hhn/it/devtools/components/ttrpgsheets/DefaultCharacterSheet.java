@@ -128,13 +128,11 @@ public class DefaultCharacterSheet implements CharacterSheet {
    */
   private Stat getStatOfType(StatType statType) {
     logger.info("getStatOfType : statType = {}", statType);
-    if (stats != null) {
       for (Stat stat : stats) {
         if (stat.getType() == statType) {
           return stat;
         }
       }
-    }
     return null;
   }
 
