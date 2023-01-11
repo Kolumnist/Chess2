@@ -56,11 +56,10 @@ public class Board {
       return fields[fieldIndex];
     }
 
-    for (int i = 1; i < 5; i++)
-    {
-      if (fields[fields.length-i].getCoordinate().getX() == coordinate.getX()
-          && fields[fields.length-i].getCoordinate().getY() == coordinate.getY()) {
-        return fields[fields.length-i];
+    for (int i = 1; i < 5; i++) {
+      if (fields[fields.length - i].getCoordinate().getX() == coordinate.getX()
+          && fields[fields.length - i].getCoordinate().getY() == coordinate.getY()) {
+        return fields[fields.length - i];
       }
     }
 
