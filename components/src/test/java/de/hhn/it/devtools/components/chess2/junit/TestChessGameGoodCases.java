@@ -54,7 +54,8 @@ public class TestChessGameGoodCases {
         currentNum++;
         continue;
       }
-      if (field.getFieldState() == FieldState.HAS_OTHER_PIECE) {
+      if (field.getFieldState() == FieldState.HAS_OTHER_PIECE
+        || field.getFieldState() == FieldState.OTHER_KING) {
         otherNum++;
         continue;
       }
@@ -102,7 +103,8 @@ public class TestChessGameGoodCases {
         currentNum++;
         continue;
       }
-      if (field.getFieldState() == FieldState.HAS_OTHER_PIECE) {
+      if (field.getFieldState() == FieldState.HAS_OTHER_PIECE
+          || field.getFieldState() == FieldState.OTHER_KING) {
         otherNum++;
         continue;
       }
