@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -11,14 +12,11 @@ import org.junit.jupiter.api.Test;
 
 
 class StatTest {
-  private static final org.slf4j.Logger logger
-          = org.slf4j.LoggerFactory.getLogger(StatTest.class);
 
   private static Stat[] stats;
 
   @BeforeEach
   void setupObjects() {
-    logger.info("setupObjects() is called");
     StatDescriptor[] statDescriptors = new StatDescriptor[StatType.values().length];
     stats = new Stat[StatType.values().length];
     for (int i = 0; i < stats.length; i++) {
@@ -39,13 +37,11 @@ class StatTest {
 
   @Test
   void constructorTest() {
-    logger.info("constructorTest() is called");
     assertThrows(IllegalArgumentException.class, () -> new Stat(null));
   }
 
   @Test
   void getTotalValueTest() {
-    logger.info("getTotalValueTest() is called");
     for (Stat stat : stats) {
       switch (stat.getType()) {
         case MAX_HEALTH -> assertEquals(30, stat.getTotalValue());
@@ -55,8 +51,12 @@ class StatTest {
         default -> assertEquals(0, stat.getTotalValue());
       }
     }
+  }
 
-    Stat edgeStat = stats[3];
+  @Test
+  void getTotalValueEdgeCasesTest() {
+    Stat edgeStat = stats[3]; // Strength stat used for testing
+    //Overflow
     edgeStat.setMiscellaneous(Integer.MAX_VALUE);
     assertEquals(Integer.MAX_VALUE, edgeStat.getTotalValue());
     edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
@@ -64,9 +64,11 @@ class StatTest {
     edgeStat.setMiscellaneous(0);
     assertEquals(Integer.MAX_VALUE, edgeStat.getTotalValue());
 
+    //Overflow goes back inbounds
     edgeStat.setMiscellaneous(Integer.MIN_VALUE);
     assertEquals(-1, edgeStat.getTotalValue());
 
+    // Underflow
     edgeStat.setAbilityPointsUsed(0);
     assertEquals(Integer.MIN_VALUE, edgeStat.getTotalValue());
     edgeStat.setAbilityPointsUsed(Integer.MIN_VALUE);
@@ -74,39 +76,32 @@ class StatTest {
     edgeStat.setMiscellaneous(0);
     assertEquals(Integer.MIN_VALUE, edgeStat.getTotalValue());
 
+    // Underflow goes back inbounds
     edgeStat.setMiscellaneous(Integer.MAX_VALUE);
     assertEquals(-1, edgeStat.getTotalValue());
   }
 
   @Test
   void addAbilityPointTest() {
-    logger.info("addAbilityPointTest() is called");
     for (Stat stat : stats) {
       stat.addAbilityPoint();
       switch (stat.getType()) {
-        case MAX_HEALTH -> {
-          assertEquals(1, stat.getAbilityPointsUsed());
-          assertEquals(35, stat.getTotalValue());
-        }
-        case HEALTH -> {
-          assertEquals(0, stat.getAbilityPointsUsed());
-          assertEquals(28, stat.getTotalValue());
-        }
-        case LEVEL -> {
-          assertEquals(0, stat.getAbilityPointsUsed());
-          assertEquals(1, stat.getTotalValue());
-        }
-        case STRENGTH -> {
-          assertEquals(3, stat.getAbilityPointsUsed());
-          assertEquals(9, stat.getTotalValue());
-        }
-        default -> {
-          assertEquals(1, stat.getAbilityPointsUsed());
-          assertEquals(1, stat.getTotalValue());
-        }
+        case MAX_HEALTH -> assertAll(() -> assertEquals(1, stat.getAbilityPointsUsed()),
+                () -> assertEquals(35, stat.getTotalValue()));
+        case HEALTH -> assertAll(() -> assertEquals(0, stat.getAbilityPointsUsed()),
+                () -> assertEquals(28, stat.getTotalValue()));
+        case LEVEL -> assertAll(() -> assertEquals(0, stat.getAbilityPointsUsed()),
+                () -> assertEquals(1, stat.getTotalValue()));
+        case STRENGTH -> assertAll(() -> assertEquals(3, stat.getAbilityPointsUsed()),
+                () -> assertEquals(9, stat.getTotalValue()));
+        default -> assertAll(() -> assertEquals(1, stat.getAbilityPointsUsed()),
+                () -> assertEquals(1, stat.getTotalValue()));
       }
     }
+  }
 
+  @Test
+  void addAbilityPointEdgeCasesTest() {
     Stat edgeStat = stats[3];
     edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
     edgeStat.addAbilityPoint();
@@ -119,33 +114,25 @@ class StatTest {
 
   @Test
   void removeAbilityPointTest() {
-    logger.info("removeAbilityPointTest() is called");
     for (Stat stat : stats) {
       stat.removeAbilityPoint();
       switch (stat.getType()) {
-        case MAX_HEALTH -> {
-          assertEquals(-1, stat.getAbilityPointsUsed());
-          assertEquals(25, stat.getTotalValue());
-        }
-        case HEALTH -> {
-          assertEquals(0, stat.getAbilityPointsUsed());
-          assertEquals(28, stat.getTotalValue());
-        }
-        case LEVEL -> {
-          assertEquals(0, stat.getAbilityPointsUsed());
-          assertEquals(1, stat.getTotalValue());
-        }
-        case STRENGTH -> {
-          assertEquals(1, stat.getAbilityPointsUsed());
-          assertEquals(7, stat.getTotalValue());
-        }
-        default -> {
-          assertEquals(-1, stat.getAbilityPointsUsed());
-          assertEquals(-1, stat.getTotalValue());
-        }
+        case MAX_HEALTH -> assertAll(() -> assertEquals(-1, stat.getAbilityPointsUsed()),
+                () -> assertEquals(25, stat.getTotalValue()));
+        case HEALTH -> assertAll(() -> assertEquals(0, stat.getAbilityPointsUsed()),
+                () -> assertEquals(28, stat.getTotalValue()));
+        case LEVEL -> assertAll(() -> assertEquals(0, stat.getAbilityPointsUsed()),
+                () -> assertEquals(1, stat.getTotalValue()));
+        case STRENGTH -> assertAll(() -> assertEquals(1, stat.getAbilityPointsUsed()),
+                () -> assertEquals(7, stat.getTotalValue()));
+        default -> assertAll(() -> assertEquals(-1, stat.getAbilityPointsUsed()),
+                () -> assertEquals(-1, stat.getTotalValue()));
       }
     }
+  }
 
+  @Test
+  void removeAbilityPointEdgeCasesTest() {
     Stat edgeStat = stats[3];
     edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
     edgeStat.removeAbilityPoint();
@@ -158,14 +145,13 @@ class StatTest {
 
   @Test
   void toStringTest() {
-    logger.info("toStringTest() is called");
     for (Stat stat : stats) {
       switch (stat.getType()) {
         case LEVEL -> assertEquals("Stat: [Type: LEVEL, Base Value: 1, Offset: 0"
                         + ", Ability Points Used: 0, Miscellaneous: 0, Level Stat: false]",
                 stat.toString());
         case HEALTH -> assertEquals("Stat: [Type: HEALTH, Base Value: 30, Offset: 0"
-                + ", Ability Points Used: 0, Miscellaneous: -2, Level Stat: false]",
+                        + ", Ability Points Used: 0, Miscellaneous: -2, Level Stat: false]",
                 stat.toString());
         case AGILITY -> assertEquals("Stat: [Type: AGILITY, Base Value: 0, Offset: 1"
                 + ", Ability Points Used: 0, Miscellaneous: 0, Level Stat: true]", stat.toString());

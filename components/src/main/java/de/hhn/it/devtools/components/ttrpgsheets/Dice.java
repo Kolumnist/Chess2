@@ -25,7 +25,7 @@ public class Dice {
   public Dice(DiceDescriptor diceDescriptor) {
     logger.info("Constructor : diceDescriptor = {}", diceDescriptor);
     changeSize(diceDescriptor.getDiceType());
-    setValue(diceDescriptor.getResult());
+    value = diceDescriptor.getResult();
   }
 
   /**
@@ -35,8 +35,8 @@ public class Dice {
    */
   public int nextRoll() {
     logger.info("nextRoll : no params");
-    setValue(generator.nextInt(size) + 1);
-    return getValue();
+    value = generator.nextInt(size) + 1;
+    return value;
   }
 
   /**
@@ -47,15 +47,15 @@ public class Dice {
   public void changeSize(DiceType diceTyp) {
     logger.info("changeSize : diceTyp = {}", diceTyp);
     switch (diceTyp) {
-      case D2 -> setSize(2);
-      case D4 -> setSize(4);
-      case D6 -> setSize(6);
-      case D8 -> setSize(8);
-      case D10 -> setSize(10);
-      case D12 -> setSize(12);
-      case D20 -> setSize(20);
-      case D100 -> setSize(100);
-      default -> setSize(0);
+      case D2 -> size = 2;
+      case D4 -> size = 4;
+      case D6 -> size = 6;
+      case D8 -> size = 8;
+      case D10 -> size = 10;
+      case D12 -> size = 12;
+      case D20 -> size = 20;
+      case D100 -> size = 100;
+      default -> size = 0;
     }
   }
 
@@ -65,7 +65,7 @@ public class Dice {
    * @param size The size of the Dice
    * @return The converted size to the DiceType. null if there is no conversion possible.
    */
-  public DiceType convertToDiceType(int size) {
+  private DiceType convertToDiceType(int size) {
     logger.info("convertToDiceType : size = {}", size);
     switch (size) {
       case 2 -> {
@@ -105,7 +105,7 @@ public class Dice {
    */
   public DiceDescriptor toDiceDescriptor() {
     logger.info("toDiceDescriptor : no params");
-    return new DiceDescriptor(this.getType(), this.getValue());
+    return new DiceDescriptor(convertToDiceType(size), value);
   }
 
   /**
@@ -115,7 +115,7 @@ public class Dice {
    */
   public DiceType getType() {
     logger.info("getType : no params");
-    return convertToDiceType(getSize());
+    return convertToDiceType(size);
   }
 
   public int getSize() {

@@ -28,14 +28,10 @@ public class DefaultCharacterSheet implements CharacterSheet {
   /**
    * Constructor of the default Character Sheet.
    *
-   * @param listener            The callback listener for the Character Sheet
    * @param characterDescriptor The Descriptor of the Character Sheet
    */
-  public DefaultCharacterSheet(CharacterSheetListener listener,
-                               CharacterDescriptor characterDescriptor) {
-    logger.info("Constructor : listener = {}, characterDescriptor = {}", listener,
-            characterDescriptor);
-    addCallback(listener);
+  public DefaultCharacterSheet(CharacterDescriptor characterDescriptor) {
+    logger.info("Constructor : characterDescriptor = {}", characterDescriptor);
     unwrapCharacter(characterDescriptor);
   }
 
@@ -72,28 +68,99 @@ public class DefaultCharacterSheet implements CharacterSheet {
     return stats;
   }
 
+  /**
+   * Handler if incrementStat is called with a negative amount.
+   * Method calls decrementStat with the absolute value of amount
+   *
+   * @param statType the Type of Stat to increment
+   * @param origin   the origin of the change
+   * @param amount   the amount the Stat changes
+   */
+  private void negativeIncrementHandler(StatType statType, OriginType origin, int amount) {
+    if (amount == Integer.MIN_VALUE) {
+      amount = Integer.MAX_VALUE;
+    }
+    decrementStat(statType, origin, Math.abs(amount));
+  }
+
+  /**
+   * Checks whether the sum of two numbers overflows and returns the respective result.
+   *
+   * @param addend1 the first number which is added
+   * @param addend2 the second number which is added
+   * @return the sum if no underflow occurs else Integer.MAX_VALUE
+   */
+  private int overflowCheck(int addend1, int addend2) {
+    return addend1 + addend2 >= addend1 ? addend1 + addend2 : Integer.MAX_VALUE;
+  }
+
+  /**
+   * Handler if decrementStat is called with a negative amount.
+   * Method calls incrementStat with the absolute value of amount
+   *
+   * @param statType the Type of Stat to increment
+   * @param origin   the origin of the change
+   * @param amount   the amount the Stat changes
+   */
+  private void negativeDecrementHandler(StatType statType, OriginType origin, int amount) {
+    if (amount == Integer.MIN_VALUE) {
+      amount = Integer.MAX_VALUE;
+    }
+    incrementStat(statType, origin, Math.abs(amount));
+  }
+
+  /**
+   * Checks whether the difference of two numbers underflows and returns the respective result.
+   *
+   * @param minuend    the number from which is subtracted from
+   * @param subtrahend the number which subtracts
+   * @return the difference if no underflow occurs else Integer.MIN_VALUE
+   */
+  private int underflowCheck(int minuend, int subtrahend) {
+    return minuend - subtrahend <= minuend ? minuend - subtrahend : Integer.MIN_VALUE;
+  }
+
+  /**
+   * Returns the Stat of the given type.
+   *
+   * @param statType The specific StatType
+   * @return The Stat of given StatType
+   */
+  private Stat getStatOfType(StatType statType) {
+    logger.info("getStatOfType : statType = {}", statType);
+    for (Stat stat : stats) {
+      if (stat.getType() == statType) {
+        return stat;
+      }
+    }
+    return null;
+  }
+
   @Override
   public void addCallback(CharacterSheetListener listener) throws IllegalArgumentException {
     logger.info("addCallback : listener = {}", listener);
-    setListener(listener);
+    if (listener == null) {
+      throw new IllegalArgumentException("Listener is null");
+    }
+    this.listener = listener;
   }
 
   @Override
   public void unwrapCharacter(CharacterDescriptor characterDescriptor) {
     logger.info("unwrapCharacter : characterDescriptor = {}", characterDescriptor);
-    setDescriptions(convertDescDescriptorsToDescriptions(characterDescriptor.getDescriptions()));
-    setStats(convertStatDescriptorsToStats(characterDescriptor.getStats()));
-    setDice(new Dice(characterDescriptor.getDice()));
+    descriptions = convertDescDescriptorsToDescriptions(characterDescriptor.getDescriptions());
+    stats = convertStatDescriptorsToStats(characterDescriptor.getStats());
+    dice = new Dice(characterDescriptor.getDice());
   }
 
   @Override
   public CharacterDescriptor wrapCharacter() {
     logger.info("wrapCharacter : no params");
-    DescriptionDescriptor[] descDescriptors = new DescriptionDescriptor[getDescriptions().length];
+    DescriptionDescriptor[] descDescriptors = new DescriptionDescriptor[descriptions.length];
     for (int i = 0; i < DescriptionType.values().length; i++) {
       descDescriptors[i] = getDescriptionDescriptor(DescriptionType.values()[i]);
     }
-    StatDescriptor[] statDescriptors = new StatDescriptor[getStats().length];
+    StatDescriptor[] statDescriptors = new StatDescriptor[stats.length];
     for (int i = 0; i < StatType.values().length; i++) {
       statDescriptors[i] = getStatDescriptor(StatType.values()[i]);
     }
@@ -103,21 +170,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public void incrementStat(StatType statType, OriginType origin) throws IllegalArgumentException {
     logger.info("incrementStat : statType = {}, origin = {}", statType, origin);
-    Stat stat = getStatOfType(statType);
-    if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
-      throw new IllegalArgumentException("Cannot change level of Stat of this Type");
-    }
-    if (origin == OriginType.LEVEL_POINT) {
-      if (stat.getAbilityPointsUsed() < Integer.MAX_VALUE) {
-        stat.addAbilityPoint();
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
-    } else {
-      if (stat.getMiscellaneous() < Integer.MAX_VALUE) {
-        stat.setMiscellaneous(stat.getMiscellaneous() + 1);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
-    }
+    incrementStat(statType, origin, 1);
   }
 
   @Override
@@ -126,54 +179,25 @@ public class DefaultCharacterSheet implements CharacterSheet {
     logger.info("incrementStat : statType = {}, origin = {}, amount = {}",
             statType, origin, amount);
     Stat stat = getStatOfType(statType);
+
     if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
       throw new IllegalArgumentException("Cannot change level of Stat of this Type");
     }
+
     if (amount < 0) {
-      if (amount == Integer.MIN_VALUE) {
-        decrementStat(statType, origin, Integer.MAX_VALUE);
-        return;
-      }
-      decrementStat(statType, origin, Math.abs(amount));
-      return;
-    }
-    if (origin == OriginType.LEVEL_POINT) {
-      if (stat.getAbilityPointsUsed() + amount > stat.getAbilityPointsUsed()) {
-        stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() + amount);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      } else {
-        stat.setAbilityPointsUsed(Integer.MAX_VALUE);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
+      negativeIncrementHandler(statType, origin, amount);
+    } else if (origin == OriginType.LEVEL_POINT) {
+      stat.setAbilityPointsUsed(overflowCheck(stat.getAbilityPointsUsed(), amount));
     } else {
-      if (stat.getMiscellaneous() + amount > stat.getMiscellaneous()) {
-        stat.setMiscellaneous(stat.getMiscellaneous() + amount);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      } else {
-        stat.setMiscellaneous(Integer.MAX_VALUE);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
+      stat.setMiscellaneous(overflowCheck(stat.getMiscellaneous(), amount));
     }
+    listener.statChanged(stat.toStatDescriptor()); // Callback
   }
 
   @Override
   public void decrementStat(StatType statType, OriginType origin) throws IllegalArgumentException {
     logger.info("decrementStat : statType = {}, origin = {}", statType, origin);
-    Stat stat = getStatOfType(statType);
-    if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
-      throw new IllegalArgumentException("Cannot change level of Stat of this Type");
-    }
-    if (origin == OriginType.LEVEL_POINT) {
-      if (stat.getAbilityPointsUsed() > Integer.MIN_VALUE) {
-        stat.removeAbilityPoint();
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
-    } else {
-      if (stat.getMiscellaneous() > Integer.MIN_VALUE) {
-        stat.setMiscellaneous(stat.getMiscellaneous() - 1);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
-    }
+    decrementStat(statType, origin, 1);
   }
 
   @Override
@@ -182,34 +206,19 @@ public class DefaultCharacterSheet implements CharacterSheet {
     logger.info("decrementStat : statType = {}, origin = {}, amount = {}",
             statType, origin, amount);
     Stat stat = getStatOfType(statType);
+
     if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
       throw new IllegalArgumentException("Cannot change level of Stat of this Type");
     }
+
     if (amount < 0) {
-      if (amount == Integer.MIN_VALUE) {
-        incrementStat(statType, origin, Integer.MAX_VALUE);
-        return;
-      }
-      incrementStat(statType, origin, Math.abs(amount));
-      return;
-    }
-    if (origin == OriginType.LEVEL_POINT) {
-      if (stat.getAbilityPointsUsed() - amount < stat.getAbilityPointsUsed()) {
-        stat.setAbilityPointsUsed(stat.getAbilityPointsUsed() - amount);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      } else {
-        stat.setAbilityPointsUsed(Integer.MIN_VALUE);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
+      negativeDecrementHandler(statType, origin, amount);
+    } else if (origin == OriginType.LEVEL_POINT) {
+      stat.setAbilityPointsUsed(underflowCheck(stat.getAbilityPointsUsed(), amount));
     } else {
-      if (stat.getMiscellaneous() - amount < stat.getMiscellaneous()) {
-        stat.setMiscellaneous(stat.getMiscellaneous() - amount);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      } else {
-        stat.setMiscellaneous(Integer.MIN_VALUE);
-        getListener().statChanged(stat.toStatDescriptor()); // Callback
-      }
+      stat.setMiscellaneous(underflowCheck(stat.getMiscellaneous(), amount));
     }
+    listener.statChanged(stat.toStatDescriptor()); // Callback
   }
 
   @Override
@@ -239,10 +248,10 @@ public class DefaultCharacterSheet implements CharacterSheet {
     if (descriptionType == null || text == null) {
       throw new IllegalArgumentException("One or both arguments are null");
     }
-    for (Description description : getDescriptions()) {
+    for (Description description : descriptions) {
       if (description.getType() == descriptionType) {
         description.setDescription(text);
-        getListener().descriptionChanged(description.toDescriptionDescriptor()); // Callback
+        listener.descriptionChanged(description.toDescriptionDescriptor()); // Callback
       }
     }
   }
@@ -250,7 +259,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public DescriptionDescriptor getDescriptionDescriptor(DescriptionType descriptionType) {
     logger.info("getDescriptionDescriptor : descriptionType = {}", descriptionType);
-    for (Description description : getDescriptions()) {
+    for (Description description : descriptions) {
       if (description.getType() == descriptionType) {
         return description.toDescriptionDescriptor();
       }
@@ -261,79 +270,29 @@ public class DefaultCharacterSheet implements CharacterSheet {
   @Override
   public int rollDice() throws NullPointerException {
     logger.info("rollDice : no params");
-    int result = getDice().nextRoll();
-    getListener().diceChanged(getDice().toDiceDescriptor()); // Callback
+    int result = dice.nextRoll();
+    listener.diceChanged(dice.toDiceDescriptor()); // Callback
     return result;
   }
 
   @Override
-  public void changeDiceType(DiceType dice) throws IllegalArgumentException {
-    logger.info("changeDiceType : dice = {}", dice);
-    getDice().changeSize(dice);
-    getListener().diceChanged(getDice().toDiceDescriptor()); // Callback
+  public void changeDiceType(DiceType diceType) throws IllegalArgumentException {
+    logger.info("changeDiceType : dice = {}", diceType);
+    dice.changeSize(diceType);
+    listener.diceChanged(dice.toDiceDescriptor()); // Callback
   }
 
   @Override
   public DiceDescriptor getDiceDescriptor() {
     logger.info("getDiceDescriptor : no params");
-    return getDice().toDiceDescriptor();
-  }
-
-  /**
-   * Returns the Stat of the given type.
-   *
-   * @param statType The specific StatType
-   * @return The Stat of given StatType
-   */
-  private Stat getStatOfType(StatType statType) {
-    logger.info("getStatOfType : statType = {}", statType);
-    if (getStats() != null) {
-      for (Stat stat : getStats()) {
-        if (stat.getType() == statType) {
-          return stat;
-        }
-      }
-    }
-    return null;
-  }
-
-  public CharacterSheetListener getListener() {
-    return listener;
-  }
-
-  public void setListener(CharacterSheetListener listener) {
-    this.listener = listener;
-  }
-
-  public Description[] getDescriptions() {
-    return descriptions;
-  }
-
-  public void setDescriptions(Description[] descriptions) {
-    this.descriptions = descriptions;
-  }
-
-  public Stat[] getStats() {
-    return stats;
-  }
-
-  public void setStats(Stat[] stats) {
-    this.stats = stats;
-  }
-
-  public Dice getDice() {
-    return dice;
-  }
-
-  public void setDice(Dice dice) {
-    this.dice = dice;
+    return dice.toDiceDescriptor();
   }
 
   @Override
   public String toString() {
-    return "DefaultCharacterSheet: [CharacterSheetListener: " + getListener()
-                   + ", Descriptions: " + Arrays.toString(getDescriptions())
-                   + ", Stats: " + Arrays.toString(getStats())
-                   + ", Dice: " + getDice() + "]";
+    return "DefaultCharacterSheet: [CharacterSheetListener: " + listener
+            + ", Descriptions: " + Arrays.toString(descriptions)
+            + ", Stats: " + Arrays.toString(stats)
+            + ", Dice: " + dice + "]";
   }
 }

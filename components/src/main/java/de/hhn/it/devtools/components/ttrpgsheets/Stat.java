@@ -31,8 +31,8 @@ public class Stat {
     this.type = statDescriptor.getStatType();
     this.baseValue = statDescriptor.getBaseValue();
     this.offset = statDescriptor.getOffset();
-    setAbilityPointsUsed(statDescriptor.getAbilityPointsUsed());
-    setMiscellaneous(statDescriptor.getMiscellaneous());
+    this.abilityPointsUsed = statDescriptor.getAbilityPointsUsed();
+    this.miscellaneous = statDescriptor.getMiscellaneous();
     this.levelStat = statDescriptor.isLevelStat();
   }
 
@@ -46,10 +46,10 @@ public class Stat {
    */
   public int getTotalValue() {
     logger.info("getTotalValue : no params");
-    BigInteger totalValue = BigInteger.valueOf(getBaseValue())
-            .add(BigInteger.valueOf(getAbilityPointsUsed())
-                    .multiply(BigInteger.valueOf(getOffset())))
-            .add(BigInteger.valueOf(getMiscellaneous()));
+    BigInteger totalValue = BigInteger.valueOf(baseValue)
+            .add(BigInteger.valueOf(abilityPointsUsed)
+                    .multiply(BigInteger.valueOf(offset)))
+            .add(BigInteger.valueOf(miscellaneous));
     if (totalValue.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0) {
       return Integer.MAX_VALUE;
     }
@@ -64,8 +64,8 @@ public class Stat {
    */
   public void addAbilityPoint() {
     logger.info("addAbilityPoint : no params");
-    if (isLevelStat() && getAbilityPointsUsed() < Integer.MAX_VALUE) {
-      setAbilityPointsUsed(getAbilityPointsUsed() + 1);
+    if (levelStat && abilityPointsUsed < Integer.MAX_VALUE) {
+      abilityPointsUsed++;
     }
   }
 
@@ -74,8 +74,8 @@ public class Stat {
    */
   public void removeAbilityPoint() {
     logger.info("removeAbilityPoint : no params");
-    if (isLevelStat() && getAbilityPointsUsed() > Integer.MIN_VALUE) {
-      setAbilityPointsUsed(getAbilityPointsUsed() - 1);
+    if (levelStat && abilityPointsUsed > Integer.MIN_VALUE) {
+      abilityPointsUsed--;
     }
   }
 
@@ -86,16 +86,12 @@ public class Stat {
    */
   public StatDescriptor toStatDescriptor() {
     logger.info("toStatDescriptor : no params");
-    return new StatDescriptor(getType(), getBaseValue(), getOffset(),
-            getAbilityPointsUsed(), getMiscellaneous(), isLevelStat());
+    return new StatDescriptor(type, baseValue, offset,
+            abilityPointsUsed, miscellaneous, levelStat);
   }
 
   public StatType getType() {
     return type;
-  }
-
-  public int getBaseValue() {
-    return baseValue;
   }
 
   public int getAbilityPointsUsed() {
@@ -104,10 +100,6 @@ public class Stat {
 
   public void setAbilityPointsUsed(int abilityPointsUsed) {
     this.abilityPointsUsed = abilityPointsUsed;
-  }
-
-  public int getOffset() {
-    return offset;
   }
 
   public int getMiscellaneous() {
@@ -124,11 +116,11 @@ public class Stat {
 
   @Override
   public String toString() {
-    return "Stat: [Type: " + getType()
-            + ", Base Value: " + getBaseValue()
-            + ", Offset: " + getOffset()
-            + ", Ability Points Used: " + getAbilityPointsUsed()
-            + ", Miscellaneous: " + getMiscellaneous()
-            + ", Level Stat: " + isLevelStat() + "]";
+    return "Stat: [Type: " + type
+            + ", Base Value: " + baseValue
+            + ", Offset: " + offset
+            + ", Ability Points Used: " + abilityPointsUsed
+            + ", Miscellaneous: " + miscellaneous
+            + ", Level Stat: " + levelStat + "]";
   }
 }

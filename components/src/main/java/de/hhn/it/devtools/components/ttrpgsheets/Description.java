@@ -22,7 +22,7 @@ public class Description {
   public Description(DescriptionDescriptor descriptionDescriptor) {
     logger.info("Constructor : descriptionDescriptor = {}", descriptionDescriptor);
     type = descriptionDescriptor.getDescriptionType();
-    setDescription(descriptionDescriptor.getText());
+    description = descriptionDescriptor.getText();
   }
 
   /**
@@ -64,6 +64,6 @@ public class Description {
 
   @Override
   public String toString() {
-    return "Description: [Type: " + getType() + ", Description: " + getDescription() + "]";
+    return "Description: [Type: " + type + ", Description: " + description + "]";
   }
 }

@@ -14,11 +14,9 @@ import org.junit.jupiter.api.Test;
 
 
 class DiceTest {
-  private static final org.slf4j.Logger logger
-          = org.slf4j.LoggerFactory.getLogger(DiceTest.class);
 
   static Dice dice;
-  static int[] sizes = {2, 4, 6, 8, 10, 12, 20, 100};
+  static int[] sizes = {2, 4, 6, 8, 10, 12, 20, 100, 3};
 
   @BeforeEach
   void setUp() {
@@ -28,7 +26,6 @@ class DiceTest {
 
   @Test
   void nextRollTest() {
-    logger.info("nextRoll() is called");
     for (int size : sizes) {
       dice.setSize(size);
       for (double i = 0; i < calculateAverageNumberOfRolls(dice.getSize()); i++) {
@@ -40,7 +37,6 @@ class DiceTest {
 
   @Test
   void changeSizeTest() {
-    logger.info("changeSize() is called");
     for (DiceType diceTyp : DiceType.values()) {
       dice.changeSize(diceTyp);
       switch (dice.getType()) {
@@ -58,8 +54,7 @@ class DiceTest {
   }
 
   @Test
-  void convertToDiceTypeTest() {
-    logger.info("convertToDiceType() is called");
+  void getTypeTest() {
     for (int size : sizes) {
       dice.setSize(size);
       switch (dice.getSize()) {
@@ -71,50 +66,37 @@ class DiceTest {
         case 12 -> assertEquals(DiceType.D12, dice.getType());
         case 20 -> assertEquals(DiceType.D20, dice.getType());
         case 100 -> assertEquals(DiceType.D100, dice.getType());
-        default -> { }
+        default -> assertNull(dice.getType());
       }
     }
-    assertNull(dice.convertToDiceType(3));
-  }
-
-  @Test
-  void getTypeTest() {
-    logger.info("getType() is called");
-    dice.setSize(2);
-    assertEquals(DiceType.D2, dice.getType());
   }
 
   @Test
   void getSizeTest() {
-    logger.info("getSize() is called");
     dice.setSize(4);
     assertEquals(4, dice.getSize());
   }
 
   @Test
   void setSizeTest() {
-    logger.info("setSize() is called");
     dice.setSize(6);
     assertEquals(6, dice.getSize());
   }
 
   @Test
   void getValueTest() {
-    logger.info("getValue() is called");
     dice.setValue(5);
     assertEquals(5, dice.getValue());
   }
 
   @Test
   void setValueTest() {
-    logger.info("setValue() is called");
     dice.setValue(3);
     assertEquals(3, dice.getValue());
   }
 
   @Test
   void testToStringTest() {
-    logger.info("testToString() is called");
     dice.setValue(3);
     for (DiceType diceTyp : DiceType.values()) {
       dice.changeSize(diceTyp);
