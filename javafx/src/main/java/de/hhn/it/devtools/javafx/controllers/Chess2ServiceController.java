@@ -2,7 +2,10 @@ package de.hhn.it.devtools.javafx.controllers;
 
 import de.hhn.it.devtools.apis.chess2.Board;
 import de.hhn.it.devtools.apis.chess2.Chess2Service;
+import de.hhn.it.devtools.apis.chess2.Coordinate;
+import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.IllegalStateException;
+import de.hhn.it.devtools.apis.chess2.WinningPlayerState;
 import de.hhn.it.devtools.components.chess2.ChessGame;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,6 +22,8 @@ public class Chess2ServiceController extends Controller implements Initializable
   private Board board;
   private ChessGame chessGame;
   private Chess2Service chess2Service;
+
+  private Coordinate[] coordinates;
 
   @FXML
   private Button giveUpButton;
@@ -45,7 +50,10 @@ public class Chess2ServiceController extends Controller implements Initializable
 
   @FXML
   void onGiveUpButtonClick(ActionEvent event) {
-    chess2Service.giveUp();
+    if (chessGame.getWinningPlayer() == WinningPlayerState.STILL_RUNNING){
+      chess2Service.giveUp();
+
+    }
   }
 
   @FXML
@@ -60,8 +68,8 @@ public class Chess2ServiceController extends Controller implements Initializable
       startEndGameButton.setText("End Game");
       giveUpButton.setVisible(true);
 
-      //TODO: Mit Collin klären wie dann alles weitere funktioniert
       board = chess2Service.startNewGame();
+      coordinates = chessGame.getCurrentFields();
 
     }else {
       startEndGameButton.setText("Start Game");
