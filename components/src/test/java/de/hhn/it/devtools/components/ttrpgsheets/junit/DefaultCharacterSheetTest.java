@@ -376,11 +376,11 @@ class DefaultCharacterSheetTest {
     for (DescriptionType descType : DescriptionType.values()) {
       DescriptionDescriptor descDescriptor = characterSheet.getDescriptionDescriptor(descType);
       DescriptionDescriptor compareDescDesc = descArray[descType.ordinal()];
-
       assertAll(
               () -> assertEquals(compareDescDesc.getText(), descDescriptor.getText()),
               () -> assertEquals(compareDescDesc.getDescriptionType(),
-                      descDescriptor.getDescriptionType())
+                      descDescriptor.getDescriptionType()),
+              () -> assertNull(nullSheet.getDescriptionDescriptor(descType))
       );
     }
   }
