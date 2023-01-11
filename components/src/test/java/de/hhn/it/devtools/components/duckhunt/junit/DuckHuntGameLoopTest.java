@@ -1,5 +1,7 @@
-package de.hhn.it.devtools.components.duckhunt;
+package de.hhn.it.devtools.components.duckhunt.junit;
 
+import de.hhn.it.devtools.components.duckhunt.DuckHunt;
+import de.hhn.it.devtools.components.duckhunt.DuckHuntGameLoop;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +18,9 @@ class DuckHuntGameLoopTest {
 
   @AfterEach
   void tearDown() {
-    gameLoop.stopLoop();
+    if (gameLoop.isAlive()) {
+      gameLoop.stopLoop();
+    }
   }
 
   @Test
