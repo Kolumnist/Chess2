@@ -36,11 +36,9 @@ public class Monkey extends Piece {
     for (int i = 0; i < possibleMoves.length; i++) {
       if (k < possibleJump.length
           && (board.getSpecificField(possibleMoves[i]).getFieldState()
-          == FieldState.HAS_OTHER_PIECE
-          || board.getSpecificField(possibleMoves[i]).getFieldState()
-          == FieldState.HAS_CURRENT_PIECE
-          || board.getSpecificField(possibleMoves[i]).getFieldState()
-          == FieldState.HAS_BEAR)) {
+          != FieldState.FREE_FIELD
+          && board.getSpecificField(possibleMoves[i]).getFieldState()
+          != FieldState.SELECTED)) {
         replaceJumpCoordinate(possibleMoves, possibleMoves[i], possibleJump[k++]);
       }
     }
@@ -48,11 +46,9 @@ public class Monkey extends Piece {
     //Testing if there are still Pieces in the way and adding them to a list to remove them.
     for (int i = 0; i < possibleMoves.length; i++) {
       if (board.getSpecificField(possibleMoves[i]).getFieldState()
-          == FieldState.HAS_OTHER_PIECE
-          || board.getSpecificField(possibleMoves[i]).getFieldState()
-          == FieldState.HAS_CURRENT_PIECE
-          || board.getSpecificField(possibleMoves[i]).getFieldState()
-          == FieldState.HAS_BEAR) {
+          != FieldState.FREE_FIELD
+          && board.getSpecificField(possibleMoves[i]).getFieldState()
+          != FieldState.SELECTED) {
         index.add(i);
       }
     }
@@ -89,6 +85,14 @@ public class Monkey extends Piece {
       }
     }
     possibleJump = shortenCoordinateArray(possibleJump, index);
+
+    //Testing if the Crow can defeat the enemy King.
+    for (int i = 0; i < possibleJump.length; i++) {
+      if (board.getSpecificField(possibleJump[i]).getFieldState() == FieldState.OTHER_KING){
+        canDefeatKing = true;
+        break;
+      }
+    }
 
     //Testing if the own King is in jail and replacing the jumpCoordinate
     // if the Monkey stands on the right Field.
