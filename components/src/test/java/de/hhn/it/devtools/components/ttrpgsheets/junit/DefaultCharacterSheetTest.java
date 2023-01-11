@@ -24,8 +24,8 @@ import org.junit.jupiter.api.Test;
 class DefaultCharacterSheetTest {
   SimpleCharacterSheetListener listener = null;
   DefaultCharacterSheet characterSheet = null;
-  DefaultCharacterSheet nullSheet = new DefaultCharacterSheet(
-          new CharacterDescriptor(null, null, null));
+  DefaultCharacterSheet nullSheet = new DefaultCharacterSheet(new CharacterDescriptor(
+                  new DescriptionDescriptor[0], new StatDescriptor[0], new DiceDescriptor(DiceType.D2, 0)));
 
   @BeforeEach
   void setupObjects() {
