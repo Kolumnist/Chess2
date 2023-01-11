@@ -16,8 +16,6 @@ import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import de.hhn.it.devtools.components.ttrpgsheets.DefaultCharacterSheet;
-import de.hhn.it.devtools.components.ttrpgsheets.Description;
-import de.hhn.it.devtools.components.ttrpgsheets.Stat;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -339,17 +337,15 @@ class DefaultCharacterSheetTest {
     for (StatType statType : StatType.values()) {
       StatDescriptor statDescriptor = characterSheet.getStatDescriptor(statType);
       StatDescriptor compareStatDesc = descArray[statType.ordinal()];
-
-      assertEquals(compareStatDesc.getMiscellaneous(), statDescriptor.getMiscellaneous());
-      assertEquals(compareStatDesc.getStatType(), statDescriptor.getStatType());
-      assertEquals(compareStatDesc.getOffset(), statDescriptor.getOffset());
-      assertEquals(compareStatDesc.getBaseValue(), statDescriptor.getBaseValue());
-      assertEquals(compareStatDesc.getAbilityPointsUsed(), statDescriptor.getAbilityPointsUsed());
-      assertEquals(compareStatDesc.isLevelStat(), statDescriptor.isLevelStat());
-    }
-    for (StatType statType : StatType.values()) {
-      characterSheet.setStats(new Stat[0]);
-      assertNull(characterSheet.getStatDescriptor(statType));
+      assertAll(
+              () -> assertEquals(compareStatDesc.getMiscellaneous(), statDescriptor.getMiscellaneous()),
+              () -> assertEquals(compareStatDesc.getStatType(), statDescriptor.getStatType()),
+              () -> assertEquals(compareStatDesc.getOffset(), statDescriptor.getOffset()),
+              () -> assertEquals(compareStatDesc.getBaseValue(), statDescriptor.getBaseValue()),
+              () -> assertEquals(compareStatDesc.getAbilityPointsUsed(), statDescriptor.getAbilityPointsUsed()),
+              () -> assertEquals(compareStatDesc.isLevelStat(), statDescriptor.isLevelStat()),
+              () -> assertNull(nullSheet.getStatDescriptor(statType))
+      );
     }
   }
 
