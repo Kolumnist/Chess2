@@ -247,8 +247,7 @@ public class DuckHunt implements DuckHuntService {
    */
   public void updateDucks() {
     for (DuckData duck : ducks) {
-      if (duck.getStatus() == DuckState.FLYING || duck.getStatus() == DuckState.FALLING
-      || duck.getStatus() == DuckState.FLYAWAY) {
+      if (duck.getStatus() == DuckState.FLYING || duck.getStatus() == DuckState.FALLING || duck.getStatus() == DuckState.FLYAWAY) {
         // velocity = resolutionCoefficient * speed * deltaTime
         float newVelocity = 0.3f * duckSpeed * deltaTime;
         duck.setVelocity(duck.getVelocity() + newVelocity);
