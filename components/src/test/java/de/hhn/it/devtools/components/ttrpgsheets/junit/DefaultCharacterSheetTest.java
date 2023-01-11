@@ -285,9 +285,9 @@ class DefaultCharacterSheetTest {
   @Test
   void decrementStatEdgeCaseTest() {
     // Underflow
-    characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, 5);
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, 10);
     characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, Integer.MAX_VALUE);
-    characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, 5);
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, 10);
     characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MAX_VALUE);
     assertAll(
             () -> assertEquals(Integer.MIN_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed()),
