@@ -91,7 +91,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
    * @return the sum if no underflow occurs else Integer.MAX_VALUE
    */
   private int overflowCheck(int addend1, int addend2) {
-    return addend1 + addend2 > addend1 ? addend1 + addend2 : Integer.MAX_VALUE;
+    return addend1 + addend2 >= addend1 ? addend1 + addend2 : Integer.MAX_VALUE;
   }
 
   /**
@@ -117,7 +117,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
    * @return the difference if no underflow occurs else Integer.MIN_VALUE
    */
   private int underflowCheck(int minuend, int subtrahend) {
-    return minuend - subtrahend < minuend ? minuend - subtrahend : Integer.MIN_VALUE;
+    return minuend - subtrahend <= minuend ? minuend - subtrahend : Integer.MIN_VALUE;
   }
 
   /**
