@@ -1,7 +1,5 @@
 package de.hhn.it.devtools.apis.chess2;
 
-import java.net.CookieHandler;
-
 /**
  * Defines the board and lets you get all fields or a specific field.
  * An Object of Board updates while the game is running.
