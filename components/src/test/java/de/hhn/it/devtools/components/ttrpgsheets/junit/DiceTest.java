@@ -2,6 +2,7 @@ package de.hhn.it.devtools.components.ttrpgsheets.junit;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.DiceDescriptor;
@@ -17,7 +18,7 @@ class DiceTest {
           = org.slf4j.LoggerFactory.getLogger(DiceTest.class);
 
   static Dice dice;
-  static int[] sizes = {2, 4, 6, 8, 10, 12, 20, 100};
+  static int[] sizes = {2, 4, 6, 8, 10, 12, 20, 100, 3};
 
   @BeforeEach
   void setUp() {
@@ -67,7 +68,7 @@ class DiceTest {
         case 12 -> assertEquals(DiceType.D12, dice.getType());
         case 20 -> assertEquals(DiceType.D20, dice.getType());
         case 100 -> assertEquals(DiceType.D100, dice.getType());
-        default -> { }
+        default -> assertNull(dice.getType());
       }
     }
   }
