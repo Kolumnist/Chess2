@@ -44,13 +44,13 @@ class DefaultCharacterSheetTest {
     for (int i = 0; i < StatType.values().length; i++) {
       switch (StatType.values()[i]) {
         case MAX_HEALTH -> statDescriptors[i]
-                                   = new StatDescriptor(StatType.values()[i], 30, 5, 0, 0, true);
+                = new StatDescriptor(StatType.values()[i], 30, 5, 0, 0, true);
         case HEALTH -> statDescriptors[i]
-                               = new StatDescriptor(StatType.values()[i], 30, 0, 0, -2, false);
+                = new StatDescriptor(StatType.values()[i], 30, 0, 0, -2, false);
         case LEVEL -> statDescriptors[i]
-                              = new StatDescriptor(StatType.values()[i], 1, 0, 0, 0, false);
+                = new StatDescriptor(StatType.values()[i], 1, 0, 0, 0, false);
         case STRENGTH -> statDescriptors[i]
-                                 = new StatDescriptor(StatType.values()[i], 0, 1, 2, 6, true);
+                = new StatDescriptor(StatType.values()[i], 0, 1, 2, 6, true);
         default -> statDescriptors[i] = new StatDescriptor(StatType.values()[i], 0, 1, 0, 0, true);
       }
     }
@@ -59,7 +59,7 @@ class DefaultCharacterSheetTest {
 
   DescriptionDescriptor[] setupDescriptions() {
     DescriptionDescriptor[] descriptionDescriptors = new DescriptionDescriptor[
-                                                             DescriptionType.values().length];
+            DescriptionType.values().length];
     for (int i = 0; i < DescriptionType.values().length; i++) {
       switch (DescriptionType.values()[i]) {
         case CHARACTER_CLASS -> descriptionDescriptors[i] = new DescriptionDescriptor(
@@ -128,7 +128,7 @@ class DefaultCharacterSheetTest {
   }
 
   @Test
-  void incrementStatTest() {
+  void incrementStatSingleTest() {
     for (StatType statType : StatType.values()) {
       StatDescriptor stat = characterSheet.getStatDescriptor(statType);
       for (OriginType origin : OriginType.values()) {
@@ -137,6 +137,7 @@ class DefaultCharacterSheetTest {
                   () -> characterSheet.incrementStat(statType, origin));
           continue;
         }
+
         characterSheet.incrementStat(statType, origin);
         stat = characterSheet.getStatDescriptor(statType);
         if (origin == OriginType.LEVEL_POINT) {
@@ -145,25 +146,20 @@ class DefaultCharacterSheetTest {
           } else {
             assertEquals(1, stat.getAbilityPointsUsed());
           }
-          for (Stat csStat : characterSheet.getStats()) {
-            if (csStat.getType() == statType) {
-              csStat.setAbilityPointsUsed(csStat.getAbilityPointsUsed() - 1);
-            }
-          }
         } else {
           switch (statType) {
             case HEALTH -> assertEquals(-1, stat.getMiscellaneous());
             case STRENGTH -> assertEquals(7, stat.getMiscellaneous());
             default -> assertEquals(1, stat.getMiscellaneous());
           }
-          for (Stat csStat : characterSheet.getStats()) {
-            if (csStat.getType() == statType) {
-              csStat.setMiscellaneous(csStat.getMiscellaneous() - 1);
-            }
-          }
         }
+        characterSheet.incrementStat(statType, origin, -1);
       }
     }
+  }
+
+  @Test
+  void incrementStatAmountTest() {
     for (StatType statType : StatType.values()) {
       StatDescriptor stat = characterSheet.getStatDescriptor(statType);
       for (OriginType origin : OriginType.values()) {
@@ -172,6 +168,7 @@ class DefaultCharacterSheetTest {
                   () -> characterSheet.incrementStat(statType, origin, 5));
           continue;
         }
+
         characterSheet.incrementStat(statType, origin, 5);
         stat = characterSheet.getStatDescriptor(statType);
         if (origin == OriginType.LEVEL_POINT) {
@@ -180,62 +177,45 @@ class DefaultCharacterSheetTest {
           } else {
             assertEquals(5, stat.getAbilityPointsUsed());
           }
-          for (Stat csStat : characterSheet.getStats()) {
-            if (csStat.getType() == statType) {
-              csStat.setAbilityPointsUsed(csStat.getAbilityPointsUsed() - 5);
-            }
-          }
         } else {
           switch (statType) {
             case HEALTH -> assertEquals(3, stat.getMiscellaneous());
             case STRENGTH -> assertEquals(11, stat.getMiscellaneous());
             default -> assertEquals(5, stat.getMiscellaneous());
           }
-          for (Stat csStat : characterSheet.getStats()) {
-            if (csStat.getType() == statType) {
-              csStat.setMiscellaneous(csStat.getMiscellaneous() - 5);
-            }
-          }
         }
+        characterSheet.incrementStat(statType, origin, -5);
       }
     }
-    Stat edgeStat = new Stat(characterSheet.getStatDescriptor(StatType.STRENGTH));
-    for (Stat csStat : characterSheet.getStats()) {
-      if (csStat.getType() == StatType.STRENGTH) {
-        edgeStat = csStat;
-      }
-    }
-    edgeStat.setAbilityPointsUsed(Integer.MAX_VALUE);
-    edgeStat.setMiscellaneous(Integer.MAX_VALUE);
-    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT);
-    characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY);
-    assertEquals(Integer.MAX_VALUE, edgeStat.getAbilityPointsUsed());
-    assertEquals(Integer.MAX_VALUE, edgeStat.getMiscellaneous());
-
-    edgeStat.setAbilityPointsUsed(5);
-    edgeStat.setMiscellaneous(5);
-    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, Integer.MAX_VALUE);
-    characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MAX_VALUE);
-    assertEquals(Integer.MAX_VALUE, edgeStat.getAbilityPointsUsed());
-    assertEquals(Integer.MAX_VALUE, edgeStat.getMiscellaneous());
-
-    edgeStat.setAbilityPointsUsed(-5);
-    edgeStat.setMiscellaneous(-5);
-    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, Integer.MIN_VALUE);
-    characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MIN_VALUE);
-    assertEquals(Integer.MIN_VALUE, edgeStat.getAbilityPointsUsed());
-    assertEquals(Integer.MIN_VALUE, edgeStat.getMiscellaneous());
-
-    edgeStat.setAbilityPointsUsed(-5);
-    edgeStat.setMiscellaneous(-5);
-    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, -5);
-    characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, -7);
-    assertEquals(-10, edgeStat.getAbilityPointsUsed());
-    assertEquals(-12, edgeStat.getMiscellaneous());
   }
 
   @Test
-  void decrementStatTest() {
+  void incrementStatEdgeCaseTest() {
+    // Overflow
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, 5);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, Integer.MAX_VALUE);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, 5);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MAX_VALUE);
+    assertEquals(Integer.MAX_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed());
+    assertEquals(Integer.MAX_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous());
+
+    // Negative Values
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, -Integer.MAX_VALUE);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, -5);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, -Integer.MAX_VALUE);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, -10);
+    assertEquals(-5, characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed());
+    assertEquals(-10, characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous());
+
+    // Underflow
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, Integer.MIN_VALUE);
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MIN_VALUE);
+    assertEquals(Integer.MIN_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed());
+    assertEquals(Integer.MIN_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous());
+  }
+
+  @Test
+  void decrementStatSingleTest() {
     for (StatType statType : StatType.values()) {
       StatDescriptor stat = characterSheet.getStatDescriptor(statType);
       for (OriginType origin : OriginType.values()) {
@@ -244,6 +224,7 @@ class DefaultCharacterSheetTest {
                   () -> characterSheet.decrementStat(statType, origin));
           continue;
         }
+
         characterSheet.decrementStat(statType, origin);
         stat = characterSheet.getStatDescriptor(statType);
         if (origin == OriginType.LEVEL_POINT) {
@@ -252,25 +233,20 @@ class DefaultCharacterSheetTest {
           } else {
             assertEquals(-1, stat.getAbilityPointsUsed());
           }
-          for (Stat csStat : characterSheet.getStats()) {
-            if (csStat.getType() == statType) {
-              csStat.setAbilityPointsUsed(csStat.getAbilityPointsUsed() + 1);
-            }
-          }
         } else {
           switch (statType) {
             case HEALTH -> assertEquals(-3, stat.getMiscellaneous());
             case STRENGTH -> assertEquals(5, stat.getMiscellaneous());
             default -> assertEquals(-1, stat.getMiscellaneous());
           }
-          for (Stat csStat : characterSheet.getStats()) {
-            if (csStat.getType() == statType) {
-              csStat.setMiscellaneous(csStat.getMiscellaneous() + 1);
-            }
-          }
         }
+        characterSheet.decrementStat(statType, origin, -1);
       }
     }
+  }
+
+  @Test
+  void decrementStatAmountTest() {
     for (StatType statType : StatType.values()) {
       StatDescriptor stat = characterSheet.getStatDescriptor(statType);
       for (OriginType origin : OriginType.values()) {
@@ -279,6 +255,7 @@ class DefaultCharacterSheetTest {
                   () -> characterSheet.decrementStat(statType, origin, 5));
           continue;
         }
+
         characterSheet.decrementStat(statType, origin, 5);
         stat = characterSheet.getStatDescriptor(statType);
         if (origin == OriginType.LEVEL_POINT) {
@@ -287,58 +264,41 @@ class DefaultCharacterSheetTest {
           } else {
             assertEquals(-5, stat.getAbilityPointsUsed());
           }
-          for (Stat csStat : characterSheet.getStats()) {
-            if (csStat.getType() == statType) {
-              csStat.setAbilityPointsUsed(csStat.getAbilityPointsUsed() + 5);
-            }
-          }
         } else {
           switch (statType) {
             case HEALTH -> assertEquals(-7, stat.getMiscellaneous());
             case STRENGTH -> assertEquals(1, stat.getMiscellaneous());
             default -> assertEquals(-5, stat.getMiscellaneous());
           }
-          for (Stat csStat : characterSheet.getStats()) {
-            if (csStat.getType() == statType) {
-              csStat.setMiscellaneous(csStat.getMiscellaneous() + 5);
-            }
-          }
         }
+        characterSheet.decrementStat(statType, origin, -5);
       }
     }
-    Stat edgeStat = new Stat(characterSheet.getStatDescriptor(StatType.STRENGTH));
-    for (Stat csStat : characterSheet.getStats()) {
-      if (csStat.getType() == StatType.STRENGTH) {
-        edgeStat = csStat;
-      }
-    }
-    edgeStat.setAbilityPointsUsed(Integer.MIN_VALUE);
-    edgeStat.setMiscellaneous(Integer.MIN_VALUE);
-    characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT);
-    characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY);
-    assertEquals(Integer.MIN_VALUE, edgeStat.getAbilityPointsUsed());
-    assertEquals(Integer.MIN_VALUE, edgeStat.getMiscellaneous());
+  }
 
-    edgeStat.setAbilityPointsUsed(-5);
-    edgeStat.setMiscellaneous(-5);
+  @Test
+  void decrementStatEdgeCaseTest() {
+    // Underflow
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, 5);
     characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, Integer.MAX_VALUE);
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, 5);
     characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MAX_VALUE);
-    assertEquals(Integer.MIN_VALUE, edgeStat.getAbilityPointsUsed());
-    assertEquals(Integer.MIN_VALUE, edgeStat.getMiscellaneous());
+    assertEquals(Integer.MIN_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed());
+    assertEquals(Integer.MIN_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous());
 
-    edgeStat.setAbilityPointsUsed(5);
-    edgeStat.setMiscellaneous(5);
+    // Negative Values
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, -Integer.MAX_VALUE);
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, -6);
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, -Integer.MAX_VALUE);
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, -11);
+    assertEquals(5, characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed());
+    assertEquals(10, characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous());
+
+    // Overflow
     characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, Integer.MIN_VALUE);
     characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, Integer.MIN_VALUE);
-    assertEquals(Integer.MAX_VALUE, edgeStat.getAbilityPointsUsed());
-    assertEquals(Integer.MAX_VALUE, edgeStat.getMiscellaneous());
-
-    edgeStat.setAbilityPointsUsed(5);
-    edgeStat.setMiscellaneous(5);
-    characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT, -5);
-    characterSheet.decrementStat(StatType.STRENGTH, OriginType.ABILITY, -7);
-    assertEquals(10, edgeStat.getAbilityPointsUsed());
-    assertEquals(12, edgeStat.getMiscellaneous());
+    assertEquals(Integer.MAX_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getAbilityPointsUsed());
+    assertEquals(Integer.MAX_VALUE, characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous());
   }
 
   @Test
@@ -422,7 +382,7 @@ class DefaultCharacterSheetTest {
               sizeFromDice(characterSheet.getDiceDescriptor().getDiceType())); i++) {
         characterSheet.rollDice();
         assertTrue(characterSheet.getDiceDescriptor().getResult() > 0
-                           && characterSheet.getDiceDescriptor().getResult() <= sizeFromDice(
+                && characterSheet.getDiceDescriptor().getResult() <= sizeFromDice(
                 characterSheet.getDiceDescriptor().getDiceType()));
       }
     }
@@ -449,7 +409,8 @@ class DefaultCharacterSheetTest {
         case D12 -> assertEquals(DiceType.D12, characterSheet.getDiceDescriptor().getDiceType());
         case D20 -> assertEquals(DiceType.D20, characterSheet.getDiceDescriptor().getDiceType());
         case D100 -> assertEquals(DiceType.D100, characterSheet.getDiceDescriptor().getDiceType());
-        default -> { }
+        default -> {
+        }
       }
     }
   }
@@ -458,7 +419,7 @@ class DefaultCharacterSheetTest {
   @Test
   void toStringTest() {
     assertTrue(characterSheet.toString()
-                       .contains("Description: [Type: EYE_COLOR, Description: Blue]"));
+            .contains("Description: [Type: EYE_COLOR, Description: Blue]"));
   }
 
   public static double calculateAverageNumberOfRolls(int size) {
