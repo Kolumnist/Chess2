@@ -1,12 +1,12 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
-public class IFrameThread implements Runnable {
+public class RgcIFrameThread implements Runnable {
 
     private static final org.slf4j.Logger logger =
-        org.slf4j.LoggerFactory.getLogger(IFrameThread.class);
-    private GameLogic logic;
+        org.slf4j.LoggerFactory.getLogger(RgcIFrameThread.class);
+    private RgcLogic logic;
 
-    public IFrameThread(GameLogic logic) {
+    public RgcIFrameThread(RgcLogic logic) {
         this.logic = logic;
     }
 

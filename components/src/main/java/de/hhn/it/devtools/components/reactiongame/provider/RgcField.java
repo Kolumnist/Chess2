@@ -8,21 +8,21 @@ import java.util.Random;
 /**
  * GameField class which holds player, obstacles and aim targets.
  */
-public class RgcGameField {
+public class RgcField {
 
   public static int NORMAL_WIDTH = 1280; // in px
   public static int NORMAL_HEIGHT = 720; // in px
 
-  private int width; // px
-  private int height; // px
+  private final int width; // px
+  private final int height; // px
 
-  private ArrayList<RgcObstacleLine> obstacleLines = new ArrayList<>();
-  private ArrayList<RgcObstacle> obstacles = new ArrayList<>();
+  private final ArrayList<RgcObstacleLine> obstacleLines = new ArrayList<>();
+  private final ArrayList<RgcObstacle> obstacles = new ArrayList<>();
 
   private ArrayList<RgcAimTargetZone> aimTargetZones = new ArrayList<>();
   private ArrayList<RgcAimTarget> targets = new ArrayList<>();
 
-  public RgcGameField() {
+  public RgcField() {
     width = NORMAL_WIDTH;
     height = NORMAL_HEIGHT;
 
@@ -30,16 +30,16 @@ public class RgcGameField {
     obstacleLines.add(new RgcObstacleLine(640));
     obstacleLines.add(new RgcObstacleLine(910));
 
-    aimTargetZones.add(new RgcAimTargetZone(0, 0, 100, RgcGameField.NORMAL_HEIGHT));
-    aimTargetZones.add(new RgcAimTargetZone(RgcGameField.NORMAL_WIDTH - 100, 0,
-            RgcGameField.NORMAL_WIDTH, RgcGameField.NORMAL_HEIGHT));
+    aimTargetZones.add(new RgcAimTargetZone(0, 0, 100, RgcField.NORMAL_HEIGHT));
+    aimTargetZones.add(new RgcAimTargetZone(RgcField.NORMAL_WIDTH - 100, 0,
+            RgcField.NORMAL_WIDTH, RgcField.NORMAL_HEIGHT));
   }
 
   public ArrayList<RgcObstacle> getObstacles() {
     return obstacles;
   }
 
-    public ArrayList<RgcAimTarget> getTargets() {
+  public ArrayList<RgcAimTarget> getTargets() {
     return targets;
   }
 
@@ -50,7 +50,7 @@ public class RgcGameField {
    * @param id identifier
    */
   void addRandomObstacle(int id) {
-    addRandomObstacle(id, new Random().nextInt(3));
+    addRandomObstacle(id, new Random().nextInt(obstacleLines.size()));
   }
 
   /**

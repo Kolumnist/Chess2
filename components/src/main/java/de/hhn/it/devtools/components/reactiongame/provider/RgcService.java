@@ -10,21 +10,21 @@ import java.util.SortedMap;
 /**
  * Realisation of ReactionGameService.
  */
-public class RgcReactionGameService implements ReactiongameService {
+public class RgcService implements ReactiongameService {
 
   private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(RgcReactionGameService.class);
-  private GameLogic gameLogic;
+      org.slf4j.LoggerFactory.getLogger(RgcService.class);
+  private RgcLogic gameLogic;
 
 
-  public GameLogic getGameLogic() {
+  public RgcLogic getGameLogic() {
     return gameLogic;
   }
 
   @Override
   public void newRun(Difficulty difficulty) throws IllegalParameterException {
-    gameLogic = new GameLogic(difficulty);
-    gameLogic.getTimer().start();
+    gameLogic = new RgcLogic(difficulty);
+    gameLogic.getClock().setRunning(true);
 
     logger.info("New run created ("  + difficulty + ")");
   }
@@ -35,7 +35,7 @@ public class RgcReactionGameService implements ReactiongameService {
       logger.info("Pause run illegal", new IllegalStateException());
       throw new IllegalStateException();
     }
-    gameLogic.getTimer().stop();
+    gameLogic.getClock().setRunning(false);
     gameLogic.setState(GameState.PAUSED);
     logger.info("Paused run");
   }
@@ -47,7 +47,7 @@ public class RgcReactionGameService implements ReactiongameService {
 
       throw new IllegalStateException();
     }
-    gameLogic.getTimer().restart();
+    gameLogic.getClock().setRunning(true);
     gameLogic.setState(GameState.RUNNING);
 
     logger.info("Continued run");
@@ -55,6 +55,9 @@ public class RgcReactionGameService implements ReactiongameService {
 
   @Override
   public void endRun() {
+    gameLogic.getClock().setRunning(false);
+
+    gameLogic.setState(GameState.FINISHED);
 
   }
 
@@ -111,5 +114,10 @@ public class RgcReactionGameService implements ReactiongameService {
   }
 
 
+  public static void main(String[] args) throws IllegalParameterException {
+    RgcService service = new RgcService();
+
+    service.newRun(Difficulty.MEDIUM);
+  }
 
 }

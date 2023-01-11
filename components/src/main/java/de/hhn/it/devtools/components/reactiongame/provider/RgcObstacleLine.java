@@ -50,12 +50,12 @@ public class RgcObstacleLine {
     public int[] generateYCoordsForObstacle() {
         int[] out = new int[2];
 
-        out[0] = new Random().nextInt(RgcGameField.NORMAL_HEIGHT - 100);
+        out[0] = new Random().nextInt(RgcField.NORMAL_HEIGHT - 100);
 
         do {
-            int temp = new Random().nextInt((RgcGameField.NORMAL_HEIGHT / 3) + 100) + 100;
+            int temp = new Random().nextInt((RgcField.NORMAL_HEIGHT / 3) + 100) + 100;
             out[1] = temp + out[0];
-        } while (out[1] > RgcGameField.NORMAL_HEIGHT);
+        } while (out[1] > RgcField.NORMAL_HEIGHT);
 
 
         return out;

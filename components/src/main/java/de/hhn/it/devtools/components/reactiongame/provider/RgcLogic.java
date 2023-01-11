@@ -1,23 +1,21 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
-import de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerDescriptor;
 import de.hhn.it.devtools.apis.reactiongame.Difficulty;
 import de.hhn.it.devtools.apis.reactiongame.GameState;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
 
 
-import javax.swing.Timer;
 import java.util.ArrayList;
 
-public class GameLogic {
+public class RgcLogic {
 
     private static final org.slf4j.Logger logger =
-        org.slf4j.LoggerFactory.getLogger(GameLogic.class);
+        org.slf4j.LoggerFactory.getLogger(RgcLogic.class);
 
     private ArrayList<ReactiongameListener> callbacks = new ArrayList<>();
-    private RgcGameField gameField = new RgcGameField();
+    private RgcField gameField = new RgcField();
     private RgcPlayer player;
-    private Timer timer; // 2 verschiedene Timer für front und backend?
+    private RgcClock clock; // 2 verschiedene Timer für front und backend?
 
     private Difficulty difficulty;
     private GameState state;
@@ -28,31 +26,27 @@ public class GameLogic {
     private int score;
     private boolean isInvincible = false;
 
-    private IFrameThread iFrameThread;
+    private RgcIFrameThread iFrameThread;
     int timePlayed;
 
 
-    public GameLogic(Difficulty difficulty) {
+    public RgcLogic(Difficulty difficulty) {
         this.difficulty = difficulty;
         player = new RgcPlayer("");
-        timer = new Timer(1000, new TaskPerformer(timer, this)); // Every second: timeplayed++
-        iFrameThread = new IFrameThread(this);
+        clock = new RgcClock(this);
+        iFrameThread = new RgcIFrameThread(this);
     }
 
     public ArrayList<ReactiongameListener> getCallbacks() {
         return callbacks;
     }
 
-    public RgcGameField getGameField() {
+    public RgcField getGameField() {
         return gameField;
     }
 
     public RgcPlayer getPlayer() {
         return player;
-    }
-
-    public Timer getTimer() {
-        return timer;
     }
 
     public GameState getState() {
@@ -78,6 +72,14 @@ public class GameLogic {
     public void setInvincible(boolean invincible) {
         isInvincible = invincible;
         logger.info("invis state = " + isInvincible);
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public RgcClock getClock() {
+        return clock;
     }
 
     /**
@@ -130,8 +132,8 @@ public class GameLogic {
     }
 
 
-    public void addObstacle() {
-        gameField.addRandomObstacle(gameField.getObstacles().size());
+    public void addObstacle(int id) {
+        gameField.addRandomObstacle(id);
 
         for (ReactiongameListener callback :
             callbacks) {
@@ -142,6 +144,13 @@ public class GameLogic {
             logger.info("Added new obstacle (" + gameField.getObstacles()
                 .get(gameField.getObstacles().size()).getId() + ") ");
         }
+
+    }
+
+
+    public static void main(String[] args) {
+        RgcLogic logic = new RgcLogic(Difficulty.MEDIUM);
+
 
     }
 }
