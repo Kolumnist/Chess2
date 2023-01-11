@@ -19,6 +19,7 @@ public class DuckHuntGameLoop extends Thread {
   private int ticks = 0;
   private Timer timer;
   private final Semaphore semaphore = new Semaphore(1);
+  private boolean isRunning = false;
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(DuckHuntGameLoop.class);
 
@@ -49,6 +50,7 @@ public class DuckHuntGameLoop extends Thread {
     if (this.isAlive()) {
       throw new RuntimeException("DuckHuntGameLoop can't be started if already running");
     }
+    isRunning = true;
     this.start();
   }
 
@@ -60,6 +62,7 @@ public class DuckHuntGameLoop extends Thread {
     if (!this.isAlive()) {
       throw new RuntimeException("DuckHuntGameLoop can't be stopped if not running");
     }
+    isRunning = false;
     semaphore.release();
     timer.cancel();
   }
@@ -100,8 +103,7 @@ public class DuckHuntGameLoop extends Thread {
 
   @Override
   public void run() {
-    while (game.getGameInfo().getState() == GameState.RUNNING
-        || game.getGameInfo().getState() == GameState.PAUSED) {
+    while (isRunning) {
       try {
         // waits if game is paused
         semaphore.tryAcquire(Integer.MAX_VALUE, TimeUnit.DAYS);
