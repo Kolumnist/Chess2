@@ -305,19 +305,19 @@ class DefaultCharacterSheetTest {
 
   @Test
   void getStatDisplayValueTest() {
-    for (Stat stat : characterSheet.getStats()) {
-      switch (stat.getType()) {
-        case MAX_HEALTH -> assertEquals(30, characterSheet.getStatDisplayValue(stat.getType()));
-        case HEALTH -> assertEquals(28, characterSheet.getStatDisplayValue(stat.getType()));
-        case LEVEL -> assertEquals(1, characterSheet.getStatDisplayValue(stat.getType()));
-        case STRENGTH -> assertEquals(8, characterSheet.getStatDisplayValue(stat.getType()));
-        default -> assertEquals(0, characterSheet.getStatDisplayValue(stat.getType()));
+    for (StatType statType : StatType.values()) {
+      StatDescriptor stat = characterSheet.getStatDescriptor(statType);
+      switch (stat.getStatType()) {
+        case MAX_HEALTH -> assertEquals(30, characterSheet.getStatDisplayValue(stat.getStatType()));
+        case HEALTH -> assertEquals(28, characterSheet.getStatDisplayValue(stat.getStatType()));
+        case LEVEL -> assertEquals(1, characterSheet.getStatDisplayValue(stat.getStatType()));
+        case STRENGTH -> assertEquals(8, characterSheet.getStatDisplayValue(stat.getStatType()));
+        default -> assertEquals(0, characterSheet.getStatDisplayValue(stat.getStatType()));
       }
     }
-    characterSheet.setStats(null);
     for (StatType statType : StatType.values()) {
       assertThrows(IllegalArgumentException.class,
-              () -> characterSheet.getStatDisplayValue(statType));
+              () -> nullSheet.getStatDisplayValue(statType));
     }
   }
 
