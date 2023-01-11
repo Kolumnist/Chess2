@@ -26,6 +26,8 @@ import org.junit.jupiter.api.Test;
 class DefaultCharacterSheetTest {
   SimpleCharacterSheetListener listener = null;
   DefaultCharacterSheet characterSheet = null;
+  DefaultCharacterSheet nullSheet = new DefaultCharacterSheet(
+          new CharacterDescriptor(null, null, null));
 
   @BeforeEach
   void setupObjects() {
