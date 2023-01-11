@@ -367,13 +367,13 @@ public class TestPieces {
   @Test
   @DisplayName("Test if calculate produces the right coordinates if the black fish stand on the field 4, 4 and the bear stands diagonal to the black fish")
   public void testCalculateBlackFishInTheMiddleOfTheBoard1() throws IllegalParameterException {
-    Piece fish = new Fish('b', new Coordinate(4, 4));
+    Piece fish = new Fish('b', new Coordinate(4, 3));
     // move bear -> because of this move its Player black's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
-    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 3));
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 2));
     //because the bear stands diagonal to the fish, the fish can go to this field!
-    Coordinate[] expected = {new Coordinate(3, 3), new Coordinate(3, 4), new Coordinate(5, 3),
-        new Coordinate(5, 4)};
+    Coordinate[] expected = {new Coordinate(3, 2), new Coordinate(3, 3), new Coordinate(5, 2),
+        new Coordinate(5, 3)};
     fish.calculate(board);
     for (int i = 0; i < fish.getPossibleMove().length; i++) {
       assertEquals(expected[i].getX(), fish.getPossibleMove()[i].getX());
@@ -384,12 +384,12 @@ public class TestPieces {
   @Test
   @DisplayName("Test if calculate produces the right coordinates if the black fish stand on the field 4, 4 and the bear stand right next to the black fish")
   public void testCalculateBlackFishInTheMiddleOfTheBoard2() throws IllegalParameterException {
-    Piece fish = new Fish('b', new Coordinate(4, 4));
+    Piece fish = new Fish('b', new Coordinate(4, 2));
     // move bear -> because of this move its Player black's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
-    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 4));
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 2));
     //because the bear stands right next to the fish, the fish can't go to this field!
-    Coordinate[] expected = {new Coordinate(3, 3), new Coordinate(3, 4), new Coordinate(5, 3)};
+    Coordinate[] expected = {new Coordinate(3, 1), new Coordinate(3, 2), new Coordinate(5, 1)};
     fish.calculate(board);
     for (int i = 0; i < fish.getPossibleMove().length; i++) {
       assertEquals(expected[i].getX(), fish.getPossibleMove()[i].getX());
@@ -414,11 +414,9 @@ public class TestPieces {
   @DisplayName("Test if calculate produces the right coordinates if the black fish stand on the field 7, 7")
   public void testCalculateBlackFishInTheCornerOfTheBoard() throws IllegalParameterException {
     Piece fish = new Fish('b', new Coordinate(7, 7));
-
     // move bear -> because of this move its Player black's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
-    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 4));
-
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 2));
     fish.calculate(board);
     for (int i = 0; i < fish.getPossibleMove().length; i++) {
       assertEquals(null, fish.getPossibleMove()[i]);
@@ -433,7 +431,7 @@ public class TestPieces {
     Piece fish = new Fish('w', new Coordinate(4, 4));
     // move bear -> because of this move its Player black's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
-    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 4));
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(4, 5));
     // move bear -> because of this move its Player black's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
     board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 5));
@@ -451,17 +449,17 @@ public class TestPieces {
   @Test
   @DisplayName("Test if calculate produces the right coordinates if the white fish stand on the field 4, 4 and the bear stands right to the black fish")
   public void testCalculateWhiteFishInTheMiddleOfTheBoard2() throws IllegalParameterException {
-    Piece fish = new Fish('w', new Coordinate(4, 4));
+    Piece fish = new Fish('w', new Coordinate(4, 5));
     // move bear -> because of this move its Player black's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
-    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 3));
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(6, 5));
     // move bear -> because of this move its Player black's turn
     board.getSpecificField(chessGame.bearCoordinate).setFieldState(FieldState.SELECTED);
-    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 4));
+    board = chessGame.moveSelectedPiece(chessGame.bearCoordinate, new Coordinate(5, 5));
 
     //because the bear stands right to the fish, the fish can go to this field!
-    Coordinate[] expected = {new Coordinate(3, 4), new Coordinate(3, 5),
-        new Coordinate(5, 5)};
+    Coordinate[] expected = {new Coordinate(3, 5), new Coordinate(3, 6),
+        new Coordinate(5, 6)};
     fish.calculate(board);
     for (int i = 0; i < fish.getPossibleMove().length; i++) {
       assertEquals(expected[i].getX(), fish.getPossibleMove()[i].getX());
