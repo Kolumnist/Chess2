@@ -20,7 +20,7 @@ public enum FieldState {
   SELECTED,
 
   /** (NO JAIL) The other King is on this Field. */
-  HAS_OTHER_KING,
+  OTHER_KING,
 
   /** (NO JAIL) A Piece (besides bear) of the current Player is on the Field. */
   HAS_CURRENT_PIECE,

@@ -99,7 +99,7 @@ public class ChessGame implements Chess2Service {
           .setFieldState(FieldState.HAS_OTHER_PIECE);
     }
     gameBoard.getSpecificField(otherKingCoordinate)
-        .setFieldState(FieldState.HAS_OTHER_KING);
+        .setFieldState(FieldState.OTHER_KING);
 
 
     /* Set Optional Piece and FieldState of the Bear */
@@ -192,7 +192,7 @@ public class ChessGame implements Chess2Service {
           || field.getFieldState() == FieldState.JAIL_QUEEN) {
         continue;
       }
-      if (field.getFieldState() == FieldState.HAS_OTHER_KING) {
+      if (field.getFieldState() == FieldState.OTHER_KING) {
         gameBoard.getSpecificField(field.getPiece().getCoordinate())
             .setFieldState(FieldState.HAS_CURRENT_PIECE);
         continue;
@@ -205,7 +205,7 @@ public class ChessGame implements Chess2Service {
 
       if (field.getPiece().getClass().equals(King.class)) {
         gameBoard.getSpecificField(field.getPiece().getCoordinate())
-            .setFieldState(FieldState.HAS_OTHER_KING);
+            .setFieldState(FieldState.OTHER_KING);
         otherKingCoordinate = field.getCoordinate();
         continue;
       }
@@ -417,7 +417,7 @@ public class ChessGame implements Chess2Service {
        * Checks if the hit Piece is a King or Queen they get send to Jail accordingly.
        * Lastly it sets the Coordinate of the otherPiece to -1/-1 */
     } else if (oldPieceFieldState == FieldState.HAS_OTHER_PIECE
-        || oldPieceFieldState == FieldState.HAS_OTHER_KING) {
+        || oldPieceFieldState == FieldState.OTHER_KING) {
 
       //Piece gets new Coordinate
       gameBoard.getSpecificField(selectedCoordinate).getPiece()
