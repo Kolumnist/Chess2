@@ -35,6 +35,8 @@ public class RgcLogic {
         player = new RgcPlayer("");
         clock = new RgcClock(this);
         iFrameThread = new RgcIFrameThread(this);
+
+        logger.info("created");
     }
 
     public ArrayList<ReactiongameListener> getCallbacks() {
@@ -132,8 +134,8 @@ public class RgcLogic {
     }
 
 
-    public void addObstacle(int id) {
-        gameField.addRandomObstacle(id);
+    public void addObstacle(int obstacleId) {
+        gameField.addRandomObstacle(obstacleId);
 
         for (ReactiongameListener callback :
             callbacks) {
@@ -141,16 +143,25 @@ public class RgcLogic {
             callback.addObstacle(RgcObstacle.toObstacleDescriptor(gameField.getObstacles()
                 .get(gameField.getObstacles().size())));
 
-            logger.info("Added new obstacle (" + gameField.getObstacles()
-                .get(gameField.getObstacles().size()).getId() + ") ");
         }
 
+        logger.info("Added new obstacle (id = " + obstacleId + ")");
+    }
+
+    public void removeObstacle(int obstacleId) {
+        gameField.removeObstacle(obstacleId);
+
+        for (ReactiongameListener callback :
+            callbacks) {
+
+            callback.removeObstacle(obstacleId);
+        }
+
+        logger.info("Removed new obstacle (id = " + obstacleId + ")");
     }
 
 
     public static void main(String[] args) {
         RgcLogic logic = new RgcLogic(Difficulty.MEDIUM);
-
-
     }
 }

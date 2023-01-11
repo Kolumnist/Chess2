@@ -25,6 +25,8 @@ public class RgcClock implements Runnable {
     isRunning = false;
 
     new Thread(this).start();
+
+    logger.info("created");
   }
 
   public void setRunning(boolean running) {
@@ -82,8 +84,10 @@ public class RgcClock implements Runnable {
    * Deletes a random obstacle
    */
   private void deleteRandomObstacle() {
-    int i = gameLogic.getGameField().getObstacles().remove(new Random()
-        .nextInt(gameLogic.getGameField().getObstacles().size())).getId();
+    int i = gameLogic.getGameField().getObstacles()
+        .get(new Random().nextInt(gameLogic.getGameField().getObstacles().size())).getId();
+
+    gameLogic.removeObstacle(i);
 
     logger.info("Obstacle (id = " + i + ") removed");
   }

@@ -10,6 +10,11 @@ import java.util.Random;
  */
 public class RgcField {
 
+
+  private static final org.slf4j.Logger logger =
+      org.slf4j.LoggerFactory.getLogger(RgcField.class);
+
+
   public static int NORMAL_WIDTH = 1280; // in px
   public static int NORMAL_HEIGHT = 720; // in px
 
@@ -33,6 +38,8 @@ public class RgcField {
     aimTargetZones.add(new RgcAimTargetZone(0, 0, 100, RgcField.NORMAL_HEIGHT));
     aimTargetZones.add(new RgcAimTargetZone(RgcField.NORMAL_WIDTH - 100, 0,
             RgcField.NORMAL_WIDTH, RgcField.NORMAL_HEIGHT));
+
+    logger.info("created");
   }
 
   public ArrayList<RgcObstacle> getObstacles() {
@@ -56,12 +63,13 @@ public class RgcField {
   /**
    * Adds an obstacle to the UI.
    *
-   * @param id identifier
+   * @param obstacleId identifier
    * @param obstacleLineId obstacleLine identifier
    */
-  void addRandomObstacle(int id, int obstacleLineId) {
-    obstacles.add(id,
-        obstacleLines.get(obstacleLineId).addRandomObstacle(id));
+  void addRandomObstacle(int obstacleId, int obstacleLineId) {
+    obstacles.add(obstacleId, obstacleLines.get(obstacleLineId).addRandomObstacle(obstacleId));
+
+    logger.info("Obstacle (id = " + obstacleId + ") added to line " + obstacleLineId);
   }
 
   /**
@@ -71,16 +79,43 @@ public class RgcField {
    */
   void removeObstacle(int obstacleId) {
 
+    for (RgcObstacleLine l :
+        obstacleLines) { // go throw every line...
+      // ... and every obstacle list to find the right obstacle
+      l.getObstacles().removeIf(o -> o.getId() == obstacleId);
+    }
+
+    if(!(obstacles.removeIf(o -> o.getId() == obstacleId))) {
+      logger.info("Obstacle not found!");
+    }
+
+
+    logger.info("Obstacle (id = " + obstacleId + ") removed");
+  }
+
+
+  /**
+   * Adds an aim target.
+   *
+   * @param aimTargetId aim target identifier
+   */
+  void addRandomAimTarget(int aimTargetId) {
+    addRandomAimTarget(aimTargetId, new Random().nextInt(aimTargetZones.size()));
   }
 
   /**
-   * Adds an aim target to the ui.
+   * Adds an aim target.
    *
-   * @param aimTarget aim target
+   * @param aimTargetId aim target identifier
+   * @param aimTargetZoneId aim target zone identifier
    */
-  void addAimTarget(AimTargetDescriptor aimTarget) {
+  void addRandomAimTarget(int aimTargetId, int aimTargetZoneId) {
+    targets.add(aimTargetId, aimTargetZones.get(aimTargetZoneId).addRandomAimTarget(aimTargetId));
 
+    logger.info("AimTarget (id = " + aimTargetId + ") added to zone " + aimTargetZoneId);
   }
+
+
 
   /**
    * Removes the aim target with the given id.
@@ -88,18 +123,12 @@ public class RgcField {
    * @param aimTargetId identifier
    */
   void removeAimTarget(int aimTargetId) {
+    for (RgcAimTargetZone z :
+        aimTargetZones) {
+      z.getAimTargets().removeIf(a -> a.getId() == aimTargetId);
+    }
 
+    logger.info("AimTarget (id = " + aimTargetId + ") removed");
   }
-
-  /**
-   * Player hits an obstacle.
-   *
-   * @param obstacleId identifier of obstacle which is hit
-   */
-  void hitObstacle(int obstacleId) {
-
-  }
-
-
 
 }

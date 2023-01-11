@@ -5,6 +5,9 @@ import java.util.Random;
 
 public class RgcAimTargetZone {
 
+    private static final org.slf4j.Logger logger =
+        org.slf4j.LoggerFactory.getLogger(RgcAimTargetZone.class);
+
     private final int x1; // Point A x
     private final int y1; // Point A y
 
@@ -20,17 +23,26 @@ public class RgcAimTargetZone {
         this.y2 = y2;
 
         aimTargets = new ArrayList<>();
+
+        logger.info("created");
     }
 
-    public AimTarget addRandomAimTarget(int id) {
+
+    public ArrayList<RgcAimTarget> getAimTargets() {
+        return aimTargets;
+    }
+
+    public RgcAimTarget addRandomAimTarget(int aimTargetId) {
 
         int x = new Random().nextInt(x1 + x2) + x2;
         int y = new Random().nextInt(y1 + y2) + y2;
 
-        RgcAimTarget aimTarget = new RgcAimTarget(id, x, y, RgcAimTarget.RADIUS,
+        RgcAimTarget aimTarget = new RgcAimTarget(aimTargetId, x, y, RgcAimTarget.RADIUS,
             generateRandomKeyforAimTarget());
 
         aimTargets.add(aimTarget);
+
+        logger.info("Added aim target (id = " + aimTargetId+ ")");
 
         return aimTarget;
     }
