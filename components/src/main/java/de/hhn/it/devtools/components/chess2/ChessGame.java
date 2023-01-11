@@ -40,6 +40,7 @@ public class ChessGame implements Chess2Service {
   protected GameState gameState;
 
   public Coordinate bearCoordinate;
+  public Coordinate otherKingCoordinate = new Coordinate(3, 7);
 
   /**
    * The Constructor that initializes every needed object.
@@ -96,16 +97,11 @@ public class ChessGame implements Chess2Service {
           .setFieldState(FieldState.HAS_CURRENT_PIECE);
       gameBoard.getSpecificField(blackPiece.getCoordinate())
           .setFieldState(FieldState.HAS_OTHER_PIECE);
-
-      if (whitePiece.getClass() == King.class) {
-        gameBoard.getSpecificField(whitePiece.getCoordinate())
-            .setFieldState(FieldState.CURRENT_KING);
-      }
-      if (blackPiece.getClass() == King.class) {
-        gameBoard.getSpecificField(blackPiece.getCoordinate())
-            .setFieldState(FieldState.OTHER_KING);
-      }
     }
+    gameBoard.getSpecificField(otherKingCoordinate)
+        .setFieldState(FieldState.HAS_OTHER_KING);
+
+
     /* Set Optional Piece and FieldState of the Bear */
     gameBoard.getSpecificField(bearCoordinate)
         .setPiece(Optional.of(bear));
@@ -190,12 +186,15 @@ public class ChessGame implements Chess2Service {
     //Could do a switch case, but I don't think it differs much
     /* Switch FieldStates from HAS_CURRENT_PIECE to HAS_OTHER_PIECE and the other way round */
     for (Field field : gameBoard.getFields()) {
-      if (field.getFieldState() == FieldState.FREE_FIELD) {
+      if (field.getFieldState() == FieldState.FREE_FIELD
+          || field.getFieldState() == FieldState.JAIL
+          || field.getFieldState() == FieldState.JAIL_KING
+          || field.getFieldState() == FieldState.JAIL_QUEEN) {
         continue;
       }
-      if (field.getFieldState() == FieldState.HAS_CURRENT_PIECE) {
-        gameBoard.getSpecificField(field.getCoordinate())
-            .setFieldState(FieldState.HAS_OTHER_PIECE);
+      if (field.getFieldState() == FieldState.HAS_OTHER_KING) {
+        gameBoard.getSpecificField(field.getPiece().getCoordinate())
+            .setFieldState(FieldState.HAS_CURRENT_PIECE);
         continue;
       }
       if (field.getFieldState() == FieldState.HAS_OTHER_PIECE) {
@@ -203,17 +202,18 @@ public class ChessGame implements Chess2Service {
             .setFieldState(FieldState.HAS_CURRENT_PIECE);
         continue;
       }
-      if (field.getPiece().getClass() == King.class
-          && field.getFieldState() == FieldState.OTHER_KING) {
+
+      if (field.getPiece().getClass().equals(King.class)) {
         gameBoard.getSpecificField(field.getPiece().getCoordinate())
-            .setFieldState(FieldState.CURRENT_KING);
+            .setFieldState(FieldState.HAS_OTHER_KING);
+        otherKingCoordinate = field.getCoordinate();
         continue;
       }
-      if (field.getPiece().getClass() == King.class
-          && field.getFieldState() == FieldState.CURRENT_KING) {
-        gameBoard.getSpecificField(field.getPiece().getCoordinate())
-            .setFieldState(FieldState.OTHER_KING);
+      if (field.getFieldState() == FieldState.HAS_CURRENT_PIECE) {
+        gameBoard.getSpecificField(field.getCoordinate())
+            .setFieldState(FieldState.HAS_OTHER_PIECE);
       }
+
     }
 
     /* Calculate all pieces movements */
@@ -387,7 +387,6 @@ public class ChessGame implements Chess2Service {
           .setFieldState(FieldState.HAS_CURRENT_PIECE);
       gameBoard.lostPiece = false;
 
-      //I don't know it that is needed here
       selectedField = gameBoard.getSpecificField(selectedCoordinate);
 
       /* The SELECTED piece is Bear: FieldState -> HAS_BEAR and Coordinates get updated*/
@@ -417,7 +416,8 @@ public class ChessGame implements Chess2Service {
       /* Selected Piece gets moved to the new Coordinate also FieldState.
        * Checks if the hit Piece is a King or Queen they get send to Jail accordingly.
        * Lastly it sets the Coordinate of the otherPiece to -1/-1 */
-    } else if (oldPieceFieldState == FieldState.HAS_OTHER_PIECE) {
+    } else if (oldPieceFieldState == FieldState.HAS_OTHER_PIECE
+        || oldPieceFieldState == FieldState.HAS_OTHER_KING) {
 
       //Piece gets new Coordinate
       gameBoard.getSpecificField(selectedCoordinate).getPiece()
@@ -473,11 +473,6 @@ public class ChessGame implements Chess2Service {
     gameBoard.getSpecificField(selectedCoordinate).setPiece(Optional.empty());
     gameBoard.getSpecificField(selectedCoordinate).setFieldState(FieldState.FREE_FIELD);
     currentlySelected = null;
-
-    /* The moved Piece was the king */
-    if (gameBoard.getSpecificField(newCoordinate).getPiece().getClass() == King.class) {
-      gameBoard.getSpecificField(newCoordinate).setFieldState(FieldState.CURRENT_KING);
-    }
 
     setUpNewRound();
     return gameBoard;

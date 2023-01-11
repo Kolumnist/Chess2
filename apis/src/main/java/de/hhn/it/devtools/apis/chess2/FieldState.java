@@ -19,11 +19,8 @@ public enum FieldState {
   /** (NO JAIL) The selected field where a current Piece stands on. */
   SELECTED,
 
-
-  /** (NO JAIL) The current King of the current Player is on this Field. */
-  CURRENT_KING,
   /** (NO JAIL) The other King is on this Field. */
-  OTHER_KING,
+  HAS_OTHER_KING,
 
   /** (NO JAIL) A Piece (besides bear) of the current Player is on the Field. */
   HAS_CURRENT_PIECE,
