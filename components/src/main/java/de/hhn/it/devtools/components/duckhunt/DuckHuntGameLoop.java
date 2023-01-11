@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class DuckHuntGameLoop extends Thread {
   private DuckHunt game;
   private float deltaTime = 0.016f;
-  private int tps = 0;
+  private int tps = 0; // Ticks per Second
   private int ticks = 0;
   private Timer timer;
   private final Semaphore semaphore = new Semaphore(1);
