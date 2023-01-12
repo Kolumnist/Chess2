@@ -56,17 +56,6 @@ public class GameScreen implements Initializable {
   @FXML
   private GridPane mainGrid;
 
-  public Pane createCard(MemoryScreenController screenController) {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/memory/Card.fxml"));
-    Pane content = null;
-    loader.setController(new CardController(screenController));
-    try {
-      content = loader.load();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return content;
-  }
 
 
   @Override
@@ -75,10 +64,10 @@ public class GameScreen implements Initializable {
     screenController =
             (MemoryScreenController) memoryAttributeStore.getAttribute(MemoryServiceController.SCREEN_CONTROLLER);
     memoryService = (SfsMemoryService) memoryAttributeStore.getAttribute(MemoryServiceController.MEMORY_SERVICE);
+    int cnt = 0;
     for (int i = 0; i < mainGrid.getColumnCount(); i++) {
       for (int j = 0; j < mainGrid.getRowCount(); j++) {
-        Node node = createCard(screenController);
-        mainGrid.add(node, i, j);
+        mainGrid.add(new CardController(memoryService.getCurrentCardSet().getDescriptor().getPictureCardDescriptors()[cnt++]), i, j);
       }
     }
 

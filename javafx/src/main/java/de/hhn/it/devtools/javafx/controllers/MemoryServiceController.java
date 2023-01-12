@@ -86,6 +86,7 @@ public class MemoryServiceController extends Controller implements Initializable
       pictureCardDescriptors[cnt++] = new PictureCardDescriptor(-1, f.getName());             //NameCard
       pathReferences.put(i, f.getAbsolutePath());
       pictureReferences.put(i, f.getName());
+      if(cnt == 21) break;
     }
     CardSetDescriptor cardSetDescriptor = new CardSetDescriptor(Difficulty.EASY, pictureCardDescriptors, pictureReferences);
     return cardSetDescriptor;
