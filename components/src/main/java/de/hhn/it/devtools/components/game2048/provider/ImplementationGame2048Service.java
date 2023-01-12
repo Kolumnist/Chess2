@@ -7,6 +7,7 @@ import de.hhn.it.devtools.components.game2048.provider.Comparators.LeftComparato
 import de.hhn.it.devtools.components.game2048.provider.Comparators.RightComparator;
 import de.hhn.it.devtools.components.game2048.provider.Comparators.UpComparator;
 
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -22,9 +23,6 @@ public class ImplementationGame2048Service implements de.hhn.it.devtools.apis.ga
   private boolean gameWon = false;
   private boolean gameLost = false;
   private Game2048Listener gameListener;
-  // TODO: 27.12.2022 Methoden gegen falsche eingabewerte schützen/ exeptions hinzufügen
-  // TODO: 05.01.2023 log4j benutzen anstatt sout in Comperator Klassen
-  // TODO: 08.01.2023 Highscore abspeichern??
 
   @Override
   public void initialisation() {
@@ -41,6 +39,7 @@ public class ImplementationGame2048Service implements de.hhn.it.devtools.apis.ga
     } catch (IllegalParameterException e) {
       e.printStackTrace();
     }
+    loadHighscore();
   }
 
   /**
@@ -239,7 +238,8 @@ public class ImplementationGame2048Service implements de.hhn.it.devtools.apis.ga
   }
 
   /**
-   * Updates currentScore and highScore
+   * Updates currentScore and highScore.
+   * Highscore gets saved if necessary.
    *
    * @throws IllegalStateException if currentScore or highScore are negative
    */
@@ -256,6 +256,7 @@ public class ImplementationGame2048Service implements de.hhn.it.devtools.apis.ga
     }
     if (currentScore > highScore) {
       highScore = currentScore;
+      safeHighscore();
     }
   }
 
@@ -328,28 +329,59 @@ public class ImplementationGame2048Service implements de.hhn.it.devtools.apis.ga
     }
   }
 
-  public static void main(String[] args) throws IllegalParameterException {
-    ImplementationGame2048Service g = new ImplementationGame2048Service();
-    g.initialisation();
-    g.addCallback(new Game2048Listener() {
-      @Override
-      public void newState(State state) {
-        logger.info("newState: state = {}", state);
+  /**
+   * Loads the highest score a player scored on this physical device, from a File.
+   */
+  private void loadHighscore() {
+    logger.info("readHighscore: no params");
+    FileInputStream fileInputStream = null;
+    try {
+      fileInputStream = new FileInputStream("SaveGame2048.txt");
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+    if (fileInputStream != null) {
+      ObjectInputStream objectInputStream;
+      try {
+        objectInputStream = new ObjectInputStream(fileInputStream);
+        highScore = objectInputStream.readInt();
+        objectInputStream.close();
+        logger.info("readHighscore, highscore = {}", highScore);
+      } catch (IOException e) {
+        logger.warn("load highScore failed, because of ObjectOutputStream Error");
+        e.printStackTrace();
       }
-    });
-    moves(g);
-    moves(g);
-    moves(g);
+    } else {
+      logger.warn("load highScore failed, because File related Error");
+    }
   }
 
   /**
-   * For Testing purposes.
+   * Writes the current value of highScore in a File.
+   * CAUTION!!! If old highScore in the File is greater than the new highScore,
+   * the old highScore will be overwritten.
    */
-  private static void moves(ImplementationGame2048Service g) throws IllegalParameterException {
-    // TODO: 08.01.2023 delete this Methode
-    g.moveAllBlocks(MovingDirection.down);
-    g.moveAllBlocks(MovingDirection.right);
-    g.moveAllBlocks(MovingDirection.up);
-    g.moveAllBlocks(MovingDirection.left);
+  private void safeHighscore() {
+    logger.info("safeHighscore: no params");
+    FileOutputStream fileOutputStream = null;
+    try {
+      fileOutputStream = new FileOutputStream("SaveGame2048.txt");
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+    if (fileOutputStream != null) {
+      ObjectOutputStream objectOutputStream;
+      try {
+        objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeInt(highScore);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+      } catch (IOException e) {
+        logger.warn("save highScore failed, because of ObjectOutputStream Error");
+        e.printStackTrace();
+      }
+    } else {
+      logger.warn("save highScore failed, because File related Error");
+    }
   }
 }
