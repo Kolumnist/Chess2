@@ -46,9 +46,13 @@ public class Monkey extends Piece {
     //Testing if there are still Pieces in the way and adding them to a list to remove them.
     for (int i = 0; i < possibleMoves.length; i++) {
       if (board.getSpecificField(possibleMoves[i]).getFieldState()
-          != FieldState.FREE_FIELD
-          && board.getSpecificField(possibleMoves[i]).getFieldState()
-          != FieldState.SELECTED) {
+          == FieldState.OTHER_KING
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_CURRENT_PIECE
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_OTHER_PIECE
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_BEAR) {
         index.add(i);
       }
     }
@@ -77,10 +81,10 @@ public class Monkey extends Piece {
     ArrayList<Integer> index = new ArrayList<>();
     for (int i = 0; i < possibleJump.length; i++) {
       if (possibleJump[i] == null
-              || possibleJump[i].getY() < 0
-              || possibleJump[i].getX() < 0
-              || possibleJump[i].getY() > 7
-              || possibleJump[i].getX() > 7) {
+          || possibleJump[i].getY() < 0
+          || possibleJump[i].getX() < 0
+          || possibleJump[i].getY() > 7
+          || possibleJump[i].getX() > 7) {
         index.add(i);
       }
     }
@@ -88,7 +92,7 @@ public class Monkey extends Piece {
 
     //Testing if the Crow can defeat the enemy King.
     for (int i = 0; i < possibleJump.length; i++) {
-      if (board.getSpecificField(possibleJump[i]).getFieldState() == FieldState.OTHER_KING){
+      if (board.getSpecificField(possibleJump[i]).getFieldState() == FieldState.OTHER_KING) {
         canDefeatKing = true;
         break;
       }
@@ -99,20 +103,20 @@ public class Monkey extends Piece {
     if (isKingInJail(board)) {
       if (color == 'b'
           && (board.getSpecificField(new Coordinate(5, 4)).getFieldState()
-              == FieldState.SELECTED
-              || board.getSpecificField(new Coordinate(5, 4)).getFieldState()
-              == FieldState.HAS_OTHER_PIECE
-              || board.getSpecificField(new Coordinate(5, 4)).getFieldState()
-              == FieldState.HAS_CURRENT_PIECE)) {
+          == FieldState.SELECTED
+          || board.getSpecificField(new Coordinate(5, 4)).getFieldState()
+          == FieldState.HAS_OTHER_PIECE
+          || board.getSpecificField(new Coordinate(5, 4)).getFieldState()
+          == FieldState.HAS_CURRENT_PIECE)) {
         replaceJumpCoordinate(possibleJump, new Coordinate(7, 4),
             new Coordinate(9, 4));
       } else if (color == 'w'
           && (board.getSpecificField(new Coordinate(2, 3)).getFieldState()
-              == FieldState.SELECTED
-              || board.getSpecificField(new Coordinate(2, 3)).getFieldState()
-              == FieldState.HAS_OTHER_PIECE
-              || board.getSpecificField(new Coordinate(2, 3)).getFieldState()
-              == FieldState.HAS_CURRENT_PIECE)) {
+          == FieldState.SELECTED
+          || board.getSpecificField(new Coordinate(2, 3)).getFieldState()
+          == FieldState.HAS_OTHER_PIECE
+          || board.getSpecificField(new Coordinate(2, 3)).getFieldState()
+          == FieldState.HAS_CURRENT_PIECE)) {
         replaceJumpCoordinate(possibleJump, new Coordinate(0, 3),
             new Coordinate(8, 3));
       }
