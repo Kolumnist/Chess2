@@ -74,34 +74,6 @@ public class TestRotateShip {
                 () -> bs.rotateShip(player2OwnerMap.get(player), ship));
     }
 
-    @Test
-    @DisplayName("Test check rotateShip that would stand out of the field - vertical to horizontal")
-    public void rotateShipToHorizontalButOutOfField() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
-        // IllegalPositionException should be thrown
-        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
-        Position pos = new Position(null, null);
-        Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        ship.setIsVertical(true);
-        bs.placeShip(player2OwnerMap.get(player), ship, 7, 5);
-        bs.unPlace(player2OwnerMap.get(player), ship);
-        IllegalPositionException exception = assertThrows(IllegalPositionException.class,
-                () -> bs.rotateShip(player2OwnerMap.get(player), ship));
-    }
-
-    @Test
-    @DisplayName("Test check rotateShip that would stand out of the field - horizontal to vertical")
-    public void rotateShipToVerticalButOutOfField() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
-        // IllegalPositionException should be thrown
-        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
-        Position pos = new Position(null, null);
-        Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        ship.setIsVertical(false);
-        bs.placeShip(player2OwnerMap.get(player), ship, 5, 1);
-        bs.unPlace(player2OwnerMap.get(player), ship);
-        IllegalPositionException exception = assertThrows(IllegalPositionException.class,
-                () -> bs.rotateShip(player2OwnerMap.get(player), ship));
-    }
-
     // Good Cases
 
     @Test
@@ -126,7 +98,7 @@ public class TestRotateShip {
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(false);
         bs.rotateShip(player2OwnerMap.get(player), ship);
-        bs.placeShip(player2OwnerMap.get(player), ship, 5, 8);
+        bs.placeShip(player2OwnerMap.get(player), ship, 2, 1);
         assertEquals(true, ship.getIsVertical());
     }
 

@@ -104,7 +104,7 @@ public class CmpBattleshipService implements BattleshipService {
         PanelState[][] shipField;
 
         // Check if coordinates of ship is outside of field
-        if((x1 < 0) || (y1 < 0) || (x1 >= fieldSize) || (y1 >= fieldSize) || (endX > fieldSize && !isVertical) || (endY > fieldSize && isVertical)){
+        if((x1 < 0) || (y1 < 0) || (x1 >= fieldSize) || (y1 >= fieldSize) || (endX >= fieldSize && !isVertical) || (endY >= fieldSize && isVertical)){
             return false;
         }
         else if(currentGameState != GameState.PLACINGSHIPS){
@@ -113,7 +113,7 @@ public class CmpBattleshipService implements BattleshipService {
         shipField = player.getShipField().getPanelMarkerMat();
 
         if(isVertical){
-            for(int i = y1; i < endY; i++){
+            for(int i = y1; i <= endY; i++){
                 if(shipField[i][x1] == PanelState.SHIP){
                     return false;
                 }
@@ -126,7 +126,7 @@ public class CmpBattleshipService implements BattleshipService {
             }
         }
         else if(!isVertical){
-            for(int i = x1; i < endX; i++){
+            for(int i = x1; i <= endX; i++){
                 if(shipField[y1][i] == PanelState.SHIP){
                     return false;
                 }
@@ -212,13 +212,13 @@ public class CmpBattleshipService implements BattleshipService {
         panelStateField = player.getShipField().getPanelMarkerMat();
         shipField = player.getShipField();
         if(isVertical){
-            for(int i = y; i < endY; i++){
+            for(int i = y; i <= endY; i++){
                 panelStateField[i][x] = PanelState.NOSHIP;
                 shipField.setPanelMarker(x, i, PanelState.NOSHIP);
             }
         }
         else if(!isVertical){
-            for(int i = x; i < endX; i++){
+            for(int i = x; i <= endX; i++){
                 panelStateField[y][i] = PanelState.NOSHIP;
                 shipField.setPanelMarker(i, y, PanelState.NOSHIP);
             }
