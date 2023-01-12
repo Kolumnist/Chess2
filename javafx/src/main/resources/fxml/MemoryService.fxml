@@ -1,42 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="templateAnchorPane" maxHeight="680.0" maxWidth="1080.0" minHeight="680.0" minWidth="1080.0" prefHeight="680.0" prefWidth="1080.0" style="-fx-background-color: Lightgray;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.MemoryServiceController">
+
+<AnchorPane fx:id="backgroundAnchorPane" maxHeight="680.0" maxWidth="1080.0" minHeight="680.0" minWidth="1080.0" prefHeight="680.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.MemoryServiceController">
    <children>
-      <Pane layoutX="390.0" layoutY="82.0" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: GRAY;">
-         <children>
-            <ImageView fitHeight="280.0" fitWidth="280.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-               <viewport>
-                  <Rectangle2D height="280.0" width="280.0" />
-               </viewport>
-            </ImageView>
-         </children>
-      </Pane>
-      <VBox layoutX="390.0" layoutY="406.0" prefHeight="200.0" prefWidth="300.0" spacing="20.0" AnchorPane.leftAnchor="390.0" AnchorPane.rightAnchor="390.0">
-         <children>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onStartButtonClicked" prefHeight="40.0" style="-fx-background-color: WHITE; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: BLACK; -fx-border-width: 3;" text="Start" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button layoutX="10.0" layoutY="30.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onOptionButtonClicked" prefHeight="40.0" style="-fx-background-color: WHITE; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: BLACK; -fx-border-width: 3;" text="Optionen" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button layoutX="10.0" layoutY="117.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onFinishButtonClicked" prefHeight="40.0" style="-fx-background-color: WHITE; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: BLACK; -fx-border-width: 3;" text="Beenden" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-         </children>
-      </VBox>
+      <ImageView fitHeight="680.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>
