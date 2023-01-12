@@ -1,7 +1,5 @@
 package de.hhn.it.devtools.apis.chess2;
 
-import java.net.CookieHandler;
-
 /**
  * Defines the board and lets you get all fields or a specific field.
  * An Object of Board updates while the game is running.
@@ -56,11 +54,10 @@ public class Board {
       return fields[fieldIndex];
     }
 
-    for (int i = 1; i < 5; i++)
-    {
-      if (fields[fields.length-i].getCoordinate().getX() == coordinate.getX()
-          && fields[fields.length-i].getCoordinate().getY() == coordinate.getY()) {
-        return fields[fields.length-i];
+    for (int i = 1; i < 5; i++) {
+      if (fields[fields.length - i].getCoordinate().getX() == coordinate.getX()
+          && fields[fields.length - i].getCoordinate().getY() == coordinate.getY()) {
+        return fields[fields.length - i];
       }
     }
 

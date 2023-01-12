@@ -59,5 +59,13 @@ public class Elephant extends Piece {
       }
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
+
+    //Testing if the Crow can defeat the enemy King.
+    for (int i = 0; i < possibleMoves.length; i++) {
+      if (board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.OTHER_KING) {
+        canDefeatKing = true;
+        break;
+      }
+    }
   }
 }
