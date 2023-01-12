@@ -43,7 +43,9 @@ public class ImplementationGame2048Service implements de.hhn.it.devtools.apis.ga
   }
 
   /**
-   * Adds a Block to random free position
+   * Adds a Block to random free position.
+   * If there was no more free space, to put a Block
+   * and this Methode got called, the game is lost.
    *
    * @param value Value of the new Block
    * @throws IllegalParameterException if Position is not a free Space or if {value % 2 == 1}
@@ -256,132 +258,139 @@ public class ImplementationGame2048Service implements de.hhn.it.devtools.apis.ga
     }
     if (currentScore > highScore) {
       highScore = currentScore;
-      safeHighscore();
+      saveHighscore();
     }
   }
 
+  /**
+   * Checks if there is a Block with value >= 2048,
+   * if so the game is won
+   */
   private void isGameWon() {
-    if (currentScore >= 2048) {
-      gameWon = true;
-    }
-  }
-
-  /**
-   * Searches the game-board for Blocks of a particular Column.
-   *
-   * @param currentColumn index of the current Column
-   * @return List of Blocks with {xPosition == currentColumn}
-   * @throws IllegalParameterException if currentCollumn is outside Boundaries
-   */
-  private ArrayList<Block> getColumn(int currentColumn) throws IllegalParameterException {
-    if (currentColumn > 3 || currentColumn < 0) {
-      throw new IllegalParameterException("Tried to get column outside the game-board boundaries");
-    }
-    ArrayList<Block> column = new ArrayList<>();
-    for (Block block : gameboard) {
-      if (block.getXYPosition().getXPosition() == currentColumn) {
-        column.add(block);
+    for (Block gameBlock : gameboard) {
+      if (gameBlock.getValue() >= 2048) {
+        gameWon = true;
+        break;
       }
     }
-    return column;
   }
 
-  /**
-   * Searches the game-board for Blocks of a particular Row.
-   *
-   * @param currentRow index of the current Column
-   * @return List of Blocks with {yPosition == currentColumn}
-   * @throws IllegalParameterException if currentRow is outside Boundaries
-   */
-  private ArrayList<Block> getRow(int currentRow) throws IllegalParameterException {
-    if (currentRow > 3 || currentRow < 0) {
-      throw new IllegalParameterException("Tried to get row outside the game-board boundaries");
+    /**
+     * Searches the game-board for Blocks of a particular Column.
+     *
+     * @param currentColumn index of the current Column
+     * @return List of Blocks with {xPosition == currentColumn}
+     * @throws IllegalParameterException if currentCollumn is outside Boundaries
+     */
+    private ArrayList<Block> getColumn ( int currentColumn) throws IllegalParameterException {
+      if (currentColumn > 3 || currentColumn < 0) {
+        throw new IllegalParameterException("Tried to get column outside the game-board boundaries");
+      }
+      ArrayList<Block> column = new ArrayList<>();
+      for (Block block : gameboard) {
+        if (block.getXYPosition().getXPosition() == currentColumn) {
+          column.add(block);
+        }
+      }
+      return column;
     }
-    ArrayList<Block> row = new ArrayList<>();
-    for (Block block : gameboard) {
-      if (block.getXYPosition().getYPosition() == currentRow) {
-        row.add(block);
+
+    /**
+     * Searches the game-board for Blocks of a particular Row.
+     *
+     * @param currentRow index of the current Column
+     * @return List of Blocks with {yPosition == currentColumn}
+     * @throws IllegalParameterException if currentRow is outside Boundaries
+     */
+    private ArrayList<Block> getRow ( int currentRow) throws IllegalParameterException {
+      if (currentRow > 3 || currentRow < 0) {
+        throw new IllegalParameterException("Tried to get row outside the game-board boundaries");
+      }
+      ArrayList<Block> row = new ArrayList<>();
+      for (Block block : gameboard) {
+        if (block.getXYPosition().getYPosition() == currentRow) {
+          row.add(block);
+        }
+      }
+      return row;
+    }
+
+
+    @Override
+    public void addCallback (Game2048Listener listener) throws IllegalParameterException {
+      if (listener == null) {
+        throw new IllegalParameterException("Listener was null reference.");
+      } else if (gameListener != null) {
+        throw new IllegalParameterException("There is already a Listener registered.");
+      } else {
+        this.gameListener = listener;
       }
     }
-    return row;
-  }
 
-
-  @Override
-  public void addCallback(Game2048Listener listener) throws IllegalParameterException {
-    if (listener == null) {
-      throw new IllegalParameterException("Listener was null reference.");
-    } else if (gameListener != null) {
-      throw new IllegalParameterException("There is already a Listener registered.");
-    } else {
-      this.gameListener = listener;
+    @Override
+    public void removeCallback (Game2048Listener listener) throws IllegalParameterException {
+      if (listener == null) {
+        throw new IllegalParameterException("Tried to remove null reference instead of a Listener.");
+      } else if (listener != gameListener) {
+        throw new IllegalParameterException("Removing Listener failed, because of wrong parameter.");
+      } else {
+        this.gameListener = null;
+      }
     }
-  }
 
-  @Override
-  public void removeCallback(Game2048Listener listener) throws IllegalParameterException {
-    if (listener == null) {
-      throw new IllegalParameterException("Tried to remove null reference instead of a Listener.");
-    } else if (listener != gameListener) {
-      throw new IllegalParameterException("Removing Listener failed, because of wrong parameter.");
-    } else {
-      this.gameListener = null;
-    }
-  }
-
-  /**
-   * Loads the highest score a player scored on this physical device, from a File.
-   */
-  private void loadHighscore() {
-    logger.info("readHighscore: no params");
-    FileInputStream fileInputStream = null;
-    try {
-      fileInputStream = new FileInputStream("SaveGame2048.txt");
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-    if (fileInputStream != null) {
-      ObjectInputStream objectInputStream;
+    /**
+     * Loads the highest score a player scored on this physical device, from a File.
+     */
+    private void loadHighscore () {
+      logger.info("readHighscore: no params");
+      FileInputStream fileInputStream = null;
       try {
-        objectInputStream = new ObjectInputStream(fileInputStream);
-        highScore = objectInputStream.readInt();
-        objectInputStream.close();
-        logger.info("readHighscore, highscore = {}", highScore);
-      } catch (IOException e) {
-        logger.warn("load highScore failed, because of ObjectOutputStream Error");
+        fileInputStream = new FileInputStream("SaveGame2048.txt");
+      } catch (FileNotFoundException e) {
         e.printStackTrace();
       }
-    } else {
-      logger.warn("load highScore failed, because File related Error");
+      if (fileInputStream != null) {
+        ObjectInputStream objectInputStream;
+        try {
+          objectInputStream = new ObjectInputStream(fileInputStream);
+          highScore = objectInputStream.readInt();
+          objectInputStream.close();
+          logger.info("readHighscore, highscore = {}", highScore);
+        } catch (IOException e) {
+          logger.warn("load highScore failed, because of ObjectOutputStream Error");
+          e.printStackTrace();
+        }
+      } else {
+        logger.warn("load highScore failed, because File related Error");
+      }
     }
-  }
 
-  /**
-   * Writes the current value of highScore in a File.
-   * CAUTION!!! If old highScore in the File is greater than the new highScore,
-   * the old highScore will be overwritten.
-   */
-  private void safeHighscore() {
-    logger.info("safeHighscore: no params");
-    FileOutputStream fileOutputStream = null;
-    try {
-      fileOutputStream = new FileOutputStream("SaveGame2048.txt");
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-    if (fileOutputStream != null) {
-      ObjectOutputStream objectOutputStream;
+    /**
+     * Writes the current value of highScore in a File.
+     * CAUTION!!! If old highScore in the File is greater than the new highScore,
+     * the old highScore will be overwritten.
+     */
+    private void saveHighscore () {
+      logger.info("safeHighscore: no params");
+      FileOutputStream fileOutputStream = null;
       try {
-        objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeInt(highScore);
-        objectOutputStream.flush();
-        objectOutputStream.close();
-      } catch (IOException e) {
-        logger.warn("save highScore failed, because of ObjectOutputStream Error");
+        fileOutputStream = new FileOutputStream("SaveGame2048.txt");
+      } catch (FileNotFoundException e) {
         e.printStackTrace();
       }
-    } else {
-      logger.warn("save highScore failed, because File related Error");
+      if (fileOutputStream != null) {
+        ObjectOutputStream objectOutputStream;
+        try {
+          objectOutputStream = new ObjectOutputStream(fileOutputStream);
+          objectOutputStream.writeInt(highScore);
+          objectOutputStream.flush();
+          objectOutputStream.close();
+        } catch (IOException e) {
+          logger.warn("save highScore failed, because of ObjectOutputStream Error");
+          e.printStackTrace();
+        }
+      } else {
+        logger.warn("save highScore failed, because File related Error");
+      }
     }
   }
-}

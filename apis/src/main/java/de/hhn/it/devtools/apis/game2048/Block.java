@@ -18,7 +18,7 @@ public class Block {
    * @param value      Current Value of the block
    */
   public Block(Position xyPosition, int value) {
-    if (value % 2 != 0) throw new RuntimeException("Illigal value Parameter");
+    if (value % 2 != 0) throw new RuntimeException("Illegal value Parameter");
     this.xyPosition = xyPosition;
     this.value = value;
   }

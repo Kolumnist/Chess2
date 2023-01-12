@@ -14,7 +14,7 @@ public class State {
   /**
    * contains the new Currentscore.
    */
-  private final int newCurrentHighscore;
+  private final int newCurrentScore;
 
   /**
    * True if the Player merged two Blocks with {Value >= 2048}
@@ -32,9 +32,9 @@ public class State {
    */
   private final int newHighscore;
 
-  public State(Block[] blocksOnGameboard, int newCurrentHighscore, int newHighscore, boolean gameWon, boolean gameLost) {
+  public State(Block[] blocksOnGameboard, int newCurrentScore, int newHighscore, boolean gameWon, boolean gameLost) {
     this.blocksOnGameboard = blocksOnGameboard;
-    this.newCurrentHighscore = newCurrentHighscore;
+    this.newCurrentScore = newCurrentScore;
     this.newHighscore = newHighscore;
     this.gameWon = gameWon;
     this.gameLost = gameLost;
@@ -44,8 +44,8 @@ public class State {
     return blocksOnGameboard;
   }
 
-  public int getNewCurrentHighscore() {
-    return newCurrentHighscore;
+  public int getNewCurrentScore() {
+    return newCurrentScore;
   }
 
   public int getNewHighscore() {
@@ -64,7 +64,7 @@ public class State {
   public String toString() {
     return "State{" +
            "blocksOnGameboard=" + Arrays.toString(blocksOnGameboard) +
-           ", newCurrentHighscore=" + newCurrentHighscore +
+           ", newCurrentHighscore=" + newCurrentScore +
            ", gameWon=" + gameWon +
            ", gameLost=" + gameLost +
            ", newHighscore=" + newHighscore +
