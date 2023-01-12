@@ -94,7 +94,7 @@ public class Fish extends Piece {
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, IndexSet);
 
-    //Testing if the Crow can defeat the enemy King.
+    //Testing if the fish can defeat the enemy King.
     for (int i = 0; i < possibleMoves.length; i++) {
       if (board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.OTHER_KING) {
         canDefeatKing = true;

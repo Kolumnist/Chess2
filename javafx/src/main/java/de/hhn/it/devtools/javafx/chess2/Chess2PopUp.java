@@ -14,6 +14,8 @@ public class Chess2PopUp {
   @FXML
   private Button buttonRematch;
 
+  //ich brauch noch ne eigene stage und scene
+
   // Je nachdem welcher Button in der Leiste aufgerufen wird (Give up / Won), soll das Label einen untersch. Text hervorbringen
   // Der button "buttonRematch" ist bei GiveUp -> insVisible
   // Der button "buttonRematch" ist bei Won -> Visible

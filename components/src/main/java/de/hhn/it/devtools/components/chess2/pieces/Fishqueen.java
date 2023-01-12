@@ -22,8 +22,8 @@ public class Fishqueen extends Piece {
   }
 
   /**
-   * This method calculates all the possible movements of the fishqueen piece.
-   * It also add the movements which are not possible to go into an arraylist/ set.
+   * This method calculates all the possible movements of the fishqueen piece. It also add the
+   * movements which are not possible to go into an arraylist/ set.
    *
    * @param board the board of the game
    */
@@ -166,5 +166,13 @@ public class Fishqueen extends Piece {
       }//endregion never look at this code
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, indexSet);
+
+    //Testing if the Fishqueen can defeat the enemy King.
+    for (int i = 0; i < possibleMoves.length; i++) {
+      if (board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.OTHER_KING) {
+        canDefeatKing = true;
+        break;
+      }
+    }
   }
 }

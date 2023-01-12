@@ -166,5 +166,13 @@ public class Queen extends Piece {
       }//endregion never look at this code
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, indexSet);
+
+    //Testing if the Queen can defeat the enemy King.
+    for (int i = 0; i < possibleMoves.length; i++) {
+      if (board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.OTHER_KING) {
+        canDefeatKing = true;
+        break;
+      }
+    }
   }
 }
