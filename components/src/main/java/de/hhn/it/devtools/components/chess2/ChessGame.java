@@ -183,6 +183,10 @@ public class ChessGame implements Chess2Service {
       currentPlayer = whitePlayer;
     }
 
+    if (gameState == GameState.CHECK) {
+      gameState = GameState.RUNNING;
+    }
+
     //Could do a switch case, but I don't think it differs much
     /* Switch FieldStates from HAS_CURRENT_PIECE to HAS_OTHER_PIECE and the other way round */
     for (Field field : gameBoard.getFields()) {
@@ -192,6 +196,11 @@ public class ChessGame implements Chess2Service {
           || field.getFieldState() == FieldState.JAIL_QUEEN) {
         continue;
       }
+
+      if (gameState != GameState.CHECK && field.getPiece().getCanDefeatKing()) {
+        gameState = GameState.CHECK;
+      }
+
       if (field.getFieldState() == FieldState.OTHER_KING) {
         gameBoard.getSpecificField(field.getPiece().getCoordinate())
             .setFieldState(FieldState.HAS_CURRENT_PIECE);
@@ -213,7 +222,6 @@ public class ChessGame implements Chess2Service {
         gameBoard.getSpecificField(field.getCoordinate())
             .setFieldState(FieldState.HAS_OTHER_PIECE);
       }
-
     }
 
     /* Calculate all pieces movements */
@@ -224,7 +232,7 @@ public class ChessGame implements Chess2Service {
       piece.calculate(gameBoard);
     }
     for (Piece piece : blackPlayer.myPieces) {
-      if (piece.getCoordinate().getY() == -1) {
+      if (piece.getCoordinate().getX() == -1) {
         continue;
       }
       piece.calculate(gameBoard);
