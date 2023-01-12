@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="680.0" maxWidth="1080.0" minHeight="680.0" minWidth="1080.0" prefHeight="680.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.Chess2ServiceController">
    <children>
       <SplitPane dividerPositions="0.8812615955473099" prefHeight="680.0" prefWidth="1080.0">
@@ -26,6 +25,7 @@
                               <Insets left="422.0" right="422.0" />
                            </VBox.margin>
                         </Label>
+                        <AnchorPane fx:id="boardPane" prefHeight="639.0" prefWidth="947.0" />
                      </children>
                   </VBox>
                </children>
