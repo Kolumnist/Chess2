@@ -76,11 +76,6 @@ public interface BattleshipService {
     void rotateShip(Owner owner, Ship shipToRotate)
             throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException;
 
-    /**
-     * algorithm to place the computers ships
-     */
-    void comShipPlacement() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException;
-
 
     /**
      * Bombs selected panel

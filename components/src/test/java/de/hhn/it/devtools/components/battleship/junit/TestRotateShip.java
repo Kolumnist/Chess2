@@ -112,9 +112,8 @@ public class TestRotateShip {
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
-        bs.placeShip(player2OwnerMap.get(player), ship, 2, 1);
-        bs.unPlace(player2OwnerMap.get(player), ship);
         bs.rotateShip(player2OwnerMap.get(player), ship);
+        bs.placeShip(player2OwnerMap.get(player), ship, 2, 1);
         assertEquals(false, ship.getIsVertical());
     }
 
@@ -126,9 +125,8 @@ public class TestRotateShip {
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(false);
-        bs.placeShip(player2OwnerMap.get(player), ship, 5, 8);
-        bs.unPlace(player2OwnerMap.get(player), ship);
         bs.rotateShip(player2OwnerMap.get(player), ship);
+        bs.placeShip(player2OwnerMap.get(player), ship, 5, 8);
         assertEquals(true, ship.getIsVertical());
     }
 

@@ -103,8 +103,6 @@ public class CmpBattleshipService implements BattleshipService {
         int fieldSize = Field.getSize();
         PanelState[][] shipField;
 
-        //logger.info("isPlacementPossible: owner = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}, endX = {}, endY = {}, currentGameState = {}", owner, shipToPlace, x1, y1, isVertical, endX, endY, currentGameState);
-
         // Check if coordinates of ship is outside of field
         if((x1 < 0) || (y1 < 0) || (x1 >= fieldSize) || (y1 >= fieldSize) || (endX > fieldSize && !isVertical) || (endY > fieldSize && isVertical)){
             return false;
@@ -176,13 +174,13 @@ public class CmpBattleshipService implements BattleshipService {
             shipToPlace.setPlaced(true);
             shipToPlace.setFieldPosition(x1, y1);
             if(isVertical){
-                for(int i = y1; i < endY; i++){
+                for(int i = y1; i <= endY; i++){
                     panelStateField[i][x1] = PanelState.SHIP;
                     shipField.setPanelMarker(x1, i, PanelState.SHIP);
                 }
             }
             else if(!isVertical){
-                for(int i = x1; i < endX; i++){
+                for(int i = x1; i <= endX; i++){
                     panelStateField[y1][i] = PanelState.SHIP;
                     shipField.setPanelMarker(i, y1, PanelState.SHIP);
                 }
@@ -207,7 +205,6 @@ public class CmpBattleshipService implements BattleshipService {
         PanelState[][] panelStateField;
         Field shipField;
 
-        logger.info("unPlace: owner = {}, ship = {}, x = {}, y = {}, endX = {}, endY = {}", owner, shipToMove, x, y, endX, endY);
 
         if(currentGameState != GameState.PLACINGSHIPS){
             throw new IllegalGameStateException("Wrong GameState! Required GameState is PlacingShips");
@@ -236,14 +233,10 @@ public class CmpBattleshipService implements BattleshipService {
         // wenn Schiff vertikal liegt, dann ist x wert gleich aber y zwischen front und heck verschieden,
         // wenn Schiff horizontal liegt, dann ist y wert gleich aber x zwischen front und heck verschieden
 
-        logger.info("rotateShip: owner = {}, ship = {}", owner, shipToRotate);
         boolean isVertical = shipToRotate.getIsVertical();
         boolean isPlaced = shipToRotate.getPlaced();
-        Position shipPosition = shipToRotate.getFieldPosition();
-        int xCurrent = shipPosition.getX();
-        int yCurrent = shipPosition.getY();
 
-        logger.info("rotateShip: owner = {}, ship = {}, xCurrent = {}, yCurrent = {}", owner, shipToRotate, xCurrent, yCurrent);
+        logger.info("rotateShip: owner = {}, ship = {}", owner, shipToRotate);
 
         if(isPlaced){
             throw new IllegalShipStateException("Ship is already placed");
@@ -254,45 +247,10 @@ public class CmpBattleshipService implements BattleshipService {
 
         // check if ship is vertical and can be placed horizontally
         if(isVertical){
-            // wenn am heck gedreht wird zu horizontal dann bleibt y und x ändert sich -> Drehung: im Uhrzeigersinn
-            int xEnd = (xCurrent + shipToRotate.getSize()) - 1;
-            logger.info("xEnd = {}", xEnd);
-            if(isPlacementPossible(owner, shipToRotate, xCurrent, yCurrent, false)){
-                // rotate the ship
-                shipToRotate.setIsVertical(false);
-                // place ship   hier werden die Felder, auf die das Schiff nach dem Drehen steht, wieder auf true gesetzt
-                placeShip(owner, shipToRotate, xCurrent, yCurrent);
-            }
-            else{
-                throw new IllegalPositionException("Ship cannot be placed");
-            }
+            shipToRotate.setIsVertical(false);
         }
         else if(!isVertical){
-            // wenn am heck gedreht wird zu vertikal dann bleibt x und y ändert sich -> Drehung: gegen Uhrzeigersinn
-            int yEnd = (yCurrent - shipToRotate.getSize()) + 1;
-            logger.info("yEnd = {}", yEnd);
-            // wenn IM UHRZEIGERSINN gedreht wird, dann statt "yEnd" -> "yCurrent"
-            if(isPlacementPossible(owner, shipToRotate, xCurrent, yEnd, true)){
-                // rotate the ship
-                shipToRotate.setIsVertical(true);
-                // place ship   hier werden die Felder, auf die das Schiff nach dem Drehen steht, wieder auf true gesetzt
-                // wenn IM UHRZEIGERSINN gedreht wird, dann statt "yEnd" -> "yCurrent"
-                placeShip(owner, shipToRotate, xCurrent, yEnd);
-            }
-            else{
-                throw new IllegalPositionException("Ship cannot be placed");
-            }
-        }
-    }
-
-    @Override
-    public void comShipPlacement() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
-        int size = Field.getSize();
-        int x = 0;
-        int y = 0;
-        for(int i = 0; i < computer.getOwnedShips().size(); i++){
-            placeShip(player2OwnerMap.get(computer), computer.getOwnedShips().get(i), x, y);
-            y++;
+            shipToRotate.setIsVertical(true);
         }
     }
 
@@ -390,7 +348,7 @@ public class CmpBattleshipService implements BattleshipService {
 
         currentGameState = GameState.PLACINGSHIPS;
 
-        comShipPlacement();
+        computer.comShipPlacement(player2OwnerMap, this, size);
     }
 
     // nuri

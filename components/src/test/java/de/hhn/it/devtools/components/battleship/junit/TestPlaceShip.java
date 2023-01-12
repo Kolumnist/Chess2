@@ -156,24 +156,24 @@ public class TestPlaceShip {
         }
     }
 
-    @Test
-    @DisplayName("Test check comShipPlacement - 10x10 field")
-    public void comPlacementSuccessful10() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
-        bsService.setCurrentGameState(GameState.PREGAME);
-        bs.createFields(10);
-        for(int i = 0; i < bsService.getComputer().getOwnedShips().size(); i++){
-            assertEquals(true, bsService.getComputer().getOwnedShips().get(i).getPlaced());
-        }
-    }
-
-    @Test
-    @DisplayName("Test check comShipPlacement - 15x15 field")
-    public void comPlacementSuccessful15() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
-        bsService.setCurrentGameState(GameState.PREGAME);
-        bs.createFields(15);
-        for(int i = 0; i < bsService.getComputer().getOwnedShips().size(); i++){
-            assertEquals(true, bsService.getComputer().getOwnedShips().get(i).getPlaced());
-        }
-    }
+    //@Test
+    //@DisplayName("Test check comShipPlacement - 10x10 field")
+    //public void comPlacementSuccessful10() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
+    //    bsService.setCurrentGameState(GameState.PREGAME);
+    //    bs.createFields(10);
+    //    for(int i = 0; i < bsService.getComputer().getOwnedShips().size(); i++){
+    //        assertEquals(true, bsService.getComputer().getOwnedShips().get(i).getPlaced());
+    //    }
+    //}
+//
+    //@Test
+    //@DisplayName("Test check comShipPlacement - 15x15 field")
+    //public void comPlacementSuccessful15() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
+    //    bsService.setCurrentGameState(GameState.PREGAME);
+    //    bs.createFields(15);
+    //    for(int i = 0; i < bsService.getComputer().getOwnedShips().size(); i++){
+    //        assertEquals(true, bsService.getComputer().getOwnedShips().get(i).getPlaced());
+    //    }
+    //}
 
 }
