@@ -10,6 +10,9 @@ import java.util.ArrayList;
  */
 public class RgcRun {
 
+  private static final org.slf4j.Logger logger =
+      org.slf4j.LoggerFactory.getLogger(RgcRun.class);
+
   private ArrayList<ReactiongameListener> callbacks = new ArrayList<>();
   private final RgcField gameField = new RgcField();
   private final RgcPlayer player;
@@ -32,6 +35,7 @@ public class RgcRun {
    * @param difficulty difficulty of the run.
    */
   public RgcRun(Difficulty difficulty) {
+    logger.info("Create run with difficulty: " + difficulty);
     this.difficulty = difficulty;
     player = new RgcPlayer("");
 
@@ -41,9 +45,6 @@ public class RgcRun {
     iFrameThread = new Thread(new RgcIFrameRunnable(this));
   }
 
-  public ArrayList<ReactiongameListener> getCallbacks() {
-    return callbacks;
-  }
 
   public void setCallbacks(
       ArrayList<ReactiongameListener> callbacks) {
@@ -99,6 +100,8 @@ public class RgcRun {
    * Pauses the clocks.
    */
   public void pauseClocks() {
+    logger.info("Pause clocks");
+
     obstacleClock.setRunning(false);
     aimTargetClock.setRunning(false);
   }
@@ -107,6 +110,8 @@ public class RgcRun {
    * Continues clocks.
    */
   public void continueClocks() {
+    logger.info("Continue clocks");
+
     obstacleClock.setRunning(true);
     aimTargetClock.setRunning(true);
   }
@@ -115,6 +120,8 @@ public class RgcRun {
    * Ends / stops clocks.
    */
   public void endRun() {
+    logger.info("End run");
+
     obstacleClock.setRunning(false);
     obstacleClock.setEnded(true);
 
@@ -134,6 +141,7 @@ public class RgcRun {
    * Methods gets called when player runs into an obstacle or after his iframes end.
    */
   public void playerHitObstacle() {
+    logger.info("Player hit obstacle");
     if (isInvincible || pObstacle == null) {
       return; // if player is not in an object or invincible - do nothing
     }
@@ -149,6 +157,7 @@ public class RgcRun {
    * Lowers the player lives by one. If it falls below 1, the game is over.
    */
   public void playerLosesLife() {
+    logger.info("Player loses life");
     player.setCurrentLife(player.getCurrentLife() - 1);
 
     if (player.getCurrentLife() < 1) { // is player game over?
@@ -183,6 +192,8 @@ public class RgcRun {
    * @param obstacleId identifier
    */
   public void addObstacle(int obstacleId) {
+    logger.info("Add obstacle (" + obstacleId + ")");
+
     gameField.addRandomObstacle(obstacleId);
 
     for (ReactiongameListener callback :
@@ -200,6 +211,8 @@ public class RgcRun {
    * @param obstacleId identifier
    */
   public void removeObstacle(int obstacleId) {
+    logger.info("Remove obstacle (" + obstacleId + ")");
+
     gameField.removeObstacle(obstacleId);
 
     for (ReactiongameListener callback :
@@ -216,6 +229,8 @@ public class RgcRun {
    * @param aimTargetId identifier
    */
   public void addAimTarget(int aimTargetId) {
+    logger.info("Add aim target (" + aimTargetId + ")");
+
     gameField.addRandomAimTarget(aimTargetId);
 
     for (ReactiongameListener callback :
@@ -231,6 +246,8 @@ public class RgcRun {
    * @param aimTargetId identifier
    */
   public void removeAimTarget(int aimTargetId) {
+    logger.info("Add aim target (" + aimTargetId + ")");
+
     gameField.removeAimTarget(aimTargetId);
 
     for (ReactiongameListener callback :
