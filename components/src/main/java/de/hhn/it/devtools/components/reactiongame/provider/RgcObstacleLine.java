@@ -99,7 +99,18 @@ public class RgcObstacleLine {
     }
 
     //check for lowest
-    if (obstacles.get(obstacles.size() - 2).getY2() < RgcField.NORMAL_HEIGHT) {
+    obstacles.sort((o1, o2) -> {
+      if (o1.getY2() == o2.getY2()) {
+        return 0;
+      }
+      if (o1.getY2() > o2.getY2()) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+
+    if (obstacles.get(0).getY2() != RgcField.NORMAL_HEIGHT) {
       return true; // Gap on bottom
     }
 

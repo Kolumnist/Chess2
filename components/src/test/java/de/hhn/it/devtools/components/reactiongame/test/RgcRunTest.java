@@ -3,6 +3,8 @@ package de.hhn.it.devtools.components.reactiongame.test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import de.hhn.it.devtools.apis.reactiongame.Difficulty;
+import de.hhn.it.devtools.components.reactiongame.provider.RgcAimTarget;
+import de.hhn.it.devtools.components.reactiongame.provider.RgcObstacle;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcPlayer;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcRun;
 import org.junit.jupiter.api.BeforeEach;
@@ -73,6 +75,93 @@ class RgcRunTest {
 
     assertFalse(run.getObstacleClock().getIsRunning());
     assertTrue(run.getObstacleClock().getIsEnded());
+
+  }
+
+  @Test
+  void testPlayerDoesHitObstacleWhileInvincible() {
+    int life = run.getPlayer().getCurrentLife();
+
+    run.setInvincible(true);
+    run.setpObstacle(null);
+
+    run.playerHitObstacle();
+
+    assertEquals(life, run.getPlayer().getCurrentLife());
+  }
+
+  @Test
+  void testPlayerDoesHitObstacleWhileNotInvincible() {
+    int life = run.getPlayer().getCurrentLife();
+
+    run.setInvincible(false);
+    run.setpObstacle(new RgcObstacle(1,1,1,1,1));
+
+    run.playerHitObstacle();
+
+    assertNotEquals(life, run.getPlayer().getCurrentLife());
+  }
+
+  @Test
+  void testPlayerLosesLife() {
+    int life = run.getPlayer().getCurrentLife();
+
+    run.playerLosesLife();
+
+    assertNotEquals(life, run.getPlayer().getCurrentLife());
+  }
+
+  @Test
+  void testPlayerLosesLifeWhileHavingOneLife() {
+    run.getPlayer().setCurrentLife(1);
+
+    run.playerLosesLife();
+
+    assertTrue(run.getAimTargetClock().getIsEnded());
+    assertTrue(run.getObstacleClock().getIsEnded());
+  }
+
+  public RgcAimTarget target;
+
+  @Test
+  void testCheckForTargetHit() {
+    run.setpKey('q');
+
+    run.setpAimTarget(target = new RgcAimTarget(1,1,1,1,'q'));
+
+    int scorealt = run.getScore();
+
+    run.checkForTargetHit();
+
+    assertNotEquals(run.getScore(), scorealt);
+  }
+
+  @Test
+  void testAddAndRemoveObstacle() {
+
+    int liste = run.getGameField().getObstacles().toArray().length;
+
+    run.addObstacle(0);
+
+    assertNotEquals(liste, run.getGameField().getObstacles().toArray().length);
+
+    run.removeObstacle(0);
+
+    assertEquals(liste, run.getGameField().getObstacles().toArray().length);
+  }
+
+  @Test
+  void testAddAndRemoveAimTarget() {
+
+    int liste = run.getGameField().getTargets().toArray().length;
+
+    run.addAimTarget(1);
+
+    assertNotEquals(liste, run.getGameField().getTargets().toArray().length);
+
+    run.removeAimTarget(1);
+
+    assertEquals(liste, run.getGameField().getTargets().toArray().length);
   }
 
 }
