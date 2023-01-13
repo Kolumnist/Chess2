@@ -13,7 +13,7 @@ public class RgcObstacleClock implements Runnable {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(RgcObstacleClock.class);
 
-  private final RgcLogic logic;
+  private final RgcRun run;
 
   private long time; // in seconds
 
@@ -27,8 +27,8 @@ public class RgcObstacleClock implements Runnable {
    *
    * @param logic RgcLogic
    */
-  public RgcObstacleClock(RgcLogic logic) {
-    this.logic = logic;
+  public RgcObstacleClock(RgcRun logic) {
+    this.run = logic;
     isRunning = true;
     isEnded = false;
 
@@ -66,20 +66,20 @@ public class RgcObstacleClock implements Runnable {
 
 
 
-        if (time % logic.getDifficulty().obstacleIntervall == 0) { // Every intervall...
+        if (time % run.getDifficulty().obstacleIntervall == 0) { // Every intervall...
           if (isHighMarkReached) { // HM reached -> remove an obstacle
             deleteRandomObstacle();
 
-            if (logic.getGameField().getObstacles().size()
-                == logic.getDifficulty().lowWatermark) { // LM reached, add now
+            if (run.getGameField().getObstacles().size()
+                == run.getDifficulty().lowWatermark) { // LM reached, add now
               isHighMarkReached = false;
             }
 
           } else {
             addNewObstacle();
 
-            if (logic.getGameField().getObstacles().size()
-                == logic.getDifficulty().highWatermark) {
+            if (run.getGameField().getObstacles().size()
+                == run.getDifficulty().highWatermark) {
               isHighMarkReached = true;
             }
           }
@@ -103,10 +103,10 @@ public class RgcObstacleClock implements Runnable {
    * Deletes a random obstacle.
    */
   private void deleteRandomObstacle() {
-    int i = logic.getGameField().getObstacles()
-        .get(new Random().nextInt(logic.getGameField().getObstacles().size())).getId();
+    int i = run.getGameField().getObstacles()
+        .get(new Random().nextInt(run.getGameField().getObstacles().size())).getId();
 
-    logic.removeObstacle(i);
+    run.removeObstacle(i);
 
   }
 
@@ -115,26 +115,26 @@ public class RgcObstacleClock implements Runnable {
    */
   private void addNewObstacle() {
 
-    if (logic.getGameField().getObstacles().size() == 0) {
-      logic.addObstacle(0);
+    if (run.getGameField().getObstacles().size() == 0) {
+      run.addObstacle(0);
 
       return;
     }
 
-    logic.getGameField().getObstacles()
+    run.getGameField().getObstacles()
         .sort(Comparator.comparingInt(RgcObstacle::getId)); // sort List by IDs
 
-    for (int i = 0; i < logic.getGameField().getObstacles().size(); i++) {
-      if (logic.getGameField().getObstacles().get(i).getId() != i) { // search for free index
-        logic.addObstacle(i);
+    for (int i = 0; i < run.getGameField().getObstacles().size(); i++) {
+      if (run.getGameField().getObstacles().get(i).getId() != i) { // search for free index
+        run.addObstacle(i);
 
         return;
       }
     }
 
-    int lastIndex = (logic.getGameField().getObstacles().size());
+    int lastIndex = (run.getGameField().getObstacles().size());
 
-    logic.addObstacle(lastIndex);
+    run.addObstacle(lastIndex);
   }
 
 
