@@ -21,7 +21,8 @@ public class Game implements GameService {
 
 
   /**
-   * Constructor for game.
+   * Constructor of Game Class
+   * @param listener Callback listener
    */
   public Game(OutputListener listener) {
     this.player = new Player("Placeholder");
@@ -29,9 +30,9 @@ public class Game implements GameService {
   }
 
   /**
-   *
-   * @param direction
-   * @throws RoomFailedException
+   * Method to Move the Player to another Room
+   * @param direction Direction the Player will take
+   * @throws RoomFailedException if there is no Room in that direction
    */
   public void move(Direction direction) throws RoomFailedException {
     if (direction == null) {
@@ -63,7 +64,6 @@ public class Game implements GameService {
     if (direction == null) {
       throw new IllegalArgumentException("Direction should not be null.");
     }
-
     String message = currentRoom.getDoor(direction).getInspectMessage();
     outputListener.sendOutputNavigation(message);
     return message;
@@ -119,6 +119,10 @@ public class Game implements GameService {
 
   }
 
+  /**
+   * Setter for the current Layout
+   * @param layout the layout to be assigned.
+   */
   @Override
   public void setLayout(Layout layout) {
     this.currentLayout = layout;
@@ -168,9 +172,9 @@ public class Game implements GameService {
   }
 
   /**
-   *
-   * @param itemId
-   * @throws NoSuchItemFoundException
+   * Method to Inspect Item in the Inventory of the Player
+   * @param itemId id of the Item
+   * @throws NoSuchItemFoundException if item not found
    */
   @Override
   public void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException {
@@ -179,9 +183,9 @@ public class Game implements GameService {
   }
 
   /**
-   *
+   * Setter for Player name
    * @param name the new name.
-   * @return
+   * @return true if name has been successfully set
    */
   @Override
   public boolean setPlayerName(String name) {
@@ -207,21 +211,38 @@ public class Game implements GameService {
     return message;
   }
 
+  /**
+   * Getter for Score Points
+   * @return current Score of Player
+   */
   @Override
   public int getScore() {
     return SCORE_BOARD;
   }
 
+  /**
+   * Update the current Scoreboard
+   * @param newScore new current Score
+   * @return the updated current Score
+   */
   @Override
   public int updateScore(int newScore) {
     return SCORE_BOARD;
   }
 
+  /**
+   * Add Callback listener to Game
+   * @param listener new listener to be added
+   */
   @Override
   public void addListener(OutputListener listener) {
 
   }
 
+  /**
+   * Remove Callback listener
+   * @param listener listener to be removed
+   */
   @Override
   public void removeListener(OutputListener listener) {
 
