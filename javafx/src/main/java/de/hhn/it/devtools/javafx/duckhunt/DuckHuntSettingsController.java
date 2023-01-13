@@ -59,12 +59,18 @@ public class DuckHuntSettingsController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 maxDuckCountLabel.setText(Integer.toString((int) maxDuckCountSlider.getValue()));
+                if ((int) maxDuckCountSlider.getValue() >= (int) ammoCountSlider.getValue()) {
+                    ammoCountSlider.setValue((int) maxDuckCountSlider.getValue());
+                }
             }
         });
         ammoCountSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 ammoCountLabel.setText(Integer.toString((int) ammoCountSlider.getValue()));
+                if ((int) ammoCountSlider.getValue() <= (int) maxDuckCountSlider.getValue()) {
+                    maxDuckCountSlider.setValue((int) ammoCountSlider.getValue());
+                }
             }
         });
         volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
