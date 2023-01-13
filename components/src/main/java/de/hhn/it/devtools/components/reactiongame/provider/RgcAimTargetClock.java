@@ -15,8 +15,8 @@ public class RgcAimTargetClock implements Runnable {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(RgcAimTargetClock.class);
 
-  public static int idCounter = 0;
-  private RgcLogic logic;
+  int idCounter = 0;
+  private RgcRun run;
 
   private long time; // in seconds
 
@@ -30,10 +30,10 @@ public class RgcAimTargetClock implements Runnable {
   /**
    * Standard constructor for aim target clock.
    *
-   * @param logic RgcLogic
+   * @param run RgcRun
    */
-  public RgcAimTargetClock(RgcLogic logic) {
-    this.logic = logic;
+  public RgcAimTargetClock(RgcRun run) {
+    this.run = run;
     targetMap = new HashMap<>();
     isRunning = true;
     isEnded = false;
@@ -42,6 +42,14 @@ public class RgcAimTargetClock implements Runnable {
 
     logger.info("created");
   }
+
+  public long getTime() {
+    return time;
+  }
+
+  public boolean getIsRunning() {return isRunning;}
+
+  public boolean getIsEnded() {return isEnded;}
 
   public void setRunning(boolean running) {
     isRunning = running;
@@ -70,10 +78,10 @@ public class RgcAimTargetClock implements Runnable {
 
         if (time % 4 == 0) { // Spawnrate
 
-          if (logic.getGameField().getTargets().size() < logic.getDifficulty().maxAimtargets) {
+          if (run.getGameField().getTargets().size() < run.getDifficulty().maxAimtargets) {
 
-            logic.addAimTarget(idCounter);
-            targetMap.put(time + logic.getDifficulty().aimTargetLifetime, idCounter);
+            run.addAimTarget(idCounter);
+            targetMap.put(time + run.getDifficulty().aimTargetLifetime, idCounter);
             idCounter++;
           }
 
@@ -105,8 +113,8 @@ public class RgcAimTargetClock implements Runnable {
         targetMap.entrySet()) {
 
       if (e.getKey() == time) { // target expired
-        logic.removeAimTarget(e.getValue());
-        logic.playerLosesLife();
+        run.removeAimTarget(e.getValue());
+        run.playerLosesLife();
 
         removers.add(Long.valueOf(e.getValue()));
       }

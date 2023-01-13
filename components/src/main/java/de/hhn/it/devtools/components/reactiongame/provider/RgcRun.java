@@ -8,18 +8,16 @@ import java.util.ArrayList;
 /**
  * Class communicate between the service and components. Also notifies the callbacks.
  */
-public class RgcLogic {
+public class RgcRun {
 
   private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(RgcLogic.class);
+      org.slf4j.LoggerFactory.getLogger(RgcRun.class);
 
-  private final ArrayList<ReactiongameListener> callbacks = new ArrayList<>();
+  private ArrayList<ReactiongameListener> callbacks = new ArrayList<>();
   private final RgcField gameField = new RgcField();
   private final RgcPlayer player;
   private final RgcObstacleClock obstacleClock; // 2 verschiedene Timer für front und backend?
-
   private final RgcAimTargetClock aimTargetClock;
-
   private final Difficulty difficulty;
   private GameState state;
 
@@ -28,7 +26,6 @@ public class RgcLogic {
   private char pKey;
   private int score;
   private boolean isInvincible = false;
-
   private final Thread iFrameThread;
 
 
@@ -37,17 +34,17 @@ public class RgcLogic {
    *
    * @param difficulty difficulty of the run.
    */
-  public RgcLogic(Difficulty difficulty) {
+  public RgcRun(Difficulty difficulty, RgcPlayer player) {
+    logger.info("Create run with difficulty: " + difficulty);
     this.difficulty = difficulty;
-    player = new RgcPlayer("");
+    this.player = player;
 
     aimTargetClock = new RgcAimTargetClock(this);
     obstacleClock = new RgcObstacleClock(this);
 
     iFrameThread = new Thread(new RgcIFrameRunnable(this));
-
-    logger.info("created");
   }
+
 
   public ArrayList<ReactiongameListener> getCallbacks() {
     return callbacks;
@@ -83,7 +80,6 @@ public class RgcLogic {
 
   public void setInvincible(boolean invincible) {
     isInvincible = invincible;
-    logger.info("invis state = " + isInvincible);
   }
 
   public Difficulty getDifficulty() {
@@ -103,6 +99,8 @@ public class RgcLogic {
    * Pauses the clocks.
    */
   public void pauseClocks() {
+    logger.info("Pause clocks");
+
     obstacleClock.setRunning(false);
     aimTargetClock.setRunning(false);
   }
@@ -111,6 +109,8 @@ public class RgcLogic {
    * Continues clocks.
    */
   public void continueClocks() {
+    logger.info("Continue clocks");
+
     obstacleClock.setRunning(true);
     aimTargetClock.setRunning(true);
   }
@@ -119,6 +119,8 @@ public class RgcLogic {
    * Ends / stops clocks.
    */
   public void endRun() {
+    logger.info("End run");
+
     obstacleClock.setRunning(false);
     obstacleClock.setEnded(true);
 
@@ -131,8 +133,6 @@ public class RgcLogic {
         callbacks) {
       callback.gameOver();
     }
-
-    logger.info("Game Over");
   }
 
 
@@ -140,12 +140,11 @@ public class RgcLogic {
    * Methods gets called when player runs into an obstacle or after his iframes end.
    */
   public void playerHitObstacle() {
+    logger.info("Player hit obstacle");
     if (isInvincible || pObstacle == null) {
       return; // if player is not in an object or invincible - do nothing
     }
     // player is in iFrames OR no longer in an obstacle
-
-    logger.info("Player hit obstacle");
 
     isInvincible = true;
     iFrameThread.start();
@@ -157,13 +156,13 @@ public class RgcLogic {
    * Lowers the player lives by one. If it falls below 1, the game is over.
    */
   public void playerLosesLife() {
+    logger.info("Player loses life");
     player.setCurrentLife(player.getCurrentLife() - 1);
 
     if (player.getCurrentLife() < 1) { // is player game over?
       endRun();
     }
 
-    logger.info("Current life updated: " + player.getCurrentLife());
 
     for (ReactiongameListener callback :
         callbacks) { // player loses a life
@@ -181,8 +180,6 @@ public class RgcLogic {
       for (ReactiongameListener callback :
           callbacks) { // raise score
         callback.changeScore(score);
-
-        logger.info("Score updated: " + score);
       }
     }
   }
@@ -194,6 +191,8 @@ public class RgcLogic {
    * @param obstacleId identifier
    */
   public void addObstacle(int obstacleId) {
+    logger.info("Add obstacle (" + obstacleId + ")");
+
     gameField.addRandomObstacle(obstacleId);
 
     for (ReactiongameListener callback :
@@ -203,8 +202,6 @@ public class RgcLogic {
           .get(gameField.getObstacles().size())));
 
     }
-
-    logger.info("Added obstacle (id = " + obstacleId + ")");
   }
 
   /**
@@ -213,6 +210,8 @@ public class RgcLogic {
    * @param obstacleId identifier
    */
   public void removeObstacle(int obstacleId) {
+    logger.info("Remove obstacle (" + obstacleId + ")");
+
     gameField.removeObstacle(obstacleId);
 
     for (ReactiongameListener callback :
@@ -221,7 +220,6 @@ public class RgcLogic {
       callback.removeObstacle(obstacleId);
     }
 
-    logger.info("Removed obstacle (id = " + obstacleId + ")");
   }
 
   /**
@@ -230,6 +228,8 @@ public class RgcLogic {
    * @param aimTargetId identifier
    */
   public void addAimTarget(int aimTargetId) {
+    logger.info("Add aim target (" + aimTargetId + ")");
+
     gameField.addRandomAimTarget(aimTargetId);
 
     for (ReactiongameListener callback :
@@ -237,8 +237,6 @@ public class RgcLogic {
 
       callback.removeAimTarget(aimTargetId);
     }
-
-    logger.info("Added aim target (id = " + aimTargetId + ")");
   }
 
   /**
@@ -247,6 +245,8 @@ public class RgcLogic {
    * @param aimTargetId identifier
    */
   public void removeAimTarget(int aimTargetId) {
+    logger.info("Add aim target (" + aimTargetId + ")");
+
     gameField.removeAimTarget(aimTargetId);
 
     for (ReactiongameListener callback :
@@ -254,12 +254,6 @@ public class RgcLogic {
 
       callback.removeAimTarget(aimTargetId);
     }
-
-    logger.info("Removed aim target (id = " + aimTargetId + ")");
   }
 
-
-  public static void main(String[] args) {
-    RgcLogic logic = new RgcLogic(Difficulty.MEDIUM);
-  }
 }

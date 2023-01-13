@@ -7,15 +7,15 @@ public class RgcIFrameRunnable implements Runnable {
 
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(RgcIFrameRunnable.class);
-  private final RgcLogic logic;
+  private final RgcRun run;
 
   /**
    * Standard constructor for the IFrameRunnable.
    *
    * @param logic Logic
    */
-  public RgcIFrameRunnable(RgcLogic logic) {
-    this.logic = logic;
+  public RgcIFrameRunnable(RgcRun logic) {
+    this.run = logic;
   }
 
   @Override
@@ -27,10 +27,10 @@ public class RgcIFrameRunnable implements Runnable {
     } catch (InterruptedException e) {
       throw new RuntimeException(e);
     }
-    logic.setInvincible(false); // i frames stop
+    run.setInvincible(false); // i frames stop
 
     logger.info("IFRAME timer ended");
 
-    logic.playerHitObstacle(); // check again if player is in an obstacles
+    run.playerHitObstacle(); // check again if player is in an obstacles
   }
 }
