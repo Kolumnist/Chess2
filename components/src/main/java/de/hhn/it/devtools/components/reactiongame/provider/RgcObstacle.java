@@ -7,13 +7,10 @@ import de.hhn.it.devtools.apis.reactiongame.ObstacleDescriptor;
  */
 public class RgcObstacle implements Obstacle, Comparable {
 
-  private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(RgcObstacle.class);
-
   public static int WIDTH = 70; // in px
 
   public static ObstacleDescriptor toObstacleDescriptor(RgcObstacle rgcObstacle) {
-    return new ObstacleDescriptor(rgcObstacle.id,rgcObstacle.x1,
+    return new ObstacleDescriptor(rgcObstacle.id, rgcObstacle.x1,
         rgcObstacle.y1, rgcObstacle.x2, rgcObstacle.y2);
   }
 
@@ -58,7 +55,7 @@ public class RgcObstacle implements Obstacle, Comparable {
     return y2;
   }
 
-   @Override
+  @Override
   public int getId() {
     return id;
   }

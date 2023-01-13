@@ -10,6 +10,21 @@ import java.util.SortedMap;
  */
 public interface ReactiongameService {
 
+
+  /**
+   * Adds a callback (ReactiongameListener) to the callbacks.
+   *
+   * @param listener Listener
+   */
+  void addCallback(ReactiongameListener listener);
+
+  /**
+   * Removes a callback (ReactiongameListener) from the callbacks.
+   *
+   * @param listener Listener
+   */
+  void removeCallback(ReactiongameListener listener);
+
   /**
    * Starts a new run and the timer.
    *
@@ -68,8 +83,8 @@ public interface ReactiongameService {
   /**
    * Saves the current highscoreTable in a file.
    *
-   * @throws IllegalFormatException when format is not in line.
    * @return Highscores with format: player - score.
+   * @throws IllegalFormatException when format is not in line.
    */
   SortedMap<String, Integer> saveHighscoreTable() throws IllegalFormatException;
 

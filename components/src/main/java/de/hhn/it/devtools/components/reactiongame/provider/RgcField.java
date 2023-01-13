@@ -1,7 +1,5 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
-import de.hhn.it.devtools.apis.reactiongame.AimTargetDescriptor;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -9,11 +7,6 @@ import java.util.Random;
  * GameField class which holds player, obstacles and aim targets.
  */
 public class RgcField {
-
-
-  private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(RgcField.class);
-
 
   public static int NORMAL_WIDTH = 1280; // in px
   public static int NORMAL_HEIGHT = 720; // in px
@@ -27,6 +20,9 @@ public class RgcField {
   private ArrayList<RgcAimTargetZone> aimTargetZones = new ArrayList<>();
   private ArrayList<RgcAimTarget> targets = new ArrayList<>();
 
+  /**
+   * Creates the basic field. (Res.: 1280x720)
+   */
   public RgcField() {
     width = NORMAL_WIDTH;
     height = NORMAL_HEIGHT;
@@ -35,11 +31,10 @@ public class RgcField {
     obstacleLines.add(new RgcObstacleLine(640));
     obstacleLines.add(new RgcObstacleLine(910));
 
-    aimTargetZones.add(new RgcAimTargetZone(0, 0, 100, RgcField.NORMAL_HEIGHT));
+    aimTargetZones.add(new RgcAimTargetZone(25, 0, 100, RgcField.NORMAL_HEIGHT));
     aimTargetZones.add(new RgcAimTargetZone(RgcField.NORMAL_WIDTH - 100, 0,
-            RgcField.NORMAL_WIDTH, RgcField.NORMAL_HEIGHT));
+            RgcField.NORMAL_WIDTH - 25, RgcField.NORMAL_HEIGHT));
 
-    logger.info("created");
   }
 
   public ArrayList<RgcObstacle> getObstacles() {
@@ -68,8 +63,6 @@ public class RgcField {
    */
   void addRandomObstacle(int obstacleId, int obstacleLineId) {
     obstacles.add(obstacleId, obstacleLines.get(obstacleLineId).addRandomObstacle(obstacleId));
-
-    logger.info("Obstacle (id = " + obstacleId + ") added to line " + obstacleLineId);
   }
 
   /**
@@ -85,12 +78,7 @@ public class RgcField {
       l.getObstacles().removeIf(o -> o.getId() == obstacleId);
     }
 
-    if(!(obstacles.removeIf(o -> o.getId() == obstacleId))) {
-      logger.info("Obstacle not found!");
-    }
-
-
-    logger.info("Obstacle (id = " + obstacleId + ") removed");
+    obstacles.removeIf(o -> o.getId() == obstacleId);
   }
 
 
@@ -100,7 +88,9 @@ public class RgcField {
    * @param aimTargetId aim target identifier
    */
   void addRandomAimTarget(int aimTargetId) {
-    addRandomAimTarget(aimTargetId, new Random().nextInt(aimTargetZones.size()));
+    addRandomAimTarget(aimTargetId,
+        aimTargetZones.get(0).getAimTargets().size() > aimTargetZones.get(1).getAimTargets().size()
+            ? 1 : 0);
   }
 
   /**
@@ -112,7 +102,6 @@ public class RgcField {
   void addRandomAimTarget(int aimTargetId, int aimTargetZoneId) {
     targets.add(aimTargetId, aimTargetZones.get(aimTargetZoneId).addRandomAimTarget(aimTargetId));
 
-    logger.info("AimTarget (id = " + aimTargetId + ") added to zone " + aimTargetZoneId);
   }
 
 
@@ -128,7 +117,6 @@ public class RgcField {
       z.getAimTargets().removeIf(a -> a.getId() == aimTargetId);
     }
 
-    logger.info("AimTarget (id = " + aimTargetId + ") removed");
   }
 
 }

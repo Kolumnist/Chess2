@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
 /**
- *
+ * This class represents an aim target (goal) on the field.
  */
 public class RgcAimTarget implements AimTarget {
 
@@ -54,12 +54,12 @@ public class RgcAimTarget implements AimTarget {
 
   @Override
   public String toString() {
-    return "AimTarget{" +
-        "x=" + x +
-        ", y=" + y +
-        ", r=" + r +
-        ", key=" + key +
-        ", id=" + id +
-        '}';
+    return "AimTarget{"
+        + "x=" + x
+        + ", y=" + y
+        + ", r=" + r
+        + ", key=" + key
+        + ", id=" + id
+        + '}';
   }
 }
