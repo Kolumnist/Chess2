@@ -5,6 +5,9 @@ import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
 import de.hhn.it.devtools.apis.memory.TimerListener;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
 import de.hhn.it.devtools.javafx.controllers.MemoryServiceController;
+import java.net.URL;
+import java.util.Random;
+import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,15 +18,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
-import java.net.URL;
-import java.util.Random;
-import java.util.ResourceBundle;
 
 public class GameScreen implements Initializable {
-  private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(GameScreen.class);
   public static final String SCREEN = "game.screen";
-
+  private static final org.slf4j.Logger logger =
+          org.slf4j.LoggerFactory.getLogger(GameScreen.class);
   private MemoryScreenController screenController;
   private SfsMemoryService memoryService;
   private TimerListener timerListener;
@@ -68,12 +67,18 @@ public class GameScreen implements Initializable {
   public void initialize(final URL location, final ResourceBundle resources) {
     MemoryAttributeStore memoryAttributeStore = MemoryAttributeStore.getReference();
     screenController =
-            (MemoryScreenController) memoryAttributeStore.getAttribute(MemoryServiceController.SCREEN_CONTROLLER);
-    memoryService = (SfsMemoryService) memoryAttributeStore.getAttribute(MemoryServiceController.MEMORY_SERVICE);
+            (MemoryScreenController) memoryAttributeStore
+                    .getAttribute(MemoryServiceController.SCREEN_CONTROLLER);
+    memoryService = (SfsMemoryService) memoryAttributeStore
+            .getAttribute(MemoryServiceController.MEMORY_SERVICE);
 
     int cnt = 0;
-    PictureCardDescriptor[] currentDeck = shuffle(memoryService.getCurrentCardSet().getDescriptor().getPictureCardDescriptors());
-    //Arrays.stream(currentDeck).toList().forEach(PictureCardDescriptor -> logger.info("Id: "+PictureCardDescriptor.getId()+" Name: " + PictureCardDescriptor.getName()+ " Ref: "+ PictureCardDescriptor.getPictureRef()));
+    PictureCardDescriptor[] currentDeck = shuffle(memoryService
+            .getCurrentCardSet().getDescriptor().getPictureCardDescriptors());
+    // Arrays.stream(currentDeck).toList().forEach(
+    // PictureCardDescriptor -> logger.info("Id: "+PictureCardDescriptor
+    // .getId()+" Name: " + PictureCardDescriptor.getName()+
+    // " Ref: "+ PictureCardDescriptor.getPictureRef()));
     for (int i = 0; i < mainGrid.getColumnCount(); i++) {
       for (int j = 0; j < mainGrid.getRowCount(); j++) {
         mainGrid.add(new CardController(currentDeck[cnt++]), i, j);
@@ -81,7 +86,8 @@ public class GameScreen implements Initializable {
     }
 
 
-    timerListener = time -> Platform.runLater(() -> timeDisplayLabel.setText(Integer.toString(time)));
+    timerListener = time -> Platform.runLater(() ->
+            timeDisplayLabel.setText(Integer.toString(time)));
 
     try {
       memoryService.addCallback(timerListener);
@@ -96,8 +102,8 @@ public class GameScreen implements Initializable {
   }
 
   public void gameWon() {
-      memoryService.stopTimer();
-      mainGrid.setDisable(true);
+    memoryService.stopTimer();
+    mainGrid.setDisable(true);
   }
 
   public void disableGrid() {
@@ -124,15 +130,19 @@ public class GameScreen implements Initializable {
     Object source = event.getSource();
     if (source == finishButton) {
       if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-        finishButton.setStyle("-fx-background-color: LIGHTGRAY; -fx-border-color: BLACK; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;");
+        finishButton.setStyle("-fx-background-color: LIGHTGRAY; -fx-border-color: BLACK;"
+                + " -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;");
       } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-        finishButton.setStyle("-fx-background-color: WHITE; -fx-border-color: BLACK; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;");
+        finishButton.setStyle("-fx-background-color: WHITE; -fx-border-color: BLACK;"
+                + " -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;");
       }
     } else if (source == optionsButton) {
       if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-        optionsButton.setStyle("-fx-background-color: LIGHTGRAY; -fx-border-color: BLACK; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;");
+        optionsButton.setStyle("-fx-background-color: LIGHTGRAY; -fx-border-color: BLACK;"
+                + " -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;");
       } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-        optionsButton.setStyle("-fx-background-color: WHITE; -fx-border-color: BLACK; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;");
+        optionsButton.setStyle("-fx-background-color: WHITE; -fx-border-color: BLACK;"
+                + " -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;");
       }
     }
   }
@@ -162,10 +172,13 @@ public class GameScreen implements Initializable {
     memoryService.stopTimer();
     memoryService.resetTimer();
     memoryService.closeGame();
-    try {
-      memoryService.removeCallback(timerListener);
-      timerListener = null;
-    } catch (IllegalParameterException e) {
+    if (timerListener != null) {
+      try {
+        memoryService.removeCallback(timerListener);
+        timerListener = null;
+      } catch (IllegalParameterException e) {
+        e.printStackTrace();
+      }
     }
     screenController.switchTo(StartScreen.SCREEN);
   }

@@ -1,16 +1,15 @@
 package de.hhn.it.devtools.javafx.controllers.memory;
 
-
 import de.hhn.it.devtools.apis.memory.Difficulty;
 import de.hhn.it.devtools.javafx.controllers.MemoryServiceController;
 import de.hhn.it.devtools.javafx.controllers.template.UnknownTransitionException;
+import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 
 public class MemoryScreenController {
   private static final org.slf4j.Logger logger =
@@ -82,9 +81,9 @@ public class MemoryScreenController {
   private Stage getWinningStage() {
     WinningPopup winningPopup = new WinningPopup(this);
     Scene winningScene = new Scene(winningPopup, 600, 400);
-      winningStage = new Stage();
-      winningStage.setAlwaysOnTop(true);
-      winningStage.setScene(winningScene);
+    winningStage = new Stage();
+    winningStage.setAlwaysOnTop(true);
+    winningStage.setScene(winningScene);
     return winningStage;
   }
 
@@ -100,7 +99,11 @@ public class MemoryScreenController {
         anchorPane.getChildren().clear();
         anchorPane.getChildren().add(getGameScreen());
       }
-      case DifficultyPopup.OPEN_POPUP -> {disableGameScreen();disableStartScreen();openPopup(getDifficultyStage());}
+      case DifficultyPopup.OPEN_POPUP -> {
+        disableGameScreen();
+        disableStartScreen();
+        openPopup(getDifficultyStage());
+      }
       case WinningPopup.OPEN_POPUP -> openPopup(getWinningStage());
       case DifficultyPopup.CLOSE_POPUP -> closePopup(getDifficultyStage());
       case WinningPopup.CLOSE_POPUP -> closePopup(winningStage);
@@ -115,17 +118,19 @@ public class MemoryScreenController {
       case "medium" -> Difficulty.MEDIUM;
       case "hard" -> Difficulty.HARD;
       case "veryhard" -> Difficulty.VERYHARD;
-      default -> (Difficulty) MemoryAttributeStore.getReference().getAttribute(MemoryServiceController.DIFFICULTY);
+      default -> (Difficulty) MemoryAttributeStore.getReference()
+              .getAttribute(MemoryServiceController.DIFFICULTY);
     };
   }
 
   public void changeDifficulty(String difficulty) {
-    MemoryAttributeStore.getReference().setAttribute(MemoryServiceController.DIFFICULTY, getDifficultyFromString(difficulty));
+    MemoryAttributeStore.getReference().setAttribute(MemoryServiceController
+            .DIFFICULTY, getDifficultyFromString(difficulty));
     startScreen.changeDifficulty(difficulty);
   }
 
   public void closeGameScreen() {
-    if (gameScreen!= null) {
+    if (gameScreen != null) {
       gameScreen.closeGame();
     }
   }
@@ -133,21 +138,25 @@ public class MemoryScreenController {
   public void disableStartScreen() {
     startScreenContent.setDisable(true);
   }
+
   public void enableStartScreen() {
     startScreenContent.setDisable(false);
   }
+
   public void disableGameScreen() {
     if (gameScreen == null) {
       return;
     }
     gameScreen.disableGameScreen();
   }
+
   public void enableGameScreen() {
     if (gameScreen == null) {
       return;
     }
     gameScreen.enableGameScreen();
   }
+
   public void setGameScreenMessage(String message) {
     gameScreen.setSystemMessage(message);
   }
