@@ -8,6 +8,8 @@ import de.hhn.it.devtools.apis.chess2.IllegalStateException;
 import de.hhn.it.devtools.apis.chess2.WinningPlayerState;
 import de.hhn.it.devtools.components.chess2.ChessGame;
 import de.hhn.it.devtools.javafx.chess2.Chess2BoardController;
+import de.hhn.it.devtools.javafx.chess2.Chess2PopUp;
+import de.hhn.it.devtools.javafx.chess2.Chess2PopUpRulesController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,8 +17,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -45,7 +49,7 @@ public class Chess2ServiceController extends Controller implements Initializable
   @FXML
   private Button startEndGameButton;
 
-  public Chess2ServiceController(){
+  public Chess2ServiceController() {
     chessGame = new ChessGame();
     chess2Service = chessGame;
   }
@@ -58,21 +62,45 @@ public class Chess2ServiceController extends Controller implements Initializable
 
   @FXML
   void onGiveUpButtonClick(ActionEvent event) {
-    if (chessGame.getWinningPlayer() == WinningPlayerState.STILL_RUNNING){
+    if (chessGame.getWinningPlayer() == WinningPlayerState.STILL_RUNNING) {
       chess2Service.giveUp();
-      //Hier bitte das GiveUp PopUp Fenster aufrufen.
+      Chess2PopUp p = new Chess2PopUp();
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/chess2"
+          + "/Chess2PopUp.fxml"));
+      try {
+        loader.load();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+      if (WinningPlayerState.WHITE_WIN.equals(true)) {
+        Label l = new Label("Player Black gave up.\nPlayer White has won.");
+        p.initialize(l);
+      }
+      if (WinningPlayerState.BLACK_WIN.equals(true)) {
+        Label l = new Label("Player White gave up.\nPlayer Black has won.");
+        p.initialize(l);
+      }
     }
   }
 
   @FXML
   void onRulesButtonClick(ActionEvent event) {
     //Hier bitte das Rules PopUp Fenster aufrufen.
+    Chess2PopUpRulesController p = new Chess2PopUpRulesController();
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/chess2"
+        + "/Chess2PopUpRules.fxml"));
+    try {
+      loader.load();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    p.initialize();
   }
 
   @FXML
   void onStartEndGameButtonClick(ActionEvent event) throws IllegalStateException {
 
-    if (startEndGameButton.getText().equals("Start Game")){
+    if (startEndGameButton.getText().equals("Start Game")) {
       startEndGameButton.setText("End Game");
       giveUpButton.setVisible(true);
 
@@ -87,7 +115,7 @@ public class Chess2ServiceController extends Controller implements Initializable
       }
       boardPane.getChildren().setAll(node);
 
-    }else {
+    } else {
       startEndGameButton.setText("Start Game");
       giveUpButton.setVisible(false);
 
