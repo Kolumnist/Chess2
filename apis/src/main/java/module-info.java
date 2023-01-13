@@ -10,4 +10,6 @@ module devtools.apis{
         exports de.hhn.it.devtools.apis.duckhunt;
         exports de.hhn.it.devtools.apis.memory;
   exports de.hhn.it.devtools.apis.reactiongame;
+        exports de.hhn.it.devtools.apis.game2048;
+        exports de.hhn.it.devtools.apis.connectfour;
 }
