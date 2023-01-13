@@ -247,7 +247,7 @@ public class RgcRun {
    * @param aimTargetId identifier
    */
   public void removeAimTarget(int aimTargetId) {
-    logger.info("Add aim target (" + aimTargetId + ")");
+    logger.info("Removed aim target (" + aimTargetId + ")");
 
     gameField.removeAimTarget(aimTargetId);
 

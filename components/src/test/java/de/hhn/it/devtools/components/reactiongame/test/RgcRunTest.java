@@ -137,10 +137,31 @@ class RgcRunTest {
   }
 
   @Test
-  void testAddObstacles() {
+  void testAddAndRemoveObstacle() {
+
+    int liste = run.getGameField().getObstacles().toArray().length;
+
     run.addObstacle(0);
 
+    assertNotEquals(liste, run.getGameField().getObstacles().toArray().length);
+
+    run.removeObstacle(0);
+
+    assertEquals(liste, run.getGameField().getObstacles().toArray().length);
   }
 
+  @Test
+  void testAddAndRemoveAimTarget() {
+
+    int liste = run.getGameField().getTargets().toArray().length;
+
+    run.addAimTarget(1);
+
+    assertNotEquals(liste, run.getGameField().getTargets().toArray().length);
+
+    run.removeAimTarget(1);
+
+    assertEquals(liste, run.getGameField().getTargets().toArray().length);
+  }
 
 }
