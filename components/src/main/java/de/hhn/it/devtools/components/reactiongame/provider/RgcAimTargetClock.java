@@ -15,7 +15,7 @@ public class RgcAimTargetClock implements Runnable {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(RgcAimTargetClock.class);
 
-  public static int idCounter = 0;
+  int idCounter = 0;
   private RgcRun run;
 
   private long time; // in seconds
