@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.components.reactiongame.test;
 
-import static org.junit.Assert.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 import de.hhn.it.devtools.components.reactiongame.provider.RgcAimTarget;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,17 +16,17 @@ class RgcAimTargetTest {
   }
   @Test
   void testGetX() {
-    assertTrue(target.getX() == 12);
+    assertEquals(12, target.getX());
   }
 
   @Test
   void testGetY() {
-    assertTrue(target.getY() == 15);
+    assertEquals(15, target.getY());
   }
 
   @Test
   void testGetR() {
-    assertTrue(target.getR() == 25);
+    assertEquals(25, target.getR());
   }
 
   @Test
@@ -35,7 +36,7 @@ class RgcAimTargetTest {
 
   @Test
   void testGetId() {
-    assertTrue(target.getId() == 1);
+    assertEquals(1, target.getId());
   }
 
   @Test
