@@ -63,9 +63,10 @@ public class Queen extends Piece {
 
       //region never look at this code
 
-      //This code checks if there are other pieces/the bear/current pieces in the possible movement of the queen
-      //because the queen can't defeat the current piece and she can also not jump over a piece or defeat a piece and walks again
-      //so we add all the movements the queen can't go into a set
+      //This code checks if there are other pieces/the bear/current pieces in the
+      //possible movement of the queen because the queen can't defeat the current piece
+      //and she can also not jump over a piece or defeat a piece and walks again so we add all
+      //the movements the queen can't go into a set
       if (board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_CURRENT_PIECE
           || board.getSpecificField(possibleMoves[i]).getFieldState()
@@ -163,7 +164,7 @@ public class Queen extends Piece {
             == FieldState.HAS_CURRENT_PIECE) {
           indexSet.add(i);
         }
-      }//endregion never look at this code
+      } //endregion never look at this code
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, indexSet);
 
