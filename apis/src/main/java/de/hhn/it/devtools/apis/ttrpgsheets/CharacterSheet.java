@@ -71,11 +71,20 @@ public interface CharacterSheet {
   void decrementStat(StatType stat, OriginType origin, int amount) throws IllegalArgumentException;
 
   /**
+   * Returns the total value of the given Stat.
+   *
+   * @param statType the Type of Stat from which the display value is from
+   * @return the value that is supposed to be displayed
+   * @throws IllegalArgumentException if StatType is invalid
+   */
+  int getStatDisplayValue(StatType statType) throws IllegalArgumentException;
+
+  /**
    * Returns descriptor of the stat.
    *
    * @return descriptor of the stat
    */
-  StatDescriptor getStat(StatType stat);
+  StatDescriptor getStatDescriptor(StatType stat);
 
   /**
    * Changes the description of the given {@link DescriptionType} to the String.
@@ -91,15 +100,16 @@ public interface CharacterSheet {
    *
    * @return descriptor of description
    */
-  DescriptionDescriptor getDescription(DescriptionType description);
+  DescriptionDescriptor getDescriptionDescriptor(DescriptionType description);
 
   /**
    * Rolls the dice to generate a random number according to the current dice.
    *
+   * @return The result of the dice throw
    * @throws NullPointerException if the Dice Type hasn't yet been changed
-   *     with {@link CharacterSheet#changeDiceType(DiceType)}
+   *      with {@link CharacterSheet#changeDiceType(DiceType)}
    */
-  void rollDice() throws NullPointerException;
+  int rollDice() throws NullPointerException;
 
   /**
    * Changes the dice to the give {@link DiceType}.
@@ -114,6 +124,6 @@ public interface CharacterSheet {
    *
    * @return descriptor of the Dice
    */
-  DiceDescriptor getDice();
+  DiceDescriptor getDiceDescriptor();
 
 }
