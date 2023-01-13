@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * This class represents an imaginary vertical line on the field which holds the obstacls.
+ * This class represents an imaginary vertical line on the field which holds the obstacles.
  */
 public class RgcObstacleLine {
 
