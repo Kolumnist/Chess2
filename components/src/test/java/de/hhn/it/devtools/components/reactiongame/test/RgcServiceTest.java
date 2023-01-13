@@ -33,20 +33,37 @@ public class RgcServiceTest {
   }
 
   @Test
-  public void callbackTest() {
-
-  }
-
-  @Test
   public void pauseRunTest() {
     service.pauseRun();
     assertEquals(run.getState(), GameState.PAUSED);
     assertFalse(run.getObstacleClock().getIsRunning());
     assertFalse(run.getAimTargetClock().getIsRunning());
 
+    boolean thrown = false;
+    try {
+      service.pauseRun();
+    } catch (IllegalStateException e) {
+      thrown = true;
+    }
+    assertTrue(thrown);
+
     service.continueRun();
     assertEquals(run.getState(), GameState.RUNNING);
     assertTrue(run.getObstacleClock().getIsRunning());
     assertTrue(run.getAimTargetClock().getIsRunning());
+
+    thrown = false;
+    try {
+      service.continueRun();
+    } catch (IllegalStateException e) {
+      thrown = true;
+    }
+    assertTrue(thrown);
+  }
+
+  @Test
+  public void testEndRun() {
+    service.endRun();
+    assertEquals(run.getState(), GameState.FINISHED);
   }
 }
