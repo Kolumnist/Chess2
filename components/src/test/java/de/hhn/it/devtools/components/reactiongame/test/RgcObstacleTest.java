@@ -63,4 +63,10 @@ public class RgcObstacleTest {
     assertEquals(obstacle1.compareTo(obstacle2), -1);
     assertEquals(obstacle1.compareTo(obstacle3), 1);
   }
+
+  @Test
+  void testToObstacleDescriptor() {
+    RgcObstacle rgcobstacle = new RgcObstacle(1,10,10,10,10);
+    assertNotNull(RgcObstacle.toObstacleDescriptor(rgcobstacle));
+  }
 }
