@@ -14,7 +14,7 @@ public class RgcRun {
       org.slf4j.LoggerFactory.getLogger(RgcRun.class);
 
   private ArrayList<ReactiongameListener> callbacks = new ArrayList<>();
-  private final RgcField gameField = new RgcField();
+  private final RgcField field = new RgcField();
   private final RgcPlayer player;
   private final RgcObstacleClock obstacleClock; // 2 verschiedene Timer für front und backend?
   private final RgcAimTargetClock aimTargetClock;
@@ -50,8 +50,8 @@ public class RgcRun {
     return callbacks;
   }
 
-  public RgcField getGameField() {
-    return gameField;
+  public RgcField getField() {
+    return field;
   }
 
   public RgcPlayer getPlayer() {
@@ -195,13 +195,13 @@ public class RgcRun {
   public void addObstacle(int obstacleId) {
     logger.info("Add obstacle (" + obstacleId + ")");
 
-    gameField.addRandomObstacle(obstacleId);
+    field.addRandomObstacle(obstacleId);
 
     for (ReactiongameListener callback :
         callbacks) {
 
-      callback.addObstacle(RgcObstacle.toObstacleDescriptor(gameField.getObstacles()
-          .get(gameField.getObstacles().size())));
+      callback.addObstacle(RgcObstacle.toObstacleDescriptor(field.getObstacles()
+          .get(field.getObstacles().size())));
 
     }
   }
@@ -214,7 +214,7 @@ public class RgcRun {
   public void removeObstacle(int obstacleId) {
     logger.info("Remove obstacle (" + obstacleId + ")");
 
-    gameField.removeObstacle(obstacleId);
+    field.removeObstacle(obstacleId);
 
     for (ReactiongameListener callback :
         callbacks) {
@@ -232,7 +232,7 @@ public class RgcRun {
   public void addAimTarget(int aimTargetId) {
     logger.info("Add aim target (" + aimTargetId + ")");
 
-    RgcAimTarget aimTarget = gameField.addRandomAimTarget(aimTargetId);
+    RgcAimTarget aimTarget = field.addRandomAimTarget(aimTargetId);
 
     for (ReactiongameListener callback :
         callbacks) {
@@ -249,7 +249,7 @@ public class RgcRun {
   public void removeAimTarget(int aimTargetId) {
     logger.info("Removed aim target (" + aimTargetId + ")");
 
-    gameField.removeAimTarget(aimTargetId);
+    field.removeAimTarget(aimTargetId);
 
     for (ReactiongameListener callback :
         callbacks) {

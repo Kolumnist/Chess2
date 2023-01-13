@@ -121,6 +121,8 @@ public class RgcField {
       z.getAimTargets().removeIf(a -> a.getId() == aimTargetId);
     }
 
+    targets.removeIf(target -> target.getId() == aimTargetId);
+
   }
 
 }
