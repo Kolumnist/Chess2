@@ -94,6 +94,8 @@ public class RgcRun {
     return aimTargetClock;
   }
 
+  public int getScore(){return score;}
+
 
   /**
    * Pauses the clocks.

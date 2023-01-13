@@ -1,18 +1,23 @@
 package de.hhn.it.devtools.components.reactiongame.test;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class RgcAimTargetClockTest {
 
-  @Test
-  void setRunning() {
+  @BeforeEach
+  void setup() {
   }
 
   @Test
-  void setEnded() {
+  void testSetRunning() {
   }
 
   @Test
-  void run() {
+  void testSetEnded() {
+  }
+
+  @Test
+  void testRun() {
   }
 }
