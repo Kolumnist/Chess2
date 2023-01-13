@@ -30,10 +30,10 @@ public class RgcAimTargetClock implements Runnable {
   /**
    * Standard constructor for aim target clock.
    *
-   * @param logic RgcLogic
+   * @param run RgcRun
    */
-  public RgcAimTargetClock(RgcRun logic) {
-    this.run = logic;
+  public RgcAimTargetClock(RgcRun run) {
+    this.run = run;
     targetMap = new HashMap<>();
     isRunning = true;
     isEnded = false;
@@ -41,6 +41,10 @@ public class RgcAimTargetClock implements Runnable {
     new Thread(this).start();
 
     logger.info("created");
+  }
+
+  public long getTime() {
+    return time;
   }
 
   public void setRunning(boolean running) {

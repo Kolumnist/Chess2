@@ -46,9 +46,8 @@ public class RgcRun {
   }
 
 
-  public void setCallbacks(
-      ArrayList<ReactiongameListener> callbacks) {
-    this.callbacks = callbacks;
+  public ArrayList<ReactiongameListener> getCallbacks() {
+    return callbacks;
   }
 
   public RgcField getGameField() {

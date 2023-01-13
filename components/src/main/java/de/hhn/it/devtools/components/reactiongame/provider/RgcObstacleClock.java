@@ -25,10 +25,10 @@ public class RgcObstacleClock implements Runnable {
   /**
    * Standard constructor for obstacle clock.
    *
-   * @param logic RgcLogic
+   * @param run RgcRun
    */
-  public RgcObstacleClock(RgcRun logic) {
-    this.run = logic;
+  public RgcObstacleClock(RgcRun run) {
+    this.run = run;
     isRunning = true;
     isEnded = false;
 
@@ -45,6 +45,9 @@ public class RgcObstacleClock implements Runnable {
     isEnded = ended;
   }
 
+  public long getTime() {
+    return time;
+  }
 
   @Override
   public void run() {

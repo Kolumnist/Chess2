@@ -18,7 +18,6 @@ public class RgcService implements ReactiongameService {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(RgcService.class);
 
-  private ArrayList<ReactiongameListener> callbacks = new ArrayList<>();
   private RgcPlayer currentPlayer;
   private RgcRun run;
 
@@ -34,21 +33,19 @@ public class RgcService implements ReactiongameService {
   @Override
   public void addCallback(ReactiongameListener listener) {
     logger.info("Added listener: " + listener.toString());
-    callbacks.add(listener);
+    run.getCallbacks().add(listener);
   }
 
   @Override
   public void removeCallback(ReactiongameListener listener) {
     logger.info("Removed listener: " + listener.toString());
-    callbacks.remove(listener);
+    run.getCallbacks().remove(listener);
   }
 
   @Override
   public void newRun(Difficulty difficulty) throws IllegalParameterException {
     logger.info("newRun ("  + difficulty + ")");
     run = new RgcRun(difficulty, currentPlayer);
-
-    run.setCallbacks(callbacks);
 
     run.getObstacleClock().setRunning(true);
     run.getAimTargetClock().setRunning(true);
