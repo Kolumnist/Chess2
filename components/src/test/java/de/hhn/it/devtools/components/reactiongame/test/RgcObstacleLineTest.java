@@ -1,7 +1,6 @@
 package de.hhn.it.devtools.components.reactiongame.test;
 
 import de.hhn.it.devtools.components.reactiongame.provider.RgcField;
-import de.hhn.it.devtools.components.reactiongame.provider.RgcObstacle;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcObstacleLine;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RgcObstacleLineTest {
 
-  RgcField field;
-  RgcObstacleLine line1;
+  private RgcField field;
+  private RgcObstacleLine line1;
 
   /**
    * Sets up RgcObstacleLine objects as well as objects of some other classes to test on
@@ -33,10 +32,5 @@ public class RgcObstacleLineTest {
         (coords[0] >= 0));
 
     assertTrue((coords[1] > coords[0]) && (coords[1] <= field.NORMAL_HEIGHT));
-  }
-
-  @Test
-  public void addRandomObstacleTest() {
-
   }
 }
