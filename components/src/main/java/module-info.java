@@ -7,8 +7,7 @@ module devtools.components {
   exports de.hhn.it.devtools.components.battleship.provider;
   requires org.slf4j;
   requires devtools.apis;
-  provides  de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerService
-          with de.hhn.it.devtools.components.example.coffeemakerservice.provider.WnckCoffeeMakerService;
+  //requires devtools.javafx;
   provides  de.hhn.it.devtools.apis.examples.coffeemakerservice.AdminCoffeeMakerService
           with de.hhn.it.devtools.components.example.coffeemakerservice.provider.WnckCoffeeMakerService;
   provides  de.hhn.it.devtools.apis.battleship.BattleshipService
@@ -17,4 +16,5 @@ module devtools.components {
           with de.hhn.it.devtools.components.duckhunt.DuckHunt;
   provides de.hhn.it.devtools.apis.game2048.Game2048Service
           with de.hhn.it.devtools.components.game2048.provider.ProviderGame2048;
-        }
+
+}

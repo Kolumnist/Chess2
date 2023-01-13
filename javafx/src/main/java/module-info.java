@@ -7,6 +7,7 @@ module devtools.javafx {
   uses de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerService;
   uses de.hhn.it.devtools.apis.examples.coffeemakerservice.AdminCoffeeMakerService;
   uses de.hhn.it.devtools.apis.battleship.BattleshipService;
+  uses de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
   opens de.hhn.it.devtools.javafx.controllers to javafx.fxml;
   opens de.hhn.it.devtools.javafx.controllers.coffeemaker to javafx.fxml;
   opens de.hhn.it.devtools.javafx.controllers.template to javafx.fxml;

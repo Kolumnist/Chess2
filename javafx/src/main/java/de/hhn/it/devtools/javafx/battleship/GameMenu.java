@@ -1,15 +1,16 @@
 package de.hhn.it.devtools.javafx.battleship;
 
+import de.hhn.it.devtools.apis.battleship.IllegalGameStateException;
+import de.hhn.it.devtools.apis.battleship.IllegalPositionException;
+import de.hhn.it.devtools.apis.battleship.IllegalShipStateException;
+import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class GameMenu{
@@ -54,27 +55,32 @@ public class GameMenu{
 
         smallGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
-                Game game = new Game(5);
+            public void handle(ActionEvent event){
+                createService(5);
             }
         });
 
         mediumGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Game game = new Game(10);
+                createService(10);
             }
         });
 
         bigGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Game game = new Game(15);
+                createService(15);
             }
         });
     }
 
-
-
-
+    public void createService(int size){
+        Game game = new Game(size);
+        try {
+            CmpBattleshipService.service.createFields(size);
+        } catch (IllegalGameStateException | IllegalShipStateException | IllegalPositionException e) {
+            e.printStackTrace();
+        }
+    }
 }

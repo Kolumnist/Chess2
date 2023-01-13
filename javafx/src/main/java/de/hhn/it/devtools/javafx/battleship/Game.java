@@ -118,7 +118,6 @@ public class Game extends Stage{
                 buttonsLower[k][i].setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-
                         buttonsLower[k1][i1].setStyle("-fx-background-color: red");
                     }
                 });

@@ -1,10 +1,12 @@
 package de.hhn.it.devtools.javafx.battleship;
 
+import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Start extends Application {
     static Stage mainStage = new Stage();
+
     /**
      * The main entry point for all JavaFX applications.
      * The start method is called after the init method has returned,
@@ -27,4 +29,7 @@ public class Start extends Application {
 
 
     }
+
+
+
 }

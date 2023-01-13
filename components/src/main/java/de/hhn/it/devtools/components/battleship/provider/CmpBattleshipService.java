@@ -3,6 +3,7 @@ package de.hhn.it.devtools.components.battleship.provider;
 import de.hhn.it.devtools.apis.battleship.*;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import java.io.*;
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.IllegalFormatException;
@@ -13,8 +14,11 @@ import java.util.Map;
 // Write Computer AI
 
 public class CmpBattleshipService implements BattleshipService {
+
+    public static CmpBattleshipService service = new CmpBattleshipService();
+
     static GameState currentGameState = GameState.PREGAME;
-    static int gameVolume;
+    int gameVolume;
     private final Player player = new Player();
     private final Computer computer = new Computer();;
     private ArrayList<BattleshipListener> listeners;
@@ -298,7 +302,6 @@ public class CmpBattleshipService implements BattleshipService {
         computer.setShipfield(new Field(size,computer));
         computer.setAttackField(new Field(size,computer));
 
-        // @TODO moutassem macht verteilung von ships abhängig von der Feldgröße
         // 1x5er, 2x4er, 3er Variabel, 1x2er
         if(size == 5){
             player.setOwnedShips(new Ship(ShipType.DESTROYER, null ));
@@ -348,7 +351,7 @@ public class CmpBattleshipService implements BattleshipService {
 
         currentGameState = GameState.PLACINGSHIPS;
 
-        computer.comShipPlacement(player2OwnerMap, this, size);
+        computer.comShipPlacement(player2OwnerMap, size);
     }
 
     // nuri
@@ -440,4 +443,5 @@ public class CmpBattleshipService implements BattleshipService {
         //Regelfenster anzeigen
         return null;
     }
+
 }
