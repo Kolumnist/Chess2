@@ -19,14 +19,13 @@ public class PictureCardDescriptor {
    * Constructor stating a picture reference, ID, name of the card and its default state hidden.
    *
    * @param pictureRef numeric reference to the corresponding picture of the card
-   * @param id         id of the card
    * @param name       name of the card
    */
-  public PictureCardDescriptor(int pictureRef, int id, String name) {
+  public PictureCardDescriptor(int pictureRef, String name) {
     this.pictureRef = pictureRef;
-    this.id = id;
     this.name = name;
     this.state = State.HIDDEN;
+    this.id = 0;
   }
 
   /**
@@ -72,5 +71,14 @@ public class PictureCardDescriptor {
    */
   public int getId() {
     return id;
+  }
+
+  /**
+   * Sets the ID of the card.
+   *
+   * @param id of the card
+   */
+  public void setId(int id) {
+    this.id = id;
   }
 }

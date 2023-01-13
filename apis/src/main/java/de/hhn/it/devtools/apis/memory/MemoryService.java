@@ -25,6 +25,16 @@ public interface MemoryService {
   void startTimer();
 
   /**
+   * Stops the timer of a game.
+   */
+  void stopTimer();
+
+  /**
+   * Resets the timer of a game.
+   */
+  void resetTimer();
+
+  /**
    * Closes the current memory game.
    */
   void closeGame();
@@ -38,6 +48,14 @@ public interface MemoryService {
   void changeDifficulty(Difficulty difficulty) throws IllegalParameterException;
 
   /**
+   * Turns a card around.
+   *
+   * @param id ID of the picture card that should be turned around
+   * @throws IllegalParameterException if the card does not exist
+   */
+  void turnCard(int id) throws IllegalParameterException;
+
+  /**
    * Adds a listener to get information on the state of the card.
    *
    * @param id       ID of the card
@@ -46,6 +64,22 @@ public interface MemoryService {
    *                                   or the listener is a null reference
    */
   void addCallback(int id, PictureCardListener listener) throws IllegalParameterException;
+
+  /**
+   * Adds a listener to get information about the time.
+   *
+   * @param listener listener to be added
+   * @throws IllegalParameterException if the listener is a null reference
+   */
+  void addCallback(TimerListener listener) throws IllegalParameterException;
+
+  /**
+   * Adds a listener to get information about the current deck of cards.
+   *
+   * @param listener listener to be added
+   * @throws IllegalParameterException if the listener is a null reference
+   */
+  void addCallback(DeckListener listener) throws IllegalParameterException;
 
   /**
    * Removes a listener.
@@ -58,11 +92,27 @@ public interface MemoryService {
   void removeCallback(int id, PictureCardListener listener) throws IllegalParameterException;
 
   /**
+   * Removes a listener.
+   *
+   * @param listener listener to be removed.
+   * @throws IllegalParameterException if the listener is a null reference
+   */
+  void removeCallback(TimerListener listener) throws IllegalParameterException;
+
+  /**
+   * Removes a listener.
+   *
+   * @param listener listener to be removed
+   * @throws IllegalParameterException if the listener is a null reference
+   */
+  void removeCallback(DeckListener listener) throws IllegalParameterException;
+
+  /**
    * Returns a list of the cards in the current game.
    *
    * @return list of cards in the current game
    */
-  List<PictureCardDescriptor> getPictureCards();
+  List<PictureCardDescriptor> getPictureCardDescriptors();
 
   /**
    * Returns the descriptor of the picture card with the corresponding ID.
@@ -71,15 +121,14 @@ public interface MemoryService {
    * @return descriptor of the picture card
    * @throws IllegalParameterException if the ID of the card does not exist
    */
-  PictureCardDescriptor getPictureCard(int id) throws IllegalParameterException;
+  PictureCardDescriptor getPictureCardDescriptor(int id) throws IllegalParameterException;
 
   /**
-   * Turns a card around.
+   * Adds a card set to the service.
    *
-   * @param id ID of the picture card that should be turned around
-   * @throws IllegalParameterException if the card does not exist
+   * @param set the card set descriptor that should be added
+   * @throws IllegalParameterException if the card set does not exist or is already registered
    */
-  void turnCard(int id) throws IllegalParameterException;
-
+  public void addCardSet(CardSetDescriptor set) throws IllegalParameterException;
 
 }

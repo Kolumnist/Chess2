@@ -9,6 +9,8 @@ module devtools.apis{
         exports de.hhn.it.devtools.apis.battleship;
         exports de.hhn.it.devtools.apis.duckhunt;
         exports de.hhn.it.devtools.apis.memory;
+        exports de.hhn.it.devtools.apis.ttrpgsheets;
         exports de.hhn.it.devtools.apis.connectfour;
+        exports de.hhn.it.devtools.apis.reactiongame;
         exports de.hhn.it.devtools.apis.game2048;
         }

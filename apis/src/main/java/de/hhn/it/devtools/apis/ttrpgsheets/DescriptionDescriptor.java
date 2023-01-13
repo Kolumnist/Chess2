@@ -55,6 +55,14 @@ public class DescriptionDescriptor {
   }
 
   @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof DescriptionDescriptor other) {
+      return descriptionType.equals(other.getDescriptionType()) && text.equals(other.text);
+    }
+    return false;
+  }
+
+  @Override
   public String toString() {
     return "Description type = " + getDescriptionType()
             + ", Text = " + getText();

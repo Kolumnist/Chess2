@@ -4,7 +4,7 @@ package de.hhn.it.devtools.apis.chess2;
  * Gets thrown when a method gets called in a state in which it should not be called.
  *
  * @author Collin, Lara, Michel
- * @version 1.0
+ * @version 1.1
  */
 
 public class IllegalStateException extends Exception {

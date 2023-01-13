@@ -2,7 +2,6 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 
 import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -194,28 +193,6 @@ public class Room {
     return hasDoorE;
   }
 
-  /**
-   * Get Number od foos.
-   *
-   * @return Number od Doors.
-   */
-  public int getNumberOfDoors() {
-    int a = 0;
-    if (hasDoorS) {
-      a++;
-    }
-    if (hasDoorW) {
-      a++;
-    }
-    if (hasDoorE) {
-      a++;
-    }
-    if (hasDoorN) {
-      a++;
-    }
-    return a;
-  }
-
 
 
   /**
@@ -274,8 +251,5 @@ public class Room {
     }
   }
 
-  public void setExit(){
-
-  }
 
 }

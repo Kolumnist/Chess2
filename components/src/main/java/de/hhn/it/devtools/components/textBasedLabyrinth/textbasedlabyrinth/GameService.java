@@ -67,7 +67,7 @@ public interface GameService {
   void setLayout(Layout layout);
 
   /**
-   * Setter for current layout
+   * Setter for current layout. This will invoke the layoutGenerator, then the setLayout(Layout layout).
    * @param newMap Map to be selected
    * @param newSeed Seed for the Map
    */
