@@ -29,6 +29,7 @@ public class DuckHuntGameLoop extends Thread {
    * @param game that shall be run
    */
   public DuckHuntGameLoop(DuckHunt game) {
+    logger.info("DuckHuntGameLoop: game", game);
     this.game = game;
     this.timer = new Timer();
 
@@ -103,6 +104,7 @@ public class DuckHuntGameLoop extends Thread {
 
   @Override
   public void run() {
+    logger.debug("run: no params");
     while (isRunning) {
       try {
         // waits if game is paused

@@ -18,6 +18,8 @@ public final class MpatternGenerator {
   private HashMap<Integer, Vector2D> duckStartingPos;
   private final int sidePadding;
   private final ScreenDimension screenDimension;
+  private static final org.slf4j.Logger logger =
+          org.slf4j.LoggerFactory.getLogger(MpatternGenerator.class);
 
   /**
    * Constructor of MpatternGenerator.
@@ -26,6 +28,7 @@ public final class MpatternGenerator {
    * @param screenDimension dimension of area where movement can be generated
    */
   public MpatternGenerator(int sidePadding, ScreenDimension screenDimension) {
+    logger.info("MpatternGenerator: sidePadding, screenDimension", sidePadding, screenDimension);
     this.generatedPaths = new HashMap<>();
     this.duckStartingPos = new HashMap<>();
     this.sidePadding = sidePadding;
@@ -38,6 +41,7 @@ public final class MpatternGenerator {
    * @param ducks for which movement path shall be generated
    */
   public void generatePaths(DuckData[] ducks) throws DuckOrientationTranslationException {
+    logger.debug("generatePaths: ducks", ducks);
     for (DuckData duck : ducks) {
       duckStartingPos.put(duck.getId(), new Vector2D());
       generatedPaths.put(duck.getId(), generateWaypoints(duck.getId()));

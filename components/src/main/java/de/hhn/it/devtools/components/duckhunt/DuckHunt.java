@@ -10,13 +10,10 @@ import de.hhn.it.devtools.apis.duckhunt.GameInfo;
 import de.hhn.it.devtools.apis.duckhunt.GameSettingsDescriptor;
 import de.hhn.it.devtools.apis.duckhunt.GameState;
 import de.hhn.it.devtools.apis.duckhunt.IllegalDuckIdException;
-import de.hhn.it.devtools.apis.duckhunt.IllegalDuckPositionException;
 import de.hhn.it.devtools.apis.duckhunt.IllegalGameInfoException;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Represents the Duck Hunt Game and contains the main game loop.
@@ -43,6 +40,7 @@ public class DuckHunt implements DuckHuntService {
    * Default constructor with standard game settings.
    */
   public DuckHunt() {
+    logger.info("DuckHunt: no params");
     this.gameSettings = new GameSettingsDescriptor();
     this.screenDimension = new ScreenDimension(500, 500);
     init();
@@ -54,6 +52,7 @@ public class DuckHunt implements DuckHuntService {
    * @param gameSettings represents previously set game settings
    */
   public DuckHunt(GameSettingsDescriptor gameSettings, ScreenDimension screenDimension) {
+    logger.info("DuckHunt: gameSettings, screenDimension", gameSettings, screenDimension);
     this.gameSettings = gameSettings;
     this.screenDimension = screenDimension;
     init();
@@ -138,6 +137,7 @@ public class DuckHunt implements DuckHuntService {
 
   @Override
   public void reload() {
+    logger.info("reload: no params");
     ammoCount = gameSettings.getAmmoAmount();
     gameInfo.setAmmo(ammoCount);
 
@@ -152,7 +152,7 @@ public class DuckHunt implements DuckHuntService {
 
   @Override
   public void startGame() {
-    logger.info("startGame(): no params");
+    logger.info("startGame: no params");
     newRound();
     gameLoop.startLoop();
     gameInfo.setState(GameState.RUNNING);
@@ -168,7 +168,7 @@ public class DuckHunt implements DuckHuntService {
 
   @Override
   public void stopGame() {
-    logger.info("stopGame(): no params");
+    logger.info("stopGame: no params");
     gameLoop.stopLoop();
     gameInfo.setState(GameState.GAMEOVER);
     listeners.forEach(
@@ -183,7 +183,7 @@ public class DuckHunt implements DuckHuntService {
 
   @Override
   public void pauseGame() {
-    logger.info("pauseGame(): no params");
+    logger.info("pauseGame: no params");
     gameLoop.pauseLoop();
     gameInfo.setState(GameState.PAUSED);
     listeners.forEach(
@@ -198,7 +198,7 @@ public class DuckHunt implements DuckHuntService {
 
   @Override
   public void continueGame() {
-    logger.info("continueGame(): no params");
+    logger.info("continueGame: no params");
     gameLoop.continueLoop();
     gameInfo.setState(GameState.RUNNING);
     listeners.forEach(
@@ -214,6 +214,7 @@ public class DuckHunt implements DuckHuntService {
   @Override
   public void changeGameSettings(GameSettingsDescriptor gameSettings)
       throws IllegalParameterException {
+    logger.info("changeGameSettings: gameSettings", gameSettings);
     if (gameSettings == null) {
       throw new IllegalParameterException();
     }
@@ -222,6 +223,7 @@ public class DuckHunt implements DuckHuntService {
 
   @Override
   public void addCallback(DuckHuntListener listener) throws IllegalParameterException {
+    logger.info("addCallback: listener", listener);
     if (listener == null) {
       throw new IllegalParameterException("Listener cannot be null");
     }
@@ -233,6 +235,7 @@ public class DuckHunt implements DuckHuntService {
 
   @Override
   public void removeCallback(DuckHuntListener listener) throws IllegalParameterException {
+    logger.info("removeCallback: listener", listener);
     if (listener == null) {
       throw new IllegalParameterException("Listener cannot be null");
     }
@@ -246,6 +249,7 @@ public class DuckHunt implements DuckHuntService {
    * Checks the states of the ducks and updates their position accordingly.
    */
   public void updateDucks() {
+    logger.trace("updateDucks: no params");
     for (DuckData duck : ducks) {
       if (duck.getStatus() == DuckState.FLYING || duck.getStatus() == DuckState.FALLING || duck.getStatus() == DuckState.FLYAWAY) {
         // velocity = resolutionCoefficient * speed * deltaTime
@@ -276,6 +280,7 @@ public class DuckHunt implements DuckHuntService {
    * @param duck
    */
   private void dropDuck(DuckData duck) {
+    logger.trace("dropDuck: no params");
     float velocity = duck.getVelocity();
     if (velocity > 1f) { // if true duck can be moved to next position
       duck.setY(duck.getY() + screenDimension.getHeight()/ 30); //TODO anpassen der Pixel beim Droppen
@@ -284,6 +289,7 @@ public class DuckHunt implements DuckHuntService {
   }
 
   private void ascendDuck(DuckData duck) {
+    logger.trace("ascendDuck: no params");
     float velocity = duck.getVelocity();
     if (velocity > 1f) { // if true duck can be moved to next position
       duck.setY(duck.getY() - screenDimension.getHeight()/ 30); //TODO anpassen der Pixel beim Wegfliegen (analog drop)
@@ -292,6 +298,7 @@ public class DuckHunt implements DuckHuntService {
   }
 
   private void moveDuck(DuckData duck) {
+    logger.trace("moveDuck: no params");
     float velocity = duck.getVelocity();
     if (velocity > 1f) { // if true duck can be moved to next position
       DuckOrientation newOrientation;
@@ -324,6 +331,7 @@ public class DuckHunt implements DuckHuntService {
    * @return boolean if all ducks are either dead or flyaway
    */
   public boolean checkRoundComplete() {
+    logger.trace("checkRoundComplete: no params");
     int completeCount = 0;
     for (DuckData duck : ducks) {
       if (duck.getStatus() == DuckState.DEAD || duck.getStatus() == DuckState.ESCAPED) {
@@ -337,6 +345,7 @@ public class DuckHunt implements DuckHuntService {
    * Resets the ducks, ammo and increments round.
    */
   public void newRound() {
+    logger.trace("newRound: no params");
     gameInfo.setRound(gameInfo.getRound() + 1);
     reload();
     calculateNewDuckPaths();
@@ -347,7 +356,11 @@ public class DuckHunt implements DuckHuntService {
     }
   }
 
-
+  /**
+   * Checks if GameOver requirements are meet.
+   *
+   * @return true if game is over
+   */
   public boolean checkGameOver() {
     for (DuckData duck : ducks) {
       if (duck.getStatus() == DuckState.ESCAPED) {
