@@ -146,7 +146,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   @Override
-  public void unwrapCharacter(CharacterDescriptor characterDescriptor) {
+  public final void unwrapCharacter(CharacterDescriptor characterDescriptor) {
     logger.info("unwrapCharacter : characterDescriptor = {}", characterDescriptor);
     descriptions = convertDescDescriptorsToDescriptions(characterDescriptor.getDescriptions());
     stats = convertStatDescriptorsToStats(characterDescriptor.getStats());
