@@ -98,41 +98,12 @@ public class LayoutGenerator {
             allRooms.get(10).setNextDoorRoom(allRooms.get(11), Direction.NORTH);
             allRooms.get(11).setNextDoorRoom(allRooms.get(12), Direction.NORTH);
             logger.info(map.toString() + "created.");
-        } else if (map.equals(Map.Circle_Of_Time)) {
-            startRoom.setNextDoorRoom(allRooms.get(2), Direction.NORTH);
-            allRooms.get(2).setNextDoorRoom(allRooms.get(1), Direction.WEST);
-            allRooms.get(2).setNextDoorRoom(allRooms.get(3), Direction.EAST);
-            allRooms.get(1).setNextDoorRoom(allRooms.get(4), Direction.NORTH);
-            allRooms.get(3).setNextDoorRoom(allRooms.get(6), Direction.NORTH);
-            allRooms.get(4).setNextDoorRoom(allRooms.get(7), Direction.NORTH);
-            allRooms.get(6).setNextDoorRoom(allRooms.get(9), Direction.NORTH);
-            allRooms.get(8).setNextDoorRoom(allRooms.get(7), Direction.WEST);
-            allRooms.get(8).setNextDoorRoom(allRooms.get(9), Direction.EAST);
-            Hallway rotate1 = new Hallway(specialRoomId, "A hallway. " +
-                    "The walls touch your arms when you stretch too much.");
-            specialRoomId++;
-            CircleCenterRoom centerOfTime = new CircleCenterRoom(specialRoomId, "A large, circular room. " +
-                    "A statue of an owl stands in the center, watching you from a pedestal.");
-            SpecialTrapTriggerItem owlStatue = new SpecialTrapTriggerItem(specialRoomId, "Owl-statue",
-                    "The statue looks at you, as if judging you. It is finely made and will look well in" +
-                            "a museum, or your own desk, if you can pass it´s judgement.");
-            specialRoomId++;
-
-            rotate1.setNextDoorRoom(centerOfTime, Direction.SOUTH);
-            rotate1.setNextDoorRoom(allRooms.get(8), Direction.NORTH);
-            centerOfTime.setRotatingHallway(rotate1);
-
-
-            allRooms.add(rotate1);
-            allRooms.add(centerOfTime);
-
-            logger.info(map.toString() + "created.");
         }
 
 
 
         for (Room room : allRooms) {
-            //room.setDoors();
+            room.setDoors();
         }
 
         if (map.equals(Map.Grave_of_the_Mad_King)) {
@@ -246,15 +217,6 @@ public class LayoutGenerator {
             allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
 
             logger.info(map.toString() + "finished.");
-        } else if (map == Map.Circle_Of_Time) {
-            if (seed.getSeed().get(1) < 3) {
-                ((CircleCenterRoom) allRooms.get(15)).setRotateTarget(allRooms.get(7));
-                ((CircleCenterRoom) allRooms.get(15)).setFutureDirectionOfHallway(Direction.WEST);
-
-            }
-
-            ((CircleCenterRoom) allRooms.get(15)).setTrap();
-
         }
     }
 
