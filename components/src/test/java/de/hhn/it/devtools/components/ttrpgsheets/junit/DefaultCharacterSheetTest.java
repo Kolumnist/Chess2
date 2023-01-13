@@ -232,6 +232,12 @@ class DefaultCharacterSheetTest {
   }
 
   @Test
+  void incrementStatNullStatTest() {
+    assertThrows(AssertionError.class, () ->
+            nullSheet.incrementStat(StatType.STRENGTH, OriginType.OTHER));
+  }
+
+  @Test
   void decrementStatSingleTest() {
     for (StatType statType : StatType.values()) {
       StatDescriptor stat = characterSheet.getStatDescriptor(statType);
@@ -331,6 +337,12 @@ class DefaultCharacterSheetTest {
             () -> assertEquals(16,
                     characterSheet.getStatDescriptor(StatType.STRENGTH).getMiscellaneous())
     );
+  }
+
+  @Test
+  void decrementStatNullStatTest() {
+    assertThrows(AssertionError.class, () ->
+            nullSheet.decrementStat(StatType.STRENGTH, OriginType.OTHER));
   }
 
   @Test
