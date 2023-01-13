@@ -57,6 +57,7 @@ public class Monkey extends Piece {
       }
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
+    canDefeatKing = false;
   }
 
   /**
@@ -90,7 +91,7 @@ public class Monkey extends Piece {
     }
     possibleJump = shortenCoordinateArray(possibleJump, index);
 
-    //Testing if the Crow can defeat the enemy King.
+    //Testing if the Monkey can defeat the enemy King.
     for (int i = 0; i < possibleJump.length; i++) {
       if (board.getSpecificField(possibleJump[i]).getFieldState() == FieldState.OTHER_KING) {
         canDefeatKing = true;
@@ -202,6 +203,5 @@ public class Monkey extends Piece {
         array[i] = replaceCoordinate;
       }
     }
-    //return array;
   }
 }
