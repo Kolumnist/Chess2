@@ -18,4 +18,6 @@ module devtools.javafx {
   exports de.hhn.it.devtools.javafx.controllers.coffeemaker;
   exports de.hhn.it.devtools.javafx.battleship;
   exports de.hhn.it.devtools.javafx.chess2;
+  exports de.hhn.it.devtools.javafx.reactiongame;
+  opens de.hhn.it.devtools.javafx.reactiongame to javafx.fxml;
 }
