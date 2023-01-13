@@ -9,4 +9,13 @@ public class Treasure extends Item {
         this.scorePoint = 1;
         super.isTreasure = true;
     }
+
+
+    public void setScorePoint(int scorePoint) {
+        this.scorePoint = scorePoint;
+    }
+
+    public int getScorePoint() {
+        return scorePoint;
+    }
 }
