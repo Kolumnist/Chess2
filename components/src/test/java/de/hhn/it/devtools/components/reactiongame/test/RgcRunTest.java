@@ -3,6 +3,8 @@ package de.hhn.it.devtools.components.reactiongame.test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import de.hhn.it.devtools.apis.reactiongame.Difficulty;
+import de.hhn.it.devtools.components.reactiongame.provider.RgcAimTarget;
+import de.hhn.it.devtools.components.reactiongame.provider.RgcObstacle;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcPlayer;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcRun;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 class RgcRunTest {
 
-  long delta = 500;
+  long delta = 1000;
 
   RgcRun run;
 
@@ -27,7 +29,7 @@ class RgcRunTest {
       throw new RuntimeException(e);
     }
 
-    assertEquals(run.getGameField().getObstacles().size() , 1);
+    assertEquals(run.getField().getObstacles().size() , 1);
 
   }
 
@@ -55,13 +57,16 @@ class RgcRunTest {
     run.continueClocks();
 
     try {
-      Thread.sleep(1000);
+      Thread.sleep(delta);
     } catch (InterruptedException e) {
       throw new RuntimeException(e);
     }
 
-    assertNotEquals(timeAC, run.getAimTargetClock().getTime());
-    assertNotEquals(timeOC, run.getObstacleClock().getTime());
+    assertAll(
+        () -> assertNotEquals(timeAC, run.getAimTargetClock().getTime()),
+        () -> assertNotEquals(timeOC, run.getObstacleClock().getTime())
+    );
+
   }
 
   @Test
@@ -73,6 +78,65 @@ class RgcRunTest {
 
     assertFalse(run.getObstacleClock().getIsRunning());
     assertTrue(run.getObstacleClock().getIsEnded());
+
+  }
+
+  @Test
+  void testPlayerDoesHitObstacleWhileInvincible() {
+    int life = run.getPlayer().getCurrentLife();
+
+    run.setInvincible(true);
+    run.setpObstacle(null);
+
+    run.playerHitObstacle();
+
+    assertEquals(life, run.getPlayer().getCurrentLife());
+  }
+
+  @Test
+  void testPlayerDoesHitObstacleWhileNotInvincible() {
+    int life = run.getPlayer().getCurrentLife();
+
+    run.setInvincible(false);
+    run.setpObstacle(new RgcObstacle(1,1,1,1,1));
+
+    run.playerHitObstacle();
+
+    assertNotEquals(life, run.getPlayer().getCurrentLife());
+  }
+
+  @Test
+  void testPlayerLosesLife() {
+    int life = run.getPlayer().getCurrentLife();
+
+    run.playerLosesLife();
+
+    assertNotEquals(life, run.getPlayer().getCurrentLife());
+  }
+
+  @Test
+  void testPlayerLosesLifeWhileHavingOneLife() {
+    run.getPlayer().setCurrentLife(1);
+
+    run.playerLosesLife();
+
+    assertTrue(run.getAimTargetClock().getIsEnded());
+    assertTrue(run.getObstacleClock().getIsEnded());
+  }
+
+  public RgcAimTarget target;
+
+  @Test
+  void testCheckForTargetHit() {
+    run.setpKey('q');
+
+    run.setpAimTarget(target = new RgcAimTarget(1,1,1,1,'q'));
+
+    int scorealt = run.getScore();
+
+    run.checkForTargetHit();
+
+    assertNotEquals(run.getScore(), scorealt);
   }
 
 }

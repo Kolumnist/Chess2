@@ -5,7 +5,6 @@ import de.hhn.it.devtools.apis.reactiongame.Difficulty;
 import de.hhn.it.devtools.apis.reactiongame.GameState;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameService;
-import java.util.ArrayList;
 import java.util.IllegalFormatException;
 import java.util.SortedMap;
 
@@ -28,6 +27,10 @@ public class RgcService implements ReactiongameService {
 
   public RgcRun getRun() {
     return run;
+  }
+
+  public RgcPlayer getCurrentPlayer() {
+    return currentPlayer;
   }
 
   @Override
@@ -107,7 +110,7 @@ public class RgcService implements ReactiongameService {
     }
 
     run.setpObstacle(null);
-    run.setpAimTarget(run.getGameField().getTargets().get(aimtargetId));
+    run.setpAimTarget(run.getField().getTargets().get(aimtargetId));
 
   }
 
@@ -121,7 +124,7 @@ public class RgcService implements ReactiongameService {
     }
 
     run.setpAimTarget(null);
-    run.setpObstacle(run.getGameField().getObstacles().get(obstacleId));
+    run.setpObstacle(run.getField().getObstacles().get(obstacleId));
 
     run.playerHitObstacle();
   }

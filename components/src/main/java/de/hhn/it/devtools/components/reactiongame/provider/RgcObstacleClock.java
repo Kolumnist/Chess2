@@ -76,7 +76,7 @@ public class RgcObstacleClock implements Runnable {
           if (isHighMarkReached) { // HM reached -> remove an obstacle
             deleteRandomObstacle();
 
-            if (run.getGameField().getObstacles().size()
+            if (run.getField().getObstacles().size()
                 == run.getDifficulty().lowWatermark) { // LM reached, add now
               isHighMarkReached = false;
             }
@@ -84,7 +84,7 @@ public class RgcObstacleClock implements Runnable {
           } else {
             addNewObstacle();
 
-            if (run.getGameField().getObstacles().size()
+            if (run.getField().getObstacles().size()
                 == run.getDifficulty().highWatermark) {
               isHighMarkReached = true;
             }
@@ -109,8 +109,8 @@ public class RgcObstacleClock implements Runnable {
    * Deletes a random obstacle.
    */
   private void deleteRandomObstacle() {
-    int i = run.getGameField().getObstacles()
-        .get(new Random().nextInt(run.getGameField().getObstacles().size())).getId();
+    int i = run.getField().getObstacles()
+        .get(new Random().nextInt(run.getField().getObstacles().size())).getId();
 
     run.removeObstacle(i);
 
@@ -121,24 +121,24 @@ public class RgcObstacleClock implements Runnable {
    */
   private void addNewObstacle() {
 
-    if (run.getGameField().getObstacles().size() == 0) {
+    if (run.getField().getObstacles().size() == 0) {
       run.addObstacle(0);
 
       return;
     }
 
-    run.getGameField().getObstacles()
+    run.getField().getObstacles()
         .sort(Comparator.comparingInt(RgcObstacle::getId)); // sort List by IDs
 
-    for (int i = 0; i < run.getGameField().getObstacles().size(); i++) {
-      if (run.getGameField().getObstacles().get(i).getId() != i) { // search for free index
+    for (int i = 0; i < run.getField().getObstacles().size(); i++) {
+      if (run.getField().getObstacles().get(i).getId() != i) { // search for free index
         run.addObstacle(i);
 
         return;
       }
     }
 
-    int lastIndex = (run.getGameField().getObstacles().size());
+    int lastIndex = (run.getField().getObstacles().size());
 
     run.addObstacle(lastIndex);
   }

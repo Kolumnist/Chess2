@@ -5,6 +5,7 @@ module devtools.components {
   exports de.hhn.it.devtools.components.ttrpgsheets;
   exports de.hhn.it.devtools.components.chess2;
   exports de.hhn.it.devtools.components.memory.provider;
+  exports de.hhn.it.devtools.components.reactiongame.provider;
   requires org.slf4j;
   requires devtools.apis;
     requires java.desktop;

@@ -87,8 +87,8 @@ public class RgcField {
    *
    * @param aimTargetId aim target identifier
    */
-  void addRandomAimTarget(int aimTargetId) {
-    addRandomAimTarget(aimTargetId,
+  RgcAimTarget addRandomAimTarget(int aimTargetId) {
+    return addRandomAimTarget(aimTargetId,
         aimTargetZones.get(0).getAimTargets().size() > aimTargetZones.get(1).getAimTargets().size()
             ? 1 : 0);
   }
@@ -99,9 +99,13 @@ public class RgcField {
    * @param aimTargetId aim target identifier
    * @param aimTargetZoneId aim target zone identifier
    */
-  void addRandomAimTarget(int aimTargetId, int aimTargetZoneId) {
-    targets.add(aimTargetId, aimTargetZones.get(aimTargetZoneId).addRandomAimTarget(aimTargetId));
+  RgcAimTarget addRandomAimTarget(int aimTargetId, int aimTargetZoneId) {
 
+    RgcAimTarget aimTarget = aimTargetZones.get(aimTargetZoneId).addRandomAimTarget(aimTargetId);
+
+    targets.add(aimTargetId, aimTarget);
+
+    return aimTarget;
   }
 
 
@@ -116,6 +120,8 @@ public class RgcField {
         aimTargetZones) {
       z.getAimTargets().removeIf(a -> a.getId() == aimTargetId);
     }
+
+    targets.removeIf(target -> target.getId() == aimTargetId);
 
   }
 

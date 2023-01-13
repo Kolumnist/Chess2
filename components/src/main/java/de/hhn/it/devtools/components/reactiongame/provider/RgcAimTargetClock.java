@@ -78,7 +78,7 @@ public class RgcAimTargetClock implements Runnable {
 
         if (time % 4 == 0) { // Spawnrate
 
-          if (run.getGameField().getTargets().size() < run.getDifficulty().maxAimtargets) {
+          if (run.getField().getTargets().size() < run.getDifficulty().maxAimtargets) {
 
             run.addAimTarget(idCounter);
             targetMap.put(time + run.getDifficulty().aimTargetLifetime, idCounter);
