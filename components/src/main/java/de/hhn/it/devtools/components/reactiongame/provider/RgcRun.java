@@ -96,6 +96,10 @@ public class RgcRun {
 
   public int getScore(){return score;}
 
+  public char getpKey() {
+    return pKey;
+  }
+
 
   /**
    * Pauses the clocks.

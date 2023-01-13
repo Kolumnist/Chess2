@@ -66,4 +66,17 @@ public class RgcServiceTest {
     service.endRun();
     assertEquals(run.getState(), GameState.FINISHED);
   }
+
+  @Test
+  public void testKeyPressed() {
+    service.keyPressed('q');
+    assertEquals(run.getpKey(), 'q');
+  }
+
+  @Test
+  public void testSetCurrentPlayername() {
+    assertEquals(service.getCurrentPlayer().getName(), "Player");
+    service.setCurrentPlayerName("Simone");
+    assertEquals(service.getCurrentPlayer().getName(), "Simone");
+  }
 }

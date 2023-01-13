@@ -29,6 +29,10 @@ public class RgcService implements ReactiongameService {
     return run;
   }
 
+  public RgcPlayer getCurrentPlayer() {
+    return currentPlayer;
+  }
+
   @Override
   public void addCallback(ReactiongameListener listener) {
     logger.info("Added listener: " + listener.toString());
