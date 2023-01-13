@@ -34,10 +34,10 @@ public class RgcRun {
    *
    * @param difficulty difficulty of the run.
    */
-  public RgcRun(Difficulty difficulty) {
+  public RgcRun(Difficulty difficulty, RgcPlayer player) {
     logger.info("Create run with difficulty: " + difficulty);
     this.difficulty = difficulty;
-    player = new RgcPlayer("");
+    this.player = player;
 
     aimTargetClock = new RgcAimTargetClock(this);
     obstacleClock = new RgcObstacleClock(this);
@@ -257,8 +257,4 @@ public class RgcRun {
     }
   }
 
-
-  public static void main(String[] args) {
-    RgcRun logic = new RgcRun(Difficulty.MEDIUM);
-  }
 }

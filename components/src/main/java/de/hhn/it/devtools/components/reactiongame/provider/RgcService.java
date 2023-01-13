@@ -19,8 +19,13 @@ public class RgcService implements ReactiongameService {
       org.slf4j.LoggerFactory.getLogger(RgcService.class);
 
   private ArrayList<ReactiongameListener> callbacks = new ArrayList<>();
+  private RgcPlayer currentPlayer;
   private RgcRun run;
 
+
+  public RgcService() {
+    this.currentPlayer = new RgcPlayer("Player");
+  }
 
   public RgcRun getRun() {
     return run;
@@ -41,7 +46,7 @@ public class RgcService implements ReactiongameService {
   @Override
   public void newRun(Difficulty difficulty) throws IllegalParameterException {
     logger.info("newRun ("  + difficulty + ")");
-    run = new RgcRun(difficulty);
+    run = new RgcRun(difficulty, currentPlayer);
 
     run.setCallbacks(callbacks);
 
@@ -148,23 +153,4 @@ public class RgcService implements ReactiongameService {
   public SortedMap<String, Integer> saveHighscoreTable() throws IllegalFormatException {
     return null;
   }
-
-
-  public static void main(String[] args) throws IllegalParameterException {
-    RgcService service = new RgcService();
-
-    service.newRun(Difficulty.HARD);
-
-
-    try {
-      Thread.sleep(35000);
-    } catch (InterruptedException e) {
-      throw new RuntimeException(e);
-    }
-
-    service.endRun();
-
-
-  }
-
 }
