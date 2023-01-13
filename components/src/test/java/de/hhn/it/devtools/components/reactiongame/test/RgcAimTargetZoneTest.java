@@ -22,8 +22,7 @@ class RgcAimTargetZoneTest {
 
   @Test
   void testGenerateRandomKeyForAimTarget() {
-
-
-
+    char cha = zone.generateRandomKeyforAimTarget();
+    assertTrue((cha == 'q') || (cha == 'w') || (cha == 'e') || (cha == 'r'));
   }
 }
