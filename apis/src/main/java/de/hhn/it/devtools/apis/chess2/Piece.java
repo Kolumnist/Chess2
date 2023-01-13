@@ -28,6 +28,10 @@ public abstract class Piece {
    */
   protected char color;
 
+  /**
+   * Indicates if the piece can defeat the king
+   */
+  protected boolean canDefeatKing;
 
   /**
    * All possible moves are returned as a List of x, y coordinates.
@@ -75,6 +79,15 @@ public abstract class Piece {
   }
 
   /**
+   * Returns if the piece is able to defeat the enemy king.
+   *
+   * @return if the piece can defeat the enemy king.
+   */
+  public boolean getCanDefeatKing(){
+    return canDefeatKing;
+  }
+
+  /**
    * This method calculates the possible moves of the piece.
    */
   public abstract void calculate(Board board);
@@ -82,6 +95,7 @@ public abstract class Piece {
   public Piece(char color, Coordinate coordinate) {
     this.color = color;
     this.coordinate = coordinate;
+    canDefeatKing = false;
   }
 
   /**

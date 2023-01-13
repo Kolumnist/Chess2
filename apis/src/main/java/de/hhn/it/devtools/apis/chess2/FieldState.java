@@ -4,7 +4,7 @@ package de.hhn.it.devtools.apis.chess2;
  * Enum for a field that has a state in which different things happen.
  *
  * @author Collin, Lara, Michel
- * @version 1.1
+ * @version 1.2
  */
 
 public enum FieldState {
@@ -18,6 +18,9 @@ public enum FieldState {
 
   /** (NO JAIL) The selected field where a current Piece stands on. */
   SELECTED,
+
+  /** (NO JAIL) The other King is on this Field. */
+  OTHER_KING,
 
   /** (NO JAIL) A Piece (besides bear) of the current Player is on the Field. */
   HAS_CURRENT_PIECE,

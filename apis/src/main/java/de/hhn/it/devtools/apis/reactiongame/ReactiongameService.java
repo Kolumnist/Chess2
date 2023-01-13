@@ -10,6 +10,21 @@ import java.util.SortedMap;
  */
 public interface ReactiongameService {
 
+
+  /**
+   * Adds a callback (ReactiongameListener) to the callbacks.
+   *
+   * @param listener Listener
+   */
+  void addCallback(ReactiongameListener listener);
+
+  /**
+   * Removes a callback (ReactiongameListener) from the callbacks.
+   *
+   * @param listener Listener
+   */
+  void removeCallback(ReactiongameListener listener);
+
   /**
    * Starts a new run and the timer.
    *
@@ -38,36 +53,18 @@ public interface ReactiongameService {
   void endRun();
 
   /**
-   * Adds a listener to the service.
-   *
-   * @param listener listener
-   * @param id identifier
-   */
-  void addCallback(ReactiongameListener listener, int id);
-
-  /**
-   * Removes listener with the given id.
-   *
-   * @param id identifier
-   */
-  void removeCallback(int id);
-
-  /**
-   * Sets the courser position.
-   *
-   * @param x position
-   * @param y position
-   * @throws IllegalStateException if state equals the current state
-   */
-  void presentCourserPosition(int x, int y) throws IllegalStateException;
-
-  /**
    * Player pressed a key.
    *
    * @param key key
    * @throws IllegalStateException if state equals the current state
    */
   void keyPressed(char key) throws IllegalStateException;
+
+  void playerEnteredAimTarget(int id) throws IllegalParameterException;
+
+  void playerEnteredObstacle(int id) throws IllegalParameterException;
+
+  void playerLeftGameObject();
 
   /**
    * Sets a player name to the current highscore.
@@ -86,8 +83,8 @@ public interface ReactiongameService {
   /**
    * Saves the current highscoreTable in a file.
    *
-   * @throws IllegalFormatException when format is not in line.
    * @return Highscores with format: player - score.
+   * @throws IllegalFormatException when format is not in line.
    */
   SortedMap<String, Integer> saveHighscoreTable() throws IllegalFormatException;
 

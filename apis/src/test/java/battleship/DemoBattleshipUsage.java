@@ -1,9 +1,10 @@
 package battleship;
 
 import de.hhn.it.devtools.apis.battleship.*;
+
 /**
  * This usage demo is not runnable because in this module there is no possibility to access the
- * implementation. The runnable demo is accessible in the components module.
+ * implementation. The runnable demo is accessible in the component's module.
  */
 
     // Ask Professor how to handle Gamestate parameter in loadGame
@@ -25,19 +26,19 @@ public class DemoBattleshipUsage  {
 
 
         //User wants to rotate ship before placing it
-        game.rotateShip(null);
+        game.rotateShip(Owner.PLAYER, null);
 
 
         //User places his ships
-        game.placeShip(null,1,2);
-        game.placeShip(null,2,2);
-        game.placeShip(null,3,2);
-        game.placeShip(null,4,2);
-        game.placeShip(null,6,2);
+        game.placeShip(Owner.PLAYER,null,1,2);
+        game.placeShip(Owner.PLAYER,null,2,2);
+        game.placeShip(Owner.PLAYER,null,3,2);
+        game.placeShip(Owner.PLAYER,null,4,2);
+        game.placeShip(Owner.PLAYER,null,6,2);
 
 
         //User starts the game by bombing the enemy panel and misses
-        game.bombPanel(4,7);
+        game.bombPanel(Owner.PLAYER, Owner.COMPUTER,4, 7);
 
         //Sound volume was too loud, user wants to adjust it
         game.adjustSoundVolume(30);
