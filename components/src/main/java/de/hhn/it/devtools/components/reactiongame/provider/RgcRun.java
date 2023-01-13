@@ -232,12 +232,12 @@ public class RgcRun {
   public void addAimTarget(int aimTargetId) {
     logger.info("Add aim target (" + aimTargetId + ")");
 
-    gameField.addRandomAimTarget(aimTargetId);
+    RgcAimTarget aimTarget = gameField.addRandomAimTarget(aimTargetId);
 
     for (ReactiongameListener callback :
         callbacks) {
 
-      callback.removeAimTarget(aimTargetId);
+      callback.addAimTarget(RgcAimTarget.toAimTargetDescriptor(aimTarget));
     }
   }
 

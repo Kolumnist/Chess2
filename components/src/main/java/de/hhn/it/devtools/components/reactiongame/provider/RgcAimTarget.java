@@ -1,9 +1,16 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
+import de.hhn.it.devtools.apis.reactiongame.AimTargetDescriptor;
+
 /**
  * This class represents an aim target (goal) on the field.
  */
 public class RgcAimTarget implements AimTarget {
+
+  public static AimTargetDescriptor toAimTargetDescriptor(RgcAimTarget rgcAimTarget) {
+    return new AimTargetDescriptor(rgcAimTarget.id, rgcAimTarget.x, rgcAimTarget.y, RADIUS,
+        rgcAimTarget.key);
+  }
 
   public static int RADIUS = 25; // in px
 
