@@ -34,14 +34,17 @@ public class Player {
   /**
    * Javadoc.
    *
-   * @param itemId new Item
-   * @throws NoSuchItemFoundException Exception
+   * @param itemId the item to be removed.
+   * @throws NoSuchItemFoundException if the item is not contained.
+   * @return the removed item.
    */
-  public void removeItem(int itemId) throws NoSuchItemFoundException {
+  public Item removeItem(int itemId) throws NoSuchItemFoundException {
     if (!inventory.containsKey(itemId)) {
       throw new NoSuchItemFoundException();
     }
+    Item returnItem = inventory.get(itemId);
     inventory.remove(itemId);
+    return returnItem;
   }
 
   /**

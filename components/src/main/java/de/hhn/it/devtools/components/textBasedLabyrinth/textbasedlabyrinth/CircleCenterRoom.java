@@ -5,7 +5,8 @@ public class CircleCenterRoom extends TrapRoom {
 
     private Room rotateTarget;
     private Hallway rotatingHallway;
-    private Direction directionOfHallway;
+    private Direction futureDirectionOfHallway;
+    private Direction directionOfFakeDoorInTargetRoom;
 
     /**
      * Constructor of special circle room.
@@ -61,11 +62,11 @@ public class CircleCenterRoom extends TrapRoom {
         return rotatingHallway;
     }
 
-    public Direction getDirectionOfHallway() {
-        return directionOfHallway;
+    public Direction getFutureDirectionOfHallway() {
+        return futureDirectionOfHallway;
     }
 
-    public void setDirectionOfHallway(Direction directionOfHallway) {
-        this.directionOfHallway = directionOfHallway;
+    public void setFutureDirectionOfHallway(Direction futureDirectionOfHallway) {
+        this.futureDirectionOfHallway = futureDirectionOfHallway;
     }
 }

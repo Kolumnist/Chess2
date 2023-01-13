@@ -12,46 +12,105 @@ import java.util.List;
  */
 public class Game implements GameService {
 
+
+  private static final org.slf4j.Logger logger =
+          org.slf4j.LoggerFactory.getLogger(Game.class);
+
+
   public Room currentRoom;
   public Player player;
   public Layout currentLayout;
-  public OutputListener outputListener;
   public ArrayList<Layout> layouts;
+  private ArrayList<OutputListener> listeners;
+  private ArrayList<Map> allMaps;
   public Map map;
+  private int score;
 
 
   /**
-   * Constructor of Game Class
-   * @param listener Callback listener
+   * This method exists to initialize the player and the lists,
+   * and other things.
+   * This method should only be done once per launch.
    */
-  public Game(OutputListener listener) {
-    this.player = new Player("Placeholder");
-    outputListener = listener;
+  public void startup() {
+    this.player = new Player("Jones");
+    layouts = new ArrayList<>();
+    listeners = new ArrayList<>();
+    allMaps = new ArrayList<>();
+    logger.info("Game initialized.");
+    score = 0;
   }
 
+
+  public void start(Map map, Seed seed) {
+    setCurrentLayout(map, seed);
+    score = 0;
+    for (OutputListener outputListener : listeners) {
+      outputListener.listenerStart();
+    }
+    logger.info("Game started.");
+  }
+
+  public void end() {
+    for (OutputListener outputListener : listeners) {
+      outputListener.listenerEnd();
+    }
+  }
+
+  public void reset() {
+
+  }
+
+
   /**
-   * Method to Move the Player to another Room
-   * @param direction Direction the Player will take
-   * @throws RoomFailedException if there is no Room in that direction
+   * This method deals with the player moving from room to room.
+   * @param direction the direction in which the player is moving.
    */
-  public void move(Direction direction) throws RoomFailedException {
+  public void move(Direction direction) {
     if (direction == null) {
       throw new IllegalArgumentException("Direction should not be null.");
     }
+    boolean stop = false;
 
-    Door checkDoor = currentRoom.getDoor(direction);
-    String message = checkDoor.open();
-    outputListener.sendOutputPlayer(message);
-    if (!checkDoor.checkIfLocked()) {
-      if (checkDoor.checkIfFake()) {
-        String fake = "The door reveals no path, but a wall. You cannot move in this direction.";
-        outputListener.sendOutputNavigation(fake);
-      } else {
-        currentRoom = currentRoom.getRoom(direction);
-        player.setCurrentRoomOfPlayer(currentRoom);
+    Door checkDoor = null;
+    try {
+      checkDoor = currentRoom.getDoor(direction);
+    } catch (RoomFailedException e) {
+      stop = true;
+      for (OutputListener outputListener : listeners) {
+        outputListener.sendOutputNavigation("There is no way in that direction.");
       }
     }
 
+    if (!stop) {
+      String message = checkDoor.open();
+      for (OutputListener outputListener : listeners) {
+        outputListener.sendOutputPlayer(message);
+      }
+      if (!checkDoor.checkIfLocked()) {
+        if (checkDoor.checkIfFake()) {
+          String fake = "The door reveals no path, but a wall. You cannot move in this direction.";
+          for (OutputListener outputListener : listeners) {
+            outputListener.sendOutputNavigation(fake);
+          }
+        } else {
+          try {
+            currentRoom = currentRoom.getRoom(direction);
+          } catch (RoomFailedException e) {
+            stop = true;
+            for (OutputListener outputListener : listeners) {
+              outputListener.sendOutputNavigation("There is no room in that direction.");
+            }
+          }
+
+        }
+      }
+
+    }
+
+    if (!stop) {
+      player.setCurrentRoomOfPlayer(currentRoom);
+    }
   }
 
   /**
@@ -64,8 +123,11 @@ public class Game implements GameService {
     if (direction == null) {
       throw new IllegalArgumentException("Direction should not be null.");
     }
+
     String message = currentRoom.getDoor(direction).getInspectMessage();
-    outputListener.sendOutputNavigation(message);
+    for (OutputListener outputListener : listeners) {
+      outputListener.sendOutputNavigation(message);
+    }
     return message;
   }
 
@@ -92,7 +154,9 @@ public class Game implements GameService {
     } else {
       successMessage = door.getPuzzle().getLockedMessage();
     }
-    outputListener.sendOutputPlayerInteract(successMessage);
+    for (OutputListener outputListener : listeners) {
+      outputListener.sendOutputPlayerInteract(successMessage);
+    }
     return successMessage;
   }
 
@@ -110,32 +174,22 @@ public class Game implements GameService {
 
     items = itemSearcher();
 
-    if (items.size() == 1) {
-      if (items.get(0).getItemId() == 10077001) {
-        items = null;
-      }
-    }
     return items;
 
   }
 
-  /**
-   * Setter for the current Layout
-   * @param layout the layout to be assigned.
-   */
   @Override
   public void setLayout(Layout layout) {
     this.currentLayout = layout;
   }
 
   /**
-   * Gets Item for player.
+   * Gets item for player.
    *
-   * @param itemId gets an item
-   * @return gives item to player
+   * @param itemId gets an item.
+   * @return the item that was picked up.
    * @throws NoSuchItemFoundException if item not found.
-   * @throws NullPointerException if item cant be null.
-   */
+   * */
   public Item pickUpItem(int itemId) throws NoSuchItemFoundException {
 
     List<Item> items = new ArrayList<>();
@@ -153,7 +207,14 @@ public class Game implements GameService {
     } else {
       player.addItem(searchedItem);
       player.getCurrentRoomOfPlayer().removeItem(searchedItem.getItemId());
-      outputListener.sendOutputPlayer(searchedItem.getName());
+      if (searchedItem.getIsTreasure()) {
+        score = score + ((Treasure) searchedItem).getScorePoint();
+      }
+
+      for (OutputListener outputListener : listeners) {
+        outputListener.sendOutputPlayer(searchedItem.getName());
+        outputListener.updateScore(score);
+      }
       return searchedItem;
     }
   }
@@ -165,34 +226,39 @@ public class Game implements GameService {
    * @return the message, which is about the success or failure of the operation.
    */
   public String dropItem(int itemId) throws NoSuchItemFoundException {
-    player.removeItem(itemId);
+    Item droppedItem = player.removeItem(itemId);
     String message = "You lay the item carefully on the ground.";
-    outputListener.sendOutputPlayer(message);
+
+    if (droppedItem.getIsTreasure()) {
+      score = score - ((Treasure) droppedItem).getScorePoint();
+    }
+    if (score < 0) {
+      score = 0;
+    }
+    for (OutputListener outputListener : listeners) {
+      outputListener.sendOutputPlayer(message);
+      outputListener.updateScore(score);
+    }
     return message;
   }
 
-  /**
-   * Method to Inspect Item in the Inventory of the Player
-   * @param itemId id of the Item
-   * @throws NoSuchItemFoundException if item not found
-   */
+
   @Override
   public void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException {
     String message = player.getItem(itemId).getInfo();
-    outputListener.sendOutputInventory(message);
+    for (OutputListener outputListener : listeners) {
+      outputListener.sendOutputInventory(message);
+    }
   }
 
   /**
-   * Setter for Player name
+   *
    * @param name the new name.
-   * @return true if name has been successfully set
+   * @return if the new name was accepted.
    */
   @Override
   public boolean setPlayerName(String name) {
-    boolean success = true;
-    if (name.isEmpty() || name.isBlank()) {
-      success = false;
-    }
+    boolean success = !name.isEmpty() && !name.isBlank();
 
     if (success) {
       player.setName(name);
@@ -207,45 +273,20 @@ public class Game implements GameService {
   public String check() {
     String message = "You find yourself in " + currentRoom.getDescription();
     message = message + ("You can search the room or move on.");
-    outputListener.sendOutputRoom(message);
+    for (OutputListener outputListener : listeners) {
+      outputListener.sendOutputRoom(message);
+    }
     return message;
   }
 
-  /**
-   * Getter for Score Points
-   * @return current Score of Player
-   */
-  @Override
-  public int getScore() {
-    return SCORE_BOARD;
-  }
-
-  /**
-   * Update the current Scoreboard
-   * @param newScore new current Score
-   * @return the updated current Score
-   */
-  @Override
-  public int updateScore(int newScore) {
-    return SCORE_BOARD;
-  }
-
-  /**
-   * Add Callback listener to Game
-   * @param listener new listener to be added
-   */
   @Override
   public void addListener(OutputListener listener) {
-
+    listeners.add(listener);
   }
 
-  /**
-   * Remove Callback listener
-   * @param listener listener to be removed
-   */
   @Override
   public void removeListener(OutputListener listener) {
-
+    listeners.remove(listener);
   }
 
   /**
@@ -253,14 +294,13 @@ public class Game implements GameService {
    */
   public String startText() {
     String message = "You are " + player.getName() + " and you are in the depths of a labyrinth.";
-    outputListener.sendOutputRoom(message);
+    for (OutputListener outputListener : listeners) {
+      outputListener.sendOutputRoom(message);
+    }
     return message;
   }
 
-  /**
-   *
-   * @return
-   */
+
   private List<Item> itemSearcher() {
     List<Item> items = new ArrayList<>();
     items = currentRoom.search();
