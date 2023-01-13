@@ -2,10 +2,8 @@ package de.hhn.it.devtools.components.game2048.provider;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.game2048.*;
-import de.hhn.it.devtools.components.game2048.provider.Comparators.DownComparator;
-import de.hhn.it.devtools.components.game2048.provider.Comparators.LeftComparator;
-import de.hhn.it.devtools.components.game2048.provider.Comparators.RightComparator;
-import de.hhn.it.devtools.components.game2048.provider.Comparators.UpComparator;
+import de.hhn.it.devtools.components.game2048.provider.Comparators.HorizontalComparator;
+import de.hhn.it.devtools.components.game2048.provider.Comparators.VerticalComparator;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,16 +11,16 @@ import java.util.ArrayList;
 /**
  * Implementation of Game2048Service interface.
  */
-public class ImplementationGame2048Service implements de.hhn.it.devtools.apis.game2048.Game2048Service {
+public class ImplementationGame2048Service implements Game2048Service {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(ImplementationGame2048Service.class);
-  private final ArrayList<Block> gameboard = new ArrayList<>();
-  private final ArrayList<Position> freelist = new ArrayList<>();
-  private int currentScore = 0;
-  private static int highScore = 0;
-  private boolean gameWon = false;
-  private boolean gameLost = false;
-  private Game2048Listener gameListener;
+  private final ArrayList<Block> gameboard;
+  private final ArrayList<Position> freelist;
+  private int currentScore;
+  private static int highScore;
+  private boolean gameWon;
+  private boolean gameLost;
+  private ArrayList<Game2048Listener> gameListeners;
 
   @Override
   public void initialisation() {
@@ -40,44 +38,6 @@ public class ImplementationGame2048Service implements de.hhn.it.devtools.apis.ga
       e.printStackTrace();
     }
     loadHighscore();
-  }
-
-  /**
-   * Adds a Block to random free position.
-   * If there was no more free space, to put a Block
-   * and this Methode got called, the game is lost.
-   *
-   * @param value Value of the new Block
-   * @throws IllegalParameterException if Position is not a free Space or if {value % 2 == 1}
-   */
-  private void addBlock(int value) throws IllegalParameterException {
-    if (freelist.size() > 1) {
-      Position position = freelist.get((int) (Math.random() * (freelist.size() - 1)));
-      addBlock(position, value);
-    } else if (freelist.size() == 1) {
-      Position position = freelist.get(0);
-      addBlock(position, value);
-    } else {
-      logger.info("game is Lost");
-      gameLost = true;
-    }
-  }
-
-  /**
-   * Is public to enable direct manipulation of the game-board from outside this class.
-   *
-   * @param xyPosition x and y coordinates of new Block
-   * @param value      Value the Block should have
-   * @throws IllegalParameterException if Position is not a free Space or if {value % 2 == 1}
-   */
-  public void addBlock(Position xyPosition, int value) throws IllegalParameterException {
-    logger.info("addBlock: xyPisition = {}, value = {}", xyPosition, value);
-    if (freelist.contains(xyPosition)) {
-      freelist.remove(xyPosition);
-      gameboard.add(new Block(xyPosition, value));
-    } else {
-      throw new IllegalParameterException("Tried to add Block to a Space that is not free.");
-    }
   }
 
   @Override
@@ -102,6 +62,76 @@ public class ImplementationGame2048Service implements de.hhn.it.devtools.apis.ga
     notifyGame2048Listener();
   }
 
+  @Override
+  public void addCallback(Game2048Listener listener) throws IllegalParameterException {
+    if (listener == null) {
+      throw new IllegalParameterException("Listener was null reference.");
+    } else if (gameListeners.contains(listener)) {
+      throw new IllegalParameterException("There is already a Listener registered.");
+    } else {
+      gameListeners.add(listener);
+    }
+  }
+
+  @Override
+  public void removeCallback(Game2048Listener listener) throws IllegalParameterException {
+    if (listener == null) {
+      throw new IllegalParameterException("Tried to remove null reference instead of a Listener.");
+    } else if (!gameListeners.contains(listener)) {
+      throw new IllegalParameterException("Removing Listener failed, because of wrong parameter.");
+    } else {
+      gameListeners.remove(listener);
+    }
+  }
+
+  public ImplementationGame2048Service() {
+    this.gameboard = new ArrayList<>();
+    this.freelist = new ArrayList<>();
+    this.currentScore = 0;
+    this.gameWon = false;
+    this.gameLost = false;
+    this.gameListeners = null;
+    loadHighscore();
+  }
+
+  /**
+   * Is public to enable direct manipulation of the game-board from outside this class.
+   *
+   * @param xyPosition x and y coordinates of new Block
+   * @param value      Value the Block should have
+   * @throws IllegalParameterException if Position is not a free Space or if {value % 2 == 1}
+   */
+  public void addBlock(Position xyPosition, int value) throws IllegalParameterException {
+    logger.info("addBlock: xyPisition = {}, value = {}", xyPosition, value);
+    if (freelist.contains(xyPosition)) {
+      freelist.remove(xyPosition);
+      gameboard.add(new Block(xyPosition, value));
+    } else {
+      throw new IllegalParameterException("Tried to add Block to a Space that is not free.");
+    }
+  }
+
+  /**
+   * Adds a Block to random free position.
+   * If there was no more free space, to put a Block
+   * and this Methode got called, the game is lost.
+   *
+   * @param value Value of the new Block
+   * @throws IllegalParameterException if Position is not a free Space or if {value % 2 == 1}
+   */
+  private void addBlock(int value) throws IllegalParameterException {
+    if (freelist.size() > 1) {
+      Position position = freelist.get((int) (Math.random() * (freelist.size() - 1)));
+      addBlock(position, value);
+    } else if (freelist.size() == 1) {
+      Position position = freelist.get(0);
+      addBlock(position, value);
+    } else {
+      logger.info("game is Lost");
+      gameLost = true;
+    }
+  }
+
   /**
    * The Blocks that are part of the column or row will be removed from the game-board.
    * Afterwards all Blocks get moved in the given direction and added to the game-board again.
@@ -124,101 +154,65 @@ public class ImplementationGame2048Service implements de.hhn.it.devtools.apis.ga
     switch (direction) {
       case up -> {
         for (int i = 0; i < columnRow.size(); i++) {
-          columnRow.sort(new UpComparator());
+          columnRow.sort(new VerticalComparator(direction));
           freelist.add(columnRow.get(i).getXYPosition());
           if (previousBlock == null) {
             Block movingBlock = columnRow.get(i).changeYPosition(3);
-            columnRow.remove(columnRow.get(i));
-            columnRow.add(movingBlock);
-            previousBlock = movingBlock;
-            freelist.remove(movingBlock.getXYPosition());
+            previousBlock = changeColumnRow(columnRow, i, movingBlock);
           } else if (previousBlock.getValue() == columnRow.get(i).getValue()) {
-            columnRow.remove(columnRow.get(i));
-            columnRow.remove(previousBlock);
-            previousBlock = previousBlock.changeValue(previousBlock.getValue() * 2);
-            columnRow.add(previousBlock);
+            previousBlock = mergeBlocks(columnRow, i, previousBlock);
             i--;
           } else {
-            Block tmp = columnRow.get(i).changeYPosition(previousBlock.getXYPosition().getYPosition() - 1);
-            columnRow.remove(columnRow.get(i));
-            columnRow.add(tmp);
-            previousBlock = tmp;
-            freelist.remove(tmp.getXYPosition());
+            Block movingBlock = columnRow.get(i).changeYPosition(previousBlock.getXYPosition().getYPosition() - 1);
+            previousBlock = changeColumnRow(columnRow, i, movingBlock);
           }
         }
       }
       case down -> {
         for (int i = 0; i < columnRow.size(); i++) {
-          columnRow.sort(new DownComparator());
+          columnRow.sort(new VerticalComparator(direction));
           freelist.add(columnRow.get(i).getXYPosition());
           if (previousBlock == null) {
             Block movingBlock = columnRow.get(i).changeYPosition(0);
-            columnRow.remove(columnRow.get(i));
-            columnRow.add(movingBlock);
-            previousBlock = movingBlock;
-            freelist.remove(movingBlock.getXYPosition());
+            previousBlock = changeColumnRow(columnRow, i, movingBlock);
           } else if (previousBlock.getValue() == columnRow.get(i).getValue()) {
-            columnRow.remove(columnRow.get(i));
-            columnRow.remove(previousBlock);
-            previousBlock = previousBlock.changeValue(previousBlock.getValue() * 2);
-            columnRow.add(previousBlock);
+            previousBlock = mergeBlocks(columnRow, i, previousBlock);
             i--;
           } else {
-            Block tmp = columnRow.get(i).changeYPosition(previousBlock.getXYPosition().getYPosition() + 1);
-            columnRow.remove(columnRow.get(i));
-            columnRow.add(tmp);
-            previousBlock = tmp;
-            freelist.remove(tmp.getXYPosition());
+            Block movingBlock = columnRow.get(i).changeYPosition(previousBlock.getXYPosition().getYPosition() + 1);
+            previousBlock = changeColumnRow(columnRow, i, movingBlock);
           }
         }
       }
       case right -> {
         for (int i = 0; i < columnRow.size(); i++) {
-          columnRow.sort(new RightComparator());
+          columnRow.sort(new HorizontalComparator(direction));
           freelist.add(columnRow.get(i).getXYPosition());
           if (previousBlock == null) {
             Block movingBlock = columnRow.get(i).changeXPosition(3);
-            columnRow.remove(columnRow.get(i));
-            columnRow.add(movingBlock);
-            previousBlock = movingBlock;
-            freelist.remove(movingBlock.getXYPosition());
+            previousBlock = changeColumnRow(columnRow, i, movingBlock);
           } else if (previousBlock.getValue() == columnRow.get(i).getValue()) {
-            columnRow.remove(columnRow.get(i));
-            columnRow.remove(previousBlock);
-            previousBlock = previousBlock.changeValue(previousBlock.getValue() * 2);
-            columnRow.add(previousBlock);
+            previousBlock = mergeBlocks(columnRow, i, previousBlock);
             i--;
           } else {
-            Block tmp = columnRow.get(i).changeXPosition(previousBlock.getXYPosition().getXPosition() - 1);
-            columnRow.remove(columnRow.get(i));
-            columnRow.add(tmp);
-            previousBlock = tmp;
-            freelist.remove(tmp.getXYPosition());
+            Block movingBlock = columnRow.get(i).changeXPosition(previousBlock.getXYPosition().getXPosition() - 1);
+            previousBlock = changeColumnRow(columnRow, i, movingBlock);
           }
         }
       }
       case left -> {
         for (int i = 0; i < columnRow.size(); i++) {
-          columnRow.sort(new LeftComparator());
+          columnRow.sort(new HorizontalComparator(direction));
           freelist.add(columnRow.get(i).getXYPosition());
           if (previousBlock == null) {
             Block movingBlock = columnRow.get(i).changeXPosition(0);
-            columnRow.remove(columnRow.get(i));
-            columnRow.add(movingBlock);
-            previousBlock = movingBlock;
-            freelist.remove(movingBlock.getXYPosition());
+            previousBlock = changeColumnRow(columnRow, i, movingBlock);
           } else if (previousBlock.getValue() == columnRow.get(i).getValue()) {
-            columnRow.remove(columnRow.get(i));
-            columnRow.remove(previousBlock);
-            previousBlock = previousBlock.changeValue(previousBlock.getValue() * 2);
-            columnRow.add(previousBlock);
+            previousBlock = mergeBlocks(columnRow, i, previousBlock);
             i--;
           } else {
-            Block tmp = columnRow.get(i).changeXPosition(previousBlock.getXYPosition().getXPosition() + 1);
-            columnRow.remove(columnRow.get(i));
-            columnRow.add(tmp);
-            previousBlock = tmp;
-            freelist.remove(tmp.getXYPosition());
+            Block movingBlock = columnRow.get(i).changeXPosition(previousBlock.getXYPosition().getXPosition() + 1);
+            previousBlock = changeColumnRow(columnRow, i, movingBlock);
           }
         }
       }
@@ -227,7 +221,7 @@ public class ImplementationGame2048Service implements de.hhn.it.devtools.apis.ga
   }
 
   /**
-   * Notifies the Frontend to present the new Data
+   * Notifies all Frontends to present new Data
    */
   private void notifyGame2048Listener() {
     logger.info("notifyGame2048Listener: no params");
@@ -236,7 +230,7 @@ public class ImplementationGame2048Service implements de.hhn.it.devtools.apis.ga
       gameboardArray[i] = gameboard.get(i);
     }
     State currentState = new State(gameboardArray, currentScore, highScore, gameWon, gameLost);
-    gameListener.newState(currentState);
+    gameListeners.forEach((listener) -> listener.newState(currentState));
   }
 
   /**
@@ -275,122 +269,120 @@ public class ImplementationGame2048Service implements de.hhn.it.devtools.apis.ga
     }
   }
 
-    /**
-     * Searches the game-board for Blocks of a particular Column.
-     *
-     * @param currentColumn index of the current Column
-     * @return List of Blocks with {xPosition == currentColumn}
-     * @throws IllegalParameterException if currentCollumn is outside Boundaries
-     */
-    private ArrayList<Block> getColumn ( int currentColumn) throws IllegalParameterException {
-      if (currentColumn > 3 || currentColumn < 0) {
-        throw new IllegalParameterException("Tried to get column outside the game-board boundaries");
-      }
-      ArrayList<Block> column = new ArrayList<>();
-      for (Block block : gameboard) {
-        if (block.getXYPosition().getXPosition() == currentColumn) {
-          column.add(block);
-        }
-      }
-      return column;
+  /**
+   * Loads the highest score a player scored on this physical device, from a File.
+   */
+  private void loadHighscore() {
+    logger.info("readHighscore: no params");
+    highScore = 0;
+    FileInputStream fileInputStream = null;
+    try {
+      fileInputStream = new FileInputStream("SaveGame2048.txt");
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
     }
-
-    /**
-     * Searches the game-board for Blocks of a particular Row.
-     *
-     * @param currentRow index of the current Column
-     * @return List of Blocks with {yPosition == currentColumn}
-     * @throws IllegalParameterException if currentRow is outside Boundaries
-     */
-    private ArrayList<Block> getRow ( int currentRow) throws IllegalParameterException {
-      if (currentRow > 3 || currentRow < 0) {
-        throw new IllegalParameterException("Tried to get row outside the game-board boundaries");
-      }
-      ArrayList<Block> row = new ArrayList<>();
-      for (Block block : gameboard) {
-        if (block.getXYPosition().getYPosition() == currentRow) {
-          row.add(block);
-        }
-      }
-      return row;
-    }
-
-
-    @Override
-    public void addCallback (Game2048Listener listener) throws IllegalParameterException {
-      if (listener == null) {
-        throw new IllegalParameterException("Listener was null reference.");
-      } else if (gameListener != null) {
-        throw new IllegalParameterException("There is already a Listener registered.");
-      } else {
-        this.gameListener = listener;
-      }
-    }
-
-    @Override
-    public void removeCallback (Game2048Listener listener) throws IllegalParameterException {
-      if (listener == null) {
-        throw new IllegalParameterException("Tried to remove null reference instead of a Listener.");
-      } else if (listener != gameListener) {
-        throw new IllegalParameterException("Removing Listener failed, because of wrong parameter.");
-      } else {
-        this.gameListener = null;
-      }
-    }
-
-    /**
-     * Loads the highest score a player scored on this physical device, from a File.
-     */
-    private void loadHighscore () {
-      logger.info("readHighscore: no params");
-      FileInputStream fileInputStream = null;
+    if (fileInputStream != null) {
+      ObjectInputStream objectInputStream;
       try {
-        fileInputStream = new FileInputStream("SaveGame2048.txt");
-      } catch (FileNotFoundException e) {
+        objectInputStream = new ObjectInputStream(fileInputStream);
+        highScore = objectInputStream.readInt();
+        objectInputStream.close();
+        logger.info("readHighscore, highscore = {}", highScore);
+      } catch (IOException e) {
+        logger.warn("load highScore failed, because of ObjectOutputStream Error");
         e.printStackTrace();
       }
-      if (fileInputStream != null) {
-        ObjectInputStream objectInputStream;
-        try {
-          objectInputStream = new ObjectInputStream(fileInputStream);
-          highScore = objectInputStream.readInt();
-          objectInputStream.close();
-          logger.info("readHighscore, highscore = {}", highScore);
-        } catch (IOException e) {
-          logger.warn("load highScore failed, because of ObjectOutputStream Error");
-          e.printStackTrace();
-        }
-      } else {
-        logger.warn("load highScore failed, because File related Error");
-      }
-    }
-
-    /**
-     * Writes the current value of highScore in a File.
-     * CAUTION!!! If old highScore in the File is greater than the new highScore,
-     * the old highScore will be overwritten.
-     */
-    private void saveHighscore () {
-      logger.info("safeHighscore: no params");
-      FileOutputStream fileOutputStream = null;
-      try {
-        fileOutputStream = new FileOutputStream("SaveGame2048.txt");
-      } catch (FileNotFoundException e) {
-        e.printStackTrace();
-      }
-      if (fileOutputStream != null) {
-        ObjectOutputStream objectOutputStream;
-        try {
-          objectOutputStream = new ObjectOutputStream(fileOutputStream);
-          objectOutputStream.writeInt(highScore);
-          objectOutputStream.flush();
-          objectOutputStream.close();
-        } catch (IOException e) {
-          logger.warn("save highScore failed, because of ObjectOutputStream Error");
-          e.printStackTrace();
-        }
-      } else {
-        logger.warn("save highScore failed, because File related Error");
-      }
+    } else {
+      logger.warn("load highScore failed, because File related Error");
     }
   }
+
+  /**
+   * Writes the current value of highScore in a File.
+   * CAUTION!!! If old highScore in the File is greater than the new highScore,
+   * the old highScore will be overwritten.
+   */
+  private void saveHighscore() {
+    logger.info("safeHighscore: no params");
+    FileOutputStream fileOutputStream = null;
+    try {
+      fileOutputStream = new FileOutputStream("SaveGame2048.txt");
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+    if (fileOutputStream != null) {
+      ObjectOutputStream objectOutputStream;
+      try {
+        objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeInt(highScore);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+      } catch (IOException e) {
+        logger.warn("save highScore failed, because of ObjectOutputStream Error");
+        e.printStackTrace();
+      }
+    } else {
+      logger.warn("save highScore failed, because File related Error");
+    }
+  }
+
+  /**
+   * Adds moved block to columnRow, updates freelist, returns moved Block as previousBlock
+   */
+  private Block changeColumnRow(ArrayList<Block> columnRow, int i, Block movingBlock) {
+    Block previousBlock;
+    columnRow.remove(columnRow.get(i));
+    columnRow.add(movingBlock);
+    previousBlock = movingBlock;
+    freelist.remove(movingBlock.getXYPosition());
+    return previousBlock;
+  }
+
+  private Block mergeBlocks(ArrayList<Block> columnRow, int i, Block previousBlock) {
+    columnRow.remove(columnRow.get(i));
+    columnRow.remove(previousBlock);
+    previousBlock = previousBlock.changeValue(previousBlock.getValue() * 2);
+    columnRow.add(previousBlock);
+    return previousBlock;
+  }
+
+  /**
+   * Searches the game-board for Blocks of a particular Column.
+   *
+   * @param currentColumn index of the current Column
+   * @return List of Blocks with {xPosition == currentColumn}
+   * @throws IllegalParameterException if currentCollumn is outside Boundaries
+   */
+  private ArrayList<Block> getColumn(int currentColumn) throws IllegalParameterException {
+    if (currentColumn > 3 || currentColumn < 0) {
+      throw new IllegalParameterException("Tried to get column outside the game-board boundaries");
+    }
+    ArrayList<Block> column = new ArrayList<>();
+    for (Block block : gameboard) {
+      if (block.getXYPosition().getXPosition() == currentColumn) {
+        column.add(block);
+      }
+    }
+    return column;
+  }
+
+  /**
+   * Searches the game-board for Blocks of a particular Row.
+   *
+   * @param currentRow index of the current Column
+   * @return List of Blocks with {yPosition == currentColumn}
+   * @throws IllegalParameterException if currentRow is outside Boundaries
+   */
+  private ArrayList<Block> getRow(int currentRow) throws IllegalParameterException {
+    if (currentRow > 3 || currentRow < 0) {
+      throw new IllegalParameterException("Tried to get row outside the game-board boundaries");
+    }
+    ArrayList<Block> row = new ArrayList<>();
+    for (Block block : gameboard) {
+      if (block.getXYPosition().getYPosition() == currentRow) {
+        row.add(block);
+      }
+    }
+    return row;
+  }
+}

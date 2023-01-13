@@ -1,5 +1,3 @@
-import de.hhn.it.devtools.components.game2048.provider.ImplementationGame2048Service;
-
 module devtools.components {
   exports de.hhn.it.devtools.components.example.coffeemakerservice.provider;
   exports de.hhn.it.devtools.components.battleship;
@@ -17,7 +15,7 @@ module devtools.components {
   provides de.hhn.it.devtools.apis.duckhunt.DuckHuntService
           with de.hhn.it.devtools.components.duckhunt.DuckHunt;
   provides de.hhn.it.devtools.apis.game2048.Game2048Service
-          with ImplementationGame2048Service;
+          with de.hhn.it.devtools.components.game2048.provider.ImplementationGame2048Service;
   provides de.hhn.it.devtools.apis.memory.MemoryService
           with de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
   provides de.hhn.it.devtools.apis.chess2.Chess2Service
