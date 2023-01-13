@@ -47,6 +47,10 @@ public class RgcAimTargetClock implements Runnable {
     return time;
   }
 
+  public boolean getIsRunning() {return isRunning;}
+
+  public boolean getIsEnded() {return isEnded;}
+
   public void setRunning(boolean running) {
     isRunning = running;
   }

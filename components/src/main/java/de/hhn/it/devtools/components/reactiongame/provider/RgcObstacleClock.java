@@ -49,6 +49,9 @@ public class RgcObstacleClock implements Runnable {
     return time;
   }
 
+  public boolean getIsRunning() {return isRunning;}
+
+  public boolean getIsEnded() {return isEnded;}
   @Override
   public void run() {
 
