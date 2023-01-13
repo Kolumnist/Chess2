@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RgcObstacleLineTest {
 
-  private RgcField field;
   private RgcObstacleLine line1;
   private RgcObstacle obstacle1;
   private RgcObstacle obstacle2;
@@ -40,6 +39,9 @@ public class RgcObstacleLineTest {
     assertTrue((coords[1] > coords[0]) && (coords[1] <= RgcField.NORMAL_HEIGHT));
   }
 
+  /**
+   * Tests whether checkLinePassable() filters out obstacles that would completely fill out a line
+   */
   @Test
   public void checkLinePassableTest() {
     assertTrue(line1.checkLinePassable());
@@ -52,5 +54,17 @@ public class RgcObstacleLineTest {
 
     line1.getObstacles().add(obstacle3);
     assertFalse(line1.checkLinePassable());
+  }
+
+  /**
+   * Tests whether addRandomObstacle() actually adds an obstacle
+   */
+  @Test
+  public void addRandomObstacleTest() {
+    line1.addRandomObstacle(2);
+    assertNotEquals(line1.getObstacles().toArray()[0], null);
+
+    line1.addRandomObstacle(10);
+    assertNotEquals(line1.getObstacles().toArray()[1], null);
   }
 }
