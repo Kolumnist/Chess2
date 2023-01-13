@@ -19,6 +19,9 @@ public class RgcRunTest2 {
   @Test
   void testAddAndRemoveObstacle() {
 
+    run.pauseClocks();
+    run.removeObstacle(0);
+
     run.addObstacle(0);
 
     assertNotEquals(0, run.getField().getObstacles().size());
@@ -30,6 +33,9 @@ public class RgcRunTest2 {
 
   @Test
   void testAddAndRemoveAimTarget() {
+
+    run.pauseClocks();
+    run.removeAimTarget(0);
 
     run.addAimTarget(0);
 
