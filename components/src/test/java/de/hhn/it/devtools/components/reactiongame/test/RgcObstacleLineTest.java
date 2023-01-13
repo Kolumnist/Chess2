@@ -14,6 +14,10 @@ public class RgcObstacleLineTest {
   private RgcObstacle obstacle1;
   private RgcObstacle obstacle2;
   private RgcObstacle obstacle3;
+  private RgcObstacle obstacle4;
+  private RgcObstacle obstacle5;
+  private RgcObstacle obstacle6;
+  private RgcObstacle obstacle7;
 
   /**
    * Sets up RgcObstacleLine objects as well as objects of some other classes to test on
@@ -24,6 +28,10 @@ public class RgcObstacleLineTest {
     obstacle1 = new RgcObstacle(1,165,100,235,500);
     obstacle2 = new RgcObstacle(2,100,250,300,720);
     obstacle3 = new RgcObstacle(3,165,0,235,500);
+    obstacle4 = new RgcObstacle(4,165,100,235,500);
+    obstacle5 = new RgcObstacle(5,165,150,235,500);
+    obstacle6 = new RgcObstacle(6,165,550,235,720);
+    obstacle7 = new RgcObstacle(7,165,200,235,400);
   }
 
   /**
@@ -54,6 +62,19 @@ public class RgcObstacleLineTest {
 
     line1.getObstacles().add(obstacle3);
     assertFalse(line1.checkLinePassable());
+
+    line1.getObstacles().add(obstacle4);
+    line1.getObstacles().add(obstacle5);
+    line1.getObstacles().add(obstacle6);
+    line1.getObstacles().add(obstacle7);
+    assertFalse(line1.checkLinePassable());
+
+    line1.getObstacles().remove(obstacle1);
+    line1.getObstacles().remove(obstacle2);
+    line1.getObstacles().remove(obstacle4);
+    line1.getObstacles().remove(obstacle5);
+    line1.getObstacles().remove(obstacle7);
+    assertTrue(line1.checkLinePassable());
   }
 
   /**
