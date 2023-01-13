@@ -14,6 +14,7 @@ public class LayoutGenerator {
     private Seed seed;
     private ArrayList<Layout> allLayouts;
     private Room startRoom;
+    private Room endRoom;
     private boolean isPrepared;
     public int maxRoomCount = 13;
 
@@ -22,17 +23,22 @@ public class LayoutGenerator {
         this.seed = seed;
         this.allRooms = new ArrayList<>();
         this.isPrepared = false;
-
-
         String exampleDescription = "A dark, cold room.";
         reset();
     }
 
 
+    /**
+     *
+     * @param layout
+     */
     public void setLayout(Layout layout) {
         layout.setAllRooms(allRooms);
     }
 
+    /**
+     *
+     */
     private void reset() {
         allRooms.clear();
         String exampleDescription = "A dark, cold room.";
@@ -43,10 +49,14 @@ public class LayoutGenerator {
             j++;
         }
         this.startRoom = allRooms.get(0);
+        this.allRooms.get(12).setExit();
         isPrepared = true;
     }
 
-
+    /**
+     *
+     * @throws RoomFailedException
+     */
     public void generateLayout() throws RoomFailedException {
         if (!isPrepared) {
             reset();
@@ -136,7 +146,6 @@ public class LayoutGenerator {
             int amountOfTreasure = 1;
 
             allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
-
             logger.info(map.toString() + "finished.");
 
         } else if (map.equals(Map.Ancient_Dungeon)) {
@@ -177,14 +186,11 @@ public class LayoutGenerator {
                 } else {
                     allRooms.get(9).addItem(key3);
                 }
-
             }
 
             int treasureId = 100;
             int amountOfTreasure = 1;
-
             allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
-
             logger.info(map.toString() + "finished.");
 
         } else if (map.equals(Map.Unknown_Sewers)) {
@@ -213,11 +219,8 @@ public class LayoutGenerator {
 
             int treasureId = 100;
             int amountOfTreasure = 1;
-
             allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
-
             logger.info(map.toString() + "finished.");
         }
     }
-
 }

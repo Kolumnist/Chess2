@@ -15,40 +15,12 @@ import java.util.stream.Collectors;
  */
 public class Room {
 
-
-
   protected HashMap<Integer, Item> items;
   protected HashMap<Direction, Room> roomMap;
   protected HashMap<Direction, Door> doorMap;
   protected ArrayList<Direction> directions;
   protected int roomId;
-
   private final String description;
-
-  // protected Room toTheNorth;
-  // protected Room toTheSouth;
-  // protected Room toTheEast;
-  // protected Room toTheWest;
-
-  // protected Boolean isNorthAssigned;
-  // protected Boolean isSouthAssigned;
-  // protected Boolean isEastAssigned;
-  // protected Boolean isWestAssigned;
-
-  // protected Door westDoor;
-  // protected Door eastDoor;
-  // protected Door northDoor;
-  // protected Door southDoor;
-  // private boolean hasDoorN;
-  // private boolean hasDoorW;
-  // private boolean hasDoorE;
-  // private boolean hasDoorS;
-
-  private boolean setFakeNorth;
-  private boolean setFakeSouth;
-  private boolean setFakeWest;
-  private boolean setFakeEast;
-
   protected boolean isExit;
 
   /**
@@ -59,11 +31,6 @@ public class Room {
    */
   public Room(int id, String description) {
     this.roomId = id;
-    // this.hasDoorS = false;
-    // this.hasDoorE = false;
-    // this.hasDoorN = false;
-    // this.hasDoorW = false;
-
     items = new HashMap<>();
     roomMap = new HashMap<>();
     doorMap = new HashMap<>();
@@ -72,7 +39,6 @@ public class Room {
     directions.add(Direction.EAST);
     directions.add(Direction.SOUTH);
     directions.add(Direction.WEST);
-
     this.description = description;
   }
 
@@ -139,28 +105,6 @@ public class Room {
 
 
   /**
-   * Get number of doors.
-   *
-   * @return number of doors.
-   *
-  public int getNumberOfDoors() {
-    int a = 0;
-    if (hasDoorS) {
-      a++;
-    }
-    if (hasDoorW) {
-      a++;
-    }
-    if (hasDoorE) {
-      a++;
-    }
-    if (hasDoorN) {
-      a++;
-    }
-    return a;
-  }*/
-
-  /**
    * Searching for an item in the room.
    *
    * @return item
@@ -181,43 +125,54 @@ public class Room {
     if(roomMap.containsKey(direction)){
       if(direction.equals(Direction.SOUTH)){
         roomMap.replace(direction, room);
-        roomMap.get(direction).roomMap.replace(Direction.NORTH, this);
+        room.getRoomMap().replace(Direction.NORTH, this);
       }
       else if(direction.equals(Direction.NORTH)) {
         roomMap.replace(direction, room);
-        roomMap.get(direction).roomMap.replace(Direction.SOUTH, this);
+        room.getRoomMap().replace(Direction.SOUTH, this);
       }
       else if(direction.equals(Direction.EAST)) {
         roomMap.replace(direction, room);
-        roomMap.get(direction).roomMap.replace(Direction.WEST, this);
+        room.getRoomMap().replace(Direction.WEST, this);
       }
       else {
         roomMap.replace(direction, room);
-        roomMap.get(direction).roomMap.replace(Direction.EAST, this);
+        room.getRoomMap().replace(Direction.EAST, this);
       }
     }
     else {
       if(direction.equals(Direction.SOUTH)){
         roomMap.put(direction, room);
-        roomMap.get(direction).roomMap.put(Direction.NORTH, this);
+        room.getRoomMap().put(Direction.NORTH, this);
       }
       else if(direction.equals(Direction.NORTH)) {
         roomMap.put(direction, room);
-        roomMap.get(direction).roomMap.put(Direction.SOUTH, this);
+        room.getRoomMap().put(Direction.SOUTH, this);
       }
       else if(direction.equals(Direction.EAST)) {
         roomMap.put(direction, room);
-        roomMap.get(direction).roomMap.put(Direction.WEST, this);
+        room.getRoomMap().put(Direction.WEST, this);
       }
       else {
         roomMap.put(direction, room);
-        roomMap.get(direction).roomMap.put(Direction.EAST, this);
+        room.getRoomMap().put(Direction.EAST, this);
       }
     }
   }
 
-  public void setExit(){
+  /**
+   *
+   * @return
+   */
+  public HashMap<Direction, Room> getRoomMap() {
+    return roomMap;
+  }
 
+  /**
+   *
+   */
+  public void setExit(){
+    this.isExit = true;
   }
 
   private Direction oppositeDirection(Direction direction) {
