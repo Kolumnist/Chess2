@@ -93,14 +93,13 @@ public class RgcObstacleLine {
     }
 
     for (int i = 0; i < obstacles.toArray().length - 1; i++) {
-      if (obstacles.get(i).getY1() != obstacles.get(i + 1).getY1()) {
+      if (obstacles.get(i).getY2() < obstacles.get(i + 1).getY1()) {
         return true; // there is a gap between two obstacles
       }
     }
 
     //check for lowest
-    if (obstacles.get(obstacles.size() - 2).getY1() != obstacles.get(obstacles.size() - 1)
-        .getY1()) {
+    if (obstacles.get(obstacles.size() - 2).getY2() < RgcField.NORMAL_HEIGHT) {
       return true; // Gap on bottom
     }
 
