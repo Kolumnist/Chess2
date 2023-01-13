@@ -6,7 +6,7 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
  * This class handles all communication between player and components.
  *
  * @author Collin Hoss, Lara Mangi, Michel Jouaux
- * @version 1.1
+ * @version 1.2
  */
 public interface Chess2Service {
 
@@ -46,17 +46,19 @@ public interface Chess2Service {
    * @throws IllegalStateException     if the method gets called during a wrong state
    */
   Coordinate[] getPossibleMoves(Coordinate selectedPieceCoordinate)
-      throws IllegalParameterException, IllegalParameterException;
+      throws IllegalParameterException, IllegalStateException;
 
   /**
-   * Changes the position of the selected piece.
+   * Changes the position of the selected piece and initializes a new Round if the moved piece
+   * was not a monkey.
    *
    * @param selectedCoordinate the position of the selected piece
    * @param newCoordinate      the new position of the piece
+   * @return freshly set board
    * @throws IllegalParameterException if newPos is a null reference or incomplete
    * @throws IllegalStateException     if the method gets called during a wrong state
    */
-  void moveSelectedPiece(Coordinate selectedCoordinate, Coordinate newCoordinate)
+  Board moveSelectedPiece(Coordinate selectedCoordinate, Coordinate newCoordinate)
       throws IllegalParameterException, InvalidMoveException, IllegalStateException;
 
   /**

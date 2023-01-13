@@ -72,7 +72,7 @@ public interface GameService {
 
 
   /**
-   * Sets the current player name to the new String given if it is not null.
+   * Sets the current player name to the new string given if it is not null.
    * @param name the new name.
    * @return if it changed the name, true, else false.
    */
