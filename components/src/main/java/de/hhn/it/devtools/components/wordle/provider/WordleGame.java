@@ -18,38 +18,7 @@ public class WordleGame {
     this.wordlePanelIndex = 0;
     this.backend = backend;
     for (int i = 0; i <= 5; i++){
-      playerGuesses[i] = new WordleGuess("     ");
-    }
-  }
-
-  public void typeLetter(char letter) {
-    if (wordlePanelIndex <= 4 && !isGameFinished && playerGuesses[wordleGuessIndex].
-        getLetterAtIndex(wordlePanelIndex) == ' '){
-      playerGuesses[wordleGuessIndex].setLetterAtIndex(wordlePanelIndex, letter);
-      if (wordlePanelIndex < 4){
-        wordlePanelIndex++;
-      }
-    }
-  }
-
-  public void deleteLetter() {
-    if (wordlePanelIndex >= 0 && !isGameFinished){
-      playerGuesses[wordleGuessIndex].deleteLetterAtIndex(wordlePanelIndex);
-      if (wordlePanelIndex > 0){
-        wordlePanelIndex--;
-      }
-    }
-  }
-
-
-  public void submitGuess() throws IllegalGuessException {
-    if (!isGameFinished){
-      backend.checkIfGuessIsLongEnough(playerGuesses[wordleGuessIndex]);
-      isGameFinished = backend.checkIfGameIsFinished(playerGuesses[wordleGuessIndex]);
-      if (!isGameFinished){
-        wordleGuessIndex++;
-        wordlePanelIndex = 0;
-      }
+      playerGuesses[i] = new WordleGuess();
     }
   }
 
