@@ -59,7 +59,7 @@ public class ObstacleDescriptor implements GameObstacleDescriptor {
   }
 
   @Override
-  public void getId() {
-
+  public int getId() {
+    return id;
   }
 }
