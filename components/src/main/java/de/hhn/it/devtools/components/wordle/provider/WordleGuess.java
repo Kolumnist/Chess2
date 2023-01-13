@@ -12,9 +12,15 @@ public class WordleGuess implements WordleGuessService {
 
   /**
    * Constructor of WordleGuess which will be entered into the WordlePanel Array.
-   *
-   * @param word The word which will be embedded in the WordlePanel Array.
    */
+
+  public WordleGuess() {
+    for (int i = 0; i < wordleWord.length; i++) {
+      // i als ID entfernt, da ID inhärent über static counter vergeben wird
+      wordleWord[i] = new WordlePanel(' ');
+      wordleWord[i].setState(State.INITIAL);
+    }
+  }
   public WordleGuess(String word) {
     for (int i = 0; i < wordleWord.length; i++) {
       // i als ID entfernt, da ID inhärent über static counter vergeben wird
