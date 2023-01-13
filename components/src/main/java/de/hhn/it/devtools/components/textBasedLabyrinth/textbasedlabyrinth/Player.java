@@ -27,7 +27,6 @@ public class Player {
 
 
   public void addItem(Item item) {
-
     inventory.put(item.getItemId(), item);
   }
 
@@ -62,7 +61,6 @@ public class Player {
   }
 
   public String getName() {
-
     return name;
   }
 

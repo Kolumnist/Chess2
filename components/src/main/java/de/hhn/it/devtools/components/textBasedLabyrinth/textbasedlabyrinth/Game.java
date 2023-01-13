@@ -41,7 +41,11 @@ public class Game implements GameService {
     score = 0;
   }
 
-
+  /**
+   *
+   * @param map
+   * @param seed
+   */
   public void start(Map map, Seed seed) {
     setCurrentLayout(map, seed);
     score = 0;
@@ -102,14 +106,15 @@ public class Game implements GameService {
               outputListener.sendOutputNavigation("There is no room in that direction.");
             }
           }
-
         }
       }
-
     }
-
     if (!stop) {
       player.setCurrentRoomOfPlayer(currentRoom);
+    }
+
+    if(player.getCurrentRoomOfPlayer().isExit){
+      //
     }
   }
 
@@ -170,14 +175,14 @@ public class Game implements GameService {
    */
   public List<Item> searchRoom() throws RoomFailedException {
     List<Item> items = new ArrayList<>();
-
-
     items = itemSearcher();
-
     return items;
-
   }
 
+  /**
+   *
+   * @param layout the layout to be assigned.
+   */
   @Override
   public void setLayout(Layout layout) {
     this.currentLayout = layout;
@@ -242,7 +247,11 @@ public class Game implements GameService {
     return message;
   }
 
-
+  /**
+   *
+   * @param itemId
+   * @throws NoSuchItemFoundException
+   */
   @Override
   public void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException {
     String message = player.getItem(itemId).getInfo();
@@ -252,7 +261,7 @@ public class Game implements GameService {
   }
 
   /**
-   *
+   * Setter for Player name
    * @param name the new name.
    * @return if the new name was accepted.
    */
@@ -279,11 +288,19 @@ public class Game implements GameService {
     return message;
   }
 
+  /**
+   *
+   * @param listener
+   */
   @Override
   public void addListener(OutputListener listener) {
     listeners.add(listener);
   }
 
+  /**
+   *
+   * @param listener
+   */
   @Override
   public void removeListener(OutputListener listener) {
     listeners.remove(listener);
@@ -300,7 +317,10 @@ public class Game implements GameService {
     return message;
   }
 
-
+  /**
+   *
+   * @return
+   */
   private List<Item> itemSearcher() {
     List<Item> items = new ArrayList<>();
     items = currentRoom.search();
@@ -316,6 +336,10 @@ public class Game implements GameService {
     this.currentLayout = new Layout(player);
   }
 
+  /**
+   *
+   * @return
+   */
   public String getPlayerName() {
     return player.getName();
   }
