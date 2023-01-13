@@ -83,9 +83,10 @@ public class DuckHunt implements DuckHuntService {
   public void shoot(int x, int y) {
     logger.info("shoot: x = {}, y = {}", x, y);
     // TODO ERROR Handling shoot
-    /*if (x < 0 || x > screenDimension.getWidth()) {
+    if (x < 0 || x > screenDimension.getWidth() || y < 0 || y > screenDimension.getHeight()) {
       throw new RuntimeException();
-    }*/
+    }
+    // Junit Test for this Exception is inside a comment in DuckHuntTest shoot() Test
     /*if (gameInfo.getState() != GameState.RUNNING) throw new Exception();*/
     for (DuckData duck : ducks) {
       if (duck.getStatus() == DuckState.DEAD

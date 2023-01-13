@@ -41,8 +41,11 @@ public class Vector2DTest {
     Vector2D testObject1 = new Vector2D(2, 1);
     Vector2D testObject2 = new Vector2D(1, 0);
     Vector2D testObject3 = new Vector2D(2, 1);
+    Integer testObjectInt = Integer.valueOf(2);
 
     assertTrue(testObject1.equals(testObject3) && !testObject1.equals(testObject2));
+    assertTrue(testObject1.equals(testObject1));
+    assertFalse(testObject3.equals(testObjectInt));
   }
 
   @Test
