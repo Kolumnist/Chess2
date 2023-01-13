@@ -3,78 +3,70 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <fx:root alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgb(97, 152, 251); -fx-border-color: BLACK; -fx-border-width: 15;" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="97.0" prefWidth="464.0" text="Wähle die Schwierigkeit aus:" textFill="WHITE">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="97.0" prefWidth="674.0" text="Herzlichen Glückwunsch, du hast gewonnen!" textFill="WHITE">
          <font>
-            <Font size="31.0" />
+            <Font size="24.0" />
          </font>
       </Label>
-      <RadioButton fx:id="easy" mnemonicParsing="false" onAction="#onSelect" selected="true" text="Leicht">
+      <Label fx:id="timeLabel" text="Gebrauchte Zeit:" textFill="WHITE">
          <font>
-            <Font size="16.0" />
+            <Font size="18.0" />
          </font>
          <VBox.margin>
-            <Insets left="260.0" />
+            <Insets />
          </VBox.margin>
-         <toggleGroup>
-            <ToggleGroup fx:id="difficulty" />
-         </toggleGroup>
-      </RadioButton>
-      <RadioButton fx:id="medium" mnemonicParsing="false" onAction="#onSelect" text="Mittel" toggleGroup="$difficulty">
+         <padding>
+            <Insets left="150.0" />
+         </padding>
+      </Label>
+      <Label fx:id="difficultyLabel" text="Schwierigkeit:" textFill="WHITE">
          <font>
-            <Font size="16.0" />
+            <Font size="18.0" />
          </font>
+         <padding>
+            <Insets left="150.0" />
+         </padding>
          <VBox.margin>
-            <Insets left="260.0" top="10.0" />
+            <Insets bottom="50.0" />
          </VBox.margin>
-      </RadioButton>
-      <RadioButton fx:id="hard" mnemonicParsing="false" onAction="#onSelect" prefHeight="25.0" prefWidth="121.0" text="Schwer" toggleGroup="$difficulty">
-         <font>
-            <Font size="16.0" />
-         </font>
-         <VBox.margin>
-            <Insets left="260.0" top="10.0" />
-         </VBox.margin>
-      </RadioButton>
-      <RadioButton fx:id="extrem" layoutX="10.0" layoutY="181.0" mnemonicParsing="false" onAction="#onSelect" prefHeight="25.0" prefWidth="121.0" text="Extrem" toggleGroup="$difficulty">
-         <font>
-            <Font size="16.0" />
-         </font>
-         <VBox.margin>
-            <Insets left="260.0" top="10.0" />
-         </VBox.margin>
-      </RadioButton>
-      <HBox prefHeight="97.0" prefWidth="600.0">
+      </Label>
+      <HBox alignment="CENTER" fillHeight="false" prefHeight="100.0" prefWidth="600.0">
          <children>
-            <Button fx:id="closeDifficulty" cancelButton="true" mnemonicParsing="false" onAction="#onCloseButtonPressed" onMouseEntered="#handle" onMouseExited="#handle" style="-fx-background-radius: 10; -fx-background-color: White; -fx-border-radius: 10; -fx-border-color: BLACK; -fx-border-width: 3;" text="Schließen">
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+               <image>
+                  <Image url="@pictures/.essentials/Konfettibombe.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin>
+            </ImageView>
+            <Button fx:id="finishButton" alignment="CENTER" mnemonicParsing="false" onAction="#onFinishButtonPressed" onMouseEntered="#handle" onMouseExited="#handle" style="-fx-border-radius: 10; -fx-border-color: BLACK; -fx-background-radius: 10; -fx-background-color: WHITE; -fx-border-width: 3;" text="Fertig">
                <font>
                   <Font size="16.0" />
                </font>
-               <HBox.margin>
-                  <Insets left="180.0" />
-               </HBox.margin>
             </Button>
-            <Button fx:id="saveDifficulty" alignment="CENTER" mnemonicParsing="false" onAction="#onSaveButtonPressed" onMouseEntered="#handle" onMouseExited="#handle" style="-fx-border-radius: 10; -fx-border-color: BLACK; -fx-background-radius: 10; -fx-background-color: WHITE; -fx-border-width: 3;" text="Speichern">
-               <font>
-                  <Font size="16.0" />
-               </font>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@pictures/.essentials/Konfettibombe.png" />
+               </image>
                <HBox.margin>
-                  <Insets left="60.0" />
+                  <Insets left="50.0" />
                </HBox.margin>
-            </Button>
+            </ImageView>
          </children>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <VBox.margin>
-            <Insets top="50.0" />
+            <Insets />
          </VBox.margin>
       </HBox>
    </children>

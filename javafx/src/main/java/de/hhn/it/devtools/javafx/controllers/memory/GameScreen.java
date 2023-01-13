@@ -1,33 +1,22 @@
 package de.hhn.it.devtools.javafx.controllers.memory;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.apis.memory.Difficulty;
+import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
 import de.hhn.it.devtools.apis.memory.TimerListener;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
 import de.hhn.it.devtools.javafx.controllers.MemoryServiceController;
-import de.hhn.it.devtools.javafx.controllers.TemplateController;
-import de.hhn.it.devtools.javafx.controllers.template.ScreenController;
-import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
-import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class GameScreen implements Initializable {
@@ -56,6 +45,23 @@ public class GameScreen implements Initializable {
   @FXML
   private GridPane mainGrid;
 
+  @FXML
+  private Label systemLabel;
+
+
+  public void disableGameScreen() {
+    optionsButton.setDisable(true);
+    finishButton.setDisable(true);
+    disableGrid();
+    memoryService.stopTimer();
+  }
+
+  public void enableGameScreen() {
+    optionsButton.setDisable(false);
+    finishButton.setDisable(false);
+    activateGrid();
+    memoryService.startTimer();
+  }
 
 
   @Override
@@ -64,24 +70,18 @@ public class GameScreen implements Initializable {
     screenController =
             (MemoryScreenController) memoryAttributeStore.getAttribute(MemoryServiceController.SCREEN_CONTROLLER);
     memoryService = (SfsMemoryService) memoryAttributeStore.getAttribute(MemoryServiceController.MEMORY_SERVICE);
+
     int cnt = 0;
+    PictureCardDescriptor[] currentDeck = shuffle(memoryService.getCurrentCardSet().getDescriptor().getPictureCardDescriptors());
+    //Arrays.stream(currentDeck).toList().forEach(PictureCardDescriptor -> logger.info("Id: "+PictureCardDescriptor.getId()+" Name: " + PictureCardDescriptor.getName()+ " Ref: "+ PictureCardDescriptor.getPictureRef()));
     for (int i = 0; i < mainGrid.getColumnCount(); i++) {
       for (int j = 0; j < mainGrid.getRowCount(); j++) {
-        mainGrid.add(new CardController(memoryService.getCurrentCardSet().getDescriptor().getPictureCardDescriptors()[cnt++]), i, j);
+        mainGrid.add(new CardController(currentDeck[cnt++]), i, j);
       }
     }
 
-    timerListener = new TimerListener() {
-      @Override
-      public void currentTime(int time) {
-        Platform.runLater(new Runnable() {
-          @Override
-          public void run() {
-            timeDisplayLabel.setText(Integer.toString(time));
-          }
-        });
-      }
-    };
+
+    timerListener = time -> Platform.runLater(() -> timeDisplayLabel.setText(Integer.toString(time)));
 
     try {
       memoryService.addCallback(timerListener);
@@ -95,6 +95,29 @@ public class GameScreen implements Initializable {
     logger.info("Game Screen initialized.");
   }
 
+  public void gameWon() {
+      memoryService.stopTimer();
+      mainGrid.setDisable(true);
+  }
+
+  public void disableGrid() {
+    mainGrid.setDisable(true);
+  }
+
+  public void activateGrid() {
+    mainGrid.setDisable(false);
+  }
+
+  public PictureCardDescriptor[] shuffle(PictureCardDescriptor[] array) {
+    Random random = new Random();
+    for (int i = array.length - 1; i > 0; i--) {
+      int index = random.nextInt(i + 1);
+      PictureCardDescriptor temp = array[index];
+      array[index] = array[i];
+      array[i] = temp;
+    }
+    return array;
+  }
 
   @FXML
   void handle(MouseEvent event) {
@@ -115,25 +138,35 @@ public class GameScreen implements Initializable {
   }
 
   @FXML
-  void onFinishButtonClicked(ActionEvent event) throws IllegalParameterException {
-    memoryService.closeGame();
-    memoryService.stopTimer();
-    memoryService.resetTimer();
-    memoryService.removeCallback(timerListener);
-
-    screenController.switchTo(StartScreen.SCREEN);
+  void onFinishButtonClicked(ActionEvent event) {
+    closeGame();
   }
 
   @FXML
   void onOptionsButtonClicked(ActionEvent event) {
+    screenController.disableGameGrid();
+    memoryService.stopTimer();
     screenController.switchTo(DifficultyPopup.OPEN_POPUP);
   }
 
-  public void changeDifficulty(Difficulty difficulty) {
+  public String getCurrentTime() {
+    return timeDisplayLabel.getText();
+  }
+
+  public void setSystemMessage(String message) {
+    systemLabel.setText(message.trim());
+  }
+
+  public void closeGame() {
+    memoryService.closeGame();
+    memoryService.stopTimer();
+    memoryService.resetTimer();
+    memoryService.closeGame();
     try {
-      memoryService.changeDifficulty(difficulty);
+      memoryService.removeCallback(timerListener);
+      timerListener = null;
     } catch (IllegalParameterException e) {
-      e.printStackTrace();
     }
+    screenController.switchTo(StartScreen.SCREEN);
   }
 }

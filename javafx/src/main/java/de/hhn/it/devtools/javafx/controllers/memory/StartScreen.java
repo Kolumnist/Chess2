@@ -87,21 +87,18 @@ public class StartScreen implements Initializable {
             (MemoryScreenController) memoryAttributeStore.getAttribute(MemoryServiceController.SCREEN_CONTROLLER);
     memoryService = (SfsMemoryService) memoryAttributeStore.getAttribute(MemoryServiceController.MEMORY_SERVICE);
 
-    //Cards fetchen
     logger.info("Start Screen initialized.");
   }
 
   public void changeDifficulty(String difficulty) {
-    String difficultyText;
-    switch (difficulty) {
-      case "easy": difficultyText = "Einfach"; break;
-      case "medium": difficultyText = "Mittel"; break;
-      case "hard": difficultyText = "Schwer"; break;
-      case "veryhard": difficultyText = "Extrem"; break;
-      default: difficultyText= ""; break;
-    }
+    String difficultyText = switch (difficulty) {
+      case "easy" -> "Einfach";
+      case "medium" -> "Mittel";
+      case "hard" -> "Schwer";
+      case "veryhard" -> "Extrem";
+      default -> "";
+    };
     difficultyLabel.setText(difficultyText);
-
   }
 
 }

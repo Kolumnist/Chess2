@@ -44,19 +44,37 @@ public class DifficultyPopup extends VBox implements Initializable {
   @FXML
   void onCloseButtonPressed(ActionEvent event) {
     switch ((Difficulty) MemoryAttributeStore.getReference().getAttribute(MemoryServiceController.DIFFICULTY)) {
-      case EASY: hover = easy; easy.setSelected(true); break;
-      case MEDIUM: hover = medium; medium.setSelected(true); break;
-      case HARD: hover = hard; hard.setSelected(true); break;
-      case VERYHARD: hover = veryhard; veryhard.setSelected(true); break;
-      default: break;
+      case EASY -> {
+        hover = easy;
+        easy.setSelected(true);
+      }
+      case MEDIUM -> {
+        hover = medium;
+        medium.setSelected(true);
+      }
+      case HARD -> {
+        hover = hard;
+        hard.setSelected(true);
+      }
+      case VERYHARD -> {
+        hover = veryhard;
+        veryhard.setSelected(true);
+      }
+      default -> {
+      }
     }
     screenController.switchTo(CLOSE_POPUP);
+    screenController.enableStartScreen();
+    screenController.enableGameScreen();
   }
 
   @FXML
   void onSaveButtonPressed(ActionEvent event) {
-    screenController.changeDifficulty(hover.getId().toString().trim().toLowerCase());
+    screenController.changeDifficulty(hover.getId().trim().toLowerCase());
     screenController.switchTo(CLOSE_POPUP);
+    screenController.closeGameScreen();
+    screenController.enableStartScreen();
+    screenController.switchTo(StartScreen.SCREEN);
   }
 
   @FXML
@@ -92,6 +110,7 @@ public class DifficultyPopup extends VBox implements Initializable {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    hover= easy;
   }
 
   @Override

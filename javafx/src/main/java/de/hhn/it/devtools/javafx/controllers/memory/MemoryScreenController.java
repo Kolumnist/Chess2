@@ -21,13 +21,10 @@ public class MemoryScreenController {
   private StartScreen startScreen;
   private Node startScreenContent;
   private GameScreen gameScreen;
-  private Node gameScreenContent;
   private DifficultyPopup difficultyPopup;
-  private WinningPopup winningPopup;
   private Stage difficultyStage;
   private Stage winningStage;
   private Scene difficultyScene;
-  private Scene winningScene;
 
   public MemoryScreenController(final AnchorPane anchorPane) {
     this.anchorPane = anchorPane;
@@ -48,8 +45,8 @@ public class MemoryScreenController {
   }
 
   private Node getGameScreen() {
-    gameScreenContent = null;
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/memory/MemoryGameField.fxml"));
+    Node gameScreenContent = null;
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/memory/GameScreen.fxml"));
     try {
       gameScreenContent = loader.load();
     } catch (IOException e) {
@@ -76,22 +73,18 @@ public class MemoryScreenController {
     }
     if (difficultyStage == null) {
       difficultyStage = new Stage();
+      difficultyStage.setAlwaysOnTop(true);
       difficultyStage.setScene(difficultyScene);
     }
     return difficultyStage;
   }
 
   private Stage getWinningStage() {
-    if (winningPopup == null) {
-      winningPopup = new WinningPopup(this);
-    }
-    if (winningScene == null) {
-      winningScene = new Scene(winningPopup, 600, 400);
-    }
-    if (winningStage == null) {
+    WinningPopup winningPopup = new WinningPopup(this);
+    Scene winningScene = new Scene(winningPopup, 600, 400);
       winningStage = new Stage();
+      winningStage.setAlwaysOnTop(true);
       winningStage.setScene(winningScene);
-    }
     return winningStage;
   }
 
@@ -99,52 +92,80 @@ public class MemoryScreenController {
     logger.info("Switch to " + toScreen);
 
     switch (toScreen) {
-      case StartScreen.SCREEN:
+      case StartScreen.SCREEN -> {
         anchorPane.getChildren().clear();
         anchorPane.getChildren().add(getStartScreen());
-        break;
-      case GameScreen.SCREEN:
+      }
+      case GameScreen.SCREEN -> {
         anchorPane.getChildren().clear();
         anchorPane.getChildren().add(getGameScreen());
-        break;
-      case DifficultyPopup.OPEN_POPUP:
-        openPopup(getDifficultyStage());
-        break;
-      case WinningPopup.OPEN_POPUP:
-        openPopup(getWinningStage());
-        break;
-      case DifficultyPopup.CLOSE_POPUP:
-        closePopup(getDifficultyStage());
-        break;
-      case WinningPopup.CLOSE_POPUP:
-        closePopup(getWinningStage());
-        break;
-      default:
-        throw new UnknownTransitionException("unknown screen: " + toScreen);
+      }
+      case DifficultyPopup.OPEN_POPUP -> {disableGameScreen();disableStartScreen();openPopup(getDifficultyStage());}
+      case WinningPopup.OPEN_POPUP -> openPopup(getWinningStage());
+      case DifficultyPopup.CLOSE_POPUP -> closePopup(getDifficultyStage());
+      case WinningPopup.CLOSE_POPUP -> closePopup(winningStage);
+      default -> throw new UnknownTransitionException("unknown screen: " + toScreen);
     }
   }
 
 
   public Difficulty getDifficultyFromString(String difficulty) {
-    switch (difficulty.trim().toLowerCase()) {
-      case "easy":
-        return Difficulty.EASY;
-      case "medium":
-        return Difficulty.MEDIUM;
-      case "hard":
-        return Difficulty.HARD;
-      case "veryhard":
-        return Difficulty.VERYHARD;
-      default:
-        return (Difficulty) MemoryAttributeStore.getReference().getAttribute(MemoryServiceController.DIFFICULTY);
-    }
+    return switch (difficulty.trim().toLowerCase()) {
+      case "easy" -> Difficulty.EASY;
+      case "medium" -> Difficulty.MEDIUM;
+      case "hard" -> Difficulty.HARD;
+      case "veryhard" -> Difficulty.VERYHARD;
+      default -> (Difficulty) MemoryAttributeStore.getReference().getAttribute(MemoryServiceController.DIFFICULTY);
+    };
   }
 
   public void changeDifficulty(String difficulty) {
     MemoryAttributeStore.getReference().setAttribute(MemoryServiceController.DIFFICULTY, getDifficultyFromString(difficulty));
     startScreen.changeDifficulty(difficulty);
-    if (gameScreen != null) {
-      gameScreen.changeDifficulty(getDifficultyFromString(difficulty));
+  }
+
+  public void closeGameScreen() {
+    if (gameScreen!= null) {
+      gameScreen.closeGame();
     }
+  }
+
+  public void disableStartScreen() {
+    startScreenContent.setDisable(true);
+  }
+  public void enableStartScreen() {
+    startScreenContent.setDisable(false);
+  }
+  public void disableGameScreen() {
+    if (gameScreen == null) {
+      return;
+    }
+    gameScreen.disableGameScreen();
+  }
+  public void enableGameScreen() {
+    if (gameScreen == null) {
+      return;
+    }
+    gameScreen.enableGameScreen();
+  }
+  public void setGameScreenMessage(String message) {
+    gameScreen.setSystemMessage(message);
+  }
+
+  public void gameWon() {
+    gameScreen.gameWon();
+    switchTo(WinningPopup.OPEN_POPUP);
+  }
+
+  public String getCurrentTime() {
+    return gameScreen.getCurrentTime();
+  }
+
+  public void disableGameGrid() {
+    gameScreen.disableGrid();
+  }
+
+  public void enableGameGrid() {
+    gameScreen.activateGrid();
   }
 }

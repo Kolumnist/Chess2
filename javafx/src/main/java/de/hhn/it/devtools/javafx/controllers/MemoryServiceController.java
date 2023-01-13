@@ -14,9 +14,7 @@ import de.hhn.it.devtools.javafx.controllers.template.UnknownTransitionException
 
 import java.io.File;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -51,17 +49,15 @@ public class MemoryServiceController extends Controller implements Initializable
     pathReferences = new HashMap<>();
     memoryAttributeStore.setAttribute(PATH_REFERENCES, pathReferences);
     try {
-      memoryService.addCallback(new DeckListener() {
-        @Override
-        public void currentDeck(PictureCardDescriptor[] deck) {
-          //
-        }
-      });
+      memoryService.addCallback((DeckListener) deck -> {});
     } catch (IllegalParameterException e) {
       e.printStackTrace();
     }
     try {
       memoryService.addCardSet(fetchCardSets("easy"));
+      memoryService.addCardSet(fetchCardSets("medium"));
+      memoryService.addCardSet(fetchCardSets("hard"));
+      memoryService.addCardSet(fetchCardSets("veryhard"));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -75,20 +71,31 @@ public class MemoryServiceController extends Controller implements Initializable
   public CardSetDescriptor fetchCardSets(String difficulty) {
     File folder = new File("javafx/src/main/resources/fxml/memory/pictures/sets/" + difficulty);
     HashMap<Integer, String> pictureReferences = new HashMap<>();
-    PictureCardDescriptor[] pictureCardDescriptors = new PictureCardDescriptor[folder.listFiles().length*2];
+    PictureCardDescriptor[] pictureCardDescriptors = new PictureCardDescriptor[5*4];
     int cnt = 0;
-    int i;
-    for (File f: folder.listFiles()) {
+    int i, j;
+    File f;
+    ArrayList<Integer> occupied = new ArrayList<>();
+    //Randomizes Cards
+    do {
+      do {
+        j = getRandomNumber(Objects.requireNonNull(folder.listFiles()).length);
+      } while (occupied.contains(j));
+      occupied.add(j);
+      f = Objects.requireNonNull(folder.listFiles())[j];
       do {
         i = new Random().nextInt();
-      } while(pathReferences.containsKey(i) || pictureReferences.containsKey(i));
+      } while(i < 0 || pathReferences.containsKey(i) || pictureReferences.containsKey(i));
       pictureCardDescriptors[cnt++] = new PictureCardDescriptor(i, null);                     //PictureCard
       pictureCardDescriptors[cnt++] = new PictureCardDescriptor(-1, f.getName());             //NameCard
       pathReferences.put(i, f.getAbsolutePath());
       pictureReferences.put(i, f.getName());
-      if(cnt == 21) break;
-    }
-    CardSetDescriptor cardSetDescriptor = new CardSetDescriptor(Difficulty.EASY, pictureCardDescriptors, pictureReferences);
-    return cardSetDescriptor;
+    } while (pictureCardDescriptors.length != cnt);
+    return new CardSetDescriptor(screenController.getDifficultyFromString(difficulty), pictureCardDescriptors, pictureReferences);
+  }
+
+  private int getRandomNumber(int n) {
+    Random random = new Random();
+    return random.nextInt(n);
   }
 }
