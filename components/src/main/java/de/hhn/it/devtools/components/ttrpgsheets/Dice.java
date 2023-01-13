@@ -44,7 +44,7 @@ public class Dice {
    *
    * @param diceTyp type of the dice.
    */
-  public void changeSize(DiceType diceTyp) {
+  public final void changeSize(DiceType diceTyp) {
     logger.info("changeSize : diceTyp = {}", diceTyp);
     switch (diceTyp) {
       case D2 -> size = 2;

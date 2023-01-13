@@ -146,7 +146,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
   }
 
   @Override
-  public void unwrapCharacter(CharacterDescriptor characterDescriptor) {
+  public final void unwrapCharacter(CharacterDescriptor characterDescriptor) {
     logger.info("unwrapCharacter : characterDescriptor = {}", characterDescriptor);
     descriptions = convertDescDescriptorsToDescriptions(characterDescriptor.getDescriptions());
     stats = convertStatDescriptorsToStats(characterDescriptor.getStats());
@@ -179,6 +179,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
     logger.info("incrementStat : statType = {}, origin = {}, amount = {}",
             statType, origin, amount);
     Stat stat = getStatOfType(statType);
+    assert stat != null;
 
     if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
       throw new IllegalArgumentException("Cannot change level of Stat of this Type");
@@ -206,6 +207,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
     logger.info("decrementStat : statType = {}, origin = {}, amount = {}",
             statType, origin, amount);
     Stat stat = getStatOfType(statType);
+    assert stat != null;
 
     if (origin == OriginType.LEVEL_POINT && !stat.isLevelStat()) {
       throw new IllegalArgumentException("Cannot change level of Stat of this Type");
