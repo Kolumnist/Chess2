@@ -1,4 +1,8 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
-public interface Obstacle extends GameObject {
+public interface GameObject {
+
+    int getId();
+
+
 }

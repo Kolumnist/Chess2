@@ -1,26 +1,29 @@
-package de.hhn.it.devtools.apis.reactiongame;
+package de.hhn.it.devtools.components.reactiongame.provider;
 
 /**
- * Describes an aim target: x and y position, the radius and the required key.
+ * This class represents an aim target (goal) on the field.
  */
-public class AimTargetDescriptor implements GameObstacleDescriptor{
+public class RgcAimTarget implements AimTarget {
 
-  private final int id;
+  public static int RADIUS = 25; // in px
+
   private final int x;
   private final int y;
   private final int r;
   private final char key;
+  private final int id;
 
 
   /**
    * Basic constructor for an aim target.
    *
+   * @param id identifier
    * @param x position
    * @param y position
    * @param r radius
    * @param key keyboard key
    */
-  public AimTargetDescriptor(int id, int x, int y, int r, char key) {
+  public RgcAimTarget(int id, int x, int y, int r, char key) {
     this.id = id;
     this.x = x;
     this.y = y;
@@ -45,16 +48,18 @@ public class AimTargetDescriptor implements GameObstacleDescriptor{
   }
 
   @Override
-  public String toString() {
-    return "AimTargetDescriptor{" +
-        "x=" + x +
-        ", y=" + y +
-        ", key=" + key +
-        '}';
+  public int getId() {
+    return id;
   }
 
   @Override
-  public void getId() {
-
+  public String toString() {
+    return "AimTarget{"
+        + "x=" + x
+        + ", y=" + y
+        + ", r=" + r
+        + ", key=" + key
+        + ", id=" + id
+        + '}';
   }
 }
