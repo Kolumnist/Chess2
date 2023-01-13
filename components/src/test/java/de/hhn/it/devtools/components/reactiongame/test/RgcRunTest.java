@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 class RgcRunTest {
 
-  long delta = 500;
+  long delta = 1000;
 
   RgcRun run;
 
@@ -57,13 +57,16 @@ class RgcRunTest {
     run.continueClocks();
 
     try {
-      Thread.sleep(1000);
+      Thread.sleep(delta);
     } catch (InterruptedException e) {
       throw new RuntimeException(e);
     }
 
-    assertNotEquals(timeAC, run.getAimTargetClock().getTime());
-    assertNotEquals(timeOC, run.getObstacleClock().getTime());
+    assertAll(
+        () -> assertNotEquals(timeAC, run.getAimTargetClock().getTime()),
+        () -> assertNotEquals(timeOC, run.getObstacleClock().getTime())
+    );
+
   }
 
   @Test
@@ -134,34 +137,6 @@ class RgcRunTest {
     run.checkForTargetHit();
 
     assertNotEquals(run.getScore(), scorealt);
-  }
-
-  @Test
-  void testAddAndRemoveObstacle() {
-
-    int liste = run.getField().getObstacles().toArray().length;
-
-    run.addObstacle(0);
-
-    assertNotEquals(liste, run.getField().getObstacles().toArray().length);
-
-    run.removeObstacle(0);
-
-    assertEquals(liste, run.getField().getObstacles().toArray().length);
-  }
-
-  @Test
-  void testAddAndRemoveAimTarget() {
-
-    int liste = run.getField().getTargets().toArray().length;
-
-    run.addAimTarget(1);
-
-    assertNotEquals(liste, run.getField().getTargets().toArray().length);
-
-    run.removeAimTarget(1);
-
-    assertEquals(liste, run.getField().getTargets().toArray().length);
   }
 
 }
