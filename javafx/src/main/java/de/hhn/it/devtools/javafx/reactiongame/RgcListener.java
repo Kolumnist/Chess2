@@ -1,11 +1,16 @@
 package de.hhn.it.devtools.javafx.reactiongame;
 
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.reactiongame.AimTargetDescriptor;
 import de.hhn.it.devtools.apis.reactiongame.GameState;
 import de.hhn.it.devtools.apis.reactiongame.ObstacleDescriptor;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcService;
+import de.hhn.it.devtools.javafx.controllers.ReactionGameController;
 import de.hhn.it.devtools.javafx.controllers.reactiongame.RgcGameController;
+import de.hhn.it.devtools.javafx.controllers.reactiongame.RgcScreenController;
+import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
+import java.io.IOException;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
@@ -15,6 +20,11 @@ public class RgcListener implements ReactiongameListener {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(RgcListener.class);
 
+  private static SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
+
+
+
+  private RgcScreenController screenController;
   private final AnchorPane pane;
   private final RgcService service;
 
@@ -27,6 +37,10 @@ public class RgcListener implements ReactiongameListener {
     this.controller = controller;
 
     service.addCallback(this);
+
+    SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
+    screenController =
+        (RgcScreenController) singletonAttributeStore.getAttribute(ReactionGameController.RGC_SCREEN_CONTROLLER);
   }
 
   @Override
@@ -74,7 +88,11 @@ public class RgcListener implements ReactiongameListener {
 
   @Override
   public void hitObstacle(int obstacleId) {
-
+    try {
+      service.playerEnteredObstacle(obstacleId);
+    } catch (IllegalParameterException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
@@ -109,6 +127,13 @@ public class RgcListener implements ReactiongameListener {
 
   @Override
   public void gameOver() {
-
+    Platform.runLater(() -> {
+      try {
+        screenController.switchTo("RgcMenu");
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    });
   }
+
 }

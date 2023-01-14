@@ -160,10 +160,10 @@ public class RgcRun {
    * Methods gets called when player runs into an obstacle or after his iframes end.
    */
   public void playerHitObstacle() {
-    logger.info("Player hit obstacle");
     if (isInvincible || pObstacle == null) {
       return; // if player is not in an object or invincible - do nothing
     }
+    logger.info("Player hit obstacle");
     // player is in iFrames OR no longer in an obstacle
 
     isInvincible = true;
