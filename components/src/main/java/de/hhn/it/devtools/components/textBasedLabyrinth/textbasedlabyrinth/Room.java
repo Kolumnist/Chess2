@@ -54,7 +54,6 @@ public class Room {
   }
 
 
-
   public void setDoors() {
     for (Direction direction : directions) {
       if (roomMap.containsKey(direction)) {
@@ -123,40 +122,12 @@ public class Room {
    */
   public void setNextDoorRoom(Room room,Direction direction) {
     if(roomMap.containsKey(direction)){
-      if(direction.equals(Direction.SOUTH)){
-        roomMap.replace(direction, room);
-        room.getRoomMap().replace(Direction.NORTH, this);
-      }
-      else if(direction.equals(Direction.NORTH)) {
-        roomMap.replace(direction, room);
-        room.getRoomMap().replace(Direction.SOUTH, this);
-      }
-      else if(direction.equals(Direction.EAST)) {
-        roomMap.replace(direction, room);
-        room.getRoomMap().replace(Direction.WEST, this);
-      }
-      else {
-        roomMap.replace(direction, room);
-        room.getRoomMap().replace(Direction.EAST, this);
-      }
+      roomMap.replace(direction, room);
+      room.getRoomMap().replace(direction.getOpposite(), this);
     }
     else {
-      if(direction.equals(Direction.SOUTH)){
-        roomMap.put(direction, room);
-        room.getRoomMap().put(Direction.NORTH, this);
-      }
-      else if(direction.equals(Direction.NORTH)) {
-        roomMap.put(direction, room);
-        room.getRoomMap().put(Direction.SOUTH, this);
-      }
-      else if(direction.equals(Direction.EAST)) {
-        roomMap.put(direction, room);
-        room.getRoomMap().put(Direction.WEST, this);
-      }
-      else {
-        roomMap.put(direction, room);
-        room.getRoomMap().put(Direction.EAST, this);
-      }
+      roomMap.put(direction, room);
+      room.getRoomMap().put(direction.getOpposite(), this);
     }
   }
 

@@ -57,7 +57,9 @@ public class Game implements GameService {
   }
 
   public void reset() {
-
+    player.reset();
+    score = 0;
+    logger.info("Game reset.");
   }
 
 
