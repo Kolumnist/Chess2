@@ -47,10 +47,6 @@ public class RgcField {
     return obstacles;
   }
 
-  public ArrayList<RgcAimTarget> getTargets() {
-    return targets;
-  }
-
   public Map<Integer, RgcAimTarget> getTargetMap() {
     return targetMap;
   }
