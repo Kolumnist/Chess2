@@ -88,6 +88,7 @@ public class CardController extends Pane {
                 screenController.setGameScreenMessage("Cards match!");
               });
               if (++cardMatched == 20) {
+                cardMatched=0;
                 Platform.runLater(screenController::gameWon);
               }
               howManyAreTurned = 0;
