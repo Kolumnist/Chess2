@@ -1,6 +1,8 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -8,8 +10,8 @@ import java.util.Random;
  */
 public class RgcField {
 
-  public static int NORMAL_WIDTH = 1280; // in px
-  public static int NORMAL_HEIGHT = 720; // in px
+  public static int NORMAL_WIDTH = 1040; // in px
+  public static int NORMAL_HEIGHT = 585; // in px
 
   private final int width; // px
   private final int height; // px
@@ -20,6 +22,9 @@ public class RgcField {
   private ArrayList<RgcAimTargetZone> aimTargetZones = new ArrayList<>();
   private ArrayList<RgcAimTarget> targets = new ArrayList<>();
 
+  private int targetCount = 0;
+  private Map<Integer, RgcAimTarget> targetMap = new HashMap<>();
+
   /**
    * Creates the basic field. (Res.: 1280x720)
    */
@@ -27,9 +32,9 @@ public class RgcField {
     width = NORMAL_WIDTH;
     height = NORMAL_HEIGHT;
 
-    obstacleLines.add(new RgcObstacleLine(370));
-    obstacleLines.add(new RgcObstacleLine(640));
-    obstacleLines.add(new RgcObstacleLine(910));
+    obstacleLines.add(new RgcObstacleLine(400));
+    obstacleLines.add(new RgcObstacleLine(500));
+    obstacleLines.add(new RgcObstacleLine(600));
 
     aimTargetZones.add(new RgcAimTargetZone(25, 0, 100, RgcField.NORMAL_HEIGHT));
     aimTargetZones.add(new RgcAimTargetZone(RgcField.NORMAL_WIDTH - 100, 0,
@@ -45,6 +50,13 @@ public class RgcField {
     return targets;
   }
 
+  public Map<Integer, RgcAimTarget> getTargetMap() {
+    return targetMap;
+  }
+
+  public int getTargetCount() {
+    return targetCount;
+  }
 
   /**
    * Adds an obstacle to the UI. (Random obstacle line)
@@ -103,8 +115,8 @@ public class RgcField {
 
     RgcAimTarget aimTarget = aimTargetZones.get(aimTargetZoneId).addRandomAimTarget(aimTargetId);
 
-    targets.add(aimTargetId, aimTarget);
-
+    targetMap.put(aimTargetId, aimTarget);
+    targetCount++;
     return aimTarget;
   }
 
@@ -121,8 +133,8 @@ public class RgcField {
       z.getAimTargets().removeIf(a -> a.getId() == aimTargetId);
     }
 
-    targets.removeIf(target -> target.getId() == aimTargetId);
-
+    targetMap.remove(aimTargetId);
+    targetCount--;
   }
 
 }

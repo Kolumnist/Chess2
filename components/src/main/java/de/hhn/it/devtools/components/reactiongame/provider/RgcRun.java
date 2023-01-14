@@ -39,6 +39,8 @@ public class RgcRun {
     this.difficulty = difficulty;
     this.player = player;
 
+    callbacks = new ArrayList<>();
+
     aimTargetClock = new RgcAimTargetClock(this);
     obstacleClock = new RgcObstacleClock(this);
 
@@ -204,8 +206,8 @@ public class RgcRun {
     for (ReactiongameListener callback :
         callbacks) {
 
-      callback.addObstacle(RgcObstacle.toObstacleDescriptor(field.getObstacles()
-          .get(field.getObstacles().size())));
+      RgcObstacle obstacle = field.getObstacles().get(obstacleId);
+      callback.addObstacle(RgcObstacle.toObstacleDescriptor(obstacle));
 
     }
   }
