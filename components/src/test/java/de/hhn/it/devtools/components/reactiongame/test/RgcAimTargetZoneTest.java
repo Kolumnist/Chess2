@@ -11,7 +11,7 @@ class RgcAimTargetZoneTest {
   RgcAimTargetZone zone;
   @BeforeEach
   void setUp() {
-    zone = new RgcAimTargetZone(10,10,10,10);
+    zone = new RgcAimTargetZone(10,10,15,15);
   }
 
   @Test
