@@ -4,6 +4,8 @@ import de.hhn.it.devtools.apis.reactiongame.Difficulty;
 import de.hhn.it.devtools.apis.reactiongame.GameState;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Class communicate between the service and components. Also notifies the callbacks.
@@ -26,7 +28,7 @@ public class RgcRun {
   private char pKey;
   private int score;
   private boolean isInvincible = false;
-  private final Thread iFrameThread;
+  private Thread iFrameThread;
 
 
   /**
@@ -143,7 +145,9 @@ public class RgcRun {
     aimTargetClock.setRunning(false);
     aimTargetClock.setEnded(true);
 
-    iFrameThread.stop();
+    ExecutorService executorService = Executors.newSingleThreadExecutor();
+    executorService.submit(iFrameThread);
+    executorService.shutdown();
 
     for (ReactiongameListener callback :
         callbacks) {
@@ -163,6 +167,7 @@ public class RgcRun {
     // player is in iFrames OR no longer in an obstacle
 
     isInvincible = true;
+    iFrameThread = new Thread(new RgcIFrameRunnable(this));
     iFrameThread.start();
 
     playerLosesLife();
