@@ -4,6 +4,7 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.reactiongame.AimTargetDescriptor;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcAimTarget;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcService;
+import javafx.scene.Cursor;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -24,7 +25,7 @@ public class RgcAimTargetFx extends StackPane {
     this.descriptor = descriptor;
     this.service = service;
 
-
+    setCursor(Cursor.CROSSHAIR);
     target.setFocusTraversable(true);
     target.setFill(Color.BLUE);
     target.setOnMouseEntered(e -> {
@@ -38,7 +39,8 @@ public class RgcAimTargetFx extends StackPane {
       }
     });
 
-    Text text = new Text(descriptor.getKey() + "");
+    Text text = new Text((descriptor.getKey() + "").toUpperCase());
+    text.setFill(Color.RED);
 
     getChildren().add(target);
     getChildren().add(text);

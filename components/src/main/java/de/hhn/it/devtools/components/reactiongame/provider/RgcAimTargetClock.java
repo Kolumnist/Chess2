@@ -94,9 +94,7 @@ public class RgcAimTargetClock implements Runnable {
 
           if (run.getField().getTargetCount() < run.getDifficulty().maxAimtargets) {
 
-            run.addAimTarget(idCounter);
-            targetMap.put(time + run.getDifficulty().aimTargetLifetime, idCounter);
-            idCounter++;
+            addTarget();
           }
 
         }
@@ -114,6 +112,14 @@ public class RgcAimTargetClock implements Runnable {
     }
 
     logger.info("Ended");
+  }
+
+  public void addTarget() {
+    if (run.getField().getTargetCount() < run.getDifficulty().highWatermark) {
+      run.addAimTarget(idCounter);
+      targetMap.put(time + run.getDifficulty().aimTargetLifetime, idCounter);
+      idCounter++;
+    }
   }
 
   /**

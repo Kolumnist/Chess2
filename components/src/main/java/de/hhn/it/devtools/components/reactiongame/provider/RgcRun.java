@@ -212,6 +212,10 @@ public class RgcRun {
         callback.removeAimTarget(pAimTarget.getId());
         callback.changeScore(score);
       }
+
+      if (field.getTargetCount() == 0) {
+        aimTargetClock.addTarget();
+      }
     }
   }
 
