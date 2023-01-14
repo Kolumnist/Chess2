@@ -22,7 +22,8 @@ public class RgcField {
   private ArrayList<RgcAimTargetZone> aimTargetZones = new ArrayList<>();
   private ArrayList<RgcAimTarget> targets = new ArrayList<>();
 
-  private int counter = -1;
+  private int targetCreationCounter = -1;
+  private int obstacleCreationCounter = -1;
   private int targetCount = 0;
   private Map<Integer, RgcAimTarget> targetMap = new HashMap<>();
 
@@ -61,7 +62,8 @@ public class RgcField {
    * @param id identifier
    */
   void addRandomObstacle(int id) {
-    addRandomObstacle(id, new Random().nextInt(obstacleLines.size()));
+    obstacleCreationCounter++;
+    addRandomObstacle(id, obstacleCreationCounter % 3);
   }
 
   /**
@@ -97,9 +99,9 @@ public class RgcField {
    * @param aimTargetId aim target identifier
    */
   RgcAimTarget addRandomAimTarget(int aimTargetId) {
-    counter++;
+    targetCreationCounter++;
     return addRandomAimTarget(aimTargetId,
-        counter % 2);
+        targetCreationCounter % 2);
   }
 
   /**
