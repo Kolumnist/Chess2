@@ -3,7 +3,6 @@ package de.hhn.it.devtools.components.reactiongame.provider;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * GameField class which holds player, obstacles and aim targets.
@@ -38,9 +37,9 @@ public class RgcField {
     obstacleLines.add(new RgcObstacleLine(520));
     obstacleLines.add(new RgcObstacleLine(790));
 
-    aimTargetZones.add(new RgcAimTargetZone(25, 25, 100, RgcField.NORMAL_HEIGHT - 25));
+    aimTargetZones.add(new RgcAimTargetZone(25, 60, 100, RgcField.NORMAL_HEIGHT - 40));
     aimTargetZones.add(new RgcAimTargetZone(RgcField.NORMAL_WIDTH - 100, 25,
-            RgcField.NORMAL_WIDTH - 25, RgcField.NORMAL_HEIGHT - 25));
+            RgcField.NORMAL_WIDTH - 50, RgcField.NORMAL_HEIGHT - 25));
 
   }
 
