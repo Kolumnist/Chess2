@@ -2,13 +2,10 @@
  * Sample Skeleton for 'RgcMenu.fxml' Controller Class
  */
 
-package de.hhn.it.devtools.javafx.reactiongame;
+package de.hhn.it.devtools.javafx.controllers.reactiongame;
 
 import de.hhn.it.devtools.javafx.controllers.Controller;
 import de.hhn.it.devtools.javafx.controllers.ReactionGameController;
-import de.hhn.it.devtools.javafx.controllers.TemplateController;
-import de.hhn.it.devtools.javafx.controllers.reactiongame.RgcScreenController;
-import de.hhn.it.devtools.javafx.controllers.template.ScreenController;
 import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
 import java.io.IOException;
 import java.net.URL;
@@ -65,6 +62,6 @@ public class RgcMenuController extends Controller implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
     screenController =
-        (RgcScreenController) singletonAttributeStore.getAttribute(ReactionGameController.SCREEN_CONTROLLER);
+        (RgcScreenController) singletonAttributeStore.getAttribute(ReactionGameController.RGC_SCREEN_CONTROLLER);
   }
 }

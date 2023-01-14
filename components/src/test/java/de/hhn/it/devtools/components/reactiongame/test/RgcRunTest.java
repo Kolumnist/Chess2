@@ -57,7 +57,7 @@ class RgcRunTest {
     run.continueClocks();
 
     try {
-      Thread.sleep(delta);
+      Thread.sleep(delta + 1000);
     } catch (InterruptedException e) {
       throw new RuntimeException(e);
     }
@@ -139,4 +139,8 @@ class RgcRunTest {
     assertNotEquals(run.getScore(), scorealt);
   }
 
+  @Test
+  void testGetCallbacks() {
+    assertNotNull(run.getCallbacks());
+  }
 }

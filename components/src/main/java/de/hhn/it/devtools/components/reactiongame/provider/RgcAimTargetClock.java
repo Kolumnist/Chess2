@@ -38,7 +38,9 @@ public class RgcAimTargetClock implements Runnable {
     isRunning = true;
     isEnded = false;
 
-    new Thread(this).start();
+    Thread t = new Thread(this);
+    t.setDaemon(true);
+    t.start();
 
     logger.info("created");
   }
@@ -78,7 +80,7 @@ public class RgcAimTargetClock implements Runnable {
 
         if (time % 4 == 0) { // Spawnrate
 
-          if (run.getField().getTargets().size() < run.getDifficulty().maxAimtargets) {
+          if (run.getField().getTargetCount() < run.getDifficulty().maxAimtargets) {
 
             run.addAimTarget(idCounter);
             targetMap.put(time + run.getDifficulty().aimTargetLifetime, idCounter);

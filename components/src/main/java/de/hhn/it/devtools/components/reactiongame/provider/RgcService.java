@@ -105,12 +105,12 @@ public class RgcService implements ReactiongameService {
   public void playerEnteredAimTarget(int aimtargetId) throws IllegalParameterException {
     logger.info("Player entered aim target (" + aimtargetId + ")");
 
-    if (aimtargetId > 0) {
+    if (aimtargetId < 0) {
       throw new IllegalParameterException();
     }
 
     run.setpObstacle(null);
-    run.setpAimTarget(run.getField().getTargets().get(aimtargetId));
+    run.setpAimTarget(run.getField().getTargetMap().get(aimtargetId));
 
   }
 
@@ -118,7 +118,7 @@ public class RgcService implements ReactiongameService {
   public void playerEnteredObstacle(int obstacleId) throws IllegalParameterException {
     logger.info("Player entered obstacle (" + obstacleId + ")");
 
-    if (obstacleId > 0) {
+    if (obstacleId < 0) {
       logger.info("Invalid obstacleId", new IllegalParameterException());
       throw new IllegalParameterException();
     }

@@ -39,6 +39,8 @@ public class RgcRun {
     this.difficulty = difficulty;
     this.player = player;
 
+    callbacks = new ArrayList<>();
+
     aimTargetClock = new RgcAimTargetClock(this);
     obstacleClock = new RgcObstacleClock(this);
 
@@ -98,6 +100,14 @@ public class RgcRun {
 
   public char getpKey() {
     return pKey;
+  }
+
+  public RgcAimTarget getpAimTarget() {
+    return pAimTarget;
+  }
+
+  public RgcObstacle getpObstacle() {
+    return pObstacle;
   }
 
 
@@ -204,8 +214,8 @@ public class RgcRun {
     for (ReactiongameListener callback :
         callbacks) {
 
-      callback.addObstacle(RgcObstacle.toObstacleDescriptor(field.getObstacles()
-          .get(field.getObstacles().size())));
+      RgcObstacle obstacle = field.getObstacles().get(obstacleId);
+      callback.addObstacle(RgcObstacle.toObstacleDescriptor(obstacle));
 
     }
   }
@@ -234,9 +244,9 @@ public class RgcRun {
    * @param aimTargetId identifier
    */
   public void addAimTarget(int aimTargetId) {
-    logger.info("Add aim target (" + aimTargetId + ")");
-
     RgcAimTarget aimTarget = field.addRandomAimTarget(aimTargetId);
+    logger.info("Add aim target (" + aimTargetId + ") (" + aimTarget.getX() + "|" + aimTarget.getY() + ")");
+
 
     for (ReactiongameListener callback :
         callbacks) {

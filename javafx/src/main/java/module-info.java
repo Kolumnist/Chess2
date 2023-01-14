@@ -20,4 +20,6 @@ module devtools.javafx {
   exports de.hhn.it.devtools.javafx.chess2;
   exports de.hhn.it.devtools.javafx.reactiongame;
   opens de.hhn.it.devtools.javafx.reactiongame to javafx.fxml;
+  exports de.hhn.it.devtools.javafx.controllers.reactiongame;
+  opens de.hhn.it.devtools.javafx.controllers.reactiongame to javafx.fxml;
 }

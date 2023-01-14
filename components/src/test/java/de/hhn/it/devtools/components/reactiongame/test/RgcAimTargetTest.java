@@ -49,4 +49,10 @@ class RgcAimTargetTest {
         + ", id=" + 1
         + '}' , target.toString());
   }
+
+  @Test
+  void testToAimTargetDescriptor(){
+    RgcAimTarget target = new RgcAimTarget(1, 10, 10, 20, 'w');
+    assertNotNull(RgcAimTarget.toAimTargetDescriptor(target));
+  }
 }
