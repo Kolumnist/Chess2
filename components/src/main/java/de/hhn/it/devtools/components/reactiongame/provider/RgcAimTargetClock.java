@@ -38,7 +38,9 @@ public class RgcAimTargetClock implements Runnable {
     isRunning = true;
     isEnded = false;
 
-    new Thread(this).start();
+    Thread t = new Thread(this);
+    t.setDaemon(true);
+    t.start();
 
     logger.info("created");
   }

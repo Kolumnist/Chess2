@@ -19,6 +19,7 @@ public class RgcAimTargetFx extends Circle {
     this.descriptor = descriptor;
     this.service = service;
 
+    setId(descriptor.getId() + "");
     setFill(Color.BLUE);
 
 

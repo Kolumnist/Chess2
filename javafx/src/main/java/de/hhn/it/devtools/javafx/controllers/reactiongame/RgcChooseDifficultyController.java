@@ -17,10 +17,12 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
 public class RgcChooseDifficultyController implements Initializable {
-
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(RgcChooseDifficultyController.class);
+
   private static SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
+
+  public static String DIFFICULTY = "rgc.difficulty";
   private RgcScreenController screenController;
 
   @FXML // fx:id="easyBtn"
@@ -35,38 +37,23 @@ public class RgcChooseDifficultyController implements Initializable {
   @FXML
   void onEasyBtn(ActionEvent event) throws IOException, IllegalParameterException {
     logger.info("Start run with difficulty easy.");
+    singletonAttributeStore.setAttribute(DIFFICULTY, Difficulty.EASY);
+    screenController.switchTo("RgcGame");
+  }
+
+  @FXML
+  void onHardBtn(ActionEvent event) throws IOException {
+    logger.info("Start run with difficulty hard.");
+    singletonAttributeStore.setAttribute(DIFFICULTY, Difficulty.HARD);
     screenController.switchTo("RgcGame");
 
-    RgcService service = (RgcService) singletonAttributeStore.getAttribute(ReactionGameController.RGC_SERVICE);
-
-    service.newRun(Difficulty.EASY);
-
-    RgcListener listener = new RgcListener(
-        (AnchorPane) singletonAttributeStore.getAttribute(ReactionGameController.RGC_ANCHOR_PANE),
-        service);
   }
 
   @FXML
-  void onHardBtn(ActionEvent event) throws IllegalParameterException {
-    logger.info("Start run with difficulty hard.");
-    try {
-      screenController.switchTo("RgcGame");
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-
-    RgcService service = (RgcService) singletonAttributeStore.getAttribute(ReactionGameController.RGC_SERVICE);
-
-    service.newRun(Difficulty.HARD);
-
-    RgcListener listener = new RgcListener(
-        (AnchorPane) singletonAttributeStore.getAttribute(ReactionGameController.RGC_ANCHOR_PANE),
-        service);
-  }
-
-  @FXML
-  void onmediumBtn(ActionEvent event) {
-
+  void onmediumBtn(ActionEvent event) throws IOException {
+    logger.info("Start run with difficulty easy.");
+    singletonAttributeStore.setAttribute(DIFFICULTY, Difficulty.MEDIUM);
+    screenController.switchTo("RgcGame");
   }
 
   @Override
