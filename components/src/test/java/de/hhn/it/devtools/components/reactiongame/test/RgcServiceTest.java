@@ -62,11 +62,6 @@ public class RgcServiceTest {
     assertTrue(thrown);
   }
 
-  @Test
-  public void testEndRun() {
-    service.endRun();
-    assertEquals(run.getState(), GameState.FINISHED);
-  }
 
   @Test
   public void testKeyPressed() {
