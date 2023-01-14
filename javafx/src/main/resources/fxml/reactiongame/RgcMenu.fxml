@@ -24,7 +24,7 @@
             <Font name="Arial Black" size="64.0" />
          </font>
       </Text>
-      <Button fx:id="soundBtn" layoutX="303.0" layoutY="349.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="434.0" style="-fx-background-color: #79CDCD; -fx-border-color: Black; -fx-border-width: 4;" text="Sound">
+      <Button fx:id="soundBtn" layoutX="303.0" layoutY="349.0" mnemonicParsing="false" onAction="#onSoundBtn" prefHeight="67.0" prefWidth="434.0" style="-fx-background-color: #79CDCD; -fx-border-color: Black; -fx-border-width: 4;" text="Sound">
          <font>
             <Font name="Arial Black" size="23.0" />
          </font>

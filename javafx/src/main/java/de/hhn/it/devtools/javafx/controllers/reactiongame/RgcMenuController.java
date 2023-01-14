@@ -63,7 +63,14 @@ public class RgcMenuController extends Controller implements Initializable {
       throw new RuntimeException(e);
     }
   }
-
+  @FXML
+  void onSoundBtn(ActionEvent actionEvent) {
+    try {
+      screenController.switchTo("RgcSoundMenu");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -71,4 +78,6 @@ public class RgcMenuController extends Controller implements Initializable {
     screenController =
         (RgcScreenController) singletonAttributeStore.getAttribute(ReactionGameController.RGC_SCREEN_CONTROLLER);
   }
+
+
 }
