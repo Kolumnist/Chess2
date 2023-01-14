@@ -15,7 +15,6 @@ public class Game implements GameService {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(Game.class);
 
-
   public Room currentRoom;
   public Player player;
   public Layout currentLayout;
@@ -343,5 +342,22 @@ public class Game implements GameService {
    */
   public String getPlayerName() {
     return player.getName();
+  }
+
+  public Player getPlayer() {
+    return player;
+  }
+
+  public Map getMap() {
+    return map;
+  }
+
+  @Override
+  public Room getCurrentRoom() {
+    return currentRoom;
+  }
+
+  public int getScore() {
+    return score;
   }
 }

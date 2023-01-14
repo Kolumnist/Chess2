@@ -36,6 +36,14 @@ public class LayoutGenerator {
         layout.setAllRooms(allRooms);
     }
 
+    public Room getStartRoom() {
+        return startRoom;
+    }
+
+    public ArrayList<Room> getAllRooms() {
+        return allRooms;
+    }
+
     /**
      *
      */
@@ -51,6 +59,14 @@ public class LayoutGenerator {
         this.startRoom = allRooms.get(0);
         this.allRooms.get(12).setExit();
         isPrepared = true;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public Seed getSeed() {
+        return seed;
     }
 
     /**
@@ -80,6 +96,7 @@ public class LayoutGenerator {
             allRooms.get(10).setNextDoorRoom(allRooms.get(11), Direction.EAST);
             allRooms.get(11).setNextDoorRoom(allRooms.get(12), Direction.NORTH);
             logger.info(map.toString() + "created.");
+
         } else if (map.equals(Map.Ancient_Dungeon)) {
             startRoom.setNextDoorRoom(allRooms.get(1), Direction.WEST);
             allRooms.get(1).setNextDoorRoom(allRooms.get(4), Direction.WEST);

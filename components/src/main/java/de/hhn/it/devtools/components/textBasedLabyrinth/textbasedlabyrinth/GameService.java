@@ -100,4 +100,14 @@ public interface GameService {
   void end();
 
   void reset();
+
+  public String getPlayerName();
+
+  public Player getPlayer();
+
+  public Map getMap();
+
+  public Room getCurrentRoom();
+
+  public int getScore();
 }
