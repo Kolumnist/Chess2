@@ -22,6 +22,7 @@ public class RgcField {
   private ArrayList<RgcAimTargetZone> aimTargetZones = new ArrayList<>();
   private ArrayList<RgcAimTarget> targets = new ArrayList<>();
 
+  private int counter = -1;
   private int targetCount = 0;
   private Map<Integer, RgcAimTarget> targetMap = new HashMap<>();
 
@@ -100,10 +101,9 @@ public class RgcField {
    * @param aimTargetId aim target identifier
    */
   RgcAimTarget addRandomAimTarget(int aimTargetId) {
-    System.out.println(targetCount);
+    counter++;
     return addRandomAimTarget(aimTargetId,
-        targetCount % 2 == 0 ? 1 : 0);
-
+        counter % 2);
   }
 
   /**
