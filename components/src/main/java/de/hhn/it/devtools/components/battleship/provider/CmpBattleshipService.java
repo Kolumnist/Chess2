@@ -8,7 +8,10 @@ import java.util.IllegalFormatException;
 
 // TODO durchs Feld durch iterieren und gucken ob es Schiffs-Felder gibt, die nicht gebombt wurden, falls nein -> gegner gewinnt & GameState zu GameOver
 // TODO Button, der kommt (isVisible zu true in dem Fenster, wo "Ships left to place", davor ist der Button isVisible = false), wenn alle Schiffe platziert sind, wenn gedrückt wird -> GameState zu FiringShots
-// Write Computer AI
+// TODO Write Computer AI
+// TODO change automatically gamestates (after all ships bombed, after all ships placed)
+// TODO start game button wenn der Spieler alle Schiffe plaziert hat damit er vielleicht noch schiffe umplatzieren/drehen kann bevor es losgeht
+
 
 public class CmpBattleshipService implements BattleshipService {
 

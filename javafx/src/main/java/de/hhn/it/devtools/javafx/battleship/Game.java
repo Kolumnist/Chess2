@@ -83,6 +83,7 @@ public class Game extends Stage{
                     public void handle(ActionEvent actionEvent) {
 
                         buttonsUpper[k1][i1].setStyle("-fx-background-color: red");
+
                     }
                 });
 
