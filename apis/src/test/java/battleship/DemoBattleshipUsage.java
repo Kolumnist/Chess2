@@ -15,6 +15,10 @@ public class DemoBattleshipUsage  {
 
     public static void main(String[] args) throws Exception{
 
+        Player player = new Player();
+
+        Player computer = new Player();
+
 
         //Field size is set and the fields are created
         //9x9 field means that 5 ships will be generated for each player
@@ -26,19 +30,19 @@ public class DemoBattleshipUsage  {
 
 
         //User wants to rotate ship before placing it
-        game.rotateShip(Owner.PLAYER, null);
+        game.rotateShip(player, null);
 
 
         //User places his ships
-        game.placeShip(Owner.PLAYER,null,1,2);
-        game.placeShip(Owner.PLAYER,null,2,2);
-        game.placeShip(Owner.PLAYER,null,3,2);
-        game.placeShip(Owner.PLAYER,null,4,2);
-        game.placeShip(Owner.PLAYER,null,6,2);
+        game.placeShip(player,null,1,2);
+        game.placeShip(player,null,2,2);
+        game.placeShip(player,null,3,2);
+        game.placeShip(player,null,4,2);
+        game.placeShip(player,null,6,2);
 
 
         //User starts the game by bombing the enemy panel and misses
-        game.bombPanel(Owner.PLAYER, Owner.COMPUTER,4, 7);
+        game.bombPanel(player, computer,4, 7);
 
         //Sound volume was too loud, user wants to adjust it
         game.adjustSoundVolume(30);
