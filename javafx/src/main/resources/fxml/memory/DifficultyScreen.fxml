@@ -61,7 +61,7 @@
                   <Insets left="180.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="saveDifficulty" alignment="CENTER" mnemonicParsing="false" onAction="#onSaveButtonPressed" onMouseEntered="#handle" onMouseExited="#handle" style="-fx-border-radius: 10; -fx-border-color: BLACK; -fx-background-radius: 10; -fx-background-color: WHITE; -fx-border-width: 3;" text="Speichern">
+            <Button fx:id="saveDifficulty" alignment="CENTER" mnemonicParsing="false" onAction="#onSaveButtonPressed" onMouseEntered="#handle" onMouseExited="#handle" style="-fx-border-radius: 10; -fx-border-color: BLACK; -fx-background-radius: 10; -fx-background-color: WHITE; -fx-border-width: 3;" text="Anwenden">
                <font>
                   <Font size="16.0" />
                </font>

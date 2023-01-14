@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 public class MemoryScreenController {
@@ -72,8 +73,10 @@ public class MemoryScreenController {
     }
     if (difficultyStage == null) {
       difficultyStage = new Stage();
+      difficultyStage.initStyle(StageStyle.UNDECORATED);
       difficultyStage.setAlwaysOnTop(true);
       difficultyStage.setScene(difficultyScene);
+      difficultyStage.setResizable(false);
     }
     return difficultyStage;
   }
@@ -82,8 +85,11 @@ public class MemoryScreenController {
     WinningPopup winningPopup = new WinningPopup(this);
     Scene winningScene = new Scene(winningPopup, 600, 400);
     winningStage = new Stage();
+    winningStage.initStyle(StageStyle.UNDECORATED);
     winningStage.setAlwaysOnTop(true);
     winningStage.setScene(winningScene);
+    winningStage.setOnCloseRequest((event) -> switchTo(WinningPopup.CLOSE_POPUP));
+    winningStage.setResizable(false);
     return winningStage;
   }
 
