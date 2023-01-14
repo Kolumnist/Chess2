@@ -85,10 +85,16 @@ public class RgcObstacleLineTest {
    */
   @Test
   public void addRandomObstacleTest() {
-    line1.addRandomObstacle(2);
+    line1.addRandomObstacle(11);
     assertNotEquals(line1.getObstacles().toArray()[0], null);
 
     line1.addRandomObstacle(10);
     assertNotEquals(line1.getObstacles().toArray()[1], null);
+
+    line1.getObstacles().add(obstacle1);
+    line1.getObstacles().add(obstacle2);
+    line1.getObstacles().add(obstacle3);
+    line1.addRandomObstacle(12);
+    assertNotNull(line1.getObstacles().toArray()[5]);
   }
 }
