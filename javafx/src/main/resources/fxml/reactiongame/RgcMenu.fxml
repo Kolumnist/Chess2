@@ -3,7 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="585.0" maxWidth="1040.0" minHeight="585.0" minWidth="1040.0" prefHeight="585.0" prefWidth="1040.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.reactiongame.RgcMenuController">
+<Pane maxHeight="585.0" maxWidth="1040.0" minHeight="585.0" minWidth="1040.0" prefHeight="585.0" prefWidth="1040.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.reactiongame.RgcMenuController">
    <children>
       <Button fx:id="startGameBtn" layoutX="303.0" layoutY="164.0" mnemonicParsing="false" onAction="#onStartGameBtn" prefHeight="67.0" prefWidth="434.0" text="Start Game" />
       <Button fx:id="highscoreBtn" layoutX="303.0" layoutY="259.0" mnemonicParsing="false" onAction="#onHighscoreBtn" prefHeight="67.0" prefWidth="434.0" text="Highscore" />
