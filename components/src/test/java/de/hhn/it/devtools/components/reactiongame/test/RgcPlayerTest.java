@@ -29,7 +29,7 @@ class RgcPlayerTest {
   @Test
   public void testConstructorAndGetters() {
     assertEquals("Tobi", player1.getName());
-    assertEquals(4, player2.getCurrentLife());
+    assertEquals(3, player2.getCurrentLife());
   }
 
   /**
