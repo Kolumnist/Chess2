@@ -75,6 +75,9 @@ public class RgcObstacleLineTest {
     line1.getObstacles().remove(obstacle5);
     line1.getObstacles().remove(obstacle7);
     assertTrue(line1.checkLinePassable());
+
+    line1.getObstacles().remove(obstacle6);
+    assertTrue(line1.checkLinePassable());
   }
 
   /**
