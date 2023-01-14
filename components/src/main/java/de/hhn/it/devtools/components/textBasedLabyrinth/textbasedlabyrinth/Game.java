@@ -41,8 +41,7 @@ public class Game implements GameService {
   }
 
 
-  public void start(Map map, Seed seed) {
-    setCurrentLayout(map, seed);
+  public void start() {
     score = 0;
     for (OutputListener outputListener : listeners) {
       outputListener.listenerStart();
@@ -266,7 +265,7 @@ public class Game implements GameService {
   public boolean setPlayerName(String name) {
     boolean success = !name.isEmpty() && !name.isBlank();
 
-    if (success) {
+    if(success) {
       player.setName(name);
     }
     return success;
