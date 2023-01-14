@@ -36,6 +36,12 @@ public class RgcGameController implements Initializable {
   @FXML // fx:id="liveLable"
   private Label liveLable; // Value injected by FXMLLoader
 
+  @FXML // fx:id="scoreLabel"
+  private Label scoreLabel; // Value injected by FXMLLoader
+
+  @FXML // fx:id="timeLabel"
+  private Label timeLabel; // Value injected by FXMLLoader
+
   @FXML
   void gpOnMouseEntered(MouseEvent event) {
     service.playerLeftGameObject();
@@ -50,8 +56,8 @@ public class RgcGameController implements Initializable {
 
     service = (RgcService) singletonAttributeStore.getAttribute(ReactionGameController.RGC_SERVICE);
     anchorPane = (AnchorPane) singletonAttributeStore.getAttribute(ReactionGameController.RGC_ANCHOR_PANE);
-
-    Stage stage = (Stage) anchorPane.getScene().getWindow();
+    scoreLabel.setText("00000");
+    timeLabel.setText("0000");
 
     try {
       service.newRun(
@@ -60,9 +66,7 @@ public class RgcGameController implements Initializable {
       throw new RuntimeException(e);
     }
 
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/template/ThirdScreen.fxml"));
-
-
+    Stage stage = (Stage) anchorPane.getScene().getWindow();
     stage.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
       String key = event.getText();
       service.keyPressed(key.charAt(0));
@@ -80,5 +84,13 @@ public class RgcGameController implements Initializable {
 
   public Label getInfoLable() {
     return infoLable;
+  }
+
+  public Label getScoreLabel() {
+    return scoreLabel;
+  }
+
+  public Label getTimeLabel() {
+    return timeLabel;
   }
 }

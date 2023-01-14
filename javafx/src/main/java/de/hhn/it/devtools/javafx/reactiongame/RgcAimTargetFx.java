@@ -15,8 +15,6 @@ public class RgcAimTargetFx extends StackPane {
 
   private final RgcService service;
 
-  private boolean isPlayerIn;
-
   public RgcAimTargetFx(AimTargetDescriptor descriptor, RgcService service) {
     setLayoutX(descriptor.getX());
     setLayoutY(descriptor.getY());
@@ -25,22 +23,20 @@ public class RgcAimTargetFx extends StackPane {
     Circle target = new Circle(RgcAimTarget.RADIUS);
     this.descriptor = descriptor;
     this.service = service;
-    isPlayerIn = false;
+
 
     target.setFocusTraversable(true);
     target.setFill(Color.BLUE);
     target.setOnMouseEntered(e -> {
       try {
-        if (!isPlayerIn) {
-          service.playerEnteredAimTarget(descriptor.getId());
-          isPlayerIn = true;
-        }
+
+        service.playerEnteredAimTarget(descriptor.getId());
+
 
       } catch (IllegalParameterException ex) {
         throw new RuntimeException(ex);
       }
     });
-
 
     Text text = new Text(descriptor.getKey() + "");
 

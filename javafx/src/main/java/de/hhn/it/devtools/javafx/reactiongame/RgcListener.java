@@ -118,7 +118,7 @@ public class RgcListener implements ReactiongameListener {
 
   @Override
   public void changeScore(int score) {
-
+    controller.getScoreLabel().setText(score + "");
   }
 
   @Override
