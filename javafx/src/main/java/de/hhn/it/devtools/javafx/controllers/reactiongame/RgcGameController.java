@@ -22,6 +22,9 @@ public class RgcGameController implements Initializable {
 
   }
 
+  @FXML // fx:id="infoLable"
+  private Label infoLable; // Value injected by FXMLLoader
+
   @FXML // fx:id="anchorPane"
   private AnchorPane anchorPane; // Value injected by FXMLLoader
 
@@ -50,5 +53,9 @@ public class RgcGameController implements Initializable {
 
   public Label getLiveLable() {
     return liveLable;
+  }
+
+  public Label getInfoLable() {
+    return infoLable;
   }
 }

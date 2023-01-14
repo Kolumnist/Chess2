@@ -99,8 +99,9 @@ public class RgcAimTargetClock implements Runnable {
 
         time++;
       }
-
     }
+
+    logger.info("Ended");
   }
 
   /**

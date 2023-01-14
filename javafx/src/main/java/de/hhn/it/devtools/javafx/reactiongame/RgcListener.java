@@ -23,18 +23,21 @@ public class RgcListener implements ReactiongameListener {
   private static SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
 
 
-
   private RgcScreenController screenController;
   private final AnchorPane pane;
   private final RgcService service;
 
   private final RgcGameController controller;
 
+  private final RgcDisplayer displayer;
+
 
   public RgcListener(AnchorPane pane, RgcService service, RgcGameController controller) {
     this.pane = pane;
     this.service = service;
     this.controller = controller;
+
+    displayer = new RgcDisplayer(controller.getInfoLable());
 
     service.addCallback(this);
 
@@ -98,6 +101,8 @@ public class RgcListener implements ReactiongameListener {
   @Override
   public void currentLife(int numberOfLifes) {
     Platform.runLater(() -> controller.getLiveLable().setText(numberOfLifes + ""));
+
+    Platform.runLater(() -> displayer.displayText("Player lost a life!", 2000));
   }
 
   @Override
@@ -130,10 +135,13 @@ public class RgcListener implements ReactiongameListener {
     Platform.runLater(() -> {
       try {
         screenController.switchTo("RgcMenu");
+        service.removeCallback(this);
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
     });
+
+
   }
 
 }

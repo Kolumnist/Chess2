@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="585.0" maxWidth="1040.0" minHeight="585.0" minWidth="1040.0" prefHeight="585.0" prefWidth="1040.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.reactiongame.RgcGameController">
+<Pane maxHeight="585.0" maxWidth="1040.0" minHeight="585.0" minWidth="1040.0" prefHeight="585.0" prefWidth="1040.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.reactiongame.RgcGameController">
    <children>
       <Label layoutX="468.0" layoutY="14.0" text="Lives:">
          <font>
@@ -14,6 +14,11 @@
       <Label fx:id="liveLable" layoutX="520.0" layoutY="14.0" text="3">
          <font>
             <Font size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="infoLable" alignment="CENTER" contentDisplay="CENTER" layoutX="706.0" layoutY="77.0" prefHeight="50.0" prefWidth="256.0" textAlignment="CENTER" textFill="RED" textOverrun="CLIP" wrapText="true">
+         <font>
+            <Font name="System Bold" size="29.0" />
          </font>
       </Label>
    </children>
