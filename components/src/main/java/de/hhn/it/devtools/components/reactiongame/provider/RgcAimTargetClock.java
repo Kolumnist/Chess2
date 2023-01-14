@@ -90,7 +90,7 @@ public class RgcAimTargetClock implements Runnable {
         checkIfTargetExpired();
 
 
-        if (time % 4 == 0) { // Spawnrate
+        if (time % 2 == 0) { // Spawnrate
 
           if (run.getField().getTargetCount() < run.getDifficulty().maxAimtargets) {
 
