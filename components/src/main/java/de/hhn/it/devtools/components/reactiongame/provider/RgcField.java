@@ -8,8 +8,8 @@ import java.util.Random;
  */
 public class RgcField {
 
-  public static int NORMAL_WIDTH = 1280; // in px
-  public static int NORMAL_HEIGHT = 720; // in px
+  public static int NORMAL_WIDTH = 1040; // in px
+  public static int NORMAL_HEIGHT = 585; // in px
 
   private final int width; // px
   private final int height; // px
@@ -21,19 +21,19 @@ public class RgcField {
   private ArrayList<RgcAimTarget> targets = new ArrayList<>();
 
   /**
-   * Creates the basic field. (Res.: 1280x720)
+   * Creates the basic field. (Res.: 1040x585)
    */
   public RgcField() {
     width = NORMAL_WIDTH;
     height = NORMAL_HEIGHT;
 
-    obstacleLines.add(new RgcObstacleLine(370));
-    obstacleLines.add(new RgcObstacleLine(640));
-    obstacleLines.add(new RgcObstacleLine(910));
+    obstacleLines.add(new RgcObstacleLine(250));
+    obstacleLines.add(new RgcObstacleLine(520));
+    obstacleLines.add(new RgcObstacleLine(790));
 
-    aimTargetZones.add(new RgcAimTargetZone(25, 0, 100, RgcField.NORMAL_HEIGHT));
-    aimTargetZones.add(new RgcAimTargetZone(RgcField.NORMAL_WIDTH - 100, 0,
-            RgcField.NORMAL_WIDTH - 25, RgcField.NORMAL_HEIGHT));
+    aimTargetZones.add(new RgcAimTargetZone(25, 25, 100, RgcField.NORMAL_HEIGHT - 25));
+    aimTargetZones.add(new RgcAimTargetZone(RgcField.NORMAL_WIDTH - 100, 25,
+            RgcField.NORMAL_WIDTH - 25, RgcField.NORMAL_HEIGHT - 25));
 
   }
 
