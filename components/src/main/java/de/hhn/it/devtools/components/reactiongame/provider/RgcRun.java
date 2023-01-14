@@ -4,6 +4,8 @@ import de.hhn.it.devtools.apis.reactiongame.Difficulty;
 import de.hhn.it.devtools.apis.reactiongame.GameState;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Class communicate between the service and components. Also notifies the callbacks.
@@ -14,7 +16,7 @@ public class RgcRun {
       org.slf4j.LoggerFactory.getLogger(RgcRun.class);
 
   private ArrayList<ReactiongameListener> callbacks = new ArrayList<>();
-  private final RgcField gameField = new RgcField();
+  private final RgcField field = new RgcField();
   private final RgcPlayer player;
   private final RgcObstacleClock obstacleClock; // 2 verschiedene Timer für front und backend?
   private final RgcAimTargetClock aimTargetClock;
@@ -26,7 +28,7 @@ public class RgcRun {
   private char pKey;
   private int score;
   private boolean isInvincible = false;
-  private final Thread iFrameThread;
+  private Thread iFrameThread;
 
 
   /**
@@ -39,6 +41,8 @@ public class RgcRun {
     this.difficulty = difficulty;
     this.player = player;
 
+    callbacks = new ArrayList<>();
+
     aimTargetClock = new RgcAimTargetClock(this);
     obstacleClock = new RgcObstacleClock(this);
 
@@ -50,8 +54,8 @@ public class RgcRun {
     return callbacks;
   }
 
-  public RgcField getGameField() {
-    return gameField;
+  public RgcField getField() {
+    return field;
   }
 
   public RgcPlayer getPlayer() {
@@ -94,6 +98,20 @@ public class RgcRun {
     return aimTargetClock;
   }
 
+  public int getScore(){return score;}
+
+  public char getpKey() {
+    return pKey;
+  }
+
+  public RgcAimTarget getpAimTarget() {
+    return pAimTarget;
+  }
+
+  public RgcObstacle getpObstacle() {
+    return pObstacle;
+  }
+
 
   /**
    * Pauses the clocks.
@@ -127,7 +145,9 @@ public class RgcRun {
     aimTargetClock.setRunning(false);
     aimTargetClock.setEnded(true);
 
-    iFrameThread.stop();
+    ExecutorService executorService = Executors.newSingleThreadExecutor();
+    executorService.submit(iFrameThread);
+    executorService.shutdown();
 
     for (ReactiongameListener callback :
         callbacks) {
@@ -147,6 +167,7 @@ public class RgcRun {
     // player is in iFrames OR no longer in an obstacle
 
     isInvincible = true;
+    iFrameThread = new Thread(new RgcIFrameRunnable(this));
     iFrameThread.start();
 
     playerLosesLife();
@@ -193,13 +214,13 @@ public class RgcRun {
   public void addObstacle(int obstacleId) {
     logger.info("Add obstacle (" + obstacleId + ")");
 
-    gameField.addRandomObstacle(obstacleId);
+    field.addRandomObstacle(obstacleId);
 
     for (ReactiongameListener callback :
         callbacks) {
 
-      callback.addObstacle(RgcObstacle.toObstacleDescriptor(gameField.getObstacles()
-          .get(gameField.getObstacles().size())));
+      RgcObstacle obstacle = field.getObstacles().get(obstacleId);
+      callback.addObstacle(RgcObstacle.toObstacleDescriptor(obstacle));
 
     }
   }
@@ -212,7 +233,7 @@ public class RgcRun {
   public void removeObstacle(int obstacleId) {
     logger.info("Remove obstacle (" + obstacleId + ")");
 
-    gameField.removeObstacle(obstacleId);
+    field.removeObstacle(obstacleId);
 
     for (ReactiongameListener callback :
         callbacks) {
@@ -228,14 +249,14 @@ public class RgcRun {
    * @param aimTargetId identifier
    */
   public void addAimTarget(int aimTargetId) {
-    logger.info("Add aim target (" + aimTargetId + ")");
+    RgcAimTarget aimTarget = field.addRandomAimTarget(aimTargetId);
+    logger.info("Add aim target (" + aimTargetId + ") (" + aimTarget.getX() + "|" + aimTarget.getY() + ")");
 
-    gameField.addRandomAimTarget(aimTargetId);
 
     for (ReactiongameListener callback :
         callbacks) {
 
-      callback.removeAimTarget(aimTargetId);
+      callback.addAimTarget(RgcAimTarget.toAimTargetDescriptor(aimTarget));
     }
   }
 
@@ -245,9 +266,9 @@ public class RgcRun {
    * @param aimTargetId identifier
    */
   public void removeAimTarget(int aimTargetId) {
-    logger.info("Add aim target (" + aimTargetId + ")");
+    logger.info("Removed aim target (" + aimTargetId + ")");
 
-    gameField.removeAimTarget(aimTargetId);
+    field.removeAimTarget(aimTargetId);
 
     for (ReactiongameListener callback :
         callbacks) {

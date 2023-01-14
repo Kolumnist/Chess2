@@ -10,11 +10,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RgcObstacleLineTest {
 
-  private RgcField field;
   private RgcObstacleLine line1;
   private RgcObstacle obstacle1;
   private RgcObstacle obstacle2;
   private RgcObstacle obstacle3;
+  private RgcObstacle obstacle4;
+  private RgcObstacle obstacle5;
+  private RgcObstacle obstacle6;
+  private RgcObstacle obstacle7;
 
   /**
    * Sets up RgcObstacleLine objects as well as objects of some other classes to test on
@@ -23,8 +26,12 @@ public class RgcObstacleLineTest {
   public void setup() {
     line1 = new RgcObstacleLine(200);
     obstacle1 = new RgcObstacle(1,165,100,235,500);
-    obstacle2 = new RgcObstacle(2,100,250,300,720);
+    obstacle2 = new RgcObstacle(2,100,250,300,585);
     obstacle3 = new RgcObstacle(3,165,0,235,500);
+    obstacle4 = new RgcObstacle(4,165,100,235,500);
+    obstacle5 = new RgcObstacle(5,165,150,235,500);
+    obstacle6 = new RgcObstacle(6,165,550,235,585);
+    obstacle7 = new RgcObstacle(7,165,200,235,400);
   }
 
   /**
@@ -40,6 +47,9 @@ public class RgcObstacleLineTest {
     assertTrue((coords[1] > coords[0]) && (coords[1] <= RgcField.NORMAL_HEIGHT));
   }
 
+  /**
+   * Tests whether checkLinePassable() filters out obstacles that would completely fill out a line
+   */
   @Test
   public void checkLinePassableTest() {
     assertTrue(line1.checkLinePassable());
@@ -52,5 +62,39 @@ public class RgcObstacleLineTest {
 
     line1.getObstacles().add(obstacle3);
     assertFalse(line1.checkLinePassable());
+
+    line1.getObstacles().add(obstacle4);
+    line1.getObstacles().add(obstacle5);
+    line1.getObstacles().add(obstacle6);
+    line1.getObstacles().add(obstacle7);
+    assertFalse(line1.checkLinePassable());
+
+    line1.getObstacles().remove(obstacle1);
+    line1.getObstacles().remove(obstacle2);
+    line1.getObstacles().remove(obstacle4);
+    line1.getObstacles().remove(obstacle5);
+    line1.getObstacles().remove(obstacle7);
+    assertTrue(line1.checkLinePassable());
+
+    line1.getObstacles().remove(obstacle6);
+    assertTrue(line1.checkLinePassable());
+  }
+
+  /**
+   * Tests whether addRandomObstacle() actually adds an obstacle
+   */
+  @Test
+  public void addRandomObstacleTest() {
+    line1.addRandomObstacle(11);
+    assertNotEquals(line1.getObstacles().toArray()[0], null);
+
+    line1.addRandomObstacle(10);
+    assertNotEquals(line1.getObstacles().toArray()[1], null);
+
+    line1.getObstacles().add(obstacle1);
+    line1.getObstacles().add(obstacle2);
+    line1.getObstacles().add(obstacle3);
+    line1.addRandomObstacle(12);
+    assertNotNull(line1.getObstacles().toArray()[5]);
   }
 }

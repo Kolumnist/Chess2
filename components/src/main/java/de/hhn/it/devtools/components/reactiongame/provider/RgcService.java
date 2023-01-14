@@ -5,7 +5,6 @@ import de.hhn.it.devtools.apis.reactiongame.Difficulty;
 import de.hhn.it.devtools.apis.reactiongame.GameState;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameService;
-import java.util.ArrayList;
 import java.util.IllegalFormatException;
 import java.util.SortedMap;
 
@@ -28,6 +27,10 @@ public class RgcService implements ReactiongameService {
 
   public RgcRun getRun() {
     return run;
+  }
+
+  public RgcPlayer getCurrentPlayer() {
+    return currentPlayer;
   }
 
   @Override
@@ -102,12 +105,12 @@ public class RgcService implements ReactiongameService {
   public void playerEnteredAimTarget(int aimtargetId) throws IllegalParameterException {
     logger.info("Player entered aim target (" + aimtargetId + ")");
 
-    if (aimtargetId > 0) {
+    if (aimtargetId < 0) {
       throw new IllegalParameterException();
     }
 
     run.setpObstacle(null);
-    run.setpAimTarget(run.getGameField().getTargets().get(aimtargetId));
+    run.setpAimTarget(run.getField().getTargetMap().get(aimtargetId));
 
   }
 
@@ -115,13 +118,13 @@ public class RgcService implements ReactiongameService {
   public void playerEnteredObstacle(int obstacleId) throws IllegalParameterException {
     logger.info("Player entered obstacle (" + obstacleId + ")");
 
-    if (obstacleId > 0) {
+    if (obstacleId < 0) {
       logger.info("Invalid obstacleId", new IllegalParameterException());
       throw new IllegalParameterException();
     }
 
     run.setpAimTarget(null);
-    run.setpObstacle(run.getGameField().getObstacles().get(obstacleId));
+    run.setpObstacle(run.getField().getObstacles().get(obstacleId));
 
     run.playerHitObstacle();
   }

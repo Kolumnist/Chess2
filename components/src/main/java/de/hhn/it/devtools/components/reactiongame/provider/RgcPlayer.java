@@ -11,7 +11,7 @@ public class RgcPlayer {
 
   public RgcPlayer(String name) {
     this.name = name;
-    currentLife = 4;
+    currentLife = 3;
   }
 
 
