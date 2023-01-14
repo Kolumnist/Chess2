@@ -3,7 +3,6 @@ package de.hhn.it.devtools.components.battleship.provider;
 import de.hhn.it.devtools.apis.battleship.*;
 
 import java.util.Random;
-import java.util.Map;
 
 public class Computer extends Player {
 
@@ -99,80 +98,80 @@ public class Computer extends Player {
         return new Position(x, y);
     }
 
-    public boolean checkSurroundings(Position position, boolean isVertical, int shipSize, int fieldSize){
-        int x = position.getX();
-        int y = position.getY();
-        if(isVertical){
-            if(y > 0){
-                if (this.getShipField().getPanelMarker(x, y - 1) == PanelState.SHIP){
-                    return true;
-                }
-            }
-
-            if(x == 0){
-                for(int i = y; i < y + shipSize; i++){
-                    if (this.getShipField().getPanelMarker(x + 1, i) == PanelState.SHIP){
-                        return true;
-                    }
-                }
-            } else if(x == fieldSize - 1){
-                for(int i = y; i < y + shipSize; i++){
-                    if (this.getShipField().getPanelMarker(x - 1, i) == PanelState.SHIP){
-                        return true;
-                    }
-                }
-            } else {
-                for(int i = y; i < y + shipSize; i++){
-                    if (this.getShipField().getPanelMarker(x + 1, i) == PanelState.SHIP){
-                        return true;
-                    }
-                    if (this.getShipField().getPanelMarker(x - 1, i) == PanelState.SHIP){
-                        return true;
-                    }
-                }
-            }
-
-            if(y + shipSize - 1 < fieldSize - 1){
-                if (this.getShipField().getPanelMarker(x, y + shipSize) == PanelState.SHIP){
-                    return true;
-                }
-            }
-        } else {
-            if(x > 0){
-                if (this.getShipField().getPanelMarker(x - 1, y) == PanelState.SHIP){
-                    return true;
-                }
-            }
-
-            if(y == 0){
-                for(int i = x; i < x + shipSize; i++){
-                    if (this.getShipField().getPanelMarker(i, y + 1) == PanelState.SHIP){
-                        return true;
-                    }
-                }
-            } else if(y == fieldSize - 1){
-                for(int i = x; i < x + shipSize; i++){
-                    if (this.getShipField().getPanelMarker(i, y - 1) == PanelState.SHIP){
-                        return true;
-                    }
-                }
-            } else {
-                for(int i = x; i < x + shipSize; i++){
-                    if (this.getShipField().getPanelMarker(i, y + 1) == PanelState.SHIP){
-                        return true;
-                    }
-                    if (this.getShipField().getPanelMarker(i, y - 1) == PanelState.SHIP){
-                        return true;
-                    }
-                }
-            }
-
-            if(x + shipSize - 1 < fieldSize - 1){
-                if (this.getShipField().getPanelMarker(x + shipSize, y) == PanelState.SHIP){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+//    public boolean checkSurroundings(Position position, boolean isVertical, int shipSize, int fieldSize){
+//        int x = position.getX();
+//        int y = position.getY();
+//        if(isVertical){
+//            if(y > 0){
+//                if (this.getShipField().getPanelMarker(x, y - 1) == PanelState.SHIP){
+//                    return true;
+//                }
+//            }
+//
+//            if(x == 0){
+//                for(int i = y; i < y + shipSize; i++){
+//                    if (this.getShipField().getPanelMarker(x + 1, i) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                }
+//            } else if(x == fieldSize - 1){
+//                for(int i = y; i < y + shipSize; i++){
+//                    if (this.getShipField().getPanelMarker(x - 1, i) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                }
+//            } else {
+//                for(int i = y; i < y + shipSize; i++){
+//                    if (this.getShipField().getPanelMarker(x + 1, i) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                    if (this.getShipField().getPanelMarker(x - 1, i) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                }
+//            }
+//
+//            if(y + shipSize - 1 < fieldSize - 1){
+//                if (this.getShipField().getPanelMarker(x, y + shipSize) == PanelState.SHIP){
+//                    return true;
+//                }
+//            }
+//        } else {
+//            if(x > 0){
+//                if (this.getShipField().getPanelMarker(x - 1, y) == PanelState.SHIP){
+//                    return true;
+//                }
+//            }
+//
+//            if(y == 0){
+//                for(int i = x; i < x + shipSize; i++){
+//                    if (this.getShipField().getPanelMarker(i, y + 1) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                }
+//            } else if(y == fieldSize - 1){
+//                for(int i = x; i < x + shipSize; i++){
+//                    if (this.getShipField().getPanelMarker(i, y - 1) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                }
+//            } else {
+//                for(int i = x; i < x + shipSize; i++){
+//                    if (this.getShipField().getPanelMarker(i, y + 1) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                    if (this.getShipField().getPanelMarker(i, y - 1) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                }
+//            }
+//
+//            if(x + shipSize - 1 < fieldSize - 1){
+//                if (this.getShipField().getPanelMarker(x + shipSize, y) == PanelState.SHIP){
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 }

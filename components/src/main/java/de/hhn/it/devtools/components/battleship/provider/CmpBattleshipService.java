@@ -3,11 +3,8 @@ package de.hhn.it.devtools.components.battleship.provider;
 import de.hhn.it.devtools.apis.battleship.*;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import java.io.*;
-import java.security.Provider;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.IllegalFormatException;
-import java.util.Map;
 
 // TODO durchs Feld durch iterieren und gucken ob es Schiffs-Felder gibt, die nicht gebombt wurden, falls nein -> gegner gewinnt & GameState zu GameOver
 // TODO Button, der kommt (isVisible zu true in dem Fenster, wo "Ships left to place", davor ist der Button isVisible = false), wenn alle Schiffe platziert sind, wenn gedrückt wird -> GameState zu FiringShots
@@ -24,18 +21,9 @@ public class CmpBattleshipService implements BattleshipService {
     private ArrayList<BattleshipListener> listeners;
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(CmpBattleshipService.class);
-    private final Map<Owner, Player> owner2PlayerMap;
-
-    private final Map<Player, Owner> player2OwnerMap;
 
     public CmpBattleshipService(){
         listeners = new ArrayList<>();
-        owner2PlayerMap = new HashMap<>();
-        owner2PlayerMap.put(Owner.PLAYER, player);
-        owner2PlayerMap.put(Owner.COMPUTER, computer);
-        player2OwnerMap = new HashMap<>();
-        player2OwnerMap.put(player, Owner.PLAYER);
-        player2OwnerMap.put(computer, Owner.COMPUTER);
     }
 
     public Player getPlayer(){

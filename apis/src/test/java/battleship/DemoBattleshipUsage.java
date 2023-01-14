@@ -1,6 +1,9 @@
 package battleship;
 
 import de.hhn.it.devtools.apis.battleship.*;
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+
+import java.util.IllegalFormatException;
 
 /**
  * This usage demo is not runnable because in this module there is no possibility to access the
@@ -11,9 +14,75 @@ import de.hhn.it.devtools.apis.battleship.*;
 
 
 public class DemoBattleshipUsage  {
-    static BattleshipService game = null;
 
     public static void main(String[] args) throws Exception{
+
+        BattleshipService game = new BattleshipService() {
+            @Override
+            public void addCallBack(BattleshipListener listener) throws IllegalParameterException {
+
+            }
+
+            @Override
+            public void removeCallback(BattleshipListener listener) throws IllegalParameterException {
+
+            }
+
+            @Override
+            public boolean isPlacementPossible(Player player, Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException {
+                return false;
+            }
+
+            @Override
+            public void placeShip(Player player, Ship shipToPlace, int x1, int y1) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException {
+
+            }
+
+            @Override
+            public void unPlace(Player player, Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException {
+
+            }
+
+            @Override
+            public void rotateShip(Player player, Ship shipToRotate) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException {
+
+            }
+
+            @Override
+            public boolean bombPanel(Player attacker, Player victim, int x, int y) throws IllegalArgumentException, IllegalGameStateException {
+                return false;
+            }
+
+            @Override
+            public void createFields(int size) throws IllegalArgumentException, IllegalGameStateException, IllegalShipStateException, IllegalPositionException {
+
+            }
+
+            @Override
+            public void adjustSoundVolume(int newVolume) throws IllegalArgumentException {
+
+            }
+
+            @Override
+            public SavedGame saveGame() throws IllegalGameStateException {
+                return null;
+            }
+
+            @Override
+            public void loadGame(SavedGame savedGame) throws IllegalFormatException {
+
+            }
+
+            @Override
+            public void concede() throws IllegalGameStateException {
+
+            }
+
+            @Override
+            public String displayRules() {
+                return null;
+            }
+        };
 
         Player player = new Player();
 
@@ -22,7 +91,7 @@ public class DemoBattleshipUsage  {
 
         //Field size is set and the fields are created
         //9x9 field means that 5 ships will be generated for each player
-        game.createFields(9);
+        game.createFields(10);
 
 
         //User wants to read the rules before he begins to play
