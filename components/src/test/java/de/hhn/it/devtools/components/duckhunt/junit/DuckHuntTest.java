@@ -68,6 +68,9 @@ class DuckHuntTest {
 
     //exception testing
     assertThrows(RuntimeException.class,()->game.shoot(0,screen.getHeight()+1));
+    game.getGameInfo().setState(GameState.PAUSED);
+    assertThrows(RuntimeException.class,()->game.shoot(testListener.duckPosition.duckData()[0].getX(),
+            testListener.duckPosition.duckData()[0].getY()));
   }
 
   @Test

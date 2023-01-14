@@ -20,5 +20,7 @@ public class RangedRandomTest {
       givenNumbers[i] = randTest.randomInt(0,9);
     }
     assertArrayEquals(expectedNumbers, givenNumbers);
+    randTest = new RangedRandom();
+    assertTrue(randTest.randomInt(0,1) == 0);
   }
 }

@@ -82,12 +82,13 @@ public class DuckHunt implements DuckHuntService {
   @Override
   public void shoot(int x, int y) {
     logger.info("shoot: x = {}, y = {}", x, y);
-    // TODO ERROR Handling shoot
+    // TODO ERROR Handling shoot (rework if needed)
     if (x < 0 || x > screenDimension.getWidth() || y < 0 || y > screenDimension.getHeight()) {
       throw new RuntimeException();
     }
-    // Junit Test for this Exception is inside a comment in DuckHuntTest shoot() Test
-    /*if (gameInfo.getState() != GameState.RUNNING) throw new Exception();*/
+    // Junit Test for these Exceptions is inside DuckHuntTest shoot() Test
+    if (gameInfo.getState() != GameState.RUNNING) throw new RuntimeException();
+
     for (DuckData duck : ducks) {
       if (duck.getStatus() == DuckState.DEAD
           || duck.getStatus() == DuckState.FLYAWAY
