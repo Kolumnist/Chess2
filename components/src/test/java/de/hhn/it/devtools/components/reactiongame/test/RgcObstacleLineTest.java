@@ -26,11 +26,11 @@ public class RgcObstacleLineTest {
   public void setup() {
     line1 = new RgcObstacleLine(200);
     obstacle1 = new RgcObstacle(1,165,100,235,500);
-    obstacle2 = new RgcObstacle(2,100,250,300,720);
+    obstacle2 = new RgcObstacle(2,100,250,300,585);
     obstacle3 = new RgcObstacle(3,165,0,235,500);
     obstacle4 = new RgcObstacle(4,165,100,235,500);
     obstacle5 = new RgcObstacle(5,165,150,235,500);
-    obstacle6 = new RgcObstacle(6,165,550,235,720);
+    obstacle6 = new RgcObstacle(6,165,550,235,585);
     obstacle7 = new RgcObstacle(7,165,200,235,400);
   }
 

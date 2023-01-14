@@ -39,11 +39,11 @@ public class RgcRunTest2 {
 
     run.addAimTarget(0);
 
-    assertNotEquals(0, run.getField().getTargets().size());
+    assertNotEquals(0, run.getField().getTargetCount());
 
     run.removeAimTarget(0);
 
-    assertEquals(0, run.getField().getTargets().size());
+    assertEquals(0, run.getField().getTargetCount());
   }
 
 }
