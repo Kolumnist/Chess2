@@ -1,18 +1,13 @@
 package de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
 
-
-
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.RoomFailedException;
-
 import java.util.List;
 
 /**
  * Interface for the game.
  */
 public interface GameService {
-
-  int SCORE_BOARD = 0;
 
   /**
    * Let the user move the room in the given direction (if possible).
@@ -38,7 +33,7 @@ public interface GameService {
    * @param itemId the id of the item to be removed.
    * @return the message, which is about the success or failure of the operation.
    */
-  String dropItem(int itemId);
+  String dropItem(int itemId) throws NoSuchItemFoundException;
 
 
   void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException;
@@ -46,13 +41,13 @@ public interface GameService {
   /**
    * Inspect a door/pathway.
    */
-  String inspect(Direction direction);
+  String inspect(Direction direction) throws RoomFailedException;;
 
   /**
    * Let the user interact with the environment.
    * (Solve puzzles)
    */
-  String interaction(Direction direction, Item item);
+  String interaction(Direction direction, Item item) throws RoomFailedException;;
 
   /**
    * Let the user search through the room.
@@ -92,15 +87,17 @@ public interface GameService {
    */
   String check();
 
-  /**
-   * Returns current Score board
-   * @return int Score of Player
-   */
-  int getScore();
+  void addListener(OutputListener listener);
 
-  /**
-   * Update the current Scoreboard
-   * @return updated Scoreboard
-   */
-  int updateScore(int newScore);
+  void removeListener(OutputListener listener);
+
+
+
+  void startup();
+
+  void start();
+
+  void end();
+
+  void reset();
 }

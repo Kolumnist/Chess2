@@ -44,4 +44,23 @@ public interface OutputListener {
     void sendOutputPickUpItem(Item item);
 
     void sendOutputDropItem(Item item);
+
+
+    void listenerStart();
+
+    void listenerMove();
+
+    void listenerPickUpItem();
+
+    void listenerDropItem();
+
+    void listenerInteract();
+
+    void listenerEnd();
+
+    void listenerReset();
+
+    void updateScore(int newScore);
+
+
 }
