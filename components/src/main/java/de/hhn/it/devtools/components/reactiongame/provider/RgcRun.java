@@ -165,6 +165,7 @@ public class RgcRun {
    */
   public void playerHitObstacle() {
     if (isInvincible || pObstacle == null) {
+      logger.info("Obstacle not found / invis");
       return; // if player is not in an object or invincible - do nothing
     }
     logger.info("Player hit obstacle");

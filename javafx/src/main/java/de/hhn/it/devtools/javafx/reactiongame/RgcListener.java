@@ -79,13 +79,16 @@ public class RgcListener implements ReactiongameListener {
 
   @Override
   public void removeObstacle(int obstacleId) {
+    logger.info("Remove obstacle " + obstacleId);
     for (Node n :
         pane.getChildren()) {
       if (n instanceof RgcObstacleFx) {
+        logger.info(n.getId());
         if (n.getId() != null && n.getId().equals(obstacleId + "")) {
           Platform.runLater(() -> pane.getChildren().remove(n));
+          logger.info("Obstacle remove success " + obstacleId);
+          return;
         }
-        return;
       }
     }
   }

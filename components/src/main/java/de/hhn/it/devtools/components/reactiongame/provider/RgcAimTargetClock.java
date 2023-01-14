@@ -70,7 +70,13 @@ public class RgcAimTargetClock implements Runnable {
   @Override
   public void run() {
     logger.info("Started");
-    
+
+    try {
+      Thread.sleep(100);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
+
     while (!isEnded) {
 
       try { // do not delete - does not work without

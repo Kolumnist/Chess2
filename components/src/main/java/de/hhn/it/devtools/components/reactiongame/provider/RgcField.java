@@ -17,6 +17,7 @@ public class RgcField {
 
   private final ArrayList<RgcObstacleLine> obstacleLines = new ArrayList<>();
   private final ArrayList<RgcObstacle> obstacles = new ArrayList<>();
+  private final Map<Integer, RgcObstacle> obstacleMap = new HashMap<>();
 
   private ArrayList<RgcAimTargetZone> aimTargetZones = new ArrayList<>();
   private ArrayList<RgcAimTarget> targets = new ArrayList<>();
@@ -51,6 +52,10 @@ public class RgcField {
     return targetMap;
   }
 
+  public Map<Integer, RgcObstacle> getObstacleMap() {
+    return obstacleMap;
+  }
+
   public int getTargetCount() {
     return targetCount;
   }
@@ -72,7 +77,9 @@ public class RgcField {
    * @param obstacleLineId obstacleLine identifier
    */
   void addRandomObstacle(int obstacleId, int obstacleLineId) {
-    obstacles.add(obstacleId, obstacleLines.get(obstacleLineId).addRandomObstacle(obstacleId));
+    RgcObstacle obstacle = obstacleLines.get(obstacleLineId).addRandomObstacle(obstacleId);
+    obstacles.add(obstacleId, obstacle);
+    obstacleMap.put(obstacleId, obstacle);
   }
 
   /**
@@ -89,6 +96,8 @@ public class RgcField {
     }
 
     obstacles.removeIf(o -> o.getId() == obstacleId);
+
+    obstacleMap.remove(obstacleId);
   }
 
 

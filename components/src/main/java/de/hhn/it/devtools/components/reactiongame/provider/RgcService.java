@@ -129,7 +129,7 @@ public class RgcService implements ReactiongameService {
     }
 
     run.setpAimTarget(null);
-    run.setpObstacle(run.getField().getObstacles().get(obstacleId));
+    run.setpObstacle(run.getField().getObstacleMap().get(obstacleId));
 
     run.playerHitObstacle();
   }
