@@ -48,7 +48,11 @@ public class RgcMenuController extends Controller implements Initializable {
 
   @FXML
   void onHighscoreBtn(ActionEvent event) {
-
+    try {
+      screenController.switchTo("RgcHighscores");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @FXML
