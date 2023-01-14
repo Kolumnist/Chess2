@@ -23,6 +23,7 @@ public class RgcAimTargetFx extends StackPane {
     this.descriptor = descriptor;
     this.service = service;
 
+    target.setFocusTraversable(true);
     target.setId(descriptor.getId() + "");
     target.setFill(Color.BLUE);
     target.setOnMouseEntered(e -> {

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="585.0" maxWidth="1040.0" minHeight="585.0" minWidth="1040.0" prefHeight="585.0" prefWidth="1040.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.reactiongame.RgcGameController">
+<Pane fx:id="gamePane" maxHeight="585.0" maxWidth="1040.0" minHeight="585.0" minWidth="1040.0" onKeyPressed="#onKeyPressed" onKeyTyped="#gpOnKeyTyped" onMouseClicked="#gpOnMouseClicked" prefHeight="585.0" prefWidth="1040.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.reactiongame.RgcGameController">
    <children>
       <Label layoutX="468.0" layoutY="14.0" text="Lives:">
          <font>
