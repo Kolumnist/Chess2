@@ -56,8 +56,13 @@ public class RgcObstacleClock implements Runnable {
   public boolean getIsEnded() {return isEnded;}
   @Override
   public void run() {
-
     logger.info("Started");
+
+    try {
+      Thread.sleep(100);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
 
     boolean isHighMarkReached = false;
 

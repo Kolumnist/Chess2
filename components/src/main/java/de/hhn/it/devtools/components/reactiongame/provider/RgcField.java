@@ -3,7 +3,6 @@ package de.hhn.it.devtools.components.reactiongame.provider;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * GameField class which holds player, obstacles and aim targets.
@@ -18,6 +17,7 @@ public class RgcField {
 
   private final ArrayList<RgcObstacleLine> obstacleLines = new ArrayList<>();
   private final ArrayList<RgcObstacle> obstacles = new ArrayList<>();
+  private final Map<Integer, RgcObstacle> obstacleMap = new HashMap<>();
 
   private ArrayList<RgcAimTargetZone> aimTargetZones = new ArrayList<>();
   private ArrayList<RgcAimTarget> targets = new ArrayList<>();
@@ -38,9 +38,9 @@ public class RgcField {
     obstacleLines.add(new RgcObstacleLine(520));
     obstacleLines.add(new RgcObstacleLine(790));
 
-    aimTargetZones.add(new RgcAimTargetZone(25, 25, 100, RgcField.NORMAL_HEIGHT - 25));
+    aimTargetZones.add(new RgcAimTargetZone(RgcAimTarget.RADIUS, 60, 100, RgcField.NORMAL_HEIGHT - 40));
     aimTargetZones.add(new RgcAimTargetZone(RgcField.NORMAL_WIDTH - 100, 25,
-            RgcField.NORMAL_WIDTH - 25, RgcField.NORMAL_HEIGHT - 25));
+            RgcField.NORMAL_WIDTH - 50, RgcField.NORMAL_HEIGHT - RgcAimTarget.RADIUS));
 
   }
 
@@ -50,6 +50,10 @@ public class RgcField {
 
   public Map<Integer, RgcAimTarget> getTargetMap() {
     return targetMap;
+  }
+
+  public Map<Integer, RgcObstacle> getObstacleMap() {
+    return obstacleMap;
   }
 
   public int getTargetCount() {
@@ -73,7 +77,9 @@ public class RgcField {
    * @param obstacleLineId obstacleLine identifier
    */
   void addRandomObstacle(int obstacleId, int obstacleLineId) {
-    obstacles.add(obstacleId, obstacleLines.get(obstacleLineId).addRandomObstacle(obstacleId));
+    RgcObstacle obstacle = obstacleLines.get(obstacleLineId).addRandomObstacle(obstacleId);
+    obstacles.add(obstacleId, obstacle);
+    obstacleMap.put(obstacleId, obstacle);
   }
 
   /**
@@ -90,6 +96,8 @@ public class RgcField {
     }
 
     obstacles.removeIf(o -> o.getId() == obstacleId);
+
+    obstacleMap.remove(obstacleId);
   }
 
 
@@ -100,8 +108,7 @@ public class RgcField {
    */
   RgcAimTarget addRandomAimTarget(int aimTargetId) {
     targetCreationCounter++;
-    return addRandomAimTarget(aimTargetId,
-        targetCreationCounter % 2);
+    return addRandomAimTarget(aimTargetId, targetCreationCounter % 2);
   }
 
   /**
