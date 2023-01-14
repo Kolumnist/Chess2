@@ -13,21 +13,21 @@ public class Computer extends Player {
     Random random = new Random();
 
 
-    private void placeShipSmall(Map<Player, Owner> player2OwnerMap, int num) throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
+    private void placeShipSmall(int num) throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
         int x = random.nextInt(5);
         int y = random.nextInt(5);
         if(random.nextInt(2) == 1){
-            CmpBattleshipService.service.rotateShip(player2OwnerMap.get(this), getOwnedShips().get(num));
+            CmpBattleshipService.service.rotateShip(this, getOwnedShips().get(num));
         }
 
         try {
-            CmpBattleshipService.service.placeShip(player2OwnerMap.get(this), getOwnedShips().get(num), x, y);
+            CmpBattleshipService.service.placeShip(this, getOwnedShips().get(num), x, y);
         } catch (IllegalPositionException e){
-            placeShipSmall(player2OwnerMap, num);
+            placeShipSmall(num);
         }
     }
 
-    private void placeShipMediumLarge(Map<Player, Owner> player2OwnerMap, int num, int size) throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
+    private void placeShipMediumLarge(int num, int size) throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
         int x = random.nextInt(5);
         Position position;
         if(x == 0){
@@ -47,24 +47,24 @@ public class Computer extends Player {
         }
 
         if(random.nextInt(2) == 1){
-            CmpBattleshipService.service.rotateShip(player2OwnerMap.get(this), getOwnedShips().get(num));
+            CmpBattleshipService.service.rotateShip(this, getOwnedShips().get(num));
         }
 
         try {
-            CmpBattleshipService.service.placeShip(player2OwnerMap.get(this), getOwnedShips().get(num), position.getX(), position.getY());
+            CmpBattleshipService.service.placeShip(this, getOwnedShips().get(num), position.getX(), position.getY());
         } catch (IllegalPositionException e){
-            placeShipMediumLarge(player2OwnerMap, num, size);
+            placeShipMediumLarge(num, size);
         }
     }
 
-    public void comShipPlacement(Map<Player, Owner> player2OwnerMap, int size) throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
+    public void comShipPlacement(int size) throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
 
         for(int num = 0; num < getOwnedShips().size(); num++){
             if(size == 5){
-                placeShipSmall(player2OwnerMap, num);
+                placeShipSmall(num);
             }
             else if(size == 10 || size == 15){
-                placeShipMediumLarge(player2OwnerMap, num, size);
+                placeShipMediumLarge(num, size);
             }
         }
     }

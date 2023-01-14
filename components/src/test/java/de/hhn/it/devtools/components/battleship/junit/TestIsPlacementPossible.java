@@ -27,11 +27,8 @@ public class TestIsPlacementPossible {
     Computer computer = bsService.getComputer();
     Field computerField = new Field(9, computer);
 
-    private Map<Player, Owner> player2OwnerMap;
-
     @BeforeEach
     void setup() {
-        player2OwnerMap = new HashMap<>();
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
                 playerField.setPanelMarker(i, j, PanelState.NOSHIP);
@@ -42,8 +39,6 @@ public class TestIsPlacementPossible {
         computer.setShipfield(computerField);
         player.setAttackField(playerField);
         computer.setAttackField(computerField);
-        player2OwnerMap.put(player, Owner.PLAYER);
-        player2OwnerMap.put(computer, Owner.COMPUTER);
     }
 
     // Bad Cases
@@ -55,7 +50,7 @@ public class TestIsPlacementPossible {
         bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        assertEquals(false, bs.isPlacementPossible(player2OwnerMap.get(player), ship, -1, -1, true));
+        assertEquals(false, bs.isPlacementPossible(player, ship, -1, -1, true));
     }
 
     @Test
@@ -65,7 +60,7 @@ public class TestIsPlacementPossible {
         bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        assertEquals(false, bs.isPlacementPossible(player2OwnerMap.get(player), ship, 9, 9, false));
+        assertEquals(false, bs.isPlacementPossible(player, ship, 9, 9, false));
     }
 
     @Test
@@ -76,7 +71,7 @@ public class TestIsPlacementPossible {
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         IllegalGameStateException exception = assertThrows(IllegalGameStateException.class,
-                () -> bs.isPlacementPossible(player2OwnerMap.get(player),ship, 2, 4, false));
+                () -> bs.isPlacementPossible(player,ship, 2, 4, false));
     }
 
     @Test
@@ -86,7 +81,7 @@ public class TestIsPlacementPossible {
         bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        assertEquals(false, bs.isPlacementPossible(player2OwnerMap.get(player), ship, 1, 8, true));
+        assertEquals(false, bs.isPlacementPossible(player, ship, 1, 8, true));
     }
 
     @Test
@@ -96,7 +91,7 @@ public class TestIsPlacementPossible {
         bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        assertEquals(false, bs.isPlacementPossible(player2OwnerMap.get(player), ship, 7, 2, false));
+        assertEquals(false, bs.isPlacementPossible(player, ship, 7, 2, false));
     }
 
     // Good Cases
@@ -108,7 +103,7 @@ public class TestIsPlacementPossible {
         bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        assertEquals(true, bs.isPlacementPossible(player2OwnerMap.get(player), ship, 7, 5, true));
+        assertEquals(true, bs.isPlacementPossible(player, ship, 7, 5, true));
     }
 
     @Test
@@ -118,7 +113,7 @@ public class TestIsPlacementPossible {
         bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        assertEquals(true, bs.isPlacementPossible(player2OwnerMap.get(player), ship, 5, 0, false));
+        assertEquals(true, bs.isPlacementPossible(player, ship, 5, 0, false));
     }
 
 }
