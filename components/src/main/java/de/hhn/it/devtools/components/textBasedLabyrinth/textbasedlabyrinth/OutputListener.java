@@ -58,6 +58,8 @@ public interface OutputListener {
 
     void listenerEnd();
 
+    void listenerReset();
+
     void updateScore(int newScore);
 
 

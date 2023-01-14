@@ -40,11 +40,7 @@ public class Game implements GameService {
     score = 0;
   }
 
-  /**
-   *
-   * @param map
-   * @param seed
-   */
+
   public void start(Map map, Seed seed) {
     setCurrentLayout(map, seed);
     score = 0;

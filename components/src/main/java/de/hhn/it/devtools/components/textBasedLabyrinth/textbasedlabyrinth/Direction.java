@@ -11,7 +11,28 @@ public enum Direction {
 
     WEST,
 
-    EAST
+    EAST;
+
+
+
+
+    private Direction opposite;
+
+    static {
+        NORTH.opposite = SOUTH;
+        SOUTH.opposite = NORTH;
+        WEST.opposite = EAST;
+        EAST.opposite = WEST;
+    }
+
+
+
+    public Direction getOpposite() {
+        return opposite;
+    }
+
+
+
 
 
 }

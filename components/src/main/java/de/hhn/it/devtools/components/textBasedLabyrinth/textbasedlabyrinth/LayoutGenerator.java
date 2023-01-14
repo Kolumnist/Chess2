@@ -64,6 +64,8 @@ public class LayoutGenerator {
         int specialRoomId = 1000;
 
 
+
+        //This part attaches rooms to other rooms, creating a layout based on the selected map.
         if (map.equals(Map.Grave_of_the_Mad_King)) {
             startRoom.setNextDoorRoom(allRooms.get(1), Direction.WEST);
             allRooms.get(1).setNextDoorRoom(allRooms.get(2), Direction.WEST);
@@ -112,10 +114,13 @@ public class LayoutGenerator {
 
 
 
+        //This sets all the doors.
         for (Room room : allRooms) {
             room.setDoors();
         }
 
+
+        //This part uses the seed to create puzzles and treasure.
         if (map.equals(Map.Grave_of_the_Mad_King)) {
             int amountOfPuzzles = 1;
             if (seed.getSeed().get(0) < 5) {

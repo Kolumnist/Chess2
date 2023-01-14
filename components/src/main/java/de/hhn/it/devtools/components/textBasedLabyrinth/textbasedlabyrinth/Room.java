@@ -58,7 +58,7 @@ public class Room {
   public void setDoors() {
     for (Direction direction : directions) {
       if (roomMap.containsKey(direction)) {
-        Direction oppositeDirection = oppositeDirection(direction);
+        Direction oppositeDirection = direction.getOpposite();
         if (roomMap.get(direction).getDoorMap().containsKey(oppositeDirection)) {
           doorMap.put(direction, roomMap.get(direction).getDoorMap().get(oppositeDirection));
         } else {
@@ -175,20 +175,6 @@ public class Room {
     this.isExit = true;
   }
 
-  private Direction oppositeDirection(Direction direction) {
-    Direction oppositeDirection = direction;
-    if (direction == Direction.SOUTH) {
-      oppositeDirection = Direction.NORTH;
-    } else if (direction == Direction.NORTH) {
-      oppositeDirection = Direction.SOUTH;
-    } else if (direction == Direction.EAST) {
-      oppositeDirection = Direction.WEST;
-    } else if (direction == Direction.WEST) {
-      oppositeDirection = Direction.EAST;
-    }
-
-    return oppositeDirection;
-  }
 
 }
 
