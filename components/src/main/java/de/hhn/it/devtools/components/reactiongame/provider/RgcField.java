@@ -99,8 +99,7 @@ public class RgcField {
    */
   RgcAimTarget addRandomAimTarget(int aimTargetId) {
     targetCreationCounter++;
-    return addRandomAimTarget(aimTargetId,
-        targetCreationCounter % 2);
+    return addRandomAimTarget(aimTargetId, targetCreationCounter % 2);
   }
 
   /**

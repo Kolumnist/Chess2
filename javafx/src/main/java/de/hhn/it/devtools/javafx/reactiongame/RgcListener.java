@@ -135,7 +135,7 @@ public class RgcListener implements ReactiongameListener {
   public void gameOver() {
     Platform.runLater(() -> {
       try {
-        screenController.switchTo("RgcMenu");
+        screenController.switchTo("RgcHighscores");
         service.removeCallback(this);
       } catch (IOException e) {
         throw new RuntimeException(e);

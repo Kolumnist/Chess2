@@ -36,6 +36,9 @@ public class RgcMenuController extends Controller implements Initializable {
   @FXML // fx:id="startGameBtn"
   private Button startGameBtn; // Value injected by FXMLLoader
 
+  @FXML // fx:id="soundBtn"
+  private Button soundBtn; // Value injected by FXMLLoader
+
   private RgcScreenController screenController;
 
   @FXML
@@ -45,7 +48,11 @@ public class RgcMenuController extends Controller implements Initializable {
 
   @FXML
   void onHighscoreBtn(ActionEvent event) {
-
+    try {
+      screenController.switchTo("RgcHighscores");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @FXML
