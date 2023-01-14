@@ -102,6 +102,14 @@ public class RgcRun {
     return pKey;
   }
 
+  public RgcAimTarget getpAimTarget() {
+    return pAimTarget;
+  }
+
+  public RgcObstacle getpObstacle() {
+    return pObstacle;
+  }
+
 
   /**
    * Pauses the clocks.

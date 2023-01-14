@@ -4,6 +4,7 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.reactiongame.Difficulty;
 import de.hhn.it.devtools.apis.reactiongame.GameState;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
+import de.hhn.it.devtools.components.reactiongame.provider.RgcAimTarget;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcObstacleClock;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcPlayer;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcRun;
@@ -74,9 +75,60 @@ public class RgcServiceTest {
   }
 
   @Test
-  public void testSetCurrentPlayername() {
+  public void testSetCurrentPlayerName() {
     assertEquals(service.getCurrentPlayer().getName(), "Player");
     service.setCurrentPlayerName("Simone");
     assertEquals(service.getCurrentPlayer().getName(), "Simone");
+  }
+
+  @Test
+  public void testPlayerEnteredAimTarget() {
+    boolean thrown = false;
+    try {
+      service.playerEnteredAimTarget(-1);
+    } catch (IllegalParameterException e) {
+      thrown = true;
+    }
+    assertTrue(thrown);
+
+    thrown = false;
+    run.addAimTarget(0);
+    try {
+      service.playerEnteredAimTarget(0);
+    } catch (IllegalParameterException e) {
+      thrown = true;
+    }
+    assertEquals(run.getpAimTarget().getId(), 0);
+    assertFalse(thrown);
+  }
+
+  @Test
+  public void testPlayerEnteredObstacle() {
+    boolean thrown = false;
+    try {
+      service.playerEnteredObstacle(-1);
+    } catch (IllegalParameterException e) {
+      thrown = true;
+    }
+    assertTrue(thrown);
+
+    int life = run.getPlayer().getCurrentLife();
+    thrown = false;
+    run.addObstacle(0);
+    try {
+      service.playerEnteredObstacle(0);
+    } catch (IllegalParameterException e) {
+      thrown = true;
+    }
+    assertEquals(run.getpObstacle().getId(), 0);
+    assertFalse(thrown);
+    assertEquals(run.getPlayer().getCurrentLife(), life - 1);
+  }
+
+  @Test
+  public void testPlayerLeftGameObject() {
+    service.playerLeftGameObject();
+    assertNull(run.getpObstacle());
+    assertNull(run.getpAimTarget());
   }
 }

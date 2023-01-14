@@ -139,4 +139,8 @@ class RgcRunTest {
     assertNotEquals(run.getScore(), scorealt);
   }
 
+  @Test
+  void testGetCallbacks() {
+    assertNotNull(run.getCallbacks());
+  }
 }

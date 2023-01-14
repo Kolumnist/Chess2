@@ -26,19 +26,19 @@ public class RgcField {
   private Map<Integer, RgcAimTarget> targetMap = new HashMap<>();
 
   /**
-   * Creates the basic field. (Res.: 1280x720)
+   * Creates the basic field. (Res.: 1040x585)
    */
   public RgcField() {
     width = NORMAL_WIDTH;
     height = NORMAL_HEIGHT;
 
-    obstacleLines.add(new RgcObstacleLine(400));
-    obstacleLines.add(new RgcObstacleLine(500));
-    obstacleLines.add(new RgcObstacleLine(600));
+    obstacleLines.add(new RgcObstacleLine(250));
+    obstacleLines.add(new RgcObstacleLine(520));
+    obstacleLines.add(new RgcObstacleLine(790));
 
-    aimTargetZones.add(new RgcAimTargetZone(25, 0, 100, RgcField.NORMAL_HEIGHT));
-    aimTargetZones.add(new RgcAimTargetZone(RgcField.NORMAL_WIDTH - 100, 0,
-            RgcField.NORMAL_WIDTH - 25, RgcField.NORMAL_HEIGHT));
+    aimTargetZones.add(new RgcAimTargetZone(25, 25, 100, RgcField.NORMAL_HEIGHT - 25));
+    aimTargetZones.add(new RgcAimTargetZone(RgcField.NORMAL_WIDTH - 100, 25,
+            RgcField.NORMAL_WIDTH - 25, RgcField.NORMAL_HEIGHT - 25));
 
   }
 
