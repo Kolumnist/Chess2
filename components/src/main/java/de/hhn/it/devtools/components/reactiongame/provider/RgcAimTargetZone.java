@@ -31,8 +31,8 @@ public class RgcAimTargetZone {
 
   public RgcAimTarget addRandomAimTarget(int aimTargetId) {
 
-    int x = new Random().nextInt(x1 + x2) + x2;
-    int y = new Random().nextInt(y1 + y2) + y2;
+    int x = new Random().nextInt(x2 - x1) + x1;
+    int y = new Random().nextInt(y2 - y1) + y1;
 
     RgcAimTarget aimTarget = new RgcAimTarget(aimTargetId, x, y, RgcAimTarget.RADIUS,
         generateRandomKeyforAimTarget());

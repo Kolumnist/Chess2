@@ -244,9 +244,9 @@ public class RgcRun {
    * @param aimTargetId identifier
    */
   public void addAimTarget(int aimTargetId) {
-    logger.info("Add aim target (" + aimTargetId + ")");
-
     RgcAimTarget aimTarget = field.addRandomAimTarget(aimTargetId);
+    logger.info("Add aim target (" + aimTargetId + ") (" + aimTarget.getX() + "|" + aimTarget.getY() + ")");
+
 
     for (ReactiongameListener callback :
         callbacks) {

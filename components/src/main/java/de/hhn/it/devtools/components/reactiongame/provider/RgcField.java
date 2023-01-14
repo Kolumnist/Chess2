@@ -100,9 +100,10 @@ public class RgcField {
    * @param aimTargetId aim target identifier
    */
   RgcAimTarget addRandomAimTarget(int aimTargetId) {
+    System.out.println(targetCount);
     return addRandomAimTarget(aimTargetId,
-        aimTargetZones.get(0).getAimTargets().size() > aimTargetZones.get(1).getAimTargets().size()
-            ? 1 : 0);
+        targetCount % 2 == 0 ? 1 : 0);
+
   }
 
   /**
