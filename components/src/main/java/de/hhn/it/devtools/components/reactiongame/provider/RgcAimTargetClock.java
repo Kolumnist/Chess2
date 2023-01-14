@@ -20,7 +20,9 @@ public class RgcAimTargetClock implements Runnable {
 
   private long time; // in seconds
 
-  private HashMap<Long, Integer> targetMap;
+  private final HashMap<Long, Integer> targetMap; // time - aimtargetID
+
+  private List<Long> removers;
   
   private boolean isRunning;
 
@@ -59,6 +61,10 @@ public class RgcAimTargetClock implements Runnable {
 
   public void setEnded(boolean ended) {
     isEnded = ended;
+  }
+
+  public HashMap<Long, Integer> getTargetMap() {
+    return targetMap;
   }
 
   @Override
@@ -109,26 +115,49 @@ public class RgcAimTargetClock implements Runnable {
    * on the game field.
    */
   private void checkIfTargetExpired() {
+    synchronized (targetMap) {
+      removers = new ArrayList<>();
 
-    List<Long> removers = new ArrayList<>();
 
-    for (Entry<Long, Integer> e :
-        targetMap.entrySet()) {
+      for (Entry<Long, Integer> e :
+          targetMap.entrySet()) {
 
-      if (e.getKey() == time) { // target expired
-        run.removeAimTarget(e.getValue());
-        run.playerLosesLife();
+        if (e.getKey() == time) { // target expired
+          run.removeAimTarget(e.getValue());
+          run.playerLosesLife();
 
-        removers.add(Long.valueOf(e.getValue()));
+          removers.add(e.getKey());
+        }
+      }
+
+      for (Long l :
+          removers) {
+        targetMap.remove(l);
       }
     }
-
-    for (Long l :
-        removers) {
-      targetMap.remove(l);
-    }
-
   }
+
+  public void removeAimTarget(int aimTargetId) {
+    synchronized (targetMap) {
+      removers = new ArrayList<>();
+
+
+      for (Entry<Long, Integer> e :
+          targetMap.entrySet()) {
+
+        if (e.getValue() == aimTargetId) { // target expired
+          removers.add(e.getKey());
+        }
+      }
+
+      for (Long l :
+          removers) {
+        targetMap.remove(l);
+      }
+    }
+  }
+
+
 
 
 }

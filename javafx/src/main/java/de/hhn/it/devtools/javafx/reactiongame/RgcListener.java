@@ -58,13 +58,14 @@ public class RgcListener implements ReactiongameListener {
 
   @Override
   public void removeAimTarget(int aimTargetId) {
+    logger.info("Remove Aimtarget " + aimTargetId);
     for (Node n :
         pane.getChildren()) {
       if (n instanceof RgcAimTargetFx) {
         if (n.getId() != null && n.getId().equals(aimTargetId + "")) {
           Platform.runLater(() -> pane.getChildren().remove(n));
+          return;
         }
-        return;
       }
     }
   }

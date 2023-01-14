@@ -23,10 +23,8 @@ public class RgcGameController implements Initializable {
 
   private static SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
 
-  public RgcGameController() {
 
-  }
-
+  private RgcService service;
   @FXML // fx:id="gamePane"
   private Pane gamePane; // Value injected by FXMLLoader
   @FXML // fx:id="infoLable"
@@ -39,23 +37,9 @@ public class RgcGameController implements Initializable {
   private Label liveLable; // Value injected by FXMLLoader
 
   @FXML
-  void onKeyPressed(KeyEvent event) {
-    System.out.println("KEY PRESSED");
-    String key = event.getText();
-    RgcService service = (RgcService) singletonAttributeStore.getAttribute(ReactionGameController.RGC_SERVICE);
-
-    service.keyPressed(key.charAt(0));
+  void gpOnMouseEntered(MouseEvent event) {
+    service.playerLeftGameObject();
   }
-
-  @FXML
-  void gpOnKeyTyped(KeyEvent event) {
-    System.out.println("KEY PRESSED");
-    String key = event.getText();
-    RgcService service = (RgcService) singletonAttributeStore.getAttribute(ReactionGameController.RGC_SERVICE);
-
-    service.keyPressed(key.charAt(0));
-  }
-
   @FXML
   void gpOnMouseClicked(MouseEvent event) {
     System.out.println("Mouse clicked");
@@ -64,7 +48,7 @@ public class RgcGameController implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
 
-    RgcService service = (RgcService) singletonAttributeStore.getAttribute(ReactionGameController.RGC_SERVICE);
+    service = (RgcService) singletonAttributeStore.getAttribute(ReactionGameController.RGC_SERVICE);
     anchorPane = (AnchorPane) singletonAttributeStore.getAttribute(ReactionGameController.RGC_ANCHOR_PANE);
 
     Stage stage = (Stage) anchorPane.getScene().getWindow();

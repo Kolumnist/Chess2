@@ -4,11 +4,6 @@ import de.hhn.it.devtools.apis.reactiongame.Difficulty;
 import de.hhn.it.devtools.apis.reactiongame.GameState;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
 import java.util.ArrayList;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Class communicate between the service and components. Also notifies the callbacks.
@@ -104,7 +99,9 @@ public class RgcRun {
     return aimTargetClock;
   }
 
-  public int getScore(){return score;}
+  public int getScore() {
+    return score;
+  }
 
   public char getpKey() {
     return pKey;
@@ -156,8 +153,6 @@ public class RgcRun {
     aimTargetClock.setRunning(false);
     aimTargetClock.setEnded(true);
 
-
-
     for (ReactiongameListener callback :
         callbacks) {
       callback.gameOver();
@@ -193,7 +188,6 @@ public class RgcRun {
       endRun();
     }
 
-
     for (ReactiongameListener callback :
         callbacks) { // player loses a life
       callback.currentLife(player.getCurrentLife());
@@ -205,10 +199,16 @@ public class RgcRun {
    */
   public void checkForTargetHit() {
     if (pAimTarget != null && pAimTarget.getKey() == pKey) {
+      logger.info(pAimTarget.getId() + " | " + pKey);
       score += 100;
+
+      field.removeAimTarget(pAimTarget.getId());
+
+      aimTargetClock.removeAimTarget(pAimTarget.getId());
 
       for (ReactiongameListener callback :
           callbacks) { // raise score
+        callback.removeAimTarget(pAimTarget.getId());
         callback.changeScore(score);
       }
     }
@@ -269,8 +269,8 @@ public class RgcRun {
       return;
     }
     RgcAimTarget aimTarget = field.addRandomAimTarget(aimTargetId);
-    logger.info("Add aim target (" + aimTargetId + ") (" + aimTarget.getX() + "|" + aimTarget.getY() + ")");
-
+    logger.info(
+        "Add aim target (" + aimTargetId + ") (" + aimTarget.getX() + "|" + aimTarget.getY() + ")");
 
     for (ReactiongameListener callback :
         callbacks) {
