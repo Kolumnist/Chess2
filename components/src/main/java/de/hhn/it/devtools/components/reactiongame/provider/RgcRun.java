@@ -4,8 +4,11 @@ import de.hhn.it.devtools.apis.reactiongame.Difficulty;
 import de.hhn.it.devtools.apis.reactiongame.GameState;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
 import java.util.ArrayList;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Class communicate between the service and components. Also notifies the callbacks.
@@ -30,6 +33,8 @@ public class RgcRun {
   private boolean isInvincible = false;
   private Thread iFrameThread;
 
+  private boolean isRunning = true;
+
 
   /**
    * Standard constructor for the logic.
@@ -40,6 +45,7 @@ public class RgcRun {
     logger.info("Create run with difficulty: " + difficulty);
     this.difficulty = difficulty;
     this.player = player;
+    player.setCurrentLife(3);
 
     callbacks = new ArrayList<>();
 
@@ -112,6 +118,9 @@ public class RgcRun {
     return pObstacle;
   }
 
+  public boolean isRunning() {
+    return isRunning;
+  }
 
   /**
    * Pauses the clocks.
@@ -139,15 +148,15 @@ public class RgcRun {
   public void endRun() {
     logger.info("End run");
 
+    isRunning = false;
+
     obstacleClock.setRunning(false);
     obstacleClock.setEnded(true);
 
     aimTargetClock.setRunning(false);
     aimTargetClock.setEnded(true);
 
-    ExecutorService executorService = Executors.newSingleThreadExecutor();
-    executorService.submit(iFrameThread);
-    executorService.shutdown();
+
 
     for (ReactiongameListener callback :
         callbacks) {
@@ -177,7 +186,7 @@ public class RgcRun {
    * Lowers the player lives by one. If it falls below 1, the game is over.
    */
   public void playerLosesLife() {
-    logger.info("Player loses life");
+    logger.info("Player loses life (" + (player.getCurrentLife() - 1) + ")");
     player.setCurrentLife(player.getCurrentLife() - 1);
 
     if (player.getCurrentLife() < 1) { // is player game over?
@@ -212,6 +221,10 @@ public class RgcRun {
    * @param obstacleId identifier
    */
   public void addObstacle(int obstacleId) {
+    if (!isRunning) {
+      return;
+    }
+
     logger.info("Add obstacle (" + obstacleId + ")");
 
     field.addRandomObstacle(obstacleId);
@@ -231,6 +244,9 @@ public class RgcRun {
    * @param obstacleId identifier
    */
   public void removeObstacle(int obstacleId) {
+    if (!isRunning) {
+      return;
+    }
     logger.info("Remove obstacle (" + obstacleId + ")");
 
     field.removeObstacle(obstacleId);
@@ -249,6 +265,9 @@ public class RgcRun {
    * @param aimTargetId identifier
    */
   public void addAimTarget(int aimTargetId) {
+    if (!isRunning) {
+      return;
+    }
     RgcAimTarget aimTarget = field.addRandomAimTarget(aimTargetId);
     logger.info("Add aim target (" + aimTargetId + ") (" + aimTarget.getX() + "|" + aimTarget.getY() + ")");
 
@@ -266,6 +285,9 @@ public class RgcRun {
    * @param aimTargetId identifier
    */
   public void removeAimTarget(int aimTargetId) {
+    if (!isRunning) {
+      return;
+    }
     logger.info("Removed aim target (" + aimTargetId + ")");
 
     field.removeAimTarget(aimTargetId);
