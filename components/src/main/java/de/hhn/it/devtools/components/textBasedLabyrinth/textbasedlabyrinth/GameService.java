@@ -95,7 +95,7 @@ public interface GameService {
 
   void startup();
 
-  void start(Map map, Seed seed);
+  void start();
 
   void end();
 
