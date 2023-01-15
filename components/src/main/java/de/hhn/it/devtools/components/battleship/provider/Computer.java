@@ -98,7 +98,7 @@ public class Computer extends Player {
         int y = random.nextInt(size/3, size - size/3);
         return new Position(x, y);
     }
-
+/*
     public boolean checkSurroundings(Position position, boolean isVertical, int shipSize, int fieldSize){
         int x = position.getX();
         int y = position.getY();
@@ -175,4 +175,6 @@ public class Computer extends Player {
         }
         return false;
     }
+
+ */
 }
