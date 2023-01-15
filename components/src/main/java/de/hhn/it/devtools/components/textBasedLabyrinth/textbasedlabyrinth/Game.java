@@ -26,6 +26,12 @@ public class Game implements GameService {
   private int score;
 
 
+
+  public Game() {
+
+  }
+
+
   /**
    * This method exists to initialize the player and the lists,
    * and other things.
@@ -71,7 +77,7 @@ public class Game implements GameService {
    * This method deals with the player moving from room to room.
    * @param direction the direction in which the player is moving.
    */
-  public void move(Direction direction) {
+  public void move(Direction direction) throws IllegalArgumentException {
     if (direction == null) {
       throw new IllegalArgumentException("Direction should not be null.");
     }
@@ -289,19 +295,15 @@ public class Game implements GameService {
     return message;
   }
 
-  /**
-   *
-   * @param listener
-   */
+
+
   @Override
   public void addListener(OutputListener listener) {
     listeners.add(listener);
   }
 
-  /**
-   *
-   * @param listener
-   */
+
+
   @Override
   public void removeListener(OutputListener listener) {
     listeners.remove(listener);
@@ -318,10 +320,8 @@ public class Game implements GameService {
     return message;
   }
 
-  /**
-   *
-   * @return
-   */
+
+
   private List<Item> itemSearcher() {
     List<Item> items = new ArrayList<>();
     items = currentRoom.search();
@@ -337,11 +337,14 @@ public class Game implements GameService {
     this.currentLayout = new Layout(player);
   }
 
-  /**
-   *
-   * @return
-   */
+
+
   public String getPlayerName() {
     return player.getName();
+  }
+
+  @Override
+  public Player getPlayer() {
+    return player;
   }
 }

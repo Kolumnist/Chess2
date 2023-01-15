@@ -91,6 +91,8 @@ public interface GameService {
 
   void removeListener(OutputListener listener);
 
+  Player getPlayer();
+
 
 
   void startup();
