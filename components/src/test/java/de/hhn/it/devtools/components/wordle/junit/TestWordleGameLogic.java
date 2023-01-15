@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -44,6 +45,23 @@ public class TestWordleGameLogic {
     wordleGameLogic.startGame();
     wordleGameLogic.startAnotherGame();
     assertNotNull(wordleGameLogic.getPreviousWordleSolution());
+  }
+
+  @Test
+  void receiveAndComputeGuessShouldThrowException() throws IllegalGuessException {
+    assertThrows(IllegalGuessException.class, () -> {
+      wordleGameLogic.receiveAndComputeGuess("grac ");
+    }
+    );
+  }
+
+  @Test
+  void receiveAndComputeGuessShouldRunNormally() throws IllegalGuessException {
+    wordleGameLogic.startGame();
+    WordleGuess expectedResult = new WordleGuess("grace");
+    wordleGameLogic.receiveAndComputeGuess("grace");
+    assertEquals(wordleGameLogic.getCurrentWordleGame().getPlayerGuesses()[0]
+        .getWordleGuessAsString(), expectedResult.getWordleGuessAsString());
   }
 
   @Test

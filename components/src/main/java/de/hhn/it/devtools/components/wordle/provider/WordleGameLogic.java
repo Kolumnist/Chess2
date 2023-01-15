@@ -187,4 +187,8 @@ public class WordleGameLogic implements WordleService {
   public void setWasStartGameCalled(boolean wasStartGameCalled) {
     WordleGameLogic.wasStartGameCalled = wasStartGameCalled;
   }
+
+  public WordleGame getCurrentWordleGame() {
+    return currentWordleGame;
+  }
 }
