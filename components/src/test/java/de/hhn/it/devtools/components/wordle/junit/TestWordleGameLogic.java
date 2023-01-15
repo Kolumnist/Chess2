@@ -42,10 +42,9 @@ public class TestWordleGameLogic {
   void checkIfGuessIsLongEnoughShouldThrowIllegalGuessExceptionWithOneWhitespace()
   throws IllegalGuessException {
     WordleGuess wordleGuess = new WordleGuess("keba ");
-    Throwable exception = assertThrows(
-       IllegalGuessException.class, () -> {
-          wordleGameLogic.checkIfGuessIsLongEnough(wordleGuess);
-        }
+    assertThrows(IllegalGuessException.class, () -> {
+      wordleGameLogic.checkIfGuessIsLongEnough(wordleGuess);
+    }
     );
   }
 
@@ -53,10 +52,9 @@ public class TestWordleGameLogic {
   void checkIfGuessIsLongEnoughShouldThrowIllegalGuessExceptionWithFiveWhitespaces()
   throws IllegalGuessException {
     WordleGuess wordleGuess = new WordleGuess("     ");
-    Throwable exception = assertThrows(
-        IllegalGuessException.class, () -> {
-          wordleGameLogic.checkIfGuessIsLongEnough(wordleGuess);
-        }
+    assertThrows(IllegalGuessException.class, () -> {
+      wordleGameLogic.checkIfGuessIsLongEnough(wordleGuess);
+    }
     );
   }
 
