@@ -64,7 +64,7 @@ public class TestPlayer {
     }
 
     @Test
-    @DisplayName("Test if Player picks up items correctly")
+    @DisplayName("Test if Player drop items correctly")
     public void checkPlayerRemoveItem() {
         NoSuchItemFoundException exception = assertThrows(NoSuchItemFoundException.class,
                 () -> gameService.dropItem(1));

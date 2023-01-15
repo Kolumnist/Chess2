@@ -4,10 +4,6 @@ import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.Map;
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.Game;
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.GameService;
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.Seed;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.OutputListener;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.*;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.RoomFailedException;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.InvalidSeedException;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 
@@ -21,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Test Map")
-public class TestMapBadCases {
+public class TestMap {
     private static final org.slf4j.Logger logger =
-            org.slf4j.LoggerFactory.getLogger(TestMapBadCases.class);
+            org.slf4j.LoggerFactory.getLogger(TestMap.class);
     private GameService gameService;
 
     private Seed seed;
@@ -36,7 +32,6 @@ public class TestMapBadCases {
         ArrayList<Integer> integers = new ArrayList<>();
         integers.add(1);
         integers.add(1);
-        integers.add(1);
         seed = new Seed(integers);
     }
 
@@ -44,12 +39,13 @@ public class TestMapBadCases {
     @DisplayName("Test bad creation of Layout with null reference")
     public void createLayoutWithNullMap() {
         IllegalParameterException exception = assertThrows(IllegalParameterException.class,
-                () -> gameService.setCurrentLayout(null, seed));
+                () -> gameService.setCurrentLayout(Map.Ancient_Dungeon, seed));
     }
 
     @Test
     @DisplayName("Test if correct Map is created")
     public void checkCorrectMap() {
+        gameService.setCurrentLayout(Map.Unknown_Sewers, seed);
         assertEquals(Map.Unknown_Sewers, gameService.getMap());
     }
 }
