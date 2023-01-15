@@ -16,18 +16,22 @@ public class WordleGameLogic implements WordleService {
 
   private static boolean wasStartGameCalled = false;
   private WordleGame currentWordleGame;
+  private static final org.slf4j.Logger logger =
+      org.slf4j.LoggerFactory.getLogger(WordleGameLogic.class);
   @Override
   public void startGame() {
     String currentSolution = WordleSolutionSelector.selectWordle();
     setCurrentWordleSolution(currentSolution);
     currentWordleGame = new WordleGame();
     wasStartGameCalled = true;
+    logger.info("Started new game, solution is: " + currentSolution);
   }
 
   @Override
   public void startAnotherGame() {
     if(!wasStartGameCalled) {
       startGame();
+      logger.info("Method startAnotherGame was called before startGame");
     }
     else {
       setPreviousWordleSolution(getCurrentWordleSolution());
@@ -35,6 +39,7 @@ public class WordleGameLogic implements WordleService {
       if (!newSolution.equals(getPreviousWordleSolution())) {
         setCurrentWordleSolution(newSolution);
         currentWordleGame = new WordleGame();
+        logger.info("Started another game, solution is: " + newSolution);
       } else {
         startAnotherGame();
       }
@@ -59,6 +64,7 @@ public class WordleGameLogic implements WordleService {
     currentWordleGuess.changeContentsOfWordlePanels(stringGuess);
     checkIfGameIsFinished(currentWordleGuess);
     currentWordleGame.incrementWordleGuessIndex();
+    logger.info("receiveAndComputeGuess ran without throwing an exception");
     return currentWordleGame.getPlayerGuesses();
   }
 
@@ -69,6 +75,7 @@ public class WordleGameLogic implements WordleService {
    * @return true if guess is equal to solution and false otherwise
    */
   public boolean checkIfGameIsFinished(WordleGuess guess){
+    logger.info("checkIfGuessIsCorrect returned:" + checkIfGuessIsCorrect(guess));
     return checkIfGuessIsCorrect(guess) ||
         checkPanelsIndividually(guess);
   }
@@ -85,9 +92,11 @@ public class WordleGameLogic implements WordleService {
       for (WordlePanelService panel : guess.getWordleWord()) {
         panel.setState(State.CORRECT);
         panel.notifyListeners(State.CORRECT);
+        logger.info("checkIfGuessIsCorrect returns true");
         return true;
       }
     }
+    logger.info("checkIfGuessIsCorrect returns false");
     return false;
   }
 
@@ -99,8 +108,11 @@ public class WordleGameLogic implements WordleService {
    */
   public void checkIfGuessIsLongEnough (WordleGuessService guess) throws IllegalGuessException { // try catch Block will be implemented in the Controller class
     for (WordlePanelService panel : guess.getWordleWord()) {
-      if (panel.getLetter() == ' ')
+      if (panel.getLetter() == ' '){
+        logger.info("checkIfGuessIsLongEnough will throw IllegalGuessException");
         throw new IllegalGuessException("Wordle guess does not contain five valid characters!");
+      }
+
     }
   }
 
@@ -118,12 +130,15 @@ public class WordleGameLogic implements WordleService {
       if (enteredWordleGuess.charAt(i) == currentWordleSolution.charAt(i)) {
         wordlePanels[i].setState(State.CORRECT);
         wordlePanels[i].notifyListeners(State.CORRECT);
+        logger.info("Panel is correct:" + wordlePanels[i].getLetter());
       } else if (currentWordleSolution.contains(Character.toString(enteredWordleGuess.charAt(i)))) {
         wordlePanels[i].setState(State.PARTIALLY_CORRECT);
         wordlePanels[i].notifyListeners(State.PARTIALLY_CORRECT);
+        logger.info("Panel is partially correct:" + wordlePanels[i].getLetter());
       } else {
         wordlePanels[i].setState(State.FALSE);
         wordlePanels[i].notifyListeners(State.FALSE);
+        logger.info("Panel is false:" + wordlePanels[i].getLetter());
       }
     }
     return false;
@@ -134,27 +149,35 @@ public class WordleGameLogic implements WordleService {
   }
 
   @Override
-  public void addCallback(WordlePanelListener listener, WordlePanelService panel) throws IllegalParameterException {
+  public void addCallback(WordlePanelListener listener, WordlePanelService panel)
+      throws IllegalParameterException {
+    logger.info("addCallback: id = {}, listener = {}", panel.getId(), listener);
     panel.addCallback(listener);
   }
 
   @Override
-  public void removeCallback(WordlePanelListener listener, WordlePanelService panel) throws IllegalParameterException {
+  public void removeCallback(WordlePanelListener listener, WordlePanelService panel)
+      throws IllegalParameterException {
+    logger.info("removeCallback: id = {}, listener = {}", panel.getId(), listener);
     panel.removeCallback(listener);
   }
 
   public String getPreviousWordleSolution() {
+    logger.debug("getPreviousWordleSolution returns: " + previousWordleSolution);
     return previousWordleSolution;
   }
 
   public void setPreviousWordleSolution(String previousWordleSolution) {
     this.previousWordleSolution = previousWordleSolution;
+    logger.debug("PreviousWordleSolution is now: " + previousWordleSolution);
   }
 
   public void setCurrentWordleSolution(String currentWordleSolution) {
     this.currentWordleSolution = currentWordleSolution;
+    logger.debug("CurrentWordleSolution is now: " + currentWordleSolution);
   }
   public String getCurrentWordleSolution() {
+    logger.debug("getCurrentWordleSolution returns: " + currentWordleSolution);
     return currentWordleSolution;
   }
 
