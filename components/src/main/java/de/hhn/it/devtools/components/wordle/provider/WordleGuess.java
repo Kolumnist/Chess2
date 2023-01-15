@@ -33,9 +33,10 @@ public class WordleGuess implements WordleGuessService {
     return wordleWord;
   }
 
-  @Override
-  public void setWordleWord(WordlePanelService[] wordleWord) {
-    this.wordleWord = wordleWord;
+  public void changeContentsOfWordlePanels(String newContent){
+    for(int i = 0; i<=4;i++){
+      setLetterAtIndex(i, newContent.toLowerCase().charAt(i));
+    }
   }
 
   /**
@@ -70,6 +71,6 @@ public class WordleGuess implements WordleGuessService {
     for (WordlePanelService wordlePanel : wordleWord) {
       wordleGuessAsString.append(wordlePanel.getLetter());
     }
-    return String.valueOf(wordleGuessAsString);
+    return String.valueOf(wordleGuessAsString).toLowerCase();
   }
 }
