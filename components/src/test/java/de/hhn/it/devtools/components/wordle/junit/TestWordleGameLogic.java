@@ -65,7 +65,7 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void guess_kebabIsCorrectShouldReturnTrue() {
+  void guessKebabIsCorrectShouldReturnTrue() {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebab");
@@ -81,7 +81,7 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void guess_nastyIsNotCorrectShouldReturnFalse() {
+  void guessNastyIsNotCorrectShouldReturnFalse() {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("nasty");
@@ -89,7 +89,7 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void guess_kebxbIsNotCorrectShouldReturnFalse() {
+  void guessKebxbIsNotCorrectShouldReturnFalse() {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebxb");
@@ -97,7 +97,7 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void guess_kebabIsEntirelyCorrectShouldReturnTrue() {
+  void guessKebabIsEntirelyCorrectShouldReturnTrue() {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebab");
@@ -105,7 +105,7 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void guess_KeBAbIsEntirelyCorrectShouldReturnTrue() {
+  void guessKeBAbIsEntirelyCorrectShouldReturnTrue() {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("KeBAb");
@@ -113,7 +113,7 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void guess_kebasIsNotEntirelyCorrectShouldReturnFalse() {
+  void guessKebasIsNotEntirelyCorrectShouldReturnFalse() {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebas");
