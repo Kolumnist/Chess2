@@ -13,6 +13,7 @@ public class WordleGameLogic implements WordleService {
 
   private String currentWordleSolution;
   private String previousWordleSolution;
+
   private static boolean wasStartGameCalled = false;
   private WordleGame currentWordleGame;
   @Override
@@ -157,5 +158,10 @@ public class WordleGameLogic implements WordleService {
     return currentWordleSolution;
   }
 
-
+  public boolean getWasStartGameCalled() {
+    return wasStartGameCalled;
+  }
+  public void setWasStartGameCalled(boolean wasStartGameCalled) {
+    WordleGameLogic.wasStartGameCalled = wasStartGameCalled;
+  }
 }
