@@ -65,7 +65,7 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void guess_kebab_IsCorrectShouldReturnTrue() {
+  void guess_kebabIsCorrectShouldReturnTrue() {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebab");
@@ -73,7 +73,7 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void guess_KeBaB_IsCorrectShouldReturnTrue() {
+  void guessKeBaBIsCorrectShouldReturnTrue() {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("KeBaB");
@@ -81,7 +81,7 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void guess_nasty_IsNotCorrectShouldReturnFalse() {
+  void guess_nastyIsNotCorrectShouldReturnFalse() {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("nasty");
@@ -89,7 +89,7 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void guess_kebxb_IsNotCorrectShouldReturnFalse() {
+  void guess_kebxbIsNotCorrectShouldReturnFalse() {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebxb");
@@ -97,7 +97,7 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void guess_kebab_IsEntirelyCorrectShouldReturnTrue() {
+  void guess_kebabIsEntirelyCorrectShouldReturnTrue() {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebab");
@@ -105,7 +105,7 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void guess_KeBAb_IsEntirelyCorrectShouldReturnTrue() {
+  void guess_KeBAbIsEntirelyCorrectShouldReturnTrue() {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("KeBAb");
@@ -113,7 +113,7 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void guess_kebas_IsNotEntirelyCorrectShouldReturnFalse() {
+  void guess_kebasIsNotEntirelyCorrectShouldReturnFalse() {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebas");

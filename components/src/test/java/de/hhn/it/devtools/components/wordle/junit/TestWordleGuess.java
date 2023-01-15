@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.components.wordle.junit;
 
 import de.hhn.it.devtools.components.wordle.provider.WordleGuess;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -25,7 +26,7 @@ public class TestWordleGuess {
   }
 
   @Test
-  void shouldReturnKitty() {
+  void shouldReturnStringKittyAfterAlteredWordleGuess() {
     WordleGuess wordleGuess = new WordleGuess("kebab");
     WordleGuess wordleGuess2 = new WordleGuess("kitty");
     wordleGuess.changeContentsOfWordlePanels("kitty");
