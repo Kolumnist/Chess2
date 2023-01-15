@@ -14,32 +14,51 @@ public class WordleGameLogic implements WordleService {
   private String currentWordleSolution;
   private String previousWordleSolution;
   private static boolean wasStartGameCalled = false;
-
-
   private WordleGame currentWordleGame;
   @Override
   public void startGame() {
     String currentSolution = WordleSolutionSelector.selectWordle();
     setCurrentWordleSolution(currentSolution);
-    currentWordleGame = new WordleGame(currentSolution, this);
+    currentWordleGame = new WordleGame();
     wasStartGameCalled = true;
   }
 
   @Override
   public void startAnotherGame() {
     if(!wasStartGameCalled) {
-      throw new NullPointerException("Use the startGame method first");
+      startGame();
     }
     else {
       setPreviousWordleSolution(getCurrentWordleSolution());
       String newSolution = WordleSolutionSelector.selectWordle();
       if (!newSolution.equals(getPreviousWordleSolution())) {
         setCurrentWordleSolution(newSolution);
-        currentWordleGame = new WordleGame(newSolution, this);
+        currentWordleGame = new WordleGame();
       } else {
         startAnotherGame();
       }
     }
+  }
+
+  /**
+   * A method that is supposed to receive a String from the Frontend, enter said String into the
+   * Array of WordleGuesses and compute whether the guess is correct. In any case, this method will
+   * update the states of the WordlePanels regardless.
+   *
+   * @param stringGuess the String that the Frontend will deliver to the Backend
+   * @return the current Array of WordleGuesses
+   * @throws IllegalGuessException is thrown should the given guess not be long enough
+   */
+  public WordleGuess[] receiveAndComputeGuess(String stringGuess) throws IllegalGuessException {
+    WordleGuess playersGuess = new WordleGuess(stringGuess);
+    checkIfGuessIsLongEnough(playersGuess);
+    WordleGuess[] currentWordleGuessArray = currentWordleGame.getPlayerGuesses();
+    int currentWordleGameIndex = currentWordleGame.getWordleGuessIndex();
+    WordleGuess currentWordleGuess = currentWordleGuessArray[currentWordleGameIndex];
+    currentWordleGuess.changeContentsOfWordlePanels(stringGuess);
+    checkIfGameIsFinished(currentWordleGuess);
+    currentWordleGame.incrementWordleGuessIndex();
+    return currentWordleGame.getPlayerGuesses();
   }
 
   /**
@@ -49,7 +68,6 @@ public class WordleGameLogic implements WordleService {
    * @return true if guess is equal to solution and false otherwise
    */
   public boolean checkIfGameIsFinished(WordleGuess guess){
-    String enteredWordleGuess = guess.getWordleGuessAsString().toLowerCase();
     return checkIfGuessIsCorrect(guess) ||
         checkPanelsIndividually(guess);
   }
@@ -61,7 +79,7 @@ public class WordleGameLogic implements WordleService {
    * @param guess The WordleGuess that the player entered
    * @return true if guess is equal to solution and false otherwise
    */
-  public boolean checkIfGuessIsCorrect( WordleGuess guess) {
+  public boolean checkIfGuessIsCorrect(WordleGuess guess) {
     if (guess.getWordleGuessAsString().equals(currentWordleSolution.toLowerCase())) {
       for (WordlePanelService panel : guess.getWordleWord()) {
         panel.setState(State.CORRECT);
@@ -86,14 +104,15 @@ public class WordleGameLogic implements WordleService {
   }
 
   /**
-   * A method that checks and updates each WordlePanel within the players guess individually according to game rules.
+   * A method that checks and updates each WordlePanel within the players guess individually
+   * according to game rules.
    *
    * @param guess The WordleGuess made by the player
    * @return always returns false since given guess is not the solution
    */
   public boolean checkPanelsIndividually(WordleGuess guess) {
     WordlePanelService[] wordlePanels = guess.getWordleWord();
-    String enteredWordleGuess = guess.getWordleGuessAsString().toLowerCase();
+    String enteredWordleGuess = guess.getWordleGuessAsString();
     for (int i = 0; i < guess.getWordleWord().length; i++) {
       if (enteredWordleGuess.charAt(i) == currentWordleSolution.charAt(i)) {
         wordlePanels[i].setState(State.CORRECT);
