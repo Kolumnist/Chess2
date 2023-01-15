@@ -8,6 +8,7 @@ import de.hhn.it.devtools.components.wordle.provider.WordleGameLogic;
 import de.hhn.it.devtools.components.wordle.provider.WordleGuess;
 import de.hhn.it.devtools.components.wordle.provider.WordlePanel;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -23,15 +24,22 @@ public class TestWordleGameLogic {
   @BeforeEach
   void init() {
     wordleGameLogic = new WordleGameLogic();
+    wordleGameLogic.setWasStartGameCalled(false);
   } 
-  
+
+  @Test
+  void startAnotherGameShouldCallStartGame() {
+    wordleGameLogic.startAnotherGame();
+    assertTrue(wordleGameLogic.getWasStartGameCalled());
+  }
+
   @Test
   void startGameShouldAssignCurrentSolutionAndReturnNotNull() {
     wordleGameLogic.startGame();
     assertNotNull(wordleGameLogic.getCurrentWordleSolution());
   }
 
-  @Test
+  @RepeatedTest(10)
   void startAnotherGameShouldAssignPreviousSolutionAndReturnNotNull() {
     wordleGameLogic.startGame();
     wordleGameLogic.startAnotherGame();
