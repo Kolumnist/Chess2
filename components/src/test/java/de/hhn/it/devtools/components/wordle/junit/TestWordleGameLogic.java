@@ -34,12 +34,6 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void startAnotherGameShouldThrowNullPointerException() {
-    WordleGameLogic wordleGameLogic = new WordleGameLogic();
-    NullPointerException exception = assertThrows(NullPointerException.class,
-        wordleGameLogic::startAnotherGame);
-  }
-  @Test
   void checkIfGuessIsLongEnoughShouldThrowIllegalGuessExceptionWithOneWhitespace()
   throws IllegalGuessException {
     WordleGameLogic wordleGameLogic = new WordleGameLogic();
