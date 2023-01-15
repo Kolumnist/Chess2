@@ -125,7 +125,7 @@ public class CmpBattleshipService implements BattleshipService {
                     return false;
                 }
             }
-            if (endX < fieldSize){  // < fieldSize, da wenn fielSize = 5 -> 0 bis 4
+            if (endX < fieldSize){  // < fieldSize, da wenn fieldSize = 5 -> 0 bis 4
                 return true;
             }
             else{
@@ -283,9 +283,19 @@ public class CmpBattleshipService implements BattleshipService {
 
         player.setShipfield(new Field(size,player));
         player.setAttackField(new Field(size,player));
-        
+
         computer.setShipfield(new Field(size,computer));
         computer.setAttackField(new Field(size,computer));
+
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 5; j++){
+                player.getShipField().setPanelMarker(i, j, PanelState.NOSHIP);
+                player.getAttackField().setPanelMarker(i, j, PanelState.NOSHIP);
+
+                computer.getShipField().setPanelMarker(i, j, PanelState.NOSHIP);
+                computer.getAttackField().setPanelMarker(i, j, PanelState.NOSHIP);
+            }
+        }
 
         // 1x5er, 2x4er, 3er Variabel, 1x2er
         if(size == 5){

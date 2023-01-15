@@ -11,6 +11,39 @@ public class Computer extends Player {
 
     Random random = new Random();
 
+    public void comBomb(Position position, Player player, int oldZ) throws IllegalGameStateException {
+        int size = Field.getSize();
+        boolean hit = false;
+        int x = random.nextInt(size);
+        int y = random.nextInt(size);
+        if(getAttackField().getPanelMarker(x, y).equals(PanelState.NOSHIP)) {
+            int z = -1;
+            if (position == null) {
+                hit = CmpBattleshipService.service.bombPanel(this, player, x, y);
+            } else {
+                z = random.nextInt(4);
+                if (z == 0 && position.getX() != 0 && oldZ != 0) {
+                    hit = CmpBattleshipService.service.bombPanel(this, player, position.getX() - 1, position.getY());
+                } else if (z == 1 && position.getX() != size - 1 && oldZ != 1) {
+                    hit = CmpBattleshipService.service.bombPanel(this, player, position.getX() + 1, position.getY());
+                } else if (z == 2 && position.getY() != 0 && oldZ != 2) {
+                    hit = CmpBattleshipService.service.bombPanel(this, player, position.getX(), position.getY() - 1);
+                } else if (z == 3 && position.getY() != size - 1 && oldZ != 3) {
+                    hit = CmpBattleshipService.service.bombPanel(this, player, position.getX(), position.getY() + 1);
+                } else {
+                    comBomb(position, player, oldZ);
+                }
+            }
+
+            if (hit) {
+                Position newHit = new Position(x, y);
+                comBomb(newHit, player, z);
+            }
+        }
+        else {
+            comBomb(position, player, oldZ);
+        }
+    }
 
     private void placeShipSmall(int num) throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
         int x = random.nextInt(5);
