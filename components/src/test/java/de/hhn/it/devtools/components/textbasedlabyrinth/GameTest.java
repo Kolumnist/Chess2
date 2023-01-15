@@ -1,12 +1,13 @@
 package de.hhn.it.devtools.components.textbasedlabyrinth;
 
 
-
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.Game;
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class GameTest {
@@ -23,15 +24,16 @@ public class GameTest {
     @BeforeAll
     public void preTest() {
         game = new Game();
-        player = null;
+        player = game.getPlayer();
 
     }
 
-    @BeforeAll
-    @Test
-    public void testInitilization() {
-        game.startup();
 
+    @Test
+    public void testStartup() {
+        game.startup();
+        assertNotNull(player);
+        assertInstanceOf(Player.class, player);
     }
 
 
