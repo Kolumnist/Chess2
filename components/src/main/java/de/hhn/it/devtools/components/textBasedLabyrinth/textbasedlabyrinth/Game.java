@@ -16,8 +16,8 @@ public class Game implements GameService {
           org.slf4j.LoggerFactory.getLogger(Game.class);
 
 
-  public Room currentRoom;
-  public Player player;
+  private Room currentRoom;
+  private Player player;
   public Layout currentLayout;
   public ArrayList<Layout> layouts;
   private ArrayList<OutputListener> listeners;
@@ -39,6 +39,7 @@ public class Game implements GameService {
    */
   public void startup() {
     this.player = new Player("Jones");
+    this.currentLayout = new Layout(player);
     layouts = new ArrayList<>();
     listeners = new ArrayList<>();
     allMaps = new ArrayList<>();
@@ -48,7 +49,6 @@ public class Game implements GameService {
 
 
   public void start() {
-    score = 0;
     for (OutputListener outputListener : listeners) {
       outputListener.listenerStart();
     }
@@ -254,11 +254,8 @@ public class Game implements GameService {
     return message;
   }
 
-  /**
-   *
-   * @param itemId
-   * @throws NoSuchItemFoundException
-   */
+
+
   @Override
   public void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException {
     String message = player.getItem(itemId).getInfo();
@@ -329,12 +326,20 @@ public class Game implements GameService {
   }
 
   /**
-   * Setter for current Layout
-   * @param newMap Map to be selected
-   * @param newSeed Seed for the Map
+   * Setter for current layout
+   * @param newMap map to be selected
+   * @param newSeed seed for the map
    */
-  public void setCurrentLayout(Map newMap, Seed newSeed){
-    this.currentLayout = new Layout(player);
+  public void setCurrentLayout(Map newMap, Seed newSeed) throws RoomFailedException {
+    LayoutGenerator generator = new LayoutGenerator(newMap, newSeed);
+    try {
+      generator.generateLayout();
+    } catch (RoomFailedException e) {
+      throw new RoomFailedException();
+    }
+
+    generator.setLayout(currentLayout);
+    currentRoom = currentLayout.getStartRoom();
   }
 
 
@@ -347,4 +352,15 @@ public class Game implements GameService {
   public Player getPlayer() {
     return player;
   }
+
+  public Layout getCurrentLayout() {
+    return currentLayout;
+  }
+
+  @Override
+  public Room getCurrentRoom() {
+    return currentRoom;
+  }
 }
+
+

@@ -131,17 +131,14 @@ public class Room {
     }
   }
 
-  /**
-   *
-   * @return
-   */
+
+
   public HashMap<Direction, Room> getRoomMap() {
     return roomMap;
   }
 
-  /**
-   *
-   */
+
+
   public void setExit(){
     this.isExit = true;
   }

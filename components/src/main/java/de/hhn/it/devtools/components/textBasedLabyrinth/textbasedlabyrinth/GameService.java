@@ -66,7 +66,7 @@ public interface GameService {
    * @param newMap Map to be selected
    * @param newSeed Seed for the Map
    */
-  void setCurrentLayout(Map newMap, Seed newSeed);
+  void setCurrentLayout(Map newMap, Seed newSeed) throws RoomFailedException;
 
 
   /**
@@ -92,6 +92,8 @@ public interface GameService {
   void removeListener(OutputListener listener);
 
   Player getPlayer();
+
+  Room getCurrentRoom();
 
 
 

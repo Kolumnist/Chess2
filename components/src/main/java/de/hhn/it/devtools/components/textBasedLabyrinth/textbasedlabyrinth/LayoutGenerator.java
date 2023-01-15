@@ -16,7 +16,7 @@ public class LayoutGenerator {
     private Room startRoom;
     private Room endRoom;
     private boolean isPrepared;
-    public int maxRoomCount = 13;
+    private int maxRoomCount = 13;
 
     public LayoutGenerator(Map map, Seed seed) {
         this.map = map;
@@ -28,17 +28,17 @@ public class LayoutGenerator {
     }
 
 
-    /**
-     *
-     * @param layout
-     */
+
+
     public void setLayout(Layout layout) {
         layout.setAllRooms(allRooms);
+        layout.setStartRoom();
     }
 
-    /**
-     *
-     */
+    public int getMaxRoomCount() {
+        return maxRoomCount;
+    }
+
     private void reset() {
         allRooms.clear();
         String exampleDescription = "A dark, cold room.";
@@ -53,15 +53,12 @@ public class LayoutGenerator {
         isPrepared = true;
     }
 
-    /**
-     *
-     * @throws RoomFailedException
-     */
+
+
     public void generateLayout() throws RoomFailedException {
         if (!isPrepared) {
             reset();
         }
-        int specialRoomId = 1000;
 
 
 
@@ -163,7 +160,7 @@ public class LayoutGenerator {
             }
 
             Item key1 = new Item(1, "ExitKey", "A metal key. It fits into your hand well.");
-            allRooms.get(11).getDoor(Direction.WEST).setPuzzle(key1);
+            allRooms.get(11).getDoor(Direction.SOUTH).setPuzzle(key1);
             if (seed.getSeed().get(1) < 5) {
                 allRooms.get(4).addItem(key1);
             } else {
