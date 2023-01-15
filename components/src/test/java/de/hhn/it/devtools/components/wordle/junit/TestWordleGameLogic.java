@@ -7,6 +7,7 @@ import de.hhn.it.devtools.apis.wordle.WordlePanelService;
 import de.hhn.it.devtools.components.wordle.provider.WordleGameLogic;
 import de.hhn.it.devtools.components.wordle.provider.WordleGuess;
 import de.hhn.it.devtools.components.wordle.provider.WordlePanel;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -18,16 +19,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestWordleGameLogic {
 
+  WordleGameLogic wordleGameLogic;
+  @BeforeEach
+  void init() {
+    wordleGameLogic = new WordleGameLogic();
+  } 
+  
   @Test
   void startGameShouldAssignCurrentSolutionAndReturnNotNull() {
-    WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.startGame();
     assertNotNull(wordleGameLogic.getCurrentWordleSolution());
   }
 
   @Test
   void startAnotherGameShouldAssignPreviousSolutionAndReturnNotNull() {
-    WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.startGame();
     wordleGameLogic.startAnotherGame();
     assertNotNull(wordleGameLogic.getPreviousWordleSolution());
@@ -36,7 +41,6 @@ public class TestWordleGameLogic {
   @Test
   void checkIfGuessIsLongEnoughShouldThrowIllegalGuessExceptionWithOneWhitespace()
   throws IllegalGuessException {
-    WordleGameLogic wordleGameLogic = new WordleGameLogic();
     WordleGuess wordleGuess = new WordleGuess("keba ");
     Throwable exception = assertThrows(
        IllegalGuessException.class, () -> {
@@ -48,7 +52,6 @@ public class TestWordleGameLogic {
   @Test
   void checkIfGuessIsLongEnoughShouldThrowIllegalGuessExceptionWithFiveWhitespaces()
   throws IllegalGuessException {
-    WordleGameLogic wordleGameLogic = new WordleGameLogic();
     WordleGuess wordleGuess = new WordleGuess("     ");
     Throwable exception = assertThrows(
         IllegalGuessException.class, () -> {
@@ -59,14 +62,12 @@ public class TestWordleGameLogic {
 
   @Test
   void checkIfGuessIsLongEnoughShouldNotThrowIllegalGuessException() {
-    WordleGameLogic wordleGameLogic = new WordleGameLogic();
     WordleGuess wordleGuess = new WordleGuess("kebab");
     assertDoesNotThrow(() -> wordleGameLogic.checkIfGuessIsLongEnough(wordleGuess));
   }
 
   @Test
   void guessKebabIsCorrectShouldReturnTrue() {
-    WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebab");
     assertTrue(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess));
@@ -74,7 +75,6 @@ public class TestWordleGameLogic {
 
   @Test
   void guessKeBaBIsCorrectShouldReturnTrue() {
-    WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("KeBaB");
     assertTrue(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess));
@@ -82,7 +82,6 @@ public class TestWordleGameLogic {
 
   @Test
   void guessNastyIsNotCorrectShouldReturnFalse() {
-    WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("nasty");
     assertFalse(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess));
@@ -90,7 +89,6 @@ public class TestWordleGameLogic {
 
   @Test
   void guessKebxbIsNotCorrectShouldReturnFalse() {
-    WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebxb");
     assertFalse(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess));
@@ -98,7 +96,6 @@ public class TestWordleGameLogic {
 
   @Test
   void guessKebabIsEntirelyCorrectShouldReturnTrue() {
-    WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebab");
     assertTrue(wordleGameLogic.checkIfGameIsFinished(wordleGuess));
@@ -106,7 +103,6 @@ public class TestWordleGameLogic {
 
   @Test
   void guessKeBAbIsEntirelyCorrectShouldReturnTrue() {
-    WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("KeBAb");
     assertTrue(wordleGameLogic.checkIfGameIsFinished(wordleGuess));
@@ -114,7 +110,6 @@ public class TestWordleGameLogic {
 
   @Test
   void guessKebasIsNotEntirelyCorrectShouldReturnFalse() {
-    WordleGameLogic wordleGameLogic = new WordleGameLogic();
     wordleGameLogic.setCurrentWordleSolution("kebab");
     WordleGuess wordleGuess = new WordleGuess("kebas");
     assertFalse(wordleGameLogic.checkIfGameIsFinished(wordleGuess));
@@ -122,10 +117,9 @@ public class TestWordleGameLogic {
 
   @Test
   void testStatesAfterCheckPanelsIndividuallyCall() {
-    WordleGameLogic testLogic = new WordleGameLogic();
-    testLogic.setCurrentWordleSolution("cargo");
+    wordleGameLogic.setCurrentWordleSolution("cargo");
     WordleGuess testGuess = new WordleGuess("grace");
-    testLogic.checkPanelsIndividually(testGuess);
+    wordleGameLogic.checkPanelsIndividually(testGuess);
     WordlePanelService [] wordlePanels = testGuess.getWordleWord();
     assertTrue((wordlePanels[0].getState() == State.PARTIALLY_CORRECT) &&
         wordlePanels[1].getState() == State.PARTIALLY_CORRECT &&
@@ -136,57 +130,51 @@ public class TestWordleGameLogic {
 
   @Test
   void testReturnValOfCheckPanelsIndividually() {
-    WordleGameLogic testLogic = new WordleGameLogic();
-    testLogic.setCurrentWordleSolution("havoc");
+    wordleGameLogic.setCurrentWordleSolution("havoc");
     WordleGuess testGuess = new WordleGuess("lithe");
-    assertFalse(testLogic.checkPanelsIndividually(testGuess));
+    assertFalse(wordleGameLogic.checkPanelsIndividually(testGuess));
   }
 
   @Test
   void testAddCallbackWithNullListener() {
-    WordleGameLogic testLogic = new WordleGameLogic();
     WordlePanel testPanel = new WordlePanel('j');
     Throwable exception = assertThrows(
-        IllegalParameterException.class, () -> testLogic.addCallback(null, testPanel)
+        IllegalParameterException.class, () -> wordleGameLogic.addCallback(null, testPanel)
     );
     assertTrue(exception.getMessage().contentEquals("Listener was null reference."));
   }
   @Test
   void testAddCallbackWithAlreadyAddedListener() throws IllegalParameterException{
-    WordleGameLogic testLogic = new WordleGameLogic();
     WordlePanel testPanel = new WordlePanel('i');
     TestListener testListener = new TestListener();
-    testLogic.addCallback(testListener, testPanel);
+    wordleGameLogic.addCallback(testListener, testPanel);
     Throwable exception = assertThrows(
-        IllegalParameterException.class, () -> testLogic.addCallback(testListener, testPanel)
+        IllegalParameterException.class, () -> wordleGameLogic.addCallback(testListener, testPanel)
     );
     assertTrue(exception.getMessage().contentEquals("Listener already registered."));
   }
 
   @Test
   void testAddCallbackShouldBeSuccessful() {
-    WordleGameLogic testLogic = new WordleGameLogic();
     WordlePanel testPanel = new WordlePanel('n');
     TestListener testListener = new TestListener();
-    assertDoesNotThrow(() -> testLogic.addCallback(testListener, testPanel));
+    assertDoesNotThrow(() -> wordleGameLogic.addCallback(testListener, testPanel));
   }
 
   @Test
   void testRemoveCallbackWithNullListener() {
-    WordleGameLogic testLogic = new WordleGameLogic();
     WordlePanel testPanel = new WordlePanel('x');
     Throwable exception = assertThrows(
-        IllegalParameterException.class, () -> testLogic.removeCallback(null, testPanel)
+        IllegalParameterException.class, () -> wordleGameLogic.removeCallback(null, testPanel)
     );
     assertTrue(exception.getMessage().contentEquals("Listener was null reference."));
   }
   @Test
   void testRemoveCallbackWithUnregisteredListener() {
-    WordleGameLogic testLogic = new WordleGameLogic();
     WordlePanel testPanel = new WordlePanel('e');
     TestListener testListener = new TestListener();
     Throwable exception = assertThrows(
-        IllegalParameterException.class, () -> testLogic.removeCallback(testListener, testPanel)
+        IllegalParameterException.class, () -> wordleGameLogic.removeCallback(testListener, testPanel)
     );
     assertTrue(exception.getMessage().contentEquals("Listener is not registered:"
         + testListener));
@@ -194,24 +182,21 @@ public class TestWordleGameLogic {
 
   @Test
   void testRemoveCallbackShouldBeSuccessful() throws IllegalParameterException {
-    WordleGameLogic testLogic = new WordleGameLogic();
     WordlePanel testPanel = new WordlePanel('d');
     TestListener testListener = new TestListener();
-    testLogic.addCallback(testListener, testPanel);
-    assertDoesNotThrow(() -> testLogic.removeCallback(testListener, testPanel));
+    wordleGameLogic.addCallback(testListener, testPanel);
+    assertDoesNotThrow(() -> wordleGameLogic.removeCallback(testListener, testPanel));
   }
 
   @Test
   void testGetterAndSetterForPreviousWordleSolution() {
-    WordleGameLogic testLogic = new WordleGameLogic();
-    testLogic.setPreviousWordleSolution("grace");
-    assertSame("grace", testLogic.getPreviousWordleSolution());
+    wordleGameLogic.setPreviousWordleSolution("grace");
+    assertSame("grace", wordleGameLogic.getPreviousWordleSolution());
   }
 
   @Test
   void testGetterAndSetterForCurrentWordleSolution() {
-    WordleGameLogic testLogic = new WordleGameLogic();
-    testLogic.setCurrentWordleSolution("havoc");
-    assertSame("havoc", testLogic.getCurrentWordleSolution());
+    wordleGameLogic.setCurrentWordleSolution("havoc");
+    assertSame("havoc", wordleGameLogic.getCurrentWordleSolution());
   }
 }
