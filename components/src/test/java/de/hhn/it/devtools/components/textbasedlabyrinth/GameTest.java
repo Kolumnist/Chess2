@@ -6,8 +6,8 @@ import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.Playe
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 public class GameTest {
@@ -22,7 +22,7 @@ public class GameTest {
 
 
     @BeforeAll
-    public void preTest() {
+    void preTest() {
         game = new Game();
         player = game.getPlayer();
 
