@@ -12,7 +12,6 @@ import de.hhn.it.devtools.apis.wordle.WordleService;
 public class WordleGameLogic implements WordleService {
 
   private String currentWordleSolution;
-  private String previousWordleSolution;
 
   private static boolean wasStartGameCalled = false;
   private WordleGame currentWordleGame;
@@ -34,9 +33,9 @@ public class WordleGameLogic implements WordleService {
       logger.info("Method startAnotherGame was called before startGame");
     }
     else {
-      setPreviousWordleSolution(getCurrentWordleSolution());
+      String prevSolution = getCurrentWordleSolution();
       String newSolution = WordleSolutionSelector.selectWordle();
-      if (!newSolution.equals(getPreviousWordleSolution())) {
+      if (!newSolution.equals(prevSolution)) {
         setCurrentWordleSolution(newSolution);
         currentWordleGame = new WordleGame();
         logger.info("Started another game, solution is: " + newSolution);
@@ -160,16 +159,6 @@ public class WordleGameLogic implements WordleService {
       throws IllegalParameterException {
     logger.info("removeCallback: id = {}, listener = {}", panel.getId(), listener);
     panel.removeCallback(listener);
-  }
-
-  public String getPreviousWordleSolution() {
-    logger.debug("getPreviousWordleSolution returns: " + previousWordleSolution);
-    return previousWordleSolution;
-  }
-
-  public void setPreviousWordleSolution(String previousWordleSolution) {
-    this.previousWordleSolution = previousWordleSolution;
-    logger.debug("PreviousWordleSolution is now: " + previousWordleSolution);
   }
 
   public void setCurrentWordleSolution(String currentWordleSolution) {
