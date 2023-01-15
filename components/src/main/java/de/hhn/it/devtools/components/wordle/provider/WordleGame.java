@@ -1,7 +1,5 @@
 package de.hhn.it.devtools.components.wordle.provider;
 
-import de.hhn.it.devtools.apis.wordle.IllegalGuessException;
-
 public class WordleGame {
 
   private final WordleGuess[] playerGuesses;
