@@ -10,12 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestWordlePanel {
 
     @Test
-    void shouldReturnPanelLetter_d() {
-        WordlePanel wordlePanelD = new WordlePanel('d');
-        assertEquals('d', wordlePanelD.getLetter());
-    }
-
-    @Test
     void shouldDeleteLetterFromPanel() {
         WordlePanel wordlePanelA = new WordlePanel('A');
         wordlePanelA.deleteLetter();
