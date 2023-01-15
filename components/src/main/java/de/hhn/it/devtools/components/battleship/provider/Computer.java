@@ -3,7 +3,6 @@ package de.hhn.it.devtools.components.battleship.provider;
 import de.hhn.it.devtools.apis.battleship.*;
 
 import java.util.Random;
-import java.util.Map;
 
 public class Computer extends Player {
 
@@ -12,6 +11,39 @@ public class Computer extends Player {
 
     Random random = new Random();
 
+    public void comBomb(Position position, Player player, int oldZ) throws IllegalGameStateException {
+        int size = Field.getSize();
+        boolean hit = false;
+        int x = random.nextInt(size);
+        int y = random.nextInt(size);
+        if(getAttackField().getPanelMarker(x, y).equals(PanelState.NOSHIP)) {
+            int z = -1;
+            if (position == null) {
+                hit = CmpBattleshipService.service.bombPanel(this, player, x, y);
+            } else {
+                z = random.nextInt(4);
+                if (z == 0 && position.getX() != 0 && oldZ != 0) {
+                    hit = CmpBattleshipService.service.bombPanel(this, player, position.getX() - 1, position.getY());
+                } else if (z == 1 && position.getX() != size - 1 && oldZ != 1) {
+                    hit = CmpBattleshipService.service.bombPanel(this, player, position.getX() + 1, position.getY());
+                } else if (z == 2 && position.getY() != 0 && oldZ != 2) {
+                    hit = CmpBattleshipService.service.bombPanel(this, player, position.getX(), position.getY() - 1);
+                } else if (z == 3 && position.getY() != size - 1 && oldZ != 3) {
+                    hit = CmpBattleshipService.service.bombPanel(this, player, position.getX(), position.getY() + 1);
+                } else {
+                    comBomb(position, player, oldZ);
+                }
+            }
+
+            if (hit) {
+                Position newHit = new Position(x, y);
+                comBomb(newHit, player, z);
+            }
+        }
+        else {
+            comBomb(position, player, oldZ);
+        }
+    }
 
     private void placeShipSmall(int num) throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
         int x = random.nextInt(5);
@@ -98,83 +130,81 @@ public class Computer extends Player {
         int y = random.nextInt(size/3, size - size/3);
         return new Position(x, y);
     }
-/*
-    public boolean checkSurroundings(Position position, boolean isVertical, int shipSize, int fieldSize){
-        int x = position.getX();
-        int y = position.getY();
-        if(isVertical){
-            if(y > 0){
-                if (this.getShipField().getPanelMarker(x, y - 1) == PanelState.SHIP){
-                    return true;
-                }
-            }
 
-            if(x == 0){
-                for(int i = y; i < y + shipSize; i++){
-                    if (this.getShipField().getPanelMarker(x + 1, i) == PanelState.SHIP){
-                        return true;
-                    }
-                }
-            } else if(x == fieldSize - 1){
-                for(int i = y; i < y + shipSize; i++){
-                    if (this.getShipField().getPanelMarker(x - 1, i) == PanelState.SHIP){
-                        return true;
-                    }
-                }
-            } else {
-                for(int i = y; i < y + shipSize; i++){
-                    if (this.getShipField().getPanelMarker(x + 1, i) == PanelState.SHIP){
-                        return true;
-                    }
-                    if (this.getShipField().getPanelMarker(x - 1, i) == PanelState.SHIP){
-                        return true;
-                    }
-                }
-            }
-
-            if(y + shipSize - 1 < fieldSize - 1){
-                if (this.getShipField().getPanelMarker(x, y + shipSize) == PanelState.SHIP){
-                    return true;
-                }
-            }
-        } else {
-            if(x > 0){
-                if (this.getShipField().getPanelMarker(x - 1, y) == PanelState.SHIP){
-                    return true;
-                }
-            }
-
-            if(y == 0){
-                for(int i = x; i < x + shipSize; i++){
-                    if (this.getShipField().getPanelMarker(i, y + 1) == PanelState.SHIP){
-                        return true;
-                    }
-                }
-            } else if(y == fieldSize - 1){
-                for(int i = x; i < x + shipSize; i++){
-                    if (this.getShipField().getPanelMarker(i, y - 1) == PanelState.SHIP){
-                        return true;
-                    }
-                }
-            } else {
-                for(int i = x; i < x + shipSize; i++){
-                    if (this.getShipField().getPanelMarker(i, y + 1) == PanelState.SHIP){
-                        return true;
-                    }
-                    if (this.getShipField().getPanelMarker(i, y - 1) == PanelState.SHIP){
-                        return true;
-                    }
-                }
-            }
-
-            if(x + shipSize - 1 < fieldSize - 1){
-                if (this.getShipField().getPanelMarker(x + shipSize, y) == PanelState.SHIP){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
- */
+//    public boolean checkSurroundings(Position position, boolean isVertical, int shipSize, int fieldSize){
+//        int x = position.getX();
+//        int y = position.getY();
+//        if(isVertical){
+//            if(y > 0){
+//                if (this.getShipField().getPanelMarker(x, y - 1) == PanelState.SHIP){
+//                    return true;
+//                }
+//            }
+//
+//            if(x == 0){
+//                for(int i = y; i < y + shipSize; i++){
+//                    if (this.getShipField().getPanelMarker(x + 1, i) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                }
+//            } else if(x == fieldSize - 1){
+//                for(int i = y; i < y + shipSize; i++){
+//                    if (this.getShipField().getPanelMarker(x - 1, i) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                }
+//            } else {
+//                for(int i = y; i < y + shipSize; i++){
+//                    if (this.getShipField().getPanelMarker(x + 1, i) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                    if (this.getShipField().getPanelMarker(x - 1, i) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                }
+//            }
+//
+//            if(y + shipSize - 1 < fieldSize - 1){
+//                if (this.getShipField().getPanelMarker(x, y + shipSize) == PanelState.SHIP){
+//                    return true;
+//                }
+//            }
+//        } else {
+//            if(x > 0){
+//                if (this.getShipField().getPanelMarker(x - 1, y) == PanelState.SHIP){
+//                    return true;
+//                }
+//            }
+//
+//            if(y == 0){
+//                for(int i = x; i < x + shipSize; i++){
+//                    if (this.getShipField().getPanelMarker(i, y + 1) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                }
+//            } else if(y == fieldSize - 1){
+//                for(int i = x; i < x + shipSize; i++){
+//                    if (this.getShipField().getPanelMarker(i, y - 1) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                }
+//            } else {
+//                for(int i = x; i < x + shipSize; i++){
+//                    if (this.getShipField().getPanelMarker(i, y + 1) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                    if (this.getShipField().getPanelMarker(i, y - 1) == PanelState.SHIP){
+//                        return true;
+//                    }
+//                }
+//            }
+//
+//            if(x + shipSize - 1 < fieldSize - 1){
+//                if (this.getShipField().getPanelMarker(x + shipSize, y) == PanelState.SHIP){
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 }

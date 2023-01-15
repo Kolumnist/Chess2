@@ -15,7 +15,6 @@ import java.util.IllegalFormatException;
 
 public class DemoBattleshipUsage  {
 
-
     public static void main(String[] args) throws Exception{
 
         BattleshipService game = new BattleshipService() {

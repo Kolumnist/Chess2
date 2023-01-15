@@ -112,7 +112,7 @@ public class TestBombPanel {
     }
 
     @Test
-    @DisplayName("Test check bombPanel - player misses")
+    @DisplayName("Test check bombPanel - computer misses")
     public void bombPanelComputerMissesShip() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
         // false should be returned
         bsService.setCurrentGameState(GameState.PLACINGSHIPS);

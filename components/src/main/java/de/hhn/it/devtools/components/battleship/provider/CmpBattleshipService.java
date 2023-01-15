@@ -3,15 +3,15 @@ package de.hhn.it.devtools.components.battleship.provider;
 import de.hhn.it.devtools.apis.battleship.*;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import java.io.*;
-import java.security.Provider;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.IllegalFormatException;
-import java.util.Map;
 
 // TODO durchs Feld durch iterieren und gucken ob es Schiffs-Felder gibt, die nicht gebombt wurden, falls nein -> gegner gewinnt & GameState zu GameOver
 // TODO Button, der kommt (isVisible zu true in dem Fenster, wo "Ships left to place", davor ist der Button isVisible = false), wenn alle Schiffe platziert sind, wenn gedrückt wird -> GameState zu FiringShots
-// Write Computer AI
+// TODO Write Computer AI
+// TODO change automatically gamestates (after all ships bombed, after all ships placed)
+// TODO start game button wenn der Spieler alle Schiffe plaziert hat damit er vielleicht noch schiffe umplatzieren/drehen kann bevor es losgeht
+
 
 public class CmpBattleshipService implements BattleshipService {
 
@@ -24,18 +24,9 @@ public class CmpBattleshipService implements BattleshipService {
     private ArrayList<BattleshipListener> listeners;
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(CmpBattleshipService.class);
-    private final Map<Owner, Player> owner2PlayerMap;
-
-    private final Map<Player, Owner> player2OwnerMap;
 
     public CmpBattleshipService(){
         listeners = new ArrayList<>();
-        owner2PlayerMap = new HashMap<>();
-        owner2PlayerMap.put(Owner.PLAYER, player);
-        owner2PlayerMap.put(Owner.COMPUTER, computer);
-        player2OwnerMap = new HashMap<>();
-        player2OwnerMap.put(player, Owner.PLAYER);
-        player2OwnerMap.put(computer, Owner.COMPUTER);
     }
 
     public Player getPlayer(){
@@ -134,7 +125,7 @@ public class CmpBattleshipService implements BattleshipService {
                     return false;
                 }
             }
-            if (endX < fieldSize){  // < fieldSize, da wenn fielSize = 5 -> 0 bis 4
+            if (endX < fieldSize){  // < fieldSize, da wenn fieldSize = 5 -> 0 bis 4
                 return true;
             }
             else{
@@ -292,9 +283,19 @@ public class CmpBattleshipService implements BattleshipService {
 
         player.setShipfield(new Field(size,player));
         player.setAttackField(new Field(size,player));
-        
+
         computer.setShipfield(new Field(size,computer));
         computer.setAttackField(new Field(size,computer));
+
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 5; j++){
+                player.getShipField().setPanelMarker(i, j, PanelState.NOSHIP);
+                player.getAttackField().setPanelMarker(i, j, PanelState.NOSHIP);
+
+                computer.getShipField().setPanelMarker(i, j, PanelState.NOSHIP);
+                computer.getAttackField().setPanelMarker(i, j, PanelState.NOSHIP);
+            }
+        }
 
         // 1x5er, 2x4er, 3er Variabel, 1x2er
         if(size == 5){
