@@ -20,7 +20,9 @@ public class RgcAimTargetClock implements Runnable {
 
   private long time; // in seconds
 
-  private HashMap<Long, Integer> targetMap;
+  private final HashMap<Long, Integer> targetMap; // time - aimtargetID
+
+  private List<Long> removers;
   
   private boolean isRunning;
 
@@ -61,10 +63,20 @@ public class RgcAimTargetClock implements Runnable {
     isEnded = ended;
   }
 
+  public HashMap<Long, Integer> getTargetMap() {
+    return targetMap;
+  }
+
   @Override
   public void run() {
     logger.info("Started");
-    
+
+    try {
+      Thread.sleep(100);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
+
     while (!isEnded) {
 
       try { // do not delete - does not work without
@@ -78,13 +90,11 @@ public class RgcAimTargetClock implements Runnable {
         checkIfTargetExpired();
 
 
-        if (time % 4 == 0) { // Spawnrate
+        if (time % 2 == 0) { // Spawnrate
 
           if (run.getField().getTargetCount() < run.getDifficulty().maxAimtargets) {
 
-            run.addAimTarget(idCounter);
-            targetMap.put(time + run.getDifficulty().aimTargetLifetime, idCounter);
-            idCounter++;
+            addTarget();
           }
 
         }
@@ -99,7 +109,16 @@ public class RgcAimTargetClock implements Runnable {
 
         time++;
       }
+    }
 
+    logger.info("Ended");
+  }
+
+  public void addTarget() {
+    if (run.getField().getTargetCount() < run.getDifficulty().highWatermark) {
+      run.addAimTarget(idCounter);
+      targetMap.put(time + run.getDifficulty().aimTargetLifetime, idCounter);
+      idCounter++;
     }
   }
 
@@ -108,26 +127,49 @@ public class RgcAimTargetClock implements Runnable {
    * on the game field.
    */
   private void checkIfTargetExpired() {
+    synchronized (targetMap) {
+      removers = new ArrayList<>();
 
-    List<Long> removers = new ArrayList<>();
 
-    for (Entry<Long, Integer> e :
-        targetMap.entrySet()) {
+      for (Entry<Long, Integer> e :
+          targetMap.entrySet()) {
 
-      if (e.getKey() == time) { // target expired
-        run.removeAimTarget(e.getValue());
-        run.playerLosesLife();
+        if (e.getKey() == time) { // target expired
+          run.removeAimTarget(e.getValue());
+          run.playerLosesLife();
 
-        removers.add(Long.valueOf(e.getValue()));
+          removers.add(e.getKey());
+        }
+      }
+
+      for (Long l :
+          removers) {
+        targetMap.remove(l);
       }
     }
-
-    for (Long l :
-        removers) {
-      targetMap.remove(l);
-    }
-
   }
+
+  public void removeAimTarget(int aimTargetId) {
+    synchronized (targetMap) {
+      removers = new ArrayList<>();
+
+
+      for (Entry<Long, Integer> e :
+          targetMap.entrySet()) {
+
+        if (e.getValue() == aimTargetId) { // target expired
+          removers.add(e.getKey());
+        }
+      }
+
+      for (Long l :
+          removers) {
+        targetMap.remove(l);
+      }
+    }
+  }
+
+
 
 
 }

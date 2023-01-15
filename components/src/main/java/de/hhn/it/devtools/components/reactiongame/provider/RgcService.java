@@ -7,6 +7,8 @@ import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameService;
 import java.util.IllegalFormatException;
 import java.util.SortedMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -87,7 +89,10 @@ public class RgcService implements ReactiongameService {
   public void endRun() {
     logger.info("End run");
 
+
     run.endRun();
+
+    run = null;
 
     run.setState(GameState.FINISHED);
   }
@@ -124,7 +129,7 @@ public class RgcService implements ReactiongameService {
     }
 
     run.setpAimTarget(null);
-    run.setpObstacle(run.getField().getObstacles().get(obstacleId));
+    run.setpObstacle(run.getField().getObstacleMap().get(obstacleId));
 
     run.playerHitObstacle();
   }

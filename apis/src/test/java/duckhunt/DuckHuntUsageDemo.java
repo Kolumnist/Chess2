@@ -39,7 +39,7 @@ public class DuckHuntUsageDemo {
       duckHuntService.startGame();
 
       // is called when there is an update of the game (every game tick)
-      duckHuntListener.newState(new GameInfo(100, 3, 5));
+      duckHuntListener.newState(new GameInfo(100, 3, 5, 15));
       duckHuntListener.newDuckPosition(new DucksInfo(duckDatas));
       // is called when a duck was hit
       duckHuntListener.duckHit(1);

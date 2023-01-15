@@ -36,6 +36,9 @@ public class RgcMenuController extends Controller implements Initializable {
   @FXML // fx:id="startGameBtn"
   private Button startGameBtn; // Value injected by FXMLLoader
 
+  @FXML // fx:id="soundBtn"
+  private Button soundBtn; // Value injected by FXMLLoader
+
   private RgcScreenController screenController;
 
   @FXML
@@ -45,7 +48,11 @@ public class RgcMenuController extends Controller implements Initializable {
 
   @FXML
   void onHighscoreBtn(ActionEvent event) {
-
+    try {
+      screenController.switchTo("RgcHighscores");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @FXML
@@ -56,7 +63,14 @@ public class RgcMenuController extends Controller implements Initializable {
       throw new RuntimeException(e);
     }
   }
-
+  @FXML
+  void onSoundBtn(ActionEvent actionEvent) {
+    try {
+      screenController.switchTo("RgcSoundMenu");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -64,4 +78,6 @@ public class RgcMenuController extends Controller implements Initializable {
     screenController =
         (RgcScreenController) singletonAttributeStore.getAttribute(ReactionGameController.RGC_SCREEN_CONTROLLER);
   }
+
+
 }

@@ -34,6 +34,9 @@ public class RgcChooseDifficultyController implements Initializable {
   @FXML // fx:id="mediumBtn"
   private Button mediumBtn; // Value injected by FXMLLoader
 
+  @FXML // fx:id="menuBtn"
+  private Button menuBtn; // Value injected by FXMLLoader
+
   @FXML
   void onEasyBtn(ActionEvent event) throws IOException, IllegalParameterException {
     logger.info("Start run with difficulty easy.");
@@ -54,6 +57,11 @@ public class RgcChooseDifficultyController implements Initializable {
     logger.info("Start run with difficulty easy.");
     singletonAttributeStore.setAttribute(DIFFICULTY, Difficulty.MEDIUM);
     screenController.switchTo("RgcGame");
+  }
+
+  @FXML
+  void onMenuBtn(ActionEvent event) throws IOException {
+    screenController.switchTo("RgcMenu");
   }
 
   @Override

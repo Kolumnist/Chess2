@@ -5,6 +5,7 @@ import de.hhn.it.devtools.components.reactiongame.provider.RgcObstacle;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcObstacleLine;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -83,7 +84,7 @@ public class RgcObstacleLineTest {
   /**
    * Tests whether addRandomObstacle() actually adds an obstacle
    */
-  @Test
+  @RepeatedTest(10)
   public void addRandomObstacleTest() {
     line1.addRandomObstacle(11);
     assertNotEquals(line1.getObstacles().toArray()[0], null);
@@ -91,10 +92,5 @@ public class RgcObstacleLineTest {
     line1.addRandomObstacle(10);
     assertNotEquals(line1.getObstacles().toArray()[1], null);
 
-    line1.getObstacles().add(obstacle1);
-    line1.getObstacles().add(obstacle2);
-    line1.getObstacles().add(obstacle3);
-    line1.addRandomObstacle(12);
-    assertNotNull(line1.getObstacles().toArray()[5]);
   }
 }

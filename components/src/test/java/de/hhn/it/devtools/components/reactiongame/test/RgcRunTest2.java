@@ -34,8 +34,16 @@ public class RgcRunTest2 {
   @Test
   void testAddAndRemoveAimTarget() {
 
+    try {
+      Thread.sleep(1);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
     run.pauseClocks();
-    run.removeAimTarget(0);
+
+    while(run.getField().getTargetCount() != 0) {
+      run.removeAimTarget(0);
+    }
 
     run.addAimTarget(0);
 
@@ -44,6 +52,7 @@ public class RgcRunTest2 {
     run.removeAimTarget(0);
 
     assertEquals(0, run.getField().getTargetCount());
+
   }
 
 }

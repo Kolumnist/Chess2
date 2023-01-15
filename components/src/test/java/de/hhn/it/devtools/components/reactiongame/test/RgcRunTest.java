@@ -8,6 +8,7 @@ import de.hhn.it.devtools.components.reactiongame.provider.RgcObstacle;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcPlayer;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcRun;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 class RgcRunTest {
@@ -71,13 +72,15 @@ class RgcRunTest {
 
   @Test
   void testEndRun() {
-    run.endRun();
+    RgcRun run2 = new RgcRun(Difficulty.EASY, new RgcPlayer("Test"));
 
-    assertFalse(run.getAimTargetClock().getIsRunning());
-    assertTrue(run.getAimTargetClock().getIsEnded());
+    run2.endRun();
 
-    assertFalse(run.getObstacleClock().getIsRunning());
-    assertTrue(run.getObstacleClock().getIsEnded());
+    assertFalse(run2.getAimTargetClock().getIsRunning());
+    assertTrue(run2.getAimTargetClock().getIsEnded());
+
+    assertFalse(run2.getObstacleClock().getIsRunning());
+    assertTrue(run2.getObstacleClock().getIsEnded());
 
   }
 

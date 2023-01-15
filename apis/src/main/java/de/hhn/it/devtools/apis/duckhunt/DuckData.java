@@ -76,5 +76,17 @@ public class DuckData {
   public void setOrientation(DuckOrientation orientation) {
     this.orientation = orientation;
   }
+
+  @Override
+  public String toString() {
+    return "DuckData{" +
+            "id=" + id +
+            ", x=" + x +
+            ", y=" + y +
+            ", status=" + status +
+            ", velocity=" + velocity +
+            ", orientation=" + orientation +
+            '}';
+  }
 }
 
