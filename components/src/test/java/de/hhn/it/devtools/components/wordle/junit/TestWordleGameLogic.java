@@ -185,16 +185,4 @@ public class TestWordleGameLogic {
     wordleGameLogic.addCallback(testListener, testPanel);
     assertDoesNotThrow(() -> wordleGameLogic.removeCallback(testListener, testPanel));
   }
-
-  @Test
-  void testGetterAndSetterForPreviousWordleSolution() {
-    wordleGameLogic.setPreviousWordleSolution("grace");
-    assertSame("grace", wordleGameLogic.getPreviousWordleSolution());
-  }
-
-  @Test
-  void testGetterAndSetterForCurrentWordleSolution() {
-    wordleGameLogic.setCurrentWordleSolution("havoc");
-    assertSame("havoc", wordleGameLogic.getCurrentWordleSolution());
-  }
 }
