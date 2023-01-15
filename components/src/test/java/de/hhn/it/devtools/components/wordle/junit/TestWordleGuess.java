@@ -7,39 +7,39 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestWordleGuess {
 
   @Test
-  void shouldReturnString_whack() {
+  void shouldReturnStringWhack() {
     WordleGuess wordleGuess = new WordleGuess("whack");
     assertEquals("whack", wordleGuess.getWordleGuessAsString());
   }
 
   @Test
-  void shouldReturnString_legal() {
+  void shouldReturnStringLegal() {
     WordleGuess wordleGuess = new WordleGuess("LeGaL");
     assertEquals("legal", wordleGuess.getWordleGuessAsString());
   }
 
   @Test
-  void shouldReturnChar_b() {
+  void shouldReturnCharB() {
     WordleGuess wordleGuess = new WordleGuess("zebra");
     assertEquals('b', wordleGuess.getLetterAtIndex(2));
   }
 
   @Test
-  void shouldReturn_kitty() {
+  void shouldReturnKitty() {
     WordleGuess wordleGuess = new WordleGuess("kebab");
     WordleGuess wordleGuess2 = new WordleGuess("kitty");
-    wordleGuess.setWordleWord(wordleGuess2.getWordleWord());
+    wordleGuess.changeContentsOfWordlePanels("kitty");
     assertEquals("kitty", wordleGuess.getWordleGuessAsString());
   }
 
   @Test
-  void shouldReturnChar_e() {
+  void shouldReturnCharE() {
     WordleGuess wordleGuess = new WordleGuess("zEbra");
     assertEquals('e', wordleGuess.getLetterAtIndex(1));
   }
 
   @Test
-  void setCharAtIndex3ToChar_g() {
+  void setCharAtIndex3ToCharG() {
     WordleGuess wordleGuess = new WordleGuess("zebra");
     wordleGuess.setLetterAtIndex(3,'g');
     assertEquals('g', wordleGuess.getLetterAtIndex(3));
