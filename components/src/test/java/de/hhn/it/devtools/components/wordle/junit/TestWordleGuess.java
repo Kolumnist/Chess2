@@ -28,7 +28,6 @@ public class TestWordleGuess {
   @Test
   void shouldReturnStringKittyAfterAlteredWordleGuess() {
     WordleGuess wordleGuess = new WordleGuess("kebab");
-    WordleGuess wordleGuess2 = new WordleGuess("kitty");
     wordleGuess.changeContentsOfWordlePanels("kitty");
     assertEquals("kitty", wordleGuess.getWordleGuessAsString());
   }
