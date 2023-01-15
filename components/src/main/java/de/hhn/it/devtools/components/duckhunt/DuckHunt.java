@@ -87,7 +87,9 @@ public class DuckHunt implements DuckHuntService {
       throw new RuntimeException();
     }
     // Junit Test for these Exceptions is inside DuckHuntTest shoot() Test
-    if (gameInfo.getState() != GameState.RUNNING) throw new RuntimeException();
+    if (gameInfo.getState() != GameState.RUNNING) {
+      throw new RuntimeException();
+    }
 
     for (DuckData duck : ducks) {
       if (duck.getStatus() == DuckState.DEAD
@@ -253,7 +255,9 @@ public class DuckHunt implements DuckHuntService {
   public void updateDucks() {
     logger.trace("updateDucks: no params");
     for (DuckData duck : ducks) {
-      if (duck.getStatus() == DuckState.FLYING || duck.getStatus() == DuckState.FALLING || duck.getStatus() == DuckState.FLYAWAY) {
+      if (duck.getStatus() == DuckState.FLYING
+          || duck.getStatus() == DuckState.FALLING
+          || duck.getStatus() == DuckState.FLYAWAY) {
         // velocity = resolutionCoefficient * speed * deltaTime
         float newVelocity = 0.3f * duckSpeed * deltaTime;
         duck.setVelocity(duck.getVelocity() + newVelocity);
@@ -270,7 +274,7 @@ public class DuckHunt implements DuckHuntService {
         case FALLING -> dropDuck(duck);
         case FLYAWAY -> ascendDuck(duck);
         case DEAD -> { /*dead is not used in this method*/ }
-        case ESCAPED -> { /*escaped is not used in this method*/}
+        case ESCAPED -> { /*escaped is not used in this method*/ }
         default -> throw new IllegalStateException("Unexpected value: " + duck.getStatus());
       }
     }
@@ -279,22 +283,30 @@ public class DuckHunt implements DuckHuntService {
 
   /**
    * Drops the duck after it has been shot.
-   * @param duck
+   *
+   * @param duck that shall be dropped
    */
   private void dropDuck(DuckData duck) {
     logger.trace("dropDuck: no params");
     float velocity = duck.getVelocity();
     if (velocity > 1f) { // if true duck can be moved to next position
-      duck.setY(duck.getY() + screenDimension.getHeight()/ 30); //TODO anpassen der Pixel beim Droppen
+      //TODO anpassen der Pixel beim Droppen
+      duck.setY(duck.getY() + screenDimension.getHeight() / 30);
       duck.setVelocity(velocity - 1f);
     }
   }
 
+  /**
+   * Ascends the duck after it is flyaway.
+   *
+   * @param duck that shall ascend
+   */
   private void ascendDuck(DuckData duck) {
     logger.trace("ascendDuck: no params");
     float velocity = duck.getVelocity();
     if (velocity > 1f) { // if true duck can be moved to next position
-      duck.setY(duck.getY() - screenDimension.getHeight()/ 30); //TODO anpassen der Pixel beim Wegfliegen (analog drop)
+      //TODO anpassen der Pixel beim Wegfliegen (analog drop)
+      duck.setY(duck.getY() - screenDimension.getHeight() /  30);
       duck.setVelocity(velocity - 1f);
     }
   }
