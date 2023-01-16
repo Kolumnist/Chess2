@@ -21,32 +21,35 @@ public class TestPuzzle {
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(TestPuzzle.class);
 
-    private Room room;
-    private Room room1;
     private Door door;
     private Item key;
+    private Item keyWrong;
 
     @BeforeEach
     void setup() {
-       room = new Room(0, "TestRoom");
-       room1 = new Room(1, "TestRoom1");
-       room.setNextDoorRoom(room1, Direction.WEST);
-       room.setDoors();
-       key = new Item(0, "TestKey", "KeyInfo");
-    }
-
-    @Test
-    @DisplayName("Test if locked Door will open with assigned Key")
-    public void check() throws RoomFailedException {
-        room.getDoor(Direction.WEST).setPuzzle(key);
-        assertTrue(room1.getDoor(Direction.EAST).unlock(key));
+        door = new Door();
+        key = new Item(0, "TestKey", "KeyInfo");
+        keyWrong = new Item(1, "TestKey", "Should not Open anything");
+        door.setPuzzle(key);
     }
 
     @Test
     @DisplayName("Test if Door is locked after being assigned a Puzzle")
-    public void test() throws RoomFailedException {
-        room.getDoor(Direction.WEST).setPuzzle(key);
-        assertFalse(room.getDoor(Direction.WEST).checkIfLocked());
+    public void checkPuzzleLocksDoor() throws RoomFailedException {
+        assertTrue(door.checkIfLocked());
     }
 
+    @Test
+    @DisplayName("Test if Door is unlocked after using assigned Key")
+    public void checkPuzzleIsSolvedWithKey() {
+        door.unlock(key);
+        assertTrue(door.unlock(key));
+    }
+
+    @Test
+    @DisplayName("Test if Door is locked after trying to unlock it with wrong key")
+    public void checkPuzzleIsSolvedWithKeyBadCase() {
+        door.unlock(keyWrong);
+        assertFalse(door.unlock(keyWrong));
+    }
 }

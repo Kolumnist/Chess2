@@ -39,21 +39,21 @@ public class TestRoom {
 
     @Test
     @DisplayName("Test RoomFailed Exception")
-    public void testRoomFailedException() {
+    public void checkRoomFailedException() {
         RoomFailedException exception = assertThrows(RoomFailedException.class,
                 () -> room.getRoom(Direction.WEST));
     }
 
     @Test
     @DisplayName("Test if Rooms are correctly assigned to each other")
-    public void testSetNextDoorRoom() throws RoomFailedException {
+    public void checkSetNextDoorRoom() throws RoomFailedException {
         room.setNextDoorRoom(room1, Direction.NORTH);
         assertEquals(room1.getRoom(Direction.SOUTH), room);
     }
 
     @Test
     @DisplayName("Test if Room adds item correctly")
-    public void testAddItemToRoom() {
+    public void checkAddItemToRoom() {
         room.addItem(item);
         assertEquals(1, room.search().size());
     }
