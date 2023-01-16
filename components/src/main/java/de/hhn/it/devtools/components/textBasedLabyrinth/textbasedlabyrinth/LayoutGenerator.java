@@ -39,6 +39,17 @@ public class LayoutGenerator {
         return maxRoomCount;
     }
 
+    public Room getStartRoom() {
+        return startRoom;
+    }
+
+    public ArrayList<Room> getAllRooms() {
+        return allRooms;
+    }
+
+    /**
+     *
+     */
     private void reset() {
         allRooms.clear();
         String exampleDescription = "A dark, cold room.";
@@ -77,6 +88,7 @@ public class LayoutGenerator {
             allRooms.get(10).setNextDoorRoom(allRooms.get(11), Direction.EAST);
             allRooms.get(11).setNextDoorRoom(allRooms.get(12), Direction.NORTH);
             logger.info(map.toString() + "created.");
+
         } else if (map.equals(Map.Ancient_Dungeon)) {
             startRoom.setNextDoorRoom(allRooms.get(1), Direction.WEST);
             allRooms.get(1).setNextDoorRoom(allRooms.get(4), Direction.WEST);

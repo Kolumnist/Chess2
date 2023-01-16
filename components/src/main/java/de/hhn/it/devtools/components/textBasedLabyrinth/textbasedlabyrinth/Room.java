@@ -112,7 +112,6 @@ public class Room {
   public List<Item> search() throws NullPointerException {
     List<Item> items1 = items.values().stream().collect(Collectors.toList());
     return items1;
-
   }
 
   /**
