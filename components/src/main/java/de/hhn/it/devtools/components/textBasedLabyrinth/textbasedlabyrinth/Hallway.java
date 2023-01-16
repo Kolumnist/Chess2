@@ -17,23 +17,17 @@ public class Hallway extends Room {
 
 
     public Door getOppositeDoor(Direction direction) throws IllegalArgumentException {
-        Door target = null;
-        if (direction.equals(Direction.NORTH)) {
-            target = doorMap.get(Direction.SOUTH);
-        } else if (direction.equals(Direction.SOUTH)) {
-            target = doorMap.get(Direction.NORTH);
-        } else if (direction.equals(Direction.EAST)) {
-            target = doorMap.get(Direction.WEST);
-        } else if (direction.equals(Direction.WEST)) {
-            target = doorMap.get(Direction.EAST);
-        } else {
-            throw new IllegalArgumentException("Direction invalid");
+        if (direction == null) {
+            throw new IllegalArgumentException("Direction was null.");
         }
-
-        if (target == null) {
+        if (!doorMap.containsKey(direction.getOpposite())) {
             throw new IllegalArgumentException("Something went wrong. Target direction was valid," +
                     "but door was null.");
         }
+
+        Door target = null;
+
+        target = doorMap.get(direction.getOpposite());
 
         return target;
 
