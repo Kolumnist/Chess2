@@ -143,7 +143,9 @@ public class Room {
     this.isExit = true;
   }
 
-
+  public boolean isExit() {
+    return isExit;
+  }
 }
 
 /**

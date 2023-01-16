@@ -90,4 +90,8 @@ public class Player {
   public void reset() {
     inventory.clear();
   }
+
+  public HashMap<Integer, Item> getInventory() {
+    return inventory;
+  }
 }

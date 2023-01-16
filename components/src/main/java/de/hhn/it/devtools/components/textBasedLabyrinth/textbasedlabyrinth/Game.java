@@ -172,15 +172,9 @@ public class Game implements GameService {
     return successMessage;
   }
 
-  /**
-   * Gets the next room.
-   * It gives a list. Whether this list will be given to the main field in the ui or appear as a popup
-   * is not decided yet.
-   *
-   * @throws RoomFailedException description to room
-   *
-   */
-  public List<Item> searchRoom() throws RoomFailedException {
+
+
+  public List<Item> searchRoom() {
     List<Item> items = new ArrayList<>();
     items = itemSearcher();
     return items;
@@ -239,6 +233,7 @@ public class Game implements GameService {
    */
   public String dropItem(int itemId) throws NoSuchItemFoundException {
     Item droppedItem = player.removeItem(itemId);
+    currentRoom.addItem(droppedItem);
     String message = "You lay the item carefully on the ground.";
 
     if (droppedItem.getIsTreasure()) {
@@ -360,6 +355,11 @@ public class Game implements GameService {
   @Override
   public Room getCurrentRoom() {
     return currentRoom;
+  }
+
+  @Override
+  public int getScore() {
+    return score;
   }
 }
 

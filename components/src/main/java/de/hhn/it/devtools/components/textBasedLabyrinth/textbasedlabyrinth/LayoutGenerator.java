@@ -159,7 +159,7 @@ public class LayoutGenerator {
                 amountOfPuzzles = 3;
             }
 
-            Item key1 = new Item(1, "ExitKey", "A metal key. It fits into your hand well.");
+            Item key1 = new Item(1, "ExitKey", "A metal key. It fits well into your hand.");
             allRooms.get(11).getDoor(Direction.SOUTH).setPuzzle(key1);
             if (seed.getSeed().get(1) < 5) {
                 allRooms.get(4).addItem(key1);
@@ -192,7 +192,7 @@ public class LayoutGenerator {
 
             int treasureId = 100;
             int amountOfTreasure = 1;
-            allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
+            allRooms.get(7).addItem(new Treasure(treasureId, "Treasure", "Treasure for Demo."));
             logger.info(map.toString() + "finished.");
 
         } else if (map.equals(Map.Unknown_Sewers)) {

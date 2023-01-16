@@ -87,6 +87,8 @@ public interface GameService {
    */
   String check();
 
+  int getScore();
+
   void addListener(OutputListener listener);
 
   void removeListener(OutputListener listener);
