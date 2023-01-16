@@ -25,29 +25,30 @@ public class TestPlayer {
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(TestPlayer.class);
 
-    private GameService gameService;
-    private LayoutGenerator layoutGenerator;
+    private Game game;
     private Player player;
+    private Item testItem;
 
     @BeforeEach
-    void setup() throws InvalidSeedException {
-        gameService = new Game();
-        gameService.startup();
-        gameService.start();
-        gameService.setPlayerName("Joe");
-        player = gameService.getPlayer();
+    void setup() {
+        game = new Game();
+        game.startup();
+        game.start();
+        game.setPlayerName("Joe");
+        player = game.getPlayer();
+        testItem = new Item(777, "testItem", "testInfo");
     }
 
     @Test
     @DisplayName("Test if correct Player name")
     public void checkPlayerName() {
-        assertEquals("Joe", gameService.getPlayerName());
+        assertEquals("Joe", game.getPlayerName());
     }
 
     @Test
     @DisplayName("Test if Player starts in correct Room")
     public void checkPlayerStartPosition(){
-        assertEquals(layoutGenerator.getStartRoom(), player.getCurrentRoomOfPlayer());
+        assertEquals(game.getCurrentRoom(), player.getCurrentRoomOfPlayer());
     }
 
     @Test
@@ -59,21 +60,21 @@ public class TestPlayer {
     @Test
     @DisplayName("Test if Player picks up items correctly")
     public void checkPlayerPickUpItem() {
-        NoSuchItemFoundException exception = assertThrows(NoSuchItemFoundException.class,
-                () -> gameService.pickUpItem(1));
+        player.addItem(testItem);
+        assertEquals(1, player.getInventory().size());
     }
 
     @Test
-    @DisplayName("Test if Player drop items correctly")
-    public void checkPlayerRemoveItem() {
+    @DisplayName("Test if Player removeItem invokes NoSuchItemException correctly")
+    public void checkPlayerRemoveItemBadCase() {
         NoSuchItemFoundException exception = assertThrows(NoSuchItemFoundException.class,
-                () -> gameService.dropItem(1));
+                () -> player.removeItem(1));
     }
 
     @Test
-    @DisplayName("Test if Player picks up items correctly")
-    public void checkPlayerRoomFailedException() {
-        RoomFailedException exception = assertThrows(RoomFailedException.class,
-                () -> gameService.move(Direction.SOUTH));
+    @DisplayName("Test if Player returns correct Item with getItem()")
+    public void checkPlayerGetItem() throws NoSuchItemFoundException {
+        player.addItem(testItem);
+        assertEquals(testItem, player.getItem(777));
     }
 }

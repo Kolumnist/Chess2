@@ -29,15 +29,37 @@ public class TestSeed {
     private Seed seed;
 
     @BeforeEach
-    void setup() throws InvalidSeedException {
+    void setup() { }
+
+    @Test
+    @DisplayName("Test InvalidSeedException exception")
+    public void testInvalidSeedExceptionToFewDigits() {
+        ArrayList<Integer> integers = new ArrayList<>();
+        InvalidSeedException exception = assertThrows(InvalidSeedException.class,
+                () -> seed = new Seed(integers) );
     }
 
     @Test
     @DisplayName("Test InvalidSeedException exception")
-    public void testInvalidSeedException() {
+    public void testInvalidSeedExceptionToManyDigits() {
         ArrayList<Integer> integers = new ArrayList<>();
+        int i = 0;
+        while(i != 10){
+            integers.add(1);
+            i++;
+        }
         InvalidSeedException exception = assertThrows(InvalidSeedException.class,
                 () -> seed = new Seed(integers) );
+    }
+
+    @Test
+    @DisplayName("Test if Seed returns correct seed digits")
+    public void testSeedGetSeed() throws InvalidSeedException {
+        ArrayList<Integer> integers = new ArrayList<>();
+        integers.add(1);
+        integers.add(1);
+        seed = new Seed(integers);
+        assertEquals(integers, seed.getSeed());
     }
 
 }

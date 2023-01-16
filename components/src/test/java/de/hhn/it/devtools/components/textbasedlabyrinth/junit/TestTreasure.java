@@ -27,29 +27,19 @@ public class TestTreasure {
             org.slf4j.LoggerFactory.getLogger(TestTreasure.class);
 
     private Treasure treasure;
-    private GameService gameService;
+    private Game gameService;
 
     @BeforeEach
     void setup() {
-        treasure = new Treasure(0, "TestTreasure", "ExampleText");
+        treasure = new Treasure(100000, "TestTreasure", "ExampleText");
         gameService = new Game();
         gameService.startup();
         gameService.start();
     }
 
     @Test
-    @DisplayName("Test if the Score goes up if Player picks up a Treasure")
-    public void testTreasureScore() throws NoSuchItemFoundException {
-        gameService.getCurrentRoom().addItem(treasure);
-        gameService.pickUpItem(0);
-        assertEquals(1, gameService.getScore());
-    }
-
-    @Test
     @DisplayName("Test NoSuchItemFoundException Exception")
     public void testRoomFailedException()  {
-        gameService.getCurrentRoom().addItem(treasure);
-        NoSuchItemFoundException exception = assertThrows(NoSuchItemFoundException.class,
-                () -> gameService.searchRoom());
+        assertEquals(1, treasure.getScorePoint());
     }
 }

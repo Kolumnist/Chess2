@@ -12,7 +12,6 @@ import java.util.HashMap;
 public class Player {
 
   private String name;
-
   private HashMap<Integer, Item> inventory;
   public Room currentRoomOfPlayer;
 
