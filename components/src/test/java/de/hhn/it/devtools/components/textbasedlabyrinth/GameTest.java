@@ -7,6 +7,7 @@ import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.excep
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.RoomFailedException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
 
-
-
     private Game game;
     private Player player;
-
-
-
-
-
 
 
     @BeforeEach
@@ -39,9 +33,8 @@ public class GameTest {
     }
 
 
-
-
     @Test
+    @DisplayName("Test simulated Game")
     public void testGameFunction() {
         ArrayList<Integer> seedList1 = new ArrayList<>();
         seedList1.add(0);
@@ -286,6 +279,7 @@ public class GameTest {
 
 
     @Test
+    @DisplayName("Test Null Cases")
     public void testNullCases() {
         assertThrows(IllegalArgumentException.class, () -> game.move(null));
         assertThrows(IllegalArgumentException.class, () -> game.inspect(null));

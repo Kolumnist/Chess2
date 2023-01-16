@@ -38,8 +38,8 @@ public class TestTreasure {
     }
 
     @Test
-    @DisplayName("Test NoSuchItemFoundException Exception")
-    public void testRoomFailedException()  {
+    @DisplayName("Test if Treasure give score points")
+    public void checkTreasureScore()  {
         assertEquals(1, treasure.getScorePoint());
     }
 }

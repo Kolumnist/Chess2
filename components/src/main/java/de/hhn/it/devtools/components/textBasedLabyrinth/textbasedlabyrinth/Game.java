@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
 
 
+import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.InvalidSeedException;
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.RoomFailedException;
 import java.util.ArrayList;
@@ -325,7 +326,10 @@ public class Game implements GameService {
    * @param newMap map to be selected
    * @param newSeed seed for the map
    */
-  public void setCurrentLayout(Map newMap, Seed newSeed) throws RoomFailedException {
+  public void setCurrentLayout(Map newMap, Seed newSeed) throws RoomFailedException, InvalidSeedException {
+    if(newSeed == null){
+      throw new InvalidSeedException();
+    }
     LayoutGenerator generator = new LayoutGenerator(newMap, newSeed);
     try {
       generator.generateLayout();
@@ -341,6 +345,11 @@ public class Game implements GameService {
 
   public String getPlayerName() {
     return player.getName();
+  }
+
+  @Override
+  public Map getMap() {
+    return map;
   }
 
   @Override
