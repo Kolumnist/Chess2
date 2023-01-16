@@ -287,8 +287,8 @@ public class CmpBattleshipService implements BattleshipService {
         computer.setShipfield(new Field(size,computer));
         computer.setAttackField(new Field(size,computer));
 
-        for(int i = 0; i < 5; i++){
-            for(int j = 0; j < 5; j++){
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
                 player.getShipField().setPanelMarker(i, j, PanelState.NOSHIP);
                 player.getAttackField().setPanelMarker(i, j, PanelState.NOSHIP);
 
