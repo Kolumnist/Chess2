@@ -45,7 +45,7 @@ public class GameTest {
 
 
     @Test
-    public void testLayoutGeneration() {
+    public void testGameFunction() {
         ArrayList<Integer> seedList1 = new ArrayList<>();
         seedList1.add(0);
         seedList1.add(0);
@@ -68,6 +68,18 @@ public class GameTest {
 
         //The player should be in room 0, the startRoom.
         assertEquals(game.getCurrentRoom(), roomsList.get(0));
+
+
+        game.move(Direction.WEST);
+        //The player should be in room 1.
+        assertEquals(game.getCurrentRoom(), roomsList.get(1));
+
+
+        try {
+            game.move(null);
+        } catch (IllegalArgumentException e) {
+            assertThrows(IllegalArgumentException.class, e);
+        }
 
     }
 
