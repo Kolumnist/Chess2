@@ -43,6 +43,14 @@ public class LayoutGenerator {
         return startRoom;
     }
 
+    public Map getMap() {
+        return map;
+    }
+
+    public Seed getSeed() {
+        return seed;
+    }
+
     public ArrayList<Room> getAllRooms() {
         return allRooms;
     }
