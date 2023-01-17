@@ -80,7 +80,7 @@ class RgcRunTest {
     int life = run.getPlayer().getCurrentLife();
 
     run.setInvincible(true);
-    run.setpObstacle(null);
+    run.setObstacle(null);
 
     run.playerHitObstacle();
 
@@ -92,7 +92,7 @@ class RgcRunTest {
     int life = run.getPlayer().getCurrentLife();
 
     run.setInvincible(false);
-    run.setpObstacle(new RgcObstacle(1,1,1,1,1));
+    run.setObstacle(new RgcObstacle(1,1,1,1,1));
 
     run.playerHitObstacle();
 
@@ -123,7 +123,7 @@ class RgcRunTest {
   void testCheckForTargetHit() {
     run.setpKey('q');
 
-    run.setpAimTarget(target = new RgcAimTarget(1,1,1,1,'q'));
+    run.setAimTarget(target = new RgcAimTarget(1,1,1,1,'q'));
 
     int scorealt = run.getScore();
 

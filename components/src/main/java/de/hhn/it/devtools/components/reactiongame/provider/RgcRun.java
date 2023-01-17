@@ -21,8 +21,8 @@ public class RgcRun {
   private final Difficulty difficulty;
   private GameState gameState;
 
-  private RgcObstacle pObstacle; // player is in this obstacle
-  private RgcAimTarget pAimTarget; // player is in this aimtarget
+  private RgcObstacle obstacle; // player is in this obstacle
+  private RgcAimTarget aimTarget; // player is in this aimTarget
   private char pKey;
   private int score;
   private boolean isInvincible = false;
@@ -72,12 +72,12 @@ public class RgcRun {
     this.gameState = gameState;
   }
 
-  public void setpObstacle(RgcObstacle pObstacle) {
-    this.pObstacle = pObstacle;
+  public void setObstacle(RgcObstacle obstacle) {
+    this.obstacle = obstacle;
   }
 
-  public void setpAimTarget(RgcAimTarget pAimTarget) {
-    this.pAimTarget = pAimTarget;
+  public void setAimTarget(RgcAimTarget aimTarget) {
+    this.aimTarget = aimTarget;
   }
 
   public void setpKey(char pKey) {
@@ -108,12 +108,20 @@ public class RgcRun {
     return pKey;
   }
 
-  public RgcAimTarget getpAimTarget() {
-    return pAimTarget;
+  public RgcAimTarget getAimTarget() {
+    return aimTarget;
   }
 
-  public RgcObstacle getpObstacle() {
-    return pObstacle;
+  public RgcObstacle getObstacle() {
+    return obstacle;
+  }
+
+  public void setObstacle(int obstacleId) {
+    obstacle = field.getObstacleMap().get(obstacleId);
+  }
+
+  public void setAimTarget(int aimTargetId) {
+    aimTarget = field.getTargetMap().get(aimTargetId);
   }
 
 
@@ -121,21 +129,21 @@ public class RgcRun {
    * Methods gets called when player runs into an obstacle or after his iframes end.
    */
   public void playerHitObstacle() {
-    if (isInvincible || pObstacle == null) {
-      logger.info("Obstacle not found / invis");
+    if (isInvincible || obstacle == null) {
+      logger.info("Player no longer in an obstacle or invincible");
       return; // if player is not in an object or invincible - do nothing
     }
     logger.info("Player hit obstacle");
     // player is in iFrames OR no longer in an obstacle
 
-    for (ReactiongameListener callback :
-        callbacks) {
-      callback.hitObstacle(pObstacle.getId());
-    }
-
     isInvincible = true;
     iFrameThread = new Thread(new RgcIFrameRunnable(this));
     iFrameThread.start();
+
+    for (ReactiongameListener callback :
+        callbacks) {
+      callback.hitObstacle(obstacle.getId());
+    }
 
     playerLosesLife();
   }
@@ -166,17 +174,17 @@ public class RgcRun {
    * Methods checks if the player is in an aimtarget and pressed the right key.
    */
   public void checkForTargetHit() {
-    if (pAimTarget != null && pAimTarget.getKey() == pKey) {
-      logger.info(pAimTarget.getId() + " | " + pKey);
+    if (aimTarget != null && aimTarget.getKey() == pKey) {
+      logger.info(aimTarget.getId() + " | " + pKey);
       score += 100;
 
-      field.removeAimTarget(pAimTarget.getId());
+      field.removeAimTarget(aimTarget.getId());
 
-      aimTargetClock.removeAimTarget(pAimTarget.getId());
+      aimTargetClock.removeAimTarget(aimTarget.getId());
 
       for (ReactiongameListener callback :
           callbacks) { // raise score
-        callback.removeAimTarget(pAimTarget.getId());
+        callback.removeAimTarget(aimTarget.getId());
         callback.changeScore(score);
       }
     }

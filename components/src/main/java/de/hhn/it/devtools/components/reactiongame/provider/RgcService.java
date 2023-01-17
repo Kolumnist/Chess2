@@ -78,7 +78,6 @@ public class RgcService implements ReactiongameService {
     logger.info("Continue run");
 
     run.setGameState(GameState.RUNNING);
-
   }
 
   @Override
@@ -110,8 +109,8 @@ public class RgcService implements ReactiongameService {
       throw new IllegalParameterException();
     }
 
-    run.setpObstacle(null);
-    run.setpAimTarget(run.getField().getTargetMap().get(aimtargetId));
+    run.setObstacle(null);
+    run.setAimTarget(aimtargetId);
 
   }
 
@@ -123,18 +122,20 @@ public class RgcService implements ReactiongameService {
     }
     logger.info("Player entered obstacle (" + obstacleId + ")");
 
-    run.setpAimTarget(null);
-    run.setpObstacle(run.getField().getObstacleMap().get(obstacleId));
+    if (run.getGameState() == GameState.RUNNING) {
+      run.setAimTarget(null);
+      run.setObstacle(obstacleId);
 
-    run.playerHitObstacle();
+      run.playerHitObstacle();
+    }
   }
 
   @Override
   public void playerLeftGameObject() {
     logger.info("Player left game object");
 
-    run.setpObstacle(null);
-    run.setpAimTarget(null);
+    run.setObstacle(null);
+    run.setAimTarget(null);
   }
 
   @Override

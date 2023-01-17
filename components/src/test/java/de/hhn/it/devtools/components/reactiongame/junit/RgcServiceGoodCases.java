@@ -59,7 +59,7 @@ public class RgcServiceGoodCases {
     service.getRun().addObstacle(0);
     service.playerEnteredObstacle(0);
 
-    assertEquals(service.getRun().getpObstacle().getId(), 0);
+    assertEquals(service.getRun().getObstacle().getId(), 0);
     assertEquals(service.getRun().getPlayer().getCurrentLife(), life - 1);
   }
 
@@ -69,14 +69,14 @@ public class RgcServiceGoodCases {
     service.getRun().addAimTarget(0);
     service.playerEnteredAimTarget(0);
 
-    assertEquals(service.getRun().getpAimTarget().getId(), 0);
+    assertEquals(service.getRun().getAimTarget().getId(), 0);
   }
 
   @Test
   public void testPlayerLeftGameObject() {
     service.playerLeftGameObject();
-    assertNull(service.getRun().getpObstacle());
-    assertNull(service.getRun().getpAimTarget());
+    assertNull(service.getRun().getObstacle());
+    assertNull(service.getRun().getAimTarget());
   }
 
 
