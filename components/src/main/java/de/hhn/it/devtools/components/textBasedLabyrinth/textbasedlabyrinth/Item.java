@@ -23,23 +23,23 @@ public class Item {
   }
 
   public String getName() {
-
     return name;
   }
 
-
   public int getItemId() {
-
     return itemId;
   }
 
   public String getInfo() {
-
     return info;
   }
 
   public boolean getIsTreasure(){
     return isTreasure;
+  }
+
+  public boolean getIsTrapActivator() {
+    return false;
   }
 
 }

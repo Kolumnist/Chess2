@@ -1,5 +1,9 @@
 package de.hhn.it.devtools.apis.chess2;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
+
 /**
  * This abstract class defines attributes of every piece.
  *
@@ -24,29 +28,35 @@ public abstract class Piece {
    */
   protected char color;
 
+  /**
+   * Indicates if the piece can defeat the king
+   */
+  protected boolean canDefeatKing;
 
   /**
    * All possible moves are returned as a List of x, y coordinates.
    *
    * @return possibleMoves of the current piece.
    */
-  Coordinate[] getPossibleMove() {
+  public Coordinate[] getPossibleMove() {
     return possibleMoves;
   }
 
-
   /**
-   * This method calculates the possible moves of the piece.
+   * The coordinate were the current piece stands is returned.
+   *
+   * @return coordinate of the current piece.
    */
-  protected abstract void calculate();
-
+  public Coordinate getCoordinate() {
+    return coordinate;
+  }
 
   /**
    * Sets the new coordinate.
    *
    * @param coordinate is the new coordinate.
    */
-  void setCoordinate(Coordinate coordinate) {
+  public void setCoordinate(Coordinate coordinate) {
     this.coordinate = coordinate;
   }
 
@@ -66,6 +76,93 @@ public abstract class Piece {
    */
   public void setColor(char color) {
     this.color = color;
+  }
+
+  /**
+   * Returns if the piece is able to defeat the enemy king.
+   *
+   * @return if the piece can defeat the enemy king.
+   */
+  public boolean getCanDefeatKing(){
+    return canDefeatKing;
+  }
+
+  /**
+   * This method calculates the possible moves of the piece.
+   */
+  public abstract void calculate(Board board);
+
+  public Piece(char color, Coordinate coordinate) {
+    this.color = color;
+    this.coordinate = coordinate;
+    canDefeatKing = false;
+  }
+
+  /**
+   * This method takes a Coordinate[] and a ArrayList of invalid index and returns the shortened
+   * Coordinate[].
+   *
+   * @param possibleMoves all possible Coordinates the piece could move to
+   * @param index         a List of index of all Coordinates that are invalid
+   * @return shorted Array of possibleMoves with only contains valid moves
+   */
+  protected Coordinate[] shortenCoordinateArray(Coordinate[] possibleMoves,
+      ArrayList<Integer> index) {
+    Coordinate[] shortedArray = new Coordinate[possibleMoves.length - index.size()];
+    int j = 0;
+    int k = 0;
+
+    for (int i = 0; i < possibleMoves.length; i++) {
+      if (index.get(j) == i) {
+        if (j < index.size() - 1) {
+          j++;
+        }
+        continue;
+      }
+      shortedArray[k] = possibleMoves[i];
+      k++;
+    }
+    return shortedArray;
+  }
+
+  /**
+   * This method takes a Coordinate[] and a Set of invalid index and returns the shortened
+   * Coordinate[].
+   *
+   * @param possibleMoves all possible Coordinates the piece could move to
+   * @param index         a List of index of all Coordinates that are invalid
+   * @return shorted Array of possibleMoves with only contains valid moves
+   */
+  protected Coordinate[] shortenCoordinateArray(Coordinate[] possibleMoves,
+      Set<Integer> index) {
+    Coordinate[] shortedArray;
+
+    if(possibleMoves.length == index.size()){
+      return shortedArray = new Coordinate[0];
+    }
+
+    shortedArray = new Coordinate[Math.abs(possibleMoves.length - index.size())];
+    int[] array = new int[index.size()];
+    int j = 0;
+    int k = 0;
+
+    Iterator iterator;
+    for (iterator = index.iterator(); iterator.hasNext();){
+      array[j++] = (Integer) iterator.next();
+    }
+
+    j = 0;
+    for (int i = 0; i < possibleMoves.length; i++) {
+      if (array[j] == i) {
+        if (j < index.size() - 1) {
+          j++;
+        }
+        continue;
+      }
+      shortedArray[k++] = possibleMoves[i];
+    }
+
+    return shortedArray;
   }
 }
 
