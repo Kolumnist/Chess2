@@ -13,13 +13,13 @@ public class RgcRun {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(RgcRun.class);
 
-  private ArrayList<ReactiongameListener> callbacks = new ArrayList<>();
+  private final ArrayList<ReactiongameListener> callbacks;
   private final RgcField field = new RgcField();
   private final RgcPlayer player;
   private final RgcObstacleClock obstacleClock; // 2 verschiedene Timer für front und backend?
   private final RgcAimTargetClock aimTargetClock;
   private final Difficulty difficulty;
-  private GameState state;
+  private GameState gameState;
 
   private RgcObstacle pObstacle; // player is in this obstacle
   private RgcAimTarget pAimTarget; // player is in this aimtarget
@@ -27,8 +27,6 @@ public class RgcRun {
   private int score;
   private boolean isInvincible = false;
   private Thread iFrameThread;
-
-  private boolean isRunning = true;
 
 
   /**
@@ -40,6 +38,9 @@ public class RgcRun {
     logger.info("Create run with difficulty: " + difficulty);
     this.difficulty = difficulty;
     this.player = player;
+
+    gameState = GameState.RUNNING;
+
     player.setCurrentLife(3);
 
     callbacks = new ArrayList<>();
@@ -63,12 +64,12 @@ public class RgcRun {
     return player;
   }
 
-  public GameState getState() {
-    return state;
+  public GameState getGameState() {
+    return gameState;
   }
 
-  public void setState(GameState state) {
-    this.state = state;
+  public void setGameState(GameState gameState) {
+    this.gameState = gameState;
   }
 
   public void setpObstacle(RgcObstacle pObstacle) {
@@ -115,50 +116,6 @@ public class RgcRun {
     return pObstacle;
   }
 
-  public boolean isRunning() {
-    return isRunning;
-  }
-
-  /**
-   * Pauses the clocks.
-   */
-  public void pauseClocks() {
-    logger.info("Pause clocks");
-
-    obstacleClock.setRunning(false);
-    aimTargetClock.setRunning(false);
-  }
-
-  /**
-   * Continues clocks.
-   */
-  public void continueClocks() {
-    logger.info("Continue clocks");
-
-    obstacleClock.setRunning(true);
-    aimTargetClock.setRunning(true);
-  }
-
-  /**
-   * Ends / stops clocks.
-   */
-  public void endRun() {
-    logger.info("End run");
-
-    isRunning = false;
-
-    obstacleClock.setRunning(false);
-    obstacleClock.setEnded(true);
-
-    aimTargetClock.setRunning(false);
-    aimTargetClock.setEnded(true);
-
-    for (ReactiongameListener callback :
-        callbacks) {
-      callback.gameOver();
-    }
-  }
-
 
   /**
    * Methods gets called when player runs into an obstacle or after his iframes end.
@@ -186,7 +143,12 @@ public class RgcRun {
     player.setCurrentLife(player.getCurrentLife() - 1);
 
     if (player.getCurrentLife() < 1) { // is player game over?
-      endRun();
+      gameState = GameState.FINISHED;
+
+      for (ReactiongameListener callback :
+          callbacks) {
+        callback.gameOver();
+      }
     }
 
     for (ReactiongameListener callback :
@@ -222,7 +184,7 @@ public class RgcRun {
    * @param obstacleId identifier
    */
   public void addObstacle(int obstacleId) {
-    if (!isRunning) {
+    if (!(gameState == GameState.RUNNING)) {
       return;
     }
 
@@ -245,7 +207,7 @@ public class RgcRun {
    * @param obstacleId identifier
    */
   public void removeObstacle(int obstacleId) {
-    if (!isRunning) {
+    if (!(gameState == GameState.RUNNING)) {
       return;
     }
     logger.info("Remove obstacle (" + obstacleId + ")");
@@ -266,9 +228,10 @@ public class RgcRun {
    * @param aimTargetId identifier
    */
   public void addAimTarget(int aimTargetId) {
-    if (!isRunning) {
+    if (!(gameState == GameState.RUNNING)) {
       return;
     }
+
     RgcAimTarget aimTarget = field.addRandomAimTarget(aimTargetId);
     logger.info(
         "Add aim target (" + aimTargetId + ") (" + aimTarget.getX() + "|" + aimTarget.getY() + ")");
@@ -286,9 +249,10 @@ public class RgcRun {
    * @param aimTargetId identifier
    */
   public void removeAimTarget(int aimTargetId) {
-    if (!isRunning) {
+    if (!(gameState == GameState.RUNNING)) {
       return;
     }
+
     logger.info("Removed aim target (" + aimTargetId + ")");
 
     field.removeAimTarget(aimTargetId);

@@ -53,52 +53,44 @@ public class RgcService implements ReactiongameService {
     logger.info("newRun ("  + difficulty + ")");
     run = new RgcRun(difficulty, currentPlayer);
 
-    run.getObstacleClock().setRunning(true);
-    run.getAimTargetClock().setRunning(true);
 
-    run.setState(GameState.RUNNING);
+    run.setGameState(GameState.RUNNING);
   }
 
   @Override
   public void pauseRun() throws IllegalStateException {
-    if (run.getState() == GameState.PAUSED) {
+    if (run.getGameState() == GameState.PAUSED) {
       logger.info("Pause run illegal", new IllegalStateException());
       throw new IllegalStateException();
     }
     logger.info("Pause run");
 
-    run.pauseClocks();
-
-    run.setState(GameState.PAUSED);
+    run.setGameState(GameState.PAUSED);
   }
 
   @Override
   public void continueRun() throws IllegalStateException {
-    if (run.getState() != GameState.PAUSED) {
+    if (run.getGameState() != GameState.PAUSED) {
       logger.info("Continue run illegal", new IllegalStateException());
       throw new IllegalStateException();
     }
 
     logger.info("Continue run");
 
-    run.continueClocks();
-
-    run.setState(GameState.RUNNING);
+    run.setGameState(GameState.RUNNING);
 
   }
 
   @Override
   public void endRun() throws IllegalStateException {
-    if (run.getState() == GameState.FINISHED) {
+    if (run.getGameState() == GameState.FINISHED) {
       logger.info("End run illegal", new IllegalStateException());
       throw new IllegalStateException();
     }
 
     logger.info("End run");
 
-    run.endRun();
-
-    run.setState(GameState.FINISHED);
+    run.setGameState(GameState.FINISHED);
   }
 
   @Override

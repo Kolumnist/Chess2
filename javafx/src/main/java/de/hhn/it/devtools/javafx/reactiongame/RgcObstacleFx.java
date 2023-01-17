@@ -25,6 +25,8 @@ public class RgcObstacleFx extends Rectangle {
 
     setFill(colors[new Random().nextInt(colors.length)]);
 
+    setStyle("-fx-background-color: black, red; -fx-background-insets: 0, 5 5 0 0; -fx-min-width: 20; -fx-min-height:20; -fx-max-width:20; -fx-max-height: 20;");
+
     setCursor(Cursor.CROSSHAIR);
 
 

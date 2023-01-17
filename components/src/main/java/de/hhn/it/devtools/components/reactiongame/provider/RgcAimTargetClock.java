@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
 
+import de.hhn.it.devtools.apis.reactiongame.GameState;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,17 +17,14 @@ public class RgcAimTargetClock implements Runnable {
       org.slf4j.LoggerFactory.getLogger(RgcAimTargetClock.class);
 
   int idCounter = 0;
-  private RgcRun run;
+  private final RgcRun run;
 
   private long time; // in seconds
 
   private final HashMap<Long, Integer> targetMap; // time - aimtargetID
 
   private List<Long> removers;
-  
-  private boolean isRunning;
 
-  private boolean isEnded;
 
 
   /**
@@ -37,8 +35,7 @@ public class RgcAimTargetClock implements Runnable {
   public RgcAimTargetClock(RgcRun run) {
     this.run = run;
     targetMap = new HashMap<>();
-    isRunning = true;
-    isEnded = false;
+
 
     Thread t = new Thread(this);
     t.setDaemon(true);
@@ -51,21 +48,7 @@ public class RgcAimTargetClock implements Runnable {
     return time;
   }
 
-  public boolean getIsRunning() {return isRunning;}
 
-  public boolean getIsEnded() {return isEnded;}
-
-  public void setRunning(boolean running) {
-    isRunning = running;
-  }
-
-  public void setEnded(boolean ended) {
-    isEnded = ended;
-  }
-
-  public HashMap<Long, Integer> getTargetMap() {
-    return targetMap;
-  }
 
   @Override
   public void run() {
@@ -77,7 +60,7 @@ public class RgcAimTargetClock implements Runnable {
       throw new RuntimeException(e);
     }
 
-    while (!isEnded) {
+    while (!(run.getGameState() == GameState.FINISHED)) {
 
       try { // do not delete - does not work without
         Thread.sleep(0);
@@ -85,7 +68,7 @@ public class RgcAimTargetClock implements Runnable {
         throw new RuntimeException(e);
       }
 
-      while (isRunning) {
+      while (run.getGameState() == GameState.RUNNING) {
 
         checkIfTargetExpired();
 

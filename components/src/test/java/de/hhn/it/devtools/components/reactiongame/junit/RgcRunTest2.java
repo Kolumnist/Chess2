@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import de.hhn.it.devtools.apis.reactiongame.Difficulty;
+import de.hhn.it.devtools.apis.reactiongame.GameState;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcPlayer;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcRun;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,39 +19,27 @@ public class RgcRunTest2 {
   }
   @Test
   void testAddAndRemoveObstacle() {
-
-    run.pauseClocks();
-    run.removeObstacle(0);
-
+    run.setGameState(GameState.PAUSED);
     run.addObstacle(0);
 
-    assertNotEquals(0, run.getField().getObstacles().size());
-
-    run.removeObstacle(0);
-
     assertEquals(0, run.getField().getObstacles().size());
+
+    run.setGameState(GameState.RUNNING);
+    run.addObstacle(0);
+    run.setGameState(GameState.PAUSED);
+
+    assertEquals(1, run.getField().getObstacles().size());
   }
 
   @Test
   void testAddAndRemoveAimTarget() {
 
-    try {
-      Thread.sleep(1);
-    } catch (InterruptedException e) {
-      throw new RuntimeException(e);
-    }
-    run.pauseClocks();
-
-    while(run.getField().getTargetCount() != 0) {
-      run.removeAimTarget(0);
-    }
-
     run.addAimTarget(0);
-
+    run.setGameState(GameState.PAUSED);
     assertNotEquals(0, run.getField().getTargetCount());
-
+    run.setGameState(GameState.RUNNING);
     run.removeAimTarget(0);
-
+    run.setGameState(GameState.PAUSED);
     assertEquals(0, run.getField().getTargetCount());
 
   }

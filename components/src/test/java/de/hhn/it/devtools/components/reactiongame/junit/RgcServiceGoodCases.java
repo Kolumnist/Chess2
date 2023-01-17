@@ -28,14 +28,10 @@ public class RgcServiceGoodCases {
   @DisplayName("Pause and continue run")
   public void pauseRunTest() {
     service.pauseRun();
-    assertEquals(service.getRun().getState(), GameState.PAUSED);
-    assertFalse(service.getRun().getObstacleClock().getIsRunning());
-    assertFalse(service.getRun().getAimTargetClock().getIsRunning());
+    assertEquals(service.getRun().getGameState(), GameState.PAUSED);
 
     service.continueRun();
-    assertEquals(service.getRun().getState(), GameState.RUNNING);
-    assertTrue(service.getRun().getObstacleClock().getIsRunning());
-    assertTrue(service.getRun().getAimTargetClock().getIsRunning());
+    assertEquals(service.getRun().getGameState(), GameState.RUNNING);
   }
 
 
