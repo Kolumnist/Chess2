@@ -60,11 +60,7 @@ public class RgcObstacleClock implements Runnable {
         throw new RuntimeException(e);
       }
 
-
       while (run.getGameState() == GameState.RUNNING) {
-
-        logger.info("HALLO");
-
         if (time % run.getDifficulty().obstacleIntervall == 0) { // Every intervall...
           if (isHighMarkReached) { // HM reached -> remove an obstacle
             deleteRandomObstacle();

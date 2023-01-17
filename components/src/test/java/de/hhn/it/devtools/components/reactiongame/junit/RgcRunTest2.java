@@ -8,6 +8,7 @@ import de.hhn.it.devtools.apis.reactiongame.GameState;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcPlayer;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcRun;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class RgcRunTest2 {
@@ -33,7 +34,6 @@ public class RgcRunTest2 {
 
   @Test
   void testAddAndRemoveAimTarget() {
-
     run.addAimTarget(0);
     run.setGameState(GameState.PAUSED);
     assertNotEquals(0, run.getField().getTargetCount());
@@ -42,6 +42,39 @@ public class RgcRunTest2 {
     run.setGameState(GameState.PAUSED);
     assertEquals(0, run.getField().getTargetCount());
 
+  }
+
+
+  @Test
+  @DisplayName("Test if clock deletes obstacles")
+  void testDeleteObstacleClock() {
+    run = new RgcRun(Difficulty.DEVELOPER, new RgcPlayer("Test"));
+
+    try {
+      Thread.sleep((Difficulty.DEVELOPER.obstacleIntervall * 1000L)
+          * (Difficulty.DEVELOPER.highWatermark + 1));
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
+
+    assertEquals(Difficulty.DEVELOPER.highWatermark - 1,
+        run.getField().getObstacles().size());
+  }
+
+
+  @Test
+  @DisplayName("Test if clock deletes aim targets")
+  void testDeleteAimtargetClock() {
+    run = new RgcRun(Difficulty.DEVELOPER, new RgcPlayer("Test"));
+
+    try {
+      Thread.sleep((Difficulty.DEVELOPER.maxAimtargets * 1000L));
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
+
+    assertEquals(Difficulty.DEVELOPER.maxAimtargets - 1,
+        run.getField().getTargetCount());
   }
 
 }

@@ -128,6 +128,11 @@ public class RgcRun {
     logger.info("Player hit obstacle");
     // player is in iFrames OR no longer in an obstacle
 
+    for (ReactiongameListener callback :
+        callbacks) {
+      callback.hitObstacle(pObstacle.getId());
+    }
+
     isInvincible = true;
     iFrameThread = new Thread(new RgcIFrameRunnable(this));
     iFrameThread.start();
