@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * This class represents an imaginary vertical line on the field which holds the obstacls.
+ * This class represents an imaginary vertical line on the field which holds the obstacles.
  */
 public class RgcObstacleLine {
 
@@ -93,14 +93,24 @@ public class RgcObstacleLine {
     }
 
     for (int i = 0; i < obstacles.toArray().length - 1; i++) {
-      if (obstacles.get(i).getY1() != obstacles.get(i + 1).getY1()) {
+      if (obstacles.get(i).getY2() < obstacles.get(i + 1).getY1()) {
         return true; // there is a gap between two obstacles
       }
     }
 
     //check for lowest
-    if (obstacles.get(obstacles.size() - 2).getY1() != obstacles.get(obstacles.size() - 1)
-        .getY1()) {
+    obstacles.sort((o1, o2) -> {
+      if (o1.getY2() == o2.getY2()) {
+        return 0;
+      }
+      if (o1.getY2() > o2.getY2()) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+
+    if (obstacles.get(0).getY2() != RgcField.NORMAL_HEIGHT) {
       return true; // Gap on bottom
     }
 

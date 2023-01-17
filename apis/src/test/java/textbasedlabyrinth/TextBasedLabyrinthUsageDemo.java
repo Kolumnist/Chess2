@@ -83,10 +83,5 @@ public class TextBasedLabyrinthUsageDemo {
     gameService.interaction(Direction.SOUTH, items.get(0));
     gameService.move(Direction.SOUTH);
 
-
-
-
-
-
   }
 }

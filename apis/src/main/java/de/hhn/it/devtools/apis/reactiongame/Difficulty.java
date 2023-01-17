@@ -8,10 +8,10 @@ package de.hhn.it.devtools.apis.reactiongame;
 public enum Difficulty {
   EASY("Easy", 5, 10, 8,
       8, 12),
-  MEDIUM("Medium", 4, 12, 10,
-      6, 11),
-  HARD("Hard", 3, 14, 12,
-      4, 10);
+  MEDIUM("Medium", 1, 10, 9,
+      6, 3),
+  HARD("Hard", 2, 14, 12,
+      2, 3);
 
   public final String label;
   public final int obstacleIntervall;

@@ -16,121 +16,134 @@ public class RgcService implements ReactiongameService {
 
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(RgcService.class);
-  private RgcLogic logic;
+
+  private final RgcPlayer currentPlayer;
+  private RgcRun run;
 
 
-  public RgcLogic getLogic() {
-    return logic;
+  public RgcService() {
+    this.currentPlayer = new RgcPlayer("Player");
+  }
+
+  public RgcRun getRun() {
+    return run;
+  }
+
+  public RgcPlayer getCurrentPlayer() {
+    return currentPlayer;
   }
 
   @Override
   public void addCallback(ReactiongameListener listener) {
-    logic.getCallbacks().add(listener);
+    logger.info("Added listener: " + listener.toString());
+    run.getCallbacks().add(listener);
   }
 
   @Override
   public void removeCallback(ReactiongameListener listener) {
-    logic.getCallbacks().remove(listener);
+    logger.info("Removed listener: " + listener.toString());
+    run.getCallbacks().remove(listener);
   }
 
   @Override
   public void newRun(Difficulty difficulty) throws IllegalParameterException {
-    logic = new RgcLogic(difficulty);
+    logger.info("newRun ("  + difficulty + ")");
+    run = new RgcRun(difficulty, currentPlayer);
 
-    logic.getObstacleClock().setRunning(true);
-    logic.getAimTargetClock().setRunning(true);
+    run.getObstacleClock().setRunning(true);
+    run.getAimTargetClock().setRunning(true);
 
-    logger.info("New run created ("  + difficulty + ")");
   }
 
   @Override
   public void pauseRun() throws IllegalStateException {
-    if (logic.getState() == GameState.PAUSED) {
+    logger.info("Pause run");
+
+    if (run.getState() == GameState.PAUSED) {
       logger.info("Pause run illegal", new IllegalStateException());
       throw new IllegalStateException();
     }
 
-    logic.pauseClocks();
+    run.pauseClocks();
 
-    logic.setState(GameState.PAUSED);
-
-    logger.info("Paused run");
+    run.setState(GameState.PAUSED);
   }
 
   @Override
   public void continueRun() throws IllegalStateException {
-    if (logic.getState() != GameState.PAUSED) {
+    logger.info("Continue run");
+    if (run.getState() != GameState.PAUSED) {
       logger.info("Continue run illegal", new IllegalStateException());
       throw new IllegalStateException();
     }
 
-    logic.continueClocks();
+    run.continueClocks();
 
-    logic.setState(GameState.RUNNING);
+    run.setState(GameState.RUNNING);
 
-    logger.info("Continued run");
   }
 
   @Override
   public void endRun() {
+    logger.info("End run");
 
-    logic.endRun();
 
-    logic.setState(GameState.FINISHED);
+    run.endRun();
+    run.setState(GameState.FINISHED);
 
-    logger.info("Run ended");
+    run = null;
   }
 
   @Override
   public void keyPressed(char key) throws IllegalStateException {
-    logic.setpKey(key);
+    logger.info("Key pressed \"" + key + "\"");
 
-    logger.info("Player pressed key \"" + key + "\"");
+    run.setpKey(key);
 
-    logic.checkForTargetHit();
+    run.checkForTargetHit();
   }
 
   @Override
   public void playerEnteredAimTarget(int aimtargetId) throws IllegalParameterException {
+    logger.info("Player entered aim target (" + aimtargetId + ")");
 
-    if (aimtargetId > 0) {
+    if (aimtargetId < 0) {
       throw new IllegalParameterException();
     }
 
-    logic.setpObstacle(null);
-    logic.setpAimTarget(logic.getGameField().getTargets().get(aimtargetId));
+    run.setpObstacle(null);
+    run.setpAimTarget(run.getField().getTargetMap().get(aimtargetId));
 
-    logger.info("Player entered aim target (" + aimtargetId + ")");
   }
 
   @Override
   public void playerEnteredObstacle(int obstacleId) throws IllegalParameterException {
+    logger.info("Player entered obstacle (" + obstacleId + ")");
 
-    if (obstacleId > 0) {
+    if (obstacleId < 0) {
+      logger.info("Invalid obstacleId", new IllegalParameterException());
       throw new IllegalParameterException();
     }
 
-    logic.setpAimTarget(null);
-    logic.setpObstacle(logic.getGameField().getObstacles().get(obstacleId));
+    run.setpAimTarget(null);
+    run.setpObstacle(run.getField().getObstacleMap().get(obstacleId));
 
-    logger.info("Player entered obstacle (" + obstacleId + ")");
-
-    logic.playerHitObstacle();
+    run.playerHitObstacle();
   }
 
   @Override
   public void playerLeftGameObject() {
-    logic.setpObstacle(null);
-    logic.setpAimTarget(null);
-
     logger.info("Player left game object");
+
+    run.setpObstacle(null);
+    run.setpAimTarget(null);
   }
 
   @Override
   public void setCurrentPlayerName(String playerName) {
-    logic.getPlayer().setName(playerName);
+    logger.info("Set player name to \"" + playerName + "\"");
 
-    logger.info("Player name changed to \"" + playerName + "\"");
+    run.getPlayer().setName(playerName);
   }
 
   @Override
@@ -142,23 +155,4 @@ public class RgcService implements ReactiongameService {
   public SortedMap<String, Integer> saveHighscoreTable() throws IllegalFormatException {
     return null;
   }
-
-
-  public static void main(String[] args) throws IllegalParameterException {
-    RgcService service = new RgcService();
-
-    service.newRun(Difficulty.HARD);
-
-
-    try {
-      Thread.sleep(35000);
-    } catch (InterruptedException e) {
-      throw new RuntimeException(e);
-    }
-
-    service.endRun();
-
-
-  }
-
 }

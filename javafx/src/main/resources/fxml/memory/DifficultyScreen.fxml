@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<fx:root alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgb(97, 152, 251); -fx-border-color: BLACK; -fx-border-width: 15;" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="97.0" prefWidth="464.0" text="Wähle die Schwierigkeit aus:" textFill="WHITE">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="easy" mnemonicParsing="false" onAction="#onSelect" selected="true" text="Leicht">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="260.0" />
+         </VBox.margin>
+         <toggleGroup>
+            <ToggleGroup fx:id="difficulty" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="medium" mnemonicParsing="false" onAction="#onSelect" text="Mittel" toggleGroup="$difficulty">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="260.0" top="10.0" />
+         </VBox.margin>
+      </RadioButton>
+      <RadioButton fx:id="hard" mnemonicParsing="false" onAction="#onSelect" prefHeight="25.0" prefWidth="121.0" text="Schwer" toggleGroup="$difficulty">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="260.0" top="10.0" />
+         </VBox.margin>
+      </RadioButton>
+      <RadioButton fx:id="veryhard" layoutX="10.0" layoutY="181.0" mnemonicParsing="false" onAction="#onSelect" prefHeight="25.0" prefWidth="121.0" text="Extrem" toggleGroup="$difficulty">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="260.0" top="10.0" />
+         </VBox.margin>
+      </RadioButton>
+      <HBox prefHeight="97.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="closeDifficulty" cancelButton="true" mnemonicParsing="false" onAction="#onCloseButtonPressed" onMouseEntered="#handle" onMouseExited="#handle" style="-fx-background-radius: 10; -fx-background-color: White; -fx-border-radius: 10; -fx-border-color: BLACK; -fx-border-width: 3;" text="Schließen">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="180.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="saveDifficulty" alignment="CENTER" mnemonicParsing="false" onAction="#onSaveButtonPressed" onMouseEntered="#handle" onMouseExited="#handle" style="-fx-border-radius: 10; -fx-border-color: BLACK; -fx-background-radius: 10; -fx-background-color: WHITE; -fx-border-width: 3;" text="Anwenden">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="60.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <VBox.margin>
+            <Insets top="50.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</fx:root>

@@ -1,0 +1,19 @@
+.gameMenuButtons-style {
+    -fx-background-color: #ccc9dc;
+
+}
+
+#gameMenuVbox{
+    -fx-alignment: center;
+    -fx-spacing: 20px;
+    -fx-background-color: #0c1821;
+}
+
+#gameVbox {
+    -fx-background-color: #0C1821;
+    -fx-text-fill: white;
+    -fx-padding: 50px 10px 10px 10px;
+    -fx-spacing: 30px;
+}
+
+

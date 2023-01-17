@@ -54,7 +54,7 @@ public class AimTargetDescriptor implements GameObstacleDescriptor{
   }
 
   @Override
-  public void getId() {
-
+  public int getId() {
+    return id;
   }
 }
