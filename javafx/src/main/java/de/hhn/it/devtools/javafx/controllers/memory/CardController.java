@@ -15,7 +15,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 
-
+/**
+ * Controller for a memory card
+ */
 public class CardController extends Pane {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(CardController.class);
@@ -29,6 +31,10 @@ public class CardController extends Pane {
   private final Label name;
   private final Pane cover;
 
+  /**
+   * Constructor for a Card Controller
+   * @param pictureCardDescriptor the picture card descriptor the controller should be constructed for
+   */
   public CardController(PictureCardDescriptor pictureCardDescriptor) {
     this.screenController = (MemoryScreenController) MemoryAttributeStore.getReference()
             .getAttribute(MemoryServiceController.SCREEN_CONTROLLER);
@@ -112,6 +118,10 @@ public class CardController extends Pane {
     logger.info("Card Controller - created: id = " + pictureCardDescriptor.getId());
   }
 
+  /**
+   * Handles what happens if the card is clicked
+   * @param event if the card is clicked
+   */
   private void onMouseClicked(MouseEvent event) {
     logger.info("Clicked Card " + pictureCardDescriptor.getId());
     showCard();
@@ -127,14 +137,16 @@ public class CardController extends Pane {
     }
   }
 
-  private boolean isNameCard(PictureCardDescriptor pictureCardDescriptor) {
-    return pictureCardDescriptor.getPictureRef() == -1;
-  }
-
+  /**
+   * Initializes name card with name
+   */
   private void initNameCard() {
     name.setText(pictureCardDescriptor.getName().replace(".png", "").replace(".jpg", ""));
   }
 
+  /**
+   * Initializes picture card with picture
+   */
   private void initPictureCard() {
     try {
       picture.setImage(new Image(getPathByPictureReference(pictureCardDescriptor.getPictureRef())));
@@ -143,6 +155,37 @@ public class CardController extends Pane {
     }
   }
 
+  /**
+   * Sets the card visible
+   */
+  private void showCard() {
+    cover.setStyle("-fx-background-color: Transparent; -fx-background-radius: 5;"
+            + " -fx-border-radius: 5; -fx-border-color: Red; -fx-border-width: 3");
+  }
+
+  /**
+   * Set the card hidden
+   */
+  private void hideCard() {
+    cover.setStyle("-fx-background-color: Gray; -fx-background-radius: 5;"
+            + " -fx-border-radius: 5; -fx-border-color: BLACK;");
+  }
+
+  /**
+   * Determines if card is name or picture card
+   * @param pictureCardDescriptor descriptor of the card
+   * @return true if its a name card
+   */
+  private boolean isNameCard(PictureCardDescriptor pictureCardDescriptor) {
+    return pictureCardDescriptor.getPictureRef() == -1;
+  }
+
+  /**
+   * Determines the path of the picture files from the picture reference
+   * @param pictureReference reference to the picture
+   * @return String of the file path
+   * @throws IllegalParameterException if the picture reference is not found
+   */
   private String getPathByPictureReference(int pictureReference) throws IllegalParameterException {
     HashMap<Integer, String> pathReferences = (HashMap<Integer, String>) MemoryAttributeStore
             .getReference().getAttribute(MemoryServiceController.PATH_REFERENCES);
@@ -150,16 +193,6 @@ public class CardController extends Pane {
       throw new IllegalParameterException("PictureReference not found");
     }
     return pathReferences.get(pictureReference);
-  }
-
-  private void showCard() {
-    cover.setStyle("-fx-background-color: Transparent; -fx-background-radius: 5;"
-            + " -fx-border-radius: 5; -fx-border-color: Red; -fx-border-width: 3");
-  }
-
-  private void hideCard() {
-    cover.setStyle("-fx-background-color: Gray; -fx-background-radius: 5;"
-            + " -fx-border-radius: 5; -fx-border-color: BLACK;");
   }
 
 }

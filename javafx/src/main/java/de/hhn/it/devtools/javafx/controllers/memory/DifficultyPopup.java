@@ -11,6 +11,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
+/**
+ * Popup for the difficulty screen of memory game
+ */
 public class DifficultyPopup extends VBox {
   public static final String OPEN_POPUP = "difficulty.popup.open";
   public static final String CLOSE_POPUP = "difficulty.popup.close";

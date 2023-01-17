@@ -11,7 +11,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-
+/**
+ * Screencontroller for memory screens and popups
+ */
 public class MemoryScreenController {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(MemoryScreenController.class);

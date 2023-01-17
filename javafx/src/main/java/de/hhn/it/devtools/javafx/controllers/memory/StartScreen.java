@@ -15,7 +15,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 
-
+/**
+ * Start screen of memory
+ */
 public class StartScreen implements Initializable {
   public static final String SCREEN = "start.screen";
   private static final org.slf4j.Logger logger =

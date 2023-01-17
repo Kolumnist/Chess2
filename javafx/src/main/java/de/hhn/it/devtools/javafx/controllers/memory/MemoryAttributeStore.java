@@ -3,6 +3,9 @@ package de.hhn.it.devtools.javafx.controllers.memory;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * AttributeStore of memory
+ */
 public class MemoryAttributeStore {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(MemoryAttributeStore.class);

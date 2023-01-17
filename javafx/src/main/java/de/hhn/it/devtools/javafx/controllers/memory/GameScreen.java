@@ -18,7 +18,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
-
+/**
+ * Game Screen of memory
+ */
 public class GameScreen implements Initializable {
   public static final String SCREEN = "game.screen";
   private static final org.slf4j.Logger logger =
@@ -48,21 +50,15 @@ public class GameScreen implements Initializable {
   private Label systemLabel;
 
 
-  public void disableGameScreen() {
-    optionsButton.setDisable(true);
-    finishButton.setDisable(true);
-    disableGrid();
-    memoryService.stopTimer();
-  }
-
-  public void enableGameScreen() {
-    optionsButton.setDisable(false);
-    finishButton.setDisable(false);
-    activateGrid();
-    memoryService.startTimer();
-  }
-
-
+  /**
+   * Called to initialize a controller after its root element has been
+   * completely processed.
+   *
+   * @param location  The location used to resolve relative paths for the root object, or
+   *                  <code>null</code> if the location is not known.
+   * @param resources The resources used to localize the root object, or <code>null</code> if
+   *                  unknown
+   */
   @Override
   public void initialize(final URL location, final ResourceBundle resources) {
     MemoryAttributeStore memoryAttributeStore = MemoryAttributeStore.getReference();
@@ -101,29 +97,6 @@ public class GameScreen implements Initializable {
     logger.info("Game Screen initialized.");
   }
 
-  public void gameWon() {
-    memoryService.stopTimer();
-    mainGrid.setDisable(true);
-  }
-
-  public void disableGrid() {
-    mainGrid.setDisable(true);
-  }
-
-  public void activateGrid() {
-    mainGrid.setDisable(false);
-  }
-
-  public PictureCardDescriptor[] shuffle(PictureCardDescriptor[] array) {
-    Random random = new Random();
-    for (int i = array.length - 1; i > 0; i--) {
-      int index = random.nextInt(i + 1);
-      PictureCardDescriptor temp = array[index];
-      array[index] = array[i];
-      array[i] = temp;
-    }
-    return array;
-  }
 
   @FXML
   void handle(MouseEvent event) {
@@ -159,14 +132,59 @@ public class GameScreen implements Initializable {
     screenController.switchTo(DifficultyPopup.OPEN_POPUP);
   }
 
-  public String getCurrentTime() {
-    return timeDisplayLabel.getText();
+  /**
+   * Disables the game screen
+   */
+  public void disableGameScreen() {
+    optionsButton.setDisable(true);
+    finishButton.setDisable(true);
+    disableGrid();
+    memoryService.stopTimer();
   }
 
+  /**
+   * Enables the game screen
+   */
+  public void enableGameScreen() {
+    optionsButton.setDisable(false);
+    finishButton.setDisable(false);
+    activateGrid();
+    memoryService.startTimer();
+  }
+
+  /**
+   * Handles timer and grid of cards if game is won
+   */
+  public void gameWon() {
+    memoryService.stopTimer();
+    mainGrid.setDisable(true);
+  }
+
+  /**
+   * Disables the grid of cards
+   */
+  public void disableGrid() {
+    mainGrid.setDisable(true);
+  }
+
+  /**
+   * Activates the grid of cards
+   */
+  public void activateGrid() {
+    mainGrid.setDisable(false);
+  }
+
+  /**
+   * Sets the message on the game screen for the player to see
+   * @param message that should be displayed to the player
+   */
   public void setSystemMessage(String message) {
     systemLabel.setText(message.trim());
   }
 
+  /**
+   * Closes the game
+   */
   public void closeGame() {
     memoryService.stopTimer();
     memoryService.resetTimer();
@@ -181,4 +199,29 @@ public class GameScreen implements Initializable {
     }
     screenController.switchTo(StartScreen.SCREEN);
   }
+
+  /**
+   * Shuffles the card descriptors
+   * @param array the card descriptors
+   * @return shuffled card descriptors
+   */
+  public PictureCardDescriptor[] shuffle(PictureCardDescriptor[] array) {
+    Random random = new Random();
+    for (int i = array.length - 1; i > 0; i--) {
+      int index = random.nextInt(i + 1);
+      PictureCardDescriptor temp = array[index];
+      array[index] = array[i];
+      array[i] = temp;
+    }
+    return array;
+  }
+
+  /**
+   * Returns the current time shown in the label on the game screen
+   * @return String the current time
+   */
+  public String getCurrentTime() {
+    return timeDisplayLabel.getText();
+  }
+
 }
