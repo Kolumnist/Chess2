@@ -2,6 +2,7 @@ package de.hhn.it.devtools.javafx.controllers.memory;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
+import de.hhn.it.devtools.apis.memory.State;
 import de.hhn.it.devtools.apis.memory.TimerListener;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
 import de.hhn.it.devtools.javafx.controllers.MemoryServiceController;
@@ -188,6 +189,9 @@ public class GameScreen implements Initializable {
   public void closeGame() {
     memoryService.stopTimer();
     memoryService.resetTimer();
+    for (PictureCardDescriptor c: memoryService.getPictureCardDescriptors()) {
+      c.setState(State.HIDDEN);
+    }
     memoryService.closeGame();
     if (timerListener != null) {
       try {
