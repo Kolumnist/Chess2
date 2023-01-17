@@ -3,11 +3,6 @@ package de.hhn.it.devtools.components.reactiongame.test;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.reactiongame.Difficulty;
 import de.hhn.it.devtools.apis.reactiongame.GameState;
-import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
-import de.hhn.it.devtools.components.reactiongame.provider.RgcAimTarget;
-import de.hhn.it.devtools.components.reactiongame.provider.RgcObstacleClock;
-import de.hhn.it.devtools.components.reactiongame.provider.RgcPlayer;
-import de.hhn.it.devtools.components.reactiongame.provider.RgcRun;
 
 import de.hhn.it.devtools.components.reactiongame.provider.RgcService;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,28 +12,22 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * This class tests the methods of RgcService
  */
-public class RgcServiceTest {
+public class RgcServiceGoodCases {
 
-  private RgcRun run;
   private RgcService service;
 
   @BeforeEach
-  public void setup() {
+  public void setup() throws IllegalParameterException {
     service = new RgcService();
-    try {
-      service.newRun(Difficulty.MEDIUM);
-      run = service.getRun();
-    } catch (IllegalParameterException e) {
-
-    }
+    service.newRun(Difficulty.MEDIUM);
   }
 
   @Test
   public void pauseRunTest() {
     service.pauseRun();
-    assertEquals(run.getState(), GameState.PAUSED);
-    assertFalse(run.getObstacleClock().getIsRunning());
-    assertFalse(run.getAimTargetClock().getIsRunning());
+    assertEquals(service.getRun().getState(), GameState.PAUSED);
+    assertFalse(service.getRun().getObstacleClock().getIsRunning());
+    assertFalse(service.getRun().getAimTargetClock().getIsRunning());
 
     boolean thrown = false;
     try {
@@ -49,9 +38,9 @@ public class RgcServiceTest {
     assertTrue(thrown);
 
     service.continueRun();
-    assertEquals(run.getState(), GameState.RUNNING);
-    assertTrue(run.getObstacleClock().getIsRunning());
-    assertTrue(run.getAimTargetClock().getIsRunning());
+    assertEquals(service.getRun().getState(), GameState.RUNNING);
+    assertTrue(service.getRun().getObstacleClock().getIsRunning());
+    assertTrue(service.getRun().getAimTargetClock().getIsRunning());
 
     thrown = false;
     try {
@@ -66,7 +55,7 @@ public class RgcServiceTest {
   @Test
   public void testKeyPressed() {
     service.keyPressed('q');
-    assertEquals(run.getpKey(), 'q');
+    assertEquals(service.getRun().getpKey(), 'q');
   }
 
   @Test
@@ -87,13 +76,13 @@ public class RgcServiceTest {
     assertTrue(thrown);
 
     thrown = false;
-    run.addAimTarget(0);
+    service.getRun().addAimTarget(0);
     try {
       service.playerEnteredAimTarget(0);
     } catch (IllegalParameterException e) {
       thrown = true;
     }
-    assertEquals(run.getpAimTarget().getId(), 0);
+    assertEquals(service.getRun().getpAimTarget().getId(), 0);
     assertFalse(thrown);
   }
 
@@ -107,23 +96,26 @@ public class RgcServiceTest {
     }
     assertTrue(thrown);
 
-    int life = run.getPlayer().getCurrentLife();
+    int life = service.getRun().getPlayer().getCurrentLife();
     thrown = false;
-    run.addObstacle(0);
+    service.getRun().addObstacle(0);
     try {
       service.playerEnteredObstacle(0);
     } catch (IllegalParameterException e) {
       thrown = true;
     }
-    assertEquals(run.getpObstacle().getId(), 0);
+    assertEquals(service.getRun().getpObstacle().getId(), 0);
     assertFalse(thrown);
-    assertEquals(run.getPlayer().getCurrentLife(), life - 1);
+    assertEquals(service.getRun().getPlayer().getCurrentLife(), life - 1);
   }
 
   @Test
   public void testPlayerLeftGameObject() {
+
     service.playerLeftGameObject();
-    assertNull(run.getpObstacle());
-    assertNull(run.getpAimTarget());
+    assertNull(service.getRun().getpObstacle());
+    assertNull(service.getRun().getpAimTarget());
   }
+
+
 }
