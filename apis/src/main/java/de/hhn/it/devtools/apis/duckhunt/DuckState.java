@@ -12,6 +12,8 @@ public enum DuckState {
   FALLING,
   /** The State of a Duck when a timer runs out and the ducks fly away. */
   FLYAWAY,
-  /** The State of a Duck when a Duck is dead and fell out of screen. */
+  /** The State of a Duck when a the duck flew out of the screen. */
+  ESCAPED,
+  /** The State of a Duck when a Duck is dead and fell out of screen after beein shot. */
   DEAD
 }

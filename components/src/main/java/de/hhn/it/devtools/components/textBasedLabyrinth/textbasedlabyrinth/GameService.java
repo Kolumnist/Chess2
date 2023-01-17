@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
 
+import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.InvalidSeedException;
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.RoomFailedException;
 import java.util.List;
@@ -66,7 +67,7 @@ public interface GameService {
    * @param newMap Map to be selected
    * @param newSeed Seed for the Map
    */
-  void setCurrentLayout(Map newMap, Seed newSeed);
+  void setCurrentLayout(Map newMap, Seed newSeed) throws RoomFailedException, InvalidSeedException;
 
 
   /**
@@ -87,9 +88,15 @@ public interface GameService {
    */
   String check();
 
+  int getScore();
+
   void addListener(OutputListener listener);
 
   void removeListener(OutputListener listener);
+
+  Player getPlayer();
+
+  Room getCurrentRoom();
 
 
 
@@ -100,4 +107,9 @@ public interface GameService {
   void end();
 
   void reset();
+
+  public String getPlayerName();
+
+  public Map getMap();
+
 }

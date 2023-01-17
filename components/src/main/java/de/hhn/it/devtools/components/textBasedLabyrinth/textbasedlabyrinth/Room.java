@@ -112,7 +112,6 @@ public class Room {
   public List<Item> search() throws NullPointerException {
     List<Item> items1 = items.values().stream().collect(Collectors.toList());
     return items1;
-
   }
 
   /**
@@ -131,22 +130,21 @@ public class Room {
     }
   }
 
-  /**
-   *
-   * @return
-   */
+
+
   public HashMap<Direction, Room> getRoomMap() {
     return roomMap;
   }
 
-  /**
-   *
-   */
+
+
   public void setExit(){
     this.isExit = true;
   }
 
-
+  public boolean isExit() {
+    return isExit;
+  }
 }
 
 /**

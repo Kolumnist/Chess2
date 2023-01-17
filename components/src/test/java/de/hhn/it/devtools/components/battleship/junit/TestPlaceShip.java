@@ -28,11 +28,8 @@ public class TestPlaceShip {
     Computer computer = bsService.getComputer();
     Field computerField = new Field(9, computer);
 
-    private Map<Player, Owner> player2OwnerMap;
-
     @BeforeEach
     void setup() {
-        player2OwnerMap = new HashMap<>();
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
                 playerField.setPanelMarker(i, j, PanelState.NOSHIP);
@@ -43,8 +40,6 @@ public class TestPlaceShip {
         computer.setShipfield(computerField);
         player.setAttackField(playerField);
         computer.setAttackField(computerField);
-        player2OwnerMap.put(player, Owner.PLAYER);
-        player2OwnerMap.put(computer, Owner.COMPUTER);
     }
 
     // Bad Cases
@@ -59,7 +54,7 @@ public class TestPlaceShip {
         ship.setIsVertical(false);
         ship.setPlaced(true);
         IllegalShipStateException exception = assertThrows(IllegalShipStateException.class,
-                () -> bs.placeShip(player2OwnerMap.get(player), ship, 4, 3));
+                () -> bs.placeShip(player, ship, 4, 3));
     }
 
     @Test
@@ -71,7 +66,7 @@ public class TestPlaceShip {
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
         IllegalGameStateException exception = assertThrows(IllegalGameStateException.class,
-                () -> bs.placeShip(player2OwnerMap.get(player), ship, 2, 5));
+                () -> bs.placeShip(player, ship, 2, 5));
     }
 
     @Test
@@ -83,7 +78,7 @@ public class TestPlaceShip {
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
         IllegalPositionException exception = assertThrows(IllegalPositionException.class,
-                () -> bs.placeShip(player2OwnerMap.get(player), ship, -2, -3));
+                () -> bs.placeShip(player, ship, -2, -3));
     }
 
     @Test
@@ -95,7 +90,7 @@ public class TestPlaceShip {
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
         IllegalPositionException exception = assertThrows(IllegalPositionException.class,
-                () -> bs.placeShip(player2OwnerMap.get(player), ship, 9, 10));
+                () -> bs.placeShip(player, ship, 9, 10));
     }
 
     @Test
@@ -107,7 +102,7 @@ public class TestPlaceShip {
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
         IllegalPositionException exception = assertThrows(IllegalPositionException.class,
-                () -> bs.placeShip(player2OwnerMap.get(player), ship, 7, 7));
+                () -> bs.placeShip(player, ship, 7, 7));
     }
 
     @Test
@@ -119,7 +114,7 @@ public class TestPlaceShip {
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(false);
         IllegalPositionException exception = assertThrows(IllegalPositionException.class,
-                () -> bs.placeShip(player2OwnerMap.get(player), ship, 8, 1));
+                () -> bs.placeShip(player, ship, 8, 1));
     }
 
     // Good Cases
@@ -131,7 +126,7 @@ public class TestPlaceShip {
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
-        bs.placeShip(player2OwnerMap.get(player), ship, 3, 4);
+        bs.placeShip(player, ship, 3, 4);
         assertEquals(true, ship.getPlaced());
     }
 
@@ -142,38 +137,8 @@ public class TestPlaceShip {
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(false);
-        bs.placeShip(player2OwnerMap.get(player), ship, 3, 4);
+        bs.placeShip(player, ship, 3, 4);
         assertEquals(true, ship.getPlaced());
-    }
-
-    @Test
-    @DisplayName("Test check comShipPlacement - 5x5 field")
-    public void comPlacementSuccessful5() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
-        bsService.setCurrentGameState(GameState.PREGAME);
-        computer.comShipPlacement(player2OwnerMap, 5);
-        for(int i = 0; i < bsService.getComputer().getOwnedShips().size(); i++){
-            assertEquals(true, bsService.getComputer().getOwnedShips().get(i).getPlaced());
-        }
-    }
-
-    @Test
-    @DisplayName("Test check comShipPlacement - 10x10 field")
-    public void comPlacementSuccessful10() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
-        bsService.setCurrentGameState(GameState.PREGAME);
-        computer.comShipPlacement(player2OwnerMap, 10);
-        for(int i = 0; i < bsService.getComputer().getOwnedShips().size(); i++){
-            assertEquals(true, bsService.getComputer().getOwnedShips().get(i).getPlaced());
-        }
-    }
-
-    @Test
-    @DisplayName("Test check comShipPlacement - 15x15 field")
-    public void comPlacementSuccessful15() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
-        bsService.setCurrentGameState(GameState.PREGAME);
-        computer.comShipPlacement(player2OwnerMap, 15);
-        for(int i = 0; i < bsService.getComputer().getOwnedShips().size(); i++){
-            assertEquals(true, bsService.getComputer().getOwnedShips().get(i).getPlaced());
-        }
     }
 
 }

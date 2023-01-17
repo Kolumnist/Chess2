@@ -38,7 +38,7 @@ public interface BattleshipService {
      * @return placing (not)possible
      * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
-    boolean isPlacementPossible(Owner owner, Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException;
+    boolean isPlacementPossible(Player player, Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException;
 
 
     /**
@@ -51,7 +51,7 @@ public interface BattleshipService {
      * @throws IllegalShipStateException if the ship is already placed
      * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
-    void placeShip(Owner owner, Ship shipToPlace, int x1, int y1)
+    void placeShip(Player player, Ship shipToPlace, int x1, int y1)
             throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException
     ;
 
@@ -62,7 +62,7 @@ public interface BattleshipService {
      * @param shipToMove selected ship to be moved
      * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
-    void unPlace(Owner owner,Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException;
+    void unPlace(Player player,Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException;
 
 
     /**
@@ -73,7 +73,7 @@ public interface BattleshipService {
      * @throws IllegalShipStateException ship cant be rotated if it's placed
      * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
-    void rotateShip(Owner owner, Ship shipToRotate)
+    void rotateShip(Player player, Ship shipToRotate)
             throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException;
 
 
@@ -87,7 +87,7 @@ public interface BattleshipService {
      * @throws IllegalArgumentException if field does not exist
      * @throws IllegalGameStateException if the GameState is not FIRINGSHOTS
      */
-    boolean bombPanel(Owner attacker, Owner victim, int x, int y) throws IllegalArgumentException, IllegalGameStateException;
+    boolean bombPanel(Player attacker, Player victim, int x, int y) throws IllegalArgumentException, IllegalGameStateException;
 
 
     /**

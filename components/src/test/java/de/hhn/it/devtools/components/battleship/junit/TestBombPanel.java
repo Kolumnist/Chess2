@@ -24,11 +24,8 @@ public class TestBombPanel {
     Computer computer = bsService.getComputer();
     Field computerField = new Field(9, computer);
 
-    private Map<Player, Owner> player2OwnerMap;
-
     @BeforeEach
     void setup() {
-        player2OwnerMap = new HashMap<>();
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
                 playerField.setPanelMarker(i, j, PanelState.NOSHIP);
@@ -39,8 +36,6 @@ public class TestBombPanel {
         computer.setShipfield(computerField);
         player.setAttackField(playerField);
         computer.setAttackField(computerField);
-        player2OwnerMap.put(player, Owner.PLAYER);
-        player2OwnerMap.put(computer, Owner.COMPUTER);
     }
 
     // Bad Cases
@@ -51,7 +46,7 @@ public class TestBombPanel {
         // IllegalGameStateException should be thrown
         bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         IllegalGameStateException exception = assertThrows(IllegalGameStateException.class,
-                () -> bs.bombPanel(player2OwnerMap.get(player), player2OwnerMap.get(computer), 5, 6));
+                () -> bs.bombPanel(player, computer, 5, 6));
     }
 
     @Test
@@ -60,7 +55,7 @@ public class TestBombPanel {
         // IllegalArgumentException should be thrown
         bsService.setCurrentGameState(GameState.FIRINGSHOTS);
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> bs.bombPanel(player2OwnerMap.get(player), player2OwnerMap.get(computer), -2 ,-7));
+                () -> bs.bombPanel(player, computer, -2 ,-7));
     }
 
     @Test
@@ -69,7 +64,7 @@ public class TestBombPanel {
         // IllegalArgumentException should be thrown
         bsService.setCurrentGameState(GameState.FIRINGSHOTS);
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> bs.bombPanel(player2OwnerMap.get(player), player2OwnerMap.get(computer), 9, 12));
+                () -> bs.bombPanel(player, computer, 9, 12));
     }
 
     // Good Cases
@@ -82,10 +77,10 @@ public class TestBombPanel {
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
-        bs.placeShip(player2OwnerMap.get(computer), ship, 8, 5);
+        bs.placeShip(computer, ship, 8, 5);
 
         bsService.setCurrentGameState(GameState.FIRINGSHOTS);
-        assertEquals(true, bs.bombPanel(player2OwnerMap.get(player), player2OwnerMap.get(computer), 8, 7));
+        assertEquals(true, bs.bombPanel(player, computer, 8, 7));
     }
 
     @Test
@@ -96,10 +91,10 @@ public class TestBombPanel {
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(false);
-        bs.placeShip(player2OwnerMap.get(computer), ship, 0, 0);
+        bs.placeShip(computer, ship, 0, 0);
 
         bsService.setCurrentGameState(GameState.FIRINGSHOTS);
-        assertEquals(false, bs.bombPanel(player2OwnerMap.get(player), player2OwnerMap.get(computer), 0, 4));
+        assertEquals(false, bs.bombPanel(player, computer, 0, 4));
     }
 
     @Test
@@ -110,24 +105,24 @@ public class TestBombPanel {
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
-        bs.placeShip(player2OwnerMap.get(player), ship, 3, 2);
+        bs.placeShip(player, ship, 3, 2);
 
         bsService.setCurrentGameState(GameState.FIRINGSHOTS);
-        assertEquals(true, bs.bombPanel(player2OwnerMap.get(computer), player2OwnerMap.get(player), 3, 4));
+        assertEquals(true, bs.bombPanel(computer, player, 3, 4));
     }
 
     @Test
-    @DisplayName("Test check bombPanel - player misses")
+    @DisplayName("Test check bombPanel - computer misses")
     public void bombPanelComputerMissesShip() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
         // false should be returned
         bsService.setCurrentGameState(GameState.PLACINGSHIPS);
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(false);
-        bs.placeShip(player2OwnerMap.get(player), ship, 0, 5);
+        bs.placeShip(player, ship, 0, 5);
 
         bsService.setCurrentGameState(GameState.FIRINGSHOTS);
-        assertEquals(false, bs.bombPanel(player2OwnerMap.get(computer), player2OwnerMap.get(player), 0, 4));
+        assertEquals(false, bs.bombPanel(computer, player, 0, 4));
     }
 
 }
