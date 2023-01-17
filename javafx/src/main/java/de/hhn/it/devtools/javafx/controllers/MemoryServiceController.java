@@ -17,7 +17,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 
-
+/**
+ * Memory Service Main Controller
+ */
 public class MemoryServiceController extends Controller implements Initializable {
   public static final String SCREEN_CONTROLLER = "screen.controller";
   public static final String MEMORY_SERVICE = "memory.service";
@@ -35,6 +37,15 @@ public class MemoryServiceController extends Controller implements Initializable
     logger.debug("MemoryService Controller created.");
   }
 
+  /**
+   * Called to initialize a controller after its root element has been
+   * completely processed.
+   *
+   * @param location  The location used to resolve relative paths for the root object, or
+   *                  <code>null</code> if the location is not known.
+   * @param resources The resources used to localize the root object, or <code>null</code> if
+   *                  unknown.
+   */
   @Override
   public void initialize(final URL location, final ResourceBundle resources) {
     screenController = new MemoryScreenController(backgroundAnchorPane);
@@ -66,6 +77,11 @@ public class MemoryServiceController extends Controller implements Initializable
     }
   }
 
+  /**
+   * Loads the card set for the chosen difficulty from files
+   * @param difficulty the chosen difficulty
+   * @return CardSetDescriptor of the chosen difficulty
+   */
   public CardSetDescriptor fetchCardSets(String difficulty) {
     File folder = new File("javafx/src/main/resources/fxml/memory/pictures/sets/" + difficulty);
     HashMap<Integer, String> pictureReferences = new HashMap<>();
@@ -94,6 +110,11 @@ public class MemoryServiceController extends Controller implements Initializable
             .getDifficultyFromString(difficulty), pictureCardDescriptors, pictureReferences);
   }
 
+  /**
+   * Creates random number
+   * @param n upper limit for random number
+   * @return int random number between 0 and n
+   */
   private int getRandomNumber(int n) {
     Random random = new Random();
     return random.nextInt(n);

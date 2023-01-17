@@ -30,7 +30,10 @@ public class MemoryScreenController {
     this.anchorPane = anchorPane;
   }
 
-
+  /**
+   * Returns the start screen content as node and sets up the controller
+   * @return Node the start screen
+   */
   private Node getStartScreen() {
     if (startScreen == null) {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/memory/StartScreen.fxml"));
@@ -44,6 +47,10 @@ public class MemoryScreenController {
     return startScreenContent;
   }
 
+  /**
+   * Returns the game screen content as node and set ups the controller
+   * @return Node the game screen
+   */
   private Node getGameScreen() {
     Node gameScreenContent = null;
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/memory/GameScreen.fxml"));
@@ -56,14 +63,10 @@ public class MemoryScreenController {
     return gameScreenContent;
   }
 
-  private void openPopup(Stage stage) {
-    stage.show();
-  }
-
-  public void closePopup(Stage stage) {
-    stage.close();
-  }
-
+  /**
+   * Builds up difficulty popup stage and returns it
+   * @return stage the difficulty popup stage
+   */
   private Stage getDifficultyStage() {
     if (difficultyPopup == null) {
       difficultyPopup = new DifficultyPopup(this);
@@ -81,6 +84,10 @@ public class MemoryScreenController {
     return difficultyStage;
   }
 
+  /**
+   * Builds up winning popup stage and returns it
+   * @return stage the winning popup stage
+   */
   private Stage getWinningStage() {
     WinningPopup winningPopup = new WinningPopup(this);
     Scene winningScene = new Scene(winningPopup, 600, 400);
@@ -93,6 +100,11 @@ public class MemoryScreenController {
     return winningStage;
   }
 
+  /**
+   * Switches between screens and popups
+   * @param toScreen the screen or popup that should be switched to
+   * @throws UnknownTransitionException if the screen or popup is unknown
+   */
   public void switchTo(String toScreen) throws UnknownTransitionException {
     logger.info("Switch to " + toScreen);
 
@@ -117,7 +129,110 @@ public class MemoryScreenController {
     }
   }
 
+  /**
+   * Saves changed difficulty in MemoryAttributeStore and calls the change on the start screen
+   * @param difficulty the chosen difficulty
+   */
+  public void changeDifficulty(String difficulty) {
+    MemoryAttributeStore.getReference().setAttribute(MemoryServiceController
+            .DIFFICULTY, getDifficultyFromString(difficulty));
+    startScreen.changeDifficulty(difficulty);
+  }
 
+  /**
+   * Opens a popup
+   * @param stage the popup stage
+   */
+  private void openPopup(Stage stage) {
+    stage.show();
+  }
+
+  /**
+   * Closes a popup
+   * @param stage the popup stage
+   */
+  private void closePopup(Stage stage) {
+    stage.close();
+  }
+
+  /**
+   * Closes the game screen
+   */
+  public void closeGameScreen() {
+    if (gameScreen != null) {
+      gameScreen.closeGame();
+    }
+  }
+
+  /**
+   * Disables the start screen
+   */
+  public void disableStartScreen() {
+    startScreenContent.setDisable(true);
+  }
+
+  /**
+   * Enables the start screen
+   */
+  public void enableStartScreen() {
+    startScreenContent.setDisable(false);
+  }
+
+  /**
+   * Disables the game screen
+   */
+  public void disableGameScreen() {
+    if (gameScreen == null) {
+      return;
+    }
+    gameScreen.disableGameScreen();
+  }
+
+  /**
+   * Enables the game screen
+   */
+  public void enableGameScreen() {
+    if (gameScreen == null) {
+      return;
+    }
+    gameScreen.enableGameScreen();
+  }
+
+  /**
+   * Sets a game screen message for the player to see what happens during the matching of cards
+   * @param message the game screen message
+   */
+  public void setGameScreenMessage(String message) {
+    gameScreen.setSystemMessage(message);
+  }
+
+  /**
+   * Changes to winning popup if game is won
+   */
+  public void gameWon() {
+    gameScreen.gameWon();
+    switchTo(WinningPopup.OPEN_POPUP);
+  }
+
+  /**
+   * Disables grid of the cards
+   */
+  public void disableGameGrid() {
+    gameScreen.disableGrid();
+  }
+
+  /**
+   * Enables the grid of the cards
+   */
+  public void enableGameGrid() {
+    gameScreen.activateGrid();
+  }
+
+  /**
+   * Returns the difficulty from a String
+   * @param difficulty difficulty as String
+   * @return Difficulty that matches the String difficulty
+   */
   public Difficulty getDifficultyFromString(String difficulty) {
     return switch (difficulty.trim().toLowerCase()) {
       case "easy" -> Difficulty.EASY;
@@ -129,58 +244,12 @@ public class MemoryScreenController {
     };
   }
 
-  public void changeDifficulty(String difficulty) {
-    MemoryAttributeStore.getReference().setAttribute(MemoryServiceController
-            .DIFFICULTY, getDifficultyFromString(difficulty));
-    startScreen.changeDifficulty(difficulty);
-  }
-
-  public void closeGameScreen() {
-    if (gameScreen != null) {
-      gameScreen.closeGame();
-    }
-  }
-
-  public void disableStartScreen() {
-    startScreenContent.setDisable(true);
-  }
-
-  public void enableStartScreen() {
-    startScreenContent.setDisable(false);
-  }
-
-  public void disableGameScreen() {
-    if (gameScreen == null) {
-      return;
-    }
-    gameScreen.disableGameScreen();
-  }
-
-  public void enableGameScreen() {
-    if (gameScreen == null) {
-      return;
-    }
-    gameScreen.enableGameScreen();
-  }
-
-  public void setGameScreenMessage(String message) {
-    gameScreen.setSystemMessage(message);
-  }
-
-  public void gameWon() {
-    gameScreen.gameWon();
-    switchTo(WinningPopup.OPEN_POPUP);
-  }
-
+  /**
+   * Return the current time of the game as String
+   * @return String current time
+   */
   public String getCurrentTime() {
     return gameScreen.getCurrentTime();
   }
 
-  public void disableGameGrid() {
-    gameScreen.disableGrid();
-  }
-
-  public void enableGameGrid() {
-    gameScreen.activateGrid();
-  }
 }

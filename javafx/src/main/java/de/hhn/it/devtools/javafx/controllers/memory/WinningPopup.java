@@ -14,6 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
+/**
+ * Popup for the winning screen of memory game
+ */
 public class WinningPopup extends VBox implements Initializable {
   public static final String OPEN_POPUP = "winning.popup.open";
   public static final String CLOSE_POPUP = "winning.popup.close";
@@ -67,6 +70,15 @@ public class WinningPopup extends VBox implements Initializable {
     }
   }
 
+  /**
+   * Called to initialize a controller after its root element has been
+   * completely processed.
+   *
+   * @param url  The location used to resolve relative paths for the root object, or
+   *             <code>null</code> if the location is not known.
+   * @param resourceBundle The resources used to localize the root object, or <code>null</code> if
+   *                       unknown.
+   */
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
     difficultyLabel.setText(difficultyLabel.getText() + " " + getTextFromDifficulty((Difficulty)
@@ -75,6 +87,11 @@ public class WinningPopup extends VBox implements Initializable {
     screenController.disableGameScreen();
   }
 
+  /**
+   * Return the difficulty as german text
+   * @param difficulty the difficulty the text should be made for
+   * @return String difficulty as german text
+   */
   public String getTextFromDifficulty(Difficulty difficulty) {
     return switch (difficulty) {
       case EASY -> "Einfach";

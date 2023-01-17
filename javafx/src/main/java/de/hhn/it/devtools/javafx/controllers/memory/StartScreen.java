@@ -88,6 +88,15 @@ public class StartScreen implements Initializable {
   }
 
 
+  /**
+   * Called to initialize a controller after its root element has been
+   * completely processed.
+   *
+   * @param location  The location used to resolve relative paths for the root object, or
+   *                  <code>null</code> if the location is not known.
+   * @param resources The resources used to localize the root object, or <code>null</code> if
+   *                  unknown.
+   */
   @Override
   public void initialize(final URL location, final ResourceBundle resources) {
     MemoryAttributeStore memoryAttributeStore = MemoryAttributeStore.getReference();
@@ -100,6 +109,10 @@ public class StartScreen implements Initializable {
     logger.info("Start Screen initialized.");
   }
 
+  /**
+   * Changes the label to show the current difficulty on the start screen in german
+   * @param difficulty the current difficulty
+   */
   public void changeDifficulty(String difficulty) {
     String difficultyText = switch (difficulty) {
       case "easy" -> "Einfach";
