@@ -52,8 +52,6 @@ public class WinningPopup extends VBox implements Initializable {
   void onFinishButtonPressed(ActionEvent event) {
     screenController.switchTo(WinningPopup.CLOSE_POPUP);
     screenController.closeGameScreen();
-    screenController.switchTo(StartScreen.SCREEN);
-
   }
 
   @FXML

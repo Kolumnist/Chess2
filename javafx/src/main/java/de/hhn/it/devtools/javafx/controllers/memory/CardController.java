@@ -37,8 +37,8 @@ public class CardController extends Pane {
     this.pictureCardDescriptor = pictureCardDescriptor;
     this.setPrefSize(150, 120);
     this.setMaxSize(150, 120);
-    this.setStyle("-fx-background-color: WHITE; -fx-border-radius: 5;"
-            + " -fx-background-radius: 5; -fx-border-width: 3; -fx-border-color: black;");
+    this.setStyle("-fx-background-color: WHITE;"
+            + " -fx-background-radius: 5;");
     this.setOnMouseClicked(this::onMouseClicked);
 
     name = new Label();
@@ -83,7 +83,7 @@ public class CardController extends Pane {
               logger.info("Card " + pictureCardDescriptor.getId() + " matched.");
               Platform.runLater(() -> {
                 cover.setStyle("-fx-background-color: Transparent;-fx-background-radius: 5;"
-                        + " -fx-border-radius: 5; -fx-border-color: Green;");
+                        + " -fx-border-radius: 5; -fx-border-color: Lime; -fx-border-width: 3");
                 screenController.enableGameGrid();
                 screenController.setGameScreenMessage("Cards match!");
               });
@@ -154,7 +154,7 @@ public class CardController extends Pane {
 
   private void showCard() {
     cover.setStyle("-fx-background-color: Transparent; -fx-background-radius: 5;"
-            + " -fx-border-radius: 5; -fx-border-color: Red;");
+            + " -fx-border-radius: 5; -fx-border-color: Red; -fx-border-width: 3");
   }
 
   private void hideCard() {

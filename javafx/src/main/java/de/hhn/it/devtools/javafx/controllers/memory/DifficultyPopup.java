@@ -82,9 +82,8 @@ public class DifficultyPopup extends VBox {
   void onSaveButtonPressed(ActionEvent event) {
     screenController.changeDifficulty(hover.getId().trim().toLowerCase());
     screenController.switchTo(CLOSE_POPUP);
-    screenController.closeGameScreen();
     screenController.enableStartScreen();
-    screenController.switchTo(StartScreen.SCREEN);
+    screenController.closeGameScreen();
   }
 
   @FXML

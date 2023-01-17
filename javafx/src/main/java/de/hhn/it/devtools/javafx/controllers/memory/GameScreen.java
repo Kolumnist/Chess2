@@ -168,7 +168,6 @@ public class GameScreen implements Initializable {
   }
 
   public void closeGame() {
-    memoryService.closeGame();
     memoryService.stopTimer();
     memoryService.resetTimer();
     memoryService.closeGame();
