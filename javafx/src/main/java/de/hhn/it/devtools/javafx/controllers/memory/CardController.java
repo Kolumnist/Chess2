@@ -43,6 +43,7 @@ public class CardController extends Pane {
             .getAttribute(MemoryServiceController.SCREEN_CONTROLLER);
     this.memoryService = (SfsMemoryService) MemoryAttributeStore.getReference()
             .getAttribute(MemoryServiceController.MEMORY_SERVICE);
+    cardMatched=0;
     this.pictureCardDescriptor = pictureCardDescriptor;
     this.setPrefSize(150, 120);
     this.setMaxSize(150, 120);
