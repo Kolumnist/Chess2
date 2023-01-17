@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.components.reactiongame.test;
+package de.hhn.it.devtools.components.reactiongame.junit;
 
 import de.hhn.it.devtools.components.reactiongame.provider.RgcObstacle;
 

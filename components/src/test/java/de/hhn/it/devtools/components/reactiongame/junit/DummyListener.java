@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.components.reactiongame.test;
+package de.hhn.it.devtools.components.reactiongame.junit;
 
 import de.hhn.it.devtools.apis.reactiongame.AimTargetDescriptor;
 import de.hhn.it.devtools.apis.reactiongame.GameState;
@@ -12,10 +12,6 @@ public class DummyListener implements ReactiongameListener {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(DummyCallback.class);
 
-
-  private ArrayList<AimTargetDescriptor> aimTargets;
-
-  private ArrayList<ObstacleDescriptor> obstacles;
 
   @Override
   public void addAimTarget(AimTargetDescriptor aimTarget) {

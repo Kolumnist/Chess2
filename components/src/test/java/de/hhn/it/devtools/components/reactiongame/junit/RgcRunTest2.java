@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.components.reactiongame.test;
+package de.hhn.it.devtools.components.reactiongame.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;

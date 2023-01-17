@@ -7,8 +7,6 @@ import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameService;
 import java.util.IllegalFormatException;
 import java.util.SortedMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 /**
@@ -19,7 +17,7 @@ public class RgcService implements ReactiongameService {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(RgcService.class);
 
-  private RgcPlayer currentPlayer;
+  private final RgcPlayer currentPlayer;
   private RgcRun run;
 
 
@@ -36,13 +34,16 @@ public class RgcService implements ReactiongameService {
   }
 
   @Override
-  public void addCallback(ReactiongameListener listener) {
+  public void addCallback(ReactiongameListener listener) throws IllegalStateException {
     logger.info("Added listener: " + listener.toString());
     run.getCallbacks().add(listener);
   }
 
   @Override
-  public void removeCallback(ReactiongameListener listener) {
+  public void removeCallback(ReactiongameListener listener) throws IllegalParameterException {
+    if (!run.getCallbacks().contains(listener)) {
+      throw new IllegalParameterException();
+    }
     logger.info("Removed listener: " + listener.toString());
     run.getCallbacks().remove(listener);
   }
@@ -55,16 +56,16 @@ public class RgcService implements ReactiongameService {
     run.getObstacleClock().setRunning(true);
     run.getAimTargetClock().setRunning(true);
 
+    run.setState(GameState.RUNNING);
   }
 
   @Override
   public void pauseRun() throws IllegalStateException {
-    logger.info("Pause run");
-
     if (run.getState() == GameState.PAUSED) {
       logger.info("Pause run illegal", new IllegalStateException());
       throw new IllegalStateException();
     }
+    logger.info("Pause run");
 
     run.pauseClocks();
 
@@ -73,11 +74,12 @@ public class RgcService implements ReactiongameService {
 
   @Override
   public void continueRun() throws IllegalStateException {
-    logger.info("Continue run");
     if (run.getState() != GameState.PAUSED) {
       logger.info("Continue run illegal", new IllegalStateException());
       throw new IllegalStateException();
     }
+
+    logger.info("Continue run");
 
     run.continueClocks();
 
@@ -86,13 +88,15 @@ public class RgcService implements ReactiongameService {
   }
 
   @Override
-  public void endRun() {
+  public void endRun() throws IllegalStateException {
+    if (run.getState() == GameState.FINISHED) {
+      logger.info("End run illegal", new IllegalStateException());
+      throw new IllegalStateException();
+    }
+
     logger.info("End run");
 
-
     run.endRun();
-
-    run = null;
 
     run.setState(GameState.FINISHED);
   }
@@ -121,12 +125,11 @@ public class RgcService implements ReactiongameService {
 
   @Override
   public void playerEnteredObstacle(int obstacleId) throws IllegalParameterException {
-    logger.info("Player entered obstacle (" + obstacleId + ")");
-
     if (obstacleId < 0) {
       logger.info("Invalid obstacleId", new IllegalParameterException());
       throw new IllegalParameterException();
     }
+    logger.info("Player entered obstacle (" + obstacleId + ")");
 
     run.setpAimTarget(null);
     run.setpObstacle(run.getField().getObstacleMap().get(obstacleId));

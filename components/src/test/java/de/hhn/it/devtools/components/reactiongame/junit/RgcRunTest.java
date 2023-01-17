@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.components.reactiongame.test;
+package de.hhn.it.devtools.components.reactiongame.junit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,7 +8,6 @@ import de.hhn.it.devtools.components.reactiongame.provider.RgcObstacle;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcPlayer;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcRun;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 class RgcRunTest {

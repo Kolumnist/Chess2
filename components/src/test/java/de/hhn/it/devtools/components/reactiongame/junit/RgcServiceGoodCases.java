@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.components.reactiongame.test;
+package de.hhn.it.devtools.components.reactiongame.junit;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.reactiongame.Difficulty;
@@ -6,6 +6,7 @@ import de.hhn.it.devtools.apis.reactiongame.GameState;
 
 import de.hhn.it.devtools.components.reactiongame.provider.RgcService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,102 +21,70 @@ public class RgcServiceGoodCases {
   public void setup() throws IllegalParameterException {
     service = new RgcService();
     service.newRun(Difficulty.MEDIUM);
+    service.addCallback(new DummyListener());
   }
 
   @Test
+  @DisplayName("Pause and continue run")
   public void pauseRunTest() {
     service.pauseRun();
     assertEquals(service.getRun().getState(), GameState.PAUSED);
     assertFalse(service.getRun().getObstacleClock().getIsRunning());
     assertFalse(service.getRun().getAimTargetClock().getIsRunning());
 
-    boolean thrown = false;
-    try {
-      service.pauseRun();
-    } catch (IllegalStateException e) {
-      thrown = true;
-    }
-    assertTrue(thrown);
-
     service.continueRun();
     assertEquals(service.getRun().getState(), GameState.RUNNING);
     assertTrue(service.getRun().getObstacleClock().getIsRunning());
     assertTrue(service.getRun().getAimTargetClock().getIsRunning());
-
-    thrown = false;
-    try {
-      service.continueRun();
-    } catch (IllegalStateException e) {
-      thrown = true;
-    }
-    assertTrue(thrown);
   }
 
 
   @Test
+  @DisplayName("Q - key pressed")
   public void testKeyPressed() {
     service.keyPressed('q');
     assertEquals(service.getRun().getpKey(), 'q');
   }
 
   @Test
+  @DisplayName("Change player name")
   public void testSetCurrentPlayerName() {
     assertEquals(service.getCurrentPlayer().getName(), "Player");
     service.setCurrentPlayerName("Simone");
     assertEquals(service.getCurrentPlayer().getName(), "Simone");
   }
 
-  @Test
-  public void testPlayerEnteredAimTarget() {
-    boolean thrown = false;
-    try {
-      service.playerEnteredAimTarget(-1);
-    } catch (IllegalParameterException e) {
-      thrown = true;
-    }
-    assertTrue(thrown);
 
-    thrown = false;
-    service.getRun().addAimTarget(0);
-    try {
-      service.playerEnteredAimTarget(0);
-    } catch (IllegalParameterException e) {
-      thrown = true;
-    }
-    assertEquals(service.getRun().getpAimTarget().getId(), 0);
-    assertFalse(thrown);
-  }
 
   @Test
-  public void testPlayerEnteredObstacle() {
-    boolean thrown = false;
-    try {
-      service.playerEnteredObstacle(-1);
-    } catch (IllegalParameterException e) {
-      thrown = true;
-    }
-    assertTrue(thrown);
-
+  @DisplayName("Player entered obstacle and loses life")
+  public void testPlayerEnteredObstacle() throws IllegalParameterException {
     int life = service.getRun().getPlayer().getCurrentLife();
-    thrown = false;
     service.getRun().addObstacle(0);
-    try {
-      service.playerEnteredObstacle(0);
-    } catch (IllegalParameterException e) {
-      thrown = true;
-    }
+    service.playerEnteredObstacle(0);
+
     assertEquals(service.getRun().getpObstacle().getId(), 0);
-    assertFalse(thrown);
     assertEquals(service.getRun().getPlayer().getCurrentLife(), life - 1);
   }
 
   @Test
-  public void testPlayerLeftGameObject() {
+  @DisplayName("Player entered aimtarget")
+  public void testPlayerEnteredAimtarget() throws IllegalParameterException {
+    service.getRun().addAimTarget(0);
+    service.playerEnteredAimTarget(0);
 
+    assertEquals(service.getRun().getpAimTarget().getId(), 0);
+  }
+
+  @Test
+  public void testPlayerLeftGameObject() {
     service.playerLeftGameObject();
     assertNull(service.getRun().getpObstacle());
     assertNull(service.getRun().getpAimTarget());
   }
+
+
+
 
 
 }
