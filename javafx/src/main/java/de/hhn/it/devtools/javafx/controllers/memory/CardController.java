@@ -6,6 +6,8 @@ import de.hhn.it.devtools.apis.memory.PictureCardListener;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
 import de.hhn.it.devtools.javafx.controllers.MemoryServiceController;
 import java.util.HashMap;
+import java.util.Map;
+
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -189,8 +191,14 @@ public class CardController extends Pane {
    * @throws IllegalParameterException if the picture reference is not found
    */
   private String getPathByPictureReference(int pictureReference) throws IllegalParameterException {
-    HashMap<Integer, String> pathReferences = (HashMap<Integer, String>) MemoryAttributeStore
+    //workaround because of unchecked cast from object to hashmap
+    HashMap<?,?> x = (HashMap<?, ?>) MemoryAttributeStore
             .getReference().getAttribute(MemoryServiceController.PATH_REFERENCES);
+    HashMap<Integer, String> pathReferences = new HashMap<>(x.size());
+    for(Map.Entry<?,?> entry : x.entrySet()) {
+      pathReferences.put((Integer)entry.getKey(), (String) entry.getValue());
+    }
+    //
     if (!pathReferences.containsKey(pictureReference)) {
       throw new IllegalParameterException("PictureReference not found");
     }
