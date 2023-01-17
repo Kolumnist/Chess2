@@ -81,6 +81,7 @@ public class StartScreen implements Initializable {
   @FXML
   void onStartButtonClicked(ActionEvent event) {
     try {
+      screenController.closeGameScreen();
       memoryService.newGame((Difficulty) MemoryAttributeStore.getReference()
               .getAttribute(MemoryServiceController.DIFFICULTY));
     } catch (IllegalParameterException e) {
