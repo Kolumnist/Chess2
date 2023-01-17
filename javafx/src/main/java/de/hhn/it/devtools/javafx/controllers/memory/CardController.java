@@ -27,6 +27,7 @@ public class CardController extends Pane {
   private final MemoryScreenController screenController;
   private final SfsMemoryService memoryService;
 
+  private Pane thisPane;
   private final ImageView picture;
   private final Label name;
   private final Pane cover;
@@ -46,7 +47,7 @@ public class CardController extends Pane {
     this.setStyle("-fx-background-color: WHITE;"
             + " -fx-background-radius: 5;");
     this.setOnMouseClicked(this::onMouseClicked);
-
+    thisPane = this;
     name = new Label();
     name.setLayoutX(20);
     name.setLayoutY(40);
@@ -91,6 +92,7 @@ public class CardController extends Pane {
                 cover.setStyle("-fx-background-color: Transparent;-fx-background-radius: 5;"
                         + " -fx-border-radius: 5; -fx-border-color: Lime; -fx-border-width: 3");
                 screenController.enableGameGrid();
+                thisPane.setDisable(true);
                 screenController.setGameScreenMessage("Cards match!");
               });
               if (++cardMatched == 20) {
