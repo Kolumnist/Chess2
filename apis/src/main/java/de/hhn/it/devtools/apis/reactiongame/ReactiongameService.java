@@ -22,8 +22,9 @@ public interface ReactiongameService {
    * Removes a callback (ReactiongameListener) from the callbacks.
    *
    * @param listener Listener
+   * @throws IllegalParameterException exception
    */
-  void removeCallback(ReactiongameListener listener);
+  void removeCallback(ReactiongameListener listener) throws IllegalParameterException;
 
   /**
    * Starts a new run and the timer.
