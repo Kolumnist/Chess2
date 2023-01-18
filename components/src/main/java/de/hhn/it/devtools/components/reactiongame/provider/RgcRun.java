@@ -26,7 +26,7 @@ public class RgcRun {
   private char key;
   private int score;
   private boolean isInvincible = false;
-  private Thread iFrameThread;
+  private Thread iframeThread;
 
 
   /**
@@ -48,7 +48,7 @@ public class RgcRun {
     aimTargetClock = new RgcAimTargetClock(this);
     obstacleClock = new RgcObstacleClock(this);
 
-    iFrameThread = new Thread(new RgcIFrameRunnable(this));
+    iframeThread = new Thread(new RgcIFrameRunnable(this));
   }
 
 
@@ -137,8 +137,8 @@ public class RgcRun {
     // player is in iFrames OR no longer in an obstacle
 
     isInvincible = true;
-    iFrameThread = new Thread(new RgcIFrameRunnable(this));
-    iFrameThread.start();
+    iframeThread = new Thread(new RgcIFrameRunnable(this));
+    iframeThread.start();
 
     for (ReactiongameListener callback :
         callbacks) {
