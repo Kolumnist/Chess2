@@ -135,7 +135,8 @@ public class RgcListener implements ReactiongameListener {
   public void gameOver() {
     Platform.runLater(() -> {
       try {
-        screenController.switchTo("RgcHighscores");
+        controller.deleteHandler();
+        screenController.switchTo("RgcEnterPlayerName");
         service.removeCallback(this);
       } catch (IOException | IllegalParameterException e) {
         throw new RuntimeException(e);
