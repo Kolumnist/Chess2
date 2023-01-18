@@ -140,13 +140,14 @@
                                     <Label text="Würfel" />
                                     <MenuButton fx:id="diceMenuButton" maxHeight="1.7976931348623157E308" mnemonicParsing="false" prefWidth="150.0" text="Würfel wählen">
                                        <items>
-                                          <MenuItem mnemonicParsing="false" text="D2" />
-                                          <MenuItem mnemonicParsing="false" text="D4" />
-                                          <MenuItem mnemonicParsing="false" text="D6" />
-                                          <MenuItem mnemonicParsing="false" text="D8" />
-                                          <MenuItem mnemonicParsing="false" text="D10" />
-                                          <MenuItem mnemonicParsing="false" text="D12" />
-                                          <MenuItem mnemonicParsing="false" text="D20" />
+                                          <MenuItem mnemonicParsing="false" onAction="#onSetD2" text="D2" />
+                                          <MenuItem mnemonicParsing="false" onAction="#onSetD4" text="D4" />
+                                          <MenuItem mnemonicParsing="false" onAction="#onSetD6" text="D6" />
+                                          <MenuItem mnemonicParsing="false" onAction="#onSetD8" text="D8" />
+                                          <MenuItem mnemonicParsing="false" onAction="#onSetD10" text="D10" />
+                                          <MenuItem mnemonicParsing="false" onAction="#onSetD12" text="D12" />
+                                          <MenuItem mnemonicParsing="false" onAction="#onSetD20" text="D20" />
+                                          <MenuItem mnemonicParsing="false" onAction="#onSetD100" text="D100" />
                                        </items>
                                     </MenuButton>
                                     <Label fx:id="diceLabel" alignment="CENTER" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: WHITE; -fx-background-radius: 25;" text="6" textAlignment="CENTER">
