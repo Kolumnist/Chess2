@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="585.0" maxWidth="1040.0" minHeight="585.0" minWidth="1040.0" onMouseClicked="#gpOnMouseClicked" onMouseEntered="#gpOnMouseEntered" onMouseExited="#gpOnMouseExited" onMouseMoved="#gpOnMouseMoved" prefHeight="585.0" prefWidth="1040.0" style="-fx-border-color: BLACK; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.reactiongame.RgcGameController">
+<Pane maxHeight="585.0" maxWidth="1040.0" minHeight="585.0" minWidth="1040.0" onMouseEntered="#gpOnMouseEntered" onMouseExited="#gpOnMouseExited" onMouseMoved="#gpOnMouseMoved" prefHeight="585.0" prefWidth="1040.0" style="-fx-border-color: BLACK; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.reactiongame.RgcGameController">
    <cursor>
       <Cursor fx:constant="CROSSHAIR" />
    </cursor>
