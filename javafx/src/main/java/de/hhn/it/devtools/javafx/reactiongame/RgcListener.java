@@ -14,6 +14,7 @@ import java.io.IOException;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 
 public class RgcListener implements ReactiongameListener {
 
@@ -40,8 +41,8 @@ public class RgcListener implements ReactiongameListener {
     service.addCallback(this);
 
     SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
-    screenController =
-        (RgcScreenController) singletonAttributeStore.getAttribute(ReactionGameController.RGC_SCREEN_CONTROLLER);
+    screenController = (RgcScreenController)
+        singletonAttributeStore.getAttribute(ReactionGameController.RGC_SCREEN_CONTROLLER);
   }
 
   @Override
@@ -81,7 +82,6 @@ public class RgcListener implements ReactiongameListener {
     for (Node n :
         pane.getChildren()) {
       if (n instanceof RgcObstacleFx) {
-        logger.info(n.getId());
         if (n.getId() != null && n.getId().equals(obstacleId + "")) {
           Platform.runLater(() -> pane.getChildren().remove(n));
           return;
@@ -92,10 +92,15 @@ public class RgcListener implements ReactiongameListener {
 
   @Override
   public void hitObstacle(int obstacleId) {
-    try {
-      service.playerEnteredObstacle(obstacleId);
-    } catch (IllegalParameterException e) {
-      throw new RuntimeException(e);
+    logger.info("Hit obstacle " + obstacleId);
+    for (Node n :
+        pane.getChildren()) {
+      if (n instanceof RgcObstacleFx) {
+        if (n.getId() != null && n.getId().equals(obstacleId + "")) {
+          Platform.runLater(() -> ((RgcObstacleFx) n).setFill(Color.RED));
+          return;
+        }
+      }
     }
   }
 
@@ -103,7 +108,7 @@ public class RgcListener implements ReactiongameListener {
   public void currentLife(int numberOfLifes) {
     Platform.runLater(() -> controller.getLiveLable().setText(numberOfLifes + ""));
 
-    Platform.runLater(() -> displayer.displayText("Player lost a life!", 2000));
+    Platform.runLater(() -> displayer.displayText("HIT!", 2000));
   }
 
   @Override

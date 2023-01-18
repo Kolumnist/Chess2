@@ -6,6 +6,7 @@ import de.hhn.it.devtools.apis.reactiongame.GameState;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcService;
 import de.hhn.it.devtools.javafx.controllers.ReactionGameController;
 import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
+import de.hhn.it.devtools.javafx.reactiongame.RgcIngameTimer;
 import de.hhn.it.devtools.javafx.reactiongame.RgcListener;
 import java.io.IOException;
 import java.net.URL;
@@ -75,8 +76,8 @@ public class RgcGameController implements Initializable {
     service = (RgcService) singletonAttributeStore.getAttribute(ReactionGameController.RGC_SERVICE);
     anchorPane = (AnchorPane) singletonAttributeStore.getAttribute(
         ReactionGameController.RGC_ANCHOR_PANE);
-    scoreLabel.setText("00000");
-    timeLabel.setText("0000");
+    scoreLabel.setText("000");
+    timeLabel.setText("0");
 
     anchorPane.addEventFilter(MouseEvent.MOUSE_MOVED, e -> {
 
@@ -116,6 +117,8 @@ public class RgcGameController implements Initializable {
     };
 
     stage.addEventFilter(KeyEvent.KEY_PRESSED, keyHandler);
+
+    new RgcIngameTimer(service.getRun(), timeLabel);
 
     new RgcListener(
         (AnchorPane) singletonAttributeStore.getAttribute(ReactionGameController.RGC_ANCHOR_PANE),
