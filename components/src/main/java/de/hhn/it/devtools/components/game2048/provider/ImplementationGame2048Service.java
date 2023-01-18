@@ -122,10 +122,10 @@ public class ImplementationGame2048Service implements Game2048Service, AdminGame
   }
 
   /**
-   * Dont use this Constructor, use addGameServiceById(int id) and afterwards getGameServiceById(int id)
+   * Don't use this Constructor, use addGameServiceById(int id) and afterwards getGameServiceById(int id)
    * to get the formerly added Object.
    */
-  private ImplementationGame2048Service() {
+  public ImplementationGame2048Service() {
     this.gameboard = new ArrayList<>();
     this.freelist = new ArrayList<>();
     this.currentScore = 0;
