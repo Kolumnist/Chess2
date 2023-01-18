@@ -212,177 +212,210 @@ public class CharacterSheetController extends Controller implements CharacterShe
 
   @FXML
   void onAgilityLevelDown(ActionEvent event) {
-
+    logger.info("Agility level down pressed");
+    characterSheet.decrementStat(StatType.AGILITY, OriginType.LEVEL_POINT);
   }
 
   @FXML
   void onAgilityLevelUp(ActionEvent event) {
-
+    logger.info("Agility level up pressed");
+    characterSheet.incrementStat(StatType.AGILITY, OriginType.LEVEL_POINT);
   }
 
   @FXML
   void onAgilityOtherDown(ActionEvent event) {
-
+    logger.info("Agility other down pressed");
+    characterSheet.decrementStat(StatType.AGILITY, OriginType.OTHER);
   }
 
   @FXML
   void onAgilityOtherUp(ActionEvent event) {
-
+    logger.info("Agility other up pressed");
+    characterSheet.incrementStat(StatType.AGILITY, OriginType.OTHER);
   }
 
   @FXML
   void onDefenceLevelDown(ActionEvent event) {
-
+    logger.info("Defence level down pressed");
+    characterSheet.decrementStat(StatType.DEFENCE, OriginType.LEVEL_POINT);
   }
 
   @FXML
   void onDefenceLevelUp(ActionEvent event) {
-
+    logger.info("Defence level up pressed");
+    characterSheet.incrementStat(StatType.DEFENCE, OriginType.LEVEL_POINT);
   }
 
   @FXML
   void onDefenceOtherDown(ActionEvent event) {
-
+    logger.info("Defence other down pressed");
+    characterSheet.decrementStat(StatType.DEFENCE, OriginType.OTHER);
   }
 
   @FXML
   void onDefenceOtherUp(ActionEvent event) {
-
+    logger.info("Defence other up pressed");
+    characterSheet.incrementStat(StatType.DEFENCE, OriginType.OTHER);
   }
 
   @FXML
   void onDexterityLevelDown(ActionEvent event) {
-
+    logger.info("Dexterity level down pressed");
+    characterSheet.decrementStat(StatType.DEXTERITY, OriginType.LEVEL_POINT);
   }
 
   @FXML
   void onDexterityLevelUp(ActionEvent event) {
-
+    logger.info("Dexterity level up pressed");
+    characterSheet.incrementStat(StatType.DEXTERITY, OriginType.LEVEL_POINT);
   }
 
   @FXML
   void onDexterityOtherDown(ActionEvent event) {
-
+    logger.info("Dexterity other down pressed");
+    characterSheet.decrementStat(StatType.DEXTERITY, OriginType.OTHER);
   }
 
   @FXML
   void onDexterityOtherUp(ActionEvent event) {
-
+    logger.info("Dexterity other up pressed");
+    characterSheet.incrementStat(StatType.DEXTERITY, OriginType.OTHER);
   }
 
   @FXML
   void onHealthDown(ActionEvent event) {
-
-  }
-
-  @FXML
-  void onHealthLevelDown(ActionEvent event) {
-
-  }
-
-  @FXML
-  void onHealthLevelUp(ActionEvent event) {
-
-  }
-
-  @FXML
-  void onHealthOtherDown(ActionEvent event) {
-
-  }
-
-  @FXML
-  void onHealthOtherUp(ActionEvent event) {
-
+    logger.info("Health down pressed");
+    characterSheet.decrementStat(StatType.HEALTH, OriginType.DAMAGE);
   }
 
   @FXML
   void onHealthUp(ActionEvent event) {
+    logger.info("Health up pressed");
+    characterSheet.incrementStat(StatType.HEALTH, OriginType.DAMAGE);
+  }
 
+  @FXML
+  void onHealthLevelDown(ActionEvent event) {
+    logger.info("Health level down pressed");
+    characterSheet.decrementStat(StatType.MAX_HEALTH, OriginType.LEVEL_POINT);
+  }
+
+  @FXML
+  void onHealthLevelUp(ActionEvent event) {
+    logger.info("Health level up pressed");
+    characterSheet.incrementStat(StatType.MAX_HEALTH, OriginType.LEVEL_POINT);
+  }
+
+  @FXML
+  void onHealthOtherDown(ActionEvent event) {
+    logger.info("Health other down pressed");
+    characterSheet.decrementStat(StatType.MAX_HEALTH, OriginType.OTHER);
+  }
+
+  @FXML
+  void onHealthOtherUp(ActionEvent event) {
+    logger.info("Health other up pressed");
+    characterSheet.incrementStat(StatType.MAX_HEALTH, OriginType.OTHER);
+  }
+
+  @FXML
+  void onStrengthLevelDown(ActionEvent event) {
+    logger.info("Strength level down pressed");
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT);
+  }
+
+  @FXML
+  void onStrengthLevelUp(ActionEvent event) {
+    logger.info("Strength level up pressed");
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT);
+  }
+
+  @FXML
+  void onStrengthOtherDown(ActionEvent event) {
+    logger.info("Strength other down pressed");
+    characterSheet.decrementStat(StatType.STRENGTH, OriginType.OTHER);
+  }
+
+  @FXML
+  void onStrengthOtherUp(ActionEvent event) {
+    logger.info("Strength other up pressed");
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.OTHER);
   }
 
   @FXML
   void onLevelDown(ActionEvent event) {
-
+    logger.info("Level down pressed");
+    characterSheet.decrementStat(StatType.LEVEL, OriginType.OTHER);
   }
 
   @FXML
   void onLevelUp(ActionEvent event) {
+    logger.info("Level up pressed");
     characterSheet.incrementStat(StatType.LEVEL, OriginType.OTHER);
   }
 
   @FXML
   void onLoad(ActionEvent event) {
-
-  }
-
-  @FXML
-  void onRollDice(ActionEvent event) {
-    characterSheet.rollDice();
+    logger.info("Load pressed");
   }
 
   @FXML
   void onSave(ActionEvent event) {
+    logger.info("Save pressed");
+  }
 
+  @FXML
+  void onRollDice(ActionEvent event) {
+    logger.info("Roll dice pressed");
+    characterSheet.rollDice();
   }
 
   @FXML
   void onSetD2(ActionEvent event) {
+    logger.info("Set D2 pressed");
     characterSheet.changeDiceType(DiceType.D2);
   }
 
   @FXML
   void onSetD4(ActionEvent event) {
+    logger.info("Set D4 pressed");
     characterSheet.changeDiceType(DiceType.D4);
   }
 
   @FXML
   void onSetD6(ActionEvent event) {
+    logger.info("Set D6 pressed");
     characterSheet.changeDiceType(DiceType.D6);
   }
 
   @FXML
   void onSetD8(ActionEvent event) {
+    logger.info("Set D8 pressed");
     characterSheet.changeDiceType(DiceType.D8);
   }
 
   @FXML
   void onSetD10(ActionEvent event) {
+    logger.info("Set D10 pressed");
     characterSheet.changeDiceType(DiceType.D10);
   }
 
   @FXML
   void onSetD12(ActionEvent event) {
+    logger.info("Set D12 pressed");
     characterSheet.changeDiceType(DiceType.D12);
   }
 
   @FXML
   void onSetD20(ActionEvent event) {
+    logger.info("Set D20 pressed");
     characterSheet.changeDiceType(DiceType.D20);
   }
 
   @FXML
   void onSetD100(ActionEvent event) {
+    logger.info("Set D100 pressed");
     characterSheet.changeDiceType(DiceType.D100);
-  }
-
-  @FXML
-  void onStrengthLevelDown(ActionEvent event) {
-
-  }
-
-  @FXML
-  void onStrengthLevelUp(ActionEvent event) {
-
-  }
-
-  @FXML
-  void onStrengthOtherDown(ActionEvent event) {
-
-  }
-
-  @FXML
-  void onStrengthOtherUp(ActionEvent event) {
-
   }
 
   // Callbacks
