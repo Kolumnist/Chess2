@@ -131,7 +131,7 @@ public class ImplementationGame2048Service implements Game2048Service, AdminGame
     this.currentScore = 0;
     this.gameWon = false;
     this.gameLost = false;
-    this.gameListeners = null;
+    this.gameListeners = new ArrayList<>();
     loadHighscore();
   }
 
@@ -318,7 +318,7 @@ public class ImplementationGame2048Service implements Game2048Service, AdminGame
     highScore = 0;
     FileInputStream fileInputStream = null;
     try {
-      fileInputStream = new FileInputStream("SaveGame2048.txt");
+      fileInputStream = new FileInputStream("components\\src\\main\\java\\de\\hhn\\it\\devtools\\components\\game2048\\provider\\SaveGame2048.txt");
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -344,10 +344,10 @@ public class ImplementationGame2048Service implements Game2048Service, AdminGame
    * the old highScore will be overwritten.
    */
   private void saveHighscore() {
-    logger.info("safeHighscore: no params");
+    logger.info("saveHighscore: no params");
     FileOutputStream fileOutputStream = null;
     try {
-      fileOutputStream = new FileOutputStream("SaveGame2048.txt");
+      fileOutputStream = new FileOutputStream("components\\src\\main\\java\\de\\hhn\\it\\devtools\\components\\game2048\\provider\\SaveGame2048.txt");
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -425,5 +425,30 @@ public class ImplementationGame2048Service implements Game2048Service, AdminGame
       }
     }
     return row;
+  }
+  public static void main(String[] args) throws IllegalParameterException {
+    ImplementationGame2048Service g = new ImplementationGame2048Service();
+    g.initialisation();
+    g.addCallback(new Game2048Listener() {
+      @Override
+      public void newState(State state) {
+        logger.info("newState: state = {}", state);
+      }
+    });
+    moves(g);
+    moves(g);
+    moves(g);
+//    moves(g);
+  }
+
+  /**
+   * For Testing purposes.
+   */
+  private static void moves(ImplementationGame2048Service g) throws IllegalParameterException {
+    // TODO: 08.01.2023 delete this Methode
+    g.moveAllBlocks(MovingDirection.down);
+    g.moveAllBlocks(MovingDirection.right);
+    g.moveAllBlocks(MovingDirection.up);
+    g.moveAllBlocks(MovingDirection.left);
   }
 }
