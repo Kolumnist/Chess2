@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="templateAnchorPane" maxHeight="680.0" maxWidth="1080.0" minHeight="680.0" minWidth="1080.0" prefHeight="680.0" prefWidth="1080.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="de.hhn.it.devtools.javafx.controllers.TemplateController">
+<AnchorPane maxHeight="680.0" maxWidth="1080.0" minHeight="680.0" minWidth="1080.0" prefHeight="680.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.CharacterSheetController">
    <children>
-      <VBox layoutX="10.0" layoutY="9.0" prefHeight="654.0" prefWidth="456.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="10.0" layoutY="9.0" prefHeight="680.0" prefWidth="530.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox prefHeight="321.0" prefWidth="390.0" spacing="20.0">
                <children>
@@ -25,29 +25,29 @@
                               <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                                  <children>
                                     <Label text="Name" />
-                                    <TextField />
+                                    <TextField fx:id="characterNameTextField" />
                                     <Label text="Alter" />
-                                    <TextField />
+                                    <TextField fx:id="ageTextField" />
                                     <Label text="Gewicht" />
-                                    <TextField />
+                                    <TextField fx:id="weightTextField" />
                                     <Label text="Hautfarbe" />
-                                    <TextField />
+                                    <TextField fx:id="skinColorTextField" />
                                     <Label text="Rasse" />
-                                    <TextField />
+                                    <TextField fx:id="raceTextField" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                                  <children>
                                     <Label text="Spitzname" />
-                                    <TextField />
+                                    <TextField fx:id="nickNameTextField" />
                                     <Label text="Größe" />
-                                    <TextField />
+                                    <TextField fx:id="heightTextField" />
                                     <Label text="Augenfarbe" />
-                                    <TextField />
+                                    <TextField fx:id="eyeColorTextField" />
                                     <Label text="Haarfarbe" />
-                                    <TextField />
+                                    <TextField fx:id="hairColorTextField" />
                                     <Label text="Klasse" />
-                                    <TextField />
+                                    <TextField fx:id="characterClassTextField" />
                                  </children>
                               </VBox>
                            </children>
@@ -65,7 +65,7 @@
                               <Insets top="15.0" />
                            </VBox.margin>
                         </Label>
-                        <TextField maxWidth="140.0" minWidth="140.0">
+                        <TextField fx:id="playerNameTextField" maxWidth="140.0" minWidth="140.0">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
@@ -77,8 +77,8 @@
                         </Label>
                         <HBox alignment="TOP_CENTER" prefHeight="29.0" prefWidth="162.0">
                            <children>
-                              <Button maxWidth="70.0" minWidth="70.0" mnemonicParsing="false" text="Speichern" />
-                              <Button maxWidth="70.0" minWidth="70.0" mnemonicParsing="false" text="Laden" />
+                              <Button maxWidth="70.0" minWidth="70.0" mnemonicParsing="false" onAction="#onSave" text="Speichern" />
+                              <Button maxWidth="70.0" minWidth="70.0" mnemonicParsing="false" onAction="#onLoad" text="Laden" />
                            </children>
                            <VBox.margin>
                               <Insets top="5.0" />
@@ -89,7 +89,7 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Label>
-                        <MenuButton minWidth="140.0" mnemonicParsing="false">
+                        <MenuButton fx:id="diceMenuButton" minWidth="140.0" mnemonicParsing="false">
                            <items>
                               <MenuItem mnemonicParsing="false" text="D2" />
                               <MenuItem mnemonicParsing="false" text="D4" />
@@ -105,7 +105,7 @@
                               <Insets top="5.0" />
                            </VBox.margin>
                         </TextField>
-                        <Button maxWidth="140.0" minWidth="140.0" mnemonicParsing="false" text="Würfeln">
+                        <Button maxWidth="140.0" minWidth="140.0" mnemonicParsing="false" onAction="#onRollDice" text="Würfeln">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
@@ -117,119 +117,119 @@
             <VBox prefHeight="204.0" prefWidth="390.0">
                <children>
                   <Label text="Informationen" />
-                  <TextArea prefHeight="200.0" prefWidth="200.0" />
+                  <TextArea fx:id="otherTextField" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </VBox>
          </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="467.0" layoutY="9.0" prefHeight="654.0" prefWidth="456.8" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="TOP_CENTER" layoutX="467.0" layoutY="9.0" prefHeight="680.0" prefWidth="530.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label text="Stats" />
             <HBox alignment="TOP_CENTER" prefHeight="482.0" prefWidth="303.0">
                <children>
-                  <VBox alignment="TOP_CENTER" prefHeight="482.0" prefWidth="147.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="482.0" prefWidth="239.0">
                      <children>
                         <Label text="Level" />
-                        <TextField maxWidth="140.0" minWidth="140.0" />
-                        <HBox alignment="CENTER" maxWidth="140.0" minWidth="140.0" prefHeight="100.0" prefWidth="200.0">
+                        <TextField fx:id="levelTextField" maxWidth="140.0" minWidth="140.0" />
+                        <HBox alignment="CENTER" maxWidth="227.0" minWidth="140.0" prefHeight="71.0" prefWidth="227.0">
                            <children>
-                              <Label prefHeight="68.0" prefWidth="79.0" text="Ungenutzte Level Punkte: 0" wrapText="true" />
-                              <Button mnemonicParsing="false" text="Down" />
-                              <Button mnemonicParsing="false" text="Up" />
+                              <Label prefHeight="48.0" prefWidth="89.0" text="Ungenutzte Level Punkte: 0" wrapText="true" />
+                              <Button mnemonicParsing="false" onAction="#onLevelDown" text="Down" />
+                              <Button mnemonicParsing="false" onAction="#onLevelUp" text="Up" />
                            </children>
                         </HBox>
                         <Label text="Verteidigung" />
-                        <TextField />
+                        <TextField fx:id="defenceTextField" />
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label text="Level: 2" />
-                              <Button mnemonicParsing="false" text="Down" />
-                              <Button mnemonicParsing="false" text="Up" />
+                              <Button mnemonicParsing="false" onAction="#onDefenceLevelDown" text="Down" />
+                              <Button mnemonicParsing="false" onAction="#onDefenceLevelUp" text="Up" />
                            </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label text="Versch.: 0" />
-                              <Button mnemonicParsing="false" text="Down" />
-                              <Button mnemonicParsing="false" text="Up" />
+                              <Button mnemonicParsing="false" onAction="#onDefenceOtherDown" text="Down" />
+                              <Button mnemonicParsing="false" onAction="#onDefenceOtherUp" text="Up" />
                            </children>
                         </HBox>
                         <Label text="Agilität" />
-                        <TextField />
+                        <TextField fx:id="agilityTextField" />
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label text="Level: 2" />
-                              <Button mnemonicParsing="false" text="Down" />
-                              <Button mnemonicParsing="false" text="Up" />
+                              <Button mnemonicParsing="false" onAction="#onAgilityLevelDown" text="Down" />
+                              <Button mnemonicParsing="false" onAction="#onAgilityLevelUp" text="Up" />
                            </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label text="Versch.: 0" />
-                              <Button mnemonicParsing="false" text="Down" />
-                              <Button mnemonicParsing="false" text="Up" />
+                              <Button mnemonicParsing="false" onAction="#onAgilityOtherDown" text="Down" />
+                              <Button mnemonicParsing="false" onAction="#onAgilityOtherUp" text="Up" />
                            </children>
                         </HBox>
                      </children>
                   </VBox>
-                  <VBox alignment="TOP_CENTER" prefHeight="482.0" prefWidth="148.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="482.0" prefWidth="200.0">
                      <children>
                         <Label text="Leben" />
                         <HBox>
                            <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
+                              <VBox prefHeight="38.0" prefWidth="76.0">
                                  <children>
-                                    <Button mnemonicParsing="false" text="Up" />
-                                    <Button mnemonicParsing="false" text="Down" />
+                                    <Button mnemonicParsing="false" onAction="#onHealthUp" text="Up" />
+                                    <Button mnemonicParsing="false" onAction="#onHealthDown" text="Down" />
                                  </children>
                               </VBox>
-                              <TextField />
+                              <TextField fx:id="healthTextField" />
                            </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label text="Level: 2" />
-                              <Button mnemonicParsing="false" text="Down" />
-                              <Button mnemonicParsing="false" text="Up" />
+                              <Button mnemonicParsing="false" onAction="#onHealthLevelDown" text="Down" />
+                              <Button mnemonicParsing="false" onAction="#onHealthLevelUp" text="Up" />
                            </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label text="Versch.: 0" />
-                              <Button mnemonicParsing="false" text="Down" />
-                              <Button mnemonicParsing="false" text="Up" />
+                              <Button mnemonicParsing="false" onAction="#onHealthOtherDown" text="Down" />
+                              <Button mnemonicParsing="false" onAction="#onHealthOtherUp" text="Up" />
                            </children>
                         </HBox>
                         <Label text="Stärke" />
-                        <TextField />
+                        <TextField fx:id="strengthTextField" />
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label text="Level: 2" />
-                              <Button mnemonicParsing="false" text="Down" />
-                              <Button mnemonicParsing="false" text="Up" />
+                              <Button mnemonicParsing="false" onAction="#onStrengthLevelDown" text="Down" />
+                              <Button mnemonicParsing="false" onAction="#onStrengthLevelUp" text="Up" />
                            </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label text="Versch.: 0" />
-                              <Button mnemonicParsing="false" text="Down" />
-                              <Button mnemonicParsing="false" text="Up" />
+                              <Button mnemonicParsing="false" onAction="#onStrengthOtherDown" text="Down" />
+                              <Button mnemonicParsing="false" onAction="#onStrengthOtherUp" text="Up" />
                            </children>
                         </HBox>
                         <Label text="Geschwindigkeit" />
-                        <TextField />
+                        <TextField fx:id="dexterityTextField" />
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label text="Level: 2" />
-                              <Button mnemonicParsing="false" text="Down" />
-                              <Button mnemonicParsing="false" text="Up" />
+                              <Button mnemonicParsing="false" onAction="#onDexterityLevelDown" text="Down" />
+                              <Button mnemonicParsing="false" onAction="#onDexterityLevelUp" text="Up" />
                            </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label text="Versch.: 0" />
-                              <Button mnemonicParsing="false" text="Down" />
-                              <Button mnemonicParsing="false" text="Up" />
+                              <Button mnemonicParsing="false" onAction="#onDexterityOtherDown" text="Down" />
+                              <Button mnemonicParsing="false" onAction="#onDexterityOtherUp" text="Up" />
                            </children>
                         </HBox>
                      </children>
