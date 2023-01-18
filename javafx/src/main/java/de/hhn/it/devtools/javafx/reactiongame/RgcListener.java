@@ -20,10 +20,8 @@ public class RgcListener implements ReactiongameListener {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(RgcListener.class);
 
-  private static SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
 
-
-  private RgcScreenController screenController;
+  private final RgcScreenController screenController;
   private final AnchorPane pane;
   private final RgcService service;
 
@@ -139,7 +137,7 @@ public class RgcListener implements ReactiongameListener {
       try {
         screenController.switchTo("RgcHighscores");
         service.removeCallback(this);
-      } catch (IOException e) {
+      } catch (IOException | IllegalParameterException e) {
         throw new RuntimeException(e);
       }
     });

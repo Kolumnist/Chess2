@@ -5,45 +5,50 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="gamePane" maxHeight="585.0" maxWidth="1040.0" minHeight="585.0" minWidth="1040.0" onMouseClicked="#gpOnMouseClicked" onMouseEntered="#gpOnMouseEntered" prefHeight="585.0" prefWidth="1040.0" style="-fx-border-color: BLACK; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.reactiongame.RgcGameController">
-   <children>
-      <Label layoutX="454.0" layoutY="14.0" text="Lives:">
-         <font>
-            <Font name="Arial Black" size="23.0" />
-         </font>
-      </Label>
-      <Label fx:id="liveLable" layoutX="529.0" layoutY="16.0" text="3">
-         <font>
-            <Font name="Arial Black" size="23.0" />
-         </font>
-      </Label>
-      <Label fx:id="infoLable" alignment="CENTER" contentDisplay="CENTER" layoutX="624.0" layoutY="77.0" prefHeight="50.0" prefWidth="338.0" textAlignment="CENTER" textFill="RED" textOverrun="CLIP" wrapText="true">
-         <font>
-            <Font name="Arial Black" size="29.0" />
-         </font>
-      </Label>
-      <Label layoutX="14.0" layoutY="14.0" text="Time:">
-         <font>
-            <Font name="Arial Black" size="23.0" />
-         </font>
-      </Label>
-      <Label layoutX="846.0" layoutY="16.0" text="Score:">
-         <font>
-            <Font name="Arial Black" size="23.0" />
-         </font>
-      </Label>
-      <Label fx:id="timeLabel" layoutX="94.0" layoutY="16.0">
-         <font>
-            <Font name="Arial Black" size="23.0" />
-         </font>
-      </Label>
-      <Label fx:id="scoreLabel" layoutX="941.0" layoutY="18.0">
-         <font>
-            <Font name="Arial Black" size="23.0" />
-         </font>
-      </Label>
-   </children>
+<Pane maxHeight="585.0" maxWidth="1040.0" minHeight="585.0" minWidth="1040.0"
+  onMouseClicked="#gpOnMouseClicked" onMouseEntered="#gpOnMouseEntered"
+  onMouseMoved="#gpOnMouseMoved" prefHeight="585.0" prefWidth="1040.0"
+  style="-fx-border-color: BLACK; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19"
+  xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="de.hhn.it.devtools.javafx.controllers.reactiongame.RgcGameController">
    <cursor>
-      <Cursor fx:constant="CROSSHAIR" />
+      <Cursor fx:constant="CROSSHAIR"/>
    </cursor>
+   <Label layoutX="322.0" layoutY="18.0" text="Lives:">
+      <font>
+         <Font name="Arial Black" size="23.0"/>
+      </font>
+   </Label>
+   <Label fx:id="liveLable" layoutX="404.0" layoutY="18.0" text="3">
+      <font>
+         <Font name="Arial Black" size="23.0"/>
+      </font>
+   </Label>
+   <Label fx:id="infoLable" alignment="CENTER" contentDisplay="CENTER" layoutX="641.0"
+     layoutY="11.0" prefHeight="50.0" prefWidth="143.0" textAlignment="CENTER" textFill="RED"
+     textOverrun="CLIP" wrapText="true">
+      <font>
+         <Font name="Arial Black" size="29.0"/>
+      </font>
+   </Label>
+   <Label layoutX="14.0" layoutY="14.0" text="Time:">
+      <font>
+         <Font name="Arial Black" size="23.0"/>
+      </font>
+   </Label>
+   <Label layoutX="846.0" layoutY="16.0" text="Score:">
+      <font>
+         <Font name="Arial Black" size="23.0"/>
+      </font>
+   </Label>
+   <Label fx:id="timeLabel" layoutX="94.0" layoutY="16.0">
+      <font>
+         <Font name="Arial Black" size="23.0"/>
+      </font>
+   </Label>
+   <Label fx:id="scoreLabel" layoutX="941.0" layoutY="18.0">
+      <font>
+         <Font name="Arial Black" size="23.0"/>
+      </font>
+   </Label>
 </Pane>

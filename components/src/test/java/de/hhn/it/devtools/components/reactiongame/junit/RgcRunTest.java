@@ -1,21 +1,23 @@
-package de.hhn.it.devtools.components.reactiongame.test;
+package de.hhn.it.devtools.components.reactiongame.junit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.reactiongame.Difficulty;
+import de.hhn.it.devtools.apis.reactiongame.GameState;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcAimTarget;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcObstacle;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcPlayer;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcRun;
+import de.hhn.it.devtools.components.reactiongame.provider.RgcService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 class RgcRunTest {
 
-  long delta = 1000;
+  private final long delta = 1000;
 
-  RgcRun run;
+  private RgcRun run;
 
   @BeforeEach
   void setUp() {
@@ -23,14 +25,17 @@ class RgcRunTest {
   }
 
   @Test
-  void testIfObstaclesAdded() {
+  void testIfObstaclesAdded() throws IllegalParameterException {
+    RgcService service = new RgcService();
+    service.newRun(Difficulty.MEDIUM);
+
     try {
-      Thread.sleep(Difficulty.MEDIUM.obstacleIntervall + delta);
+      Thread.sleep(Difficulty.MEDIUM.obstacleIntervall * 1000L);
     } catch (InterruptedException e) {
       throw new RuntimeException(e);
     }
 
-    assertEquals(run.getField().getObstacles().size() , 1);
+    assertEquals(1 , service.getRun().getField().getObstacles().size());
 
   }
 
@@ -40,7 +45,7 @@ class RgcRunTest {
     long timePreAC = run.getAimTargetClock().getTime();
     long timePreOC = run.getObstacleClock().getTime();
 
-    run.pauseClocks();
+    run.setGameState(GameState.PAUSED);
 
     assertAll(
         () -> assertEquals(timePreAC, run.getAimTargetClock().getTime()),
@@ -50,12 +55,12 @@ class RgcRunTest {
 
   @Test
   void testContinueClock() {
-    run.pauseClocks();
+    run.setGameState(GameState.PAUSED);
 
     long timeAC = run.getAimTargetClock().getTime();
     long timeOC = run.getObstacleClock().getTime();
 
-    run.continueClocks();
+    run.setGameState(GameState.RUNNING);
 
     try {
       Thread.sleep(delta + 1000);
@@ -71,25 +76,11 @@ class RgcRunTest {
   }
 
   @Test
-  void testEndRun() {
-    RgcRun run2 = new RgcRun(Difficulty.EASY, new RgcPlayer("Test"));
-
-    run2.endRun();
-
-    assertFalse(run2.getAimTargetClock().getIsRunning());
-    assertTrue(run2.getAimTargetClock().getIsEnded());
-
-    assertFalse(run2.getObstacleClock().getIsRunning());
-    assertTrue(run2.getObstacleClock().getIsEnded());
-
-  }
-
-  @Test
   void testPlayerDoesHitObstacleWhileInvincible() {
     int life = run.getPlayer().getCurrentLife();
 
     run.setInvincible(true);
-    run.setpObstacle(null);
+    run.setObstacle(null);
 
     run.playerHitObstacle();
 
@@ -101,7 +92,7 @@ class RgcRunTest {
     int life = run.getPlayer().getCurrentLife();
 
     run.setInvincible(false);
-    run.setpObstacle(new RgcObstacle(1,1,1,1,1));
+    run.setObstacle(new RgcObstacle(1,1,1,1,1));
 
     run.playerHitObstacle();
 
@@ -123,8 +114,7 @@ class RgcRunTest {
 
     run.playerLosesLife();
 
-    assertTrue(run.getAimTargetClock().getIsEnded());
-    assertTrue(run.getObstacleClock().getIsEnded());
+    assertSame(run.getGameState(), GameState.FINISHED);
   }
 
   public RgcAimTarget target;
@@ -133,7 +123,7 @@ class RgcRunTest {
   void testCheckForTargetHit() {
     run.setpKey('q');
 
-    run.setpAimTarget(target = new RgcAimTarget(1,1,1,1,'q'));
+    run.setAimTarget(target = new RgcAimTarget(1,1,1,1,'q'));
 
     int scorealt = run.getScore();
 

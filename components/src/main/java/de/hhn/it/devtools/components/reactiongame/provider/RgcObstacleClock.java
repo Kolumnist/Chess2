@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
+import de.hhn.it.devtools.apis.reactiongame.GameState;
 import java.util.Comparator;
 import java.util.Random;
 
@@ -17,9 +18,6 @@ public class RgcObstacleClock implements Runnable {
 
   private long time; // in seconds
 
-  private boolean isRunning;
-
-  private boolean isEnded;
 
 
   /**
@@ -29,8 +27,6 @@ public class RgcObstacleClock implements Runnable {
    */
   public RgcObstacleClock(RgcRun run) {
     this.run = run;
-    isRunning = true;
-    isEnded = false;
 
     Thread t = new Thread(this);
     t.setDaemon(true);
@@ -39,21 +35,11 @@ public class RgcObstacleClock implements Runnable {
     logger.info("created");
   }
 
-  public void setRunning(boolean running) {
-    isRunning = running;
-  }
-
-  public void setEnded(boolean ended) {
-    isEnded = ended;
-  }
 
   public long getTime() {
     return time;
   }
 
-  public boolean getIsRunning() {return isRunning;}
-
-  public boolean getIsEnded() {return isEnded;}
   @Override
   public void run() {
     logger.info("Started");
@@ -66,7 +52,7 @@ public class RgcObstacleClock implements Runnable {
 
     boolean isHighMarkReached = false;
 
-    while (!isEnded) {
+    while (!(run.getGameState() == GameState.FINISHED)) {
 
       try { // do not delete - does not work without
         Thread.sleep(0);
@@ -74,11 +60,7 @@ public class RgcObstacleClock implements Runnable {
         throw new RuntimeException(e);
       }
 
-
-      while (isRunning) {
-
-
-
+      while (run.getGameState() == GameState.RUNNING) {
         if (time % run.getDifficulty().obstacleIntervall == 0) { // Every intervall...
           if (isHighMarkReached) { // HM reached -> remove an obstacle
             deleteRandomObstacle();
