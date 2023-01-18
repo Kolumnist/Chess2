@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.connectfour.ProfilesNewController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="profileImage" fitHeight="150.0" fitWidth="150.0" layoutX="352.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="cancelButton" layoutX="14.0" layoutY="416.0" mnemonicParsing="false" onAction="#onCancel" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="Cancel" />
+            <Button fx:id="saveButton" layoutX="690.0" layoutY="416.0" mnemonicParsing="false" onAction="#onSave" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="Save" />
+            <TextField fx:id="nameText" layoutX="354.0" layoutY="250.0" />
+            <Label layoutX="300.0" layoutY="254.0" text="Name" />
+            <Label layoutX="298.0" layoutY="304.0" text="Picture" />
+            <ChoiceBox fx:id="imageChoice" layoutX="353.0" layoutY="300.0" prefWidth="150.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

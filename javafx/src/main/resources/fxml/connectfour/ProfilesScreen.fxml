@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.connectfour.ProfilesController">
+    <center>
+        <AnchorPane fx:id="root" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="301.0" layoutY="30.0" text="Profiles">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                </Label>
+                <Button fx:id="btnNewProfile" layoutX="905.0" layoutY="25.0" mnemonicParsing="false" onAction="#onNewProfile" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="New Profile" />
+                <Button layoutX="25.0" layoutY="605.0" mnemonicParsing="false" onAction="#onBack" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="Back" />
+            <ScrollPane hbarPolicy="NEVER" layoutX="250.0" layoutY="75.0" prefHeight="500.0" prefWidth="200.0">
+               <content>
+                  <VBox fx:id="vBox" prefWidth="200.0">
+                     <children>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>
