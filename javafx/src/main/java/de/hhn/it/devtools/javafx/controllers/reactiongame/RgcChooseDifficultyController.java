@@ -37,7 +37,7 @@ public class RgcChooseDifficultyController implements Initializable {
 
   @FXML
   void onmediumBtn(ActionEvent event) throws IOException {
-    logger.info("Start run with difficulty easy.");
+    logger.info("Start run with difficulty medium.");
     singletonAttributeStore.setAttribute(DIFFICULTY, Difficulty.MEDIUM);
     screenController.switchTo("RgcGame");
   }

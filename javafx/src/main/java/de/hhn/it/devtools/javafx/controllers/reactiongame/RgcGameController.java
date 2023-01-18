@@ -10,6 +10,7 @@ import de.hhn.it.devtools.javafx.reactiongame.RgcListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -22,6 +23,8 @@ import javafx.stage.Stage;
 
 public class RgcGameController implements Initializable {
 
+  private static final org.slf4j.Logger logger =
+      org.slf4j.LoggerFactory.getLogger(RgcGameController.class);
   public static String RGC_PLAYER_X_POSITION = "rgc.player.pos.x";
 
   public static String RGC_PLAYER_Y_POSITION = "rgc.player.pos.y";
@@ -66,6 +69,8 @@ public class RgcGameController implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
 
+    logger.info("init");
+
     service = (RgcService) singletonAttributeStore.getAttribute(ReactionGameController.RGC_SERVICE);
     anchorPane = (AnchorPane) singletonAttributeStore.getAttribute(
         ReactionGameController.RGC_ANCHOR_PANE);
@@ -90,23 +95,37 @@ public class RgcGameController implements Initializable {
       service.continueRun();
     }
 
+    EventHandler<KeyEvent> keyEventEventHandler = new EventHandler<KeyEvent>() {
+      @Override
+      public void handle(KeyEvent event) {
+
+        if (event.getCode() == KeyCode.ESCAPE) {
+          try {
+            if (service.getRun().getGameState() == GameState.RUNNING) {
+              openPauseMenu();
+            }
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+          return;
+          //TODO: Spiel return hier nach dem zweiten Spiel erneut raus.
+        }
+
+        String key = event.getText();
+        service.keyPressed(key.charAt(0));
+
+      }
+    };
+
     Stage stage = (Stage) anchorPane.getScene().getWindow();
 
-    stage.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+    try {
+      stage.removeEventFilter(KeyEvent.KEY_PRESSED, keyEventEventHandler);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
-      if (event.getCode() == KeyCode.ESCAPE) {
-        try {
-          openPauseMenu();
-        } catch (IOException e) {
-          throw new RuntimeException(e);
-        }
-        return;
-        //TODO: Spiel return hier nach dem zweiten Spiel erneut raus.
-      }
-
-      String key = event.getText();
-      service.keyPressed(key.charAt(0));
-    });
+    stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEventEventHandler);
 
     new RgcListener(
         (AnchorPane) singletonAttributeStore.getAttribute(ReactionGameController.RGC_ANCHOR_PANE),
