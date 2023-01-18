@@ -95,7 +95,8 @@ public class CharacterSheetController extends Controller implements CharacterShe
 
   HashMap<StatType, SimpleIntegerProperty> stat2Property;
   HashMap<DescriptionType, SimpleStringProperty> description2Property;
-  SimpleIntegerProperty diceProperty;
+  SimpleStringProperty diceProperty;
+  SimpleIntegerProperty resultProperty;
 
   public CharacterSheetController() {
     characterSheet = new DefaultCharacterSheet(CharacterDescriptor.EMPTY);
@@ -107,7 +108,8 @@ public class CharacterSheetController extends Controller implements CharacterShe
     for (DescriptionType descriptionType : DescriptionType.values()) {
       description2Property.put(descriptionType, new SimpleStringProperty());
     }
-    diceProperty = new SimpleIntegerProperty();
+    diceProperty = new SimpleStringProperty();
+    resultProperty = new SimpleIntegerProperty();
   }
 
   @FXML
@@ -142,14 +144,70 @@ public class CharacterSheetController extends Controller implements CharacterShe
 
     // Descriptions binding
     // Player name
-    playerNameTextField.textProperty().addListener((o, oldValue, newValue) ->
+    playerNameTextField.textProperty().addListener((observable, oldValue, newValue) ->
             characterSheet.changeDescription(DescriptionType.PLAYER_NAME, newValue));
     playerNameTextField.textProperty().bindBidirectional(
             description2Property.get(DescriptionType.PLAYER_NAME));
+    // Character name
+    characterNameTextField.textProperty().addListener((observable, oldValue, newValue) ->
+            characterSheet.changeDescription(DescriptionType.CHARACTER_NAME, newValue));
+    characterNameTextField.textProperty().bindBidirectional(
+            description2Property.get(DescriptionType.CHARACTER_NAME));
+    // Nickname
+    nickNameTextField.textProperty().addListener((observable, oldValue, newValue) ->
+            characterSheet.changeDescription(DescriptionType.NICKNAME, newValue));
+    nickNameTextField.textProperty().bindBidirectional(
+            description2Property.get(DescriptionType.NICKNAME));
+    // Age
+    ageTextField.textProperty().addListener((observable, oldValue, newValue) ->
+            characterSheet.changeDescription(DescriptionType.AGE, newValue));
+    ageTextField.textProperty().bindBidirectional(
+            description2Property.get(DescriptionType.AGE));
+    // Race
+    raceTextField.textProperty().addListener((observable, oldValue, newValue) ->
+            characterSheet.changeDescription(DescriptionType.RACE, newValue));
+    raceTextField.textProperty().bindBidirectional(
+            description2Property.get(DescriptionType.RACE));
+    // Height
+    heightTextField.textProperty().addListener((observable, oldValue, newValue) ->
+            characterSheet.changeDescription(DescriptionType.HEIGHT, newValue));
+    heightTextField.textProperty().bindBidirectional(
+            description2Property.get(DescriptionType.HEIGHT));
+    // Weight
+    weightTextField.textProperty().addListener((observable, oldValue, newValue) ->
+            characterSheet.changeDescription(DescriptionType.WEIGHT, newValue));
+    weightTextField.textProperty().bindBidirectional(
+            description2Property.get(DescriptionType.WEIGHT));
+    // Skin color
+    skinColorTextField.textProperty().addListener((observable, oldValue, newValue) ->
+            characterSheet.changeDescription(DescriptionType.SKIN_COLOR, newValue));
+    skinColorTextField.textProperty().bindBidirectional(
+            description2Property.get(DescriptionType.SKIN_COLOR));
+    // Hair color
+    hairColorTextField.textProperty().addListener((observable, oldValue, newValue) ->
+            characterSheet.changeDescription(DescriptionType.HAIR_COLOR, newValue));
+    hairColorTextField.textProperty().bindBidirectional(
+            description2Property.get(DescriptionType.HAIR_COLOR));
+    // Eye color
+    eyeColorTextField.textProperty().addListener((observable, oldValue, newValue) ->
+            characterSheet.changeDescription(DescriptionType.EYE_COLOR, newValue));
+    eyeColorTextField.textProperty().bindBidirectional(
+            description2Property.get(DescriptionType.EYE_COLOR));
+    // Character class
+    characterClassTextField.textProperty().addListener((observable, oldValue, newValue) ->
+            characterSheet.changeDescription(DescriptionType.CHARACTER_CLASS, newValue));
+    characterClassTextField.textProperty().bindBidirectional(
+            description2Property.get(DescriptionType.CHARACTER_CLASS));
+    // Other
+    otherTextField.textProperty().addListener((observable, oldValue, newValue) ->
+            characterSheet.changeDescription(DescriptionType.OTHER, newValue));
+    otherTextField.textProperty().bindBidirectional(
+            description2Property.get(DescriptionType.OTHER));
 
     // Dice binding
+    diceMenuButton.textProperty().bind(diceProperty);
     diceLabel.textProperty().bind(Bindings.createStringBinding(
-            () -> String.valueOf(diceProperty.get()), diceProperty));
+            () -> String.valueOf(resultProperty.get()), resultProperty));
   }
 
   @FXML
@@ -345,16 +403,16 @@ public class CharacterSheetController extends Controller implements CharacterShe
   @Override
   public void diceChanged(DiceDescriptor dice) {
     Platform.runLater(() -> {
-      diceProperty.set(dice.getResult());
+      resultProperty.set(dice.getResult());
       switch (dice.getDiceType()) {
-        case D2 -> diceMenuButton.setText("D2");
-        case D4 -> diceMenuButton.setText("D4");
-        case D6 -> diceMenuButton.setText("D6");
-        case D8 -> diceMenuButton.setText("D8");
-        case D10 -> diceMenuButton.setText("D10");
-        case D12 -> diceMenuButton.setText("D12");
-        case D20 -> diceMenuButton.setText("D20");
-        case D100 -> diceMenuButton.setText("D100");
+        case D2 -> diceProperty.set("D2");
+        case D4 -> diceProperty.set("D4");
+        case D6 -> diceProperty.set("D6");
+        case D8 -> diceProperty.set("D8");
+        case D10 -> diceProperty.set("D10");
+        case D12 -> diceProperty.set("D12");
+        case D20 -> diceProperty.set("D20");
+        case D100 -> diceProperty.set("D100");
       }
     });
   }
