@@ -20,24 +20,11 @@ public interface WordleService {
 
   void receiveAndComputeGuess(String stringGuess) throws IllegalGuessException;
 
-  boolean checkPanelsIndividually(WordleGuessService guess);
 
   /**
    * Quits the game and closes all Wordle windows.
    */
   void quitGame();
-
-  boolean checkIfGameIsFinished(WordleGuessService guess);
-
-  boolean checkIfGuessIsCorrect(WordleGuessService guess);
-
-  /**
-   * Check if the given guess has exactly five characters.
-   *
-   * @param guess Guess which is due to be checked
-   * @throws IllegalGuessException is thrown if the guesss is not long enough
-   */
-  void checkIfGuessIsLongEnough(WordleGuessService guess) throws IllegalGuessException;
 
   /**
    * Adds a listener in order to get information on the state of a WordlePanel.
