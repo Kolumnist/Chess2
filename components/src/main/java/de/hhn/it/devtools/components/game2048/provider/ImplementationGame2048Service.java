@@ -74,6 +74,7 @@ public class ImplementationGame2048Service implements Game2048Service, AdminGame
     } else {
       gameListeners.add(listener);
     }
+    notifyGame2048Listener();
   }
 
   @Override
@@ -427,6 +428,7 @@ public class ImplementationGame2048Service implements Game2048Service, AdminGame
     }
     return row;
   }
+
   public static void main(String[] args) throws IllegalParameterException {
     ImplementationGame2048Service g = new ImplementationGame2048Service();
     g.initialisation();
