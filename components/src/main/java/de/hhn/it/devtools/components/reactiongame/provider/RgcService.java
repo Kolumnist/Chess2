@@ -7,8 +7,6 @@ import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameService;
 import java.util.IllegalFormatException;
 import java.util.SortedMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 /**
@@ -91,12 +89,7 @@ public class RgcService implements ReactiongameService {
 
     logger.info("End run");
 
-
-    run.endRun();
-
-    run = null;
-
-    run.setState(GameState.FINISHED);
+    run.setGameState(GameState.FINISHED);
   }
 
   @Override
