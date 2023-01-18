@@ -70,6 +70,11 @@ public class RgcGameController implements Initializable {
     singletonAttributeStore.setAttribute(RgcGameController.RGC_PLAYER_Y_POSITION, event.getY());
   }
 
+  @FXML
+  void gpOnMouseExited() {
+    service.playerLeftField();
+  }
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
 
@@ -78,10 +83,6 @@ public class RgcGameController implements Initializable {
         ReactionGameController.RGC_ANCHOR_PANE);
     scoreLabel.setText("000");
     timeLabel.setText("0");
-
-    anchorPane.addEventFilter(MouseEvent.MOUSE_MOVED, e -> {
-
-    });
 
     try {
       service.newRun((Difficulty) singletonAttributeStore.getAttribute(
