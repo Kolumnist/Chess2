@@ -73,7 +73,7 @@ public class WordleGameLogic implements WordleService {
    * @param guess The WordleGuess entered by the player
    * @return true if guess is equal to solution and false otherwise
    */
-  @Override
+
   public boolean checkIfGameIsFinished(WordleGuessService guess){
     logger.info("checkIfGuessIsCorrect returned:" + checkIfGuessIsCorrect(guess));
     return checkIfGuessIsCorrect(guess) ||
@@ -87,7 +87,6 @@ public class WordleGameLogic implements WordleService {
    * @param guess The WordleGuess that the player entered
    * @return true if guess is equal to solution and false otherwise
    */
-  @Override
   public boolean checkIfGuessIsCorrect(WordleGuessService guess) {
     if (guess.getWordleGuessAsString().equals(currentWordleSolution.toLowerCase())) {
       for (WordlePanelService panel : guess.getWordleWord()) {
@@ -107,7 +106,7 @@ public class WordleGameLogic implements WordleService {
    * @param guess The guess entered by the player
    * @throws IllegalGuessException is thrown if guess is not long enough
    */
-  @Override
+
   public void checkIfGuessIsLongEnough (WordleGuessService guess) throws IllegalGuessException { // try catch Block will be implemented in the Controller class
     for (WordlePanelService panel : guess.getWordleWord()) {
       if (panel.getLetter() == ' '){
@@ -125,7 +124,7 @@ public class WordleGameLogic implements WordleService {
    * @param guess The WordleGuess made by the player
    * @return always returns false since given guess is not the solution
    */
-  @Override
+
   public boolean checkPanelsIndividually(WordleGuessService guess) {
     WordlePanelService[] wordlePanels = guess.getWordleWord();
     String enteredWordleGuess = guess.getWordleGuessAsString();
