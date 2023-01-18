@@ -79,9 +79,7 @@ public class RgcAimTargetClock implements Runnable {
 
             addTarget();
           }
-
         }
-
 
 
         try {

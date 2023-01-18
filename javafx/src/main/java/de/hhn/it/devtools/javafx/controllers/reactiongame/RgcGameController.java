@@ -72,6 +72,10 @@ public class RgcGameController implements Initializable {
     scoreLabel.setText("00000");
     timeLabel.setText("0000");
 
+    anchorPane.addEventFilter(MouseEvent.MOUSE_MOVED, e -> {
+
+    });
+
     try {
       service.newRun((Difficulty) singletonAttributeStore.getAttribute(
           RgcChooseDifficultyController.DIFFICULTY));
@@ -79,11 +83,15 @@ public class RgcGameController implements Initializable {
       throw new RuntimeException(e);
     }
 
+    singletonAttributeStore.setAttribute(RgcGameController.RGC_PLAYER_X_POSITION, 0d);
+    singletonAttributeStore.setAttribute(RgcGameController.RGC_PLAYER_X_POSITION, 0d);
+
     if (service.getRun().getGameState() != GameState.RUNNING) {
       service.continueRun();
     }
 
     Stage stage = (Stage) anchorPane.getScene().getWindow();
+
     stage.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
 
       if (event.getCode() == KeyCode.ESCAPE) {
@@ -93,6 +101,7 @@ public class RgcGameController implements Initializable {
           throw new RuntimeException(e);
         }
         return;
+        //TODO: Spiel return hier nach dem zweiten Spiel erneut raus.
       }
 
       String key = event.getText();
