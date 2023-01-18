@@ -10,6 +10,7 @@ import de.hhn.it.devtools.javafx.reactiongame.RgcListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -28,10 +29,15 @@ public class RgcGameController implements Initializable {
 
   public static String RGC_GAME_NODES = "rgc.game.nodes";
 
-  private static final SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
+  private static final SingletonAttributeStore singletonAttributeStore
+      = SingletonAttributeStore.getReference();
 
 
   private RgcService service;
+
+  private EventHandler<KeyEvent> keyHandler;
+
+  private Stage stage;
   @FXML // fx:id="infoLable"
   private Label infoLable; // Value injected by FXMLLoader
 
@@ -48,12 +54,12 @@ public class RgcGameController implements Initializable {
   private Label timeLabel; // Value injected by FXMLLoader
 
   @FXML
-  void gpOnMouseEntered(MouseEvent event) {
+  void gpOnMouseEntered() {
     service.playerLeftGameObject();
   }
 
   @FXML
-  void gpOnMouseClicked(MouseEvent event) {
+  void gpOnMouseClicked() {
     System.out.println("Mouse clicked");
   }
 
@@ -90,10 +96,9 @@ public class RgcGameController implements Initializable {
       service.continueRun();
     }
 
-    Stage stage = (Stage) anchorPane.getScene().getWindow();
+    stage = (Stage) anchorPane.getScene().getWindow();
 
-    stage.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-
+    keyHandler = event -> {
       if (event.getCode() == KeyCode.ESCAPE) {
         try {
           openPauseMenu();
@@ -106,7 +111,9 @@ public class RgcGameController implements Initializable {
 
       String key = event.getText();
       service.keyPressed(key.charAt(0));
-    });
+    };
+
+    stage.addEventFilter(KeyEvent.KEY_PRESSED, keyHandler);
 
     new RgcListener(
         (AnchorPane) singletonAttributeStore.getAttribute(ReactionGameController.RGC_ANCHOR_PANE),
@@ -126,8 +133,12 @@ public class RgcGameController implements Initializable {
     return scoreLabel;
   }
 
+  /**
+   * Set a button at the current mouse position to continue the game
+   *
+   * @throws IOException exception
+   */
   public void openPauseMenu() throws IOException {
-
     singletonAttributeStore.setAttribute(RgcGameController.RGC_GAME_NODES,
         anchorPane.getChildren());
     service.pauseRun();
@@ -156,5 +167,9 @@ public class RgcGameController implements Initializable {
     b.setLayoutY(y - 15 > 0 ? y - 20 : 0);
 
     anchorPane.getChildren().add(b);
+  }
+
+  public void deleteHandler() {
+    stage.removeEventFilter(KeyEvent.KEY_PRESSED, keyHandler);
   }
 }
