@@ -110,7 +110,6 @@ public class RgcGameController implements Initializable {
           throw new RuntimeException(e);
         }
         return;
-        //TODO: Spiel return hier nach dem zweiten Spiel erneut raus.
       }
 
       String key = event.getText();
