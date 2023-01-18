@@ -51,11 +51,10 @@ public class WordleGameLogic implements WordleService {
    * update the states of the WordlePanels regardless.
    *
    * @param stringGuess the String that the Frontend will deliver to the Backend
-   * @return the current Array of WordleGuesses
    * @throws IllegalGuessException is thrown should the given guess not be long enough
    */
   @Override
-  public WordleGuessService[] receiveAndComputeGuess(String stringGuess)
+  public void receiveAndComputeGuess(String stringGuess)
       throws IllegalGuessException {
     WordleGuess playersGuess = new WordleGuess(stringGuess);
     checkIfGuessIsLongEnough(playersGuess);
@@ -66,7 +65,6 @@ public class WordleGameLogic implements WordleService {
     checkIfGameIsFinished(currentWordleGuess);
     currentWordleGame.incrementWordleGuessIndex();
     logger.info("receiveAndComputeGuess ran without throwing an exception");
-    return currentWordleGame.getPlayerGuesses();
   }
 
   /**

@@ -18,7 +18,7 @@ public interface WordleService {
    */
   void startAnotherGame();
 
-  WordleGuessService[] receiveAndComputeGuess(String stringGuess) throws IllegalGuessException;
+  void receiveAndComputeGuess(String stringGuess) throws IllegalGuessException;
 
   boolean checkPanelsIndividually(WordleGuessService guess);
 
