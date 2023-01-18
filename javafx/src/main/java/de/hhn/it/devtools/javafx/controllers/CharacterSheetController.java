@@ -1,6 +1,18 @@
 package de.hhn.it.devtools.javafx.controllers;
 
+import de.hhn.it.devtools.apis.ttrpgsheets.CharacterDescriptor;
+import de.hhn.it.devtools.apis.ttrpgsheets.CharacterSheetListener;
+import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
+import de.hhn.it.devtools.apis.ttrpgsheets.DiceDescriptor;
+import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
+import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
+import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import de.hhn.it.devtools.components.ttrpgsheets.DefaultCharacterSheet;
+import java.util.HashMap;
+import java.util.Map;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -10,7 +22,7 @@ import javafx.scene.control.TextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CharacterSheetController extends Controller {
+public class CharacterSheetController extends Controller implements CharacterSheetListener {
   private static final Logger logger = LoggerFactory.getLogger(CharacterSheetController.class);
 
   @FXML
@@ -76,17 +88,31 @@ public class CharacterSheetController extends Controller {
   @FXML
   private TextField weightTextField;
 
-  private DefaultCharacterSheet characterSheet;
+  private final DefaultCharacterSheet characterSheet;
+
+  HashMap<StatType, SimpleIntegerProperty> stat2Property;
+
+  private final SimpleBooleanProperty isLevelOne;
   // TODO Properties erstellen für alle Labels usw.
 
   public CharacterSheetController() {
-    characterSheet = new DefaultCharacterSheet(null);
+    characterSheet = new DefaultCharacterSheet(CharacterDescriptor.EMPTY);
+    isLevelOne = new SimpleBooleanProperty();
+    stat2Property = new HashMap<>();
+    for (StatType statType : StatType.values()) {
+      stat2Property.put(statType, new SimpleIntegerProperty());
+    }
     // TODO vlt. ein standard ausgefüllter Bogen am anfang laden
   }
 
   @FXML
   void initialize() {
+    characterSheet.addCallback(this);
     // TODO Properties hier binden
+    levelLabel.textProperty().bind(Bindings.createStringBinding(
+            () -> String.valueOf(stat2Property.get(StatType.LEVEL).get()),
+            stat2Property.get(StatType.LEVEL)));
+
   }
 
   @FXML
@@ -186,7 +212,7 @@ public class CharacterSheetController extends Controller {
 
   @FXML
   void onLevelUp(ActionEvent event) {
-
+    characterSheet.incrementStat(StatType.LEVEL, OriginType.OTHER);
   }
 
   @FXML
@@ -221,6 +247,22 @@ public class CharacterSheetController extends Controller {
 
   @FXML
   void onStrengthOtherUp(ActionEvent event) {
+
+  }
+
+  @Override
+  public void statChanged(StatDescriptor stat) {
+    StatType statType = stat.getStatType();
+    stat2Property.get(statType).set(characterSheet.getStatDisplayValue(statType));
+  }
+
+  @Override
+  public void descriptionChanged(DescriptionDescriptor description) {
+
+  }
+
+  @Override
+  public void diceChanged(DiceDescriptor dice) {
 
   }
 
