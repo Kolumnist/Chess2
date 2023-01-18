@@ -96,21 +96,29 @@ public class RgcService implements ReactiongameService {
   public void keyPressed(char key) throws IllegalStateException {
     logger.info("Key pressed \"" + key + "\"");
 
+    if (run.getGameState() != GameState.RUNNING) {
+      return;
+    }
+
     run.setpKey(key);
 
     run.checkForTargetHit();
   }
 
   @Override
-  public void playerEnteredAimTarget(int aimtargetId) throws IllegalParameterException {
-    logger.info("Player entered aim target (" + aimtargetId + ")");
+  public void playerEnteredAimTarget(int aimTargetId) throws IllegalParameterException {
+    logger.info("Player entered aim target (" + aimTargetId + ")");
 
-    if (aimtargetId < 0) {
+    if (aimTargetId < 0) {
       throw new IllegalParameterException();
     }
 
+    if (run.getGameState() != GameState.RUNNING) {
+      return;
+    }
+
     run.setObstacle(null);
-    run.setAimTarget(aimtargetId);
+    run.setAimTarget(aimTargetId);
 
   }
 
