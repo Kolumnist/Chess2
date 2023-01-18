@@ -25,6 +25,9 @@ import javafx.scene.control.TextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The controller class for the character sheet module.
+ */
 public class CharacterSheetController extends Controller implements CharacterSheetListener {
   private static final Logger logger = LoggerFactory.getLogger(CharacterSheetController.class);
 
@@ -94,16 +97,20 @@ public class CharacterSheetController extends Controller implements CharacterShe
   private final CharacterSheet characterSheet;
 
   HashMap<StatType, SimpleIntegerProperty> stat2Property;
+  HashMap<StatType, SimpleIntegerProperty> statLevel2Property;
+  HashMap<StatType, SimpleIntegerProperty> statOther2Property;
   HashMap<DescriptionType, SimpleStringProperty> description2Property;
   SimpleStringProperty diceTypeProperty;
   SimpleIntegerProperty diceResultProperty;
-  HashMap<StatType, SimpleIntegerProperty> statLevel2Property;
-  HashMap<StatType, SimpleIntegerProperty> statOther2Property;
 
+  /**
+   * Constructor for the controller class.
+   * An empty character sheet gets loaded for initialization.
+   */
   public CharacterSheetController() {
     characterSheet = new DefaultCharacterSheet(CharacterDescriptor.EMPTY);
+    // Maps for stats
     stat2Property = new HashMap<>();
-    description2Property = new HashMap<>();
     statLevel2Property = new HashMap<>();
     statOther2Property = new HashMap<>();
     for (StatType statType : StatType.values()) {
@@ -111,9 +118,12 @@ public class CharacterSheetController extends Controller implements CharacterShe
       statLevel2Property.put(statType, new SimpleIntegerProperty());
       statOther2Property.put(statType, new SimpleIntegerProperty());
     }
+    // Map for descriptions
+    description2Property = new HashMap<>();
     for (DescriptionType descriptionType : DescriptionType.values()) {
       description2Property.put(descriptionType, new SimpleStringProperty());
     }
+    // Dice Properties
     diceTypeProperty = new SimpleStringProperty();
     diceResultProperty = new SimpleIntegerProperty();
   }
@@ -128,7 +138,7 @@ public class CharacterSheetController extends Controller implements CharacterShe
     // Health / Max health
     healthLabel.textProperty().bind(Bindings.createStringBinding(
             () -> String.format("%d/%d", stat2Property.get(StatType.HEALTH).get(),
-            stat2Property.get(StatType.MAX_HEALTH).get()),
+                    stat2Property.get(StatType.MAX_HEALTH).get()),
             stat2Property.get(StatType.HEALTH), stat2Property.get(StatType.MAX_HEALTH)));
     // Defence
     defenceLabel.textProperty().bind(Bindings.createStringBinding(
@@ -505,6 +515,8 @@ public class CharacterSheetController extends Controller implements CharacterShe
         case D12 -> diceTypeProperty.set("D12");
         case D20 -> diceTypeProperty.set("D20");
         case D100 -> diceTypeProperty.set("D100");
+        default -> {
+        }
       }
     });
   }
