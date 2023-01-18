@@ -264,9 +264,10 @@ public class ImplementationGame2048Service implements Game2048Service, AdminGame
   }
 
   /**
-   * Notifies all Frontends to present new Data
+   * Loads Highscore and notifies all Frontends to present new Data.
    */
   private void notifyGame2048Listener() {
+    loadHighscore();
     logger.info("notifyGame2048Listener: no params");
     Block[] gameboardArray = new Block[gameboard.size()];
     for (int i = 0; i < gameboard.size(); i++) {
@@ -427,31 +428,5 @@ public class ImplementationGame2048Service implements Game2048Service, AdminGame
       }
     }
     return row;
-  }
-
-  public static void main(String[] args) throws IllegalParameterException {
-    ImplementationGame2048Service g = new ImplementationGame2048Service();
-    g.initialisation();
-    g.addCallback(new Game2048Listener() {
-      @Override
-      public void newState(State state) {
-        logger.info("newState: state = {}", state);
-      }
-    });
-    moves(g);
-    moves(g);
-    moves(g);
-//    moves(g);
-  }
-
-  /**
-   * For Testing purposes.
-   */
-  private static void moves(ImplementationGame2048Service g) throws IllegalParameterException {
-    // TODO: 08.01.2023 delete this Methode
-    g.moveAllBlocks(MovingDirection.down);
-    g.moveAllBlocks(MovingDirection.right);
-    g.moveAllBlocks(MovingDirection.up);
-    g.moveAllBlocks(MovingDirection.left);
   }
 }
