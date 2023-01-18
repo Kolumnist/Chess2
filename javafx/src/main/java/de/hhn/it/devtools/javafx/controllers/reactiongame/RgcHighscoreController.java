@@ -2,14 +2,13 @@ package de.hhn.it.devtools.javafx.controllers.reactiongame;
 
 import de.hhn.it.devtools.javafx.controllers.ReactionGameController;
 import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
-import java.io.FileInputStream;
+import de.hhn.it.devtools.javafx.reactiongame.RgcHighScoreHandler;
+import de.hhn.it.devtools.javafx.reactiongame.RgcHighScoreSet;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.NavigableMap;
-import java.util.Properties;
+import java.util.Collections;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -50,16 +49,12 @@ public class RgcHighscoreController implements Initializable {
   }
 
   private void readHighscores() throws IOException {
-    TreeMap<String, String> highScoreTreeMap = new TreeMap<>();
-    Properties properties = new Properties();
 
-    properties.load(
-        new FileInputStream("javafx/src/main/resources/reactiongame/highscore.list"));
+    RgcHighScoreHandler handler = new RgcHighScoreHandler();
 
-    for (String key :
-      properties.stringPropertyNames()) {
-      highScoreTreeMap.put(key, properties.get(key).toString());
-    }
+    ArrayList<RgcHighScoreSet> scores = handler.loadHighscoreList();
+
+    Collections.sort(scores);
 
     ArrayList<Label> labels = new ArrayList<>() {
       {
@@ -72,15 +67,11 @@ public class RgcHighscoreController implements Initializable {
       }
     };
 
-    NavigableMap<String, String> reverseHighscoreList = highScoreTreeMap.descendingMap();
-    ArrayList<String> scoreList = new ArrayList<>(reverseHighscoreList.keySet());
-
-    ArrayList<String> nameList = new ArrayList<>(reverseHighscoreList.values());
 
 
-    for (int i = 0; i < (Math.min(scoreList.size(), 7)); i++) {
+    for (int i = 0; i < (Math.min(scores.size(), 6)); i++) {
       Label label = labels.get(i);
-      label.setText(scoreList.get(i) + " - " + nameList.get(i));
+      label.setText(scores.get(i).name() + " - " + scores.get(i).score());
     }
   }
 
