@@ -100,7 +100,7 @@ public class RgcService implements ReactiongameService {
       return;
     }
 
-    run.setpKey(key);
+    run.setKey(key);
 
     run.checkForTargetHit();
   }

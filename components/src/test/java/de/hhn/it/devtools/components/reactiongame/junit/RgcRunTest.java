@@ -121,7 +121,7 @@ class RgcRunTest {
 
   @Test
   void testCheckForTargetHit() {
-    run.setpKey('q');
+    run.setKey('q');
 
     run.setAimTarget(target = new RgcAimTarget(1,1,1,1,'q'));
 

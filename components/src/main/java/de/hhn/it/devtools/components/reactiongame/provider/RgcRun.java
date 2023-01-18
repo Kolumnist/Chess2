@@ -23,7 +23,7 @@ public class RgcRun {
 
   private RgcObstacle obstacle; // player is in this obstacle
   private RgcAimTarget aimTarget; // player is in this aimTarget
-  private char pKey;
+  private char key;
   private int score;
   private boolean isInvincible = false;
   private Thread iFrameThread;
@@ -80,8 +80,8 @@ public class RgcRun {
     this.aimTarget = aimTarget;
   }
 
-  public void setpKey(char pKey) {
-    this.pKey = pKey;
+  public void setKey(char key) {
+    this.key = key;
   }
 
   public void setInvincible(boolean invincible) {
@@ -104,8 +104,8 @@ public class RgcRun {
     return score;
   }
 
-  public char getpKey() {
-    return pKey;
+  public char getKey() {
+    return key;
   }
 
   public RgcAimTarget getAimTarget() {
@@ -174,8 +174,8 @@ public class RgcRun {
    * Methods checks if the player is in an aimtarget and pressed the right key.
    */
   public void checkForTargetHit() {
-    if (aimTarget != null && aimTarget.getKey() == pKey) {
-      logger.info(aimTarget.getId() + " | " + pKey);
+    if (aimTarget != null && aimTarget.getKey() == key) {
+      logger.info(aimTarget.getId() + " | " + key);
       score += 100;
 
       field.removeAimTarget(aimTarget.getId());
