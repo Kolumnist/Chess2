@@ -95,26 +95,31 @@ public class CharacterSheetController extends Controller implements CharacterShe
 
   HashMap<StatType, SimpleIntegerProperty> stat2Property;
   HashMap<DescriptionType, SimpleStringProperty> description2Property;
-  SimpleStringProperty diceProperty;
-  SimpleIntegerProperty resultProperty;
+  SimpleStringProperty diceTypeProperty;
+  SimpleIntegerProperty diceResultProperty;
+  HashMap<StatType, SimpleIntegerProperty> statLevel2Property;
+  HashMap<StatType, SimpleIntegerProperty> statOther2Property;
 
   public CharacterSheetController() {
     characterSheet = new DefaultCharacterSheet(CharacterDescriptor.EMPTY);
     stat2Property = new HashMap<>();
     description2Property = new HashMap<>();
+    statLevel2Property = new HashMap<>();
+    statOther2Property = new HashMap<>();
     for (StatType statType : StatType.values()) {
       stat2Property.put(statType, new SimpleIntegerProperty());
+      statLevel2Property.put(statType, new SimpleIntegerProperty());
+      statOther2Property.put(statType, new SimpleIntegerProperty());
     }
     for (DescriptionType descriptionType : DescriptionType.values()) {
       description2Property.put(descriptionType, new SimpleStringProperty());
     }
-    diceProperty = new SimpleStringProperty();
-    resultProperty = new SimpleIntegerProperty();
+    diceTypeProperty = new SimpleStringProperty();
+    diceResultProperty = new SimpleIntegerProperty();
   }
 
   @FXML
   void initialize() {
-    characterSheet.addCallback(this);
     // Stats binding
     // Level
     levelLabel.textProperty().bind(Bindings.createStringBinding(
@@ -141,6 +146,53 @@ public class CharacterSheetController extends Controller implements CharacterShe
     dexterityLabel.textProperty().bind(Bindings.createStringBinding(
             () -> String.valueOf(stat2Property.get(StatType.DEXTERITY).get()),
             stat2Property.get(StatType.DEXTERITY)));
+
+    // Stats level binding
+    // Level
+    unusedLevelPointsLabel.textProperty().bind(Bindings.createStringBinding(
+            () -> "E")); // TODO Ausrechnen wie viele Level Points noch übrig sind
+    // Health / Max health
+    healthLevelLabel.textProperty().bind(Bindings.createStringBinding(
+            () -> String.valueOf(statLevel2Property.get(StatType.MAX_HEALTH).get()),
+            statLevel2Property.get(StatType.MAX_HEALTH)));
+    // Defence
+    defenceLevelLabel.textProperty().bind(Bindings.createStringBinding(
+            () -> String.valueOf(statLevel2Property.get(StatType.DEFENCE).get()),
+            statLevel2Property.get(StatType.DEFENCE)));
+    // Strength
+    strengthLevelLabel.textProperty().bind(Bindings.createStringBinding(
+            () -> String.valueOf(statLevel2Property.get(StatType.STRENGTH).get()),
+            statLevel2Property.get(StatType.STRENGTH)));
+    // Agility
+    agilityLevelLabel.textProperty().bind(Bindings.createStringBinding(
+            () -> String.valueOf(statLevel2Property.get(StatType.AGILITY).get()),
+            statLevel2Property.get(StatType.AGILITY)));
+    // Dexterity
+    dexterityLevelLabel.textProperty().bind(Bindings.createStringBinding(
+            () -> String.valueOf(statLevel2Property.get(StatType.DEXTERITY).get()),
+            statLevel2Property.get(StatType.DEXTERITY)));
+
+    // Stats other binding
+    // Health / Max health
+    healthOtherLabel.textProperty().bind(Bindings.createStringBinding(
+            () -> String.valueOf(statOther2Property.get(StatType.MAX_HEALTH).get()),
+            statOther2Property.get(StatType.MAX_HEALTH)));
+    // Defence
+    defenceOtherLabel.textProperty().bind(Bindings.createStringBinding(
+            () -> String.valueOf(statOther2Property.get(StatType.DEFENCE).get()),
+            statOther2Property.get(StatType.DEFENCE)));
+    // Strength
+    strengthOtherLabel.textProperty().bind(Bindings.createStringBinding(
+            () -> String.valueOf(statOther2Property.get(StatType.STRENGTH).get()),
+            statOther2Property.get(StatType.STRENGTH)));
+    // Agility
+    agilityOtherLabel.textProperty().bind(Bindings.createStringBinding(
+            () -> String.valueOf(statOther2Property.get(StatType.AGILITY).get()),
+            statOther2Property.get(StatType.AGILITY)));
+    // Dexterity
+    dexterityOtherLabel.textProperty().bind(Bindings.createStringBinding(
+            () -> String.valueOf(statOther2Property.get(StatType.DEXTERITY).get()),
+            statOther2Property.get(StatType.DEXTERITY)));
 
     // Descriptions binding
     // Player name
@@ -205,9 +257,12 @@ public class CharacterSheetController extends Controller implements CharacterShe
             description2Property.get(DescriptionType.OTHER));
 
     // Dice binding
-    diceMenuButton.textProperty().bind(diceProperty);
+    diceMenuButton.textProperty().bind(diceTypeProperty);
     diceLabel.textProperty().bind(Bindings.createStringBinding(
-            () -> String.valueOf(resultProperty.get()), resultProperty));
+            () -> String.valueOf(diceResultProperty.get()), diceResultProperty));
+
+    // Adding the listener, this will update the whole sheet
+    characterSheet.addCallback(this);
   }
 
   @FXML
@@ -424,6 +479,10 @@ public class CharacterSheetController extends Controller implements CharacterShe
     Platform.runLater(() -> {
       StatType statType = stat.getStatType();
       stat2Property.get(statType).set(characterSheet.getStatDisplayValue(statType));
+      statLevel2Property.get(statType).set(stat.getAbilityPointsUsed());
+      statOther2Property.get(statType).set(stat.getMiscellaneous());
+      logger.info("Was soll das: {}", stat);
+      logger.info("Hmmmmm: {}", statLevel2Property.get(statType));
     });
   }
 
@@ -436,16 +495,16 @@ public class CharacterSheetController extends Controller implements CharacterShe
   @Override
   public void diceChanged(DiceDescriptor dice) {
     Platform.runLater(() -> {
-      resultProperty.set(dice.getResult());
+      diceResultProperty.set(dice.getResult());
       switch (dice.getDiceType()) {
-        case D2 -> diceProperty.set("D2");
-        case D4 -> diceProperty.set("D4");
-        case D6 -> diceProperty.set("D6");
-        case D8 -> diceProperty.set("D8");
-        case D10 -> diceProperty.set("D10");
-        case D12 -> diceProperty.set("D12");
-        case D20 -> diceProperty.set("D20");
-        case D100 -> diceProperty.set("D100");
+        case D2 -> diceTypeProperty.set("D2");
+        case D4 -> diceTypeProperty.set("D4");
+        case D6 -> diceTypeProperty.set("D6");
+        case D8 -> diceTypeProperty.set("D8");
+        case D10 -> diceTypeProperty.set("D10");
+        case D12 -> diceTypeProperty.set("D12");
+        case D20 -> diceTypeProperty.set("D20");
+        case D100 -> diceTypeProperty.set("D100");
       }
     });
   }
