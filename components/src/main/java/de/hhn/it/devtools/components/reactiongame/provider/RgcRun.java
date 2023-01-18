@@ -179,7 +179,6 @@ public class RgcRun {
    */
   public void checkForTargetHit() {
     if (aimTarget != null && aimTarget.getKey() == key) {
-      logger.info(aimTarget.getId() + " | " + key);
       score += 100;
 
       field.removeAimTarget(aimTarget.getId());
