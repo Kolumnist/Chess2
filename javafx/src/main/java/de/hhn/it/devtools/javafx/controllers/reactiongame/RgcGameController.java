@@ -133,6 +133,10 @@ public class RgcGameController implements Initializable {
     b.setMinWidth(30);
     b.setMinHeight(30);
 
+    b.setMaxWidth(30);
+    b.setMinHeight(30);
+
+
     b.setOnAction(event -> {
       service.continueRun();
 
