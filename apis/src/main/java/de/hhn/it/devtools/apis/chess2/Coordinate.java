@@ -57,4 +57,13 @@ public class Coordinate {
     }
     return false;
   }
+
+  /**
+   * Returns x and y as a String in the format "xy"
+   *
+   * @return the coordinate as a String
+   */
+  public String coordinateToString(){
+    return ""+x+y;
+  }
 }
