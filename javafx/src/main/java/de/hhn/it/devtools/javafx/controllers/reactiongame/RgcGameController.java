@@ -101,7 +101,9 @@ public class RgcGameController implements Initializable {
     keyHandler = event -> {
       if (event.getCode() == KeyCode.ESCAPE) {
         try {
-          openPauseMenu();
+          if (service.getRun().getGameState() == GameState.RUNNING) {
+            openPauseMenu();
+          }
         } catch (IOException e) {
           throw new RuntimeException(e);
         }

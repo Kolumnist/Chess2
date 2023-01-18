@@ -49,8 +49,8 @@ public class RgcEnterPlayerNameController implements Initializable {
       highscoreList.put(key, properties.get(key).toString());
     }
 
-    highscoreList.put(String.valueOf(service.getRun().getScore()),
-        service.getCurrentPlayer().getName());
+    highscoreList.put(service.getCurrentPlayer().getName(),
+        String.valueOf(service.getRun().getScore()));
 
     Properties propertiesNew = new Properties();
 
