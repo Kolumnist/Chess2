@@ -412,11 +412,13 @@ public class CharacterSheetController extends Controller implements CharacterShe
   @FXML
   void onLoad(ActionEvent event) {
     logger.info("Load pressed");
+    // TODO Irgendwie File IO dies das
   }
 
   @FXML
   void onSave(ActionEvent event) {
     logger.info("Save pressed");
+    // TODO Irgendwie File IO dies das PART 2
   }
 
   @FXML
@@ -481,8 +483,6 @@ public class CharacterSheetController extends Controller implements CharacterShe
       stat2Property.get(statType).set(characterSheet.getStatDisplayValue(statType));
       statLevel2Property.get(statType).set(stat.getAbilityPointsUsed());
       statOther2Property.get(statType).set(stat.getMiscellaneous());
-      logger.info("Was soll das: {}", stat);
-      logger.info("Hmmmmm: {}", statLevel2Property.get(statType));
     });
   }
 
