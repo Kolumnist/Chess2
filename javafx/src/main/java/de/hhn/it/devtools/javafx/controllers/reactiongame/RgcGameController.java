@@ -38,6 +38,8 @@ public class RgcGameController implements Initializable {
 
   private EventHandler<KeyEvent> keyHandler;
 
+  private EventHandler<MouseEvent> mouseHandler;
+
   private Stage stage;
   @FXML // fx:id="infoLable"
   private Label infoLable; // Value injected by FXMLLoader
@@ -54,25 +56,21 @@ public class RgcGameController implements Initializable {
   @FXML // fx:id="timeLabel"
   private Label timeLabel; // Value injected by FXMLLoader
 
-  @FXML
-  void gpOnMouseEntered() {
-    service.playerLeftGameObject();
-  }
 
   @FXML
-  void gpOnMouseClicked() {
-    System.out.println("Mouse clicked");
+  void gpOnMouseExited() {
+
+
+  }
+  @FXML
+  void gpOnMouseEntered() {
+
   }
 
   @FXML
   void gpOnMouseMoved(MouseEvent event) {
     singletonAttributeStore.setAttribute(RgcGameController.RGC_PLAYER_X_POSITION, event.getX());
     singletonAttributeStore.setAttribute(RgcGameController.RGC_PLAYER_Y_POSITION, event.getY());
-  }
-
-  @FXML
-  void gpOnMouseExited() {
-    service.playerLeftField();
   }
 
   @Override
@@ -116,7 +114,14 @@ public class RgcGameController implements Initializable {
       service.keyPressed(key.charAt(0));
     };
 
+    mouseHandler = event -> {
+      service.playerLeftField();
+      System.out.println("JETZT");
+    };
+
     stage.addEventFilter(KeyEvent.KEY_PRESSED, keyHandler);
+
+    anchorPane.addEventFilter(MouseEvent.MOUSE_ENTERED, mouseHandler);
 
     new RgcIngameTimer(service.getRun(), timeLabel);
 
@@ -161,6 +166,8 @@ public class RgcGameController implements Initializable {
     b.setMaxWidth(30);
     b.setMinHeight(30);
 
+    b.setStyle("-fx-border-color: BLACK;" + "-fx-border-width: 2;" + "-fx-background-color: BLUE");
+
 
     b.setOnAction(event -> {
       service.continueRun();
@@ -176,5 +183,6 @@ public class RgcGameController implements Initializable {
 
   public void deleteHandler() {
     stage.removeEventFilter(KeyEvent.KEY_PRESSED, keyHandler);
+    anchorPane.removeEventFilter(MouseEvent.MOUSE_ENTERED, mouseHandler);
   }
 }
