@@ -14,6 +14,8 @@ public interface AdminGame2048Service {
   /**
    * Is important if multiple Objects of this class are used.
    * Adds a GameService by an ID.
+   * Also notifies GameListener so that a new State can be acquired immediately after
+   * adding a new Game2048Service
    *
    * @throws IllegalParameterException if there is no Existing GameService for given id
    */

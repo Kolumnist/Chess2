@@ -119,6 +119,7 @@ public class ImplementationGame2048Service implements Game2048Service, AdminGame
       throw new IllegalParameterException("Game2048Service with id " + id + " does already exist.");
     }
     gameServices.put(id, new ImplementationGame2048Service());
+    notifyGame2048Listener();
   }
 
   /**
