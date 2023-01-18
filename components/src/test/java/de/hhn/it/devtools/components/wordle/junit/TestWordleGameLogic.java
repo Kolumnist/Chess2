@@ -13,7 +13,7 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -49,7 +49,7 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void receiveAndComputeGuessShouldThrowException() throws IllegalGuessException {
+  void receiveAndComputeGuessShouldThrowExceptionWithOneWhitespace() throws IllegalGuessException {
     assertThrows(IllegalGuessException.class, () -> {
       wordleGameLogic.receiveAndComputeGuess("grac ");
     }
@@ -66,86 +66,76 @@ public class TestWordleGameLogic {
   }
 
   @Test
-  void checkIfGuessIsLongEnoughShouldThrowIllegalGuessExceptionWithOneWhitespace()
-  throws IllegalGuessException {
-    WordleGuess wordleGuess = new WordleGuess("keba ");
+  void receiveAndComputeGuessShouldRunNormallyInAllCaps() throws IllegalGuessException {
+    wordleGameLogic.startGame();
+    WordleGuess expectedResult = new WordleGuess("grace");
+    wordleGameLogic.receiveAndComputeGuess("GRACE");
+    assertEquals(wordleGameLogic.getCurrentWordleGame().getPlayerGuesses()[0]
+        .getWordleGuessAsString(), expectedResult.getWordleGuessAsString());
+  }
+
+  @Test
+  void receiveAndComputeGuessShouldRunNormallyWithThreeCaps() throws IllegalGuessException {
+    wordleGameLogic.startGame();
+    WordleGuess expectedResult = new WordleGuess("grace");
+    wordleGameLogic.receiveAndComputeGuess("gRaCE");
+    assertEquals(wordleGameLogic.getCurrentWordleGame().getPlayerGuesses()[0]
+        .getWordleGuessAsString(), expectedResult.getWordleGuessAsString());
+  }
+
+  @Test
+  void receiveAndComputeGuessShouldThrowExceptionWithTwoWhitespaces() throws IllegalGuessException {
     assertThrows(IllegalGuessException.class, () -> {
-      wordleGameLogic.checkIfGuessIsLongEnough(wordleGuess);
-    }
+          wordleGameLogic.receiveAndComputeGuess(" rac ");
+        }
     );
   }
 
   @Test
-  void checkIfGuessIsLongEnoughShouldThrowIllegalGuessExceptionWithFiveWhitespaces()
-  throws IllegalGuessException {
-    WordleGuess wordleGuess = new WordleGuess("     ");
+  void receiveAndComputeGuessShouldThrowExceptionWithFiveWhitespaces()
+      throws IllegalGuessException {
     assertThrows(IllegalGuessException.class, () -> {
-      wordleGameLogic.checkIfGuessIsLongEnough(wordleGuess);
-    }
+          wordleGameLogic.receiveAndComputeGuess("     ");
+        }
     );
   }
 
   @Test
-  void checkIfGuessIsLongEnoughShouldNotThrowIllegalGuessException() {
-    WordleGuess wordleGuess = new WordleGuess("kebab");
-    assertDoesNotThrow(() -> wordleGameLogic.checkIfGuessIsLongEnough(wordleGuess));
-  }
-
-  @Test
-  void guessKebabIsCorrectShouldReturnTrue() {
+  void guessNastyIsNotCorrectShouldReturnFalse() throws IllegalGuessException {
+    wordleGameLogic.startGame();
     wordleGameLogic.setCurrentWordleSolution("kebab");
-    WordleGuess wordleGuess = new WordleGuess("kebab");
-    assertTrue(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess));
+    wordleGameLogic.receiveAndComputeGuess("nasty");
+    assertNotEquals(wordleGameLogic.getCurrentWordleSolution(),
+        wordleGameLogic.getCurrentWordleGame().getPlayerGuesses()[0]
+        .getWordleGuessAsString());
   }
 
   @Test
-  void guessKeBaBIsCorrectShouldReturnTrue() {
+  void guessKebabIsCorrectShouldReturnTrue() throws IllegalGuessException {
+    wordleGameLogic.startGame();
     wordleGameLogic.setCurrentWordleSolution("kebab");
-    WordleGuess wordleGuess = new WordleGuess("KeBaB");
-    assertTrue(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess));
+    wordleGameLogic.receiveAndComputeGuess("kebab");
+    assertEquals(wordleGameLogic.getCurrentWordleSolution(),
+        wordleGameLogic.getCurrentWordleGame().getPlayerGuesses()[0]
+            .getWordleGuessAsString());
   }
-
   @Test
-  void guessNastyIsNotCorrectShouldReturnFalse() {
+  void guessKebabInAllCapsIsCorrectShouldReturnTrue() throws IllegalGuessException {
+    wordleGameLogic.startGame();
     wordleGameLogic.setCurrentWordleSolution("kebab");
-    WordleGuess wordleGuess = new WordleGuess("nasty");
-    assertFalse(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess));
+    wordleGameLogic.receiveAndComputeGuess("KEBAB");
+    assertEquals(wordleGameLogic.getCurrentWordleSolution(),
+        wordleGameLogic.getCurrentWordleGame().getPlayerGuesses()[0]
+            .getWordleGuessAsString());
   }
 
   @Test
-  void guessKebxbIsNotCorrectShouldReturnFalse() {
-    wordleGameLogic.setCurrentWordleSolution("kebab");
-    WordleGuess wordleGuess = new WordleGuess("kebxb");
-    assertFalse(wordleGameLogic.checkIfGuessIsCorrect(wordleGuess));
-  }
-
-  @Test
-  void guessKebabIsEntirelyCorrectShouldReturnTrue() {
-    wordleGameLogic.setCurrentWordleSolution("kebab");
-    WordleGuess wordleGuess = new WordleGuess("kebab");
-    assertTrue(wordleGameLogic.checkIfGameIsFinished(wordleGuess));
-  }
-
-  @Test
-  void guessKeBAbIsEntirelyCorrectShouldReturnTrue() {
-    wordleGameLogic.setCurrentWordleSolution("kebab");
-    WordleGuess wordleGuess = new WordleGuess("KeBAb");
-    assertTrue(wordleGameLogic.checkIfGameIsFinished(wordleGuess));
-  }
-
-  @Test
-  void guessKebasIsNotEntirelyCorrectShouldReturnFalse() {
-    wordleGameLogic.setCurrentWordleSolution("kebab");
-    WordleGuess wordleGuess = new WordleGuess("kebas");
-    assertFalse(wordleGameLogic.checkIfGameIsFinished(wordleGuess));
-  }
-
-  @Test
-  void testStatesAfterCheckPanelsIndividuallyCall() {
+  void testStatesAfterCheckPanelsIndividuallyCall() throws IllegalGuessException {
+    wordleGameLogic.startGame();
     wordleGameLogic.setCurrentWordleSolution("cargo");
-    WordleGuess testGuess = new WordleGuess("grace");
-    wordleGameLogic.checkPanelsIndividually(testGuess);
-    WordlePanelService [] wordlePanels = testGuess.getWordleWord();
+    wordleGameLogic.receiveAndComputeGuess("grace");
+    WordlePanelService [] wordlePanels = wordleGameLogic
+        .getCurrentWordleGame().getPlayerGuesses()[0].getWordleWord();
     Assertions.assertAll(
         () -> assertSame(wordlePanels[0].getState(), State.PARTIALLY_CORRECT),
         () -> assertSame(wordlePanels[1].getState(), State.PARTIALLY_CORRECT),
@@ -153,13 +143,6 @@ public class TestWordleGameLogic {
         () -> assertSame(wordlePanels[3].getState(), State.PARTIALLY_CORRECT),
         () -> assertSame(wordlePanels[4].getState(), State.FALSE)
     );
-  }
-
-  @Test
-  void testReturnValOfCheckPanelsIndividually() {
-    wordleGameLogic.setCurrentWordleSolution("havoc");
-    WordleGuess testGuess = new WordleGuess("lithe");
-    assertFalse(wordleGameLogic.checkPanelsIndividually(testGuess));
   }
 
   @Test
