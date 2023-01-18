@@ -18,10 +18,18 @@ public interface WordleService {
    */
   void startAnotherGame();
 
+  WordleGuessService[] receiveAndComputeGuess(String stringGuess) throws IllegalGuessException;
+
+  boolean checkPanelsIndividually(WordleGuessService guess);
+
   /**
    * Quits the game and closes all Wordle windows.
    */
   void quitGame();
+
+  boolean checkIfGameIsFinished(WordleGuessService guess);
+
+  boolean checkIfGuessIsCorrect(WordleGuessService guess);
 
   /**
    * Check if the given guess has exactly five characters.

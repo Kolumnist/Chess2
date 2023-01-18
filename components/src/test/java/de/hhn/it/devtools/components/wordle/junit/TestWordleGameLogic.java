@@ -7,10 +7,12 @@ import de.hhn.it.devtools.apis.wordle.WordlePanelService;
 import de.hhn.it.devtools.components.wordle.provider.WordleGameLogic;
 import de.hhn.it.devtools.components.wordle.provider.WordleGuess;
 import de.hhn.it.devtools.components.wordle.provider.WordlePanel;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -43,7 +45,24 @@ public class TestWordleGameLogic {
   void startAnotherGameShouldAssignPreviousSolutionAndReturnNotNull() {
     wordleGameLogic.startGame();
     wordleGameLogic.startAnotherGame();
-    assertNotNull(wordleGameLogic.getPreviousWordleSolution());
+    assertNotNull(wordleGameLogic.getCurrentWordleGame());
+  }
+
+  @Test
+  void receiveAndComputeGuessShouldThrowException() throws IllegalGuessException {
+    assertThrows(IllegalGuessException.class, () -> {
+      wordleGameLogic.receiveAndComputeGuess("grac ");
+    }
+    );
+  }
+
+  @Test
+  void receiveAndComputeGuessShouldRunNormally() throws IllegalGuessException {
+    wordleGameLogic.startGame();
+    WordleGuess expectedResult = new WordleGuess("grace");
+    wordleGameLogic.receiveAndComputeGuess("grace");
+    assertEquals(wordleGameLogic.getCurrentWordleGame().getPlayerGuesses()[0]
+        .getWordleGuessAsString(), expectedResult.getWordleGuessAsString());
   }
 
   @Test
@@ -127,11 +146,13 @@ public class TestWordleGameLogic {
     WordleGuess testGuess = new WordleGuess("grace");
     wordleGameLogic.checkPanelsIndividually(testGuess);
     WordlePanelService [] wordlePanels = testGuess.getWordleWord();
-    assertTrue((wordlePanels[0].getState() == State.PARTIALLY_CORRECT) &&
-        wordlePanels[1].getState() == State.PARTIALLY_CORRECT &&
-        wordlePanels[2].getState() == State.PARTIALLY_CORRECT &&
-        wordlePanels[3].getState() == State.PARTIALLY_CORRECT &&
-        wordlePanels[4].getState() == State.FALSE);
+    Assertions.assertAll(
+        () -> assertSame(wordlePanels[0].getState(), State.PARTIALLY_CORRECT),
+        () -> assertSame(wordlePanels[1].getState(), State.PARTIALLY_CORRECT),
+        () -> assertSame(wordlePanels[2].getState(), State.PARTIALLY_CORRECT),
+        () -> assertSame(wordlePanels[3].getState(), State.PARTIALLY_CORRECT),
+        () -> assertSame(wordlePanels[4].getState(), State.FALSE)
+    );
   }
 
   @Test
