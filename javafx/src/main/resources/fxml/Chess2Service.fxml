@@ -6,6 +6,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -25,7 +26,7 @@
                               <Insets left="422.0" right="422.0" />
                            </VBox.margin>
                         </Label>
-                        <AnchorPane fx:id="boardPane" prefHeight="639.0" prefWidth="947.0" />
+                        <BorderPane fx:id="boardPane" prefHeight="642.0" prefWidth="947.0" />
                      </children>
                   </VBox>
                </children>
