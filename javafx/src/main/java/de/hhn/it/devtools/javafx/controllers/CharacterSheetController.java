@@ -1,11 +1,12 @@
 package de.hhn.it.devtools.javafx.controllers;
 
+import de.hhn.it.devtools.components.ttrpgsheets.DefaultCharacterSheet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,15 +16,29 @@ public class CharacterSheetController extends Controller {
   @FXML
   private TextField ageTextField;
   @FXML
-  private TextField agilityTextField;
+  private Label agilityLabel;
+  @FXML
+  private Label agilityLevelLabel;
+  @FXML
+  private Label agilityOtherLabel;
   @FXML
   private TextField characterClassTextField;
   @FXML
   private TextField characterNameTextField;
   @FXML
-  private TextField defenceTextField;
+  private Label defenceLabel;
   @FXML
-  private TextField dexterityTextField;
+  private Label defenceLevelLabel;
+  @FXML
+  private Label defenceOtherLabel;
+  @FXML
+  private Label dexterityLabel;
+  @FXML
+  private Label dexterityLevelLabel;
+  @FXML
+  private Label dexterityOtherLabel;
+  @FXML
+  private Label diceLabel;
   @FXML
   private MenuButton diceMenuButton;
   @FXML
@@ -31,11 +46,15 @@ public class CharacterSheetController extends Controller {
   @FXML
   private TextField hairColorTextField;
   @FXML
-  private TextField healthTextField;
+  private Label healthLabel;
+  @FXML
+  private Label healthLevelLabel;
+  @FXML
+  private Label healthOtherLabel;
   @FXML
   private TextField heightTextField;
   @FXML
-  private TextField levelTextField;
+  private Label levelLabel;
   @FXML
   private TextField nickNameTextField;
   @FXML
@@ -47,17 +66,27 @@ public class CharacterSheetController extends Controller {
   @FXML
   private TextField skinColorTextField;
   @FXML
-  private TextField strengthTextField;
+  private Label strengthLabel;
+  @FXML
+  private Label strengthLevelLabel;
+  @FXML
+  private Label strengthOtherLabel;
+  @FXML
+  private Label unusedLevelPointsLabel;
   @FXML
   private TextField weightTextField;
 
+  private DefaultCharacterSheet characterSheet;
+  // TODO Properties erstellen für alle Labels usw.
+
   public CharacterSheetController() {
-    logger.info("Test CharacterSheet");
+    characterSheet = new DefaultCharacterSheet(null);
+    // TODO vlt. ein standard ausgefüllter Bogen am anfang laden
   }
 
   @FXML
   void initialize() {
-
+    // TODO Properties hier binden
   }
 
   @FXML
