@@ -76,8 +76,16 @@ public class RgcRun {
     this.obstacle = obstacle;
   }
 
+  public void setObstacle(int obstacleId) {
+    obstacle = field.getObstacleMap().get(obstacleId);
+  }
+
   public void setAimTarget(RgcAimTarget aimTarget) {
     this.aimTarget = aimTarget;
+  }
+
+  public void setAimTarget(int aimTargetId) {
+    aimTarget = field.getTargetMap().get(aimTargetId);
   }
 
   public void setKey(char key) {
@@ -91,6 +99,7 @@ public class RgcRun {
   public Difficulty getDifficulty() {
     return difficulty;
   }
+
 
   public RgcObstacleClock getObstacleClock() {
     return obstacleClock;
@@ -116,13 +125,8 @@ public class RgcRun {
     return obstacle;
   }
 
-  public void setObstacle(int obstacleId) {
-    obstacle = field.getObstacleMap().get(obstacleId);
-  }
 
-  public void setAimTarget(int aimTargetId) {
-    aimTarget = field.getTargetMap().get(aimTargetId);
-  }
+
 
 
   /**
