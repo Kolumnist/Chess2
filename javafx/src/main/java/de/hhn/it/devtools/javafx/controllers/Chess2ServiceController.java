@@ -229,4 +229,14 @@ public class Chess2ServiceController extends Controller implements Initializable
 
     button.setGraphic(imageView);
   }
+
+  @Override
+  void pause() {
+    logger.debug("pause: -");
+  }
+
+  @Override
+  void resume() {
+    logger.debug("resume: -");
+  }
 }
