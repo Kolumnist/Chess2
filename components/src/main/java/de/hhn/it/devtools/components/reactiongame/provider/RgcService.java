@@ -147,6 +147,14 @@ public class RgcService implements ReactiongameService {
   }
 
   @Override
+  public void playerLeftField() {
+    logger.info("Player left field");
+    if (run.getGameState() == GameState.RUNNING) {
+      run.playerLosesLife();
+    }
+  }
+
+  @Override
   public void setCurrentPlayerName(String playerName) {
     logger.info("Set player name to \"" + playerName + "\"");
 
