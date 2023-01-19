@@ -3,11 +3,8 @@ package de.hhn.it.devtools.javafx.controllers.reactiongame;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcService;
 import de.hhn.it.devtools.javafx.controllers.ReactionGameController;
 import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
-import de.hhn.it.devtools.javafx.reactiongame.RgcHighScoreHandler;
-import de.hhn.it.devtools.javafx.reactiongame.RgcHighScoreSet;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,15 +30,6 @@ public class RgcEnterPlayerNameController implements Initializable {
         service.setCurrentPlayerName(nameTf.getText());
       }
     }
-
-    RgcHighScoreHandler highScoreHandler = new RgcHighScoreHandler();
-
-    ArrayList<RgcHighScoreSet> scores = highScoreHandler.loadHighscoreList(); // load list
-
-    scores.add(new RgcHighScoreSet(service.getCurrentPlayer().getName(),
-        service.getRun().getScore())); // add new entry
-
-    highScoreHandler.writeHighscoreList(scores); // save
 
     RgcScreenController screenController = (RgcScreenController)
         singletonAttributeStore.getAttribute(ReactionGameController.RGC_SCREEN_CONTROLLER);

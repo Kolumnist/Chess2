@@ -1,10 +1,14 @@
 package de.hhn.it.devtools.components.reactiongame.junit;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.reactiongame.Difficulty;
+import de.hhn.it.devtools.apis.reactiongame.HighscoreTupel;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcService;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,6 +69,26 @@ public class RgcServiceBadCases {
     service.endRun();
     assertThrows(IllegalStateException.class,
         () -> service.continueRun());
+  }
+
+  @Test
+  @DisplayName("Add a new highscore")
+  public void testNewHighscore() {
+    ArrayList<HighscoreTupel> testHighscores = new ArrayList<>();
+
+    testHighscores.add(new HighscoreTupel("Tobi", 100));
+    testHighscores.add(new HighscoreTupel("Nadja", 500));
+
+    service.loadHighscoreTable(testHighscores);
+
+    ArrayList<HighscoreTupel> sortedHighscores = service.saveHighscoreTable();
+
+    assertAll(
+        () -> assertNotEquals(sortedHighscores.get(0).name(), "Tobi"),
+        () -> assertNotEquals(sortedHighscores.get(0).score(), 100),
+        () -> assertNotEquals(sortedHighscores.get(1).name(), "Nadja"),
+        () -> assertNotEquals(sortedHighscores.get(1).score(), 500)
+    );
   }
 
 

@@ -4,7 +4,9 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.reactiongame.Difficulty;
 import de.hhn.it.devtools.apis.reactiongame.GameState;
 
+import de.hhn.it.devtools.apis.reactiongame.HighscoreTupel;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcService;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -79,7 +81,25 @@ public class RgcServiceGoodCases {
     assertNull(service.getRun().getAimTarget());
   }
 
+  @Test
+  @DisplayName("Add a new highscore")
+  public void testNewHighscore() {
+    ArrayList<HighscoreTupel> testHighscores = new ArrayList<>();
 
+    testHighscores.add(new HighscoreTupel("Max", 400));
+    testHighscores.add(new HighscoreTupel("Jonas", 600));
+
+    service.loadHighscoreTable(testHighscores);
+
+    ArrayList<HighscoreTupel> sortedHighscores = service.saveHighscoreTable();
+
+    assertAll(
+        () -> assertEquals(sortedHighscores.get(0).name(), "Jonas"),
+        () -> assertEquals(sortedHighscores.get(0).score(), 600),
+        () -> assertEquals(sortedHighscores.get(1).name(), "Max"),
+        () -> assertEquals(sortedHighscores.get(1).score(), 400)
+    );
+  }
 
 
 

@@ -258,7 +258,7 @@ public class RgcRun {
 
     RgcAimTarget aimTarget = field.addRandomAimTarget(aimTargetId);
     logger.info(
-        "Add aim target (" + aimTargetId + ") (" + aimTarget.getX() + "|" + aimTarget.getY() + ")");
+        "Add aim target (" + aimTargetId + ") (" + aimTarget.getxPosition() + "|" + aimTarget.getyPosition() + ")");
 
     for (ReactiongameListener callback :
         callbacks) {

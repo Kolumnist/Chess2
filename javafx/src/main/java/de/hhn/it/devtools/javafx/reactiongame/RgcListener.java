@@ -138,6 +138,7 @@ public class RgcListener implements ReactiongameListener {
 
   @Override
   public void gameOver() {
+
     Platform.runLater(() -> {
       try {
         controller.deleteHandlers();
@@ -147,7 +148,6 @@ public class RgcListener implements ReactiongameListener {
         throw new RuntimeException(e);
       }
     });
-
 
   }
 
