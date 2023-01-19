@@ -167,7 +167,8 @@ public class CharacterSheetController extends Controller implements CharacterShe
   void initialize() {
     // Adding the listener, this will update the whole sheet
     characterSheet.addCallback(this);
-    // Stats binding
+
+    // ########## Stats binding ##########
     // Level
     levelLabel.textProperty().bind(Bindings.createStringBinding(
             () -> String.valueOf(stat2Property.get(StatType.LEVEL).get()),
@@ -194,7 +195,7 @@ public class CharacterSheetController extends Controller implements CharacterShe
             () -> String.valueOf(stat2Property.get(StatType.DEXTERITY).get()),
             stat2Property.get(StatType.DEXTERITY)));
 
-    // Stats level binding
+    // ########## Stats level binding ##########
     // Level
     unusedLevelPointsLabel.textProperty().bind(Bindings.createStringBinding(
             () -> String.valueOf(freeLevelPointsProperty.get()), freeLevelPointsProperty));
@@ -220,7 +221,7 @@ public class CharacterSheetController extends Controller implements CharacterShe
             () -> String.valueOf(statLevel2Property.get(StatType.DEXTERITY).get()),
             statLevel2Property.get(StatType.DEXTERITY)));
 
-    // Stats other binding
+    // ########## Stats other binding ##########
     // Health / Max health
     healthOtherLabel.textProperty().bind(Bindings.createStringBinding(
             () -> String.valueOf(statOther2Property.get(StatType.MAX_HEALTH).get()),
@@ -242,7 +243,7 @@ public class CharacterSheetController extends Controller implements CharacterShe
             () -> String.valueOf(statOther2Property.get(StatType.DEXTERITY).get()),
             statOther2Property.get(StatType.DEXTERITY)));
 
-    // Descriptions binding
+    // ########## Descriptions binding ##########
     // Player name
     playerNameTextField.textProperty().addListener((observable, oldValue, newValue) ->
             characterSheet.changeDescription(DescriptionType.PLAYER_NAME, newValue));
@@ -304,19 +305,55 @@ public class CharacterSheetController extends Controller implements CharacterShe
     otherTextField.textProperty().bindBidirectional(
             description2Property.get(DescriptionType.OTHER));
 
-    // Dice binding
+    // ########## Dice binding ##########
     diceMenuButton.textProperty().bind(diceTypeProperty);
     diceLabel.textProperty().bind(Bindings.createStringBinding(
             () -> String.valueOf(diceResultProperty.get()), diceResultProperty));
 
-    // Logical bindings
+    // ########## Logical bindings ##########
+    // disable level down at level 1 or if there are no available level points
+    levelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
+            () -> stat2Property.get(StatType.LEVEL).get() <= 1 || freeLevelPointsProperty.get() < 1,
+            stat2Property.get(StatType.LEVEL), freeLevelPointsProperty));
     // disable health up at full health
     healthUpButton.disableProperty().bind(Bindings.createBooleanBinding(
             () -> stat2Property.get(StatType.HEALTH).get()
                     >= stat2Property.get(StatType.MAX_HEALTH).get(),
             stat2Property.get(StatType.HEALTH), stat2Property.get(StatType.MAX_HEALTH)));
+    // disable health down at 0 health
+    healthDownButton.disableProperty().bind(Bindings.createBooleanBinding(
+            () -> stat2Property.get(StatType.HEALTH).get() <= 0,
+            stat2Property.get(StatType.HEALTH)));
 
-
+    // ########## Logical bindings for leveling stats ##########
+    // disable defence level down at level 0
+    defenceLevelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
+            () -> stat2Property.get(StatType.DEFENCE).get() <= 0,
+            stat2Property.get(StatType.DEFENCE)));
+    // disable defence level up if there are no available level points
+    defenceLevelUpButton.disableProperty().bind(Bindings.createBooleanBinding(
+            () -> freeLevelPointsProperty.get() <= 0, freeLevelPointsProperty));
+    // disable strength level down at level 0
+    strengthLevelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
+            () -> stat2Property.get(StatType.STRENGTH).get() <= 0,
+            stat2Property.get(StatType.STRENGTH)));
+    // disable strength level up if there are no available level points
+    strengthLevelUpButton.disableProperty().bind(Bindings.createBooleanBinding(
+            () -> freeLevelPointsProperty.get() <= 0, freeLevelPointsProperty));
+    // disable agility level down at level 0
+    agilityLevelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
+            () -> stat2Property.get(StatType.AGILITY).get() <= 0,
+            stat2Property.get(StatType.AGILITY)));
+    // disable agility level up if there are no available level points
+    agilityLevelUpButton.disableProperty().bind(Bindings.createBooleanBinding(
+            () -> freeLevelPointsProperty.get() <= 0, freeLevelPointsProperty));
+    // disable dexterity level down at level 0
+    dexterityLevelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
+            () -> stat2Property.get(StatType.DEXTERITY).get() <= 0,
+            stat2Property.get(StatType.DEXTERITY)));
+    // disable dexterity level up if there are no available level points
+    dexterityLevelUpButton.disableProperty().bind(Bindings.createBooleanBinding(
+            () -> freeLevelPointsProperty.get() <= 0, freeLevelPointsProperty));
   }
 
   @FXML
