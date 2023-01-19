@@ -259,7 +259,7 @@
                                     <Label text="Level:" wrapText="true" />
                                     <Label fx:id="defenceLevelLabel" text="5" />
                                     <Region HBox.hgrow="ALWAYS" />
-                                    <Button fx:id="defenceLevelDownButton" mnemonicParsing="false" onAction="#onDefenceLevelDown" text="▼" />
+                                    <Button mnemonicParsing="false" onAction="#onDefenceLevelDown" text="▼" />
                                     <Button fx:id="defenceLevelUpButton" mnemonicParsing="false" onAction="#onDefenceLevelUp" text="▲" />
                                  </children>
                               </HBox>
@@ -287,7 +287,7 @@
                                     <Label text="Level:" wrapText="true" />
                                     <Label fx:id="strengthLevelLabel" text="5" />
                                     <Region HBox.hgrow="ALWAYS" />
-                                    <Button fx:id="strengthLevelDownButton" mnemonicParsing="false" onAction="#onStrengthLevelDown" text="▼" />
+                                    <Button mnemonicParsing="false" onAction="#onStrengthLevelDown" text="▼" />
                                     <Button fx:id="strengthLevelUpButton" mnemonicParsing="false" onAction="#onStrengthLevelUp" text="▲" />
                                  </children>
                               </HBox>
@@ -315,7 +315,7 @@
                                     <Label text="Level:" wrapText="true" />
                                     <Label fx:id="agilityLevelLabel" text="5" />
                                     <Region HBox.hgrow="ALWAYS" />
-                                    <Button fx:id="agilityLevelDownButton" mnemonicParsing="false" onAction="#onAgilityLevelDown" text="▼" />
+                                    <Button mnemonicParsing="false" onAction="#onAgilityLevelDown" text="▼" />
                                     <Button fx:id="agilityLevelUpButton" mnemonicParsing="false" onAction="#onAgilityLevelUp" text="▲" />
                                  </children>
                               </HBox>
@@ -343,7 +343,7 @@
                                     <Label text="Level:" wrapText="true" />
                                     <Label fx:id="dexterityLevelLabel" text="5" />
                                     <Region HBox.hgrow="ALWAYS" />
-                                    <Button fx:id="dexterityLevelDownButton" mnemonicParsing="false" onAction="#onDexterityLevelDown" text="▼" />
+                                    <Button mnemonicParsing="false" onAction="#onDexterityLevelDown" text="▼" />
                                     <Button fx:id="dexterityLevelUpButton" mnemonicParsing="false" onAction="#onDexterityLevelUp" text="▲" />
                                  </children>
                               </HBox>
