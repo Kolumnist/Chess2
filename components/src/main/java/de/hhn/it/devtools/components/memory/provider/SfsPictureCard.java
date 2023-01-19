@@ -15,10 +15,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class SfsPictureCard implements PictureCard {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(SfsPictureCard.class);
+  private static AtomicInteger idCounter = new AtomicInteger(0);
   private List<PictureCardListener> listeners;
   private PictureCardDescriptor descriptor;
-  private static AtomicInteger idCounter = new AtomicInteger(0);
 
+  /**
+   * Constructor.
+   *
+   * @param descriptor the pictureCardDescriptor of the Card
+   */
   public SfsPictureCard(PictureCardDescriptor descriptor) {
     logger.debug("Constructor - {}", descriptor);
     listeners = new ArrayList<>();
@@ -26,6 +31,12 @@ public class SfsPictureCard implements PictureCard {
     this.descriptor = descriptor;
   }
 
+  /**
+   * Resets the ID counter.
+   */
+  public static void resetIdCounter() {
+    idCounter.set(0);
+  }
 
   @Override
   public void turnCard() throws IllegalStateException {
@@ -77,14 +88,6 @@ public class SfsPictureCard implements PictureCard {
   public void matchCard() {
     descriptor.setState(State.MATCHED);
     notifyListeners(State.MATCHED);
-  }
-
-
-  /**
-   * Resets the ID counter.
-   */
-  public static void resetIdCounter() {
-    idCounter.set(0);
   }
 
   /**

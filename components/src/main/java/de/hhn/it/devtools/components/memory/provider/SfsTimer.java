@@ -6,12 +6,21 @@ import de.hhn.it.devtools.apis.memory.TimerListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Simple implementation of a MemoryService timer.
+ */
+
 public class SfsTimer implements Timer, Runnable {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(SfsTimer.class);
   private List<TimerListener> listeners;
   private TimerDescriptor descriptor;
 
+  /**
+   * Constructor.
+   *
+   * @param descriptor descriptor of the timer
+   */
   public SfsTimer(TimerDescriptor descriptor) {
     logger.debug("Constructor - {}", descriptor);
     listeners = new ArrayList<>();
@@ -54,9 +63,12 @@ public class SfsTimer implements Timer, Runnable {
 
   public void startTime() {
     descriptor.startTime();
-    new Thread(this::run).start();
+    new Thread(this).start();
   }
 
+  /**
+   * Resets the time of the timer.
+   */
   public void resetTime() {
     descriptor.resetTime();
     try {
@@ -80,7 +92,7 @@ public class SfsTimer implements Timer, Runnable {
   }
 
   /**
-   * Notifies the listener
+   * Notifies the listener.
    *
    * @param time time that should be notified to the listener
    * @throws IllegalParameterException if the time does not exist
