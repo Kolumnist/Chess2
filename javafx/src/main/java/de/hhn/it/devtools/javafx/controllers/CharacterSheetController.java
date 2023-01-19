@@ -341,28 +341,12 @@ public class CharacterSheetController extends Controller implements CharacterShe
             stat2Property.get(StatType.HEALTH)));
     // disable health level up if there are no available level points
     healthLevelUpButton.disableProperty().bind(noFreeLevelPointsBinding);
-    // disable defence level down at level 0
-    defenceLevelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
-            () -> stat2Property.get(StatType.DEFENCE).get() <= 0,
-            stat2Property.get(StatType.DEFENCE)));
     // disable defence level up if there are no available level points
     defenceLevelUpButton.disableProperty().bind(noFreeLevelPointsBinding);
-    // disable strength level down at level 0
-    strengthLevelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
-            () -> stat2Property.get(StatType.STRENGTH).get() <= 0,
-            stat2Property.get(StatType.STRENGTH)));
     // disable strength level up if there are no available level points
     strengthLevelUpButton.disableProperty().bind(noFreeLevelPointsBinding);
-    // disable agility level down at level 0
-    agilityLevelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
-            () -> stat2Property.get(StatType.AGILITY).get() <= 0,
-            stat2Property.get(StatType.AGILITY)));
     // disable agility level up if there are no available level points
     agilityLevelUpButton.disableProperty().bind(noFreeLevelPointsBinding);
-    // disable dexterity level down at level 0
-    dexterityLevelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
-            () -> stat2Property.get(StatType.DEXTERITY).get() <= 0,
-            stat2Property.get(StatType.DEXTERITY)));
     // disable dexterity level up if there are no available level points
     dexterityLevelUpButton.disableProperty().bind(noFreeLevelPointsBinding);
   }
