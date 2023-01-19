@@ -3,6 +3,9 @@ package de.hhn.it.devtools.components.reactiongame.provider;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Represents the zone on the screen where AimTargets can spawn
+ */
 public class RgcAimTargetZone {
 
 
@@ -12,7 +15,7 @@ public class RgcAimTargetZone {
   private final int x2; // Point B x
   private final int y2; // Point B y
 
-  private ArrayList<RgcAimTarget> aimTargets;
+  private ArrayList<RgcAimTarget> aimTargets; // List of aimTargets currently in this zone
 
   public RgcAimTargetZone(int x1, int y1, int x2, int y2) {
     this.x1 = x1;

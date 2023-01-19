@@ -95,6 +95,9 @@ public class RgcAimTargetClock implements Runnable {
     logger.info("Ended");
   }
 
+  /**
+   * adds a new AimTarget if the maximum amount of targets isn´t reached yet
+   */
   public void addTarget() {
     if (run.getField().getTargetCount() < run.getDifficulty().highWatermark) {
       run.addAimTarget(idCounter);
@@ -130,6 +133,11 @@ public class RgcAimTargetClock implements Runnable {
     }
   }
 
+  /**
+   * removes an AimTarget with a certain ID
+   *
+   * @param aimTargetId Identifier of target that should be removed
+   */
   public void removeAimTarget(int aimTargetId) {
     synchronized (targetMap) {
       removers = new ArrayList<>();

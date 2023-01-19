@@ -94,6 +94,6 @@ public class RgcObstacleLine {
     obstacles.sort((o1, o2) -> Integer.compare(o2.getY2(), o1.getY2()));
 
     return obstacles.get(0).getY2() != RgcField.NORMAL_HEIGHT; // Gap on bottom
-// no gap is found
+    // no gap is found
   }
 }
