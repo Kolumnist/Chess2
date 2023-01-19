@@ -11,6 +11,7 @@ import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.StatType;
 import de.hhn.it.devtools.components.ttrpgsheets.DefaultCharacterSheet;
+import de.hhn.it.devtools.javafx.ttrpgsheets.CharacterSheetFileIo;
 import java.util.HashMap;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -18,6 +19,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -100,6 +102,7 @@ public class CharacterSheetController extends Controller implements CharacterShe
   private TextField weightTextField;
 
   private final CharacterSheet characterSheet;
+  private final CharacterSheetFileIo characterSheetFileIo;
 
   HashMap<StatType, SimpleIntegerProperty> stat2Property;
   HashMap<StatType, SimpleIntegerProperty> statLevel2Property;
@@ -115,6 +118,7 @@ public class CharacterSheetController extends Controller implements CharacterShe
    */
   public CharacterSheetController() {
     characterSheet = new DefaultCharacterSheet(CharacterDescriptor.EMPTY);
+    characterSheetFileIo = new CharacterSheetFileIo();
     // Maps for stats
     stat2Property = new HashMap<>();
     statLevel2Property = new HashMap<>();
@@ -127,7 +131,7 @@ public class CharacterSheetController extends Controller implements CharacterShe
     // Map for descriptions
     description2Property = new HashMap<>();
     for (DescriptionType descriptionType : DescriptionType.values()) {
-      description2Property.put(descriptionType, new SimpleStringProperty());
+      description2Property.put(descriptionType, new SimpleStringProperty(""));
     }
     // Dice Properties
     diceTypeProperty = new SimpleStringProperty();
@@ -137,6 +141,8 @@ public class CharacterSheetController extends Controller implements CharacterShe
 
   @FXML
   void initialize() {
+    // Adding the listener, this will update the whole sheet
+    characterSheet.addCallback(this);
     // Stats binding
     // Level
     levelLabel.textProperty().bind(Bindings.createStringBinding(
@@ -286,8 +292,7 @@ public class CharacterSheetController extends Controller implements CharacterShe
                     >= stat2Property.get(StatType.MAX_HEALTH).get(),
             stat2Property.get(StatType.HEALTH), stat2Property.get(StatType.MAX_HEALTH)));
 
-    // Adding the listener, this will update the whole sheet
-    characterSheet.addCallback(this);
+
   }
 
   @FXML
@@ -443,13 +448,17 @@ public class CharacterSheetController extends Controller implements CharacterShe
   @FXML
   void onLoad(ActionEvent event) {
     logger.info("Load pressed");
-    // TODO Irgendwie File IO dies das
+    characterSheetFileIo.setParent(((Node) event.getSource()).getScene().getWindow());
+    characterSheet.unwrapCharacter(characterSheetFileIo.loadCharacterFile());
   }
 
   @FXML
   void onSave(ActionEvent event) {
     logger.info("Save pressed");
-    // TODO Irgendwie File IO dies das PART 2
+    String name = description2Property.get(DescriptionType.CHARACTER_NAME).get();
+    characterSheetFileIo.setParent(((Node) event.getSource()).getScene().getWindow());
+    characterSheetFileIo.saveCharacterFile(name.isBlank() ? "My Character" : name,
+            characterSheet.wrapCharacter());
   }
 
   @FXML
