@@ -497,7 +497,10 @@ public class CharacterSheetController extends Controller implements CharacterShe
   void onLoad(ActionEvent event) {
     logger.info("Load pressed");
     characterSheetFileIo.setParent(((Node) event.getSource()).getScene().getWindow());
-    characterSheet.unwrapCharacter(characterSheetFileIo.loadCharacterFile());
+    CharacterDescriptor loadedCharacter = characterSheetFileIo.loadCharacterFile();
+    if (loadedCharacter != null) {
+      characterSheet.unwrapCharacter(loadedCharacter);
+    }
   }
 
   @FXML
