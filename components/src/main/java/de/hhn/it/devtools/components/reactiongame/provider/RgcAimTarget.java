@@ -8,15 +8,15 @@ import de.hhn.it.devtools.apis.reactiongame.AimTargetDescriptor;
 public class RgcAimTarget implements AimTarget {
 
   public static AimTargetDescriptor toAimTargetDescriptor(RgcAimTarget rgcAimTarget) {
-    return new AimTargetDescriptor(rgcAimTarget.id, rgcAimTarget.x, rgcAimTarget.y, RADIUS,
+    return new AimTargetDescriptor(rgcAimTarget.id, rgcAimTarget.xPosition, rgcAimTarget.yPosition, RADIUS,
         rgcAimTarget.key);
   }
 
   public static int RADIUS = 25; // in px
 
-  private final int x;
-  private final int y;
-  private final int r;
+  private final int xPosition;
+  private final int yPosition;
+  private final int radius;
   private final char key;
   private final int id;
 
@@ -32,22 +32,22 @@ public class RgcAimTarget implements AimTarget {
    */
   public RgcAimTarget(int id, int x, int y, int r, char key) {
     this.id = id;
-    this.x = x;
-    this.y = y;
-    this.r = r;
+    this.xPosition = x;
+    this.yPosition = y;
+    this.radius = r;
     this.key = key;
   }
 
-  public int getX() {
-    return x;
+  public int getxPosition() {
+    return xPosition;
   }
 
-  public int getY() {
-    return y;
+  public int getyPosition() {
+    return yPosition;
   }
 
-  public int getR() {
-    return r;
+  public int getRadius() {
+    return radius;
   }
 
   public char getKey() {
@@ -62,9 +62,9 @@ public class RgcAimTarget implements AimTarget {
   @Override
   public String toString() {
     return "AimTarget{"
-        + "x=" + x
-        + ", y=" + y
-        + ", r=" + r
+        + "x=" + xPosition
+        + ", y=" + yPosition
+        + ", r=" + radius
         + ", key=" + key
         + ", id=" + id
         + '}';

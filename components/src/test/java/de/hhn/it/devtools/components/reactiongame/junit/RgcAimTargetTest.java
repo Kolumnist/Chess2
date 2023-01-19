@@ -16,17 +16,17 @@ class RgcAimTargetTest {
   }
   @Test
   void testGetX() {
-    assertEquals(12, target.getX());
+    assertEquals(12, target.getxPosition());
   }
 
   @Test
   void testGetY() {
-    assertEquals(15, target.getY());
+    assertEquals(15, target.getyPosition());
   }
 
   @Test
   void testGetR() {
-    assertEquals(25, target.getR());
+    assertEquals(25, target.getRadius());
   }
 
   @Test
