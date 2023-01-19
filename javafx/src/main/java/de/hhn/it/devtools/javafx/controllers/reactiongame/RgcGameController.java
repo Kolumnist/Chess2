@@ -37,11 +37,7 @@ public class RgcGameController implements Initializable {
 
   private RgcService service;
 
-  private Pane backgroundPane;
-
   private EventHandler<KeyEvent> keyHandler;
-
-  private EventHandler<MouseEvent> mouseHandler;
 
   private AnchorPane anchorPane; // Value injected by FXMLLoader
 
@@ -133,14 +129,7 @@ public class RgcGameController implements Initializable {
       service.keyPressed(key.charAt(0));
     };
 
-    mouseHandler = event -> {
-      service.playerLeftField();
-      System.out.println("JETZT");
-    };
-
     stage.addEventFilter(KeyEvent.KEY_PRESSED, keyHandler);
-
-    anchorPane.addEventFilter(MouseEvent.MOUSE_ENTERED, mouseHandler);
 
     new RgcIngameTimer(service.getRun(), timeLabel);
 
@@ -189,6 +178,5 @@ public class RgcGameController implements Initializable {
 
   public void deleteHandlers() {
     stage.removeEventFilter(KeyEvent.KEY_PRESSED, keyHandler);
-    anchorPane.removeEventFilter(MouseEvent.MOUSE_ENTERED, mouseHandler);
   }
 }
