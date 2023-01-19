@@ -149,8 +149,7 @@ public class RgcService implements ReactiongameService {
   @Override
   public void playerLeftField() {
     logger.info("Player left field");
-    if (run.getGameState() == GameState.RUNNING && run.getAimTarget() == null
-        && run.getObstacle() == null) {
+    if (run.getGameState() == GameState.RUNNING) {
       run.playerLosesLife();
     }
   }
