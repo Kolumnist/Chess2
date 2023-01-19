@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 /**
- * Popup for the difficulty screen of memory game
+ * Popup for the difficulty screen of memory game.
  */
 public class DifficultyPopupController extends VBox {
   public static final String OPEN_POPUP = "difficulty.popup.open";
@@ -39,8 +39,13 @@ public class DifficultyPopupController extends VBox {
   @FXML
   private RadioButton veryhard;
 
+  /**
+   * Constructor of DifficultyPopUpController.
+   */
   public DifficultyPopupController() {
-    this.screenController = (MemoryScreenController) MemoryAttributeStore.getReference().getAttribute(MemoryServiceController.SCREEN_CONTROLLER);
+    this.screenController =
+        (MemoryScreenController) MemoryAttributeStore.getReference()
+            .getAttribute(MemoryServiceController.SCREEN_CONTROLLER);
     hover = easy;
   }
 

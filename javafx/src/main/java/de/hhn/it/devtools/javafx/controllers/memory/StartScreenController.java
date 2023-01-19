@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 
 
 /**
- * Start screen of memory
+ * Start screen of memory.
  */
 public class StartScreenController implements Initializable {
   public static final String SCREEN = "start.screen";
@@ -113,7 +113,8 @@ public class StartScreenController implements Initializable {
   }
 
   /**
-   * Changes the label to show the current difficulty on the start screen in german
+   * Changes the label to show the current difficulty on the start screen in german.
+   *
    * @param difficulty the current difficulty
    */
   public void changeDifficulty(String difficulty) {

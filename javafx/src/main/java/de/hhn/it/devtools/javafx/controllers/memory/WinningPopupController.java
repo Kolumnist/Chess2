@@ -2,7 +2,6 @@ package de.hhn.it.devtools.javafx.controllers.memory;
 
 import de.hhn.it.devtools.apis.memory.Difficulty;
 import de.hhn.it.devtools.javafx.controllers.MemoryServiceController;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -13,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 /**
- * Popup for the winning screen of memory game
+ * Popup for the winning screen of memory game.
  */
 public class WinningPopupController implements Initializable {
   public static final String OPEN_POPUP = "winning.popup.open";
@@ -33,7 +32,9 @@ public class WinningPopupController implements Initializable {
 
 
   public WinningPopupController() {
-    this.screenController = (MemoryScreenController) MemoryAttributeStore.getReference().getAttribute(MemoryServiceController.SCREEN_CONTROLLER);
+    this.screenController =
+        (MemoryScreenController) MemoryAttributeStore.getReference()
+            .getAttribute(MemoryServiceController.SCREEN_CONTROLLER);
   }
 
   @FXML
@@ -74,7 +75,8 @@ public class WinningPopupController implements Initializable {
   }
 
   /**
-   * Return the difficulty as german text
+   * Return the difficulty as german text.
+   *
    * @param difficulty the difficulty the text should be made for
    * @return String difficulty as german text
    */

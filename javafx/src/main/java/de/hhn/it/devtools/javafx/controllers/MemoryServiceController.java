@@ -18,7 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 
 /**
- * Memory Service Main Controller
+ * Memory Service Main Controller.
  */
 public class MemoryServiceController extends Controller implements Initializable, DeckListener {
   public static final String SCREEN_CONTROLLER = "screen.controller";
@@ -77,14 +77,15 @@ public class MemoryServiceController extends Controller implements Initializable
   }
 
   /**
-   * Loads the card set for the chosen difficulty from files
+   * Loads the card set for the chosen difficulty from files.
+   *
    * @param difficulty the chosen difficulty
    * @return CardSetDescriptor of the chosen difficulty
    */
   public CardSetDescriptor fetchCardSets(String difficulty) {
     //File folder = new File(Objects.requireNonNull(getClass().getClassLoader()
-     //  .getResource("/fxml/memory/pictures/sets/" + difficulty + "/")).getFile());
-    File folder = new File("javafx/src/main/resources/fxml/memory/pictures/sets/"+difficulty);
+    //  .getResource("/fxml/memory/pictures/sets/" + difficulty + "/")).getFile());
+    File folder = new File("javafx/src/main/resources/fxml/memory/pictures/sets/" + difficulty);
     HashMap<Integer, String> pictureReferences = new HashMap<>();
     PictureCardDescriptor[] pictureCardDescriptors = new PictureCardDescriptor[5 * 4];
     int cnt = 0;
@@ -103,7 +104,8 @@ public class MemoryServiceController extends Controller implements Initializable
         i = new Random().nextInt();
       } while (i < 0 || pathReferences.containsKey(i) || pictureReferences.containsKey(i));
       pictureCardDescriptors[cnt++] = new PictureCardDescriptor(i, null); //PictureCard
-      pictureCardDescriptors[cnt++] = new PictureCardDescriptor(-1, f.getName().replace(".png", "").replace(".jpg", "")); //NameCard
+      pictureCardDescriptors[cnt++] = new PictureCardDescriptor(-1, f.getName()
+          .replace(".png", "").replace(".jpg", "")); //NameCard
       pathReferences.put(i, f.getAbsolutePath());
       pictureReferences.put(i, f.getName().replace(".png", "").replace(".jpg", ""));
     } while (pictureCardDescriptors.length != cnt);
@@ -112,7 +114,8 @@ public class MemoryServiceController extends Controller implements Initializable
   }
 
   /**
-   * Creates random number
+   * Creates random number.
+   *
    * @param n upper limit for random number
    * @return int random number between 0 and n
    */

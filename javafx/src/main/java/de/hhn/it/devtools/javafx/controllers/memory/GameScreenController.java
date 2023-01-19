@@ -6,11 +6,10 @@ import de.hhn.it.devtools.apis.memory.State;
 import de.hhn.it.devtools.apis.memory.TimerListener;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
 import de.hhn.it.devtools.javafx.controllers.MemoryServiceController;
+import de.hhn.it.devtools.javafx.memory.CardView;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
-
-import de.hhn.it.devtools.javafx.memory.CardView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 /**
- * Game Screen of memory
+ * Game Screen of memory.
  */
 public class GameScreenController implements Initializable, TimerListener {
   public static final String SCREEN = "game.screen";
@@ -124,7 +123,7 @@ public class GameScreenController implements Initializable, TimerListener {
   }
 
   /**
-   * Disables the game screen
+   * Disables the game screen.
    */
   public void disableGameScreen() {
     optionsButton.setDisable(true);
@@ -134,7 +133,7 @@ public class GameScreenController implements Initializable, TimerListener {
   }
 
   /**
-   * Enables the game screen
+   * Enables the game screen.
    */
   public void enableGameScreen() {
     optionsButton.setDisable(false);
@@ -144,7 +143,7 @@ public class GameScreenController implements Initializable, TimerListener {
   }
 
   /**
-   * Handles timer and grid of cards if game is won
+   * Handles timer and grid of cards if game is won.
    */
   public void gameWon() {
     memoryService.stopTimer();
@@ -152,21 +151,22 @@ public class GameScreenController implements Initializable, TimerListener {
   }
 
   /**
-   * Disables the grid of cards
+   * Disables the grid of cards.
    */
   public void disableGrid() {
     mainGrid.setDisable(true);
   }
 
   /**
-   * Activates the grid of cards
+   * Activates the grid of cards.
    */
   public void activateGrid() {
     mainGrid.setDisable(false);
   }
 
   /**
-   * Sets the message on the game screen for the player to see
+   * Sets the message on the game screen for the player to see.
+   *
    * @param message that should be displayed to the player
    */
   public void setSystemMessage(String message) {
@@ -174,25 +174,26 @@ public class GameScreenController implements Initializable, TimerListener {
   }
 
   /**
-   * Closes the game
+   * Closes the game.
    */
   public void closeGame() {
     memoryService.stopTimer();
     memoryService.resetTimer();
-    for (PictureCardDescriptor c: memoryService.getPictureCardDescriptors()) {
+    for (PictureCardDescriptor c : memoryService.getPictureCardDescriptors()) {
       c.setState(State.HIDDEN);
     }
     memoryService.closeGame();
-      try {
-        memoryService.removeCallback(this);
-      } catch (IllegalParameterException e) {
-        e.printStackTrace();
-      }
+    try {
+      memoryService.removeCallback(this);
+    } catch (IllegalParameterException e) {
+      e.printStackTrace();
+    }
     screenController.switchTo(StartScreenController.SCREEN);
   }
 
   /**
-   * Shuffles the card descriptors
+   * Shuffles the card descriptors.
+   *
    * @param array the card descriptors
    * @return shuffled card descriptors
    */
@@ -208,7 +209,8 @@ public class GameScreenController implements Initializable, TimerListener {
   }
 
   /**
-   * Returns the current time shown in the label on the game screen
+   * Returns the current time shown in the label on the game screen.
+   *
    * @return String the current time
    */
   public String getCurrentTime() {

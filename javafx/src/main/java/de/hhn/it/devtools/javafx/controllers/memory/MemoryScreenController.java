@@ -3,10 +3,9 @@ package de.hhn.it.devtools.javafx.controllers.memory;
 import de.hhn.it.devtools.apis.memory.Difficulty;
 import de.hhn.it.devtools.javafx.controllers.MemoryServiceController;
 import de.hhn.it.devtools.javafx.controllers.template.UnknownTransitionException;
-import java.io.IOException;
-
 import de.hhn.it.devtools.javafx.memory.DifficultyPopupView;
 import de.hhn.it.devtools.javafx.memory.WinningPopupView;
+import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -15,7 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
- * Screencontroller for memory screens and popups
+ * Screencontroller for memory screens and popups.
  */
 public class MemoryScreenController {
   private static final org.slf4j.Logger logger =
@@ -36,7 +35,8 @@ public class MemoryScreenController {
   }
 
   /**
-   * Returns the start screen content as node and sets up the controller
+   * Returns the start screen content as node and sets up the controller.
+   *
    * @return Node the start screen
    */
   private Node getStartScreen() {
@@ -53,7 +53,8 @@ public class MemoryScreenController {
   }
 
   /**
-   * Returns the game screen content as node and set ups the controller
+   * Returns the game screen content as node and set ups the controller.
+   *
    * @return Node the game screen
    */
   private Node getGameScreen() {
@@ -69,7 +70,8 @@ public class MemoryScreenController {
   }
 
   /**
-   * Builds up difficulty popup stage and returns it
+   * Builds up difficulty popup stage and returns it.
+   *
    * @return stage the difficulty popup stage
    */
   private Stage getDifficultyStage() {
@@ -90,7 +92,8 @@ public class MemoryScreenController {
   }
 
   /**
-   * Builds up winning popup stage and returns it
+   * Builds up winning popup stage and returns it.
+   *
    * @return stage the winning popup stage
    */
   private Stage getWinningStage() {
@@ -106,7 +109,8 @@ public class MemoryScreenController {
   }
 
   /**
-   * Switches between screens and popups
+   * Switches between screens and popups.
+   *
    * @param toScreen the screen or popup that should be switched to
    * @throws UnknownTransitionException if the screen or popup is unknown
    */
@@ -135,7 +139,8 @@ public class MemoryScreenController {
   }
 
   /**
-   * Saves changed difficulty in MemoryAttributeStore and calls the change on the start screen
+   * Saves changed difficulty in MemoryAttributeStore and calls the change on the start screen.
+   *
    * @param difficulty the chosen difficulty
    */
   public void changeDifficulty(String difficulty) {
@@ -145,7 +150,8 @@ public class MemoryScreenController {
   }
 
   /**
-   * Opens a popup
+   * Opens a popup.
+   *
    * @param stage the popup stage
    */
   private void openPopup(Stage stage) {
@@ -153,7 +159,8 @@ public class MemoryScreenController {
   }
 
   /**
-   * Closes a popup
+   * Closes a popup.
+   *
    * @param stage the popup stage
    */
   private void closePopup(Stage stage) {
@@ -161,7 +168,7 @@ public class MemoryScreenController {
   }
 
   /**
-   * Closes the game screen
+   * Closes the game screen.
    */
   public void closeGameScreen() {
     if (gameScreenController != null) {
@@ -170,21 +177,21 @@ public class MemoryScreenController {
   }
 
   /**
-   * Disables the start screen
+   * Disables the start screen.
    */
   public void disableStartScreen() {
     startScreenContent.setDisable(true);
   }
 
   /**
-   * Enables the start screen
+   * Enables the start screen.
    */
   public void enableStartScreen() {
     startScreenContent.setDisable(false);
   }
 
   /**
-   * Disables the game screen
+   * Disables the game screen.
    */
   public void disableGameScreen() {
     if (gameScreenController == null) {
@@ -194,7 +201,7 @@ public class MemoryScreenController {
   }
 
   /**
-   * Enables the game screen
+   * Enables the game screen.
    */
   public void enableGameScreen() {
     if (gameScreenController == null) {
@@ -204,7 +211,8 @@ public class MemoryScreenController {
   }
 
   /**
-   * Sets a game screen message for the player to see what happens during the matching of cards
+   * Sets a game screen message for the player to see what happens during the matching of cards.
+   *
    * @param message the game screen message
    */
   public void setGameScreenMessage(String message) {
@@ -212,7 +220,7 @@ public class MemoryScreenController {
   }
 
   /**
-   * Changes to winning popup if game is won
+   * Changes to winning popup if game is won.
    */
   public void gameWon() {
     gameScreenController.gameWon();
@@ -220,21 +228,22 @@ public class MemoryScreenController {
   }
 
   /**
-   * Disables grid of the cards
+   * Disables grid of the cards.
    */
   public void disableGameGrid() {
     gameScreenController.disableGrid();
   }
 
   /**
-   * Enables the grid of the cards
+   * Enables the grid of the cards.
    */
   public void enableGameGrid() {
     gameScreenController.activateGrid();
   }
 
   /**
-   * Returns the difficulty from a String
+   * Returns the difficulty from a String.
+   *
    * @param difficulty difficulty as String
    * @return Difficulty that matches the String difficulty
    */
@@ -250,7 +259,8 @@ public class MemoryScreenController {
   }
 
   /**
-   * Return the current time of the game as String
+   * Return the current time of the game as String.
+   *
    * @return String current time
    */
   public String getCurrentTime() {
