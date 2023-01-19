@@ -123,7 +123,6 @@ public class RgcService implements ReactiongameService {
 
     run.setObstacle(null);
     run.setAimTarget(aimTargetId);
-
   }
 
   @Override
