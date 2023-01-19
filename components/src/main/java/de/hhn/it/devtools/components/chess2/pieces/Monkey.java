@@ -85,7 +85,9 @@ public class Monkey extends Piece {
           || possibleJump[i].getY() < 0
           || possibleJump[i].getX() < 0
           || possibleJump[i].getY() > 7
-          || possibleJump[i].getX() > 7) {
+          || possibleJump[i].getX() > 7
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.HAS_CURRENT_PIECE) {
         index.add(i);
       }
     }
