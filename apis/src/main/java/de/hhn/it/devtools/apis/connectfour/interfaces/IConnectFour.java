@@ -1,5 +1,12 @@
-package de.hhn.it.devtools.apis.connectfour;
+package de.hhn.it.devtools.apis.connectfour.interfaces;
 
+import de.hhn.it.devtools.apis.connectfour.helper.Profile;
+import de.hhn.it.devtools.apis.connectfour.enums.Difficulty;
+import de.hhn.it.devtools.apis.connectfour.enums.Mode;
+import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
+import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
+import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotFoundException;
+import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotSelectedException;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import java.util.List;
 import java.util.UUID;
@@ -7,7 +14,7 @@ import java.util.UUID;
 /**
  * This is an interface to the game Connect Four.
  */
-public interface ConnectFour {
+public interface IConnectFour {
 
   /**
    * Adds a listener to get updates on the state of the game or the current match.
@@ -15,7 +22,7 @@ public interface ConnectFour {
    * @param listener object implementing the listener interface
    * @throws IllegalArgumentException if the listener reference is null
    */
-  void addCallback(ConnectFourListener listener)
+  void addCallback(IConnectFourListener listener)
       throws IllegalArgumentException, IllegalParameterException;
 
   /**
@@ -24,7 +31,7 @@ public interface ConnectFour {
    * @param listener object implementing the listener interface
    * @throws IllegalArgumentException if the listener reference is null
    */
-  void removeCallback(ConnectFourListener listener)
+  void removeCallback(IConnectFourListener listener)
       throws IllegalArgumentException, IllegalParameterException;
 
   /**

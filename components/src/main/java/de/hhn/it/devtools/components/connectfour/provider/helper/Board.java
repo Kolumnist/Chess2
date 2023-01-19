@@ -1,6 +1,6 @@
-package de.hhn.it.devtools.components.connectfour.provider;
+package de.hhn.it.devtools.components.connectfour.provider.helper;
 
-import de.hhn.it.devtools.apis.connectfour.IllegalOperationException;
+import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import java.util.Arrays;
 
 /**

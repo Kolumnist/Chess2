@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
-import de.hhn.it.devtools.apis.connectfour.Mode;
-import de.hhn.it.devtools.apis.connectfour.Profile;
+import de.hhn.it.devtools.apis.connectfour.enums.Mode;
+import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.ProfileNameComparator;
@@ -51,7 +51,7 @@ public class MultiplayerController implements Initializable {
   @FXML
   void onStart() {
     logger.info("Starting");
-    ConnectFour game = Instance.getInstance();
+    ConnectFour game = Instance.getConnectFour();
     game.setMode(Mode.LOCAL_PVP);
     switch (startingPlayer) {
       case PLAYER1 -> {
@@ -79,9 +79,9 @@ public class MultiplayerController implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     logger.info("Initializing");
-    Instance.reset();
+
     // player 1
-    List<Profile> profiles = Instance.getInstance().getProfiles();
+    List<Profile> profiles = Instance.getConnectFour().getProfiles();
     Comparator<Profile> comparator = new ProfileNameComparator();
     profiles.sort(comparator);
     player1ChoiceBox.getItems().addAll(profiles);
@@ -90,7 +90,7 @@ public class MultiplayerController implements Initializable {
       player1ChoiceBox.setDisable(true);
       logger.info("Player 1: " + player1);
       // player 2
-      for (Profile profile : Instance.getInstance().getProfiles()) {
+      for (Profile profile : Instance.getConnectFour().getProfiles()) {
         if (profile != player1) {
           player2ChoiceBox.getItems().add(profile);
         }

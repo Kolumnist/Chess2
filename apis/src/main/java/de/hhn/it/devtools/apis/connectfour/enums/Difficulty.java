@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.apis.connectfour;
+package de.hhn.it.devtools.apis.connectfour.enums;
 
 /**
  * This enum contains the different difficulty levels.

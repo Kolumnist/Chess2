@@ -1,6 +1,6 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour.helper;
 
-import de.hhn.it.devtools.apis.connectfour.Profile;
+import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import java.util.Comparator;
 
 /**

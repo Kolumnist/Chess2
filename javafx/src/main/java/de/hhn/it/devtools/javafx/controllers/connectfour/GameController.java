@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
-import de.hhn.it.devtools.apis.connectfour.GameState;
-import de.hhn.it.devtools.components.connectfour.provider.Disc;
+import de.hhn.it.devtools.apis.connectfour.enums.GameState;
+import de.hhn.it.devtools.components.connectfour.provider.helper.Disc;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.FileIO;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Tile;
@@ -46,12 +46,12 @@ public class GameController implements Initializable {
   @FXML
   void onRestart() {
     logger.info("Restart game");
-    Instance.restart();
+    Instance.getConnectFour().startGame();
     initialize(null, null);
   }
 
   public void updateTiles() {
-    Disc[][] b = Instance.getInstance().getDiscs();
+    Disc[][] b = Instance.getConnectFour().getDiscs();
     // column
     for (int i = 0; i < b.length; i++) {
       // row
@@ -68,13 +68,13 @@ public class GameController implements Initializable {
     logger.info("update board");
     updateText();
     updateTiles();
-    if (Instance.getInstance().getGameState() == GameState.FINISHED
-        || Instance.getInstance().getGameState() == GameState.CANCELED) {
+    if (Instance.getConnectFour().getGameState() == GameState.FINISHED
+        || Instance.getConnectFour().getGameState() == GameState.CANCELED) {
       return;
     }
-    if (Instance.getInstance().computerIsNext()) {
+    if (Instance.getConnectFour().computerIsNext()) {
       logger.info("Computer is next");
-      Instance.getInstance().play();
+      Instance.getConnectFour().play();
       t.schedule(new TimerTask() {
         @Override
         public void run() {
@@ -87,7 +87,7 @@ public class GameController implements Initializable {
   }
 
   public void updateText() {
-    output.setText(Instance.getInstance().getText());
+    output.setText(Instance.getConnectFour().getText());
   }
 
   public void lock() {
@@ -109,10 +109,10 @@ public class GameController implements Initializable {
         tiles[column][row] = tile;
       }
     }
-    Instance.getInstance().startGame();
-    if (Instance.getInstance().computerIsNext()) {
+    Instance.getConnectFour().startGame();
+    if (Instance.getConnectFour().computerIsNext()) {
       logger.info("Computer begins");
-      Instance.getInstance().play();
+      Instance.getConnectFour().play();
       t.schedule(new TimerTask() {
         @Override
         public void run() {

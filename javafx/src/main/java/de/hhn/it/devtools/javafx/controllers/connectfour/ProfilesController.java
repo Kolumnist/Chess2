@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
-import de.hhn.it.devtools.apis.connectfour.Profile;
-import de.hhn.it.devtools.apis.connectfour.ProfileNotFoundException;
+import de.hhn.it.devtools.apis.connectfour.helper.Profile;
+import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotFoundException;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import java.io.IOException;
 import java.util.Collections;
@@ -53,7 +53,7 @@ public class ProfilesController {
   void onProfile(ActionEvent event){
     Button button = (Button) event.getTarget();
     try{
-      ProfilesInfoController.pinfo = Instance.getInstance().getProfile(UUID.fromString(button.getId()));
+      ProfilesInfoController.pinfo = Instance.getConnectFour().getProfile(UUID.fromString(button.getId()));
     }
     catch (ProfileNotFoundException ex){
       SceneChanger.changeScene(root, "/fxml/connectfour/ProfilesScreen.fxml");
@@ -78,7 +78,7 @@ public class ProfilesController {
 
   @FXML
   public void initialize(){
-    List<Profile> profiles = new LinkedList<>(Instance.getInstance().getProfiles());
+    List<Profile> profiles = new LinkedList<>(Instance.getConnectFour().getProfiles());
     Collections.sort(profiles, new Comparator<Profile>(){
       @Override
       public int compare(Profile o1, Profile o2) {

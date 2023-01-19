@@ -1,15 +1,19 @@
 package de.hhn.it.devtools.components.connectfour.provider;
 
-import de.hhn.it.devtools.apis.connectfour.ConnectFourListener;
-import de.hhn.it.devtools.apis.connectfour.Difficulty;
-import de.hhn.it.devtools.apis.connectfour.GameState;
-import de.hhn.it.devtools.apis.connectfour.IllegalNameException;
-import de.hhn.it.devtools.apis.connectfour.IllegalOperationException;
-import de.hhn.it.devtools.apis.connectfour.MatchState;
-import de.hhn.it.devtools.apis.connectfour.Mode;
-import de.hhn.it.devtools.apis.connectfour.Profile;
-import de.hhn.it.devtools.apis.connectfour.ProfileNotFoundException;
+import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFourListener;
+import de.hhn.it.devtools.apis.connectfour.enums.Difficulty;
+import de.hhn.it.devtools.apis.connectfour.enums.GameState;
+import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFour;
+import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
+import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
+import de.hhn.it.devtools.apis.connectfour.enums.MatchState;
+import de.hhn.it.devtools.apis.connectfour.enums.Mode;
+import de.hhn.it.devtools.apis.connectfour.helper.Profile;
+import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotFoundException;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.components.connectfour.provider.helper.Color;
+import de.hhn.it.devtools.components.connectfour.provider.helper.Disc;
+import de.hhn.it.devtools.components.connectfour.provider.helper.Game;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +22,7 @@ import java.util.UUID;
 /**
  * This class implements the component facade.
  */
-public class ConnectFour implements de.hhn.it.devtools.apis.connectfour.ConnectFour {
+public class ConnectFour implements IConnectFour {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(ConnectFour.class);
   private HashMap<UUID, Profile> profiles = new HashMap<>();
@@ -28,7 +32,7 @@ public class ConnectFour implements de.hhn.it.devtools.apis.connectfour.ConnectF
   private GameState gameState;
   private MatchState matchState;
   private Mode mode;
-  private List<ConnectFourListener> listeners;
+  private List<IConnectFourListener> listeners;
 
   private final Game game = new Game(this);
 
@@ -137,7 +141,7 @@ public class ConnectFour implements de.hhn.it.devtools.apis.connectfour.ConnectF
    */
 
   @Override
-  public void addCallback(ConnectFourListener listener)
+  public void addCallback(IConnectFourListener listener)
       throws IllegalArgumentException, IllegalParameterException {
     logger.info("Adding callback...");
     if (listener == null) {
@@ -150,7 +154,7 @@ public class ConnectFour implements de.hhn.it.devtools.apis.connectfour.ConnectF
   }
 
   @Override
-  public void removeCallback(ConnectFourListener listener)
+  public void removeCallback(IConnectFourListener listener)
       throws IllegalArgumentException, IllegalParameterException {
     logger.info("Removing callback...");
     if (listener == null) {

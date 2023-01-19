@@ -1,5 +1,6 @@
-package de.hhn.it.devtools.apis.connectfour;
+package de.hhn.it.devtools.apis.connectfour.helper;
 
+import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
 import java.text.DecimalFormat;
 import java.util.UUID;
 
@@ -155,9 +156,10 @@ public class Profile {
    * get singleplayer win percentage of the user profile.
    */
   public String getSingleplayerWinPercentage() {
-    double percentage = 0;
-    if((singleplayerWin + singleplayerDraw + singleplayerLoose) != 0) {
-      percentage = (singleplayerWin / (singleplayerWin + singleplayerDraw + singleplayerLoose)) * 100;
+    int percentage = 0;
+    if ((singleplayerWin + singleplayerDraw + singleplayerLoose) != 0) {
+      percentage =
+          (singleplayerWin / (singleplayerWin + singleplayerDraw + singleplayerLoose)) * 100;
     }
     DecimalFormat df = new DecimalFormat("#.##");
     return df.format(percentage);
@@ -166,9 +168,9 @@ public class Profile {
   /**
    * get multiplayer win percentage of the user profile.
    */
-  public String getMultiplayerWinPercentage(){
-    double percentage = 0;
-    if((multiplayerWin + multiplayerDraw + multiplayerLoose) != 0) {
+  public String getMultiplayerWinPercentage() {
+    int percentage = 0;
+    if ((multiplayerWin + multiplayerDraw + multiplayerLoose) != 0) {
       percentage = (multiplayerWin / (multiplayerWin + multiplayerDraw + multiplayerLoose)) * 100;
     }
     DecimalFormat df = new DecimalFormat("#.##");

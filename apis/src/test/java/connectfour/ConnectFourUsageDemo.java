@@ -1,13 +1,13 @@
 package connectfour;
 
-import de.hhn.it.devtools.apis.connectfour.ConnectFour;
-import de.hhn.it.devtools.apis.connectfour.Difficulty;
-import de.hhn.it.devtools.apis.connectfour.IllegalNameException;
-import de.hhn.it.devtools.apis.connectfour.IllegalOperationException;
-import de.hhn.it.devtools.apis.connectfour.Mode;
-import de.hhn.it.devtools.apis.connectfour.Profile;
-import de.hhn.it.devtools.apis.connectfour.ProfileNotFoundException;
-import de.hhn.it.devtools.apis.connectfour.ProfileNotSelectedException;
+import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFour;
+import de.hhn.it.devtools.apis.connectfour.enums.Difficulty;
+import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
+import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
+import de.hhn.it.devtools.apis.connectfour.enums.Mode;
+import de.hhn.it.devtools.apis.connectfour.helper.Profile;
+import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotFoundException;
+import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotSelectedException;
 import java.util.List;
 
 /**
@@ -20,7 +20,7 @@ public class ConnectFourUsageDemo {
 
 
   public static void main(String[] args) {
-    ConnectFour connectFour = null;
+    IConnectFour connectFour = null;
 
     //load existing profile data
     //connectFour.loadProfileData();

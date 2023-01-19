@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour.helper;
 
-import de.hhn.it.devtools.apis.connectfour.GameState;
-import de.hhn.it.devtools.apis.connectfour.IllegalOperationException;
+import de.hhn.it.devtools.apis.connectfour.enums.GameState;
+import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import de.hhn.it.devtools.javafx.controllers.connectfour.GameController;
 import javafx.geometry.Insets;
@@ -52,7 +52,7 @@ public class Tile extends Pane {
       controller.lock();
       logger.info("Board locked");
       try {
-        ConnectFour instance = Instance.getInstance();
+        ConnectFour instance = Instance.getConnectFour();
         instance.placeDiscAt(column);
         // set tile color
         controller.update();

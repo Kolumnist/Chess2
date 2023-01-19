@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.apis.connectfour;
+package de.hhn.it.devtools.apis.connectfour.exceptions;
 
 /**
  * This Class models a profile not found exception, which might occur when the user tries to edit or

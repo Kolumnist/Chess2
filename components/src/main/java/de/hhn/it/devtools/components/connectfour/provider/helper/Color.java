@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.components.connectfour.provider;
+package de.hhn.it.devtools.components.connectfour.provider.helper;
 
 /**
  * This enum contains the String values for the disc colors.

@@ -1,16 +1,14 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour.helper;
 
-import de.hhn.it.devtools.apis.connectfour.IllegalNameException;
-import de.hhn.it.devtools.apis.connectfour.Profile;
+import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
+import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
 public class FileIO {
 
@@ -31,7 +29,7 @@ public class FileIO {
       int count = 0;
       for(;count < profiles.size(); count++) {
         try {
-          Instance.getInstance().createProfile(profiles.get(count).getName());
+          Instance.getConnectFour().createProfile(profiles.get(count).getName());
         } catch (IllegalNameException ex){
 
         }
@@ -42,7 +40,7 @@ public class FileIO {
 
   public void saveProfileData() {
     List<Profile> profiles;
-    profiles = Instance.getInstance().getProfiles();
+    profiles = Instance.getConnectFour().getProfiles();
     File out = new File(getClass().getResource("/fxml/connectfour/files/Profiles.txt").getPath());
     try (FileOutputStream fos = new FileOutputStream(out);
          ObjectOutputStream oos = new ObjectOutputStream(fos)) {

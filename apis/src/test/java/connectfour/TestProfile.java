@@ -3,8 +3,8 @@ package connectfour;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import de.hhn.it.devtools.apis.connectfour.IllegalNameException;
-import de.hhn.it.devtools.apis.connectfour.Profile;
+import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
+import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

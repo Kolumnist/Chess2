@@ -1,6 +1,6 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
-import de.hhn.it.devtools.apis.connectfour.ProfileNotFoundException;
+import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotFoundException;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.FileIO;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import javafx.beans.binding.Bindings;
@@ -54,7 +54,7 @@ public class ProfilesEditController {
     if(alert.showAndWait().get() == ButtonType.OK){
       Stage stage = (Stage) root.getScene().getWindow();
       try {
-        Instance.getInstance().deleteProfile(ProfilesInfoController.pinfo.getId());
+        Instance.getConnectFour().deleteProfile(ProfilesInfoController.pinfo.getId());
       } catch (ProfileNotFoundException ex){
         stage.close();
       }

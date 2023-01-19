@@ -2,9 +2,9 @@ package de.hhn.it.devtools.components.connectfour.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import de.hhn.it.devtools.apis.connectfour.IllegalNameException;
-import de.hhn.it.devtools.apis.connectfour.Profile;
-import de.hhn.it.devtools.apis.connectfour.ProfileNotFoundException;
+import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
+import de.hhn.it.devtools.apis.connectfour.helper.Profile;
+import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotFoundException;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

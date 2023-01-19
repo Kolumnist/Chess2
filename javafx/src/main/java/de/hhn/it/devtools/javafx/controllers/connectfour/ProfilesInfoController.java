@@ -1,10 +1,8 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
 
-import de.hhn.it.devtools.apis.connectfour.Profile;
+import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import java.io.IOException;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,7 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 
 public class ProfilesInfoController{

@@ -1,11 +1,12 @@
-package de.hhn.it.devtools.components.connectfour.provider;
+package de.hhn.it.devtools.components.connectfour.provider.helper;
 
-import de.hhn.it.devtools.apis.connectfour.GameState;
-import de.hhn.it.devtools.apis.connectfour.IllegalNameException;
-import de.hhn.it.devtools.apis.connectfour.IllegalOperationException;
-import de.hhn.it.devtools.apis.connectfour.MatchState;
-import de.hhn.it.devtools.apis.connectfour.Mode;
-import de.hhn.it.devtools.apis.connectfour.Profile;
+import de.hhn.it.devtools.apis.connectfour.enums.GameState;
+import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
+import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
+import de.hhn.it.devtools.apis.connectfour.enums.MatchState;
+import de.hhn.it.devtools.apis.connectfour.enums.Mode;
+import de.hhn.it.devtools.apis.connectfour.helper.Profile;
+import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import java.util.LinkedList;
 
 /**
