@@ -18,6 +18,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
@@ -69,6 +70,10 @@ public class CharacterSheetController extends Controller implements CharacterShe
   private Label healthLevelLabel;
   @FXML
   private Label healthOtherLabel;
+  @FXML
+  private Button healthDownButton;
+  @FXML
+  private Button healthUpButton;
   @FXML
   private TextField heightTextField;
   @FXML
@@ -274,6 +279,13 @@ public class CharacterSheetController extends Controller implements CharacterShe
     diceLabel.textProperty().bind(Bindings.createStringBinding(
             () -> String.valueOf(diceResultProperty.get()), diceResultProperty));
 
+    // Logical bindings
+    // disable health up at full health
+    healthUpButton.disableProperty().bind(Bindings.createBooleanBinding(
+            () -> stat2Property.get(StatType.HEALTH).get()
+                    >= stat2Property.get(StatType.MAX_HEALTH).get(),
+            stat2Property.get(StatType.HEALTH), stat2Property.get(StatType.MAX_HEALTH)));
+
     // Adding the listener, this will update the whole sheet
     characterSheet.addCallback(this);
   }
@@ -382,12 +394,14 @@ public class CharacterSheetController extends Controller implements CharacterShe
   void onHealthOtherDown(ActionEvent event) {
     logger.info("Health other down pressed");
     characterSheet.decrementStat(StatType.MAX_HEALTH, OriginType.OTHER);
+    characterSheet.decrementStat(StatType.HEALTH, OriginType.DAMAGE);
   }
 
   @FXML
   void onHealthOtherUp(ActionEvent event) {
     logger.info("Health other up pressed");
     characterSheet.incrementStat(StatType.MAX_HEALTH, OriginType.OTHER);
+    characterSheet.incrementStat(StatType.HEALTH, OriginType.DAMAGE);
   }
 
   @FXML

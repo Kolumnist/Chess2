@@ -215,8 +215,8 @@
                                  <children>
                                     <VBox>
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#onHealthUp" text="Up" />
-                                          <Button mnemonicParsing="false" onAction="#onHealthDown" text="Down" />
+                                          <Button fx:id="healthUpButton" mnemonicParsing="false" onAction="#onHealthUp" text="Up" />
+                                          <Button fx:id="healthDownButton" mnemonicParsing="false" onAction="#onHealthDown" text="Down" />
                                        </children>
                                     </VBox>
                                     <Label fx:id="healthLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="50.0" style="-fx-background-color: WHITE; -fx-background-radius: 5;" text="22/30" HBox.hgrow="ALWAYS">
