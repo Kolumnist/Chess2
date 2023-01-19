@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers.memory;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.apis.memory.MemoryService;
 import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
 import de.hhn.it.devtools.apis.memory.State;
 import de.hhn.it.devtools.apis.memory.TimerListener;
@@ -28,7 +29,7 @@ public class GameScreenController implements Initializable, TimerListener {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(GameScreenController.class);
   private MemoryScreenController screenController;
-  private SfsMemoryService memoryService;
+  private MemoryService memoryService;
   @FXML
   private Button finishButton;
 
@@ -70,8 +71,8 @@ public class GameScreenController implements Initializable, TimerListener {
             .getAttribute(MemoryServiceController.MEMORY_SERVICE);
 
     int cnt = 0;
-    PictureCardDescriptor[] currentDeck = shuffle(memoryService
-            .getCurrentCardSet().getDescriptor().getPictureCardDescriptors());
+    PictureCardDescriptor[] currentDeck = shuffle((PictureCardDescriptor[]) memoryAttributeStore
+            .getAttribute(MemoryServiceController.CURRENT_DECK));
     for (int i = 0; i < mainGrid.getColumnCount(); i++) {
       for (int j = 0; j < mainGrid.getRowCount(); j++) {
         mainGrid.add(new CardView(currentDeck[cnt++]), i, j);
