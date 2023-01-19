@@ -64,9 +64,10 @@ public class RgcHighScoreHandler {
   public static void makeDemoHighscoreList() {
     ArrayList<HighscoreTupel> scores = new ArrayList<>();
 
-    scores.add(new HighscoreTupel("Neptune", 500));
-    scores.add(new HighscoreTupel("Jupiter", 400));
-    scores.add(new HighscoreTupel("Mars", 300));
+    scores.add(new HighscoreTupel("Max", 500));
+    scores.add(new HighscoreTupel("Tobi", 420));
+    scores.add(new HighscoreTupel("Jonas", 360));
+    scores.add(new HighscoreTupel("Nicobert", -1));
 
     Collections.sort(scores);
 

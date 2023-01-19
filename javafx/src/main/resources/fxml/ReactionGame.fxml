@@ -3,12 +3,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="backgroundPane" onMouseEntered="#onMouseEntered" onMouseMoved="#onMouseMoved"
-  prefHeight="647.0" prefWidth="1123.0" xmlns="http://javafx.com/javafx/19"
-  xmlns:fx="http://javafx.com/fxml/1"
-  fx:controller="de.hhn.it.devtools.javafx.controllers.ReactionGameController">
-   <AnchorPane fx:id="anchorPane" layoutX="42.0" layoutY="31.0" maxHeight="585.0" maxWidth="1040.0"
-     minHeight="585.0" minWidth="1040.0" prefHeight="585.0" prefWidth="1040.0">
+<Pane fx:id="backgroundPane" onMouseEntered="#onMouseEntered" onMouseMoved="#onMouseMoved" prefHeight="614.0" prefWidth="1081.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.ReactionGameController">
+   <AnchorPane fx:id="anchorPane" layoutX="21.0" layoutY="15.0" maxHeight="585.0" maxWidth="1040.0" minHeight="585.0" minWidth="1040.0" prefHeight="585.0" prefWidth="1040.0">
 
    </AnchorPane>
 </Pane>

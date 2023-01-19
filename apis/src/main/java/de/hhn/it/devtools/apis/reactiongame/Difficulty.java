@@ -10,22 +10,22 @@ public enum Difficulty {
    * Parameter for "Easy" difficulty
    */
   EASY("Easy", 5, 10, 8,
-      8, 12),
+      8, 3, 10),
   /**
    * Parameter for "Medium" difficulty
    */
   MEDIUM("Medium", 1, 10, 9,
-      6, 3),
+      6, 3, 15),
   /**
    * Parameter for "Hard" difficulty
    */
-  HARD("Hard", 2, 14, 12,
-      2, 3),
+  HARD("Hard", 1, 14, 12,
+      2, 2, 20),
   /**
    * Parameter for "dev" difficulty for easier testing
    */
   DEVELOPER("Dev", 1, 3, 2,
-      2,3); // Developer Difficulty for testing
+      2,3, 0); // Developer Difficulty for testing
 
   /**
    * Name descriptor
@@ -48,18 +48,24 @@ public enum Difficulty {
    */
   public final int maxAimtargets;
   /**
-   * variable for the liftime of aimtargets in seconds
+   * variable for the lifetime of aim targets in seconds
    */
   public final int aimTargetLifetime; // in s
 
+  /**
+   * multiplier to calculate the points
+   */
+  public final int scoreMultiplier;
+
 
   Difficulty(String label, int obstacleIntervall, int highWatermark, int lowWatermark,
-      int maxAimtargets, int aimTargetLifetime) {
+      int maxAimtargets, int aimTargetLifetime, int scoreMultiplier) {
     this.label = label;
     this.obstacleIntervall = obstacleIntervall;
     this.highWatermark = highWatermark;
     this.lowWatermark = lowWatermark;
     this.maxAimtargets = maxAimtargets;
     this.aimTargetLifetime = aimTargetLifetime;
+    this.scoreMultiplier = scoreMultiplier;
   }
 }

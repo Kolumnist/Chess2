@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -167,8 +168,9 @@ public class RgcGameController implements Initializable {
     double y = (double) singletonAttributeStore.getAttribute(
         RgcGameController.RGC_PLAYER_Y_POSITION);
 
-    continueButton = new Button("Continue");
+    continueButton = new Button("");
 
+    continueButton.setTooltip(new Tooltip("To continue click here!"));
     continueButton.setId("continue");
 
     continueButton.setMinWidth(30);

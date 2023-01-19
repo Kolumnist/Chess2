@@ -187,7 +187,7 @@ public class RgcRun {
    */
   public void checkForTargetHit() {
     if (aimTarget != null && aimTarget.getKey() == key) {
-      score += 100;
+      score += 2 * difficulty.scoreMultiplier;
 
       field.removeAimTarget(aimTarget.getId());
 
