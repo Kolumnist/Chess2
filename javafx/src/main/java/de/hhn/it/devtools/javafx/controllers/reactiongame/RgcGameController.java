@@ -20,6 +20,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class RgcGameController implements Initializable {
@@ -36,16 +37,22 @@ public class RgcGameController implements Initializable {
 
   private RgcService service;
 
+  private Pane backgroundPane;
+
   private EventHandler<KeyEvent> keyHandler;
 
   private EventHandler<MouseEvent> mouseHandler;
 
+  private AnchorPane anchorPane; // Value injected by FXMLLoader
+
   private Stage stage;
+
+
   @FXML // fx:id="infoLable"
   private Label infoLable; // Value injected by FXMLLoader
 
-  @FXML // fx:id="anchorPane"
-  private AnchorPane anchorPane; // Value injected by FXMLLoader
+  @FXML
+  private Pane gamePane;
 
   @FXML // fx:id="liveLable"
   private Label liveLable; // Value injected by FXMLLoader
@@ -56,6 +63,18 @@ public class RgcGameController implements Initializable {
   @FXML // fx:id="timeLabel"
   private Label timeLabel; // Value injected by FXMLLoader
 
+
+  public Label getLiveLable() {
+    return liveLable;
+  }
+
+  public Label getInfoLable() {
+    return infoLable;
+  }
+
+  public Label getScoreLabel() {
+    return scoreLabel;
+  }
 
   @FXML
   void gpOnMouseExited() {
@@ -130,19 +149,6 @@ public class RgcGameController implements Initializable {
           service, this);
   }
 
-
-  public Label getLiveLable() {
-    return liveLable;
-  }
-
-  public Label getInfoLable() {
-    return infoLable;
-  }
-
-  public Label getScoreLabel() {
-    return scoreLabel;
-  }
-
   /**
    * Set a button at the current mouse position to continue the game
    *
@@ -181,7 +187,7 @@ public class RgcGameController implements Initializable {
     anchorPane.getChildren().add(b);
   }
 
-  public void deleteHandler() {
+  public void deleteHandlers() {
     stage.removeEventFilter(KeyEvent.KEY_PRESSED, keyHandler);
     anchorPane.removeEventFilter(MouseEvent.MOUSE_ENTERED, mouseHandler);
   }
