@@ -1,21 +1,25 @@
 package de.hhn.it.devtools.javafx.controllers;
 
-import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.apis.game2048.Game2048Listener;
 import de.hhn.it.devtools.apis.game2048.State;
-import de.hhn.it.devtools.components.game2048.provider.ImplementationGame2048Service;
+import de.hhn.it.devtools.javafx.controllers.game2048.Game2048ScreenController;
+import de.hhn.it.devtools.javafx.game2048.Game2048FileIO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 
 
-public class Game2048Controller extends Controller implements Initializable, Game2048Listener {
+public class Game2048Controller extends Controller implements Initializable {
+  @FXML
+  public AnchorPane game2048AnchorPane;
+
   @FXML // ResourceBundle that was given to the FXMLLoader
   private ResourceBundle resources;
 
@@ -33,25 +37,16 @@ public class Game2048Controller extends Controller implements Initializable, Gam
 
   @FXML
   void startGameButtonClicked(ActionEvent event) {
-
+    Game2048ScreenController screenController = new Game2048ScreenController(game2048AnchorPane);
+    try {
+      screenController.switchTo("GameView2048");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    currentState = null;
-    ImplementationGame2048Service gameService = new ImplementationGame2048Service();
-    try {
-      gameService.addGameServiceById(0);
-      gameService = gameService.getGameServiceById(0);
-      gameService.addCallback(this);
-    } catch (IllegalParameterException e) {
-      e.printStackTrace();
-    }
-    highscoreValueStart.setText(String.valueOf(currentState.getNewHighscore()));
-  }
-
-  @Override
-  public void newState(State state) {
-    currentState = state;
+    highscoreValueStart.setText(String.valueOf(Game2048FileIO.loadHighscore()));
   }
 }

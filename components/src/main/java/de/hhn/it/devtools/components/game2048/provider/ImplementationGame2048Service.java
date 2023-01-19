@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ImplementationGame2048Service implements Game2048Service {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(ImplementationGame2048Service.class);
-  private final ArrayList<Block> gameboard;
+  private final ArrayList<Block> gameBoard;
   private final ArrayList<Position> freelist;
   private int currentScore;
   private static int highScore;
@@ -22,7 +22,7 @@ public class ImplementationGame2048Service implements Game2048Service {
   private ArrayList<Game2048Listener> gameListeners;
 
   public ImplementationGame2048Service() {
-    this.gameboard = new ArrayList<>();
+    this.gameBoard = new ArrayList<>();
     this.freelist = new ArrayList<>();
     this.currentScore = 0;
     this.gameWon = false;
@@ -38,7 +38,7 @@ public class ImplementationGame2048Service implements Game2048Service {
         freelist.add(new Position(i, j));
       }
     }
-    gameboard.clear();
+    gameBoard.clear();
     try {
       addBlock(2);
       addBlock(2);
@@ -102,10 +102,10 @@ public class ImplementationGame2048Service implements Game2048Service {
    * @throws IllegalParameterException if Position is not a free Space or if {value % 2 == 1}
    */
   public void addBlock(Position xyPosition, int value) throws IllegalParameterException {
-    logger.info("addBlock: xyPisition = {}, value = {}", xyPosition, value);
+    logger.info("addBlock: xyPosition = {}, value = {}", xyPosition, value);
     if (freelist.contains(xyPosition)) {
       freelist.remove(xyPosition);
-      gameboard.add(new Block(xyPosition, value));
+      gameBoard.add(new Block(xyPosition, value));
     } else {
       throw new IllegalParameterException("Tried to add Block to a Space that is not free.");
     }
@@ -148,7 +148,7 @@ public class ImplementationGame2048Service implements Game2048Service {
       throw new IllegalParameterException("column or row were null reference.");
     }
     for (Block removed : columnRow) {
-      gameboard.remove(removed);
+      gameBoard.remove(removed);
     }
     Block previousBlock = null;
     switch (direction) {
@@ -217,7 +217,7 @@ public class ImplementationGame2048Service implements Game2048Service {
         }
       }
     }
-    gameboard.addAll(columnRow);
+    gameBoard.addAll(columnRow);
   }
 
   /**
@@ -225,11 +225,11 @@ public class ImplementationGame2048Service implements Game2048Service {
    */
   private void notifyGame2048Listener() {
     logger.info("notifyGame2048Listener: no params");
-    Block[] gameboardArray = new Block[gameboard.size()];
-    for (int i = 0; i < gameboard.size(); i++) {
-      gameboardArray[i] = gameboard.get(i);
+    Block[] gameBoardArray = new Block[gameBoard.size()];
+    for (int i = 0; i < gameBoard.size(); i++) {
+      gameBoardArray[i] = gameBoard.get(i);
     }
-    State currentState = new State(gameboardArray, currentScore, highScore, gameWon, gameLost);
+    State currentState = new State(gameBoardArray, currentScore, highScore, gameWon, gameLost);
     gameListeners.forEach((listener) -> listener.newState(currentState));
   }
 
@@ -241,7 +241,7 @@ public class ImplementationGame2048Service implements Game2048Service {
    */
   private void updateScores() throws IllegalStateException {
     currentScore = 0;
-    for (Block gameBlock : gameboard) {
+    for (Block gameBlock : gameBoard) {
       currentScore += gameBlock.getValue();
     }
     if (currentScore < 0) {
@@ -260,7 +260,7 @@ public class ImplementationGame2048Service implements Game2048Service {
    * if so the game is won
    */
   private void isGameWon() {
-    for (Block gameBlock : gameboard) {
+    for (Block gameBlock : gameBoard) {
       if (gameBlock.getValue() >= 2048) {
         gameWon = true;
         break;
@@ -293,14 +293,14 @@ public class ImplementationGame2048Service implements Game2048Service {
    *
    * @param currentColumn index of the current Column
    * @return List of Blocks with {xPosition == currentColumn}
-   * @throws IllegalParameterException if currentCollumn is outside Boundaries
+   * @throws IllegalParameterException if currentColumn is outside Boundaries
    */
   private ArrayList<Block> getColumn(int currentColumn) throws IllegalParameterException {
     if (currentColumn > 3 || currentColumn < 0) {
       throw new IllegalParameterException("Tried to get column outside the game-board boundaries");
     }
     ArrayList<Block> column = new ArrayList<>();
-    for (Block block : gameboard) {
+    for (Block block : gameBoard) {
       if (block.getXYPosition().getXPosition() == currentColumn) {
         column.add(block);
       }
@@ -320,7 +320,7 @@ public class ImplementationGame2048Service implements Game2048Service {
       throw new IllegalParameterException("Tried to get row outside the game-board boundaries");
     }
     ArrayList<Block> row = new ArrayList<>();
-    for (Block block : gameboard) {
+    for (Block block : gameBoard) {
       if (block.getXYPosition().getYPosition() == currentRow) {
         row.add(block);
       }
