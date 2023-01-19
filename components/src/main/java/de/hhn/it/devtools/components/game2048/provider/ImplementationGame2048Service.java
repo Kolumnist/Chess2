@@ -5,7 +5,6 @@ import de.hhn.it.devtools.apis.game2048.*;
 import de.hhn.it.devtools.components.game2048.provider.Comparators.HorizontalComparator;
 import de.hhn.it.devtools.components.game2048.provider.Comparators.VerticalComparator;
 
-import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -29,7 +28,6 @@ public class ImplementationGame2048Service implements Game2048Service {
     this.gameWon = false;
     this.gameLost = false;
     this.gameListeners = new ArrayList<>();
-    loadHighscore();
   }
 
   @Override
@@ -47,7 +45,6 @@ public class ImplementationGame2048Service implements Game2048Service {
     } catch (IllegalParameterException e) {
       e.printStackTrace();
     }
-    loadHighscore();
   }
 
   @Override
@@ -227,7 +224,6 @@ public class ImplementationGame2048Service implements Game2048Service {
    * Loads Highscore and notifies all Frontends to present new Data.
    */
   private void notifyGame2048Listener() {
-    loadHighscore();
     logger.info("notifyGame2048Listener: no params");
     Block[] gameboardArray = new Block[gameboard.size()];
     for (int i = 0; i < gameboard.size(); i++) {
@@ -256,7 +252,6 @@ public class ImplementationGame2048Service implements Game2048Service {
     }
     if (currentScore > highScore) {
       highScore = currentScore;
-      saveHighscore();
     }
   }
 
@@ -270,64 +265,6 @@ public class ImplementationGame2048Service implements Game2048Service {
         gameWon = true;
         break;
       }
-    }
-  }
-
-  // TODO: 19.01.2023  
-  /**
-   * Loads the highest score a player scored on this physical device, from a File.
-   */
-  private void loadHighscore() {
-    logger.info("readHighscore: no params");
-    highScore = 0;
-    FileInputStream fileInputStream = null;
-    try {
-      fileInputStream = new FileInputStream("components\\src\\main\\java\\de\\hhn\\it\\devtools\\components\\game2048\\provider\\SaveGame2048.txt");
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-    if (fileInputStream != null) {
-      ObjectInputStream objectInputStream;
-      try {
-        objectInputStream = new ObjectInputStream(fileInputStream);
-        highScore = objectInputStream.readInt();
-        objectInputStream.close();
-        logger.info("readHighscore, highscore = {}", highScore);
-      } catch (IOException e) {
-        logger.warn("load highScore failed, because of ObjectOutputStream Error");
-        e.printStackTrace();
-      }
-    } else {
-      logger.warn("load highScore failed, because File related Error");
-    }
-  }
-
-  /**
-   * Writes the current value of highScore in a File.
-   * CAUTION!!! If old highScore in the File is greater than the new highScore,
-   * the old highScore will be overwritten.
-   */
-  private void saveHighscore() {
-    logger.info("saveHighscore: no params");
-    FileOutputStream fileOutputStream = null;
-    try {
-      fileOutputStream = new FileOutputStream("components\\src\\main\\java\\de\\hhn\\it\\devtools\\components\\game2048\\provider\\SaveGame2048.txt");
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-    if (fileOutputStream != null) {
-      ObjectOutputStream objectOutputStream;
-      try {
-        objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeInt(highScore);
-        objectOutputStream.flush();
-        objectOutputStream.close();
-      } catch (IOException e) {
-        logger.warn("save highScore failed, because of ObjectOutputStream Error");
-        e.printStackTrace();
-      }
-    } else {
-      logger.warn("save highScore failed, because File related Error");
     }
   }
 
