@@ -2,11 +2,10 @@ package de.hhn.it.devtools.components.connectfour.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
-import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotFoundException;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +22,7 @@ public class TestUserInterfaceGoodCases {
 
   @Test
   @DisplayName("adding one new profile with name results in one entry.")
-  public void addNewProfile() throws IllegalNameException, IllegalArgumentException {
+  public void addNewProfile() throws IllegalArgumentException {
     int profileCount = connectFour.getProfiles().size();
     connectFour.createProfile("Max");
     List<Profile> profiles = connectFour.getProfiles();
@@ -34,7 +33,7 @@ public class TestUserInterfaceGoodCases {
   @Test
   @DisplayName("delete one profile and check the result.")
   public void removeOneProfile()
-      throws ProfileNotFoundException, IllegalArgumentException, IllegalNameException {
+      throws IllegalArgumentException, NoSuchElementException {
     int profileCount = connectFour.getProfiles().size();
     connectFour.createProfile("Alice");
     Profile bob = connectFour.createProfile("Bob");

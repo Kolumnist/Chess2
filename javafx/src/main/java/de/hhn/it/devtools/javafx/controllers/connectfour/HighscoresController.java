@@ -2,9 +2,9 @@ package de.hhn.it.devtools.javafx.controllers.connectfour;
 
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.ProfileMultiplayerComparator;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.ProfileSingleplayerComparator;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.SortBy;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.ProfileMultiplayerComparator;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.ProfileSingleplayerComparator;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.SortBy;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;

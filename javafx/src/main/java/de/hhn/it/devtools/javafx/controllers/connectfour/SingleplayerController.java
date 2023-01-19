@@ -1,11 +1,10 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
-import de.hhn.it.devtools.apis.connectfour.enums.Mode;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.ProfileNameComparator;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.StartingPlayer;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.ProfileNameComparator;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.enums.StartingPlayer;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
@@ -54,24 +53,25 @@ public class SingleplayerController implements Initializable {
     game.setMode(Mode.SINGLEPLAYER);
     switch (startingPlayer) {
       case HUMAN -> {
-        game.chooseProfileA(player);
-        game.chooseProfileB(game.getComputer());
+        game.setPlayer1(player);
+        game.setPlayer2(game.getComputer());
       }
       case COMPUTER -> {
-        game.chooseProfileA(game.getComputer());
-        game.chooseProfileB(player);
+        game.setPlayer1(game.getComputer());
+        game.setPlayer2(player);
       }
       case RANDOM -> {
         if (Math.random() > 0.5) {
-          game.chooseProfileA(player);
-          game.chooseProfileB(game.getComputer());
+          game.setPlayer1(player);
+          game.setPlayer2(game.getComputer());
         } else {
-          game.chooseProfileA(game.getComputer());
-          game.chooseProfileB(player);
+          game.setPlayer1(game.getComputer());
+          game.setPlayer2(player);
         }
       }
       default -> logger.debug("Something went wrong");
     }
+    game.playSingleplayerGame(player,true);
     SceneChanger.changeScene(root, "/fxml/connectfour/GameScreen.fxml");
   }
 
@@ -84,10 +84,6 @@ public class SingleplayerController implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     logger.info("initialize: {}, {}", location, resources);
-
-    // Set mode to singleplayer.
-    Instance.getConnectFour().setMode(Mode.SINGLEPLAYER);
-
     // Choose profile:
     List<Profile> profiles = Instance.getConnectFour().getProfiles();
     Comparator<Profile> comparator = new ProfileNameComparator();

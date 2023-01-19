@@ -31,6 +31,7 @@ public class Tile extends Pane {
    * @param controller the game controller
    */
   public Tile(int column, int row, GameController controller) {
+    logger.info("Constructor - {}, {}, {}", column, row, controller);
     setMinSize(80, 80);
     setMaxSize(80, 80);
     setBorder(
@@ -50,16 +51,14 @@ public class Tile extends Pane {
     setOnMouseClicked(event -> {
       // If the disc can be placed...
       controller.lock();
-      logger.info("Board locked");
       try {
         ConnectFour instance = Instance.getConnectFour();
-        instance.placeDiscAt(column);
+        instance.placeDiscInColumn(column);
         // set tile color
         controller.update();
         if (instance.getGameState() == GameState.FINISHED) {
           controller.lock();
         } else {
-          logger.info("Board unlocked");
           controller.unlock();
         }
       } catch (IllegalOperationException e) {

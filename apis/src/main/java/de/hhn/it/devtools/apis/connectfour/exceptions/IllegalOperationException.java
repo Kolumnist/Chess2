@@ -5,4 +5,10 @@ package de.hhn.it.devtools.apis.connectfour.exceptions;
  * a disc in a row without any empty slots.
  */
 public class IllegalOperationException extends Throwable {
+  public IllegalOperationException() {
+  }
+
+  public IllegalOperationException(String message) {
+    super(message);
+  }
 }

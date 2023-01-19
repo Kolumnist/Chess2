@@ -1,11 +1,10 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
-import de.hhn.it.devtools.apis.connectfour.enums.Mode;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.ProfileNameComparator;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.StartingPlayer;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.ProfileNameComparator;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.enums.StartingPlayer;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
@@ -52,23 +51,23 @@ public class MultiplayerController implements Initializable {
   void onStart() {
     logger.info("Starting");
     ConnectFour game = Instance.getConnectFour();
-    game.setMode(Mode.LOCAL_PVP);
+    game.setMode(Mode.MULTIPLAYER);
     switch (startingPlayer) {
       case PLAYER1 -> {
-        game.chooseProfileA(player1);
-        game.chooseProfileB(player2);
+        game.setPlayer1(player1);
+        game.setPlayer2(player2);
       }
       case PLAYER2 -> {
-        game.chooseProfileA(player2);
-        game.chooseProfileB(player1);
+        game.setPlayer1(player2);
+        game.setPlayer2(player1);
       }
       case RANDOM -> {
         if (Math.random() > 0.5) {
-          game.chooseProfileA(player1);
-          game.chooseProfileB(player2);
+          game.setPlayer1(player1);
+          game.setPlayer2(player2);
         } else {
-          game.chooseProfileA(player2);
-          game.chooseProfileB(player1);
+          game.setPlayer1(player2);
+          game.setPlayer2(player1);
         }
       }
       default -> logger.debug("Something went wrong");

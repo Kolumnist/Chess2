@@ -1,14 +1,9 @@
 package de.hhn.it.devtools.apis.connectfour.interfaces;
 
-import de.hhn.it.devtools.apis.connectfour.helper.Profile;
-import de.hhn.it.devtools.apis.connectfour.enums.Difficulty;
-import de.hhn.it.devtools.apis.connectfour.enums.Mode;
-import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
-import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotFoundException;
-import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotSelectedException;
-import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 /**
@@ -19,108 +14,103 @@ public interface IConnectFour {
   /**
    * Adds a listener to get updates on the state of the game or the current match.
    *
-   * @param listener object implementing the listener interface
-   * @throws IllegalArgumentException if the listener reference is null
+   * @param listener Object implementing the listener interface.
+   * @throws IllegalArgumentException If the listener reference is null.
    */
-  void addCallback(IConnectFourListener listener)
-      throws IllegalArgumentException, IllegalParameterException;
+  void addCallback(IConnectFourListener listener) throws IllegalArgumentException;
 
   /**
    * Removes a listener.
    *
-   * @param listener object implementing the listener interface
-   * @throws IllegalArgumentException if the listener reference is null
+   * @param listener Object implementing the listener interface.
+   * @throws IllegalArgumentException If the listener reference is null.
    */
-  void removeCallback(IConnectFourListener listener)
-      throws IllegalArgumentException, IllegalParameterException;
+  void removeCallback(IConnectFourListener listener) throws IllegalArgumentException;
 
   /**
    * Create a new user profile.
    *
-   * @param name name of the profile
-   * @return User profile
+   * @param name name of the profile.
+   * @return User profile.
+   * @throws IllegalArgumentException If the name isn't valid or is already in use.
    */
-  Profile createProfile(String name) throws IllegalNameException, IllegalArgumentException;
+  Profile createProfile(String name) throws IllegalArgumentException;
 
   /**
    * Change the name of the profile with the specified ID.
    *
-   * @param profileId ID of the profil
-   * @param name      Name of the profile
+   * @param id   ID of the profil.
+   * @param name Name of the profile.
+   * @throws IllegalArgumentException If the nome or the id aren't valid.
+   * @throws NoSuchElementException   If no profile with the ID exists.
    */
-  void setProfileName(UUID profileId, String name) throws
-      ProfileNotFoundException, IllegalNameException, IllegalArgumentException;
+  void setProfileName(UUID id, String name) throws IllegalArgumentException;
 
   /**
    * Delete the profile with the specified ID.
    *
-   * @param profileId ID of the profile.
+   * @param id ID of the profile.
+   * @throws IllegalArgumentException If the id isn't valid.
+   * @throws NoSuchElementException   If no profile with the ID exists.
    */
-  void deleteProfile(UUID profileId) throws ProfileNotFoundException, IllegalArgumentException;
+  void deleteProfile(UUID id) throws IllegalArgumentException, NoSuchElementException;
 
   /**
    * Get the user profile with the specified ID.
    *
-   * @return The user profile with the specified ID
+   * @return The user profile with the specified ID.
+   * @throws IllegalArgumentException If the ID isn't valid.
+   * @throws NoSuchElementException   If no profile with the ID exists.
    */
-  Profile getProfile(UUID id) throws ProfileNotFoundException;
+  Profile getProfile(UUID id) throws IllegalArgumentException, NoSuchElementException;
 
   /**
    * Get all user profiles.
    *
-   * @return List of user profiles
+   * @return List of user profiles.
+   * @throws NoSuchElementException If no profiles are registered.
    */
-  List<Profile> getProfiles();
-
+  List<Profile> getProfiles() throws NoSuchElementException;
 
   /**
-   * Change the mode of the game.
+   * Set all user profiles.
    *
-   * @param mode Game mode
+   * @param profiles The profiles.
    */
-  void setMode(Mode mode);
+  void setProfiles(List<Profile> profiles) throws IllegalArgumentException;
 
   /**
-   * Change the difficulty of the game.
+   * Create new singleplayer game.
    *
-   * @param difficulty Difficulty level
+   * @param player        The profile of the player.
+   * @param playerIsFirst True, if player 1 begins. Otherwise, false.
+   * @throws IllegalArgumentException If the argument isn't a valid player profile.
    */
-  void setDifficulty(Difficulty difficulty);
+  void playSingleplayerGame(Profile player, boolean player1IsFirst) throws IllegalArgumentException;
 
   /**
-   * Choose the profile which will be used in singleplayer mode or as the profile for player 1 in
-   * PvP mode.
-   * Player 1 begins.
+   * Create new multiplayer game.
    *
-   * @param a Player 1
+   * @param player1        Player 1.
+   * @param player2        Player 2.
+   * @param player1IsFirst True, if player 1 begins. Otherwise, false.
+   * @throws IllegalArgumentException If the arguments are not valid player profiles.
    */
-  void chooseProfileA(Profile a);
-
-  /**
-   * Choose the profile, which will be used in PvP mode for player 2.
-   * Player 2 is second.
-   *
-   * @param b Player 2
-   */
-  void chooseProfileB(Profile b);
-
-  /**
-   * Start the game.
-   */
-  void startGame() throws ProfileNotSelectedException;
+  void playMultiplayerMode(Profile player1, Profile player2, boolean player1IsFirst)
+      throws IllegalArgumentException;
 
   /**
    * Place a disc at the specified position.
    *
-   * @param column Column in which the disc should be placed in
-   * @throws IllegalOperationException If column is full
+   * @param column Column in which the disc should be placed in.
+   * @throws IllegalArgumentException  If column index is invalid.
+   * @throws IllegalOperationException If column is full.
    */
-  void placeDiscAt(int column) throws IllegalOperationException;
+  void placeDiscInColumn(int column) throws IllegalArgumentException, IllegalOperationException;
 
   /**
-   * End the current game.
+   * Restarts the game with its current configuration. Switches players if game was FINISHED.
    */
-  void quitGame();
-
+  void restart();
 }
 

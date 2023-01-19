@@ -1,31 +1,16 @@
 package connectfour;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class TestProfile {
-  @Test
-  @DisplayName("Create a Profile with an invalid name")
-  public void testConstructorBadCases() {
-    // null
-    assertThrows(IllegalArgumentException.class,
-        () -> new Profile(null));
-    // empty string
-    assertThrows(IllegalNameException.class,
-        () -> new Profile(""));
-    // blanks
-    assertThrows(IllegalNameException.class,
-        () -> new Profile("   "));
-  }
 
   @Test
   @DisplayName("Create a Profile with a valid name")
-  public void testConstructorGoodCases() throws IllegalNameException {
+  public void testConstructorGoodCases() throws IllegalArgumentException {
     // valid name: "user1"
     Profile u1 = new Profile("user1");
     assertEquals(u1.getName(), "user1");
@@ -38,24 +23,8 @@ public class TestProfile {
   }
 
   @Test
-  @DisplayName("Set the name of a profile to an invalid name")
-  public void testSetNameBadCases() throws IllegalNameException {
-    Profile u1 = new Profile("User 1");
-    // null
-    assertThrows(IllegalArgumentException.class,
-        () -> u1.setName(null));
-    Profile u2 = new Profile("User 2");
-    // empty string
-    assertThrows(IllegalNameException.class,
-        () -> u2.setName(""));
-    Profile u3 = new Profile("User 3");
-    assertThrows(IllegalNameException.class,
-        () -> u3.setName("   "));
-  }
-
-  @Test
   @DisplayName("Set the name of a profile to a valid name")
-  public void testSetNameGoodCases() throws IllegalNameException {
+  public void testSetNameGoodCases() throws IllegalArgumentException {
     Profile u1 = new Profile("User 1");
     u1.setName("Bob");
     assertEquals(u1.getName(), "Bob");

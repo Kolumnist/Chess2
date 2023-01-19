@@ -1,7 +1,6 @@
 import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFour;
 import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFourListener;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
-import de.hhn.it.devtools.components.connectfour.provider.helper.ConnectFourListener;
 
 module devtools.components {
   exports de.hhn.it.devtools.components.example.coffeemakerservice.provider;

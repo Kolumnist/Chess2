@@ -1,15 +1,16 @@
-package de.hhn.it.devtools.javafx.controllers.connectfour.helper;
+package de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting;
 
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import java.util.Comparator;
 
 /**
- * Class for comparing profile multiplayer wins.
+ * Class for comparing profile singleplayer wins.
  */
-public class ProfileMultiplayerComparator implements Comparator<Profile> {
+public class ProfileSingleplayerComparator implements Comparator<Profile> {
+
   @Override
   public int compare(Profile o1, Profile o2) {
-    int x = Integer.compare(o2.getMultiplayerWin(), o1.getMultiplayerWin());
+    int x = Integer.compare(o2.getSingleplayerWin(), o1.getSingleplayerWin());
     if (x != 0) {
       return x;
     } else {

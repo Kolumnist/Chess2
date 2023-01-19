@@ -1,8 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
-import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.FileIO;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIO;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -38,7 +37,7 @@ public class ProfilesNewController {
     Stage stage = (Stage) saveButton.getScene().getWindow();
     try {
       Instance.getConnectFour().createProfile(nameText.getText());
-    } catch (IllegalNameException ex){
+    } catch (IllegalArgumentException ex) {
       stage.close();
     }
     file.saveProfileData();
@@ -46,7 +45,7 @@ public class ProfilesNewController {
   }
 
   @FXML
-  public void initialize(){
+  public void initialize() {
     saveButton.disableProperty().bind(Bindings.isEmpty(nameText.textProperty()));
   }
 

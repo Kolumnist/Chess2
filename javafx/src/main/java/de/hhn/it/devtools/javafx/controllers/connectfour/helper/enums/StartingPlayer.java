@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.javafx.controllers.connectfour.helper;
+package de.hhn.it.devtools.javafx.controllers.connectfour.helper.enums;
 
 /**
  * This enum contains the values for choosing the starting player.

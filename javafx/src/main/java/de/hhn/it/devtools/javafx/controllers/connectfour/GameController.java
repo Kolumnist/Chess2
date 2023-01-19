@@ -1,10 +1,10 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
 import de.hhn.it.devtools.apis.connectfour.enums.GameState;
-import de.hhn.it.devtools.components.connectfour.provider.helper.Disc;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.FileIO;
+import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFourListener;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Tile;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIO;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -19,7 +19,7 @@ import javafx.scene.paint.Color;
 /**
  * Controller for the game screen.
  */
-public class GameController implements Initializable {
+public class GameController implements Initializable, IConnectFourListener {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(GameController.class);
 
@@ -46,7 +46,7 @@ public class GameController implements Initializable {
   @FXML
   void onRestart() {
     logger.info("Restart game");
-    Instance.getConnectFour().startGame();
+    Instance.getConnectFour().initializeGame();
     initialize(null, null);
   }
 
@@ -86,10 +86,6 @@ public class GameController implements Initializable {
     }
   }
 
-  public void updateText() {
-    output.setText(Instance.getConnectFour().getText());
-  }
-
   public void lock() {
     board.setDisable(true);
   }
@@ -109,7 +105,7 @@ public class GameController implements Initializable {
         tiles[column][row] = tile;
       }
     }
-    Instance.getConnectFour().startGame();
+    Instance.getConnectFour().initializeGame();
     if (Instance.getConnectFour().computerIsNext()) {
       logger.info("Computer begins");
       Instance.getConnectFour().play();
@@ -122,5 +118,15 @@ public class GameController implements Initializable {
     } else {
       update();
     }
+  }
+
+  @Override
+  public void boardChanged(int column, int row, String color) {
+    tiles[column][row].setColor(Color.valueOf(color));
+  }
+
+  @Override
+  public void descriptionChanged(String description) {
+    output.setText(description);
   }
 }

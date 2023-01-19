@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.javafx.controllers.connectfour.helper;
+package de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting;
 
 /**
  * Options to sort by.

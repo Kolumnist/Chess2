@@ -1,8 +1,8 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
-import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotFoundException;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.FileIO;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIO;
+import java.util.NoSuchElementException;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,7 +39,7 @@ public class ProfilesEditController {
   }
 
   @FXML
-  void onSave(){
+  void onSave() {
     logger.info("Edit Profile saved...");
     file.saveProfileData();
   }
@@ -51,11 +51,11 @@ public class ProfilesEditController {
     alert.setHeaderText("You're about to delete " + ProfilesInfoController.pinfo.getName() + "!");
     alert.setContentText("Do you want to delete this Profile?");
 
-    if(alert.showAndWait().get() == ButtonType.OK){
+    if (alert.showAndWait().get() == ButtonType.OK) {
       Stage stage = (Stage) root.getScene().getWindow();
       try {
         Instance.getConnectFour().deleteProfile(ProfilesInfoController.pinfo.getId());
-      } catch (ProfileNotFoundException ex){
+      } catch (NoSuchElementException ex) {
         stage.close();
       }
       file.saveProfileData();
@@ -64,7 +64,7 @@ public class ProfilesEditController {
   }
 
   @FXML
-  public void initialize(){
+  public void initialize() {
     saveButton.disableProperty().bind(Bindings.isEmpty(nameText.textProperty()));
   }
 

@@ -2,11 +2,10 @@ package de.hhn.it.devtools.components.connectfour.junit;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFour;
-import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
-import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotFoundException;
+import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFour;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,11 +14,10 @@ import org.junit.jupiter.api.Test;
 public class TestUserInterfaceBadCases {
 
   IConnectFour game;
-
   Profile alice;
 
   @BeforeEach
-  void setup() throws IllegalNameException {
+  void setup() throws IllegalArgumentException {
     game = new ConnectFour();
     alice = game.createProfile("Alice");
   }
@@ -34,14 +32,14 @@ public class TestUserInterfaceBadCases {
   @Test
   @DisplayName("Test bad creation with empty string as profile name")
   void createProfileWithEmptyString() {
-    assertThrows(IllegalNameException.class,
+    assertThrows(IllegalArgumentException.class,
         () -> game.createProfile(""));
   }
 
   @Test
   @DisplayName("Test bad creation with blanks as profile name")
   void createProfileWithBlanks() {
-    assertThrows(IllegalNameException.class,
+    assertThrows(IllegalArgumentException.class,
         () -> game.createProfile("   "));
   }
 
@@ -55,30 +53,30 @@ public class TestUserInterfaceBadCases {
   @Test
   @DisplayName("Test bad change of user name to empty string")
   void changeProfileNameToEmptyString() {
-    assertThrows(IllegalNameException.class,
+    assertThrows(IllegalArgumentException.class,
         () -> game.setProfileName(alice.getId(), ""));
   }
 
   @Test
   @DisplayName("Test bad change of user name to blanks")
   void changeProfileNameToBlanks() {
-    assertThrows(IllegalNameException.class,
+    assertThrows(IllegalArgumentException.class,
         () -> game.setProfileName(alice.getId(), "   "));
   }
 
   @Test
   @DisplayName("Test bad change of user name with invalid ID")
-  void changeProfileNameWithInvalidID() throws IllegalNameException {
+  void changeProfileNameWithInvalidID() throws IllegalArgumentException {
     Profile ghost = new Profile("Ghost");
-    assertThrows(ProfileNotFoundException.class,
+    assertThrows(NoSuchElementException.class,
         () -> game.setProfileName(ghost.getId(), "User_1"));
   }
 
   @Test
   @DisplayName("Test bad deletion of user with invalid ID")
-  void deleteProfileWithInvalidID() throws IllegalNameException {
+  void deleteProfileWithInvalidID() throws IllegalArgumentException {
     Profile ghost = new Profile("Ghost");
-    assertThrows(ProfileNotFoundException.class,
+    assertThrows(NoSuchElementException.class,
         () -> game.deleteProfile(ghost.getId()));
   }
 }

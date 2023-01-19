@@ -7,31 +7,21 @@ public enum MatchState {
   /**
    * Player A can place the disk.
    */
-  PLAYER_A_IS_PLAYING("Player 1's turn."),
+  PLAYER_1_IS_PLAYING(),
   /**
    * Player A places the disk.
    */
-  PLAYER_B_IS_PLAYING("Player 2's turn."),
+  PLAYER_2_IS_PLAYING(),
   /**
    * Player A won the game.
    */
-  PLAYER_A_WON("Player 1 won!"),
+  PLAYER_1_WON(),
   /**
    * Player B won the game.
    */
-  PLAYER_B_WON("Player 2 won!"),
+  PLAYER_2_WON(),
   /**
    * Neither Player A nor Player B won the game.
    */
-  DRAW("Draw.");
-  String description;
-
-  MatchState(String description) {
-    this.description = description;
-  }
-
-  @Override
-  public String toString() {
-    return description;
-  }
+  DRAW();
 }

@@ -1,6 +1,5 @@
 package de.hhn.it.devtools.apis.connectfour.helper;
 
-import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
 import java.text.DecimalFormat;
 import java.util.UUID;
 
@@ -24,8 +23,7 @@ public class Profile {
    *
    * @param name the name of the profile
    */
-  public Profile(String name) throws IllegalNameException, IllegalArgumentException {
-    checkName(name);
+  public Profile(String name) throws IllegalArgumentException {
     this.name = name.strip();
     this.id = UUID.randomUUID();
   }
@@ -51,13 +49,12 @@ public class Profile {
   /**
    * Set the name of the user profile.
    */
-  public void setName(String name) throws IllegalNameException {
-    checkName(name);
+  public void setName(String name) throws IllegalArgumentException {
     this.name = name.strip();
   }
 
   /**
-   * Get the singeleplayer wins of the user profile.
+   * Get the singleplayer wins of the user profile.
    *
    * @return singleplayerWin of the profile
    */
@@ -68,12 +65,12 @@ public class Profile {
   /**
    * Add one singleplayer win to user profile.
    */
-  public void addSingleplayerWin() throws IllegalNameException {
+  public void addSingleplayerWin() throws IllegalArgumentException {
     this.singleplayerWin = this.singleplayerWin + 1;
   }
 
   /**
-   * Get the singeleplayer looses of the user profile.
+   * Get the singleplayer looses of the user profile.
    *
    * @return singleplayerLoose of the profile
    */
@@ -84,12 +81,12 @@ public class Profile {
   /**
    * Add one singleplayer loose to user profile.
    */
-  public void addSingleplayerLoose() throws IllegalNameException {
+  public void addSingleplayerLoose() throws IllegalArgumentException {
     this.singleplayerLoose = this.singleplayerLoose + 1;
   }
 
   /**
-   * Get the singeleplayer draws of the user profile.
+   * Get the singleplayer draws of the user profile.
    *
    * @return singleplayerDraw of the profile
    */
@@ -100,7 +97,7 @@ public class Profile {
   /**
    * Add one singleplayer draw to user profile.
    */
-  public void addSingleplayerDraw() throws IllegalNameException {
+  public void addSingleplayerDraw() throws IllegalArgumentException {
     this.singleplayerDraw = this.singleplayerDraw + 1;
   }
 
@@ -116,12 +113,12 @@ public class Profile {
   /**
    * Add one multiplayer win to user profile.
    */
-  public void addMultiplayerWin() throws IllegalNameException {
+  public void addMultiplayerWin() throws IllegalArgumentException {
     this.multiplayerWin = this.multiplayerWin + 1;
   }
 
   /**
-   * Get the singeleplayer looses of the user profile.
+   * Get the singleplayer looses of the user profile.
    *
    * @return singleplayerLoose of the profile
    */
@@ -132,12 +129,12 @@ public class Profile {
   /**
    * Add one singleplayer loose to user profile.
    */
-  public void addMultiplayerLoose() throws IllegalNameException {
+  public void addMultiplayerLoose() throws IllegalArgumentException {
     this.multiplayerLoose = this.multiplayerLoose + 1;
   }
 
   /**
-   * Get the singeleplayer draws of the user profile.
+   * Get the singleplayer draws of the user profile.
    *
    * @return singleplayerDraw of the profile
    */
@@ -148,7 +145,7 @@ public class Profile {
   /**
    * Add one singleplayer draw to user profile.
    */
-  public void addMultiplayerDraw() throws IllegalNameException {
+  public void addMultiplayerDraw() throws IllegalArgumentException {
     this.multiplayerDraw = this.multiplayerDraw + 1;
   }
 
@@ -175,23 +172,6 @@ public class Profile {
     }
     DecimalFormat df = new DecimalFormat("#.##");
     return df.format(percentage);
-  }
-
-  /**
-   * Checks, whether the name is allowed or not.
-   *
-   * @param name the name of the user profile.
-   * @throws IllegalNameException     if name isn't allowed.
-   * @throws IllegalArgumentException if name is null.
-   */
-  private void checkName(String name) throws IllegalNameException, IllegalArgumentException {
-    // Null?
-    if (name == null) {
-      throw new IllegalArgumentException("Name must not be null");
-    } else if (name.isBlank()) {
-      // Empty or blanks?
-      throw new IllegalNameException("Name must not be an empty string and only consist of spaces");
-    }
   }
 
   @Override

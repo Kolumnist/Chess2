@@ -5,19 +5,23 @@ package de.hhn.it.devtools.apis.connectfour.enums;
  */
 public enum GameState {
   /**
+   * The game needs to be configured.
+   */
+  CONFIGURING,
+  /**
+   * The game is configured and can be started.
+   */
+  READY,
+  /**
    * The game is started and running.
    */
-  STARTED,
+  RUNNING,
   /**
-   * The game is paused.
+   * The game has ended.
    */
-  PAUSED,
+  FINISHED,
   /**
    * The game has been canceled.
    */
   CANCELED,
-  /**
-   * The game has ended.
-   */
-  FINISHED
 }

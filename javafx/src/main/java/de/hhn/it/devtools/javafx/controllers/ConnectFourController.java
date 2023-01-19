@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers;
 
 import de.hhn.it.devtools.javafx.controllers.connectfour.SceneChanger;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.FileIO;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIO;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;

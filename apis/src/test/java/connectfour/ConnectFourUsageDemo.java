@@ -1,118 +1,73 @@
 package connectfour;
 
-import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFour;
-import de.hhn.it.devtools.apis.connectfour.enums.Difficulty;
-import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
-import de.hhn.it.devtools.apis.connectfour.enums.Mode;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
-import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotFoundException;
-import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotSelectedException;
+import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFour;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * This usage demo is not runnable because in this module there is no possibility to access the
  * implementation. The runnable demo will be accessible in the components-module.
  */
-
-
 public class ConnectFourUsageDemo {
-
 
   public static void main(String[] args) {
     IConnectFour connectFour = null;
 
-    //load existing profile data
-    //connectFour.loadProfileData();
-
-    //create three profiles
+    // Create three profiles.
     try {
       Profile user1 = connectFour.createProfile("User1");
       Profile user2 = connectFour.createProfile("User2");
       Profile user3 = connectFour.createProfile("User3");
-    } catch (IllegalNameException e) {
+    } catch (IllegalArgumentException e) {
       e.printStackTrace();
     }
 
-    //save profile data
-    //connectFour.saveProfileData();
-
-    //browse profiles
+    // Browse profiles.
     List<Profile> profiles = connectFour.getProfiles();
     Profile profile0 = profiles.get(0);
     Profile profile1 = profiles.get(1);
     Profile profile2 = profiles.get(2);
 
-    //change name of User1
+    // Change name of User1.
     try {
       connectFour.setProfileName(profile0.getId(), "Player1");
-    } catch (ProfileNotFoundException | IllegalNameException e) {
+    } catch (IllegalArgumentException | NoSuchElementException e) {
       e.printStackTrace();
     }
 
-    //delete User2
+    // Delete User2.
     try {
       connectFour.deleteProfile(profile1.getId());
-    } catch (ProfileNotFoundException e) {
+    } catch (NoSuchElementException e) {
       e.printStackTrace();
     }
 
-    //set mode to singleplayer
-    connectFour.setMode(Mode.SINGLEPLAYER);
+    // Play singleplayer mode.
+    connectFour.playSingleplayerGame(profile0);
 
-    //set difficulty
-    connectFour.setDifficulty(Difficulty.HARD);
-
-    //choose profile for singleplayer mode
-    connectFour.chooseProfileA(profile0);
-
-    //start game
+    // profile0: place disc at column 3.
     try {
-      connectFour.startGame();
-    } catch (ProfileNotSelectedException e) {
-      e.printStackTrace();
-    }
-
-    //profile0: place disc at column 3
-    try {
-      connectFour.placeDiscAt(3);
+      connectFour.placeDiscInColumn(3);
     } catch (IllegalOperationException e) {
       e.printStackTrace();
     }
 
-    //eng game, go back to main menu
-    connectFour.quitGame();
+    connectFour.playMultiplayerMode(profile2, profile0);
 
-    connectFour.setMode(Mode.LOCAL_PVP);
-    connectFour.chooseProfileA(profile2);
-    connectFour.chooseProfileB(profile0);
-
-    //start game
+    // profile2: place disc at column 1.
     try {
-      connectFour.startGame();
-    } catch (ProfileNotSelectedException e) {
-      e.printStackTrace();
-    }
-
-    //profile2: place disc at column 1
-    try {
-      connectFour.placeDiscAt(1);
+      connectFour.placeDiscInColumn(1);
     } catch (IllegalOperationException e) {
       e.printStackTrace();
     }
 
-    //profile0: place disc at column 2
+    // profile0: place disc at column 2.
     try {
-      connectFour.placeDiscAt(2);
+      connectFour.placeDiscInColumn(2);
     } catch (IllegalOperationException e) {
       e.printStackTrace();
     }
-
-    //end game, go back to main menu
-    connectFour.quitGame();
-
-    //save profile data
-    //connectFour.saveProfileData();
   }
 }
-

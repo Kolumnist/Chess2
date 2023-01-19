@@ -1,258 +1,247 @@
 package de.hhn.it.devtools.components.connectfour.provider;
 
-import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFourListener;
-import de.hhn.it.devtools.apis.connectfour.enums.Difficulty;
-import de.hhn.it.devtools.apis.connectfour.enums.GameState;
-import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFour;
-import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
-import de.hhn.it.devtools.apis.connectfour.enums.MatchState;
-import de.hhn.it.devtools.apis.connectfour.enums.Mode;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
-import de.hhn.it.devtools.apis.connectfour.exceptions.ProfileNotFoundException;
-import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.components.connectfour.provider.helper.Color;
-import de.hhn.it.devtools.components.connectfour.provider.helper.Disc;
+import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFour;
+import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFourListener;
 import de.hhn.it.devtools.components.connectfour.provider.helper.Game;
+import de.hhn.it.devtools.components.connectfour.provider.helper.MultiplayerGame;
+import de.hhn.it.devtools.components.connectfour.provider.helper.SingleplayerGame;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 /**
- * This class implements the component facade.
+ * This class implements the IConnectFour interface.
  */
 public class ConnectFour implements IConnectFour {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(ConnectFour.class);
+
+  private Game game;
   private HashMap<UUID, Profile> profiles = new HashMap<>();
-  private Profile profileA;
-  private Profile profileB;
-  private static Profile computer;
-  private GameState gameState;
-  private MatchState matchState;
-  private Mode mode;
-  private List<IConnectFourListener> listeners;
-
-  private final Game game = new Game(this);
-
-  public boolean computerIsNext() {
-    return game.getDiscs().getFirst().owner() == computer;
-  }
-
-  public void play() {
-    logger.info("Computer is placing disc");
-    int i = (int) (Math.random() * 6);
-    try {
-      placeDiscAt(i);
-    } catch (IllegalOperationException e) {
-      for (int j = 0; j < 6; j++) {
-        try {
-          placeDiscAt(j);
-          break;
-        } catch (IllegalOperationException e2) {
-          logger.debug("Something went wrong...");
-        }
-      }
-    }
-  }
+  private List<IConnectFourListener> listeners = new LinkedList<>();
 
   /**
-   * Create a new Connect Four game.
+   * Adds a listener to get updates on the state of the game or the current match.
+   *
+   * @param listener Object implementing the listener interface.
+   * @throws IllegalArgumentException If the listener reference is null.
    */
-  public ConnectFour() {
-    // not in profiles
-    try {
-    } catch (Exception e) {
-      logger.info("cannot load profiles");
-    }
-    if (profiles.size() == 0) {
-      try {
-        if (computer == null) {
-          computer = new Profile("Computer");
-        }
-      } catch (IllegalNameException e) {
-        logger.info("Something went wrong");
-      }
-      // in profiles
-      /*try {
-        createProfile("Alice");
-      } catch (IllegalNameException e) {
-        logger.info("Alice already exists...");
-      }
-      try {
-        createProfile("Bob");
-      } catch (IllegalNameException e) {
-        logger.info("Bob already exists...");
-      }*/
-    }
-  }
-
-  /*
-  Game methods
-   */
-
-  public Disc[][] getDiscs() {
-    return game.getBoard();
-  }
-
-  public String getColor() {
-    return game.getColor();
-  }
-
-  public String getText() {
-    return game.getText();
-  }
-
-  public Profile getProfileA() {
-    return profileA;
-  }
-
-  public Profile getProfileB() {
-    return profileB;
-  }
-
-  public Profile getComputer() {
-    return computer;
-  }
-
-  public Mode getMode() {
-    return mode;
-  }
-
-  public void setMatchState(MatchState matchState) {
-    this.matchState = matchState;
-  }
-
-  public MatchState getMatchState() {
-    return matchState;
-  }
-
-  public void setGameState(GameState gameState) {
-    this.gameState = gameState;
-  }
-
-  public GameState getGameState() {
-    return gameState;
-  }
-
-  /*
-  Interface Methods
-   */
-
   @Override
-  public void addCallback(IConnectFourListener listener)
-      throws IllegalArgumentException, IllegalParameterException {
-    logger.info("Adding callback...");
+  public void addCallback(IConnectFourListener listener) throws IllegalArgumentException {
+    logger.info("addCallback: {}", listener);
     if (listener == null) {
-      throw new IllegalParameterException("Listener was null reference.");
+      throw new IllegalArgumentException("Listener was null reference.");
     }
     if (listeners.contains(listener)) {
-      throw new IllegalParameterException("Listener already registered.");
+      throw new IllegalArgumentException("Listener already registered.");
     }
     listeners.add(listener);
   }
 
+  /**
+   * Removes a listener.
+   *
+   * @param listener Object implementing the listener interface.
+   * @throws IllegalArgumentException If the listener reference is null.
+   */
   @Override
-  public void removeCallback(IConnectFourListener listener)
-      throws IllegalArgumentException, IllegalParameterException {
-    logger.info("Removing callback...");
+  public void removeCallback(IConnectFourListener listener) throws IllegalArgumentException {
+    logger.info("removeCallback: listener = {}", listener);
     if (listener == null) {
-      throw new IllegalParameterException("Listener was null reference.");
+      throw new IllegalArgumentException("Listener is null.");
     }
     if (!listeners.contains(listener)) {
-      throw new IllegalParameterException("Listener is not registered:" + listener);
+      throw new IllegalArgumentException("Listener is not registered.");
     }
     listeners.remove(listener);
   }
 
+  /**
+   * Create a new user profile.
+   *
+   * @param name name of the profile.
+   * @return User profile.
+   * @throws IllegalArgumentException If the name isn't valid or is already in use.
+   */
   @Override
-  public Profile createProfile(String name) throws IllegalNameException, IllegalArgumentException {
-    logger.info("Creating profile...");
+  public Profile createProfile(String name) throws IllegalArgumentException {
+    logger.info("createProfile: name = {}", name);
+    checkName(name);
     Profile profile = new Profile(name);
     profiles.put(profile.getId(), profile);
     return profile;
   }
 
+  /**
+   * Change the name of the profile with the specified ID.
+   *
+   * @param id   ID of the profil.
+   * @param name Name of the profile.
+   * @throws IllegalArgumentException If the nome or the id aren't valid.
+   * @throws NoSuchElementException   If no profile with the ID exists.
+   */
   @Override
-  public void setProfileName(UUID profileId, String name)
-      throws ProfileNotFoundException, IllegalNameException, IllegalArgumentException {
-    logger.info("Setting profile name of profile with ID " + profileId + " to " + name + "...");
-    checkId(profileId);
-    Profile profile = getProfile(profileId);
-    profile.setName(name);
+  public void setProfileName(UUID id, String name)
+      throws IllegalArgumentException, NoSuchElementException {
+    logger.info("setProfileName: id = {}, name = {}", id, name);
+    checkId(id);
+    checkName(name);
+    getProfile(id).setName(name);
   }
 
+  /**
+   * Delete the profile with the specified ID.
+   *
+   * @param id ID of the profile.
+   * @throws IllegalArgumentException If the id isn't valid.
+   * @throws NoSuchElementException   If no profile with the ID exists.
+   */
   @Override
-  public void deleteProfile(UUID profileId)
-      throws ProfileNotFoundException, IllegalArgumentException {
-    logger.info("Deleting profile profile with ID " + profileId + "...");
-    checkId(profileId);
-    profiles.remove(profileId);
+  public void deleteProfile(UUID id) {
+    logger.info("deleteProfile: id = {}", id);
+    profiles.remove(id);
   }
 
+  /**
+   * Get the user profile with the specified ID.
+   *
+   * @return The user profile with the specified ID.
+   * @throws IllegalArgumentException If the ID isn't valid.
+   * @throws NoSuchElementException   If no profile with the ID exists.
+   */
   @Override
-  public Profile getProfile(UUID profileId) throws ProfileNotFoundException {
-    checkId(profileId);
-    logger.info("Getting profile profile with ID " + profileId + "...");
-    return profiles.get(profileId);
+  public Profile getProfile(UUID id) {
+    logger.info("getProfile: id = {}", id);
+    return profiles.get(id);
   }
 
+  /**
+   * Get all user profiles.
+   *
+   * @return List of user profiles.
+   * @throws NoSuchElementException If no profiles are registered.
+   */
   @Override
   public List<Profile> getProfiles() {
-    logger.info("Getting all profiles...");
+    logger.info("getProfiles: no params");
     return new LinkedList<>(profiles.values());
   }
 
+  /**
+   * Set all user profiles.
+   *
+   * @param profiles The profiles.
+   */
   @Override
-  public void setMode(Mode mode) {
-    logger.info("Setting mode to " + mode + "...");
-    this.mode = mode;
+  public void setProfiles(List<Profile> profiles) {
+    logger.info("setProfiles: profiles = {}", profiles);
   }
 
+  /**
+   * Create new singleplayer game.
+   *
+   * @param player         The profile of the player.
+   * @param player1IsFirst True, if player 1 begins. Otherwise, false.
+   * @throws IllegalArgumentException If the argument isn't a valid player profile.
+   */
   @Override
-  public void setDifficulty(Difficulty difficulty) {
-    logger.info("Setting difficulty to " + difficulty + "...");
+  public void playSingleplayerGame(Profile player, boolean player1IsFirst)
+      throws IllegalArgumentException {
+    logger.info("playSingleplayerGame: player = {}", player);
+    if (player == null) {
+      throw new IllegalArgumentException("Player must not be null.");
+    }
+    game = new SingleplayerGame(player, player1IsFirst);
   }
 
+  /**
+   * Create new multiplayer game.
+   *
+   * @param player1        Player 1.
+   * @param player2        Player 2.
+   * @param player1IsFirst True, if player 1 begins. Otherwise, false.
+   * @throws IllegalArgumentException If the arguments are not valid player profiles.
+   */
   @Override
-  public void chooseProfileA(Profile a) {
-    logger.info("Choosing " + a + " as player 1...");
-    profileA = a;
-    game.addDisc(a, Color.RED);
+  public void playMultiplayerMode(Profile player1, Profile player2, boolean player1IsFirst)
+      throws IllegalArgumentException {
+    logger.info("playSingleplayerGame: player1 = {}, player2 = {}", player1, player2);
+    if (player1 == null || player2 == null) {
+      throw new IllegalArgumentException("Players must not be null.");
+    }
+    game = new MultiplayerGame(player1, player2, player1IsFirst);
   }
 
+  /**
+   * Place a disc at the specified position.
+   *
+   * @param column Column in which the disc should be placed in.
+   * @throws IllegalArgumentException  If column index is invalid.
+   * @throws IllegalOperationException If column is full.
+   */
   @Override
-  public void chooseProfileB(Profile b) {
-    logger.info("Choosing " + b + " as player 2...");
-    profileB = b;
-    game.addDisc(b, Color.GREEN);
+  public void placeDiscInColumn(int column) throws IllegalOperationException {
+    logger.info("placeDiscIn: column = {}", column);
+    game.placeDiscInColumn(column);
+    listeners.get(0).descriptionChanged(game.getDescription());
+    listeners.get(0).boardChanged(
+        game.getBoard().getAffectedColumn(),
+        game.getBoard().getAffectedRow(),
+        game.getBoard().getAffectedColor()
+    );
   }
 
+  /**
+   * Restarts the game with its current configuration. Switches players if game was FINISHED.
+   */
   @Override
-  public void startGame() {
-    logger.info("Starting game...");
-    gameState = GameState.STARTED;
-    matchState = MatchState.PLAYER_A_IS_PLAYING;
+  public void restart() {
+    logger.info("restart: no params");
+    game.restart();
   }
 
-  @Override
-  public void placeDiscAt(int column) throws IllegalOperationException {
-    logger.info("Placing disk at column " + column + "...");
-    game.placeDiscIn(column);
-  }
-
-  @Override
-  public void quitGame() {
-    logger.info("Quitting game...");
-    gameState = GameState.CANCELED;
-  }
-
-  private void checkId(UUID id) throws ProfileNotFoundException {
-    logger.info("Checking profile ID...");
-    if (!profiles.containsKey(id)) {
-      throw new ProfileNotFoundException("There is no profile with the specified ID");
+  /**
+   * Check if the name is valid.
+   *
+   * @param name The profile name.
+   * @throws IllegalArgumentException If name is not valid.
+   */
+  private void checkName(String name) throws IllegalArgumentException {
+    logger.info("checkName: name = {}", name);
+    // Null?
+    if (name == null) {
+      throw new IllegalArgumentException("Name must not be null");
+    } else if (name.isBlank()) {
+      // Empty or blanks?
+      throw new IllegalArgumentException(
+          "Name must not be an empty string and only consist of spaces");
+    }
+    // Name already taken?
+    for (Profile value : profiles.values()) {
+      if (name.equalsIgnoreCase(value.getName())) {
+        throw new IllegalArgumentException("Name already taken.");
+      }
     }
   }
 
+  /**
+   * Check if ID is valid.
+   *
+   * @param id The profile ID.
+   * @throws IllegalArgumentException If ID is null.
+   * @throws NoSuchElementException   If no profile with the specified ID exists.
+   */
+  private void checkId(UUID id) throws IllegalArgumentException, NoSuchElementException {
+    logger.info("checkId: id = {}", id);
+    if (id == null) {
+      throw new IllegalArgumentException("Id must not be null.");
+    }
+    if (!profiles.containsKey(id)) {
+      throw new NoSuchElementException("Profile with specified id does not exist.");
+    }
+  }
 }

@@ -3,6 +3,7 @@ package de.hhn.it.devtools.javafx.controllers.connectfour;
 
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import java.io.IOException;
+import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,7 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
-public class ProfilesInfoController{
+public class ProfilesInfoController {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(HighscoresController.class);
 
@@ -60,18 +61,18 @@ public class ProfilesInfoController{
 
   @FXML
   void onEditProfile() {
-      try {
-        Parent proot = FXMLLoader.load(getClass().getResource("/fxml/connectfour/ProfilesEditScreen.fxml"));
-        Stage stage = new Stage();
-        stage.setTitle("New Profile");
-        stage.setScene(new Scene(proot, 854, 480));
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setResizable(false);
-        stage.show();
-      }
-      catch (IOException e) {
-        e.printStackTrace();
-      }
+    try {
+      Parent proot = FXMLLoader.load(Objects.requireNonNull(
+          getClass().getResource("/fxml/connectfour/ProfilesEditScreen.fxml")));
+      Stage stage = new Stage();
+      stage.setTitle("New Profile");
+      stage.setScene(new Scene(proot, 854, 480));
+      stage.initModality(Modality.APPLICATION_MODAL);
+      stage.setResizable(false);
+      stage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   @FXML

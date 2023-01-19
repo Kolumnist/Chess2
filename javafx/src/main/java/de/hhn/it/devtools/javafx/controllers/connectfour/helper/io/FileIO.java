@@ -1,7 +1,7 @@
-package de.hhn.it.devtools.javafx.controllers.connectfour.helper;
+package de.hhn.it.devtools.javafx.controllers.connectfour.helper.io;
 
-import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalNameException;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class FileIO {
 
-  public FileIO(){
+  public FileIO() {
 
   }
 
@@ -27,10 +27,10 @@ public class FileIO {
         System.err.println(ex);
       }
       int count = 0;
-      for(;count < profiles.size(); count++) {
+      for (; count < profiles.size(); count++) {
         try {
           Instance.getConnectFour().createProfile(profiles.get(count).getName());
-        } catch (IllegalNameException ex){
+        } catch (IllegalArgumentException ex) {
 
         }
       }
