@@ -39,7 +39,11 @@ public class CharacterSheetController extends Controller implements CharacterShe
   @FXML
   private Label agilityLabel;
   @FXML
+  private Button agilityLevelDownButton;
+  @FXML
   private Label agilityLevelLabel;
+  @FXML
+  private Button agilityLevelUpButton;
   @FXML
   private Label agilityOtherLabel;
   @FXML
@@ -49,13 +53,21 @@ public class CharacterSheetController extends Controller implements CharacterShe
   @FXML
   private Label defenceLabel;
   @FXML
+  private Button defenceLevelDownButton;
+  @FXML
   private Label defenceLevelLabel;
+  @FXML
+  private Button defenceLevelUpButton;
   @FXML
   private Label defenceOtherLabel;
   @FXML
   private Label dexterityLabel;
   @FXML
+  private Button dexterityLevelDownButton;
+  @FXML
   private Label dexterityLevelLabel;
+  @FXML
+  private Button dexterityLevelUpButton;
   @FXML
   private Label dexterityOtherLabel;
   @FXML
@@ -67,17 +79,25 @@ public class CharacterSheetController extends Controller implements CharacterShe
   @FXML
   private TextField hairColorTextField;
   @FXML
+  private Button healthDownButton;
+  @FXML
   private Label healthLabel;
+  @FXML
+  private Button healthLevelDownButton;
   @FXML
   private Label healthLevelLabel;
   @FXML
+  private Button healthLevelUpButton;
+  @FXML
   private Label healthOtherLabel;
   @FXML
-  private Button healthDownButton;
+  private Button healthOtherUpButton;
   @FXML
   private Button healthUpButton;
   @FXML
   private TextField heightTextField;
+  @FXML
+  private Button levelDownButton;
   @FXML
   private Label levelLabel;
   @FXML
@@ -93,7 +113,11 @@ public class CharacterSheetController extends Controller implements CharacterShe
   @FXML
   private Label strengthLabel;
   @FXML
+  private Button strengthLevelDownButton;
+  @FXML
   private Label strengthLevelLabel;
+  @FXML
+  private Button strengthLevelUpButton;
   @FXML
   private Label strengthOtherLabel;
   @FXML
