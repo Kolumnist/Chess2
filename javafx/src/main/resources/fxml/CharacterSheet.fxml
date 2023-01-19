@@ -135,9 +135,12 @@
                                     </HBox>
                                  </children>
                               </VBox>
-                              <VBox alignment="TOP_CENTER">
+                              <VBox alignment="TOP_CENTER" spacing="10.0">
                                  <children>
-                                    <Label text="Würfel" />
+                                    <Label text="Würfel">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Label>
                                     <MenuButton fx:id="diceMenuButton" maxHeight="1.7976931348623157E308" mnemonicParsing="false" prefWidth="150.0" text="Würfel wählen">
                                        <items>
                                           <MenuItem mnemonicParsing="false" onAction="#onSetD2" text="D2" />
@@ -165,7 +168,7 @@
                   <VBox>
                      <children>
                         <Label text="Informationen" />
-                        <TextArea fx:id="otherTextField" prefHeight="270.0" prefWidth="520.0" />
+                        <TextArea fx:id="otherTextField" prefHeight="240.0" prefWidth="540.0" />
                      </children>
                   </VBox>
                </children>
