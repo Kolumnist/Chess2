@@ -1,9 +1,11 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
+import java.io.Serializable;
+
 /**
  * The Descriptor for the Dice class.
  */
-public class DiceDescriptor {
+public class DiceDescriptor implements Serializable {
   private DiceType diceType;
   private int result;
 

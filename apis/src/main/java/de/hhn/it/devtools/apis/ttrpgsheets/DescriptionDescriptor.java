@@ -1,9 +1,11 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
+import java.io.Serializable;
+
 /**
  * The Descriptor for the Description class.
  */
-public class DescriptionDescriptor {
+public class DescriptionDescriptor implements Serializable {
   private DescriptionType descriptionType;
   private String text;
 

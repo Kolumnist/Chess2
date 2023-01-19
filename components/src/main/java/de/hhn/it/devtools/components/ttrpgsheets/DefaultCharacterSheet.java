@@ -136,6 +136,23 @@ public class DefaultCharacterSheet implements CharacterSheet {
     return null;
   }
 
+  /**
+   * Notifies the listener with all stats, descriptions and dice.
+   * But only if the listener is not null.
+   */
+  private void callbackAll() {
+    if (listener == null) {
+      return;
+    }
+    for (Description description : descriptions) {
+      listener.descriptionChanged(description.toDescriptionDescriptor());
+    }
+    for (Stat stat : stats) {
+      listener.statChanged(stat.toStatDescriptor());
+    }
+    listener.diceChanged(dice.toDiceDescriptor());
+  }
+
   @Override
   public void addCallback(CharacterSheetListener listener) throws IllegalArgumentException {
     logger.info("addCallback : listener = {}", listener);
@@ -143,6 +160,7 @@ public class DefaultCharacterSheet implements CharacterSheet {
       throw new IllegalArgumentException("Listener is null");
     }
     this.listener = listener;
+    callbackAll();
   }
 
   @Override
@@ -151,6 +169,8 @@ public class DefaultCharacterSheet implements CharacterSheet {
     descriptions = convertDescDescriptorsToDescriptions(characterDescriptor.getDescriptions());
     stats = convertStatDescriptorsToStats(characterDescriptor.getStats());
     dice = new Dice(characterDescriptor.getDice());
+    // Notify listener of new descriptions, stats and dice
+    callbackAll();
   }
 
   @Override
