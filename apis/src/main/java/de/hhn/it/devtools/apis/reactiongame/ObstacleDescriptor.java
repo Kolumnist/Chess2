@@ -18,6 +18,7 @@ public class ObstacleDescriptor implements GameObstacleDescriptor {
   /**
    * Basic constructor for an obstacle.
    *
+   * @param id identifier
    * @param x1 top left
    * @param y1 top left y
    * @param x2 bottom right x
