@@ -7,13 +7,11 @@ import de.hhn.it.devtools.components.game2048.provider.Comparators.VerticalCompa
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Implementation of Game2048Service interface.
  */
-public class ImplementationGame2048Service implements Game2048Service, AdminGame2048Service {
+public class ImplementationGame2048Service implements Game2048Service {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(ImplementationGame2048Service.class);
   private final ArrayList<Block> gameboard;
@@ -23,7 +21,16 @@ public class ImplementationGame2048Service implements Game2048Service, AdminGame
   private boolean gameWon;
   private boolean gameLost;
   private ArrayList<Game2048Listener> gameListeners;
-  private static Map<Integer, ImplementationGame2048Service> gameServices = new HashMap<>();
+
+  public ImplementationGame2048Service() {
+    this.gameboard = new ArrayList<>();
+    this.freelist = new ArrayList<>();
+    this.currentScore = 0;
+    this.gameWon = false;
+    this.gameLost = false;
+    this.gameListeners = new ArrayList<>();
+    loadHighscore();
+  }
 
   @Override
   public void initialisation() {
@@ -67,6 +74,7 @@ public class ImplementationGame2048Service implements Game2048Service, AdminGame
 
   @Override
   public void addCallback(Game2048Listener listener) throws IllegalParameterException {
+    logger.info("addCallback: listener = {}", listener);
     if (listener == null) {
       throw new IllegalParameterException("Listener was null reference.");
     } else if (gameListeners.contains(listener)) {
@@ -79,6 +87,7 @@ public class ImplementationGame2048Service implements Game2048Service, AdminGame
 
   @Override
   public void removeCallback(Game2048Listener listener) throws IllegalParameterException {
+    logger.info("removeCallback: listener = {}", listener);
     if (listener == null) {
       throw new IllegalParameterException("Tried to remove null reference instead of a Listener.");
     } else if (!gameListeners.contains(listener)) {
@@ -86,55 +95,6 @@ public class ImplementationGame2048Service implements Game2048Service, AdminGame
     } else {
       gameListeners.remove(listener);
     }
-  }
-
-  /**
-   * Is important if multiple Objects of this class are used.
-   * Gets an Objekt of this class by its ID.
-   * To do that successfully an Object of this class must be added first!
-   *
-   * @return A GameService by its ID
-   * @throws IllegalParameterException if there is no Existing GameService for given id
-   */
-  public ImplementationGame2048Service getGameServiceById(int id) throws IllegalParameterException {
-    logger.info("getGame2048ServiceById: id = {}", id);
-    if (!gameServices.containsKey(id)) {
-      throw new IllegalParameterException("Game2048Service with id " + id + " does not exist.");
-    }
-    return gameServices.get(id);
-  }
-
-  @Override
-  public void removeGameServiceById(int id) throws IllegalParameterException {
-    logger.info("removeGameServiceById: id = {}", id);
-    if (!gameServices.containsKey(id)) {
-      throw new IllegalParameterException("Game2048Service with id " + id + " does not exist.");
-    }
-    gameServices.remove(id);
-  }
-
-  @Override
-  public void addGameServiceById(int id) throws IllegalParameterException {
-    logger.info("removeGameServiceById: id = {}", id);
-    if (gameServices.containsKey(id)) {
-      throw new IllegalParameterException("Game2048Service with id " + id + " does already exist.");
-    }
-    gameServices.put(id, new ImplementationGame2048Service());
-    notifyGame2048Listener();
-  }
-
-  /**
-   * Don't use this Constructor, use addGameServiceById(int id) and afterwards getGameServiceById(int id)
-   * to get the formerly added Object.
-   */
-  public ImplementationGame2048Service() {
-    this.gameboard = new ArrayList<>();
-    this.freelist = new ArrayList<>();
-    this.currentScore = 0;
-    this.gameWon = false;
-    this.gameLost = false;
-    this.gameListeners = new ArrayList<>();
-    loadHighscore();
   }
 
   /**
@@ -313,6 +273,7 @@ public class ImplementationGame2048Service implements Game2048Service, AdminGame
     }
   }
 
+  // TODO: 19.01.2023  
   /**
    * Loads the highest score a player scored on this physical device, from a File.
    */
