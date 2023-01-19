@@ -1,11 +1,12 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * The Descriptor for the Character class.
  */
-public class CharacterDescriptor {
+public class CharacterDescriptor implements Serializable {
   public static final CharacterDescriptor EMPTY = new CharacterDescriptor(
           new DescriptionDescriptor[]{
                   new DescriptionDescriptor(DescriptionType.PLAYER_NAME, ""),
@@ -32,9 +33,9 @@ public class CharacterDescriptor {
           },
           new DiceDescriptor(DiceType.D6, 1));
 
-  DescriptionDescriptor[] descriptions;
-  StatDescriptor[] stats;
-  DiceDescriptor dice;
+  private DescriptionDescriptor[] descriptions;
+  private StatDescriptor[] stats;
+  private DiceDescriptor dice;
 
   /**
    * Constructor stating {@link DescriptionDescriptor}, {@link StatDescriptor}
