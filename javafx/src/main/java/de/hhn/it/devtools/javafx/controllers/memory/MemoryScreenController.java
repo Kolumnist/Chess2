@@ -4,6 +4,9 @@ import de.hhn.it.devtools.apis.memory.Difficulty;
 import de.hhn.it.devtools.javafx.controllers.MemoryServiceController;
 import de.hhn.it.devtools.javafx.controllers.template.UnknownTransitionException;
 import java.io.IOException;
+
+import de.hhn.it.devtools.javafx.memory.DifficultyPopupView;
+import de.hhn.it.devtools.javafx.memory.WinningPopupView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -20,10 +23,10 @@ public class MemoryScreenController {
 
   AnchorPane anchorPane;
 
-  private StartScreen startScreen;
+  private StartScreenController startScreenController;
   private Node startScreenContent;
-  private GameScreen gameScreen;
-  private DifficultyPopup difficultyPopup;
+  private GameScreenController gameScreenController;
+  private DifficultyPopupView difficultyPopupView;
   private Stage difficultyStage;
   private Stage winningStage;
   private Scene difficultyScene;
@@ -37,11 +40,11 @@ public class MemoryScreenController {
    * @return Node the start screen
    */
   private Node getStartScreen() {
-    if (startScreen == null) {
+    if (startScreenController == null) {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/memory/StartScreen.fxml"));
       try {
         startScreenContent = loader.load();
-        startScreen = loader.getController();
+        startScreenController = loader.getController();
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -61,7 +64,7 @@ public class MemoryScreenController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    gameScreen = loader.getController();
+    gameScreenController = loader.getController();
     return gameScreenContent;
   }
 
@@ -70,11 +73,11 @@ public class MemoryScreenController {
    * @return stage the difficulty popup stage
    */
   private Stage getDifficultyStage() {
-    if (difficultyPopup == null) {
-      difficultyPopup = new DifficultyPopup(this);
+    if (difficultyPopupView == null) {
+      difficultyPopupView = new DifficultyPopupView();
     }
     if (difficultyScene == null) {
-      difficultyScene = new Scene(difficultyPopup, 600, 400);
+      difficultyScene = new Scene(difficultyPopupView, 600, 400);
     }
     if (difficultyStage == null) {
       difficultyStage = new Stage();
@@ -91,13 +94,13 @@ public class MemoryScreenController {
    * @return stage the winning popup stage
    */
   private Stage getWinningStage() {
-    WinningPopup winningPopup = new WinningPopup(this);
-    Scene winningScene = new Scene(winningPopup, 600, 400);
+    WinningPopupView winningPopupView = new WinningPopupView();
+    Scene winningScene = new Scene(winningPopupView, 600, 400);
     winningStage = new Stage();
     winningStage.initStyle(StageStyle.UNDECORATED);
     winningStage.setAlwaysOnTop(true);
     winningStage.setScene(winningScene);
-    winningStage.setOnCloseRequest((event) -> switchTo(WinningPopup.CLOSE_POPUP));
+    winningStage.setOnCloseRequest((event) -> switchTo(WinningPopupController.CLOSE_POPUP));
     winningStage.setResizable(false);
     return winningStage;
   }
@@ -111,22 +114,22 @@ public class MemoryScreenController {
     logger.info("Switch to " + toScreen);
 
     switch (toScreen) {
-      case StartScreen.SCREEN -> {
+      case StartScreenController.SCREEN -> {
         anchorPane.getChildren().clear();
         anchorPane.getChildren().add(getStartScreen());
       }
-      case GameScreen.SCREEN -> {
+      case GameScreenController.SCREEN -> {
         anchorPane.getChildren().clear();
         anchorPane.getChildren().add(getGameScreen());
       }
-      case DifficultyPopup.OPEN_POPUP -> {
+      case DifficultyPopupController.OPEN_POPUP -> {
         disableGameScreen();
         disableStartScreen();
         openPopup(getDifficultyStage());
       }
-      case WinningPopup.OPEN_POPUP -> openPopup(getWinningStage());
-      case DifficultyPopup.CLOSE_POPUP -> closePopup(getDifficultyStage());
-      case WinningPopup.CLOSE_POPUP -> closePopup(winningStage);
+      case WinningPopupController.OPEN_POPUP -> openPopup(getWinningStage());
+      case DifficultyPopupController.CLOSE_POPUP -> closePopup(getDifficultyStage());
+      case WinningPopupController.CLOSE_POPUP -> closePopup(winningStage);
       default -> throw new UnknownTransitionException("unknown screen: " + toScreen);
     }
   }
@@ -138,7 +141,7 @@ public class MemoryScreenController {
   public void changeDifficulty(String difficulty) {
     MemoryAttributeStore.getReference().setAttribute(MemoryServiceController
             .DIFFICULTY, getDifficultyFromString(difficulty));
-    startScreen.changeDifficulty(difficulty);
+    startScreenController.changeDifficulty(difficulty);
   }
 
   /**
@@ -161,8 +164,8 @@ public class MemoryScreenController {
    * Closes the game screen
    */
   public void closeGameScreen() {
-    if (gameScreen != null) {
-      gameScreen.closeGame();
+    if (gameScreenController != null) {
+      gameScreenController.closeGame();
     }
   }
 
@@ -184,20 +187,20 @@ public class MemoryScreenController {
    * Disables the game screen
    */
   public void disableGameScreen() {
-    if (gameScreen == null) {
+    if (gameScreenController == null) {
       return;
     }
-    gameScreen.disableGameScreen();
+    gameScreenController.disableGameScreen();
   }
 
   /**
    * Enables the game screen
    */
   public void enableGameScreen() {
-    if (gameScreen == null) {
+    if (gameScreenController == null) {
       return;
     }
-    gameScreen.enableGameScreen();
+    gameScreenController.enableGameScreen();
   }
 
   /**
@@ -205,29 +208,29 @@ public class MemoryScreenController {
    * @param message the game screen message
    */
   public void setGameScreenMessage(String message) {
-    gameScreen.setSystemMessage(message);
+    gameScreenController.setSystemMessage(message);
   }
 
   /**
    * Changes to winning popup if game is won
    */
   public void gameWon() {
-    gameScreen.gameWon();
-    switchTo(WinningPopup.OPEN_POPUP);
+    gameScreenController.gameWon();
+    switchTo(WinningPopupController.OPEN_POPUP);
   }
 
   /**
    * Disables grid of the cards
    */
   public void disableGameGrid() {
-    gameScreen.disableGrid();
+    gameScreenController.disableGrid();
   }
 
   /**
    * Enables the grid of the cards
    */
   public void enableGameGrid() {
-    gameScreen.activateGrid();
+    gameScreenController.activateGrid();
   }
 
   /**
@@ -251,7 +254,7 @@ public class MemoryScreenController {
    * @return String current time
    */
   public String getCurrentTime() {
-    return gameScreen.getCurrentTime();
+    return gameScreenController.getCurrentTime();
   }
 
 }

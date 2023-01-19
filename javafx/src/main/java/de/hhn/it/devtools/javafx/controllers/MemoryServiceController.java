@@ -8,7 +8,7 @@ import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
 import de.hhn.it.devtools.javafx.controllers.memory.MemoryAttributeStore;
 import de.hhn.it.devtools.javafx.controllers.memory.MemoryScreenController;
-import de.hhn.it.devtools.javafx.controllers.memory.StartScreen;
+import de.hhn.it.devtools.javafx.controllers.memory.StartScreenController;
 import de.hhn.it.devtools.javafx.controllers.template.UnknownTransitionException;
 import java.io.File;
 import java.net.URL;
@@ -20,7 +20,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * Memory Service Main Controller
  */
-public class MemoryServiceController extends Controller implements Initializable {
+public class MemoryServiceController extends Controller implements Initializable, DeckListener {
   public static final String SCREEN_CONTROLLER = "screen.controller";
   public static final String MEMORY_SERVICE = "memory.service";
   public static final String DIFFICULTY = "current.difficulty";
@@ -57,8 +57,7 @@ public class MemoryServiceController extends Controller implements Initializable
     pathReferences = new HashMap<>();
     memoryAttributeStore.setAttribute(PATH_REFERENCES, pathReferences);
     try {
-      memoryService.addCallback((DeckListener) deck -> {
-      });
+      memoryService.addCallback(this);
     } catch (IllegalParameterException e) {
       e.printStackTrace();
     }
@@ -71,7 +70,7 @@ public class MemoryServiceController extends Controller implements Initializable
       e.printStackTrace();
     }
     try {
-      screenController.switchTo(StartScreen.SCREEN);
+      screenController.switchTo(StartScreenController.SCREEN);
     } catch (UnknownTransitionException e) {
       e.printStackTrace();
     }
@@ -83,7 +82,9 @@ public class MemoryServiceController extends Controller implements Initializable
    * @return CardSetDescriptor of the chosen difficulty
    */
   public CardSetDescriptor fetchCardSets(String difficulty) {
-    File folder = new File("javafx/src/main/resources/fxml/memory/pictures/sets/" + difficulty);
+    File folder = new File(Objects.requireNonNull(getClass().getClassLoader()
+       .getResource("/fxml/memory/pictures/sets/" + difficulty + "/")).getFile());
+    //File folder = new File("javafx/src/main/resources/fxml/memory/pictures/sets/"+difficulty);
     HashMap<Integer, String> pictureReferences = new HashMap<>();
     PictureCardDescriptor[] pictureCardDescriptors = new PictureCardDescriptor[5 * 4];
     int cnt = 0;
@@ -102,9 +103,9 @@ public class MemoryServiceController extends Controller implements Initializable
         i = new Random().nextInt();
       } while (i < 0 || pathReferences.containsKey(i) || pictureReferences.containsKey(i));
       pictureCardDescriptors[cnt++] = new PictureCardDescriptor(i, null); //PictureCard
-      pictureCardDescriptors[cnt++] = new PictureCardDescriptor(-1, f.getName()); //NameCard
+      pictureCardDescriptors[cnt++] = new PictureCardDescriptor(-1, f.getName().replace(".png", "").replace(".jpg", "")); //NameCard
       pathReferences.put(i, f.getAbsolutePath());
-      pictureReferences.put(i, f.getName());
+      pictureReferences.put(i, f.getName().replace(".png", "").replace(".jpg", ""));
     } while (pictureCardDescriptors.length != cnt);
     return new CardSetDescriptor(screenController
             .getDifficultyFromString(difficulty), pictureCardDescriptors, pictureReferences);
@@ -118,5 +119,10 @@ public class MemoryServiceController extends Controller implements Initializable
   private int getRandomNumber(int n) {
     Random random = new Random();
     return random.nextInt(n);
+  }
+
+  @Override
+  public void currentDeck(PictureCardDescriptor[] deck) {
+
   }
 }

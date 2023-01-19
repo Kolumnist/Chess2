@@ -2,22 +2,20 @@ package de.hhn.it.devtools.javafx.controllers.memory;
 
 import de.hhn.it.devtools.apis.memory.Difficulty;
 import de.hhn.it.devtools.javafx.controllers.MemoryServiceController;
-import java.io.IOException;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 
 /**
  * Popup for the winning screen of memory game
  */
-public class WinningPopup extends VBox implements Initializable {
+public class WinningPopupController implements Initializable {
   public static final String OPEN_POPUP = "winning.popup.open";
   public static final String CLOSE_POPUP = "winning.popup.close";
 
@@ -34,23 +32,13 @@ public class WinningPopup extends VBox implements Initializable {
   private Label timeLabel;
 
 
-  public WinningPopup(final MemoryScreenController screenController) {
-    this.screenController = screenController;
-
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/memory/WinningScreen.fxml"));
-    loader.setRoot(this);
-    loader.setController(this);
-
-    try {
-      loader.load();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+  public WinningPopupController() {
+    this.screenController = (MemoryScreenController) MemoryAttributeStore.getReference().getAttribute(MemoryServiceController.SCREEN_CONTROLLER);
   }
 
   @FXML
   void onFinishButtonPressed(ActionEvent event) {
-    screenController.switchTo(WinningPopup.CLOSE_POPUP);
+    screenController.switchTo(WinningPopupController.CLOSE_POPUP);
     screenController.closeGameScreen();
   }
 

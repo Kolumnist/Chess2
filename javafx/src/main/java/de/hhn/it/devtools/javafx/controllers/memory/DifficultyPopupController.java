@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 /**
  * Popup for the difficulty screen of memory game
  */
-public class DifficultyPopup extends VBox {
+public class DifficultyPopupController extends VBox {
   public static final String OPEN_POPUP = "difficulty.popup.open";
   public static final String CLOSE_POPUP = "difficulty.popup.close";
 
@@ -39,17 +39,8 @@ public class DifficultyPopup extends VBox {
   @FXML
   private RadioButton veryhard;
 
-  public DifficultyPopup(final MemoryScreenController screenController) {
-    this.screenController = screenController;
-    FXMLLoader loader = new FXMLLoader(getClass()
-            .getResource("/fxml/memory/DifficultyScreen.fxml"));
-    loader.setRoot(this);
-    loader.setController(this);
-    try {
-      loader.load();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+  public DifficultyPopupController() {
+    this.screenController = (MemoryScreenController) MemoryAttributeStore.getReference().getAttribute(MemoryServiceController.SCREEN_CONTROLLER);
     hover = easy;
   }
 

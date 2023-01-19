@@ -18,10 +18,10 @@ import javafx.stage.Stage;
 /**
  * Start screen of memory
  */
-public class StartScreen implements Initializable {
+public class StartScreenController implements Initializable {
   public static final String SCREEN = "start.screen";
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(StartScreen.class);
+          org.slf4j.LoggerFactory.getLogger(StartScreenController.class);
   private MemoryScreenController screenController;
   private SfsMemoryService memoryService;
 
@@ -75,7 +75,7 @@ public class StartScreen implements Initializable {
 
   @FXML
   void onOptionButtonClicked(ActionEvent event) {
-    screenController.switchTo(DifficultyPopup.OPEN_POPUP);
+    screenController.switchTo(DifficultyPopupController.OPEN_POPUP);
   }
 
   @FXML
@@ -86,7 +86,7 @@ public class StartScreen implements Initializable {
     } catch (IllegalParameterException e) {
       e.printStackTrace();
     }
-    screenController.switchTo(GameScreen.SCREEN);
+    screenController.switchTo(GameScreenController.SCREEN);
   }
 
 

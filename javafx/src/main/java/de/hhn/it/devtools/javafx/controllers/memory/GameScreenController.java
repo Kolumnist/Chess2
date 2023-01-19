@@ -9,6 +9,8 @@ import de.hhn.it.devtools.javafx.controllers.MemoryServiceController;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
+
+import de.hhn.it.devtools.javafx.memory.CardView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,13 +24,12 @@ import javafx.scene.layout.GridPane;
 /**
  * Game Screen of memory
  */
-public class GameScreen implements Initializable {
+public class GameScreenController implements Initializable, TimerListener {
   public static final String SCREEN = "game.screen";
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(GameScreen.class);
+          org.slf4j.LoggerFactory.getLogger(GameScreenController.class);
   private MemoryScreenController screenController;
   private SfsMemoryService memoryService;
-  private TimerListener timerListener;
   @FXML
   private Button finishButton;
 
@@ -72,29 +73,18 @@ public class GameScreen implements Initializable {
     int cnt = 0;
     PictureCardDescriptor[] currentDeck = shuffle(memoryService
             .getCurrentCardSet().getDescriptor().getPictureCardDescriptors());
-    // Arrays.stream(currentDeck).toList().forEach(
-    // PictureCardDescriptor -> logger.info("Id: "+PictureCardDescriptor
-    // .getId()+" Name: " + PictureCardDescriptor.getName()+
-    // " Ref: "+ PictureCardDescriptor.getPictureRef()));
     for (int i = 0; i < mainGrid.getColumnCount(); i++) {
       for (int j = 0; j < mainGrid.getRowCount(); j++) {
-        mainGrid.add(new CardController(currentDeck[cnt++]), i, j);
+        mainGrid.add(new CardView(currentDeck[cnt++]), i, j);
       }
     }
 
-
-    timerListener = time -> Platform.runLater(() ->
-            timeDisplayLabel.setText(Integer.toString(time)));
-
     try {
-      memoryService.addCallback(timerListener);
+      memoryService.addCallback(this);
     } catch (IllegalParameterException e) {
       e.printStackTrace();
     }
-
     memoryService.startTimer();
-
-
     logger.info("Game Screen initialized.");
   }
 
@@ -130,7 +120,7 @@ public class GameScreen implements Initializable {
   void onOptionsButtonClicked(ActionEvent event) {
     screenController.disableGameGrid();
     memoryService.stopTimer();
-    screenController.switchTo(DifficultyPopup.OPEN_POPUP);
+    screenController.switchTo(DifficultyPopupController.OPEN_POPUP);
   }
 
   /**
@@ -193,15 +183,12 @@ public class GameScreen implements Initializable {
       c.setState(State.HIDDEN);
     }
     memoryService.closeGame();
-    if (timerListener != null) {
       try {
-        memoryService.removeCallback(timerListener);
-        timerListener = null;
+        memoryService.removeCallback(this);
       } catch (IllegalParameterException e) {
         e.printStackTrace();
       }
-    }
-    screenController.switchTo(StartScreen.SCREEN);
+    screenController.switchTo(StartScreenController.SCREEN);
   }
 
   /**
@@ -228,4 +215,9 @@ public class GameScreen implements Initializable {
     return timeDisplayLabel.getText();
   }
 
+  @Override
+  public void currentTime(int time) {
+    Platform.runLater(() ->
+        timeDisplayLabel.setText(Integer.toString(time)));
+  }
 }
