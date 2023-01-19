@@ -38,7 +38,8 @@ public class RgcField {
     obstacleLines.add(new RgcObstacleLine(520));
     obstacleLines.add(new RgcObstacleLine(790));
 
-    aimTargetZones.add(new RgcAimTargetZone(RgcAimTarget.RADIUS, 60, 100, RgcField.NORMAL_HEIGHT - 40));
+    aimTargetZones.add(new RgcAimTargetZone(RgcAimTarget.RADIUS, 60, 100,
+            RgcField.NORMAL_HEIGHT - 40));
     aimTargetZones.add(new RgcAimTargetZone(RgcField.NORMAL_WIDTH - 100, 25,
             RgcField.NORMAL_WIDTH - 50, RgcField.NORMAL_HEIGHT - RgcAimTarget.RADIUS));
 

@@ -8,8 +8,8 @@ import de.hhn.it.devtools.apis.reactiongame.AimTargetDescriptor;
 public class RgcAimTarget implements AimTarget {
 
   public static AimTargetDescriptor toAimTargetDescriptor(RgcAimTarget rgcAimTarget) {
-    return new AimTargetDescriptor(rgcAimTarget.id, rgcAimTarget.xPosition, rgcAimTarget.yPosition, RADIUS,
-        rgcAimTarget.key);
+    return new AimTargetDescriptor(rgcAimTarget.id, rgcAimTarget.xPosition,
+                        rgcAimTarget.yPosition, RADIUS, rgcAimTarget.key);
   }
 
   public static int RADIUS = 25; // in px

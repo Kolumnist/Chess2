@@ -32,19 +32,34 @@ public class ObstacleDescriptor implements GameObstacleDescriptor {
     this.y2 = y2;
   }
 
-
+  /**
+   *
+   * @return returns the coordinate of x1
+   */
   public int getX1() {
     return x1;
   }
 
+  /**
+   *
+   * @return returns the coordinate of y1
+   */
   public int getY1() {
     return y1;
   }
 
+  /**
+   *
+   * @return returns the coordinate of x2
+   */
   public int getX2() {
     return x2;
   }
 
+  /**
+   *
+   * @return returns the coordinate of y1
+   */
   public int getY2() {
     return y2;
   }
