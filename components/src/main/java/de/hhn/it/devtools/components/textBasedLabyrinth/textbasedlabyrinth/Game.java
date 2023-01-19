@@ -1,9 +1,6 @@
 package de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
 
-
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.InvalidSeedException;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.RoomFailedException;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,7 +118,7 @@ public class Game implements GameService {
       player.setCurrentRoomOfPlayer(currentRoom);
     }
 
-    if(player.getCurrentRoomOfPlayer().isExit){
+    if(player.getCurrentRoomOfPlayer().isExit()){
       //
     }
   }

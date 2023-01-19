@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions;
+package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 /**
  * Invalid Seed Exception.

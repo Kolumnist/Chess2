@@ -1,7 +1,6 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 
-import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
 import java.util.HashMap;
 
 /**
@@ -25,21 +24,23 @@ public class Player {
 
 
   public void addItem(Item item) {
-
     inventory.put(item.getItemId(), item);
   }
 
   /**
    * Javadoc.
    *
-   * @param itemId new Item
-   * @throws NoSuchItemFoundException Exception
+   * @param itemId the item to be removed.
+   * @throws NoSuchItemFoundException if the item is not contained.
+   * @return the removed item.
    */
-  public void removeItem(int itemId) throws NoSuchItemFoundException {
+  public Item removeItem(int itemId) throws NoSuchItemFoundException {
     if (!inventory.containsKey(itemId)) {
       throw new NoSuchItemFoundException();
     }
+    Item returnItem = inventory.get(itemId);
     inventory.remove(itemId);
+    return returnItem;
   }
 
   /**
@@ -57,7 +58,6 @@ public class Player {
   }
 
   public String getName() {
-
     return name;
   }
 
@@ -84,4 +84,11 @@ public class Player {
     this.currentRoomOfPlayer = currentRoomOfPlayer;
   }
 
+  public void reset() {
+    inventory.clear();
+  }
+
+  public HashMap<Integer, Item> getInventory() {
+    return inventory;
+  }
 }
