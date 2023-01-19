@@ -186,7 +186,6 @@ public class GameScreenController implements Initializable, TimerListener {
     try {
       memoryService.removeCallback(this);
     } catch (IllegalParameterException e) {
-      e.printStackTrace();
     }
     screenController.switchTo(StartScreenController.SCREEN);
   }
