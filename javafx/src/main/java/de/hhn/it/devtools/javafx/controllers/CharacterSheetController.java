@@ -102,6 +102,7 @@ public class CharacterSheetController extends Controller implements CharacterShe
   HashMap<DescriptionType, SimpleStringProperty> description2Property;
   SimpleStringProperty diceTypeProperty;
   SimpleIntegerProperty diceResultProperty;
+  SimpleIntegerProperty freeLevelPointsProperty;
 
   /**
    * Constructor for the controller class.
@@ -126,6 +127,7 @@ public class CharacterSheetController extends Controller implements CharacterShe
     // Dice Properties
     diceTypeProperty = new SimpleStringProperty();
     diceResultProperty = new SimpleIntegerProperty();
+    freeLevelPointsProperty = new SimpleIntegerProperty();
   }
 
   @FXML
@@ -160,7 +162,8 @@ public class CharacterSheetController extends Controller implements CharacterShe
     // Stats level binding
     // Level
     unusedLevelPointsLabel.textProperty().bind(Bindings.createStringBinding(
-            () -> "E")); // TODO Ausrechnen wie viele Level Points noch übrig sind
+            () -> String.valueOf(freeLevelPointsProperty.get()), freeLevelPointsProperty));
+
     // Health / Max health
     healthLevelLabel.textProperty().bind(Bindings.createStringBinding(
             () -> String.valueOf(statLevel2Property.get(StatType.MAX_HEALTH).get()),
@@ -363,12 +366,16 @@ public class CharacterSheetController extends Controller implements CharacterShe
   void onHealthLevelDown(ActionEvent event) {
     logger.info("Health level down pressed");
     characterSheet.decrementStat(StatType.MAX_HEALTH, OriginType.LEVEL_POINT);
+    characterSheet.decrementStat(StatType.HEALTH, OriginType.DAMAGE,
+            characterSheet.getStatDescriptor(StatType.MAX_HEALTH).getOffset());
   }
 
   @FXML
   void onHealthLevelUp(ActionEvent event) {
     logger.info("Health level up pressed");
     characterSheet.incrementStat(StatType.MAX_HEALTH, OriginType.LEVEL_POINT);
+    characterSheet.incrementStat(StatType.HEALTH, OriginType.DAMAGE,
+            characterSheet.getStatDescriptor(StatType.MAX_HEALTH).getOffset());
   }
 
   @FXML
@@ -485,6 +492,15 @@ public class CharacterSheetController extends Controller implements CharacterShe
     characterSheet.changeDiceType(DiceType.D100);
   }
 
+  private int calculateFreeLevelPoints() {
+    int total = 5 + stat2Property.get(StatType.LEVEL).get();
+    int used = 0;
+    for (SimpleIntegerProperty value : statLevel2Property.values()) {
+      used += value.get();
+    }
+    return total - used;
+  }
+
   // Callbacks
   @Override
   public void statChanged(StatDescriptor stat) {
@@ -493,6 +509,7 @@ public class CharacterSheetController extends Controller implements CharacterShe
       stat2Property.get(statType).set(characterSheet.getStatDisplayValue(statType));
       statLevel2Property.get(statType).set(stat.getAbilityPointsUsed());
       statOther2Property.get(statType).set(stat.getMiscellaneous());
+      freeLevelPointsProperty.set(calculateFreeLevelPoints());
     });
   }
 
