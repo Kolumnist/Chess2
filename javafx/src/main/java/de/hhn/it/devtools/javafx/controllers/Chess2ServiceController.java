@@ -6,6 +6,7 @@ import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.IllegalStateException;
 import de.hhn.it.devtools.apis.chess2.WinningPlayerState;
 import de.hhn.it.devtools.components.chess2.ChessGame;
+import de.hhn.it.devtools.javafx.chess2.Chess2BoardController;
 import de.hhn.it.devtools.javafx.chess2.Chess2PopUp;
 import de.hhn.it.devtools.javafx.chess2.Chess2PopUpRulesController;
 import java.io.IOException;
@@ -110,6 +111,7 @@ public class Chess2ServiceController extends Controller implements Initializable
       coordinates = chessGame.getCurrentFields();
 
       placePieces();
+      Chess2BoardController.giveChessGameAndBoard(chessGame, board);
 
     } else {
       startEndGameButton.setText("Start Game");

@@ -44,6 +44,7 @@ public class ChessGame implements Chess2Service {
 
   /**
    * The Constructor that initializes every needed object.
+   * TODO: REFACTORING EVERY WHITE PLAYER THING TO REDPLAYER ;(((
    */
   public ChessGame() {
     logger.info("ChessGame Constructor");
@@ -266,8 +267,11 @@ public class ChessGame implements Chess2Service {
   public void endGame() {
     logger.info("endGame");
 
-    //currentPlayer = whitePlayer;
-    gameState = null;
+    currentPlayer = whitePlayer;
+    gameState = GameState.CHECKMATE;
+    bearCoordinate = null;
+    bear = null;
+    gameBoard.lostPiece = false;
     winState = WinningPlayerState.NO_WINNER;
   }
 
@@ -335,7 +339,7 @@ public class ChessGame implements Chess2Service {
 
     /* When monkeyChaos, the monkey can only jump no other moves */
     if (monkeyChaos) {
-      Monkey monkey = (Monkey) gameBoard.getSpecificField(currentlySelected).getPiece();
+      Monkey monkey = (Monkey) field.getPiece();
       return monkey.getPossibleJump();
     }
 
@@ -394,6 +398,7 @@ public class ChessGame implements Chess2Service {
       gameBoard.getSpecificField(newCoordinate)
           .setFieldState(FieldState.HAS_CURRENT_PIECE);
       gameBoard.lostPiece = false;
+      monkeyChaos = false;
 
       selectedField = gameBoard.getSpecificField(selectedCoordinate);
 
@@ -403,6 +408,7 @@ public class ChessGame implements Chess2Service {
         bear.setCoordinate(bearCoordinate);
         gameBoard.getSpecificField(bearCoordinate).setPiece(Optional.of(bear));
         gameBoard.getSpecificField(bearCoordinate).setFieldState(FieldState.HAS_BEAR);
+        monkeyChaos = false;
 
         /* The SELECTED piece be a Monkey and is able to jump,
          * the current Player can move with the Monkey till he is not able to anymore! */
@@ -449,7 +455,7 @@ public class ChessGame implements Chess2Service {
       gameBoard.getSpecificField(newCoordinate)
           .setFieldState(FieldState.HAS_CURRENT_PIECE);
       gameBoard.lostPiece = true;
-
+      monkeyChaos = false;
       /* The new Field has the Bear on it. Both Pieces get destroyed and yes King/Queen get
        * send to Jail if they slay the bear.*/
     } else if (oldPieceFieldState == FieldState.HAS_BEAR) {
@@ -475,6 +481,7 @@ public class ChessGame implements Chess2Service {
       gameBoard.getSpecificField(newCoordinate).setPiece(Optional.empty());
       gameBoard.getSpecificField(newCoordinate).setFieldState(FieldState.FREE_FIELD);
       gameBoard.lostPiece = true;
+      monkeyChaos = false;
     }
 
     //The old SELECTED Field gets updated
