@@ -3,17 +3,16 @@ package de.hhn.it.devtools.javafx;
 import de.hhn.it.devtools.javafx.controllers.Controller;
 import de.hhn.it.devtools.javafx.controllers.RootController;
 import de.hhn.it.devtools.javafx.modules.Module;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Main extends Application {
@@ -59,6 +58,7 @@ public class Main extends Application {
     addModule("CoffeeMakerService");
     addModule("Chess2Service");
     addModule("ReactionGame");
+    addModule("Game2048");
   }
 
   @Override
