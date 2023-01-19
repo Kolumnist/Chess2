@@ -42,7 +42,7 @@ public class RgcObstacleLineTest {
    */
   @Test
   public void generateYCoordinatesTest() {
-    int[] coords = line1.generateYCoordsForObstacle();
+    int[] coords = line1.generateYcoordsForObstacle();
 
     assertTrue((coords[0] <= (RgcField.NORMAL_HEIGHT - 100)) &&
         (coords[0] >= 0));

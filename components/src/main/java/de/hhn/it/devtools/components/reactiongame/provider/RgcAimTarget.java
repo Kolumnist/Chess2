@@ -8,14 +8,14 @@ import de.hhn.it.devtools.apis.reactiongame.AimTargetDescriptor;
 public class RgcAimTarget implements AimTarget {
 
   public static AimTargetDescriptor toAimTargetDescriptor(RgcAimTarget rgcAimTarget) {
-    return new AimTargetDescriptor(rgcAimTarget.id, rgcAimTarget.xPosition,
-                        rgcAimTarget.yPosition, RADIUS, rgcAimTarget.key);
+    return new AimTargetDescriptor(rgcAimTarget.id, rgcAimTarget.xposition,
+                        rgcAimTarget.yposition, RADIUS, rgcAimTarget.key);
   }
 
   public static int RADIUS = 25; // in px
 
-  private final int xPosition;
-  private final int yPosition;
+  private final int xposition;
+  private final int yposition;
   private final int radius;
   private final char key;
   private final int id;
@@ -32,18 +32,18 @@ public class RgcAimTarget implements AimTarget {
    */
   public RgcAimTarget(int id, int x, int y, int r, char key) {
     this.id = id;
-    this.xPosition = x;
-    this.yPosition = y;
+    this.xposition = x;
+    this.yposition = y;
     this.radius = r;
     this.key = key;
   }
 
-  public int getxPosition() {
-    return xPosition;
+  public int getXposition() {
+    return xposition;
   }
 
-  public int getyPosition() {
-    return yPosition;
+  public int getYposition() {
+    return yposition;
   }
 
   public int getRadius() {
@@ -62,8 +62,8 @@ public class RgcAimTarget implements AimTarget {
   @Override
   public String toString() {
     return "AimTarget{"
-        + "x=" + xPosition
-        + ", y=" + yPosition
+        + "x=" + xposition
+        + ", y=" + yposition
         + ", r=" + radius
         + ", key=" + key
         + ", id=" + id

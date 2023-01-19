@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 
 /**
@@ -8,12 +9,12 @@ import java.util.Random;
  */
 public class RgcObstacleLine {
 
-  private final int x;
+  private final int xposition;
 
   private final ArrayList<RgcObstacle> obstacles;
 
   public RgcObstacleLine(int x) {
-    this.x = x;
+    this.xposition = x;
     obstacles = new ArrayList<>();
   }
 
@@ -30,10 +31,10 @@ public class RgcObstacleLine {
   public RgcObstacle addRandomObstacle(int id) {
 
     RgcObstacle obstacle;
-    int[] yCoords = generateYCoordsForObstacle();
+    int[] ycoords = generateYcoordsForObstacle();
 
-    obstacle = new RgcObstacle(id, x - RgcObstacle.WIDTH / 2, yCoords[0],
-        x + RgcObstacle.WIDTH / 2, yCoords[1]);
+    obstacle = new RgcObstacle(id, xposition - RgcObstacle.WIDTH / 2, ycoords[0],
+        xposition + RgcObstacle.WIDTH / 2, ycoords[1]);
 
     obstacles.add(obstacle);
 
@@ -48,9 +49,9 @@ public class RgcObstacleLine {
   /**
    * Generates a set of y coordinates for an obstacle.
    *
-   * @return set of coordinates
+   * @return array of coordinates
    */
-  public int[] generateYCoordsForObstacle() {
+  public int[] generateYcoordsForObstacle() {
     int[] out = new int[2];
 
     out[0] = new Random().nextInt(RgcField.NORMAL_HEIGHT - 100);
@@ -76,16 +77,7 @@ public class RgcObstacleLine {
     }
 
     // Sort obstacles on the basis of the highest y value.
-    obstacles.sort((o1, o2) -> {
-      if (o1.getY1() == o2.getY1()) {
-        return 0;
-      }
-      if (o1.getY1() > o2.getY1()) {
-        return 1;
-      } else {
-        return -1;
-      }
-    });
+    obstacles.sort(Comparator.comparingInt(RgcObstacle::getY1));
 
     //check for highest
     if (obstacles.get(0).getY1() != 0) {
@@ -99,21 +91,9 @@ public class RgcObstacleLine {
     }
 
     //check for lowest
-    obstacles.sort((o1, o2) -> {
-      if (o1.getY2() == o2.getY2()) {
-        return 0;
-      }
-      if (o1.getY2() > o2.getY2()) {
-        return -1;
-      } else {
-        return 1;
-      }
-    });
+    obstacles.sort((o1, o2) -> Integer.compare(o2.getY2(), o1.getY2()));
 
-    if (obstacles.get(0).getY2() != RgcField.NORMAL_HEIGHT) {
-      return true; // Gap on bottom
-    }
-
-    return false; // no gap is found
+    return obstacles.get(0).getY2() != RgcField.NORMAL_HEIGHT; // Gap on bottom
+// no gap is found
   }
 }
