@@ -99,8 +99,9 @@ class DefaultCharacterSheetTest {
   void addCallbackTest() {
     SimpleCharacterSheetListener newListener = new SimpleCharacterSheetListener();
     characterSheet.addCallback(newListener);
-    characterSheet.incrementStat(StatType.AGILITY, OriginType.LEVEL_POINT);
-    //assertEquals(1, newListener.stats.size());
+    assertEquals(7, newListener.stats.size());
+    assertEquals(12, newListener.descriptions.size());
+    assertEquals(1, newListener.dice.size());
     assertThrows(IllegalArgumentException.class, () -> characterSheet.addCallback(null));
   }
 
@@ -399,8 +400,6 @@ class DefaultCharacterSheetTest {
             () -> characterSheet.changeDescription(DescriptionType.HEIGHT, null));
     assertThrows(IllegalArgumentException.class,
             () -> characterSheet.changeDescription(null, null));
-
-    //assertEquals(2, listener.descriptions.size());
   }
 
   @Test
@@ -459,6 +458,26 @@ class DefaultCharacterSheetTest {
     }
   }
 
+  @Test
+  void statCallbackTest() {
+    characterSheet.incrementStat(StatType.STRENGTH, OriginType.LEVEL_POINT);
+    assertEquals(characterSheet.getStatDescriptor(StatType.STRENGTH).toString(),
+            listener.stats.get(listener.stats.size() - 1).toString());
+  }
+
+  @Test
+  void descriptionCallbackTest() {
+    characterSheet.changeDescription(DescriptionType.NICKNAME, "Nick");
+    assertEquals(characterSheet.getDescriptionDescriptor(DescriptionType.NICKNAME).toString(),
+            listener.descriptions.get(listener.descriptions.size() - 1).toString());
+  }
+
+  @Test
+  void diceCallbackTest() {
+    characterSheet.changeDiceType(DiceType.D10);
+    assertEquals(characterSheet.getDiceDescriptor().toString(),
+            listener.dice.get(listener.dice.size() - 1).toString());
+  }
 
   @Test
   void toStringTest() {
