@@ -15,6 +15,7 @@ import de.hhn.it.devtools.javafx.ttrpgsheets.CharacterSheetFileIo;
 import java.util.HashMap;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -91,7 +92,7 @@ public class CharacterSheetController extends Controller implements CharacterShe
   @FXML
   private Label healthOtherLabel;
   @FXML
-  private Button healthOtherUpButton;
+  private Button healthOtherDownButton;
   @FXML
   private Button healthUpButton;
   @FXML
@@ -310,11 +311,7 @@ public class CharacterSheetController extends Controller implements CharacterShe
     diceLabel.textProperty().bind(Bindings.createStringBinding(
             () -> String.valueOf(diceResultProperty.get()), diceResultProperty));
 
-    // ########## Logical bindings ##########
-    // disable level down at level 1 or if there are no available level points
-    levelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
-            () -> stat2Property.get(StatType.LEVEL).get() <= 1 || freeLevelPointsProperty.get() < 1,
-            stat2Property.get(StatType.LEVEL), freeLevelPointsProperty));
+    // ########## Logical bindings health ##########
     // disable health up at full health
     healthUpButton.disableProperty().bind(Bindings.createBooleanBinding(
             () -> stat2Property.get(StatType.HEALTH).get()
@@ -324,36 +321,50 @@ public class CharacterSheetController extends Controller implements CharacterShe
     healthDownButton.disableProperty().bind(Bindings.createBooleanBinding(
             () -> stat2Property.get(StatType.HEALTH).get() <= 0,
             stat2Property.get(StatType.HEALTH)));
+    // disable health other down if health would drop below 1
+    healthOtherDownButton.disableProperty().bind(Bindings.createBooleanBinding(
+            () -> stat2Property.get(StatType.HEALTH).subtract(1).get() < 1,
+            stat2Property.get(StatType.HEALTH)));
 
     // ########## Logical bindings for leveling stats ##########
+    // BooleanBinding for: if there are no free level points
+    BooleanBinding noFreeLevelPointsBinding = Bindings.createBooleanBinding(
+            () -> freeLevelPointsProperty.get() <= 0, freeLevelPointsProperty);
+    // disable level down at level 1 or if there are no available level points
+    levelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
+            () -> stat2Property.get(StatType.LEVEL).get() <= 1, stat2Property.get(StatType.LEVEL),
+            freeLevelPointsProperty).or(noFreeLevelPointsBinding));
+    // disable health level down if health would drop below 1
+    healthLevelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
+            () -> stat2Property.get(StatType.HEALTH).subtract(
+                    characterSheet.getStatDescriptor(StatType.MAX_HEALTH).getOffset()).get() < 1,
+            stat2Property.get(StatType.HEALTH)));
+    // disable health level up if there are no available level points
+    healthLevelUpButton.disableProperty().bind(noFreeLevelPointsBinding);
     // disable defence level down at level 0
     defenceLevelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
             () -> stat2Property.get(StatType.DEFENCE).get() <= 0,
             stat2Property.get(StatType.DEFENCE)));
     // disable defence level up if there are no available level points
-    defenceLevelUpButton.disableProperty().bind(Bindings.createBooleanBinding(
-            () -> freeLevelPointsProperty.get() <= 0, freeLevelPointsProperty));
+    defenceLevelUpButton.disableProperty().bind(noFreeLevelPointsBinding);
     // disable strength level down at level 0
     strengthLevelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
             () -> stat2Property.get(StatType.STRENGTH).get() <= 0,
             stat2Property.get(StatType.STRENGTH)));
     // disable strength level up if there are no available level points
-    strengthLevelUpButton.disableProperty().bind(Bindings.createBooleanBinding(
-            () -> freeLevelPointsProperty.get() <= 0, freeLevelPointsProperty));
+    strengthLevelUpButton.disableProperty().bind(noFreeLevelPointsBinding);
     // disable agility level down at level 0
     agilityLevelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
             () -> stat2Property.get(StatType.AGILITY).get() <= 0,
             stat2Property.get(StatType.AGILITY)));
     // disable agility level up if there are no available level points
-    agilityLevelUpButton.disableProperty().bind(Bindings.createBooleanBinding(
-            () -> freeLevelPointsProperty.get() <= 0, freeLevelPointsProperty));
+    agilityLevelUpButton.disableProperty().bind(noFreeLevelPointsBinding);
     // disable dexterity level down at level 0
     dexterityLevelDownButton.disableProperty().bind(Bindings.createBooleanBinding(
             () -> stat2Property.get(StatType.DEXTERITY).get() <= 0,
             stat2Property.get(StatType.DEXTERITY)));
     // disable dexterity level up if there are no available level points
-    dexterityLevelUpButton.disableProperty().bind(Bindings.createBooleanBinding(
-            () -> freeLevelPointsProperty.get() <= 0, freeLevelPointsProperty));
+    dexterityLevelUpButton.disableProperty().bind(noFreeLevelPointsBinding);
   }
 
   @FXML

@@ -240,7 +240,7 @@
                                     <Label text="Verschiedenes:" wrapText="true" />
                                     <Label fx:id="healthOtherLabel" text="5" />
                                     <Region HBox.hgrow="ALWAYS" />
-                                    <Button fx:id="healthOtherUpButton" mnemonicParsing="false" onAction="#onHealthOtherDown" text="▼" />
+                                    <Button fx:id="healthOtherDownButton" mnemonicParsing="false" onAction="#onHealthOtherDown" text="▼" />
                                     <Button mnemonicParsing="false" onAction="#onHealthOtherUp" text="▲" />
                                  </children>
                               </HBox>
