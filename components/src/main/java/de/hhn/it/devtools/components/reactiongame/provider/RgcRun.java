@@ -133,16 +133,15 @@ public class RgcRun {
    * Methods gets called when player runs into an obstacle or after his iframes end.
    */
   public void playerHitObstacle() {
+    logger.info("Player hit obstacle");
+
     if (isInvincible || obstacle == null) {
       logger.info("Player no longer in an obstacle or invincible");
       return; // if player is not in an object or invincible - do nothing
     }
-    logger.info("Player hit obstacle");
     // player is in iFrames OR no longer in an obstacle
 
-    isInvincible = true;
-    iframeThread = new Thread(new RgcIFrameRunnable(this));
-    iframeThread.start();
+
 
     for (ReactiongameListener callback :
         callbacks) {
@@ -156,6 +155,15 @@ public class RgcRun {
    * Lowers the player lives by one. If it falls below 1, the game is over.
    */
   public void playerLosesLife() {
+
+    if (isInvincible) {
+      return;
+    }
+
+    isInvincible = true;
+    iframeThread = new Thread(new RgcIFrameRunnable(this));
+    iframeThread.start();
+
     logger.info("Player loses life (" + (player.getCurrentLife() - 1) + ")");
     player.setCurrentLife(player.getCurrentLife() - 1);
 
