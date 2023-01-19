@@ -6,5 +6,5 @@ package de.hhn.it.devtools.apis.minesweeper;
  * @version 0.1
  */
 
-public record MinesweeperKoordinaten(int x, int y) {}
+public record MinesweeperCoordinates(int x, int y) {}
 

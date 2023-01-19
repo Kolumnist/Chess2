@@ -1,7 +1,6 @@
 package minesweeper;
 
-import de.hhn.it.devtools.apis.minesweeper.Difficulty;
-import de.hhn.it.devtools.apis.minesweeper.MinesweeperActionListener;
+import de.hhn.it.devtools.apis.minesweeper.*;
 
 /**
  * The Handler interface is for handling interactions between a player with a component
@@ -9,8 +8,6 @@ import de.hhn.it.devtools.apis.minesweeper.MinesweeperActionListener;
  * @version 0.1
  */
 
-import de.hhn.it.devtools.apis.minesweeper.MinesweeperService;
-    
 public class DemoMinesweeperUsage implements MinesweeperService{
 
     private MinesweeperActionListener minesweeperActionListener;
@@ -18,15 +15,7 @@ public class DemoMinesweeperUsage implements MinesweeperService{
     public static void main(String[]args){        
         DemoMinesweeperUsage demo = new DemoMinesweeperUsage();
         
-        demo.setMinesweeperActionListener(
-            new MinesweeperActionListener(){                         
-                public void onAction(String event){                    
-                    System.out.println("Starting the long running task.");
-                }
-        });
-        
         // User chooses difficulty easy
-        demo.chooseDifficulty(Difficulty.EASY);
         System.out.println("Changing diffictulty to easy");
 
         // Player decides to adjust some settings manually, 
@@ -35,74 +24,52 @@ public class DemoMinesweeperUsage implements MinesweeperService{
         System.out.println("Staring Game");
 
         // Player clicks on fields
-        demo.clickField();
+        demo.clickField(new MinesweeperCoordinates(1,2));
         System.out.println("Field Opened");
         System.out.println("No mine detected");
-        demo.clickField();
+        demo.clickField(new MinesweeperCoordinates(2,2));
         System.out.println("Field Opened");
         System.out.println("No mine detected");
-        demo.clickField();
+        demo.clickField(new MinesweeperCoordinates(3,2));
         System.out.println("Field Opened");
         System.out.println("No mine detected");
-        demo.clickField();
+        demo.clickField(new MinesweeperCoordinates(4,2));
         System.out.println("Field Opened");
         System.out.println("No mine detected");
-        demo.clickField();
+        demo.clickField(new MinesweeperCoordinates(1,3));
         System.out.println("Field Opened");
         System.out.println("No mine detected");
-        demo.clickField();
+        demo.clickField(new MinesweeperCoordinates(1,4));
         System.out.println("Field Opened");
         System.out.println("No mine detected");
 
         // Player marks field
-        demo.markField();
+        demo.markField(new MinesweeperCoordinates(0,0));
         System.out.println("marked field");
 
         // Player goes to the menu
-        demo.menu();
         System.out.println("Going back to the menu");
 
         demo.minesweeperActionListener.onAction("Hello");
     }
 
     @Override
-    public void startGame(int fieldSize, int time, int mineCount) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void startGame(int fieldSize, int time, int bombCount) {
 
-    @Override
-    public void menu() {
-        // TODO Auto-generated method stub
-        
     }
 
     @Override
     public void restart() {
-        // TODO Auto-generated method stub
-        
+
     }
 
     @Override
-    public void clickField() {
-        // TODO Auto-generated method stub
-        
+    public Status clickField(MinesweeperCoordinates coords) {
+        return null;
     }
 
     @Override
-    public void markField() {
-        // TODO Auto-generated method stub
-        
-    }
-
-	@Override
-	public void chooseDifficulty(Difficulty difficulty) {
-		// TODO Auto-generated method stub
-		
-	}
-    @Override
-    public void setMinesweeperActionListener(MinesweeperActionListener minesweeperActionListener) {
-        // TODO Auto-generated method stub
-        this.minesweeperActionListener = minesweeperActionListener;
+    public Status markField(MinesweeperCoordinates coords) {
+        return null;
     }
 }

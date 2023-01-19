@@ -9,30 +9,14 @@ package de.hhn.it.devtools.apis.minesweeper;
 public interface MinesweeperService {
     
     /**
-     * 
-     * @param minesweeperActionListener
-     */
-    void setMinesweeperActionListener(MinesweeperActionListener minesweeperActionListener);
-    
-    /**
      * Creates a field with given size, time and mineCount.
      * Starts the counter and the game
      * @param fieldSize size of the Field
      * @param time max time for player
-     * @param mineCount how many mines will be created
+     * @param bombCount how many mines will be created
      */
-    void startGame(int fieldSize, int time, int mineCount);
+    void startGame(int fieldSize, int time, int bombCount);
 
-    /**
-     * fills customizable size, time and minecount with static values
-     * @param difficulty first letter of which difficulty get selected (e,m,h)
-     */
-    void chooseDifficulty(Difficulty difficulty);
-
-    /**
-     * Closes the current game and return to the menu
-     */
-    void menu();
 
     /**
      * Restarts the current game with different mine positions
@@ -44,10 +28,10 @@ public interface MinesweeperService {
      * If there is a mine, the game will end, and a gameover screen will appear.
      * If there is no mine, display how many mines are around the clicked field.
      */
-    void clickField();
+    Status clickField(MinesweeperCoordinates coords);
 
     /**
      * Paint a red flag ontop of the field, and make it unclickable until it gets unmarked
      */
-    void markField();
+    Status markField(MinesweeperCoordinates coords);
 }
