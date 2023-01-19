@@ -11,7 +11,10 @@ public enum Difficulty {
   MEDIUM("Medium", 1, 10, 9,
       6, 3),
   HARD("Hard", 2, 14, 12,
-      2, 3);
+      2, 3),
+
+  DEVELOPER("Dev", 1, 3, 2,
+      2,3); // Developer Difficulty for testing
 
   public final String label;
   public final int obstacleIntervall;

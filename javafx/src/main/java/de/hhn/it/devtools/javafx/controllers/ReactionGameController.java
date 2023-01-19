@@ -13,22 +13,36 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
+/**
+ * ReactionGameController for set up screen controller etc
+ */
 public class ReactionGameController extends Controller implements Initializable {
 
   public static final String RGC_SCREEN_CONTROLLER = "rgc.screen.controller";
   public static final String RGC_SERVICE = "rgc.service";
   public static final String RGC_PLAYER_NAME = "rgc.player.name";
   public static final String RGC_ANCHOR_PANE = "rgc.anchor.pane";
+  public static final String RGC_BACKGROUND_PANE = "rgc.background.pane";
 
   @FXML // fx:id="anchorPane"
   private AnchorPane anchorPane; // Value injected by FXMLLoader
+  @FXML
+  private Pane backgroundPane;
 
-  private RgcScreenController screenController;
+
+  @FXML
+  void onMouseEntered() {
+  }
+
+  @FXML
+  void onMouseMoved() {
+  }
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    screenController = new RgcScreenController(anchorPane);
+    RgcScreenController screenController = new RgcScreenController(anchorPane);
     SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
     singletonAttributeStore.setAttribute(RGC_SCREEN_CONTROLLER, screenController);
 
@@ -37,6 +51,10 @@ public class ReactionGameController extends Controller implements Initializable 
     singletonAttributeStore.setAttribute(RGC_PLAYER_NAME, "Player");
 
     singletonAttributeStore.setAttribute(RGC_ANCHOR_PANE, anchorPane);
+
+    singletonAttributeStore.setAttribute(RGC_BACKGROUND_PANE, backgroundPane);
+
+
 
     try {
       screenController.switchTo("RgcMenu");

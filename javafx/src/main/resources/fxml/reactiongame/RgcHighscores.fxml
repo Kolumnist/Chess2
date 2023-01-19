@@ -7,70 +7,72 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="585.0" maxWidth="1040.0" minHeight="585.0" minWidth="1040.0" prefHeight="585.0" prefWidth="1040.0" style="-fx-border-color: Black; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.reactiongame.RgcHighscoreController">
-   <children>
-      <VBox alignment="TOP_CENTER" prefHeight="585.0" prefWidth="1040.0">
-         <children>
-            <Label alignment="TOP_CENTER" contentDisplay="CENTER" text="HIGHSCORE" textAlignment="CENTER">
-               <font>
-                  <Font name="Arial Black" size="54.0" />
-               </font>
-               <padding>
-                  <Insets bottom="30.0" top="40.0" />
-               </padding>
-            </Label>
-            <Label fx:id="highscore1" alignment="TOP_CENTER" text="Test" textAlignment="CENTER">
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
-               <font>
-                  <Font name="Arial Black" size="30.0" />
-               </font>
-            </Label>
-            <Label fx:id="highscore2" text="Label">
-               <font>
-                  <Font name="Arial Black" size="30.0" />
-               </font>
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
-            </Label>
-            <Label fx:id="highscore3" text="Label">
-               <font>
-                  <Font name="Arial Black" size="30.0" />
-               </font>
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
-            </Label>
-            <Label fx:id="highscore4" text="Label">
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
-               <font>
-                  <Font name="Arial Black" size="30.0" />
-               </font>
-            </Label>
-            <Label fx:id="highscore5" text="Label">
-               <font>
-                  <Font name="Arial Black" size="30.0" />
-               </font>
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
-            </Label>
-            <Label fx:id="highscore6" text="Label">
-               <font>
-                  <Font name="Arial Black" size="30.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
-      <Button layoutX="27.0" layoutY="500.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="362.0" onAction="#onBackToMenuBtn" style="-fx-background-color: #B452CD; -fx-border-color: Black; -fx-border-width: 4;" text="Back to Menu">
+<Pane maxHeight="585.0" maxWidth="1040.0" minHeight="585.0" minWidth="1040.0" prefHeight="585.0"
+  prefWidth="1040.0" style="-fx-border-color: Black; -fx-border-width: 4;"
+  xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="de.hhn.it.devtools.javafx.controllers.reactiongame.RgcHighscoreController">
+   <VBox alignment="TOP_CENTER" prefHeight="585.0" prefWidth="1040.0">
+      <Label alignment="TOP_CENTER" contentDisplay="CENTER" text="HIGHSCORE"
+        textAlignment="CENTER">
          <font>
-            <Font name="Arial Black" size="23.0" />
+            <Font name="Arial Black" size="54.0"/>
          </font>
-      </Button>
-   </children>
+         <padding>
+            <Insets bottom="30.0" top="40.0"/>
+         </padding>
+      </Label>
+      <Label fx:id="highscore1" alignment="TOP_CENTER" text="-" textAlignment="CENTER">
+         <padding>
+            <Insets bottom="10.0"/>
+         </padding>
+         <font>
+            <Font name="Arial Black" size="30.0"/>
+         </font>
+      </Label>
+      <Label fx:id="highscore2" text="-">
+         <font>
+            <Font name="Arial Black" size="30.0"/>
+         </font>
+         <padding>
+            <Insets bottom="10.0"/>
+         </padding>
+      </Label>
+      <Label fx:id="highscore3" text="-">
+         <font>
+            <Font name="Arial Black" size="30.0"/>
+         </font>
+         <padding>
+            <Insets bottom="10.0"/>
+         </padding>
+      </Label>
+      <Label fx:id="highscore4" text="-">
+         <padding>
+            <Insets bottom="10.0"/>
+         </padding>
+         <font>
+            <Font name="Arial Black" size="30.0"/>
+         </font>
+      </Label>
+      <Label fx:id="highscore5" text="-">
+         <font>
+            <Font name="Arial Black" size="30.0"/>
+         </font>
+         <padding>
+            <Insets bottom="10.0"/>
+         </padding>
+      </Label>
+      <Label fx:id="highscore6" text="-">
+         <font>
+            <Font name="Arial Black" size="30.0"/>
+         </font>
+      </Label>
+   </VBox>
+   <Button layoutX="27.0" layoutY="500.0" mnemonicParsing="false" onAction="#onBackToMenuBtn"
+     prefHeight="41.0" prefWidth="362.0"
+     style="-fx-background-color: #B452CD; -fx-border-color: Black; -fx-border-width: 4;"
+     text="Back to Menu">
+      <font>
+         <Font name="Arial Black" size="23.0"/>
+      </font>
+   </Button>
 </Pane>

@@ -15,7 +15,7 @@ public class DemoReactiongameUsage {
     public static void main(String[] args) throws IllegalParameterException {
 
         RgcService reactiongameService = new RgcService();
-        ReactiongameListener reactiongameListener = null;
+
 
 
         logger.info("> Player starts a run");
@@ -30,9 +30,10 @@ public class DemoReactiongameUsage {
         logger.info("> Player continues the run");
         reactiongameService.continueRun();
 
-
+        logger.info("> Player enters obstacle");
         reactiongameService.playerEnteredObstacle(0);
 
+        logger.info("> Player leaves game object");
         reactiongameService.playerLeftGameObject();
 
 

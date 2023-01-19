@@ -22,8 +22,9 @@ public interface ReactiongameService {
    * Removes a callback (ReactiongameListener) from the callbacks.
    *
    * @param listener Listener
+   * @throws IllegalParameterException exception
    */
-  void removeCallback(ReactiongameListener listener);
+  void removeCallback(ReactiongameListener listener) throws IllegalParameterException;
 
   /**
    * Starts a new run and the timer.
@@ -60,14 +61,34 @@ public interface ReactiongameService {
    */
   void keyPressed(char key) throws IllegalStateException;
 
+  /**
+   * Player entered aim target.
+   *
+   * @param id identifier
+   * @throws IllegalParameterException if aim target with id does not exist
+   */
   void playerEnteredAimTarget(int id) throws IllegalParameterException;
 
+  /**
+   * Player entered obstacle.
+   *
+   * @param id identifier
+   * @throws IllegalParameterException if obstacle with id does not exist
+   */
   void playerEnteredObstacle(int id) throws IllegalParameterException;
 
+  /**
+   * Player left aim target or obstacle.
+   */
   void playerLeftGameObject();
 
   /**
-   * Sets a player name to the current highscore.
+   * Player left the legal playing area.
+   */
+  void playerLeftField();
+
+  /**
+   * Sets a player name to the current high score.
    *
    * @param playerName new player name
    */
