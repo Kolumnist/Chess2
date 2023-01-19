@@ -50,10 +50,13 @@ public class CharacterSheetFileIo {
     fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
     File saveFile = fileChooser.showSaveDialog(parent);
-    try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(saveFile))) {
-      outputStream.writeObject(characterDescriptor);
-    } catch (IOException exception) {
-      exception.printStackTrace();
+    if (saveFile != null) {
+      try (ObjectOutputStream outputStream =
+                   new ObjectOutputStream(new FileOutputStream(saveFile))) {
+        outputStream.writeObject(characterDescriptor);
+      } catch (IOException exception) {
+        exception.printStackTrace();
+      }
     }
   }
 
@@ -70,12 +73,12 @@ public class CharacterSheetFileIo {
 
     CharacterDescriptor loadedCharacter = null;
     File loadFile = fileChooser.showOpenDialog(parent);
-    try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(loadFile))) {
-      loadedCharacter = (CharacterDescriptor) inputStream.readObject();
-    } catch (IOException exception) {
-      exception.printStackTrace();
-    } catch (ClassNotFoundException e) {
-      throw new RuntimeException(e);
+    if (loadFile != null) {
+      try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(loadFile))) {
+        loadedCharacter = (CharacterDescriptor) inputStream.readObject();
+      } catch (IOException | ClassNotFoundException exception) {
+        exception.printStackTrace();
+      }
     }
     return loadedCharacter;
   }
