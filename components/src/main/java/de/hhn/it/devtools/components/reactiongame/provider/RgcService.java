@@ -100,7 +100,7 @@ public class RgcService implements ReactiongameService {
       return;
     }
 
-    run.setpKey(key);
+    run.setKey(key);
 
     run.checkForTargetHit();
   }
@@ -144,6 +144,14 @@ public class RgcService implements ReactiongameService {
 
     run.setObstacle(null);
     run.setAimTarget(null);
+  }
+
+  @Override
+  public void playerLeftField() {
+    logger.info("Player left field");
+    if (run.getGameState() == GameState.RUNNING) {
+      run.playerLosesLife();
+    }
   }
 
   @Override

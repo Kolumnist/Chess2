@@ -23,10 +23,10 @@ public class RgcRun {
 
   private RgcObstacle obstacle; // player is in this obstacle
   private RgcAimTarget aimTarget; // player is in this aimTarget
-  private char pKey;
+  private char key;
   private int score;
   private boolean isInvincible = false;
-  private Thread iFrameThread;
+  private Thread iframeThread;
 
 
   /**
@@ -48,7 +48,7 @@ public class RgcRun {
     aimTargetClock = new RgcAimTargetClock(this);
     obstacleClock = new RgcObstacleClock(this);
 
-    iFrameThread = new Thread(new RgcIFrameRunnable(this));
+    iframeThread = new Thread(new RgcIFrameRunnable(this));
   }
 
 
@@ -76,12 +76,20 @@ public class RgcRun {
     this.obstacle = obstacle;
   }
 
+  public void setObstacle(int obstacleId) {
+    obstacle = field.getObstacleMap().get(obstacleId);
+  }
+
   public void setAimTarget(RgcAimTarget aimTarget) {
     this.aimTarget = aimTarget;
   }
 
-  public void setpKey(char pKey) {
-    this.pKey = pKey;
+  public void setAimTarget(int aimTargetId) {
+    aimTarget = field.getTargetMap().get(aimTargetId);
+  }
+
+  public void setKey(char key) {
+    this.key = key;
   }
 
   public void setInvincible(boolean invincible) {
@@ -91,6 +99,7 @@ public class RgcRun {
   public Difficulty getDifficulty() {
     return difficulty;
   }
+
 
   public RgcObstacleClock getObstacleClock() {
     return obstacleClock;
@@ -104,8 +113,8 @@ public class RgcRun {
     return score;
   }
 
-  public char getpKey() {
-    return pKey;
+  public char getKey() {
+    return key;
   }
 
   public RgcAimTarget getAimTarget() {
@@ -116,29 +125,23 @@ public class RgcRun {
     return obstacle;
   }
 
-  public void setObstacle(int obstacleId) {
-    obstacle = field.getObstacleMap().get(obstacleId);
-  }
 
-  public void setAimTarget(int aimTargetId) {
-    aimTarget = field.getTargetMap().get(aimTargetId);
-  }
+
 
 
   /**
    * Methods gets called when player runs into an obstacle or after his iframes end.
    */
   public void playerHitObstacle() {
+    logger.info("Player hit obstacle");
+
     if (isInvincible || obstacle == null) {
       logger.info("Player no longer in an obstacle or invincible");
       return; // if player is not in an object or invincible - do nothing
     }
-    logger.info("Player hit obstacle");
     // player is in iFrames OR no longer in an obstacle
 
-    isInvincible = true;
-    iFrameThread = new Thread(new RgcIFrameRunnable(this));
-    iFrameThread.start();
+
 
     for (ReactiongameListener callback :
         callbacks) {
@@ -152,6 +155,15 @@ public class RgcRun {
    * Lowers the player lives by one. If it falls below 1, the game is over.
    */
   public void playerLosesLife() {
+
+    if (isInvincible) {
+      return;
+    }
+
+    isInvincible = true;
+    iframeThread = new Thread(new RgcIFrameRunnable(this));
+    iframeThread.start();
+
     logger.info("Player loses life (" + (player.getCurrentLife() - 1) + ")");
     player.setCurrentLife(player.getCurrentLife() - 1);
 
@@ -174,7 +186,7 @@ public class RgcRun {
    * Methods checks if the player is in an aimtarget and pressed the right key.
    */
   public void checkForTargetHit() {
-    if (aimTarget != null && aimTarget.getKey() == pKey) {
+    if (aimTarget != null && aimTarget.getKey() == key) {
       score += 100;
 
       field.removeAimTarget(aimTarget.getId());

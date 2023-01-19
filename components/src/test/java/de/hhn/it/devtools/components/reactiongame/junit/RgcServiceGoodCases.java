@@ -39,7 +39,7 @@ public class RgcServiceGoodCases {
   @DisplayName("Q - key pressed")
   public void testKeyPressed() {
     service.keyPressed('q');
-    assertEquals(service.getRun().getpKey(), 'q');
+    assertEquals(service.getRun().getKey(), 'q');
   }
 
   @Test
