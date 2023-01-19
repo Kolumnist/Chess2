@@ -28,7 +28,7 @@ public class Game2048FileIO {
                 objectInputStream = new ObjectInputStream(fileInputStream);
                 highScore = objectInputStream.readInt();
                 objectInputStream.close();
-                logger.info("readHighscore, highscore = {}", highScore);
+                logger.info("readHighscore, highScore = {}", highScore);
             } catch (IOException e) {
                 logger.warn("load highScore failed, because of ObjectOutputStream Error");
                 e.printStackTrace();
