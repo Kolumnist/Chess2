@@ -39,6 +39,9 @@ public class StartScreenController implements Initializable {
   private Label difficultyLabel;
 
   @FXML
+  private Label highScore;
+
+  @FXML
   void handle(MouseEvent event) {
     Object source = event.getSource();
     if (source == finishButton) {
@@ -129,4 +132,12 @@ public class StartScreenController implements Initializable {
     difficultyLabel.setText(difficultyText);
   }
 
+  /**
+   * Sets the highScore on the start screen.
+   *
+   * @param highScore the current highScore
+   */
+  public void setHighScore(String highScore) {
+    this.highScore.setText(highScore.trim());
+  }
 }

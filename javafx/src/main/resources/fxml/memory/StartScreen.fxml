@@ -58,5 +58,15 @@
             <Font size="24.0" />
          </font>
       </Label>
+      <Label layoutX="948.0" layoutY="14.0" text="Beste Zeit:" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="highScore" layoutX="948.0" text="-" layoutY="41.0" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
