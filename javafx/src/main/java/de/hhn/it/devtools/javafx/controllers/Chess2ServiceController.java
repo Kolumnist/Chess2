@@ -25,6 +25,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
+/**
+ * This class implements the main controller for the UI of Chess2.
+ *
+ * @author Collin Hoss, Lara Mangi, Michel Jouaux
+ * @version 1.0
+ */
 public class Chess2ServiceController extends Controller implements Initializable {
 
   private static final org.slf4j.Logger logger =
@@ -45,9 +51,6 @@ public class Chess2ServiceController extends Controller implements Initializable
 
   @FXML
   private static TextField playerTextField;
-
-  @FXML
-  private Button rulesButton;
 
   @FXML
   private Button startEndGameButton;
@@ -123,7 +126,10 @@ public class Chess2ServiceController extends Controller implements Initializable
     }
   }
 
-  private void loadBoard(){
+  /**
+   * This method load the Chess2Board.fxml.
+   */
+  private void loadBoard() {
     try {
       gridPane = FXMLLoader.load(getClass().getResource("/fxml/chess2/Chess2Board.fxml"));
     } catch (IOException e) {
@@ -133,98 +139,122 @@ public class Chess2ServiceController extends Controller implements Initializable
     boardPane.setCenter(gridPane);
   }
 
-  private void placePieces(){
+  /**
+   * This method goes through every Button and places the image of a Piece on it if a Piece stands
+   * on it.
+   */
+  private void placePieces() {
     String[] piece = {"Crow", "Elephant", "Fish", "King-With-Banana", "Monkey", "Queen"};
     String[] color = {"_Red", "_Black"};
 
     String bearCoordinate = chessGame.bearCoordinate.coordinateToString();
 
+    //Getting all Buttons from the parent GridPane.
     ObservableList observableList = gridPane.getChildren();
 
     Button[] buttons = new Button[68];
 
     int i = 0;
 
+    //Turns the ObservableList into an Array for easier handling.
     for (Object o : observableList) {
       if (o instanceof Button) {
         buttons[i++] = (Button) o;
       }
     }
 
-    for (Button button:buttons) {
+    //Going through the Button-Array and placing the right image on it.
+    for (Button button : buttons) {
       //Setting the Bear image on the right button.
-      if (bearCoordinate.equals(button.getId().substring(6,8))){
-        setPieceImage(button, "Bear","");
+      if (bearCoordinate.equals(button.getId().substring(6, 8))) {
+        setPieceImage(button, "Bear", "");
         continue;
       }
 
       //Setting the King image on the right button.
-      if (equals(button.getId().substring(6,8), new String[]{"40"})){
+      if (equals(button.getId().substring(6, 8), new String[]{"40"})) {
         setPieceImage(button, piece[3], color[0]);
         continue;
-      } else if (equals(button.getId().substring(6,8), new String[]{"37"})) {
+      } else if (equals(button.getId().substring(6, 8), new String[]{"37"})) {
         setPieceImage(button, piece[3], color[1]);
         continue;
       }
 
       //Setting the Queen image on the right button.
-      if (equals(button.getId().substring(6,8), new String[]{"30"})){
+      if (equals(button.getId().substring(6, 8), new String[]{"30"})) {
         setPieceImage(button, piece[5], color[0]);
         continue;
-      } else if (equals(button.getId().substring(6,8), new String[]{"47"})) {
+      } else if (equals(button.getId().substring(6, 8), new String[]{"47"})) {
         setPieceImage(button, piece[5], color[1]);
         continue;
       }
 
       //Setting the Crow image on the right button.
-      if (equals(button.getId().substring(6,8), new String[]{"00", "70"})){
+      if (equals(button.getId().substring(6, 8), new String[]{"00", "70"})) {
         setPieceImage(button, piece[0], color[0]);
         continue;
-      } else if (equals(button.getId().substring(6,8), new String[]{"07", "77"})) {
+      } else if (equals(button.getId().substring(6, 8), new String[]{"07", "77"})) {
         setPieceImage(button, piece[0], color[1]);
         continue;
       }
 
       //Setting the Monkey image on the right button.
-      if (equals(button.getId().substring(6,8), new String[]{"10", "60"})){
+      if (equals(button.getId().substring(6, 8), new String[]{"10", "60"})) {
         setPieceImage(button, piece[4], color[0]);
         continue;
-      } else if (equals(button.getId().substring(6,8), new String[]{"17", "67"})) {
+      } else if (equals(button.getId().substring(6, 8), new String[]{"17", "67"})) {
         setPieceImage(button, piece[4], color[1]);
         continue;
       }
 
       //Setting the Elephant image on the right button.
-      if (equals(button.getId().substring(6,8), new String[]{"21", "51"})){
+      if (equals(button.getId().substring(6, 8), new String[]{"21", "51"})) {
         setPieceImage(button, piece[1], color[0]);
         continue;
-      } else if (equals(button.getId().substring(6,8), new String[]{"26", "56"})) {
+      } else if (equals(button.getId().substring(6, 8), new String[]{"26", "56"})) {
         setPieceImage(button, piece[1], color[1]);
         continue;
       }
 
       //Setting the Fish image on the right button.
-      if (equals(button.getId().substring(6,8), new String[]{"01", "11", "20", "31", "41", "50", "61", "71"})){
+      if (equals(button.getId().substring(6, 8),
+          new String[]{"01", "11", "20", "31", "41", "50", "61", "71"})) {
         setPieceImage(button, piece[2], color[0]);
-      } else if (equals(button.getId().substring(6,8), new String[]{"06", "16", "27", "36", "46", "57", "66", "76"})) {
+      } else if (equals(button.getId().substring(6, 8),
+          new String[]{"06", "16", "27", "36", "46", "57", "66", "76"})) {
         setPieceImage(button, piece[2], color[1]);
       }
     }
   }
 
-  private boolean equals(String string, String[] arrayString){
-    for (String aString: arrayString) {
-      if (string.equals(aString)){
+  /**
+   * Retruns true if the string is an element in the arrayString.
+   *
+   * @param string      the string you got from a method
+   * @param arrayString all Strings that you search for
+   * @return if the string is one of the elements from the arrayString
+   */
+  private boolean equals(String string, String[] arrayString) {
+    for (String s : arrayString) {
+      if (string.equals(s)) {
         return true;
       }
     }
     return false;
   }
 
-  private void setPieceImage(Button button, String piece, String color){
+  /**
+   * Sets the image of the right Piece on a specific Button.
+   *
+   * @param button the Button on which the Piece will stand
+   * @param piece  name of the Piece which should stand on the Field/Button
+   * @param color  the color of the Piece
+   */
+  private void setPieceImage(Button button, String piece, String color) {
     ImageView imageView;
 
-    imageView = new ImageView(getClass().getResource("/fxml/chess2/pieces/"+piece+color+".png").toExternalForm());
+    imageView = new ImageView(
+        getClass().getResource("/fxml/chess2/pieces/" + piece + color + ".png").toExternalForm());
     imageView.setPreserveRatio(true);
     imageView.fitWidthProperty().bind(button.widthProperty());
     imageView.fitHeightProperty().bind(button.heightProperty());
@@ -242,7 +272,8 @@ public class Chess2ServiceController extends Controller implements Initializable
     logger.debug("resume: -");
   }
 
-  public static void setPlayerTextField(String playerColor){
+  // To give the Chess2BoardController the possibility to set the Text of the playerTextField.
+  public static void setPlayerTextField(String playerColor) {
     playerTextField.setText(playerColor);
   }
 }

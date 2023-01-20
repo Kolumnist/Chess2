@@ -67,7 +67,7 @@
                               <Font size="18.0" />
                            </font>
                         </Button>
-                        <Button fx:id="rulesButton" mnemonicParsing="false" onAction="#onRulesButtonClick" text="Rules" textAlignment="CENTER">
+                        <Button mnemonicParsing="false" onAction="#onRulesButtonClick" text="Rules" textAlignment="CENTER">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="400.0" />
                            </VBox.margin>
