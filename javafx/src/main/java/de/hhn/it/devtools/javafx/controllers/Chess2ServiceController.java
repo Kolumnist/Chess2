@@ -37,8 +37,6 @@ public class Chess2ServiceController extends Controller implements Initializable
   private ChessGame chessGame;
   private Chess2Service chess2Service;
 
-  private static boolean isTurnOfRed = true;
-
   private GridPane gridPane;
 
   @FXML
@@ -111,16 +109,7 @@ public class Chess2ServiceController extends Controller implements Initializable
       board = chess2Service.startNewGame();
 
       placePieces();
-      Chess2BoardController.giveChessGameAndBoard(chessGame, board);
-
-      while (chessGame.getWinningPlayer() == WinningPlayerState.STILL_RUNNING){
-        if (isTurnOfRed){
-          playerTextField.setText("Red");
-        }else {
-          playerTextField.setText("Black");
-        }
-
-      }
+      Chess2BoardController.giveChessGameAndBoard(chessGame, board, playerTextField);
 
     } else {
       startEndGameButton.setText("Start Game");
@@ -276,9 +265,5 @@ public class Chess2ServiceController extends Controller implements Initializable
   @Override
   void resume() {
     logger.debug("resume: -");
-  }
-
-  public static void setIsTurnOfRed(boolean isRed) {
-    isTurnOfRed = isRed;
   }
 }
