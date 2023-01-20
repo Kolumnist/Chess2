@@ -1,10 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.apis.memory.CardSetDescriptor;
-import de.hhn.it.devtools.apis.memory.DeckListener;
-import de.hhn.it.devtools.apis.memory.Difficulty;
-import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
+import de.hhn.it.devtools.apis.memory.*;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
 import de.hhn.it.devtools.javafx.controllers.memory.MemoryAttributeStore;
 import de.hhn.it.devtools.javafx.controllers.memory.MemoryScreenController;
@@ -25,12 +22,13 @@ public class MemoryServiceController extends Controller implements Initializable
   public static final String MEMORY_SERVICE = "memory.service";
   public static final String DIFFICULTY = "current.difficulty";
   public static final String PATH_REFERENCES = "path.references";
+  public static final String CURRENT_DECK = "current.deck";
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(MemoryServiceController.class);
   @FXML
   AnchorPane backgroundAnchorPane;
   MemoryScreenController screenController;
-  SfsMemoryService memoryService;
+  MemoryService memoryService;
   HashMap<Integer, String> pathReferences;
 
   public MemoryServiceController() {
@@ -126,6 +124,6 @@ public class MemoryServiceController extends Controller implements Initializable
 
   @Override
   public void currentDeck(PictureCardDescriptor[] deck) {
-
+    MemoryAttributeStore.getReference().setAttribute(CURRENT_DECK, deck);
   }
 }

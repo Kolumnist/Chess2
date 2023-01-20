@@ -2,6 +2,7 @@ package de.hhn.it.devtools.javafx.controllers.memory;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.memory.Difficulty;
+import de.hhn.it.devtools.apis.memory.MemoryService;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
 import de.hhn.it.devtools.javafx.controllers.MemoryServiceController;
 import java.net.URL;
@@ -23,7 +24,7 @@ public class StartScreenController implements Initializable {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(StartScreenController.class);
   private MemoryScreenController screenController;
-  private SfsMemoryService memoryService;
+  private MemoryService memoryService;
 
   @FXML
   private Button finishButton;
@@ -36,6 +37,9 @@ public class StartScreenController implements Initializable {
 
   @FXML
   private Label difficultyLabel;
+
+  @FXML
+  private Label highScore;
 
   @FXML
   void handle(MouseEvent event) {
@@ -128,4 +132,12 @@ public class StartScreenController implements Initializable {
     difficultyLabel.setText(difficultyText);
   }
 
+  /**
+   * Sets the highScore on the start screen.
+   *
+   * @param highScore the current highScore
+   */
+  public void setHighScore(String highScore) {
+    this.highScore.setText(highScore.trim());
+  }
 }
