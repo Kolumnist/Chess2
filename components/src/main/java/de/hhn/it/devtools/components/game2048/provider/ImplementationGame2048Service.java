@@ -45,6 +45,7 @@ public class ImplementationGame2048Service implements Game2048Service {
     } catch (IllegalParameterException e) {
       e.printStackTrace();
     }
+    notifyGame2048Listener();
   }
 
   @Override
