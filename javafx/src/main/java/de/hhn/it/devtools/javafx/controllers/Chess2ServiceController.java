@@ -2,8 +2,6 @@ package de.hhn.it.devtools.javafx.controllers;
 
 import de.hhn.it.devtools.apis.chess2.Board;
 import de.hhn.it.devtools.apis.chess2.Chess2Service;
-import de.hhn.it.devtools.apis.chess2.Coordinate;
-import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.IllegalStateException;
 import de.hhn.it.devtools.apis.chess2.WinningPlayerState;
 import de.hhn.it.devtools.components.chess2.ChessGame;
@@ -77,12 +75,12 @@ public class Chess2ServiceController extends Controller implements Initializable
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
-      if (WinningPlayerState.WHITE_WIN == chessGame.getWinningPlayer()) {
-        Label l = new Label("Player Black gave up.\nPlayer White has won.");
+      if (WinningPlayerState.RED_WIN == chessGame.getWinningPlayer()) {
+        Label l = new Label("Player Black gave up.\nPlayer Red has won.");
         p.initialize(l);
       }
       if (WinningPlayerState.BLACK_WIN == chessGame.getWinningPlayer()) {
-        Label l = new Label("Player White gave up.\nPlayer Black has won.");
+        Label l = new Label("Player Red gave up.\nPlayer Black has won.");
         p.initialize(l);
       }
     }

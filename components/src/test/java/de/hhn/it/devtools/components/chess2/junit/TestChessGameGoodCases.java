@@ -137,7 +137,7 @@ public class TestChessGameGoodCases {
     chess2Service.moveSelectedPiece(currentCoords[0], new Coordinate(4, 1));
 
     chess2Service.giveUp();
-    assertEquals(WinningPlayerState.WHITE_WIN, chess2Service.getWinningPlayer());
+    assertEquals(WinningPlayerState.RED_WIN, chess2Service.getWinningPlayer());
   }
 
   @Test
@@ -282,7 +282,7 @@ public class TestChessGameGoodCases {
     chess2Service.moveSelectedPiece(new Coordinate(3, 7), bear);
 
     assertEquals(GameState.CHECKMATE, chess2Service.getGameState());
-    assertEquals(WinningPlayerState.WHITE_WIN, chess2Service.getWinningPlayer());
+    assertEquals(WinningPlayerState.RED_WIN, chess2Service.getWinningPlayer());
   }
   @Test
   @DisplayName("Black wins because both the King and Queen of white are in the jail")

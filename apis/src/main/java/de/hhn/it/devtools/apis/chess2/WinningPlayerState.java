@@ -12,8 +12,8 @@ public enum WinningPlayerState {
 
   /** The black player is the victor. */
   BLACK_WIN,
-  /** The white player is the victor. */
-  WHITE_WIN,
+  /** The red player is the victor. */
+  RED_WIN,
   /** No one won it is a draw. */
   NO_WINNER,
 

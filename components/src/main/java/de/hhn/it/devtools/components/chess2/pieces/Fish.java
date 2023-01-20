@@ -31,7 +31,7 @@ public class Fish extends Piece {
   public void calculate(Board board) {
     possibleMoves = new Coordinate[8];
     int k = 0;
-    if (color == 'w') {
+    if (color == 'r') {
       for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
         for (int j = coordinate.getY(); j <= coordinate.getY() + 1; j++) {
           //because the fish shoudn't go straight forward

@@ -113,7 +113,7 @@ public class Monkey extends Piece {
           == FieldState.HAS_CURRENT_PIECE)) {
         replaceJumpCoordinate(possibleJump, new Coordinate(7, 4),
             new Coordinate(9, 4));
-      } else if (color == 'w'
+      } else if (color == 'r'
           && (board.getSpecificField(new Coordinate(2, 3)).getFieldState()
           == FieldState.SELECTED
           || board.getSpecificField(new Coordinate(2, 3)).getFieldState()
@@ -182,7 +182,7 @@ public class Monkey extends Piece {
           == FieldState.JAIL_KING) {
         return true;
       }
-    } else if (color == 'w') {
+    } else if (color == 'r') {
       if (board.getSpecificField(new Coordinate(8, 3)).getFieldState()
           == FieldState.JAIL_KING) {
         return true;

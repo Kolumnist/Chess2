@@ -11,7 +11,6 @@ import de.hhn.it.devtools.apis.chess2.InvalidMoveException;
 import de.hhn.it.devtools.apis.chess2.WinningPlayerState;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.components.chess2.ChessGame;
-import de.hhn.it.devtools.javafx.controllers.Chess2ServiceController;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
@@ -343,7 +342,7 @@ public class Chess2BoardController {
           Label l = new Label("Congratulation Player Black! You has won!");
           p.initialize(l);
         }
-        if (chessGame.getWinningPlayer() == WinningPlayerState.WHITE_WIN) {
+        if (chessGame.getWinningPlayer() == WinningPlayerState.RED_WIN) {
           Label l = new Label("Congratulation Player Red! You has won!");
           p.initialize(l);
         }
@@ -443,7 +442,7 @@ public class Chess2BoardController {
         Label l = new Label("Congratulation Player Black! You has won!");
         p.initialize(l);
       }
-      if (chessGame.getWinningPlayer() == WinningPlayerState.WHITE_WIN) {
+      if (chessGame.getWinningPlayer() == WinningPlayerState.RED_WIN) {
         Label l = new Label("Congratulation Player White! You has won!");
         p.initialize(l);
       }

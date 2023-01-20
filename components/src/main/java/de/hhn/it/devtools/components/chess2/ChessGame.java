@@ -28,7 +28,7 @@ public class ChessGame implements Chess2Service {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(ChessGame.class);
 
-  private final Player whitePlayer;
+  private final Player redPlayer;
   private final Player blackPlayer;
   private Player currentPlayer;
   private Coordinate currentlySelected; //Could be used instead of selectedCoordinate
@@ -50,9 +50,9 @@ public class ChessGame implements Chess2Service {
     logger.info("ChessGame Constructor");
 
     gameBoard = new Board();
-    whitePlayer = new Player('w', gameBoard);
+    redPlayer = new Player('r', gameBoard);
     blackPlayer = new Player('b', gameBoard);
-    currentPlayer = whitePlayer;
+    currentPlayer = redPlayer;
   }
 
   /**
@@ -78,23 +78,23 @@ public class ChessGame implements Chess2Service {
     gameBoard.getFields()[fieldsMax - 1].setFieldState(FieldState.JAIL);
 
     /* Set the Pieces back to the old position */
-    whitePlayer.initializeMyPieces();
+    redPlayer.initializeMyPieces();
     blackPlayer.initializeMyPieces();
 
-    Piece whitePiece;
+    Piece redPiece;
     Piece blackPiece;
-    for (int i = 0; i < whitePlayer.myPieces.length; i++) {
-      whitePiece = whitePlayer.myPieces[i];
+    for (int i = 0; i < redPlayer.myPieces.length; i++) {
+      redPiece = redPlayer.myPieces[i];
       blackPiece = blackPlayer.myPieces[i];
 
       /* Set Optional Piece of Field */
-      gameBoard.getSpecificField(whitePiece.getCoordinate())
-          .setPiece(Optional.of(whitePiece));
+      gameBoard.getSpecificField(redPiece.getCoordinate())
+          .setPiece(Optional.of(redPiece));
       gameBoard.getSpecificField(blackPiece.getCoordinate())
           .setPiece(Optional.of(blackPiece));
 
       /* Set FieldState of Field */
-      gameBoard.getSpecificField(whitePiece.getCoordinate())
+      gameBoard.getSpecificField(redPiece.getCoordinate())
           .setFieldState(FieldState.HAS_CURRENT_PIECE);
       gameBoard.getSpecificField(blackPiece.getCoordinate())
           .setFieldState(FieldState.HAS_OTHER_PIECE);
@@ -110,7 +110,7 @@ public class ChessGame implements Chess2Service {
         .setFieldState(FieldState.HAS_BEAR);
 
     /* Calculate all Pieces movements */
-    for (Piece piece : whitePlayer.myPieces) {
+    for (Piece piece : redPlayer.myPieces) {
       piece.calculate(gameBoard);
     }
     for (Piece piece : blackPlayer.myPieces) {
@@ -120,7 +120,7 @@ public class ChessGame implements Chess2Service {
   }
 
   /**
-   * We check through all Jail fields if there is any Queen/King and raise the black/white counter.
+   * We check through all Jail fields if there is any Queen/King and raise the black/red counter.
    * Should the counter hit 2 one player wins
    *
    * @return if a player won or not! (true = won / false = not)
@@ -129,7 +129,7 @@ public class ChessGame implements Chess2Service {
     logger.info("handleWin");
 
     int blackLose = 0;
-    int whiteLose = 0;
+    int redLose = 0;
 
     Field[] fields = gameBoard.getFields();
 
@@ -143,22 +143,22 @@ public class ChessGame implements Chess2Service {
         continue;
       }
       if ((fields[fields.length - i].getFieldState() == FieldState.JAIL_KING
-          && fields[fields.length - i].getPiece().getColor() == 'w')
+          && fields[fields.length - i].getPiece().getColor() == 'r')
           || (fields[fields.length - i].getFieldState() == FieldState.JAIL_QUEEN
-          && fields[fields.length - i].getPiece().getColor() == 'w')) {
-        whiteLose++;
+          && fields[fields.length - i].getPiece().getColor() == 'r')) {
+        redLose++;
       }
     }
 
     /* Should a player have both his King and Queen in Jail, return true and "end the game"*/
-    if (whiteLose == 2) {
+    if (redLose == 2) {
       gameState = GameState.CHECKMATE;
       winState = WinningPlayerState.BLACK_WIN;
       return true;
     }
     if (blackLose == 2) {
       gameState = GameState.CHECKMATE;
-      winState = WinningPlayerState.WHITE_WIN;
+      winState = WinningPlayerState.RED_WIN;
       return true;
     }
     return false;
@@ -178,10 +178,10 @@ public class ChessGame implements Chess2Service {
     }
 
     /* Switch currentPlayer to the otherPlayer */
-    if (whitePlayer == currentPlayer) {
+    if (redPlayer == currentPlayer) {
       currentPlayer = blackPlayer;
     } else {
-      currentPlayer = whitePlayer;
+      currentPlayer = redPlayer;
     }
 
     if (gameState == GameState.CHECK) {
@@ -229,7 +229,7 @@ public class ChessGame implements Chess2Service {
     }
 
     /* Calculate all pieces movements */
-    for (Piece piece : whitePlayer.myPieces) {
+    for (Piece piece : redPlayer.myPieces) {
       if (piece.getCoordinate().getX() == -1) {
         continue;
       }
@@ -270,7 +270,7 @@ public class ChessGame implements Chess2Service {
   public void endGame() {
     logger.info("endGame");
 
-    currentPlayer = whitePlayer;
+    currentPlayer = redPlayer;
     gameState = GameState.CHECKMATE;
     bearCoordinate = null;
     bear = null;
@@ -287,10 +287,10 @@ public class ChessGame implements Chess2Service {
     }
 
     gameState = GameState.CHECKMATE;
-    if (currentPlayer == whitePlayer) {
+    if (currentPlayer == redPlayer) {
       winState = WinningPlayerState.BLACK_WIN;
     } else if (currentPlayer == blackPlayer) {
-      winState = WinningPlayerState.WHITE_WIN;
+      winState = WinningPlayerState.RED_WIN;
     }
   }
 
