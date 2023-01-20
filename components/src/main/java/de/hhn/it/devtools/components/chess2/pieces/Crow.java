@@ -29,7 +29,8 @@ public class Crow extends Piece {
 
     //Testing if the Crow stands near an enemy Piece.
     for (int i = 0; i < movement.length; i++) {
-      if (board.getSpecificField(movement[i]).getFieldState() == FieldState.HAS_OTHER_PIECE) {
+      if (board.getSpecificField(movement[i]).getFieldState() == FieldState.HAS_OTHER_PIECE
+          || board.getSpecificField(movement[i]).getFieldState() == FieldState.OTHER_KING) {
         nearEnemy = true;
         break;
       }
@@ -37,6 +38,14 @@ public class Crow extends Piece {
 
     //Testing if a Piece got defeated in the last turn and if an enemy Piece is nearby.
     if (board.lostPiece && nearEnemy) {
+      //Testing if the Crow can defeat the enemy King.
+      for (int i = 0; i < movement.length; i++) {
+        if (board.getSpecificField(movement[i]).getFieldState() == FieldState.OTHER_KING) {
+          canDefeatKing = true;
+          break;
+        }
+      }
+
       possibleMoves = movement;
     } else {
       ArrayList<Integer> index = new ArrayList<>();

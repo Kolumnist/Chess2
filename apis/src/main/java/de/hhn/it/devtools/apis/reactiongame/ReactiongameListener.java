@@ -1,6 +1,5 @@
 package de.hhn.it.devtools.apis.reactiongame;
 
-
 /**
  * Listener to give front and backend updates about the user input.
  */
@@ -35,9 +34,9 @@ public interface ReactiongameListener {
   void removeObstacle(int obstacleId);
 
   /**
-   * Player hits an obstacle.
+   * Notification when an obstacle with a certain ID is hit
    *
-   * @param obstacleId identifier of obstacle which is hit
+   * @param obstacleId identifier
    */
   void hitObstacle(int obstacleId);
 
@@ -62,6 +61,13 @@ public interface ReactiongameListener {
    * @param state new state
    */
   void changeGameState(GameState state);
+
+  /**
+   * Changes the score display
+   *
+   * @param score updated score of the player during a run
+   */
+  void changeScore(int score);
 
   /**
    * Pauses the run and the timer.

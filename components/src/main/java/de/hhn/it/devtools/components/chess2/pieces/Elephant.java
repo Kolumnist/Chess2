@@ -19,6 +19,12 @@ public class Elephant extends Piece {
     super(color, coordinate);
   }
 
+  /**
+   * This method calculates all the possible movements of the elephant piece.
+   * It also add the movements which are not possible to go into an arraylist.
+   *
+   * @param board the board of the game
+   */
   public void calculate(Board board) {
     possibleMoves = new Coordinate[10];
     int k = 0;
@@ -38,6 +44,8 @@ public class Elephant extends Piece {
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
     index = new ArrayList<>();
 
+    //This code checks that the fish can't go outside the board
+    //(we add this movements into an arraylist)
     for (int i = 0; i < possibleMoves.length; i++) {
       if (possibleMoves[i] == null
           || possibleMoves[i].getY() < 0
@@ -51,5 +59,13 @@ public class Elephant extends Piece {
       }
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
+
+    //Testing if the Crow can defeat the enemy King.
+    for (int i = 0; i < possibleMoves.length; i++) {
+      if (board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.OTHER_KING) {
+        canDefeatKing = true;
+        break;
+      }
+    }
   }
 }

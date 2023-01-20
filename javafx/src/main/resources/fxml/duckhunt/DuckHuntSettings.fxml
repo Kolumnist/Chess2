@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <fx:root fx:id="templateAnchorPane" maxHeight="680.0" maxWidth="1080.0" minHeight="680.0" minWidth="1080.0" prefHeight="680.0" prefWidth="1080.0" type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.TemplateController">
@@ -25,6 +26,7 @@
                 <Font name="Times New Roman" size="64.0" />
             </font>
         </Label>
+      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#0000005c" height="378.0" layoutX="143.0" layoutY="267.0" stroke="BLACK" strokeType="INSIDE" width="809.0" />
       <VBox alignment="TOP_CENTER" layoutX="153.0" layoutY="291.0" prefHeight="348.0" prefWidth="788.0">
          <children>
             <GridPane prefHeight="258.0" prefWidth="749.0">
@@ -39,7 +41,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label prefHeight="75.0" prefWidth="380.0" style="-fx-background-color: WHITE; -fx-border-color: GRAY; -fx-border-radius: 8; -fx-background-radius: 8;" text="MAX Duck Count">
+                  <Label prefHeight="75.0" prefWidth="380.0" style="-fx-background-color: WHITE; -fx-border-color: GRAY; -fx-border-radius: 8; -fx-background-radius: 8;" text="MAX Duck Count" textAlignment="CENTER">
                      <font>
                         <Font name="Times New Roman" size="30.0" />
                      </font>

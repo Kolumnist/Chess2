@@ -14,7 +14,7 @@ public interface BattleshipService {
      * Adds a listener to get updates on the state of the game.
      *
      * @param listener object implementing the listener interface
-     * @throws IllegalParameterException if the the listener is null
+     * @throws IllegalParameterException if the listener is null
      */
     void addCallBack(BattleshipListener listener) throws IllegalParameterException;
 
@@ -38,7 +38,7 @@ public interface BattleshipService {
      * @return placing (not)possible
      * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
-    boolean isPlacementPossible(Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException;
+    boolean isPlacementPossible(Player player, Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException;
 
 
     /**
@@ -51,7 +51,7 @@ public interface BattleshipService {
      * @throws IllegalShipStateException if the ship is already placed
      * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
-    void placeShip(Ship shipToPlace, int x1, int y1)
+    void placeShip(Player player, Ship shipToPlace, int x1, int y1)
             throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException
     ;
 
@@ -62,7 +62,7 @@ public interface BattleshipService {
      * @param shipToMove selected ship to be moved
      * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
-    void unPlace(Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException;
+    void unPlace(Player player,Ship shipToMove) throws IllegalArgumentException, IllegalGameStateException;
 
 
     /**
@@ -73,7 +73,7 @@ public interface BattleshipService {
      * @throws IllegalShipStateException ship cant be rotated if it's placed
      * @throws IllegalGameStateException if the GameState is not at PLACINGSHIPS
      */
-    void rotateShip(Ship shipToRotate)
+    void rotateShip(Player player, Ship shipToRotate)
             throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException;
 
 
@@ -82,10 +82,12 @@ public interface BattleshipService {
      * @return bombing (not)successful
      * @param x x coordinate of the target panel
      * @param y y coordinate of the target panel
+     * @param attacker player that performs the bombing
+     * @param victim player on whose field is shot
      * @throws IllegalArgumentException if field does not exist
-     * @throws  IllegalGameStateException if the GameState is not FIRINGSHOTS
+     * @throws IllegalGameStateException if the GameState is not FIRINGSHOTS
      */
-    boolean bombPanel(int x, int y) throws IllegalArgumentException, IllegalGameStateException;
+    boolean bombPanel(Player attacker, Player victim, int x, int y) throws IllegalArgumentException, IllegalGameStateException;
 
 
     /**
@@ -94,7 +96,7 @@ public interface BattleshipService {
      * @throws IllegalArgumentException if player enters something else instead of numbers
      * @throws IllegalGameStateException if the Gamestate is not PREGAME
      */
-    void createFields(int size) throws IllegalArgumentException, IllegalGameStateException;
+    void createFields(int size) throws IllegalArgumentException, IllegalGameStateException, IllegalShipStateException, IllegalPositionException;
 
 
     /**

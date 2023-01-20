@@ -23,8 +23,8 @@ public class DemoReactiongameUsage {
 
         logger.info("> Player starts a run");
         reactiongameService.newRun(Difficulty.HARD);
-        reactiongameListener.addObstacle(new ObstacleDescriptor(100, 100, 200, 200));
-        reactiongameListener.addAimTarget(new AimTargetDescriptor(400, 400, 50, 'W'));
+        reactiongameListener.addObstacle(new ObstacleDescriptor(100, 100, 200, 200, 0));
+        reactiongameListener.addAimTarget(new AimTargetDescriptor(1, 400, 400, 50, 'W'));
 
         logger.info("> Player pauses the run");
         reactiongameService.pauseRun();
@@ -39,9 +39,6 @@ public class DemoReactiongameUsage {
 
         logger.info("> Player gets to aim target");
         reactiongameListener.aimTargetHit('W', 0);
-
-        logger.info("> Current courser position is x, y");
-        reactiongameService.presentCourserPosition(0,1);
 
         logger.info("> Player pressed the Button: a");
         reactiongameService.keyPressed('a');

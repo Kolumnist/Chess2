@@ -14,7 +14,7 @@ public interface OutputListener {
 
     /**
      * Output about the state of the player and the actions done by him.
-     * Picking items up is currently considered a player action, not an inventory action.
+     * Picking items up and dropping them is currently considered a player action, not an inventory action.
      * @param output String to be output.
      */
     void sendOutputPlayer(String output);
@@ -22,7 +22,7 @@ public interface OutputListener {
 
     /**
      * Output about the state of the inventory and items inspected inside it.
-     * Mainly for inspecting the items. Now for dropping items as well.
+     * Mainly for inspecting the items.
      * @param output String to be output.
      */
     void sendOutputInventory(String output);
@@ -54,5 +54,23 @@ public interface OutputListener {
      * @param item item that can give output.
      */
     void sendOutputDropItem(Item item);
+
+
+    void listenerStart();
+
+    void listenerMove();
+
+    void listenerPickUpItem();
+
+    void listenerDropItem();
+
+    void listenerInteract();
+
+    void listenerEnd();
+
+    void listenerReset();
+
+    void updateScore(int newScore);
+
 
 }

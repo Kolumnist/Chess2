@@ -1,5 +1,7 @@
 package de.hhn.it.devtools.components.reactiongame.provider;
 
-public class Obstacle {
-
+/**
+ * Basic interface for an obstacle.
+ */
+public interface Obstacle extends GameObject {
 }

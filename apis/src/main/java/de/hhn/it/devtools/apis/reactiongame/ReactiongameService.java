@@ -2,13 +2,29 @@ package de.hhn.it.devtools.apis.reactiongame;
 
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import java.util.ArrayList;
 import java.util.IllegalFormatException;
-import java.util.SortedMap;
 
 /**
  * Interface for the reaction game.
  */
 public interface ReactiongameService {
+
+
+  /**
+   * Adds a callback (ReactiongameListener) to the callbacks.
+   *
+   * @param listener Listener
+   */
+  void addCallback(ReactiongameListener listener);
+
+  /**
+   * Removes a callback (ReactiongameListener) from the callbacks.
+   *
+   * @param listener Listener
+   * @throws IllegalParameterException exception
+   */
+  void removeCallback(ReactiongameListener listener) throws IllegalParameterException;
 
   /**
    * Starts a new run and the timer.
@@ -38,30 +54,6 @@ public interface ReactiongameService {
   void endRun();
 
   /**
-   * Adds a listener to the service.
-   *
-   * @param listener listener
-   * @param id identifier
-   */
-  void addCallback(ReactiongameListener listener, int id);
-
-  /**
-   * Removes listener with the given id.
-   *
-   * @param id identifier
-   */
-  void removeCallback(int id);
-
-  /**
-   * Sets the courser position.
-   *
-   * @param x position
-   * @param y position
-   * @throws IllegalStateException if state equals the current state
-   */
-  void presentCourserPosition(int x, int y) throws IllegalStateException;
-
-  /**
    * Player pressed a key.
    *
    * @param key key
@@ -70,7 +62,33 @@ public interface ReactiongameService {
   void keyPressed(char key) throws IllegalStateException;
 
   /**
-   * Sets a player name to the current highscore.
+   * Player entered aim target.
+   *
+   * @param id identifier
+   * @throws IllegalParameterException if aim target with id does not exist
+   */
+  void playerEnteredAimTarget(int id) throws IllegalParameterException;
+
+  /**
+   * Player entered obstacle.
+   *
+   * @param id identifier
+   * @throws IllegalParameterException if obstacle with id does not exist
+   */
+  void playerEnteredObstacle(int id) throws IllegalParameterException;
+
+  /**
+   * Player left aim target or obstacle.
+   */
+  void playerLeftGameObject();
+
+  /**
+   * Player left the legal playing area.
+   */
+  void playerLeftField();
+
+  /**
+   * Sets a player name to the current high score.
    *
    * @param playerName new player name
    */
@@ -81,14 +99,14 @@ public interface ReactiongameService {
    *
    * @param newHighScoreTable updated highscore list.
    */
-  void loadHighscoreTable(SortedMap<String, Integer> newHighScoreTable);
+  void loadHighscoreTable(ArrayList<HighscoreTupel> newHighScoreTable);
 
   /**
    * Saves the current highscoreTable in a file.
    *
-   * @throws IllegalFormatException when format is not in line.
    * @return Highscores with format: player - score.
+   * @throws IllegalFormatException when format is not in line.
    */
-  SortedMap<String, Integer> saveHighscoreTable() throws IllegalFormatException;
+  ArrayList<HighscoreTupel> saveHighscoreTable() throws IllegalFormatException;
 
 }

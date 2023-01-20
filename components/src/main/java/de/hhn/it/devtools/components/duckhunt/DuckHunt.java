@@ -31,7 +31,8 @@ public class DuckHunt implements DuckHuntService {
   private final int gunSpread = 5;  // TODO configure gun spread by screenDimension
   private MpatternGenerator pathGenerator;
   private float deltaTime = 0.016f;
-  private final float duckSpeed = 1f;
+  private final float duckSpeed = 10f;
+  private final float velocityToOvercome = 1f;
   DuckHuntGameLoop gameLoop = new DuckHuntGameLoop(this);
 
   private static final org.slf4j.Logger logger =
@@ -99,13 +100,16 @@ public class DuckHunt implements DuckHuntService {
       throw new RuntimeException();
     }
     // Junit Test for these Exceptions is inside DuckHuntTest shoot() Test
-    if (gameInfo.getState() != GameState.RUNNING) throw new RuntimeException();
+    if (gameInfo.getState() != GameState.RUNNING) {
+      throw new RuntimeException();
+    }
 
     for (DuckData duck : ducks) {
       if (duck.getStatus() == DuckState.DEAD
           || duck.getStatus() == DuckState.FLYAWAY
           || duck.getStatus() == DuckState.SCARRED
-          || duck.getStatus() == DuckState.ESCAPED) {
+          || duck.getStatus() == DuckState.ESCAPED
+          || duck.getStatus() == DuckState.FALLING) {
         continue;
       }
       // if amount of the vector between duck and shoot <= gunSpread
@@ -261,7 +265,9 @@ public class DuckHunt implements DuckHuntService {
   public void updateDucks() {
     logger.trace("updateDucks: no params");
     for (DuckData duck : ducks) {
-      if (duck.getStatus() == DuckState.FLYING || duck.getStatus() == DuckState.FALLING || duck.getStatus() == DuckState.FLYAWAY) {
+      if (duck.getStatus() == DuckState.FLYING
+          || duck.getStatus() == DuckState.FALLING
+          || duck.getStatus() == DuckState.FLYAWAY) {
         // velocity = resolutionCoefficient * speed * deltaTime
         float newVelocity = 0.3f * duckSpeed * deltaTime;
         duck.setVelocity(duck.getVelocity() + newVelocity);
@@ -278,7 +284,7 @@ public class DuckHunt implements DuckHuntService {
         case FALLING -> dropDuck(duck);
         case FLYAWAY -> ascendDuck(duck);
         case DEAD -> { /*dead is not used in this method*/ }
-        case ESCAPED -> { /*escaped is not used in this method*/}
+        case ESCAPED -> { /*escaped is not used in this method*/ }
         default -> throw new IllegalStateException("Unexpected value: " + duck.getStatus());
       }
     }
@@ -287,30 +293,38 @@ public class DuckHunt implements DuckHuntService {
 
   /**
    * Drops the duck after it has been shot.
-   * @param duck
+   *
+   * @param duck that shall be dropped
    */
   private void dropDuck(DuckData duck) {
     logger.trace("dropDuck: no params");
     float velocity = duck.getVelocity();
-    if (velocity > 1f) { // if true duck can be moved to next position
-      duck.setY(duck.getY() + screenDimension.getHeight()/ 30); //TODO anpassen der Pixel beim Droppen
-      duck.setVelocity(velocity - 1f);
+    if (velocity > velocityToOvercome) { // if true duck can be moved to next position
+      //TODO anpassen der Pixel beim Droppen
+      duck.setY(duck.getY() + 1);
+      duck.setVelocity(velocity - velocityToOvercome);
     }
   }
 
+  /**
+   * Ascends the duck after it is flyaway.
+   *
+   * @param duck that shall ascend
+   */
   private void ascendDuck(DuckData duck) {
     logger.trace("ascendDuck: no params");
     float velocity = duck.getVelocity();
-    if (velocity > 1f) { // if true duck can be moved to next position
-      duck.setY(duck.getY() - screenDimension.getHeight()/ 30); //TODO anpassen der Pixel beim Wegfliegen (analog drop)
-      duck.setVelocity(velocity - 1f);
+    if (velocity > velocityToOvercome) { // if true duck can be moved to next position
+      //TODO anpassen der Pixel beim Wegfliegen (analog drop)
+      duck.setY(duck.getY() - screenDimension.getHeight() /  30);
+      duck.setVelocity(velocity - velocityToOvercome);
     }
   }
 
   private void moveDuck(DuckData duck) {
     logger.trace("moveDuck: no params");
     float velocity = duck.getVelocity();
-    if (velocity > 1f) { // if true duck can be moved to next position
+    if (velocity > velocityToOvercome) { // if true duck can be moved to next position
       DuckOrientation newOrientation;
       try {
         newOrientation = pathGenerator.getNextMove(duck.getId());
@@ -322,7 +336,7 @@ public class DuckHunt implements DuckHuntService {
       duck.setOrientation(newOrientation);
       duck.setX(duck.getX() + newOrientation.getX());
       duck.setY(duck.getY() + newOrientation.getY());
-      duck.setVelocity(velocity - 1f);
+      duck.setVelocity(velocity - velocityToOvercome);
     }
   }
 

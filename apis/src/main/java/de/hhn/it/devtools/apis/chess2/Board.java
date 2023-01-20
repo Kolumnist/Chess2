@@ -5,7 +5,7 @@ package de.hhn.it.devtools.apis.chess2;
  * An Object of Board updates while the game is running.
  *
  * @author Collin Hoss, Michel Jouaux, Lara Mangi
- * @version 1.1
+ * @version 1.2
  */
 
 public class Board {
@@ -40,20 +40,27 @@ public class Board {
   }
 
   /**
-   * A getter for a specific Field.
-   * MARK: Could make a Table instead of going through array
+   * A getter for a specific Field. The index gets calculated with the x and y value of coordinate.
    *
    * @param coordinate to get the correct field.
    * @return the Field on index.
    * @throws IllegalArgumentException so that no ArrayIndexOutOfBoundsException will occur.
    */
   public Field getSpecificField(Coordinate coordinate) throws IllegalArgumentException {
-    for (Field field : fields) {
-      if (field.getCoordinate().getX() == coordinate.getX()
-          && field.getCoordinate().getY() == coordinate.getY()) {
-        return field;
+
+    int fieldIndex = coordinate.getX() + 8 * coordinate.getY();
+
+    if (fieldIndex < 64 && fieldIndex >= 0 && coordinate.getX() < 8) {
+      return fields[fieldIndex];
+    }
+
+    for (int i = 1; i < 5; i++) {
+      if (fields[fields.length - i].getCoordinate().getX() == coordinate.getX()
+          && fields[fields.length - i].getCoordinate().getY() == coordinate.getY()) {
+        return fields[fields.length - i];
       }
     }
+
     return fields[fields.length - 1];
   }
 
