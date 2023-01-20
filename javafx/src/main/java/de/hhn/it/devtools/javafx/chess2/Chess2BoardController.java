@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 /**
  * This class handles all communication between buttons and components.
@@ -241,6 +242,7 @@ public class Chess2BoardController {
   // Needed static variables to check for things
   private static Chess2Service chessGame = new ChessGame();
   private static Board gameBoard;
+  private static TextField playerText;
 
   String currentPlayerName = "Red";
   private boolean currentSelected = false;
@@ -571,6 +573,7 @@ public class Chess2BoardController {
       } else {
         currentPlayerName = "Red";
       }
+      playerText.setText(currentPlayerName);
       //Chess2ServiceController.setPlayerTextField(currentPlayerName);
     }
   }
@@ -604,7 +607,8 @@ public class Chess2BoardController {
         button06, button16, button26, button36, button46, button56, button66, button76,
         button07, button17, button27, button37, button47, button57, button67, button77,
         buttonjailLy3, buttonjailLy4, buttonjailRy3, buttonjailRy4)) {
-      if (button.getId().substring(6, 8).equals(buttonId)) {
+      if (button.getId().substring(6, 8).equals(buttonId)
+          && !button.getStyle().contains("#099809")) {
         checkedButton = button;
         checkedStyle = checkedButton.getStyle();
         break;
@@ -671,9 +675,10 @@ public class Chess2BoardController {
    * @param chessGame newest chessGame version
    * @param board     newest board version
    */
-  public static void giveChessGameAndBoard(Chess2Service chessGame, Board board) {
+  public static void giveChessGameAndBoard(Chess2Service chessGame, Board board, TextField field) {
     Chess2BoardController.chessGame = chessGame;
     gameBoard = board;
+    playerText = field;
   }
 
 }
