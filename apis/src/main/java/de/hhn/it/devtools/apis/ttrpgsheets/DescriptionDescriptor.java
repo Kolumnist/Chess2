@@ -66,7 +66,7 @@ public class DescriptionDescriptor implements Serializable {
 
   @Override
   public String toString() {
-    return "DescriptionDescriptor: [DescriptionType: " + descriptionType
+    return "DescriptionDescriptor: [Type: " + descriptionType
             + ", Text: " + text + "]";
   }
 }

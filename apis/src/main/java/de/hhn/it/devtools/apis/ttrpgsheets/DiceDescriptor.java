@@ -58,7 +58,7 @@ public class DiceDescriptor implements Serializable {
 
   @Override
   public String toString() {
-    return "DiceDescriptor: [DiceType: " + diceType
+    return "DiceDescriptor: [Type: " + diceType
             + ", Result = " + result;
   }
 }
