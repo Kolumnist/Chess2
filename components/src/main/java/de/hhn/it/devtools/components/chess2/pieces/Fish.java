@@ -22,16 +22,17 @@ public class Fish extends Piece {
   }
 
   /**
-   * This method calculates all the possible movements of the fish piece.
-   * It also add the movements which are not possible to go into an arraylist/ set.
+   * This method calculates all the possible movements of the fish piece. It also add the movements
+   * which are not possible to go into an arraylist/ set.
    *
    * @param board the board of the game
    */
   @Override
   public void calculate(Board board) {
+    canDefeatKing = false;
     possibleMoves = new Coordinate[8];
     int k = 0;
-    if (color == 'w') {
+    if (color == 'r') {
       for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
         for (int j = coordinate.getY(); j <= coordinate.getY() + 1; j++) {
           //because the fish shoudn't go straight forward
@@ -60,7 +61,7 @@ public class Fish extends Piece {
       }
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
-    Set<Integer> IndexSet = new TreeSet<>();
+    Set<Integer> indexSet = new TreeSet<>();
 
     //This code checks that the fish can't go outside the board
     //(we add this movements into a set)
@@ -73,10 +74,11 @@ public class Fish extends Piece {
           || possibleMoves[i].getX() > 7
           || board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_CURRENT_PIECE) {
-        IndexSet.add(i);
+        indexSet.add(i);
       }
-      //This code look that the fish can't go on a field if there is another piece/ the bear on the left
-      //or right side of the fish (because the fish can only defeat other pieces on the diagonal
+      //This code look that the fish can't go on a field if there is another piece/ the bear
+      // on the left or right side of the fish (because the fish can only
+      // defeat other pieces on the diagonal
       if ((possibleMoves[i].getX() == coordinate.getX() + 1
           && possibleMoves[i].getY() == coordinate.getY())
           && (board.getSpecificField(possibleMoves[i]).getFieldState()
@@ -89,10 +91,18 @@ public class Fish extends Piece {
           == FieldState.HAS_OTHER_PIECE
           || board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_BEAR)) {
-        IndexSet.add(i);
+        indexSet.add(i);
       }
     }
-    possibleMoves = shortenCoordinateArray(possibleMoves, IndexSet);
+    possibleMoves = shortenCoordinateArray(possibleMoves, indexSet);
+
+    //Testing if the fish can defeat the enemy King.
+    for (int i = 0; i < possibleMoves.length; i++) {
+      if (board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.OTHER_KING) {
+        canDefeatKing = true;
+        break;
+      }
+    }
   }
 }
 

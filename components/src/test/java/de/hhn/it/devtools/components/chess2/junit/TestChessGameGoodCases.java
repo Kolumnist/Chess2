@@ -50,11 +50,12 @@ public class TestChessGameGoodCases {
         continue;
       }
       if (field.getFieldState() == FieldState.HAS_CURRENT_PIECE) {
-        assertEquals('w', field.getPiece().getColor());
+        assertEquals('r', field.getPiece().getColor());
         currentNum++;
         continue;
       }
-      if (field.getFieldState() == FieldState.HAS_OTHER_PIECE) {
+      if (field.getFieldState() == FieldState.HAS_OTHER_PIECE
+        || field.getFieldState() == FieldState.OTHER_KING) {
         otherNum++;
         continue;
       }
@@ -74,7 +75,7 @@ public class TestChessGameGoodCases {
   @DisplayName("Ending a Game of Chess which sets GameState to null")
   void TestEndGame() throws IllegalStateException {
     chess2Service.endGame();
-    assertNull(chess2Service.getGameState());
+    assertEquals(GameState.CHECKMATE, chess2Service.getGameState());
   }
 
   @Test
@@ -98,11 +99,12 @@ public class TestChessGameGoodCases {
         continue;
       }
       if (field.getFieldState() == FieldState.HAS_CURRENT_PIECE) {
-        assertEquals('w', field.getPiece().getColor());
+        assertEquals('r', field.getPiece().getColor());
         currentNum++;
         continue;
       }
-      if (field.getFieldState() == FieldState.HAS_OTHER_PIECE) {
+      if (field.getFieldState() == FieldState.HAS_OTHER_PIECE
+          || field.getFieldState() == FieldState.OTHER_KING) {
         otherNum++;
         continue;
       }
@@ -135,7 +137,7 @@ public class TestChessGameGoodCases {
     chess2Service.moveSelectedPiece(currentCoords[0], new Coordinate(4, 1));
 
     chess2Service.giveUp();
-    assertEquals(WinningPlayerState.WHITE_WIN, chess2Service.getWinningPlayer());
+    assertEquals(WinningPlayerState.RED_WIN, chess2Service.getWinningPlayer());
   }
 
   @Test
@@ -221,7 +223,6 @@ public class TestChessGameGoodCases {
   @DisplayName("Selected Piece gets moved on bear both are defeated")
   void TestMoveSelectedPieceOnBear()
       throws IllegalParameterException, IllegalStateException, InvalidMoveException {
-    //TODO minimum 12-32
     Coordinate[] currentCoords = chess2Service.getCurrentFields();
     Coordinate[] possibleMoves = chess2Service.getPossibleMoves(currentCoords[0]);
     Coordinate bear = new Coordinate();
@@ -281,7 +282,7 @@ public class TestChessGameGoodCases {
     chess2Service.moveSelectedPiece(new Coordinate(3, 7), bear);
 
     assertEquals(GameState.CHECKMATE, chess2Service.getGameState());
-    assertEquals(WinningPlayerState.WHITE_WIN, chess2Service.getWinningPlayer());
+    assertEquals(WinningPlayerState.RED_WIN, chess2Service.getWinningPlayer());
   }
   @Test
   @DisplayName("Black wins because both the King and Queen of white are in the jail")

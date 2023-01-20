@@ -30,6 +30,7 @@ public class King extends Piece {
    */
   @Override
   public void calculate(Board board) {
+    canDefeatKing = false;
     possibleMoves = new Coordinate[9];
     int k = 0;
     for (int i = coordinate.getX() - 1; i <= coordinate.getX() + 1; i++) {
@@ -55,5 +56,13 @@ public class King extends Piece {
       }
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
+
+    //Testing if the King can defeat the enemy King.
+    for (int i = 0; i < possibleMoves.length; i++) {
+      if (board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.OTHER_KING) {
+        canDefeatKing = true;
+        break;
+      }
+    }
   }
 }

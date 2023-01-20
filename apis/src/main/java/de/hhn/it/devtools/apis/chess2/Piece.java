@@ -28,6 +28,22 @@ public abstract class Piece {
    */
   protected char color;
 
+  /**
+   * Indicates if the piece can defeat the king.
+   */
+  protected boolean canDefeatKing;
+
+  /**
+   * The constructor of the piece class.
+   *
+   * @param color is the color of the piece
+   * @param coordinate is the coordinate where the piece stands at the beginning
+   */
+  public Piece(char color, Coordinate coordinate) {
+    this.color = color;
+    this.coordinate = coordinate;
+    canDefeatKing = false;
+  }
 
   /**
    * All possible moves are returned as a List of x, y coordinates.
@@ -75,14 +91,18 @@ public abstract class Piece {
   }
 
   /**
+   * Returns if the piece is able to defeat the enemy king.
+   *
+   * @return if the piece can defeat the enemy king.
+   */
+  public boolean getCanDefeatKing() {
+    return canDefeatKing;
+  }
+
+  /**
    * This method calculates the possible moves of the piece.
    */
   public abstract void calculate(Board board);
-
-  public Piece(char color, Coordinate coordinate) {
-    this.color = color;
-    this.coordinate = coordinate;
-  }
 
   /**
    * This method takes a Coordinate[] and a ArrayList of invalid index and returns the shortened
@@ -95,6 +115,15 @@ public abstract class Piece {
   protected Coordinate[] shortenCoordinateArray(Coordinate[] possibleMoves,
       ArrayList<Integer> index) {
     Coordinate[] shortedArray = new Coordinate[possibleMoves.length - index.size()];
+
+    if (shortedArray.length == 0) {
+      return shortedArray;
+    }
+
+    if (index.size() == 0) {
+      return possibleMoves;
+    }
+
     int j = 0;
     int k = 0;
 
@@ -123,7 +152,7 @@ public abstract class Piece {
       Set<Integer> index) {
     Coordinate[] shortedArray;
 
-    if(possibleMoves.length == index.size()){
+    if (possibleMoves.length == index.size()) {
       return shortedArray = new Coordinate[0];
     }
 
@@ -133,7 +162,7 @@ public abstract class Piece {
     int k = 0;
 
     Iterator iterator;
-    for (iterator = index.iterator(); iterator.hasNext();){
+    for (iterator = index.iterator(); iterator.hasNext();) {
       array[j++] = (Integer) iterator.next();
     }
 

@@ -6,9 +6,9 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane maxHeight="680.0" maxWidth="1080.0" minHeight="680.0" minWidth="1080.0" prefHeight="680.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.Chess2ServiceController">
    <children>
@@ -26,6 +26,7 @@
                               <Insets left="422.0" right="422.0" />
                            </VBox.margin>
                         </Label>
+                        <BorderPane fx:id="boardPane" prefHeight="642.0" prefWidth="947.0" />
                      </children>
                   </VBox>
                </children>
@@ -66,7 +67,7 @@
                               <Font size="18.0" />
                            </font>
                         </Button>
-                        <Button fx:id="rulesButton" mnemonicParsing="false" onAction="#onRulesButtonClick" text="Rules" textAlignment="CENTER">
+                        <Button mnemonicParsing="false" onAction="#onRulesButtonClick" text="Rules" textAlignment="CENTER">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="400.0" />
                            </VBox.margin>
