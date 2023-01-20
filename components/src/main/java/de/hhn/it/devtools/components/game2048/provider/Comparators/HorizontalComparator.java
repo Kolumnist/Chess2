@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.components.game2048.provider.Comparators;
 
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.game2048.Block;
 import de.hhn.it.devtools.apis.game2048.MovingDirection;
 
@@ -19,7 +20,7 @@ public class HorizontalComparator implements Comparator<Block> {
    */
   private boolean leftRight;
 
-  public HorizontalComparator(MovingDirection direction) {
+  public HorizontalComparator(MovingDirection direction) throws IllegalParameterException {
     switch (direction) {
       case right -> {
         leftRight = true;
@@ -28,7 +29,7 @@ public class HorizontalComparator implements Comparator<Block> {
         leftRight = false;
       }
       default -> {
-        logger.warn("Wrong Comparator for this direktion: " + direction);
+        throw new IllegalParameterException("Wrong Comparator for this direktion: " + direction);
       }
     }
   }
