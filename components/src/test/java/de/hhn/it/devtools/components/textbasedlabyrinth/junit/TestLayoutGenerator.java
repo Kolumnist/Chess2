@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestLayoutGenerator {
     private static final org.slf4j.Logger logger =
-            org.slf4j.LoggerFactory.getLogger(TestMap.class);
+            org.slf4j.LoggerFactory.getLogger(TestLayoutGenerator.class);
 
     private Map map;
     private Seed seedLow;

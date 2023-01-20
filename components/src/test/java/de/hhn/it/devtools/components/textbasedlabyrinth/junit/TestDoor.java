@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestDoor {
     private static final org.slf4j.Logger logger =
-            org.slf4j.LoggerFactory.getLogger(TestMap.class);
+            org.slf4j.LoggerFactory.getLogger(TestDoor.class);
 
     private Door door;
 

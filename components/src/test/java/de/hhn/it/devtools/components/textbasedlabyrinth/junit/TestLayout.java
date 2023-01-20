@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestLayout {
     private static final org.slf4j.Logger logger =
-            org.slf4j.LoggerFactory.getLogger(TestMap.class);
+            org.slf4j.LoggerFactory.getLogger(TestLayout.class);
 
     private Layout layout;
     private Player player;
