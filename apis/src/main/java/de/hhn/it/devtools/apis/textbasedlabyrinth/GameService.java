@@ -35,7 +35,7 @@ public interface GameService {
   String dropItem(int itemId) throws NoSuchItemFoundException;
 
 
-  void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException;
+  String inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException;
 
   /**
    * Inspect a door/pathway.

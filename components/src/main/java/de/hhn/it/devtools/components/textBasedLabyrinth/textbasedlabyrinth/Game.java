@@ -62,6 +62,8 @@ public class Game implements GameService {
   public void reset() {
     player.reset();
     score = 0;
+    currentRoom = currentLayout.getStartRoom();
+    player.setCurrentRoomOfPlayer(currentRoom);
     for (OutputListener outputListener : listeners) {
       outputListener.listenerReset();
     }
@@ -250,11 +252,12 @@ public class Game implements GameService {
 
 
   @Override
-  public void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException {
+  public String inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException {
     String message = player.getItem(itemId).getInfo();
     for (OutputListener outputListener : listeners) {
       outputListener.sendOutputInventory(message);
     }
+    return message;
   }
 
   /**
@@ -335,6 +338,7 @@ public class Game implements GameService {
     }
 
     generator.setLayout(currentLayout);
+    this.map = newMap;
     currentRoom = currentLayout.getStartRoom();
   }
 
