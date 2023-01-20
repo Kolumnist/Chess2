@@ -22,7 +22,7 @@ public class ConnectFour implements IConnectFour {
 
   private Game game;
   private HashMap<UUID, Profile> profiles = new HashMap<>();
-  private List<IConnectFourListener> listeners = new LinkedList<>();
+  private final List<IConnectFourListener> listeners = new LinkedList<>();
 
   /**
    * Adds a listener to get updates on the state of the game or the current match.
@@ -126,9 +126,9 @@ public class ConnectFour implements IConnectFour {
    * @throws NoSuchElementException If no profiles are registered.
    */
   @Override
-  public List<Profile> getProfiles() {
+  public HashMap<UUID,Profile> getProfiles() {
     logger.info("getProfiles: no params");
-    return new LinkedList<>(profiles.values());
+    return profiles;
   }
 
   /**
@@ -137,8 +137,9 @@ public class ConnectFour implements IConnectFour {
    * @param profiles The profiles.
    */
   @Override
-  public void setProfiles(List<Profile> profiles) {
+  public void setProfiles(HashMap<UUID,Profile> profiles) {
     logger.info("setProfiles: profiles = {}", profiles);
+    this.profiles = profiles;
   }
 
   /**
@@ -187,8 +188,9 @@ public class ConnectFour implements IConnectFour {
   public void placeDiscInColumn(int column) throws IllegalOperationException {
     logger.info("placeDiscIn: column = {}", column);
     game.placeDiscInColumn(column);
-    listeners.get(0).descriptionChanged(game.getDescription());
-    listeners.get(0).boardChanged(
+    listeners.get(0).update(
+        game.getMatchState(),
+        game.getDescription(),
         game.getBoard().getAffectedColumn(),
         game.getBoard().getAffectedRow(),
         game.getBoard().getAffectedColor()

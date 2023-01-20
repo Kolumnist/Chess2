@@ -1,9 +1,11 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
 import de.hhn.it.devtools.apis.connectfour.enums.GameState;
+import de.hhn.it.devtools.apis.connectfour.enums.MatchState;
 import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFourListener;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Tile;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.board.Tile;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.computer.Computer;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIO;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,9 +25,12 @@ public class GameController implements Initializable, IConnectFourListener {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(GameController.class);
 
+  private final FileIO file = new FileIO();
+
+  private final Timer timer = new Timer(true);
+
   private final Tile[][] tiles = new Tile[7][6];
 
-  private FileIO file = new FileIO();
 
   @FXML
   Pane root;
@@ -33,8 +38,6 @@ public class GameController implements Initializable, IConnectFourListener {
   GridPane board;
   @FXML
   TextArea output;
-
-  Timer t = new Timer(true);
 
   @FXML
   void onQuit() {
@@ -50,19 +53,6 @@ public class GameController implements Initializable, IConnectFourListener {
     initialize(null, null);
   }
 
-  public void updateTiles() {
-    Disc[][] b = Instance.getInstance().getDiscs();
-    // column
-    for (int i = 0; i < b.length; i++) {
-      // row
-      for (int j = 0; j < b[i].length; j++) {
-        if (b[i][j] != null) {
-          tiles[i][5 - j].setColor(Color.valueOf(b[i][j].color().toString()));
-        }
-      }
-    }
-  }
-
   public void update() {
     lock();
     logger.info("update board");
@@ -75,7 +65,7 @@ public class GameController implements Initializable, IConnectFourListener {
     if (Instance.getInstance().computerIsNext()) {
       logger.info("Computer is next");
       Instance.getInstance().play();
-      t.schedule(new TimerTask() {
+      timer.schedule(new TimerTask() {
         @Override
         public void run() {
           update();
@@ -96,8 +86,8 @@ public class GameController implements Initializable, IConnectFourListener {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    logger.info("initialize: location = {}, resources = {}", location, resources);
     lock();
-    logger.info("Initializing...");
     for (int column = 0; column < 7; column++) {
       for (int row = 0; row < 6; row++) {
         Tile tile = new Tile(column, row, this);
@@ -105,28 +95,14 @@ public class GameController implements Initializable, IConnectFourListener {
         tiles[column][row] = tile;
       }
     }
-    Instance.getInstance().initializeGame();
-    if (Instance.getInstance().computerIsNext()) {
-      logger.info("Computer begins");
-      Instance.getInstance().play();
-      t.schedule(new TimerTask() {
-        @Override
-        public void run() {
-          update();
-        }
-      }, 500);
-    } else {
-      update();
-    }
   }
 
   @Override
-  public void boardChanged(int column, int row, String color) {
-    tiles[column][row].setColor(Color.valueOf(color));
-  }
-
-  @Override
-  public void descriptionChanged(String description) {
+  public void update(MatchState matchState, String description, int column, int row, String color) {
     output.setText(description);
+    tiles[column][row].setColor(Color.valueOf(color));
+    if(matchState == MatchState.COMPUTER_IS_PLAYING){
+
+    }
   }
 }

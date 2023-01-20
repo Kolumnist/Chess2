@@ -1,9 +1,9 @@
-package de.hhn.it.devtools.javafx.controllers.connectfour.helper;
+package de.hhn.it.devtools.javafx.controllers.connectfour.helper.board;
 
-import de.hhn.it.devtools.apis.connectfour.enums.GameState;
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import de.hhn.it.devtools.javafx.controllers.connectfour.GameController;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.layout.Background;
@@ -47,22 +47,13 @@ public class Tile extends Pane {
     );
     setColor(Color.WHITE);
     setCursor(Cursor.HAND);
-
     setOnMouseClicked(event -> {
-      // If the disc can be placed...
       controller.lock();
       try {
         ConnectFour instance = Instance.getInstance();
         instance.placeDiscInColumn(column);
-        // set tile color
-        controller.update();
-        if (instance.getGameState() == GameState.FINISHED) {
-          controller.lock();
-        } else {
-          controller.unlock();
-        }
       } catch (IllegalOperationException e) {
-        // ...
+        controller.unlock();
       }
     });
   }
@@ -73,6 +64,7 @@ public class Tile extends Pane {
    * @param color color of the disc
    */
   public void setColor(Color color) {
+    logger.info("setColor: color = {}", color);
     setBackground(new Background(new BackgroundFill(
         color,
         new CornerRadii(90),

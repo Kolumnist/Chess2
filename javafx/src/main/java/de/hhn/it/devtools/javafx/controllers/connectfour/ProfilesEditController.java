@@ -1,9 +1,8 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
-import de.hhn.it.devtools.apis.connectfour.IllegalNameException;
-import de.hhn.it.devtools.apis.connectfour.ProfileNotFoundException;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.FileIO;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIO;
+import java.util.NoSuchElementException;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +19,7 @@ public class ProfilesEditController {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(HighscoresController.class);
 
-  private FileIO file = new FileIO();
+  private final FileIO file = new FileIO();
 
   @FXML
   BorderPane root;
@@ -45,13 +44,13 @@ public class ProfilesEditController {
   }
 
   @FXML
-  void onSave(){
+  void onSave() {
     logger.info("Edit Profile saved...");
     Stage stage = (Stage) saveButton.getScene().getWindow();
     try {
       ProfilesInfoController.pinfo.setName(nameText.getText());
-    } catch (IllegalNameException ex){
-      System.err.println(ex);
+    } catch (IllegalArgumentException e) {
+      System.err.println(e.getMessage());
     }
     file.saveProfileData();
     stage.close();
@@ -64,12 +63,12 @@ public class ProfilesEditController {
     alert.setHeaderText("You're about to delete " + ProfilesInfoController.pinfo.getName() + "!");
     alert.setContentText("Do you want to delete this Profile?");
 
-    if(alert.showAndWait().get() == ButtonType.OK){
+    if (alert.showAndWait().isPresent() && alert.showAndWait().get() == ButtonType.OK) {
       Stage stage = (Stage) root.getScene().getWindow();
       try {
         Instance.getInstance().deleteProfile(ProfilesInfoController.pinfo.getId());
         ProfilesInfoController.pinfo = null;
-      } catch (ProfileNotFoundException ex){
+      } catch (NoSuchElementException e) {
         stage.close();
       }
       file.saveProfileData();
@@ -78,10 +77,9 @@ public class ProfilesEditController {
   }
 
   @FXML
-  public void initialize(){
+  public void initialize() {
     saveButton.disableProperty().bind(Bindings.isEmpty(nameText.textProperty()));
     Image profileImg = new Image("/fxml/connectfour/files/images/dummy-profile-pic.png");
     profileImageView.setImage(profileImg);
   }
-
 }

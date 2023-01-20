@@ -1,13 +1,8 @@
 package de.hhn.it.devtools.javafx.controllers;
 
-import de.hhn.it.devtools.apis.connectfour.Profile;
 import de.hhn.it.devtools.javafx.controllers.connectfour.SceneChanger;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.FileIO;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
-import java.util.LinkedList;
-import java.util.List;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIO;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -15,7 +10,7 @@ import javafx.scene.layout.BorderPane;
  */
 public class ConnectFourController extends Controller {
 
-  private FileIO file = new FileIO();
+  private final FileIO file = new FileIO();
 
   @FXML
   BorderPane root;

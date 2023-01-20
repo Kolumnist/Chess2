@@ -12,30 +12,42 @@ public class SingleplayerGame extends Game {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SingleplayerGame.class);
 
-  private final Profile player;
+  private final Profile player1;
 
   /**
    * Creates a new singleplayer game.
    *
-   * @param player The player.
+   * @param player1 The player.
    */
-  public SingleplayerGame(Profile player, boolean player1IsFirst) {
-    logger.info("Constructor - player = {}", player);
-    this.player = player;
+  public SingleplayerGame(Profile player1, boolean player1IsFirst) {
+    logger.info("Constructor - player = {}", player1);
+    this.player1 = player1;
     this.player1IsFirst = player1IsFirst;
     if (player1IsFirst) {
       matchState = MatchState.PLAYER_1_IS_PLAYING;
     } else {
-      matchState = MatchState.PLAYER_2_IS_PLAYING;
+      matchState = MatchState.COMPUTER_IS_PLAYING;
     }
   }
 
-  /**
-   * Initialize the board.
-   */
   @Override
-  protected void initializeBoard() {
-    board = new Board(matchState);
+  public void restart() {
+    logger.info("restart: no params");
+    if (gameState == GameState.FINISHED) {
+      if (player1IsFirst) {
+        matchState = MatchState.COMPUTER_IS_PLAYING;
+        player1IsFirst = false;
+      } else {
+        matchState = MatchState.PLAYER_1_IS_PLAYING;
+        player1IsFirst = true;
+      }
+    } else {
+      if (player1IsFirst) {
+        matchState = MatchState.PLAYER_1_IS_PLAYING;
+      } else {
+        matchState = MatchState.COMPUTER_IS_PLAYING;
+      }
+    }
   }
 
   /**
@@ -53,13 +65,13 @@ public class SingleplayerGame extends Game {
     if (gameState == GameState.FINISHED) {
       switch (matchState) {
         case PLAYER_1_WON -> {
-          player.addSingleplayerWin();
+          player1.addSingleplayerWin();
         }
-        case PLAYER_2_WON -> {
-          player.addSingleplayerLoose();
+        case COMPUTER_WON -> {
+          player1.addSingleplayerLoose();
         }
         default -> {
-          player.addSingleplayerDraw();
+          player1.addSingleplayerDraw();
         }
       }
     }
@@ -73,6 +85,6 @@ public class SingleplayerGame extends Game {
   @Override
   public String getDescription() {
     logger.info("getDescription: no params");
-    return descriptor.describeSingleplayer(matchState, player);
+    return descriptor.describeSingleplayer(matchState, player1);
   }
 }

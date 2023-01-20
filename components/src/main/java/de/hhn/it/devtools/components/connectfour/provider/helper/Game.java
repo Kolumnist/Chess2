@@ -20,38 +20,17 @@ public abstract class Game {
   /**
    * Restarts the game.
    */
-  public void restart() {
-    logger.info("restart: no params");
-    if (gameState == GameState.FINISHED) {
-      if (player1IsFirst) {
-        matchState = MatchState.PLAYER_2_IS_PLAYING;
-        player1IsFirst = false;
-      } else {
-        matchState = MatchState.PLAYER_1_IS_PLAYING;
-        player1IsFirst = true;
-      }
-    } else {
-      if (player1IsFirst) {
-        matchState = MatchState.PLAYER_1_IS_PLAYING;
-      } else {
-        matchState = MatchState.PLAYER_2_IS_PLAYING;
-      }
-    }
-    initializeBoard();
-  }
+  public abstract void restart();
 
   /**
-   * Reset board.
-   */
-  protected abstract void initializeBoard();
-
-  /**
-   * Places the disc of the current player in the specified column.
+   * Returns the current match state.
    *
-   * @param column The column in which the disc is to be placed in.
-   * @throws IllegalOperationException If column is full.
+   * @return The current match state.
    */
-  public abstract void placeDiscInColumn(int column) throws IllegalOperationException;
+  public MatchState getMatchState() {
+    logger.info("getMatchState: no params");
+    return matchState;
+  }
 
   /**
    * Describes the current match state.
@@ -61,12 +40,20 @@ public abstract class Game {
   public abstract String getDescription();
 
   /**
-   * Returns the game board.
+   * Returns the board.
    *
-   * @return The board.
+   * @return The game board.
    */
   public Board getBoard() {
     logger.info("getBoard: no params");
     return board;
   }
+
+  /**
+   * Places the disc of the current player in the specified column.
+   *
+   * @param column The column in which the disc is to be placed in.
+   * @throws IllegalOperationException If column is full.
+   */
+  public abstract void placeDiscInColumn(int column) throws IllegalOperationException;
 }

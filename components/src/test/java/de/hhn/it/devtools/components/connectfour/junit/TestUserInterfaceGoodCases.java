@@ -25,7 +25,7 @@ public class TestUserInterfaceGoodCases {
   public void addNewProfile() throws IllegalArgumentException {
     int profileCount = connectFour.getProfiles().size();
     connectFour.createProfile("Max");
-    List<Profile> profiles = connectFour.getProfiles();
+    List<Profile> profiles = connectFour.getProfiles().values().stream().toList();
     assertEquals(profileCount + 1, profiles.size(),
         "There should be exactly one additional profile in the list.");
   }
@@ -39,7 +39,7 @@ public class TestUserInterfaceGoodCases {
     Profile bob = connectFour.createProfile("Bob");
     connectFour.createProfile("Carl");
     connectFour.deleteProfile(bob.getId());
-    List<Profile> profiles = connectFour.getProfiles();
+    List<Profile> profiles = connectFour.getProfiles().values().stream().toList();
     assertEquals(profileCount + 2, profiles.size());
   }
 }

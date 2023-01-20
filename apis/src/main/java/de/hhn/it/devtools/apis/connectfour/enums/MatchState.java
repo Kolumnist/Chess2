@@ -5,23 +5,31 @@ package de.hhn.it.devtools.apis.connectfour.enums;
  */
 public enum MatchState {
   /**
-   * Player A can place the disk.
+   * Player 1 can place the disk.
    */
-  PLAYER_1_IS_PLAYING(),
+  PLAYER_1_IS_PLAYING,
   /**
-   * Player A places the disk.
+   * Player 2 places the disk.
    */
-  PLAYER_2_IS_PLAYING(),
+  PLAYER_2_IS_PLAYING,
+  /**
+   * Computer places the disk.
+   */
+  COMPUTER_IS_PLAYING,
   /**
    * Player A won the game.
    */
-  PLAYER_1_WON(),
+  PLAYER_1_WON,
   /**
    * Player B won the game.
    */
-  PLAYER_2_WON(),
+  PLAYER_2_WON,
+  /**
+   * Computer places the disk.
+   */
+  COMPUTER_WON,
   /**
    * Neither Player A nor Player B won the game.
    */
-  DRAW();
+  DRAW,
 }

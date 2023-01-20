@@ -65,6 +65,8 @@ public class Board {
   /**
    * Get next match state.
    */
+
+  // make boolean
   private void nextState() {
     logger.info("nextState: no params");
     final int maxX = 7;

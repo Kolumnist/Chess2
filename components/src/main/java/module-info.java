@@ -1,5 +1,4 @@
 import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFour;
-import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFourListener;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 
 module devtools.components {
@@ -17,7 +16,5 @@ module devtools.components {
   // -----------------------------------------------------------------------------------------------
   provides IConnectFour                                                             // Connect Four
       with ConnectFour;
-  provides IConnectFourListener
-      with ConnectFourListener;
   // -----------------------------------------------------------------------------------------------
 }

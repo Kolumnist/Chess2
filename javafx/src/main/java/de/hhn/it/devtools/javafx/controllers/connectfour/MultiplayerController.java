@@ -3,8 +3,8 @@ package de.hhn.it.devtools.javafx.controllers.connectfour;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.ProfileNameComparator;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.enums.StartingPlayer;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.ProfileNameComparator;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
@@ -50,36 +50,20 @@ public class MultiplayerController implements Initializable {
   @FXML
   void onStart() {
     logger.info("Starting");
-    ConnectFour game = Instance.getInstance();
-    game.setMode(Mode.MULTIPLAYER);
+    ConnectFour instance = Instance.getInstance();
     switch (startingPlayer) {
-      case PLAYER1 -> {
-        game.setPlayer1(player1);
-        game.setPlayer2(player2);
-      }
-      case PLAYER2 -> {
-        game.setPlayer1(player2);
-        game.setPlayer2(player1);
-      }
-      case RANDOM -> {
-        if (Math.random() > 0.5) {
-          game.setPlayer1(player1);
-          game.setPlayer2(player2);
-        } else {
-          game.setPlayer1(player2);
-          game.setPlayer2(player1);
-        }
-      }
-      default -> logger.debug("Something went wrong");
+      case PLAYER1 -> instance.playMultiplayerMode(player1, player2, true);
+      case PLAYER2 -> instance.playMultiplayerMode(player1, player2, false);
+      default -> instance.playMultiplayerMode(player1, player2, Math.random() > 0.5);
     }
     SceneChanger.changeScene(root, "/fxml/connectfour/GameScreen.fxml");
   }
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    logger.info("Initializing");
+    logger.info("initialize: location = {}, resources = {}", location, resources);
 
-    // player 1
+    // Player 1:
     List<Profile> profiles = Instance.getInstance().getProfiles();
     Comparator<Profile> comparator = new ProfileNameComparator();
     profiles.sort(comparator);
@@ -87,8 +71,7 @@ public class MultiplayerController implements Initializable {
     player1ChoiceBox.setOnAction(event -> {
       player1 = player1ChoiceBox.getValue();
       player1ChoiceBox.setDisable(true);
-      logger.info("Player 1: " + player1);
-      // player 2
+      // Player 2:
       for (Profile profile : Instance.getInstance().getProfiles()) {
         if (profile != player1) {
           player2ChoiceBox.getItems().add(profile);
@@ -98,8 +81,7 @@ public class MultiplayerController implements Initializable {
       player2ChoiceBox.setOnAction(event2 -> {
         player2ChoiceBox.setDisable(true);
         player2 = player2ChoiceBox.getValue();
-        logger.info("Player 2: " + player2);
-        // starting player
+        // Starting player:
         startingPlayerChoiceBox.getItems().add(StartingPlayer.PLAYER1);
         startingPlayerChoiceBox.getItems().add(StartingPlayer.PLAYER2);
         startingPlayerChoiceBox.getItems().add(StartingPlayer.RANDOM);
@@ -107,8 +89,7 @@ public class MultiplayerController implements Initializable {
         startingPlayerChoiceBox.setOnAction(event3 -> {
           startingPlayerChoiceBox.setDisable(true);
           startingPlayer = startingPlayerChoiceBox.getValue();
-          logger.info("Starting player: " + startingPlayer);
-          // start
+          // Start.
           startButton.setDisable(false);
         });
       });

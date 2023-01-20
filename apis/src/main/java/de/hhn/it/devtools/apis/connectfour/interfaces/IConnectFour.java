@@ -2,7 +2,7 @@ package de.hhn.it.devtools.apis.connectfour.interfaces;
 
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
-import java.util.List;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -70,20 +70,20 @@ public interface IConnectFour {
    * @return List of user profiles.
    * @throws NoSuchElementException If no profiles are registered.
    */
-  List<Profile> getProfiles() throws NoSuchElementException;
+  HashMap<UUID, Profile> getProfiles() throws NoSuchElementException;
 
   /**
    * Set all user profiles.
    *
    * @param profiles The profiles.
    */
-  void setProfiles(List<Profile> profiles) throws IllegalArgumentException;
+  void setProfiles(HashMap<UUID, Profile> profiles) throws IllegalArgumentException;
 
   /**
    * Create new singleplayer game.
    *
-   * @param player        The profile of the player.
-   * @param playerIsFirst True, if player 1 begins. Otherwise, false.
+   * @param player         The profile of the player.
+   * @param player1IsFirst True, if player 1 begins. Otherwise, false.
    * @throws IllegalArgumentException If the argument isn't a valid player profile.
    */
   void playSingleplayerGame(Profile player, boolean player1IsFirst) throws IllegalArgumentException;
