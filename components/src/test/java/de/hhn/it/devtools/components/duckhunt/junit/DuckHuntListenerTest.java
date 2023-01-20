@@ -23,12 +23,13 @@ class DuckHuntListenerTest implements DuckHuntListener {
   @Override
   public void newDuckPosition(DucksInfo duckPosition) throws IllegalDuckPositionException {
     this.duckPosition = duckPosition;
-    System.out.println(duckPosition.duckData()[0]);
+    //System.out.println(duckPosition.duckData()[0]);
     newDuckPositionCallCount++;
   }
 
   @Override
   public void duckHit(int id) throws IllegalDuckIdException {
+    System.out.println("Duck " + id + " was hit");
     duckHitId = id;
   }
 }
