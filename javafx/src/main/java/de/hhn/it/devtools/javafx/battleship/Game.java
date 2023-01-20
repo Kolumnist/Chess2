@@ -62,7 +62,7 @@ public class Game extends Stage{
                            'K', 'L', 'M', 'N', 'O'};
 
 
-
+        // Creates the upper Playground
         for ( int k = 0; k <sizeGrid; k++) {
             Label lblAbc = new Label(abc[k].toString());
             lblAbc.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-padding: 0 15 0 0 ");
@@ -92,7 +92,7 @@ public class Game extends Stage{
         }
 
 
-
+        // Labels the playgrounds with numbers
         for(int i = 1; i<=sizeGrid ; i++){
             Label numbers = new Label(Integer.toString(i));
             numbers.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-padding: 15 0 -50  15");
@@ -100,6 +100,8 @@ public class Game extends Stage{
             playgroundUpper.add(numbers,i,sizeGrid);
         }
 
+
+        // Creates the lower Playground
         for (int k = 0; k <sizeGrid; k++) {
             Label lblAbc = new Label(abc[k].toString());
             lblAbc.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-padding: 0 15 0 0 ");
@@ -127,6 +129,8 @@ public class Game extends Stage{
             }
         }
 
+
+        // Menubar functionality
         helpRules.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -134,6 +138,7 @@ public class Game extends Stage{
             }
         });
 
+        // Menubar functionality
         helpShipsLeft.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -141,6 +146,7 @@ public class Game extends Stage{
             }
         });
 
+        // Menubar functionality
         soundChangeVolume.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -148,6 +154,7 @@ public class Game extends Stage{
             }
         });
 
+        // Menubar functionality
         gameSave.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -157,6 +164,7 @@ public class Game extends Stage{
             }
         });
 
+        // Menubar functionality
         gameLoad.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -166,6 +174,7 @@ public class Game extends Stage{
             }
         });
 
+        // Menubar functionality
         gameConcede.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {

@@ -41,5 +41,16 @@ public class Player {
         return ownedShips;
     }
 
+    public Ship returnNextShip(ShipType type){
+
+        int size = type.getShipSize();
+
+        for (Ship ownedShip : ownedShips) {
+            if ( ownedShip.getSize() == size) return ownedShip;
+        }
+
+        return null;
+    }
+
 
 }

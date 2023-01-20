@@ -16,4 +16,6 @@
     -fx-spacing: 30px;
 }
 
-
+.buttonSelectShip {
+    -fx-background-color: red;
+}

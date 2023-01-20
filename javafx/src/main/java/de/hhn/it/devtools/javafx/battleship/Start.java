@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 
 public class Start extends Application {
     static Stage mainStage = new Stage();
-
+    GameMenu gameMenu;
     /**
      * The main entry point for all JavaFX applications.
      * The start method is called after the init method has returned,
@@ -24,7 +24,7 @@ public class Start extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        GameMenu test = new GameMenu();
+         gameMenu = new GameMenu();
 
 
 

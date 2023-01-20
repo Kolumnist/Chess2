@@ -20,6 +20,7 @@ public class GameMenu{
     Button smallGame = new Button("Small (5x5)");
     Button mediumGame = new Button("Medium (10x10)");
     Button bigGame = new Button("Big (15x15)");
+    Game game;
 
     public GameMenu() throws FileNotFoundException {
 
@@ -76,7 +77,7 @@ public class GameMenu{
     }
 
     public void createService(int size){
-        Game game = new Game(size);
+        game = new Game(size);
         try {
             CmpBattleshipService.service.createFields(size);
         } catch (IllegalGameStateException | IllegalShipStateException | IllegalPositionException e) {

@@ -14,7 +14,7 @@ public class Ship {
     private Position fieldPosition;
     private boolean placed;
     private Owner owner;
-    private static int counterId=0;
+    private static int counterId = 0;
     private int id;
 
     /**
