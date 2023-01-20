@@ -20,7 +20,7 @@ public class CmpBattleshipService implements BattleshipService {
     static GameState currentGameState = GameState.PREGAME;
     int gameVolume;
     private final Player player = new Player();
-    private final Computer computer = new Computer();;
+    private final Computer computer = new Computer();
     private ArrayList<BattleshipListener> listeners;
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(CmpBattleshipService.class);
@@ -103,12 +103,7 @@ public class CmpBattleshipService implements BattleshipService {
             throw new IllegalGameStateException("Wrong GameState! Required GameState is PlacingShips");
         }
 
-        if(isVertical){
-            return checkShipOnPanel(true, y1, endY, x1);
-        }
-        else {
-            return checkShipOnPanel(false, x1, endX, y1);
-        }
+        return checkShipOnPanel(isVertical, y1, endY, x1);
     }
 
     /**
@@ -133,12 +128,8 @@ public class CmpBattleshipService implements BattleshipService {
                 }
             }
         }
-        if(endCoordinate < Field.getSize()){  // < fieldSize, because if fielSize = 5 -> 0 to 4
-            return true;
-        }
-        else {
-            return false;
-        }
+        // < fieldSize, because if fielSize = 5 -> 0 to 4
+        return endCoordinate < Field.getSize();
     }
 
     // nedim
@@ -151,8 +142,6 @@ public class CmpBattleshipService implements BattleshipService {
         int endX = (x1 + shipToPlace.getSize()) - 1;
         // if y1 is the end point (top point) of the ship then this calculation:
         int endY = (y1 + shipToPlace.getSize()) - 1;
-        PanelState[][] panelStateField;
-        Field shipField;
 
         if(isPlaced){
             throw new IllegalShipStateException("Ship is already placed");
@@ -164,21 +153,19 @@ public class CmpBattleshipService implements BattleshipService {
             throw new IllegalPositionException("Ship cannot be placed");
         }
         else if(isPlacementPossible(player, shipToPlace, x1, y1, isVertical)){
-            panelStateField = player.getShipField().getPanelMarkerMat();
-            shipField = player.getShipField();
             // set ship on field and change placed state to true
             shipToPlace.setPlaced(true);
             shipToPlace.setFieldPosition(x1, y1);
             if(isVertical){
                 for(int i = y1; i <= endY; i++){
-                    panelStateField[i][x1] = PanelState.SHIP;
-                    shipField.setPanelMarker(x1, i, PanelState.SHIP);
+                    player.getShipField().getPanelMarkerMat()[i][x1] = PanelState.SHIP;
+                    player.getShipField().setPanelMarker(x1, i, PanelState.SHIP);
                 }
             }
-            else if(!isVertical){
+            else {
                 for(int i = x1; i <= endX; i++){
-                    panelStateField[y1][i] = PanelState.SHIP;
-                    shipField.setPanelMarker(i, y1, PanelState.SHIP);
+                    player.getShipField().getPanelMarkerMat()[y1][i] = PanelState.SHIP;
+                    player.getShipField().setPanelMarker(i, y1, PanelState.SHIP);
                 }
             }
         }
@@ -212,7 +199,7 @@ public class CmpBattleshipService implements BattleshipService {
                 shipField.setPanelMarker(x, i, PanelState.NOSHIP);
             }
         }
-        else if(!isVertical){
+        else {
             for(int i = x; i <= endX; i++){
                 panelStateField[y][i] = PanelState.NOSHIP;
                 shipField.setPanelMarker(i, y, PanelState.NOSHIP);
@@ -238,12 +225,7 @@ public class CmpBattleshipService implements BattleshipService {
         }
 
         // check if ship is vertical and can be placed horizontally
-        if(isVertical){
-            shipToRotate.setIsVertical(false);
-        }
-        else if(!isVertical){
-            shipToRotate.setIsVertical(true);
-        }
+        shipToRotate.setIsVertical(!isVertical);
     }
 
     // nuri
