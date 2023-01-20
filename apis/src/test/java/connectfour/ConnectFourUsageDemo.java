@@ -25,7 +25,7 @@ public class ConnectFourUsageDemo {
     }
 
     // Browse profiles.
-    List<Profile> profiles = connectFour.getProfiles();
+    List<Profile> profiles = connectFour.getProfiles().values().stream().toList();
     Profile profile0 = profiles.get(0);
     Profile profile1 = profiles.get(1);
     Profile profile2 = profiles.get(2);
@@ -45,7 +45,7 @@ public class ConnectFourUsageDemo {
     }
 
     // Play singleplayer mode.
-    connectFour.playSingleplayerGame(profile0);
+    connectFour.playSingleplayerGame(profile0, true);
 
     // profile0: place disc at column 3.
     try {
@@ -54,7 +54,7 @@ public class ConnectFourUsageDemo {
       e.printStackTrace();
     }
 
-    connectFour.playMultiplayerMode(profile2, profile0);
+    connectFour.playMultiplayerGame(profile2, profile0, true);
 
     // profile2: place disc at column 1.
     try {

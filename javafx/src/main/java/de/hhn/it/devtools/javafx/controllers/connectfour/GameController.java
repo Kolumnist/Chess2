@@ -1,11 +1,11 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
-import de.hhn.it.devtools.apis.connectfour.enums.GameState;
 import de.hhn.it.devtools.apis.connectfour.enums.MatchState;
+import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFourListener;
+import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.board.Tile;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.computer.Computer;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIO;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,11 +26,9 @@ public class GameController implements Initializable, IConnectFourListener {
       org.slf4j.LoggerFactory.getLogger(GameController.class);
 
   private final FileIO file = new FileIO();
-
   private final Timer timer = new Timer(true);
-
   private final Tile[][] tiles = new Tile[7][6];
-
+  private final ConnectFour instance = Instance.getInstance();
 
   @FXML
   Pane root;
@@ -41,47 +39,54 @@ public class GameController implements Initializable, IConnectFourListener {
 
   @FXML
   void onQuit() {
-    logger.info("Quitting...");
+    logger.info("onQuit: no params");
     file.saveProfileData();
     SceneChanger.changeScene(root, "/fxml/ConnectFour.fxml");
   }
 
   @FXML
   void onRestart() {
-    logger.info("Restart game");
-    Instance.getInstance().initializeGame();
+    logger.info("onRestart: no params");
+    instance.restart();
     initialize(null, null);
   }
 
-  public void update() {
-    lock();
-    logger.info("update board");
-    updateText();
-    updateTiles();
-    if (Instance.getInstance().getGameState() == GameState.FINISHED
-        || Instance.getInstance().getGameState() == GameState.CANCELED) {
-      return;
-    }
-    if (Instance.getInstance().computerIsNext()) {
-      logger.info("Computer is next");
-      Instance.getInstance().play();
-      timer.schedule(new TimerTask() {
-        @Override
-        public void run() {
-          update();
-        }
-      }, 500);
-    } else {
-      unlock();
-    }
-  }
-
   public void lock() {
+    logger.info("onLock: no params");
     board.setDisable(true);
   }
 
   public void unlock() {
+    logger.info("onUnlock: no params");
     board.setDisable(false);
+  }
+
+  @Override
+  public void update(MatchState matchState, String description, int column, int row, String color) {
+    logger.info(
+        "onUpdate: matchState = {}, description = {}, column = {}, row = {}, color = {}",
+        matchState, description, column, row, color
+    );
+    lock();
+    output.setText(description);
+    tiles[column][row].setColor(Color.valueOf(color));
+    if (matchState == MatchState.COMPUTER_IS_PLAYING) {
+      timer.schedule(new TimerTask() {
+        @Override
+        public void run() {
+          while (true) {
+            try {
+              Instance.getInstance().placeDiscInColumn((int) (Math.random() * 6));
+              unlock();
+              break;
+            } catch (IllegalOperationException ignore) {
+            }
+          }
+        }
+      }, 1000);
+    } else {
+      unlock();
+    }
   }
 
   @Override
@@ -94,15 +99,6 @@ public class GameController implements Initializable, IConnectFourListener {
         board.add(tile, column, row);
         tiles[column][row] = tile;
       }
-    }
-  }
-
-  @Override
-  public void update(MatchState matchState, String description, int column, int row, String color) {
-    output.setText(description);
-    tiles[column][row].setColor(Color.valueOf(color));
-    if(matchState == MatchState.COMPUTER_IS_PLAYING){
-
     }
   }
 }

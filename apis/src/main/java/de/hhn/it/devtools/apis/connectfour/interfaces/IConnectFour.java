@@ -96,7 +96,7 @@ public interface IConnectFour {
    * @param player1IsFirst True, if player 1 begins. Otherwise, false.
    * @throws IllegalArgumentException If the arguments are not valid player profiles.
    */
-  void playMultiplayerMode(Profile player1, Profile player2, boolean player1IsFirst)
+  void playMultiplayerGame(Profile player1, Profile player2, boolean player1IsFirst)
       throws IllegalArgumentException;
 
   /**

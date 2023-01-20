@@ -126,7 +126,7 @@ public class ConnectFour implements IConnectFour {
    * @throws NoSuchElementException If no profiles are registered.
    */
   @Override
-  public HashMap<UUID,Profile> getProfiles() {
+  public HashMap<UUID, Profile> getProfiles() {
     logger.info("getProfiles: no params");
     return profiles;
   }
@@ -137,7 +137,7 @@ public class ConnectFour implements IConnectFour {
    * @param profiles The profiles.
    */
   @Override
-  public void setProfiles(HashMap<UUID,Profile> profiles) {
+  public void setProfiles(HashMap<UUID, Profile> profiles) {
     logger.info("setProfiles: profiles = {}", profiles);
     this.profiles = profiles;
   }
@@ -168,7 +168,7 @@ public class ConnectFour implements IConnectFour {
    * @throws IllegalArgumentException If the arguments are not valid player profiles.
    */
   @Override
-  public void playMultiplayerMode(Profile player1, Profile player2, boolean player1IsFirst)
+  public void playMultiplayerGame(Profile player1, Profile player2, boolean player1IsFirst)
       throws IllegalArgumentException {
     logger.info("playSingleplayerGame: player1 = {}, player2 = {}", player1, player2);
     if (player1 == null || player2 == null) {

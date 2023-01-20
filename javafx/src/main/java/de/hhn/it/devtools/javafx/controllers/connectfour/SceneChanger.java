@@ -9,13 +9,12 @@ public class SceneChanger {
       org.slf4j.LoggerFactory.getLogger(SceneChanger.class);
 
   public static void changeScene(Pane wrapperPane, String screenPath) {
-    logger.info("Try changing to " + screenPath + "...");
+    logger.info("changeScene: wrapperPane = {}, screenPath = {}", wrapperPane, screenPath);
     try {
       FXMLLoader fxmlLoader = new FXMLLoader(SceneChanger.class.getResource(screenPath));
       wrapperPane.getChildren().clear();
       wrapperPane.getChildren().add(fxmlLoader.load());
     } catch (IOException e) {
-      logger.error("Couldn't change to " + screenPath);
       throw new RuntimeException(e);
     }
   }

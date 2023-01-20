@@ -4,7 +4,6 @@ import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIO;
 import java.util.NoSuchElementException;
 import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -23,29 +22,25 @@ public class ProfilesEditController {
 
   @FXML
   BorderPane root;
-
   @FXML
   Button cancelButton;
-
   @FXML
   Button saveButton;
-
   @FXML
   TextField nameText;
-
   @FXML
   ImageView profileImageView;
 
   @FXML
   void onCancel() {
-    logger.info("Edit Profile canceled...");
+    logger.info("onCancel: no params");
     Stage stage = (Stage) cancelButton.getScene().getWindow();
     stage.close();
   }
 
   @FXML
   void onSave() {
-    logger.info("Edit Profile saved...");
+    logger.info("onSave: no params");
     Stage stage = (Stage) saveButton.getScene().getWindow();
     try {
       ProfilesInfoController.pinfo.setName(nameText.getText());
@@ -57,7 +52,8 @@ public class ProfilesEditController {
   }
 
   @FXML
-  void onDelete(ActionEvent event) {
+  void onDelete() {
+    logger.info("onDelete: no params");
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setTitle("Confirm delete");
     alert.setHeaderText("You're about to delete " + ProfilesInfoController.pinfo.getName() + "!");
@@ -78,6 +74,7 @@ public class ProfilesEditController {
 
   @FXML
   public void initialize() {
+    logger.info("initialize: no params");
     saveButton.disableProperty().bind(Bindings.isEmpty(nameText.textProperty()));
     Image profileImg = new Image("/fxml/connectfour/files/images/dummy-profile-pic.png");
     profileImageView.setImage(profileImg);

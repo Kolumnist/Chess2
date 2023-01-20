@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.components.connectfour.provider.helper;
 
+import de.hhn.it.devtools.apis.connectfour.enums.GameState;
 import de.hhn.it.devtools.apis.connectfour.enums.MatchState;
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
@@ -33,15 +34,6 @@ public class MultiplayerGame extends Game {
   }
 
   /**
-   * Initialize the board.
-   */
-  @Override
-  public void initializeBoard() {
-    logger.info("initializeBoard: no params");
-    board = new Board(matchState);
-  }
-
-  /**
    * Place the disc in the specified column.
    *
    * @param column The column in which the disc is to be placed in.
@@ -53,6 +45,26 @@ public class MultiplayerGame extends Game {
     board.placeDiscInColumn(column);
     gameState = board.getGameState();
     matchState = board.getMatchState();
+  }
+
+  @Override
+  public void restart() {
+    logger.info("restart: no params");
+    if (gameState == GameState.FINISHED) {
+      if (player1IsFirst) {
+        matchState = MatchState.PLAYER_2_IS_PLAYING;
+        player1IsFirst = false;
+      } else {
+        matchState = MatchState.PLAYER_1_IS_PLAYING;
+        player1IsFirst = true;
+      }
+    } else {
+      if (player1IsFirst) {
+        matchState = MatchState.PLAYER_1_IS_PLAYING;
+      } else {
+        matchState = MatchState.PLAYER_2_IS_PLAYING;
+      }
+    }
   }
 
   /**

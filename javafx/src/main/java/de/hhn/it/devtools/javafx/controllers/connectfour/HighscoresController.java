@@ -23,42 +23,35 @@ public class HighscoresController implements Initializable {
 
   @FXML
   Pane root;
-
   @FXML
-  ChoiceBox sortByChoiceBox;
-
+  ChoiceBox<SortBy> sortByChoiceBox;
   @FXML
   ListView<Profile> ranking;
-
   @FXML
   ListView<Integer> position;
-
   @FXML
   ListView<Integer> wins;
 
-
   @FXML
   void onBack() {
-    logger.info("Going back...");
+    logger.info("onBack: no params");
     SceneChanger.changeScene(root, "/fxml/ConnectFour.fxml");
   }
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    logger.info("Initializing...");
+    logger.info("initialize: location = {}, resources = {}", location, resources);
     sortByChoiceBox.getItems().addAll(SortBy.values());
     sortByChoiceBox.setValue(SortBy.Multiplayer_RANKING);
     sortByChoiceBox.setOnAction(event -> {
       ranking.getItems().clear();
       position.getItems().clear();
       wins.getItems().clear();
-      List<Profile> profiles = Instance.getInstance().getProfiles();
+      List<Profile> profiles = Instance.getInstance().getProfiles().values().stream().toList();
       if (sortByChoiceBox.getValue() == SortBy.Multiplayer_RANKING) {
-        logger.info("sort by multiplayer");
         profiles.sort(new ProfileMultiplayerComparator());
       } else {
         profiles.sort(new ProfileSingleplayerComparator());
-        logger.info("sort by singleplayer");
       }
       ranking.getItems().addAll(profiles);
       for (int i = 1; i <= profiles.size(); i++) {
@@ -66,8 +59,7 @@ public class HighscoresController implements Initializable {
         wins.getItems().add(profiles.get(i - 1).getSingleplayerWin());
       }
     });
-    List<Profile> profiles = Instance.getInstance().getProfiles();
-    logger.info("sort by multiplayer");
+    List<Profile> profiles = Instance.getInstance().getProfiles().values().stream().toList();
     profiles.sort(new ProfileMultiplayerComparator());
     ranking.getItems().addAll(profiles);
     for (int i = 1; i <= profiles.size(); i++) {

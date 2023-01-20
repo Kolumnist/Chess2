@@ -24,42 +24,32 @@ public class ProfilesInfoController {
 
   @FXML
   Pane root;
-
   @FXML
   ImageView profileImageView;
-
   @FXML
   Label nameLabel;
-
   @FXML
   Button btnEditProfile;
-
   @FXML
   Label swonLabel;
-
   @FXML
   Label mwonLabel;
-
   @FXML
   Label slostLabel;
-
   @FXML
   Label mlostLabel;
-
   @FXML
   Label sdrawLabel;
-
   @FXML
   Label mdrawLabel;
-
   @FXML
   Label swinpLabel;
-
   @FXML
   Label mwinpLabel;
 
   @FXML
   void onEditProfile() {
+    logger.info("onEditProfile: no params");
     try {
       Parent proot =
           FXMLLoader.load(Objects.requireNonNull(
@@ -78,12 +68,13 @@ public class ProfilesInfoController {
 
   @FXML
   void onBack() {
-    logger.info("Going back...");
+    logger.info("onBack: no params");
     SceneChanger.changeScene(root, "/fxml/connectfour/ProfilesScreen.fxml");
   }
 
   @FXML
   public void initialize() {
+    logger.info("initialize: no params");
     if (pinfo == null) {
       SceneChanger.changeScene(root, "/fxml/connectfour/ProfilesScreen.fxml");
     } else {

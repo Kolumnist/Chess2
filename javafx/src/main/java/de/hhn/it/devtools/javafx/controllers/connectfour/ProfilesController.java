@@ -26,15 +26,14 @@ public class ProfilesController {
 
   @FXML
   Pane root;
-
   @FXML
   VBox vBox;
-
   @FXML
   Button btnNewProfile;
 
   @FXML
   void onNewProfile() {
+    logger.info("onNewProfile: no params");
     try {
       Parent proot = FXMLLoader.load(Objects.requireNonNull(
           getClass().getResource("/fxml/connectfour/ProfilesNewScreen.fxml")));
@@ -52,6 +51,7 @@ public class ProfilesController {
 
   @FXML
   void onProfile(ActionEvent event) {
+    logger.info("onProfile: event = {}", event);
     Button button = (Button) event.getTarget();
     try {
       ProfilesInfoController.pinfo =
@@ -64,11 +64,12 @@ public class ProfilesController {
 
   @FXML
   void onBack() {
-    logger.info("Going back...");
+    logger.info("onBack: no params");
     SceneChanger.changeScene(root, "/fxml/ConnectFour.fxml");
   }
 
   public void addProfileButton(Profile p) {
+    logger.info("addProfile: p = {}", p);
     Button next = new Button();
     next.setPrefSize(200, 40);
     next.setText(p.getName());
@@ -79,11 +80,13 @@ public class ProfilesController {
 
   @FXML
   public void initialize() {
-    List<Profile> profiles = new LinkedList<>(Instance.getInstance().getProfiles());
+    logger.info("initialize: no params");
+    List<Profile> profiles =
+        new LinkedList<>(Instance.getInstance().getProfiles().values().stream().toList());
     profiles.sort(Comparator.comparing(Profile::getName));
     vBox.getChildren().clear();
-    for (int count = 0; count < profiles.size(); count++) {
-      addProfileButton(profiles.get(count));
+    for (Profile profile : profiles) {
+      addProfileButton(profile);
     }
   }
 }

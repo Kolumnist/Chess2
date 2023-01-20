@@ -16,29 +16,25 @@ public class ProfilesNewController {
 
   private final FileIO file = new FileIO();
 
-
   @FXML
   Button cancelButton;
-
   @FXML
   Button saveButton;
-
   @FXML
   TextField nameText;
-
   @FXML
   ImageView profileImageView;
 
   @FXML
   void onCancel() {
-    logger.info("Add new Profile canceled...");
+    logger.info("onCancel: no params");
     Stage stage = (Stage) cancelButton.getScene().getWindow();
     stage.close();
   }
 
   @FXML
   void onSave() {
-    logger.info("New Profile created...");
+    logger.info("onSave: no params");
     Stage stage = (Stage) saveButton.getScene().getWindow();
     try {
       Instance.getInstance().createProfile(nameText.getText());
@@ -51,6 +47,7 @@ public class ProfilesNewController {
 
   @FXML
   public void initialize() {
+    logger.info("initialize: no params");
     saveButton.disableProperty().bind(Bindings.isEmpty(nameText.textProperty()));
     Image profileImg = new Image("/fxml/connectfour/files/images/dummy-profile-pic.png");
     profileImageView.setImage(profileImg);

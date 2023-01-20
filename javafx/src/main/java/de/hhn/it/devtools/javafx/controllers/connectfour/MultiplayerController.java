@@ -28,33 +28,29 @@ public class MultiplayerController implements Initializable {
 
   @FXML
   Pane root;
-
   @FXML
   ChoiceBox<Profile> player1ChoiceBox;
-
   @FXML
   ChoiceBox<Profile> player2ChoiceBox;
-
   @FXML
   ChoiceBox<StartingPlayer> startingPlayerChoiceBox;
-
   @FXML
   Button startButton;
 
   @FXML
   void onBack() {
-    logger.info("Going back");
+    logger.info("onBack: no params");
     SceneChanger.changeScene(root, "/fxml/ConnectFour.fxml");
   }
 
   @FXML
   void onStart() {
-    logger.info("Starting");
+    logger.info("onStart: no params");
     ConnectFour instance = Instance.getInstance();
     switch (startingPlayer) {
-      case PLAYER1 -> instance.playMultiplayerMode(player1, player2, true);
-      case PLAYER2 -> instance.playMultiplayerMode(player1, player2, false);
-      default -> instance.playMultiplayerMode(player1, player2, Math.random() > 0.5);
+      case PLAYER1 -> instance.playMultiplayerGame(player1, player2, true);
+      case PLAYER2 -> instance.playMultiplayerGame(player1, player2, false);
+      default -> instance.playMultiplayerGame(player1, player2, Math.random() > 0.5);
     }
     SceneChanger.changeScene(root, "/fxml/connectfour/GameScreen.fxml");
   }
@@ -62,9 +58,8 @@ public class MultiplayerController implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     logger.info("initialize: location = {}, resources = {}", location, resources);
-
     // Player 1:
-    List<Profile> profiles = Instance.getInstance().getProfiles();
+    List<Profile> profiles = Instance.getInstance().getProfiles().values().stream().toList();
     Comparator<Profile> comparator = new ProfileNameComparator();
     profiles.sort(comparator);
     player1ChoiceBox.getItems().addAll(profiles);
@@ -72,7 +67,7 @@ public class MultiplayerController implements Initializable {
       player1 = player1ChoiceBox.getValue();
       player1ChoiceBox.setDisable(true);
       // Player 2:
-      for (Profile profile : Instance.getInstance().getProfiles()) {
+      for (Profile profile : Instance.getInstance().getProfiles().values().stream().toList()) {
         if (profile != player1) {
           player2ChoiceBox.getItems().add(profile);
         }
