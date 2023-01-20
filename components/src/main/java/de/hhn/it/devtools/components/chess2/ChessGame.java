@@ -28,8 +28,8 @@ public class ChessGame implements Chess2Service {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(ChessGame.class);
 
-  private final Player redPlayer;
-  private final Player blackPlayer;
+  private Player redPlayer;
+  private Player blackPlayer;
   private Player currentPlayer;
   private Coordinate currentlySelected; //Could be used instead of selectedCoordinate
   private boolean monkeyChaos = false;
@@ -270,11 +270,13 @@ public class ChessGame implements Chess2Service {
   public void endGame() {
     logger.info("endGame");
 
-    currentPlayer = redPlayer;
     gameState = GameState.CHECKMATE;
     bearCoordinate = null;
     bear = null;
     gameBoard = new Board();
+    redPlayer = new Player('r', gameBoard);
+    blackPlayer = new Player('b', gameBoard);
+    currentPlayer = redPlayer;
     winState = WinningPlayerState.NO_WINNER;
   }
 
