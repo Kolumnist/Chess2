@@ -166,8 +166,8 @@ public class ChessGame implements Chess2Service {
 
   /**
    * Before every new Round this method gets called. It initializes the new Round sets all
-   * fieldStates and currentPlayer to the correct value.
-   * MARK tests if there is Mate/Check we won't be getting this done it is too hard
+   * fieldStates and currentPlayer to the correct value. MARK tests if there is Mate/Check we won't
+   * be getting this done it is too hard
    */
   private void setUpNewRound() {
     logger.info("setUpNewRound");
@@ -216,7 +216,7 @@ public class ChessGame implements Chess2Service {
       }
 
       if (field.getPiece().getClass().equals(King.class)
-        && field.getFieldState() == FieldState.HAS_CURRENT_PIECE) {
+          && field.getFieldState() == FieldState.HAS_CURRENT_PIECE) {
         gameBoard.getSpecificField(field.getCoordinate())
             .setFieldState(FieldState.OTHER_KING);
         otherKingCoordinate = field.getCoordinate();

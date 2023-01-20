@@ -20,8 +20,8 @@ public class Elephant extends Piece {
   }
 
   /**
-   * This method calculates all the possible movements of the elephant piece.
-   * It also add the movements which are not possible to go into an arraylist.
+   * This method calculates all the possible movements of the elephant piece. It also add the
+   * movements which are not possible to go into an arraylist.
    *
    * @param board the board of the game
    */

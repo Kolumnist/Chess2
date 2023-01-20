@@ -13,8 +13,7 @@ import de.hhn.it.devtools.components.chess2.pieces.Queen;
 import java.util.Optional;
 
 /**
- * The Player class should display a player that has his pieces
- * and a color.
+ * The Player class should display a player that has his pieces and a color.
  *
  * @author Collin Hoss, Lara Mangi, Michel Jouaux
  * @version 1.3
@@ -42,8 +41,8 @@ public class Player {
   }
 
   /**
-   * All pieces that the players has get initialized here it works with a offset to check
-   * which color the player has.
+   * All pieces that the players has get initialized here it works with a offset to check which
+   * color the player has.
    */
   protected void initializeMyPieces() {
     int coordOffset7 = 0;
