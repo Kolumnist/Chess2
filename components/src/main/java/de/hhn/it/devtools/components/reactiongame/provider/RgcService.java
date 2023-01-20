@@ -3,10 +3,12 @@ package de.hhn.it.devtools.components.reactiongame.provider;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.reactiongame.Difficulty;
 import de.hhn.it.devtools.apis.reactiongame.GameState;
+import de.hhn.it.devtools.apis.reactiongame.HighscoreTupel;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameService;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.IllegalFormatException;
-import java.util.SortedMap;
 
 
 /**
@@ -19,6 +21,8 @@ public class RgcService implements ReactiongameService {
 
   private final RgcPlayer currentPlayer;
   private RgcRun run;
+
+  private ArrayList<HighscoreTupel> highScoreSets;
 
 
   public RgcService() {
@@ -119,7 +123,6 @@ public class RgcService implements ReactiongameService {
 
     run.setObstacle(null);
     run.setAimTarget(aimTargetId);
-
   }
 
   @Override
@@ -162,12 +165,21 @@ public class RgcService implements ReactiongameService {
   }
 
   @Override
-  public void loadHighscoreTable(SortedMap<String, Integer> newHighScoreTable) {
-
+  public void loadHighscoreTable(ArrayList<HighscoreTupel> newHighScoreTable) {
+    highScoreSets = newHighScoreTable;
   }
 
   @Override
-  public SortedMap<String, Integer> saveHighscoreTable() throws IllegalFormatException {
-    return null;
+  public ArrayList<HighscoreTupel> saveHighscoreTable() throws IllegalFormatException {
+
+    if (run != null) {
+      highScoreSets.add(new HighscoreTupel(currentPlayer.getName(), run.getScore()));
+      Collections.sort(highScoreSets);
+
+      run = null;
+    }
+
+
+    return highScoreSets;
   }
 }

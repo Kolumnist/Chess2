@@ -48,7 +48,7 @@ public class RgcRun {
     aimTargetClock = new RgcAimTargetClock(this);
     obstacleClock = new RgcObstacleClock(this);
 
-    iframeThread = new Thread(new RgcIFrameRunnable(this));
+    iframeThread = new Thread(new RgcIframeRunnable(this));
   }
 
 
@@ -161,7 +161,7 @@ public class RgcRun {
     }
 
     isInvincible = true;
-    iframeThread = new Thread(new RgcIFrameRunnable(this));
+    iframeThread = new Thread(new RgcIframeRunnable(this));
     iframeThread.start();
 
     logger.info("Player loses life (" + (player.getCurrentLife() - 1) + ")");
@@ -187,7 +187,7 @@ public class RgcRun {
    */
   public void checkForTargetHit() {
     if (aimTarget != null && aimTarget.getKey() == key) {
-      score += 100;
+      score += 2 * difficulty.scoreMultiplier;
 
       field.removeAimTarget(aimTarget.getId());
 
@@ -258,7 +258,8 @@ public class RgcRun {
 
     RgcAimTarget aimTarget = field.addRandomAimTarget(aimTargetId);
     logger.info(
-        "Add aim target (" + aimTargetId + ") (" + aimTarget.getX() + "|" + aimTarget.getY() + ")");
+        "Add aim target (" + aimTargetId + ") (" + aimTarget.getXposition()
+            + "|" + aimTarget.getYposition() + ")");
 
     for (ReactiongameListener callback :
         callbacks) {

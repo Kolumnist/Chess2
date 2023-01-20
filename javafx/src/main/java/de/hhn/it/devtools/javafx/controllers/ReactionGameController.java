@@ -7,6 +7,7 @@ package de.hhn.it.devtools.javafx.controllers;
 import de.hhn.it.devtools.components.reactiongame.provider.RgcService;
 import de.hhn.it.devtools.javafx.controllers.reactiongame.RgcScreenController;
 import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
+import de.hhn.it.devtools.javafx.reactiongame.RgcHighScoreHandler;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,10 +44,12 @@ public class ReactionGameController extends Controller implements Initializable 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     RgcScreenController screenController = new RgcScreenController(anchorPane);
+    RgcService service = new RgcService();
+
     SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
     singletonAttributeStore.setAttribute(RGC_SCREEN_CONTROLLER, screenController);
 
-    singletonAttributeStore.setAttribute(RGC_SERVICE, new RgcService());
+    singletonAttributeStore.setAttribute(RGC_SERVICE, service);
 
     singletonAttributeStore.setAttribute(RGC_PLAYER_NAME, "Player");
 
@@ -54,7 +57,8 @@ public class ReactionGameController extends Controller implements Initializable 
 
     singletonAttributeStore.setAttribute(RGC_BACKGROUND_PANE, backgroundPane);
 
-
+    RgcHighScoreHandler.highscoreList = RgcHighScoreHandler.readHighscoreList();
+    service.loadHighscoreTable(RgcHighScoreHandler.highscoreList);
 
     try {
       screenController.switchTo("RgcMenu");

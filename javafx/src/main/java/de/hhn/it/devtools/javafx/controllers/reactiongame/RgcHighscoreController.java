@@ -1,13 +1,13 @@
 package de.hhn.it.devtools.javafx.controllers.reactiongame;
 
+import de.hhn.it.devtools.components.reactiongame.provider.RgcService;
 import de.hhn.it.devtools.javafx.controllers.ReactionGameController;
 import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
 import de.hhn.it.devtools.javafx.reactiongame.RgcHighScoreHandler;
-import de.hhn.it.devtools.javafx.reactiongame.RgcHighScoreSet;
+import de.hhn.it.devtools.apis.reactiongame.HighscoreTupel;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +15,8 @@ import javafx.scene.control.Label;
 
 public class RgcHighscoreController implements Initializable {
 
+  private static final SingletonAttributeStore singletonAttributeStore
+      = SingletonAttributeStore.getReference();
   private RgcScreenController screenController;
   @FXML
   private Label highscore1;
@@ -37,9 +39,8 @@ public class RgcHighscoreController implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
-    screenController =
-        (RgcScreenController) singletonAttributeStore.getAttribute(ReactionGameController.RGC_SCREEN_CONTROLLER);
+    screenController = (RgcScreenController)
+        singletonAttributeStore.getAttribute(ReactionGameController.RGC_SCREEN_CONTROLLER);
 
     try {
       readHighscores();
@@ -50,11 +51,12 @@ public class RgcHighscoreController implements Initializable {
 
   private void readHighscores() throws IOException {
 
-    RgcHighScoreHandler handler = new RgcHighScoreHandler();
+    RgcService service = (RgcService)
+        singletonAttributeStore.getAttribute(ReactionGameController.RGC_SERVICE);
 
-    ArrayList<RgcHighScoreSet> scores = handler.loadHighscoreList();
+    ArrayList<HighscoreTupel> scores = service.saveHighscoreTable();
 
-    Collections.sort(scores);
+    RgcHighScoreHandler.writeHighscoreList(scores);
 
     ArrayList<Label> labels = new ArrayList<>() {
       {

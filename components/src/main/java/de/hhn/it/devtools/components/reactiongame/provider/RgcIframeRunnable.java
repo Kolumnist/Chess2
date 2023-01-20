@@ -3,10 +3,10 @@ package de.hhn.it.devtools.components.reactiongame.provider;
 /**
  * This class is a runnable which counts down the time the player is in his iFrames.
  */
-public class RgcIFrameRunnable implements Runnable {
+public class RgcIframeRunnable implements Runnable {
 
   private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(RgcIFrameRunnable.class);
+      org.slf4j.LoggerFactory.getLogger(RgcIframeRunnable.class);
   private final RgcRun run;
 
   /**
@@ -14,7 +14,7 @@ public class RgcIFrameRunnable implements Runnable {
    *
    * @param logic Logic
    */
-  public RgcIFrameRunnable(RgcRun logic) {
+  public RgcIframeRunnable(RgcRun logic) {
     this.run = logic;
   }
 

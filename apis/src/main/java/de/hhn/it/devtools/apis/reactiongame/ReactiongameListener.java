@@ -33,6 +33,11 @@ public interface ReactiongameListener {
    */
   void removeObstacle(int obstacleId);
 
+  /**
+   * Notification when an obstacle with a certain ID is hit
+   *
+   * @param obstacleId identifier
+   */
   void hitObstacle(int obstacleId);
 
   /**
@@ -59,6 +64,8 @@ public interface ReactiongameListener {
 
   /**
    * Changes the score display
+   *
+   * @param score updated score of the player during a run
    */
   void changeScore(int score);
 

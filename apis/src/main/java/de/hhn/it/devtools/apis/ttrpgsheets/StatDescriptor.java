@@ -1,9 +1,11 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
+import java.io.Serializable;
+
 /**
  * The Descriptor for the Stat class.
  */
-public class StatDescriptor {
+public class StatDescriptor implements Serializable {
   private StatType statType;
   private int baseValue;
   private int offset;
