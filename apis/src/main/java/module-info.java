@@ -10,5 +10,5 @@ module devtools.apis{
         exports de.hhn.it.devtools.apis.duckhunt;
         exports de.hhn.it.devtools.apis.memory;
         exports de.hhn.it.devtools.apis.connectfour;
-    exports de.hhn.it.devtools.apis.textbasedlabyrinth;
+        exports de.hhn.it.devtools.apis.textbasedlabyrinth;
 }

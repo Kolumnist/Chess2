@@ -2,10 +2,7 @@ package de.hhn.it.devtools.components.textbasedlabyrinth.junit;
 
 
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.*;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.InvalidSeedException;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.RoomFailedException;
-import org.junit.jupiter.api.BeforeAll;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

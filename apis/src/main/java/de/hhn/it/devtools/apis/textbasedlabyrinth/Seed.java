@@ -1,7 +1,5 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
-import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.InvalidSeedException;
-
 import java.util.ArrayList;
 
 /**
@@ -14,8 +12,8 @@ public class Seed {
 
   /**
    * The seed should be an array list with integer values of the length 2.
-   * @param seedInteger
-   * @throws InvalidSeedException
+   * @param seedInteger the numbers of the seed, contained in an ArrayList.
+   * @throws InvalidSeedException when the list is smaller than one or bigger then the maximum length (2).
    */
   public Seed(ArrayList<Integer> seedInteger) throws InvalidSeedException {
     if (seedInteger.size() < 1) {
@@ -29,7 +27,7 @@ public class Seed {
 
     if (seed.size() < 2) {
       while (seed.size() < 2) {
-        seed.add(seed.size() - 1, 0);
+        seed.add(seed.size(), 0);
       }
     }
 

@@ -1,7 +1,6 @@
 package de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
 
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.RoomFailedException;
-
+import de.hhn.it.devtools.apis.textbasedlabyrinth.*;
 import java.util.ArrayList;
 
 
@@ -14,7 +13,6 @@ public class LayoutGenerator {
     private Seed seed;
     private ArrayList<Layout> allLayouts;
     private Room startRoom;
-    private Room endRoom;
     private boolean isPrepared;
     private int maxRoomCount = 13;
 
@@ -26,8 +24,6 @@ public class LayoutGenerator {
         String exampleDescription = "A dark, cold room.";
         reset();
     }
-
-
 
 
     public void setLayout(Layout layout) {
@@ -54,6 +50,8 @@ public class LayoutGenerator {
     public ArrayList<Room> getAllRooms() {
         return allRooms;
     }
+
+    public boolean isPrepared() { return isPrepared; }
 
     /**
      *

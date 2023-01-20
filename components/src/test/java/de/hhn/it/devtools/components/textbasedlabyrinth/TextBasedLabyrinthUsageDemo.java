@@ -1,14 +1,6 @@
 package de.hhn.it.devtools.components.textbasedlabyrinth;
 
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.Direction;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.GameService;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.Item;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.Map;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.OutputListener;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.Seed;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.InvalidSeedException;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.RoomFailedException;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.*;
 import java.util.ArrayList;
 import java.util.List;
 
