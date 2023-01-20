@@ -37,6 +37,8 @@ public class Chess2ServiceController extends Controller implements Initializable
   private ChessGame chessGame;
   private Chess2Service chess2Service;
 
+  private static boolean isTurnOfRed = true;
+
   private GridPane gridPane;
 
   @FXML
@@ -46,7 +48,7 @@ public class Chess2ServiceController extends Controller implements Initializable
   private Button giveUpButton;
 
   @FXML
-  private static TextField playerTextField;
+  private TextField playerTextField;
 
   @FXML
   private Button startEndGameButton;
@@ -110,6 +112,15 @@ public class Chess2ServiceController extends Controller implements Initializable
 
       placePieces();
       Chess2BoardController.giveChessGameAndBoard(chessGame, board);
+
+      while (chessGame.getWinningPlayer() == WinningPlayerState.STILL_RUNNING){
+        if (isTurnOfRed){
+          playerTextField.setText("Red");
+        }else {
+          playerTextField.setText("Black");
+        }
+
+      }
 
     } else {
       startEndGameButton.setText("Start Game");
@@ -267,8 +278,7 @@ public class Chess2ServiceController extends Controller implements Initializable
     logger.debug("resume: -");
   }
 
-  // To give the Chess2BoardController the possibility to set the Text of the playerTextField.
-  public static void setPlayerTextField(String playerColor) {
-    playerTextField.setText(playerColor);
+  public static void setIsTurnOfRed(boolean isRed) {
+    isTurnOfRed = isRed;
   }
 }
