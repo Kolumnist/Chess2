@@ -96,7 +96,8 @@ public class DuckHunt implements DuckHuntService {
       if (duck.getStatus() == DuckState.DEAD
           || duck.getStatus() == DuckState.FLYAWAY
           || duck.getStatus() == DuckState.SCARRED
-          || duck.getStatus() == DuckState.ESCAPED) {
+          || duck.getStatus() == DuckState.ESCAPED
+          || duck.getStatus() == DuckState.FALLING) {
         continue;
       }
       // if amount of the vector between duck and shoot <= gunSpread
