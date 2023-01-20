@@ -15,8 +15,6 @@ public class FXBattleshipListener implements BattleshipListener {
      */
     @Override
     public void newState(GameState state) {
-        singletonAttributeStore.setAttribute("test", new CmpBattleshipService() {
-        });
     }
 
     /**
@@ -47,7 +45,86 @@ public class FXBattleshipListener implements BattleshipListener {
      */
     @Override
     public void outputShipPlaced(Ship ship) {
-        CmpBattleshipService a =(CmpBattleshipService) singletonAttributeStore.getAttribute("test");
+/*
+        Ship ship = shipsleft.getShipSelected();
+
+        // if place ship is selected
+        if (!shipsleft.placeMode && !shipsleft.isHorizontal) {
+
+            if(!shipsleft.getShipSelected().getIsVertical()){
+                try {
+                    service.rotateShip(player,ship);
+                } catch (IllegalPositionException | IllegalGameStateException | IllegalShipStateException e) {
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+
+            try {
+                service.placeShip(player, shipsleft.getShipSelected(), i1, k1);
+                updateField();
+                shipsleft.setShipSelected(null);
+                shipsleft.resetStylesSelectShips();
+
+                if(!player.hasUnplacedShipsLeft()){
+                    shipsleft.startFiring.setVisible(true);
+                }
+
+
+            } catch (IllegalPositionException | IllegalGameStateException | IllegalShipStateException e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+        if (!shipsleft.placeMode && shipsleft.isHorizontal){
+
+            if(shipsleft.getShipSelected().getIsVertical()) {
+                try {
+                    service.rotateShip(player, ship);
+                } catch (IllegalPositionException | IllegalGameStateException | IllegalShipStateException e) {
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+            try {
+                service.placeShip(player, shipsleft.getShipSelected(), i1, k1);
+                updateField();
+                shipsleft.setShipSelected(null);
+                shipsleft.resetStylesSelectShips();
+
+                if(!player.hasUnplacedShipsLeft()){
+                    shipsleft.startFiring.setVisible(true);
+                }
+
+            } catch (IllegalPositionException | IllegalGameStateException | IllegalShipStateException e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }w
+        }
+
+
+        // if unplace ship is selected
+        if (shipsleft.placeMode) {
+
+            ship = player.getShipField().getShipsOnField(i1, k1);
+
+            if (ship != null) {
+                try {
+                    service.unPlace(player, player.getShipField().getShipsOnField(i1, k1));
+                    updateField();
+                    shipsleft.startFiring.setVisible(false);
+                } catch (IllegalGameStateException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            else;
+
+        }
+    }
+
+ */
     }
 
     /**

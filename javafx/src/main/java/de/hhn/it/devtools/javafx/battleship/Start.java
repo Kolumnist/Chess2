@@ -8,11 +8,13 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Start extends Application {
-    static Stage mainStage = new Stage();
+    public static Stage mainStage = new Stage();
     GameMenu gameMenu;
     static String BATTLESHIP_SERVICE = "Battleship.service";
+    static String BATTLESHIPS_SHIPSLEFT = "Battleship.ShipsLeft";
     SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
     CmpBattleshipService service;
+    ShipsLeft shipsLeft;
 
     /**
      * The main entry point for all JavaFX applications.
@@ -34,6 +36,7 @@ public class Start extends Application {
 
         service = new CmpBattleshipService();
         singletonAttributeStore.setAttribute(BATTLESHIP_SERVICE,service);
+        //singletonAttributeStore.setAttribute(BATTLESHIPS_SHIPS LEFT, );
         gameMenu = new GameMenu();
 
     }

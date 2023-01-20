@@ -7,6 +7,7 @@ import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
 import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -16,10 +17,14 @@ import java.io.FileNotFoundException;
 
 public class GameMenu{
 
+    public ImageView imageView;
     VBox vbox = new VBox();
     Scene sceneGameMenu = new Scene(vbox);
+    @FXML
     Button smallGame = new Button("Small (5x5)");
+    @FXML
     Button mediumGame = new Button("Medium (10x10)");
+    @FXML
     Button bigGame = new Button("Big (15x15)");
     Game game;
 
