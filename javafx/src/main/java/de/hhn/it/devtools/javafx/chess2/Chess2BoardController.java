@@ -445,7 +445,7 @@ public class Chess2BoardController {
         p.initialize(l);
       }
       if (chessGame.getWinningPlayer() == WinningPlayerState.RED_WIN) {
-        Label l = new Label("Congratulation Player White! You have won!");
+        Label l = new Label("Congratulation Player Red! You have won!");
         p.initialize(l);
       }
     }
