@@ -61,6 +61,7 @@ public class Main extends Application {
     addModule("ReactionGame");
     addModule("MemoryService");
     addModule("CharacterSheet");
+    addModule("BattleshipMenu");
   }
 
   @Override
