@@ -39,8 +39,6 @@ public class Chess2ServiceController extends Controller implements Initializable
   private ChessGame chessGame;
   private Chess2Service chess2Service;
 
-  private Coordinate[] coordinates;
-
   private GridPane gridPane;
 
   @FXML
@@ -111,7 +109,6 @@ public class Chess2ServiceController extends Controller implements Initializable
       giveUpButton.setVisible(true);
 
       board = chess2Service.startNewGame();
-      coordinates = chessGame.getCurrentFields();
 
       placePieces();
       Chess2BoardController.giveChessGameAndBoard(chessGame, board);
