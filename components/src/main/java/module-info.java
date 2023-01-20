@@ -5,7 +5,8 @@ module devtools.components {
   exports de.hhn.it.devtools.components.battleship;
   exports de.hhn.it.devtools.components.duckhunt;
   exports de.hhn.it.devtools.components.chess2;
-  requires org.slf4j;
+    exports de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
+    requires org.slf4j;
   requires devtools.apis;
   provides  de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerService
           with de.hhn.it.devtools.components.example.coffeemakerservice.provider.WnckCoffeeMakerService;
