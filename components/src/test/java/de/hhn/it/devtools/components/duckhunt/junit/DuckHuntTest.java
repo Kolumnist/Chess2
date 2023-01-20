@@ -8,6 +8,8 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.components.duckhunt.DuckHunt;
 import de.hhn.it.devtools.components.duckhunt.ScreenDimension;
 import java.lang.reflect.Field;
+
+import de.hhn.it.devtools.components.duckhunt.Vector2D;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,6 +44,30 @@ class DuckHuntTest {
     assertDoesNotThrow(() -> game.removeCallback(testListener));
 
     assertThrowsExactly(IllegalParameterException.class, () -> game.removeCallback(null));
+  }
+
+  @Test
+  void duckDropTest() throws IllegalParameterException, InterruptedException {
+    game.addCallback(testListener);
+    game.startGame();
+    Thread.sleep(1000);
+    game.pauseGame();
+    Thread.sleep(1000);
+    game.getGameInfo().setState(GameState.RUNNING);
+    game.shoot(testListener.duckPosition.duckData()[0].getX(),
+        testListener.duckPosition.duckData()[0].getY());
+    game.getGameInfo().setState(GameState.PAUSED);
+    Vector2D preDuckPos = new Vector2D(testListener.duckPosition.duckData()[0].getX(),
+        testListener.duckPosition.duckData()[0].getY());
+    game.continueGame();
+    Thread.sleep(100);
+    game.pauseGame();
+    Thread.sleep(1000);
+    Vector2D postDuckPos = new Vector2D(testListener.duckPosition.duckData()[0].getX(),
+        testListener.duckPosition.duckData()[0].getY());
+    assertEquals(DuckState.FALLING, testListener.duckPosition.duckData()[0].getStatus());
+    System.out.println(preDuckPos.getY() + " < " + postDuckPos.getY());
+    assertTrue(preDuckPos.getY() < postDuckPos.getY());
   }
 
   @Test

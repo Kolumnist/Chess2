@@ -31,6 +31,7 @@ public class DuckHunt implements DuckHuntService {
   private MpatternGenerator pathGenerator;
   private float deltaTime = 0.016f;
   private final float duckSpeed = 1f;
+  private final float velocityToOvercome = 500f;
   DuckHuntGameLoop gameLoop = new DuckHuntGameLoop(this);
 
   private static final org.slf4j.Logger logger =
@@ -289,10 +290,10 @@ public class DuckHunt implements DuckHuntService {
   private void dropDuck(DuckData duck) {
     logger.trace("dropDuck: no params");
     float velocity = duck.getVelocity();
-    if (velocity > 1f) { // if true duck can be moved to next position
+    if (velocity > velocityToOvercome) { // if true duck can be moved to next position
       //TODO anpassen der Pixel beim Droppen
-      duck.setY(duck.getY() + screenDimension.getHeight() / 30);
-      duck.setVelocity(velocity - 1f);
+      duck.setY(duck.getY() + 1);
+      duck.setVelocity(velocity - velocityToOvercome);
     }
   }
 
@@ -304,17 +305,17 @@ public class DuckHunt implements DuckHuntService {
   private void ascendDuck(DuckData duck) {
     logger.trace("ascendDuck: no params");
     float velocity = duck.getVelocity();
-    if (velocity > 1f) { // if true duck can be moved to next position
+    if (velocity > velocityToOvercome) { // if true duck can be moved to next position
       //TODO anpassen der Pixel beim Wegfliegen (analog drop)
       duck.setY(duck.getY() - screenDimension.getHeight() /  30);
-      duck.setVelocity(velocity - 1f);
+      duck.setVelocity(velocity - velocityToOvercome);
     }
   }
 
   private void moveDuck(DuckData duck) {
     logger.trace("moveDuck: no params");
     float velocity = duck.getVelocity();
-    if (velocity > 1f) { // if true duck can be moved to next position
+    if (velocity > velocityToOvercome) { // if true duck can be moved to next position
       DuckOrientation newOrientation;
       try {
         newOrientation = pathGenerator.getNextMove(duck.getId());
@@ -326,7 +327,7 @@ public class DuckHunt implements DuckHuntService {
       duck.setOrientation(newOrientation);
       duck.setX(duck.getX() + newOrientation.getX());
       duck.setY(duck.getY() + newOrientation.getY());
-      duck.setVelocity(velocity - 1f);
+      duck.setVelocity(velocity - velocityToOvercome);
     }
   }
 
