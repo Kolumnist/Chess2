@@ -120,6 +120,10 @@ public abstract class Piece {
       return shortedArray;
     }
 
+    if (index.size() == 0){
+      return possibleMoves;
+    }
+
     int j = 0;
     int k = 0;
 
