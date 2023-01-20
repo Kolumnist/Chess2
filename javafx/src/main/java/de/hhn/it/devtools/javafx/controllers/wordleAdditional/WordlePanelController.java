@@ -89,7 +89,7 @@ public class WordlePanelController {
   private Label secondRowThirdLabel;
 
   @FXML
-  private Label sixthRowFiifthLabel;
+  private Label sixthRowFifthLabel;
 
   @FXML
   private Label thirdRowThirdLabel;
