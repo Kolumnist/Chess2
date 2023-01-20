@@ -44,7 +44,6 @@ public class ChessGame implements Chess2Service {
 
   /**
    * The Constructor that initializes every needed object.
-   * TODO: REFACTORING EVERY WHITE PLAYER THING TO REDPLAYER ;(((
    */
   public ChessGame() {
     logger.info("ChessGame Constructor");
@@ -271,6 +270,7 @@ public class ChessGame implements Chess2Service {
     logger.info("endGame");
 
     gameState = GameState.CHECKMATE;
+    otherKingCoordinate = new Coordinate(3, 7);
     bearCoordinate = null;
     bear = null;
     gameBoard = new Board();
@@ -313,7 +313,7 @@ public class ChessGame implements Chess2Service {
   @Override
   public FieldState getFieldState(Coordinate selectedCoordinate)
       throws IllegalParameterException {
-    logger.info("getFieldState", selectedCoordinate);
+    logger.info("getFieldState: {}", selectedCoordinate);
 
     return gameBoard.getSpecificField(selectedCoordinate).getFieldState();
   }
@@ -338,7 +338,7 @@ public class ChessGame implements Chess2Service {
   @Override
   public Coordinate[] getPossibleMoves(Coordinate selectedPieceCoordinate)
       throws IllegalParameterException {
-    logger.info("getPossibleMoves", selectedPieceCoordinate);
+    logger.info("getPossibleMoves: {}", selectedPieceCoordinate);
 
     Field field = gameBoard.getSpecificField(selectedPieceCoordinate);
 
@@ -367,7 +367,7 @@ public class ChessGame implements Chess2Service {
   @Override
   public Board moveSelectedPiece(Coordinate selectedCoordinate, Coordinate newCoordinate)
       throws IllegalParameterException {
-    logger.info("moveSelectedPiece", selectedCoordinate, newCoordinate);
+    logger.info("moveSelectedPiece: {} | {}", selectedCoordinate, newCoordinate);
 
     if (gameBoard.getSpecificField(selectedCoordinate).getFieldState() != FieldState.SELECTED) {
       return gameBoard;
@@ -407,7 +407,7 @@ public class ChessGame implements Chess2Service {
 
       selectedField = gameBoard.getSpecificField(selectedCoordinate);
 
-      /* The SELECTED piece is Bear: FieldState -> HAS_BEAR and Coordinates get updated*/
+      /* The SELECTED piece is Bear: FieldState -> HAS_BEAR and Coordinates get updated */
       if (selectedField.getPiece() == bear) {
         bearCoordinate = newCoordinate;
         bear.setCoordinate(bearCoordinate);
