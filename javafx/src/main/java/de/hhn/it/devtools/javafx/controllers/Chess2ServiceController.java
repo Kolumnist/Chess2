@@ -111,9 +111,12 @@ public class Chess2ServiceController extends Controller implements Initializable
       placePieces();
       Chess2BoardController.giveChessGameAndBoard(chessGame, board, playerTextField);
 
+      playerTextField.setText("Red");
+
     } else {
       startEndGameButton.setText("Start Game");
       giveUpButton.setVisible(false);
+      playerTextField.setText("");
 
       chess2Service.endGame();
 
