@@ -34,7 +34,7 @@ public class RoomInventoryScreen extends AnchorPane implements Initializable {
     @FXML
     Button pickUpItem;
     @FXML
-    TextField inspectTextField;
+    TextField itemInspectTextField;
     @FXML
     ChoiceBox<Item> itemChoiceBox;
 
@@ -66,6 +66,11 @@ public class RoomInventoryScreen extends AnchorPane implements Initializable {
 
     }
 
+
+    public void updateInspectField(String text) {
+        itemInspectTextField.clear();
+        itemInspectTextField.setText(text);
+    }
 
 
 

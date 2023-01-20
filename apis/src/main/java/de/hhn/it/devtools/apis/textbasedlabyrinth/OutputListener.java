@@ -50,9 +50,9 @@ public interface OutputListener {
 
     void listenerMove();
 
-    void listenerPickUpItem();
+    void outputPickUpItemInspect(String output);
 
-    void listenerDropItem();
+    void outputDropItemInspect(String output);
 
     void listenerInteract();
 

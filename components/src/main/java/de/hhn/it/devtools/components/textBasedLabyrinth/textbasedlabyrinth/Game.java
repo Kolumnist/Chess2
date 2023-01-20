@@ -216,7 +216,7 @@ public class Game implements GameService {
       }
 
       for (OutputListener outputListener : listeners) {
-        outputListener.sendOutputPlayer(searchedItem.getName());
+        outputListener.sendOutputPickUpItem(searchedItem);
         outputListener.updateScore(score);
       }
       return searchedItem;
@@ -229,10 +229,14 @@ public class Game implements GameService {
    * @param itemId the id of the item to be removed.
    * @return the message, which is about the success or failure of the operation.
    */
-  public String dropItem(int itemId) throws NoSuchItemFoundException {
-    Item droppedItem = player.removeItem(itemId);
+  public Item dropItem(int itemId) throws NoSuchItemFoundException {
+    Item droppedItem = null;
+    try {
+      droppedItem = player.removeItem(itemId);
+    } catch (NoSuchItemFoundException e) {
+      throw new NoSuchItemFoundException(e.getMessage());
+    }
     currentRoom.addItem(droppedItem);
-    String message = "You lay the item carefully on the ground.";
 
     if (droppedItem.getIsTreasure()) {
       score = score - ((Treasure) droppedItem).getScorePoint();
@@ -241,10 +245,10 @@ public class Game implements GameService {
       score = 0;
     }
     for (OutputListener outputListener : listeners) {
-      outputListener.sendOutputPlayer(message);
+      outputListener.sendOutputDropItem(droppedItem);
       outputListener.updateScore(score);
     }
-    return message;
+    return droppedItem;
   }
 
 

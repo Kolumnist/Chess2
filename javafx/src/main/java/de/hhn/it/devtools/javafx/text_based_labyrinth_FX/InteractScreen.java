@@ -1,6 +1,8 @@
 package de.hhn.it.devtools.javafx.text_based_labyrinth_FX;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
@@ -13,6 +15,11 @@ public class InteractScreen extends AnchorPane implements Initializable {
 
 
     private GameViewModel viewModel;
+
+
+
+    @FXML
+    TextField interactTextField;
 
 
 
@@ -29,5 +36,11 @@ public class InteractScreen extends AnchorPane implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+
+    public void updateInteractField(String text) {
+        interactTextField.clear();
+        interactTextField.setText(text);
     }
 }

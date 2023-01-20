@@ -31,7 +31,7 @@ public interface GameService {
    * @param itemId the id of the item to be removed.
    * @return the message, which is about the success or failure of the operation.
    */
-  String dropItem(int itemId) throws NoSuchItemFoundException;
+  Item dropItem(int itemId) throws NoSuchItemFoundException;
 
 
   void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException;

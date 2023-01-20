@@ -12,4 +12,12 @@ public class UnknownTransitionException extends Exception {
         super(message);
     }
 
+
+    public String getFrom() {
+        return from;
+    }
+
+    public String getTo() {
+        return to;
+    }
 }
