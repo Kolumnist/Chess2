@@ -35,7 +35,7 @@ public class ChessGame implements Chess2Service {
   private boolean monkeyChaos = false;
   private Bear bear;
 
-  protected final Board gameBoard;
+  protected Board gameBoard;
   protected WinningPlayerState winState;
   protected GameState gameState;
 
@@ -192,9 +192,10 @@ public class ChessGame implements Chess2Service {
     /* Switch FieldStates from HAS_CURRENT_PIECE to HAS_OTHER_PIECE and the other way round */
     for (Field field : gameBoard.getFields()) {
       if (field.getFieldState() == FieldState.FREE_FIELD
-          || field.getFieldState() == FieldState.JAIL
-          || field.getFieldState() == FieldState.JAIL_KING
-          || field.getFieldState() == FieldState.JAIL_QUEEN) {
+          || field.getCoordinate().compareCoordinates(new Coordinate(8, 3))
+          || field.getCoordinate().compareCoordinates(new Coordinate(8, 4))
+          || field.getCoordinate().compareCoordinates(new Coordinate(9, 3))
+          || field.getCoordinate().compareCoordinates(new Coordinate(9, 4))) {
         continue;
       }
 
@@ -202,8 +203,9 @@ public class ChessGame implements Chess2Service {
         gameState = GameState.CHECK;
       }
 
-      if (field.getFieldState() == FieldState.OTHER_KING) {
-        gameBoard.getSpecificField(field.getPiece().getCoordinate())
+      if (field.getPiece().getClass().equals(King.class)
+          && field.getFieldState() == FieldState.OTHER_KING) {
+        gameBoard.getSpecificField(field.getCoordinate())
             .setFieldState(FieldState.HAS_CURRENT_PIECE);
         continue;
       }
@@ -213,8 +215,9 @@ public class ChessGame implements Chess2Service {
         continue;
       }
 
-      if (field.getPiece().getClass().equals(King.class)) {
-        gameBoard.getSpecificField(field.getPiece().getCoordinate())
+      if (field.getPiece().getClass().equals(King.class)
+        && field.getFieldState() == FieldState.HAS_CURRENT_PIECE) {
+        gameBoard.getSpecificField(field.getCoordinate())
             .setFieldState(FieldState.OTHER_KING);
         otherKingCoordinate = field.getCoordinate();
         continue;
@@ -271,7 +274,7 @@ public class ChessGame implements Chess2Service {
     gameState = GameState.CHECKMATE;
     bearCoordinate = null;
     bear = null;
-    gameBoard.lostPiece = false;
+    gameBoard = new Board();
     winState = WinningPlayerState.NO_WINNER;
   }
 
@@ -446,7 +449,7 @@ public class ChessGame implements Chess2Service {
         currentPlayer.setQueenOnJail(gameBoard.getSpecificField(newCoordinate).getPiece());
         /* Or update the destroyed Piece */
       } else {
-        gameBoard.getSpecificField(selectedCoordinate).getPiece()
+        gameBoard.getSpecificField(newCoordinate).getPiece()
             .setCoordinate(new Coordinate(-1, -1));
       }
       //New Field gets updated & lostPiece set to true
