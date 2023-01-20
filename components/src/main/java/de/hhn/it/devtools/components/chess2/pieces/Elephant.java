@@ -26,6 +26,7 @@ public class Elephant extends Piece {
    * @param board the board of the game
    */
   public void calculate(Board board) {
+    canDefeatKing = false;
     possibleMoves = new Coordinate[10];
     int k = 0;
 

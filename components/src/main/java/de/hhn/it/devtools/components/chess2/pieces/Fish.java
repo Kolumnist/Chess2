@@ -29,6 +29,7 @@ public class Fish extends Piece {
    */
   @Override
   public void calculate(Board board) {
+    canDefeatKing = false;
     possibleMoves = new Coordinate[8];
     int k = 0;
     if (color == 'r') {

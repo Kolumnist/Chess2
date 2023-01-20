@@ -27,6 +27,7 @@ public class Monkey extends Piece {
 
   @Override
   public void calculate(Board board) {
+    canDefeatKing = false;
     ArrayList<Integer> index = new ArrayList<>();
 
     calculateJump(board);

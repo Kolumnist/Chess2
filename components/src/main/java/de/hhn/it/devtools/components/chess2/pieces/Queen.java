@@ -29,6 +29,7 @@ public class Queen extends Piece {
    */
   @Override
   public void calculate(Board board) {
+    canDefeatKing = false;
     possibleMoves = new Coordinate[64];
     int k = 0;
     for (int g = 1; g <= 7; g++) {
