@@ -125,12 +125,12 @@ public class SingleplayerGame extends Game {
   private void play() {
     logger.info("play: no params");
     timer.schedule(new TimerTask() {
-      int i = (int) (Math.random() * 6);
+      int preset = (int) (Math.random() * 6);
 
       @Override
       public void run() {
         try {
-          placeDiscInColumn((i += 1) % 6);
+          placeDiscInColumn((preset += 1) % 6);
         } catch (IllegalOperationException ignore) {
           run();
         }

@@ -3,7 +3,6 @@ package de.hhn.it.devtools.javafx.controllers.connectfour;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.ProfileMultiplayerComparator;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.ProfileNameComparator;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.ProfileSingleplayerComparator;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.SortBy;
 import java.util.LinkedList;
@@ -38,6 +37,9 @@ public class HighscoresController {
     SceneChanger.changeScene(root, "/fxml/ConnectFour.fxml");
   }
 
+  /**
+   * Initialize controller.
+   */
   @FXML
   public void initialize() {
     logger.info("initialize: no params");
@@ -52,14 +54,14 @@ public class HighscoresController {
         profiles.sort(new ProfileMultiplayerComparator());
         ranking.getItems().addAll(profiles);
         for (int i = 0; i < profiles.size(); i++) {
-          position.getItems().add(i+1);
+          position.getItems().add(i + 1);
           wins.getItems().add(profiles.get(i).getMultiplayerWin());
         }
       } else {
         profiles.sort(new ProfileSingleplayerComparator());
         ranking.getItems().addAll(profiles);
         for (int i = 0; i < profiles.size(); i++) {
-          position.getItems().add(i+1);
+          position.getItems().add(i + 1);
           wins.getItems().add(profiles.get(i).getSingleplayerWin());
         }
       }
