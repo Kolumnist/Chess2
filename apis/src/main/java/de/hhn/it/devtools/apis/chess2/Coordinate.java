@@ -8,24 +8,26 @@ package de.hhn.it.devtools.apis.chess2;
  */
 
 public class Coordinate {
-  private int xValue;
-  private int yValue;
+
+  private int x;
+  private int y;
 
   /**
    * Constructor that initializes the x and y values.
    *
-   * @param xValue the x value of the coordinate.
-   * @param yValue the y value of the coordinate.
+   * @param x the x value of the coordinate.
+   * @param y the y value of the coordinate.
    */
-  public Coordinate(int xValue, int  yValue) {
-    this.xValue = xValue;
-    this.yValue = yValue;
+  public Coordinate(int x, int y) {
+    this.x = x;
+    this.y = y;
   }
 
   /**
    * Default Constructor.
    */
-  public Coordinate() {}
+  public Coordinate() {
+  }
 
   /**
    * Returns the xValue of the Coordinate.
@@ -33,7 +35,7 @@ public class Coordinate {
    * @return the xValue as int
    */
   public int getX() {
-    return xValue;
+    return x;
   }
 
   /**
@@ -42,7 +44,7 @@ public class Coordinate {
    * @return the yValue as int
    */
   public int getY() {
-    return yValue;
+    return y;
   }
 
   /**
@@ -52,9 +54,27 @@ public class Coordinate {
    * @return the result of the comparison as a boolean
    */
   public boolean compareCoordinates(Coordinate coordinate) {
-    if (xValue == coordinate.getX() && yValue == coordinate.getY()) {
+    if (x == coordinate.getX() && y == coordinate.getY()) {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Returns x and y as a String in the format "xy".
+   *
+   * @return the coordinate as a String
+   */
+  public String coordinateToString() {
+    return "" + x + y;
+  }
+
+  /**
+   * Returns x and y as a String in the format "{ x, y }".
+   *
+   * @return the coordinate as a String
+   */
+  public String toString() {
+    return "{ X = " + x + ", Y = " + y + " }";
   }
 }
