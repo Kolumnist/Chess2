@@ -1,5 +1,10 @@
 package de.hhn.it.devtools.javafx.battleship;
 
+import de.hhn.it.devtools.apis.battleship.IllegalGameStateException;
+import de.hhn.it.devtools.apis.battleship.IllegalPositionException;
+import de.hhn.it.devtools.apis.battleship.IllegalShipStateException;
+import de.hhn.it.devtools.apis.battleship.PanelState;
+import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -14,6 +19,8 @@ public class Game extends Stage{
 
     VBox root = new VBox();
     Scene GameScene = new Scene(root);
+
+    ShipsLeft shipsleft;
 
     GridPane playgroundUpper = new GridPane();
     GridPane playgroundLower = new GridPane();
@@ -31,8 +38,12 @@ public class Game extends Stage{
     MenuItem helpShipsLeft = new MenuItem("Ships left");
     MenuItem helpRules = new MenuItem("Rules");
 
+    Button[][] buttonsUpper;
+    Button[][] buttonsLower;
+    int sizeGrid;
+    public Game(int gridSizeChoosen){
 
-    public Game(int sizeGrid){
+        sizeGrid = gridSizeChoosen;
 
         root.getStylesheets().add("battleship/style.css");
         root.setId("gameVbox");
@@ -54,8 +65,8 @@ public class Game extends Stage{
 
         int sizeButtons = 50;
 
-        Button[][] buttonsUpper = new Button[sizeGrid][sizeGrid];
-        Button[][] buttonsLower = new Button[sizeGrid][sizeGrid];
+        buttonsUpper = new Button[sizeGrid][sizeGrid];
+        buttonsLower = new Button[sizeGrid][sizeGrid];
 
         Character[] abc = {'A', 'B', 'C', 'D', 'E',
                            'F', 'G', 'H', 'I', 'J',
@@ -122,6 +133,17 @@ public class Game extends Stage{
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         buttonsLower[k1][i1].setStyle("-fx-background-color: red");
+                        switch(CmpBattleshipService.service.getCurrentGameState()){
+                            case PLACINGSHIPS -> {
+                                try {
+                                    CmpBattleshipService.service.placeShip(CmpBattleshipService.service.getPlayer(),shipsleft.getShipSelected(),k1,i1);
+                                    updateField();
+                                } catch (IllegalPositionException | IllegalShipStateException | IllegalGameStateException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
                     }
                 });
 
@@ -142,7 +164,7 @@ public class Game extends Stage{
         helpShipsLeft.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ShipsLeft shipsleft = new ShipsLeft();
+                shipsleft = new ShipsLeft();
             }
         });
 
@@ -195,6 +217,19 @@ public class Game extends Stage{
         Start.mainStage.setWidth(60*sizeGrid);
         Start.mainStage.setScene(GameScene);
 
+    }
+
+    public void updateField(){
+
+        // Only update if player places ship is done till now
+        PanelState[][] playerShipsPlaced = CmpBattleshipService.service.getPlayer().getShipField().getPanelMarkerMat();
+        for (int i = 0; i < sizeGrid ; i++) {
+            for (int k = 0; k < sizeGrid ; k++) {
+                if(playerShipsPlaced[i][k] == PanelState.SHIP){
+                buttonsLower[k][i].getStyleClass().add("buttonPlacedShips");
+            }
+        }
+        }
     }
 
 

@@ -38,7 +38,7 @@ public class ShipsLeft {
     Label submarinesLeft = new Label();
     Label destroyersLeft = new Label();
 
-    Ship shipSelected;
+    private Ship shipSelected;
 
     ShipsLeft(){
         scene.getStylesheets().add("battleship/style.css");
@@ -137,7 +137,8 @@ public class ShipsLeft {
 
     }
 
-
-
+    public Ship getShipSelected() {
+        return shipSelected;
+    }
 }
 

@@ -19,3 +19,7 @@
 .buttonSelectShip {
     -fx-background-color: red;
 }
+
+.buttonPlacedShips {
+    -fx-background-color: blueviolet;
+}
