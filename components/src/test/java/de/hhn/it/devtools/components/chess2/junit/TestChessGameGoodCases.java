@@ -50,7 +50,7 @@ public class TestChessGameGoodCases {
         continue;
       }
       if (field.getFieldState() == FieldState.HAS_CURRENT_PIECE) {
-        assertEquals('w', field.getPiece().getColor());
+        assertEquals('r', field.getPiece().getColor());
         currentNum++;
         continue;
       }
@@ -99,7 +99,7 @@ public class TestChessGameGoodCases {
         continue;
       }
       if (field.getFieldState() == FieldState.HAS_CURRENT_PIECE) {
-        assertEquals('w', field.getPiece().getColor());
+        assertEquals('r', field.getPiece().getColor());
         currentNum++;
         continue;
       }
