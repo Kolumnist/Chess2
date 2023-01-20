@@ -10,6 +10,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+/**
+ * This class modells the new profile controller.
+ */
 public class ProfilesNewController {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(HighscoresController.class);
@@ -25,6 +28,9 @@ public class ProfilesNewController {
   @FXML
   ImageView profileImageView;
 
+  /**
+   * Cancel action.
+   */
   @FXML
   void onCancel() {
     logger.info("onCancel: no params");
@@ -32,6 +38,9 @@ public class ProfilesNewController {
     stage.close();
   }
 
+  /**
+   * Save profile data.
+   */
   @FXML
   void onSave() {
     logger.info("onSave: no params");
@@ -39,12 +48,15 @@ public class ProfilesNewController {
     try {
       Instance.getInstance().createProfile(nameText.getText());
     } catch (IllegalArgumentException e) {
-      System.err.println(e);
+      System.err.println(e.getMessage());
     }
     file.saveProfileData();
     stage.close();
   }
 
+  /**
+   * Initialize the controller.
+   */
   @FXML
   public void initialize() {
     logger.info("initialize: no params");

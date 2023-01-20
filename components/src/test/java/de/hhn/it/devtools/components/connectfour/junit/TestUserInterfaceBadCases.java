@@ -3,7 +3,7 @@ package de.hhn.it.devtools.components.connectfour.junit;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
-import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFour;
+import de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourInterface;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Test user interface with bad cases.")
 public class TestUserInterfaceBadCases {
 
-  IConnectFour game;
+  ConnectFourInterface game;
   Profile alice;
 
   @BeforeEach

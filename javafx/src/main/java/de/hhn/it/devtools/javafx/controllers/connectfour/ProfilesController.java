@@ -20,6 +20,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * This class models the profiles controller.
+ */
 public class ProfilesController {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(HighscoresController.class);
@@ -62,12 +65,20 @@ public class ProfilesController {
     SceneChanger.changeScene(root, "/fxml/connectfour/ProfilesInfoScreen.fxml");
   }
 
+  /**
+   * Go back to main screen.
+   */
   @FXML
   void onBack() {
     logger.info("onBack: no params");
     SceneChanger.changeScene(root, "/fxml/ConnectFour.fxml");
   }
 
+  /**
+   * Add profile button.
+   *
+   * @param p The profile button.
+   */
   public void addProfileButton(Profile p) {
     logger.info("addProfile: p = {}", p);
     Button next = new Button();
@@ -78,6 +89,9 @@ public class ProfilesController {
     vBox.getChildren().add(next);
   }
 
+  /**
+   * Initialize the controller.
+   */
   @FXML
   public void initialize() {
     logger.info("initialize: no params");

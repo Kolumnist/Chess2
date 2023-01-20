@@ -2,8 +2,8 @@ package de.hhn.it.devtools.components.connectfour.provider;
 
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
-import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFour;
-import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFourListener;
+import de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourInterface;
+import de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourListenerInterface;
 import de.hhn.it.devtools.components.connectfour.provider.helper.Game;
 import de.hhn.it.devtools.components.connectfour.provider.helper.MultiplayerGame;
 import de.hhn.it.devtools.components.connectfour.provider.helper.SingleplayerGame;
@@ -12,15 +12,15 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 /**
- * This class implements the IConnectFour interface.
+ * This class implements the ConnectFourInterface interface.
  */
-public class ConnectFour implements IConnectFour {
+public class ConnectFour implements ConnectFourInterface {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(ConnectFour.class);
 
   private Game game;
   private HashMap<UUID, Profile> profiles = new HashMap<>();
-  private IConnectFourListener listener;
+  private ConnectFourListenerInterface listener;
 
   /**
    * Set the listener.
@@ -30,7 +30,7 @@ public class ConnectFour implements IConnectFour {
    */
 
   @Override
-  public void setCallback(IConnectFourListener listener) throws IllegalArgumentException {
+  public void setCallback(ConnectFourListenerInterface listener) throws IllegalArgumentException {
     if (listener == null) {
       throw new IllegalArgumentException("Listener is a null reference.");
     }

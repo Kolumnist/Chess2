@@ -15,7 +15,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-
+/**
+ * This class models the profile info controller.
+ */
 public class ProfilesInfoController {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(HighscoresController.class);
@@ -47,6 +49,9 @@ public class ProfilesInfoController {
   @FXML
   Label mwinpLabel;
 
+  /**
+   * Edit profile.
+   */
   @FXML
   void onEditProfile() {
     logger.info("onEditProfile: no params");
@@ -62,16 +67,22 @@ public class ProfilesInfoController {
       stage.showAndWait();
       SceneChanger.changeScene(root, "/fxml/connectfour/ProfilesInfoScreen.fxml");
     } catch (IOException e) {
-      System.err.println(e);
+      System.err.println(e.getMessage());
     }
   }
 
+  /**
+   * Go back to profiles-screen.
+   */
   @FXML
   void onBack() {
     logger.info("onBack: no params");
     SceneChanger.changeScene(root, "/fxml/connectfour/ProfilesScreen.fxml");
   }
 
+  /**
+   * Initialize the controller.
+   */
   @FXML
   public void initialize() {
     logger.info("initialize: no params");

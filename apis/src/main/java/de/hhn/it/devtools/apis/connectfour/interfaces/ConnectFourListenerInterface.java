@@ -3,7 +3,7 @@ package de.hhn.it.devtools.apis.connectfour.interfaces;
 /**
  * Callback to notify observers about a state change of the game.
  */
-public interface IConnectFourListener {
+public interface ConnectFourListenerInterface {
 
   /**
    * Called when the match state changes. Updates game.

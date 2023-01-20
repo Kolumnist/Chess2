@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * This is an interface to the game Connect Four.
  */
-public interface IConnectFour {
+public interface ConnectFourInterface {
 
   /**
    * Set the Listener.
@@ -17,7 +17,7 @@ public interface IConnectFour {
    * @param listener Object implementing the listener interface.
    * @throws IllegalArgumentException If the listener reference is null.
    */
-  void setCallback(IConnectFourListener listener) throws IllegalArgumentException;
+  void setCallback(ConnectFourListenerInterface listener) throws IllegalArgumentException;
 
   /**
    * Create a new user profile.

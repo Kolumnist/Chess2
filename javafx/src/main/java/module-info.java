@@ -1,4 +1,4 @@
-import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFour;
+import de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourInterface;
 
 module devtools.javafx {
   requires org.slf4j;
@@ -9,7 +9,7 @@ module devtools.javafx {
   uses de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerService;
   uses de.hhn.it.devtools.apis.examples.coffeemakerservice.AdminCoffeeMakerService;
   // -----------------------------------------------------------------------------------------------
-  uses IConnectFour;                                                                // Connect Four
+  uses ConnectFourInterface;                                                                // Connect Four
   // -----------------------------------------------------------------------------------------------
   opens de.hhn.it.devtools.javafx.controllers to javafx.fxml;
   opens de.hhn.it.devtools.javafx.controllers.coffeemaker to javafx.fxml;

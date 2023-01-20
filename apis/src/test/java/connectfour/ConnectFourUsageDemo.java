@@ -2,7 +2,7 @@ package connectfour;
 
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
-import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFour;
+import de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourInterface;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 public class ConnectFourUsageDemo {
 
   public static void main(String[] args) {
-    IConnectFour connectFour = null;
+    ConnectFourInterface connectFour = null;
 
     // Create three profiles.
     try {

@@ -14,6 +14,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/**
+ * This class modells the edit profile controller.
+ */
 public class ProfilesEditController {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(HighscoresController.class);
@@ -72,6 +75,9 @@ public class ProfilesEditController {
     }
   }
 
+  /**
+   * Initialize the controller.
+   */
   @FXML
   public void initialize() {
     logger.info("initialize: no params");

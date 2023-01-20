@@ -1,6 +1,6 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
-import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFourListener;
+import de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourListenerInterface;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.board.Tile;
@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 /**
  * Controller for the game screen.
  */
-public class GameController implements Initializable, IConnectFourListener {
+public class GameController implements Initializable, ConnectFourListenerInterface {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(GameController.class);
 

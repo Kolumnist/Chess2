@@ -1,4 +1,4 @@
-import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFour;
+import de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourInterface;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 
 module devtools.components {
@@ -14,7 +14,7 @@ module devtools.components {
   provides de.hhn.it.devtools.apis.examples.coffeemakerservice.AdminCoffeeMakerService
       with de.hhn.it.devtools.components.example.coffeemakerservice.provider.WnckCoffeeMakerService;
   // -----------------------------------------------------------------------------------------------
-  provides IConnectFour                                                             // Connect Four
+  provides ConnectFourInterface                                                             // Connect Four
       with ConnectFour;
   // -----------------------------------------------------------------------------------------------
 }

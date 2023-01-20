@@ -1,5 +1,8 @@
 package de.hhn.it.devtools.apis.connectfour.enums;
 
+/**
+ * This enum contains the multiplayer states.
+ */
 public enum MultiplayerState {
   /**
    * Player 1 is placing the disk.

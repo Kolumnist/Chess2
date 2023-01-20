@@ -10,6 +10,9 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.UUID;
 
+/**
+ * This class allows for storing the profile data.
+ */
 public class FileIo {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(FileIo.class);
