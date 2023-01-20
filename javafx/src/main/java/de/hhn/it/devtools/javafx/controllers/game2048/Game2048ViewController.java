@@ -7,6 +7,7 @@ import de.hhn.it.devtools.apis.game2048.State;
 import de.hhn.it.devtools.components.game2048.provider.ImplementationGame2048Service;
 import de.hhn.it.devtools.javafx.game2048.Game2048FileIO;
 import de.hhn.it.devtools.javafx.game2048.ImplemtListener;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -82,28 +83,31 @@ public class Game2048ViewController {
     private Button newGame; // Value injected by FXMLLoader
 
     Label[] labelGameBoard;
-    ImplementationGame2048Service game2048Service;
+    ImplementationGame2048Service service;
     ImplemtListener listener;
 
     private State currentState;
 
+    public Game2048ViewController() {
+        service = new ImplementationGame2048Service();
+        labelGameBoard = new Label[16];
+        listener = new ImplemtListener(this);
+    }
+
+    @FXML
+    void startGameButtonClicked(ActionEvent event) {
+        service.initialisation();
+    }
+
     @FXML
     void initialize() {
         logger.info("initialize: no params");
-        game2048Service = new ImplementationGame2048Service();
-        labelGameBoard = new Label[16];
-        listener = new ImplemtListener(this);
         try {
-            game2048Service.addCallback(listener);
+            service.addCallback(listener);
         } catch (IllegalParameterException e) {
             e.printStackTrace();
         }
-        combineLabels();
-        for (Label label :
-                labelGameBoard) {
-            label.setText("");
-        }
-        game2048Service.initialisation();
+        service.initialisation();
     }
 
     private void updateGameBoard() {
@@ -115,32 +119,19 @@ public class Game2048ViewController {
         }
     }
 
-    /**
-     * Puts all Block-Labels in one place
-     */
-    private void combineLabels() {
-        labelGameBoard[0] = gameBlock13;
-        labelGameBoard[1] = gameBlock14;
-        labelGameBoard[2] = gameBlock15;
-        labelGameBoard[3] = gameBlock16;
-        labelGameBoard[4] = gameBlock9;
-        labelGameBoard[5] = gameBlock10;
-        labelGameBoard[6] = gameBlock11;
-        labelGameBoard[7] = gameBlock12;
-        labelGameBoard[8] = gameBlock5;
-        labelGameBoard[9] = gameBlock6;
-        labelGameBoard[10] = gameBlock7;
-        labelGameBoard[11] = gameBlock8;
-        labelGameBoard[12] = gameBlock1;
-        labelGameBoard[13] = gameBlock2;
-        labelGameBoard[14] = gameBlock3;
-        labelGameBoard[15] = gameBlock4;
-    }
-
     public void setState(State state) {
         logger.info("setState: state = {}", state);
+        clearScreen();
         currentState = state;
         updateScreen();
+    }
+
+    private void clearScreen() {
+        if (currentState != null) {
+            for (Block block : currentState.getBlocksOnGameboard()) {
+                getLabel(block.getXYPosition()).setText("");
+            }
+        }
     }
 
     private void updateScreen() {
@@ -155,7 +146,7 @@ public class Game2048ViewController {
         if (currentScore > oldHighscore) {
             Game2048FileIO.saveHighscore(currentScore);
             highScoreNumber.setText(String.valueOf(currentScore));
-        }else{
+        } else {
             highScoreNumber.setText(String.valueOf(oldHighscore));
         }
     }

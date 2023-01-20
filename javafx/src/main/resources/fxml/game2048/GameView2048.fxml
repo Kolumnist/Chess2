@@ -7,212 +7,235 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.game2048.Game2048ViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0"
+            prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="de.hhn.it.devtools.javafx.controllers.game2048.Game2048ViewController">
    <children>
-      <Button fx:id="newGame" layoutX="813.0" layoutY="459.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="new Game">
+      <Button fx:id="newGame" layoutX="813.0" layoutY="459.0" mnemonicParsing="false"
+              onAction="#startGameButtonClicked" prefHeight="50.0" prefWidth="150.0" text="new Game">
          <font>
-            <Font size="23.0" />
+            <Font size="23.0"/>
          </font>
       </Button>
-      <Label alignment="CENTER" layoutX="402.0" layoutY="27.0" prefHeight="59.0" prefWidth="197.0" text="2048" underline="true">
+      <Label alignment="CENTER" layoutX="402.0" layoutY="27.0" prefHeight="59.0" prefWidth="197.0" text="2048"
+             underline="true">
          <font>
-            <Font name="System Bold" size="38.0" />
+            <Font name="System Bold" size="38.0"/>
          </font>
       </Label>
       <Label alignment="CENTER" layoutX="663.0" layoutY="36.0" prefHeight="50.0" prefWidth="150.0" text="High Score">
          <font>
-            <Font size="23.0" />
+            <Font size="23.0"/>
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="663.0" layoutY="86.0" prefHeight="50.0" prefWidth="150.0" text="Current Score">
+      <Label alignment="CENTER" layoutX="663.0" layoutY="86.0" prefHeight="50.0" prefWidth="150.0"
+             text="Current Score">
          <font>
-            <Font size="23.0" />
+            <Font size="23.0"/>
          </font>
       </Label>
-      <Label fx:id="highScoreNumber" alignment="CENTER" layoutX="813.0" layoutY="36.0" prefHeight="50.0" prefWidth="150.0" text="highScoreNumber">
+      <Label fx:id="highScoreNumber" alignment="CENTER" layoutX="813.0" layoutY="36.0" prefHeight="50.0"
+             prefWidth="150.0" text="highScoreNumber">
          <font>
-            <Font size="23.0" />
+            <Font size="23.0"/>
          </font>
       </Label>
-      <Label fx:id="currentScoreNumber" alignment="CENTER" layoutX="813.0" layoutY="86.0" prefHeight="50.0" prefWidth="150.0" text="currentScoreNumber">
+      <Label fx:id="currentScoreNumber" alignment="CENTER" layoutX="813.0" layoutY="86.0" prefHeight="50.0"
+             prefWidth="150.0" text="currentScoreNumber">
          <font>
-            <Font size="23.0" />
+            <Font size="23.0"/>
          </font>
       </Label>
-      <Label fx:id="gameBlock1" alignment="CENTER" layoutX="313.0" layoutY="141.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock1">
+      <Label fx:id="gameBlock1" alignment="CENTER" layoutX="313.0" layoutY="141.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="gameBlock2" alignment="CENTER" layoutX="413.0" layoutY="141.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock2">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="DEFAULT"/>
          </cursor>
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="18.0"/>
          </font>
       </Label>
-      <Label fx:id="gameBlock3" alignment="CENTER" layoutX="513.0" layoutY="141.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock3">
+      <Label fx:id="gameBlock2" alignment="CENTER" layoutX="413.0" layoutY="141.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="DEFAULT"/>
          </cursor>
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="18.0"/>
          </font>
       </Label>
-      <Label fx:id="gameBlock4" alignment="CENTER" layoutX="613.0" layoutY="141.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock4">
+      <Label fx:id="gameBlock3" alignment="CENTER" layoutX="513.0" layoutY="141.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="DEFAULT"/>
          </cursor>
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="18.0"/>
          </font>
       </Label>
-      <Label fx:id="gameBlock5" alignment="CENTER" layoutX="313.0" layoutY="237.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock5">
+      <Label fx:id="gameBlock4" alignment="CENTER" layoutX="613.0" layoutY="141.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="DEFAULT"/>
          </cursor>
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="18.0"/>
          </font>
       </Label>
-      <Label fx:id="gameBlock6" alignment="CENTER" layoutX="413.0" layoutY="237.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock6">
+      <Label fx:id="gameBlock5" alignment="CENTER" layoutX="313.0" layoutY="237.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="DEFAULT"/>
          </cursor>
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="18.0"/>
          </font>
       </Label>
-      <Label fx:id="gameBlock7" alignment="CENTER" layoutX="513.0" layoutY="237.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock7">
+      <Label fx:id="gameBlock6" alignment="CENTER" layoutX="413.0" layoutY="237.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="DEFAULT"/>
          </cursor>
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="18.0"/>
          </font>
       </Label>
-      <Label fx:id="gameBlock8" alignment="CENTER" layoutX="613.0" layoutY="237.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock8">
+      <Label fx:id="gameBlock7" alignment="CENTER" layoutX="513.0" layoutY="237.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="DEFAULT"/>
          </cursor>
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="18.0"/>
          </font>
       </Label>
-      <Label fx:id="gameBlock9" alignment="CENTER" layoutX="313.0" layoutY="338.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock9">
+      <Label fx:id="gameBlock8" alignment="CENTER" layoutX="613.0" layoutY="237.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="DEFAULT"/>
          </cursor>
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="18.0"/>
          </font>
       </Label>
-      <Label fx:id="gameBlock10" alignment="CENTER" layoutX="413.0" layoutY="338.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock10">
+      <Label fx:id="gameBlock9" alignment="CENTER" layoutX="313.0" layoutY="338.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="DEFAULT"/>
          </cursor>
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="18.0"/>
          </font>
       </Label>
-      <Label fx:id="gameBlock11" alignment="CENTER" layoutX="513.0" layoutY="338.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock11">
+      <Label fx:id="gameBlock10" alignment="CENTER" layoutX="413.0" layoutY="338.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="DEFAULT"/>
          </cursor>
-                  <font>
-            <Font name="System Bold" size="18.0" />
+         <font>
+            <Font name="System Bold" size="18.0"/>
          </font>
       </Label>
-      <Label fx:id="gameBlock12" alignment="CENTER" layoutX="613.0" layoutY="338.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock12">
+      <Label fx:id="gameBlock11" alignment="CENTER" layoutX="513.0" layoutY="338.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="DEFAULT"/>
          </cursor>
-                  <font>
-            <Font name="System Bold" size="18.0" />
+         <font>
+            <Font name="System Bold" size="18.0"/>
          </font>
       </Label>
-      <Label fx:id="gameBlock13" alignment="CENTER" layoutX="313.0" layoutY="434.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock13">
+      <Label fx:id="gameBlock12" alignment="CENTER" layoutX="613.0" layoutY="338.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="DEFAULT"/>
          </cursor>
-                  <font>
-            <Font name="System Bold" size="18.0" />
+         <font>
+            <Font name="System Bold" size="18.0"/>
          </font>
       </Label>
-      <Label fx:id="gameBlock14" alignment="CENTER" layoutX="413.0" layoutY="434.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock14">
+      <Label fx:id="gameBlock13" alignment="CENTER" layoutX="313.0" layoutY="434.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="DEFAULT"/>
          </cursor>
-                  <font>
-            <Font name="System Bold" size="18.0" />
+         <font>
+            <Font name="System Bold" size="18.0"/>
          </font>
       </Label>
-      <Label fx:id="gameBlock15" alignment="CENTER" layoutX="513.0" layoutY="434.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock15">
+      <Label fx:id="gameBlock14" alignment="CENTER" layoutX="413.0" layoutY="434.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="DEFAULT"/>
          </cursor>
-                  <font>
-            <Font name="System Bold" size="18.0" />
+         <font>
+            <Font name="System Bold" size="18.0"/>
          </font>
       </Label>
-      <Label fx:id="gameBlock16" alignment="CENTER" layoutX="613.0" layoutY="434.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: A8A8A8;" text="gameBlock16">
+      <Label fx:id="gameBlock15" alignment="CENTER" layoutX="513.0" layoutY="434.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="DEFAULT"/>
          </cursor>
-                  <font>
-            <Font name="System Bold" size="18.0" />
+         <font>
+            <Font name="System Bold" size="18.0"/>
+         </font>
+      </Label>
+      <Label fx:id="gameBlock16" alignment="CENTER" layoutX="613.0" layoutY="434.0" prefHeight="75.0" prefWidth="75.0"
+             style="-fx-background-color: A8A8A8;">
+         <opaqueInsets>
+            <Insets/>
+         </opaqueInsets>
+         <cursor>
+            <Cursor fx:constant="DEFAULT"/>
+         </cursor>
+         <font>
+            <Font name="System Bold" size="18.0"/>
          </font>
       </Label>
    </children>
