@@ -23,7 +23,7 @@ public class SingleplayerController implements Initializable {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SingleplayerController.class);
 
-  Profile player1 = null;
+  Profile player = null;
   StartingPlayer startingPlayer = null;
 
   @FXML
@@ -46,9 +46,9 @@ public class SingleplayerController implements Initializable {
     logger.info("onStart: no params");
     ConnectFour instance = Instance.getInstance();
     switch (startingPlayer) {
-      case PLAYER1 -> instance.playSingleplayerGame(player1, true);
-      case PLAYER2 -> instance.playSingleplayerGame(player1, false);
-      default -> instance.playSingleplayerGame(player1, Math.random() > 0.5);
+      case HUMAN -> instance.playSingleplayerGame(player, true);
+      case COMPUTER -> instance.playSingleplayerGame(player, false);
+      default -> instance.playSingleplayerGame(player, Math.random() > 0.5);
     }
     SceneChanger.changeScene(root, "/fxml/connectfour/GameScreen.fxml");
   }
@@ -70,12 +70,12 @@ public class SingleplayerController implements Initializable {
     // Set action:
     playerChoiceBox.setOnAction(event -> {
       playerChoiceBox.setDisable(true);
-      player1 = playerChoiceBox.getValue();
-      logger.info("Player: " + player1);
+      player = playerChoiceBox.getValue();
+      logger.info("Player: " + player);
       // Choose starting player:
-      for (StartingPlayer value : StartingPlayer.values()) {
-        startingPlayerChoiceBox.getItems().add(value);
-      }
+      startingPlayerChoiceBox.getItems().add(StartingPlayer.HUMAN);
+      startingPlayerChoiceBox.getItems().add(StartingPlayer.COMPUTER);
+      startingPlayerChoiceBox.getItems().add(StartingPlayer.RANDOM);
       startingPlayerChoiceBox.setDisable(false);
       // Set action:
       startingPlayerChoiceBox.setOnAction(event2 -> {
