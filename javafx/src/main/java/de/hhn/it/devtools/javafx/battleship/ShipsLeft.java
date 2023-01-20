@@ -5,6 +5,7 @@ import de.hhn.it.devtools.apis.battleship.Player;
 import de.hhn.it.devtools.apis.battleship.Ship;
 import de.hhn.it.devtools.apis.battleship.ShipType;
 import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
+import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -46,9 +47,16 @@ public class ShipsLeft {
     Label submarinesLeft = new Label();
     Label destroyersLeft = new Label();
 
+    SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
+    CmpBattleshipService service;
+
     private Ship shipSelected;
 
     ShipsLeft(){
+
+        service = (CmpBattleshipService) singletonAttributeStore.getAttribute("Battleship.service");
+
+
         scene.getStylesheets().add("battleship/style.css");
 
         stage.setWidth(800);
@@ -67,7 +75,7 @@ public class ShipsLeft {
         startFiring.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                CmpBattleshipService.service.setCurrentGameState(GameState.FIRINGSHOTS);
+                service.setCurrentGameState(GameState.FIRINGSHOTS);
                 vbox.getChildren().remove(startFiring);
             }
         });
@@ -104,7 +112,7 @@ public class ShipsLeft {
         carrier.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                shipSelected = CmpBattleshipService.service.getPlayer().returnNextShip(ShipType.CARRIER);
+                shipSelected = service.getPlayer().returnNextShip(ShipType.CARRIER);
                 resetStylesSelectShips();
                 carrier.getStyleClass().add("buttonSelectShip");
 
@@ -115,7 +123,7 @@ public class ShipsLeft {
         battleship.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                setShipSelected(CmpBattleshipService.service.getPlayer().returnNextShip(ShipType.BATTLESHIP));
+                setShipSelected(service.getPlayer().returnNextShip(ShipType.BATTLESHIP));
                 resetStylesSelectShips();
                 battleship.getStyleClass().add("buttonSelectShip");
             }
@@ -125,7 +133,7 @@ public class ShipsLeft {
         cruiser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                setShipSelected(CmpBattleshipService.service.getPlayer().returnNextShip(ShipType.CRUISER));
+                setShipSelected(service.getPlayer().returnNextShip(ShipType.CRUISER));
                 resetStylesSelectShips();
                 cruiser.getStyleClass().add("buttonSelectShip");
             }
@@ -135,7 +143,7 @@ public class ShipsLeft {
         submarine.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                setShipSelected(CmpBattleshipService.service.getPlayer().returnNextShip(ShipType.SUBMARINE));
+                setShipSelected(service.getPlayer().returnNextShip(ShipType.SUBMARINE));
                 resetStylesSelectShips();
                 submarine.getStyleClass().add("buttonSelectShip");
             }
@@ -145,7 +153,7 @@ public class ShipsLeft {
         destroyer.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                setShipSelected(CmpBattleshipService.service.getPlayer().returnNextShip(ShipType.DESTROYER));
+                setShipSelected(service.getPlayer().returnNextShip(ShipType.DESTROYER));
                 resetStylesSelectShips();
                 destroyer.getStyleClass().add("buttonSelectShip");
             }

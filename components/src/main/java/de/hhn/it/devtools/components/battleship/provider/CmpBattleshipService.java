@@ -177,6 +177,9 @@ public class CmpBattleshipService implements BattleshipService {
                 }
             }
         }
+        for (BattleshipListener a : listeners) {
+            a.outputShipPlaced(shipToPlace);
+        }
     }
 
     // nedim

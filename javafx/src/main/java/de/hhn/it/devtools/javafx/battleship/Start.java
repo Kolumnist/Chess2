@@ -1,12 +1,19 @@
 package de.hhn.it.devtools.javafx.battleship;
 
+import de.hhn.it.devtools.apis.battleship.BattleshipListener;
+import de.hhn.it.devtools.apis.battleship.BattleshipService;
 import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
+import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Start extends Application {
     static Stage mainStage = new Stage();
     GameMenu gameMenu;
+    static String BATTLESHIP_SERVICE = "Battleship.service";
+    SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
+    CmpBattleshipService service;
+
     /**
      * The main entry point for all JavaFX applications.
      * The start method is called after the init method has returned,
@@ -24,9 +31,10 @@ public class Start extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-         gameMenu = new GameMenu();
 
-
+        service = new CmpBattleshipService();
+        singletonAttributeStore.setAttribute(BATTLESHIP_SERVICE,service);
+        gameMenu = new GameMenu();
 
     }
 

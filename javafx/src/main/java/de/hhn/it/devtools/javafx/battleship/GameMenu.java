@@ -4,6 +4,7 @@ import de.hhn.it.devtools.apis.battleship.IllegalGameStateException;
 import de.hhn.it.devtools.apis.battleship.IllegalPositionException;
 import de.hhn.it.devtools.apis.battleship.IllegalShipStateException;
 import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
+import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -22,7 +23,12 @@ public class GameMenu{
     Button bigGame = new Button("Big (15x15)");
     Game game;
 
+    SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
+    CmpBattleshipService service;
+
     public GameMenu() throws FileNotFoundException {
+
+        service = (CmpBattleshipService) singletonAttributeStore.getAttribute("Battleship.service");
 
         sceneGameMenu.getStylesheets().add("battleship/style.css");
         vbox.setId("gameMenuVbox");
@@ -79,7 +85,7 @@ public class GameMenu{
     public void createService(int size){
         game = new Game(size);
         try {
-            CmpBattleshipService.service.createFields(size);
+            service.createFields(size);
         } catch (IllegalGameStateException | IllegalShipStateException | IllegalPositionException e) {
             e.printStackTrace();
         }
