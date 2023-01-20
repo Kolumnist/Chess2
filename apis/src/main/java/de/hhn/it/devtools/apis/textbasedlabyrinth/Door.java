@@ -6,7 +6,6 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
  */
 public class Door {
 
-
   private Puzzle puzzle;
   private boolean locked;
   private boolean fake;
@@ -98,12 +97,14 @@ public class Door {
   }
 
   public boolean checkIfFake() {
-
     return fake;
   }
 
-  public void isFake() {
+  public boolean hasPuzzle() {
+    return hasPuzzle;
+  }
 
+  public void isFake() {
     fake = true;
   }
 
@@ -112,7 +113,6 @@ public class Door {
   }
 
   public Puzzle getPuzzle() {
-
     return puzzle;
   }
 
