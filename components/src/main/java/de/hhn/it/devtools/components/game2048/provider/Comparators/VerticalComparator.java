@@ -6,8 +6,9 @@ import de.hhn.it.devtools.apis.game2048.MovingDirection;
 import java.util.Comparator;
 
 /**
- * Compares two Blocks and sorts them relative two the positions of both Blocks.
- * The smallest YPosition is going to be at index 0.
+ * Compares two Blocks and sorts them relative to the positions of both Blocks.
+ * direction.left the smallest YPosition is going to be at index 0.
+ * direction.right the greatest YPosition is going to be at index 0.
  */
 public class VerticalComparator implements Comparator<Block> {
   private static final org.slf4j.Logger logger =
