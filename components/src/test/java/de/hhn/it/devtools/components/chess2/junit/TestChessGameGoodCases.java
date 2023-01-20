@@ -223,7 +223,6 @@ public class TestChessGameGoodCases {
   @DisplayName("Selected Piece gets moved on bear both are defeated")
   void TestMoveSelectedPieceOnBear()
       throws IllegalParameterException, IllegalStateException, InvalidMoveException {
-    //TODO minimum 12-32
     Coordinate[] currentCoords = chess2Service.getCurrentFields();
     Coordinate[] possibleMoves = chess2Service.getPossibleMoves(currentCoords[0]);
     Coordinate bear = new Coordinate();
