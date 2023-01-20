@@ -18,21 +18,8 @@ public interface WordleService {
    */
   void startAnotherGame();
 
-  /**
-   * Method that randomly selects a Wordle solution that the user must attempt to guess.
-   *
-   * @return The randomly selected Wordle solution
-   */
-  String selectWordle();
+  void receiveAndComputeGuess(String stringGuess) throws IllegalGuessException;
 
-  /**
-   * A method to ensure that the user's guess is 5 letters long. An exception is thrown if it isn't.
-   *
-   * @param guess the guess which the method will validate
-   * @return true if the guess is 5 letters long
-   * @throws IllegalGuessException if the given guess is too short
-   */
-  boolean validateWordleGuess(WordleGuess guess) throws IllegalGuessException;
 
   /**
    * Quits the game and closes all Wordle windows.
@@ -42,19 +29,19 @@ public interface WordleService {
   /**
    * Adds a listener in order to get information on the state of a WordlePanel.
    *
-   * @param id ID of the WordlePanel which will have a callback added to it
    * @param listener WordlePanelListener which will be added to the panel
+   * @param panel Panel to which Listener will be added
    * @throws IllegalParameterException if the given ID or listener do not exist
    */
-  void addCallback(int id, WordlePanelListener listener) throws IllegalParameterException;
+  void addCallback(WordlePanelListener listener, WordlePanelService panel) throws IllegalParameterException;
 
   /**
    * Removes a listener from a WordlePanel.
    *
-   * @param id ID of the WordlePanel which will have its Listener removed
    * @param listener Listener which is to be removed
+   * @param panel Panel from which Listener is removed
    * @throws IllegalParameterException if the given ID or listener do not exist
    */
-  void removeCallback(int id, WordlePanelListener listener) throws IllegalParameterException;
+  void removeCallback(WordlePanelListener listener, WordlePanelService panel) throws IllegalParameterException;
 
 }

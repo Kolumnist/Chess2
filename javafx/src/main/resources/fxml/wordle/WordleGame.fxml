@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #121213;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER" prefHeight="46.0" prefWidth="600.0">
+         <children>
+            <Label text="Wordle" textFill="WHITE">
+               <font>
+                  <Font name="Dubai Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Separator prefWidth="200.0" style="-fx-background-color: black;" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="firstRowFirstLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="firstRowFSecondLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="firstRowThirdLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="firstRowFourthLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="firstRowFifthLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="20.0" right="20.0" top="20.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="secondRowFirstLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="secondRowSecondLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="secondRowThirdLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="secondRowFourthLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="secondRowFifthLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="thirdRowFirstLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="thirdRowSecondLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="thirdRowThirdLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="thirdRowFourthLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="thirdRowFifthLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="fourthRowFirstLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="fourthRowSecondLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="fourthRowThirdLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="fourthRowFourthLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="fourthRowFifthLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="fifthRowFirstLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="fifthRowSecondLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="fifthRowThirdLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="fifthRowFourthLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="fifthRowFifthLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="sixthRowFirstLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="sixthRowSecondLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="sixthRowThirdLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="sixthRowFourthLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="sixthRowFiifthLabel" alignment="CENTER" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #3a3a3c;" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="42.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button mnemonicParsing="false" text="Enter" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
