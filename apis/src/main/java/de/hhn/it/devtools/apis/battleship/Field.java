@@ -8,7 +8,7 @@ public class Field {
 
     private static int size;
     //Index is false if no ship is on panel
-    PanelState[][] panelMarkerMat;
+    private PanelState[][] panelMarkerMat;
     private final Player owner;
 
 

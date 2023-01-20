@@ -74,13 +74,13 @@ public class Game extends Stage{
 
 
         // Creates the upper Playground
-        for ( int k = 0; k <sizeGrid; k++) {
-            Label lblAbc = new Label(abc[k].toString());
+        for ( int i = 0; i <sizeGrid; i++) {
+            Label lblAbc = new Label(abc[i].toString());
             lblAbc.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-padding: 0 15 0 0 ");
 
-            playgroundUpper.add(lblAbc, 0 ,k);
+            playgroundUpper.add(lblAbc, 0 ,i);
 
-            for ( int i = 0; i < sizeGrid; i++) {
+            for ( int k = 0; k < sizeGrid; k++) {
                 buttonsUpper[k][i] = new Button();
                 buttonsUpper[k][i].setPrefWidth(sizeButtons);
                 buttonsUpper[k][i].setPrefHeight(sizeButtons);
@@ -98,7 +98,7 @@ public class Game extends Stage{
                     }
                 });
 
-                playgroundUpper.add(buttonsUpper[k][i], i + 1, k);
+                playgroundUpper.add(buttonsUpper[k][i], k + 1, i);
             }
         }
 
@@ -113,13 +113,13 @@ public class Game extends Stage{
 
 
         // Creates the lower Playground
-        for (int k = 0; k <sizeGrid; k++) {
-            Label lblAbc = new Label(abc[k].toString());
+        for (int i = 0; i <sizeGrid; i++) {
+            Label lblAbc = new Label(abc[i].toString());
             lblAbc.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-padding: 0 15 0 0 ");
 
-            playgroundLower.add(lblAbc, 0 ,k);
+            playgroundLower.add(lblAbc, 0 ,i);
 
-            for (int i = 0; i < sizeGrid; i++) {
+            for (int k = 0; k < sizeGrid; k++) {
                 buttonsLower[k][i] = new Button();
                 buttonsLower[k][i].setPrefWidth(sizeButtons);
                 buttonsLower[k][i].setPrefHeight(sizeButtons);
@@ -132,11 +132,10 @@ public class Game extends Stage{
                 buttonsLower[k][i].setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        buttonsLower[k1][i1].setStyle("-fx-background-color: red");
                         switch(CmpBattleshipService.service.getCurrentGameState()){
                             case PLACINGSHIPS -> {
                                 try {
-                                    CmpBattleshipService.service.placeShip(CmpBattleshipService.service.getPlayer(),shipsleft.getShipSelected(),k1,i1);
+                                    CmpBattleshipService.service.placeShip(CmpBattleshipService.service.getPlayer(),shipsleft.getShipSelected(),i1,k1);
                                     updateField();
                                 } catch (IllegalPositionException | IllegalShipStateException | IllegalGameStateException e) {
                                     e.printStackTrace();
@@ -147,7 +146,7 @@ public class Game extends Stage{
                     }
                 });
 
-                playgroundLower.add(buttonsLower[k][i], i + 1, k);
+                playgroundLower.add(buttonsLower[k][i], k + 1, i);
             }
         }
 
@@ -225,12 +224,10 @@ public class Game extends Stage{
         PanelState[][] playerShipsPlaced = CmpBattleshipService.service.getPlayer().getShipField().getPanelMarkerMat();
         for (int i = 0; i < sizeGrid ; i++) {
             for (int k = 0; k < sizeGrid ; k++) {
-                if(playerShipsPlaced[i][k] == PanelState.SHIP){
+                if(playerShipsPlaced[k][i] == PanelState.SHIP){
                 buttonsLower[k][i].getStyleClass().add("buttonPlacedShips");
+                }
             }
         }
-        }
     }
-
-
 }
