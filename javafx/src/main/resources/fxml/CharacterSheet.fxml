@@ -139,7 +139,7 @@
                                  <children>
                                     <Label text="Würfel">
                                        <font>
-                                          <Font name="System Bold" size="12.0" />
+                                          <Font name="System Bold" size="14.0" />
                                        </font></Label>
                                     <MenuButton fx:id="diceMenuButton" maxHeight="1.7976931348623157E308" mnemonicParsing="false" prefWidth="150.0" text="Würfel wählen">
                                        <items>
