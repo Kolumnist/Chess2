@@ -5,14 +5,18 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * This class handles all communication between buttons and components.
+ *
+ * @author Collin Hoss, Lara Mangi, Michel Jouaux
+ * @version 1.0
+ */
 public class Chess2PopUpRulesController {
 
 
@@ -25,6 +29,8 @@ public class Chess2PopUpRulesController {
   @FXML
   private TableView<Rules> myTableView;
 
+  //I write in the ObservableList everything i like to have later in my tableview.
+   //The list allows listeners to track changes when they occur.
   ObservableList<Rules> list = FXCollections.observableArrayList(
 
       new Rules("Fish",
@@ -74,22 +80,24 @@ public class Chess2PopUpRulesController {
               + "defeating she goes to jail. The queen can not get free from jail\n\n"),
       new Rules("Jail",
           "It is on the right and left side of the board and is an extension to it!\n "
-              + "The defeated king and/or queen is imprisoned, only those two go to jail upon "
+              + "The defeated king and/or queen is imprisoned, only those two go to jail upon\n"
               + "defeat.\n\n"));
 
-
+  /**
+   * This method create a popUp Window.
+   * This method fill the TableView with the values in the ObservableList.
+   */
   @FXML
   public void initialize() {
+    Stage dialog = new Stage();
+    VBox dialogVbox = new VBox(10);
     columnFigur.setCellValueFactory(new PropertyValueFactory<Rules, String>("Figur"));
     columnDescription.setCellValueFactory(new PropertyValueFactory<Rules, String>("Description"));
     myTableView.setFixedCellSize(Region.USE_COMPUTED_SIZE);
     myTableView.setItems(list);
-    VBox dialogVbox = new VBox(10);
     dialogVbox.getChildren().add(myTableView);
     Scene dialogScene = new Scene(dialogVbox, 600, 400);
-    Stage dialog = new Stage();
     dialog.setScene(dialogScene);
     dialog.show();
-
   }
 }

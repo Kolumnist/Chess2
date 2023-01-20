@@ -96,7 +96,6 @@ public class Chess2ServiceController extends Controller implements Initializable
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-    p.initialize();
   }
 
   @FXML

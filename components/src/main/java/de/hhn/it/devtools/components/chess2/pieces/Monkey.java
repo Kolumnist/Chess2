@@ -104,7 +104,7 @@ public class Monkey extends Piece {
 
     //Testing if the own King is in jail and replacing the jumpCoordinate
     // if the Monkey stands on the right Field.
-    if (isKingInJail(board)) {
+    if (isKingInJailWithBanana(board)) {
       if (color == 'b'
           && (board.getSpecificField(new Coordinate(5, 4)).getFieldState()
           == FieldState.SELECTED
@@ -177,15 +177,17 @@ public class Monkey extends Piece {
    * @param board the board of the game to test if the King is in jail
    * @return a boolean if the King is in jail or not
    */
-  private boolean isKingInJail(Board board) {
-    if (color == 'b') {
-      if (board.getSpecificField(new Coordinate(9, 4)).getFieldState()
-          == FieldState.JAIL_KING) {
+  private boolean isKingInJailWithBanana(Board board) {
+    if (color == 'b'
+        && board.getSpecificField(new Coordinate(9, 4)).getFieldState() == FieldState.JAIL_KING) {
+      King king = (King) board.getSpecificField(new Coordinate(9, 4)).getPiece();
+      if (king.hasBanana) {
         return true;
       }
-    } else if (color == 'r') {
-      if (board.getSpecificField(new Coordinate(8, 3)).getFieldState()
-          == FieldState.JAIL_KING) {
+    } else if (color == 'r'
+        && board.getSpecificField(new Coordinate(8, 3)).getFieldState() == FieldState.JAIL_KING) {
+      King king = (King) board.getSpecificField(new Coordinate(8, 3)).getPiece();
+      if (king.hasBanana) {
         return true;
       }
     }
