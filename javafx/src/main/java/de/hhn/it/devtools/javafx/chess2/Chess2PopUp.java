@@ -16,7 +16,8 @@ import javafx.stage.Stage;
 public class Chess2PopUp {
 
   /**
-   * This method create a popUp Window
+   * This method create a popUp Window.
+   *
    * @param popUpLabel is a label in the middle of the window
    */
   @FXML

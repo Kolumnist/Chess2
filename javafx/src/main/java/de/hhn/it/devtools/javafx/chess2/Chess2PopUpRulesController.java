@@ -30,7 +30,7 @@ public class Chess2PopUpRulesController {
   private TableView<Rules> myTableView;
 
   //I write in the ObservableList everything i like to have later in my tableview.
-   //The list allows listeners to track changes when they occur.
+  //The list allows listeners to track changes when they occur.
   ObservableList<Rules> list = FXCollections.observableArrayList(
 
       new Rules("Fish",
@@ -84,17 +84,17 @@ public class Chess2PopUpRulesController {
               + "defeat.\n\n"));
 
   /**
-   * This method create a popUp Window.
-   * This method fill the TableView with the values in the ObservableList.
+   * This method create a popUp Window. This method fill the TableView with the values in the
+   * ObservableList.
    */
   @FXML
   public void initialize() {
-    Stage dialog = new Stage();
-    VBox dialogVbox = new VBox(10);
     columnFigur.setCellValueFactory(new PropertyValueFactory<Rules, String>("Figur"));
     columnDescription.setCellValueFactory(new PropertyValueFactory<Rules, String>("Description"));
     myTableView.setFixedCellSize(Region.USE_COMPUTED_SIZE);
     myTableView.setItems(list);
+    Stage dialog = new Stage();
+    VBox dialogVbox = new VBox(10);
     dialogVbox.getChildren().add(myTableView);
     Scene dialogScene = new Scene(dialogVbox, 600, 400);
     dialog.setScene(dialogScene);
