@@ -21,11 +21,11 @@ public class VerticalComparator implements Comparator<Block> {
   private boolean upDown;
 
   public VerticalComparator(MovingDirection direction) {
-    switch (direction){
-      case up ->{
+    switch (direction) {
+      case up -> {
         upDown = true;
       }
-      case down ->{
+      case down -> {
         upDown = false;
       }
       default -> {
