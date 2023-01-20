@@ -90,51 +90,55 @@ public class CmpBattleshipService implements BattleshipService {
     @Override
     public boolean isPlacementPossible(Player player, Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException {
         logger.info("isPlacementPossible: player = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}", player, shipToPlace, x1, y1, isVertical);
-        int shipSize = shipToPlace.getSize();
         // if x1 is the endpoint (leftmost point) of the ship then this calculation:
-        int endX = (x1 + shipSize) - 1;
+        int endX = (x1 + shipToPlace.getSize()) - 1;
         // if y1 is the end point (top point) of the ship then this calculation:
-        int endY = (y1 + shipSize) - 1;
-        int fieldSize = Field.getSize();
-        PanelState[][] shipField;
+        int endY = (y1 + shipToPlace.getSize()) - 1;
 
         // Check if coordinates of ship is outside of field
-        if((x1 < 0) || (y1 < 0) || (x1 >= fieldSize) || (y1 >= fieldSize) || (endX >= fieldSize && !isVertical) || (endY >= fieldSize && isVertical)){
+        if((x1 < 0) || (y1 < 0) || (x1 >= Field.getSize()) || (y1 >= Field.getSize()) || (endX >= Field.getSize() && !isVertical) || (endY >= Field.getSize() && isVertical)){
             return false;
         }
         else if(currentGameState != GameState.PLACINGSHIPS){
             throw new IllegalGameStateException("Wrong GameState! Required GameState is PlacingShips");
         }
-        shipField = player.getShipField().getPanelMarkerMat();
 
         if(isVertical){
-            for(int i = y1; i <= endY; i++){
-                if(shipField[i][x1] == PanelState.SHIP){
+            return checkShipOnPanel(true, y1, endY, x1);
+        }
+        else {
+            return checkShipOnPanel(false, x1, endX, y1);
+        }
+    }
+
+    /**
+     * @param isVertival true if to placing ship is vertical, false if horizontal
+     * @param startCoordinate one of the start coordinates where the ship should be placed
+     * @param endCoordinate End coordinate of the ship to be placed
+     * @param secondStartCoordinate second of the start coordinates where the ship should be placed (if startCoordinate is x then secondStartCoordinate is y and the other way around)
+     * @return true if ship can be placed, false if not
+     */
+    public boolean checkShipOnPanel(boolean isVertival, int startCoordinate, int endCoordinate, int secondStartCoordinate){
+        for(int i = startCoordinate; i <= endCoordinate; i++){
+            if(isVertival) {
+                // startCoordiante = y1, endCoordinate = endY, secondStartCoordinate = x1
+                if (player.getShipField().getPanelMarkerMat()[i][secondStartCoordinate] == PanelState.SHIP) {
                     return false;
                 }
             }
-            if(endY < fieldSize){  // < fieldSize, because if fielSize = 5 -> 0 to 4
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-        else if(!isVertical){
-            for(int i = x1; i <= endX; i++){
-                if(shipField[y1][i] == PanelState.SHIP){
+            else {
+                // startCoordinate = x1, endCoordinate = endX, secondStartCoordinate = y1
+                if(player.getShipField().getPanelMarkerMat()[secondStartCoordinate][i] == PanelState.SHIP){
                     return false;
                 }
             }
-            if (endX < fieldSize){  // < fieldSize, because if fielSize = 5 -> 0 to 4
-                return true;
-            }
-            else{
-                return false;
-            }
         }
-        // Muss rein sonst Fehlermeldung
-        return false;
+        if(endCoordinate < Field.getSize()){  // < fieldSize, because if fielSize = 5 -> 0 to 4
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     // nedim
@@ -143,11 +147,10 @@ public class CmpBattleshipService implements BattleshipService {
         logger.info("placeShip: player = {}, ship = {}, x-value = {}, y-value = {}, ", player, shipToPlace, x1, y1);
         boolean isPlaced = shipToPlace.getPlaced();
         boolean isVertical = shipToPlace.getIsVertical();
-        int shipSize = shipToPlace.getSize();
         // if x1 is the endpoint (leftmost point) of the ship then this calculation:
-        int endX = (x1 + shipSize) - 1;
+        int endX = (x1 + shipToPlace.getSize()) - 1;
         // if y1 is the end point (top point) of the ship then this calculation:
-        int endY = (y1 + shipSize) - 1;
+        int endY = (y1 + shipToPlace.getSize()) - 1;
         PanelState[][] panelStateField;
         Field shipField;
 
