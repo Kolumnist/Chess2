@@ -58,6 +58,7 @@ public class SfsTimer implements Timer, Runnable {
 
   @Override
   public TimerDescriptor getTimer() {
+    logger.info("getTimer: no params");
     return descriptor;
   }
 
@@ -86,7 +87,7 @@ public class SfsTimer implements Timer, Runnable {
         notifyListener(descriptor.time);
         Thread.sleep(1000);
       } catch (InterruptedException | IllegalParameterException e) {
-        System.out.println(e);
+        e.printStackTrace();
       }
     }
   }

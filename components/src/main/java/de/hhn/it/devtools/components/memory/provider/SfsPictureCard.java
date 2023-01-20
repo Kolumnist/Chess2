@@ -40,6 +40,7 @@ public class SfsPictureCard implements PictureCard {
 
   @Override
   public void turnCard() throws IllegalStateException {
+    logger.info("turnCard: no params");
     if (descriptor.getState().equals(State.MATCHED)) {
       throw new IllegalStateException("PictureCard is already matched.");
     }
@@ -55,6 +56,7 @@ public class SfsPictureCard implements PictureCard {
 
   @Override
   public void addCallback(PictureCardListener listener) throws IllegalParameterException {
+    logger.info("addCallback: listener = {}", listener);
     if (listener == null) {
       throw new IllegalParameterException("Listener was null reference.");
     }
@@ -68,6 +70,7 @@ public class SfsPictureCard implements PictureCard {
 
   @Override
   public void removeCallback(PictureCardListener listener) throws IllegalParameterException {
+    logger.info("removeCallback: listener = {}", listener);
     if (listener == null) {
       throw new IllegalParameterException("Listener was null reference.");
     }
@@ -81,11 +84,13 @@ public class SfsPictureCard implements PictureCard {
 
   @Override
   public PictureCardDescriptor getPictureCard() {
+    logger.info("getPictureCard: no params");
     return descriptor;
   }
 
   @Override
   public void matchCard() {
+    logger.info("matchCard: no params");
     descriptor.setState(State.MATCHED);
     notifyListeners(State.MATCHED);
   }
