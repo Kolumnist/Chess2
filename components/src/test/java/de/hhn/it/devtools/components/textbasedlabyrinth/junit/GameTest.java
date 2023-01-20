@@ -32,7 +32,42 @@ public class GameTest {
 
     @Test
     @DisplayName("Test simulated Game")
-    public void testGameFunction() {
+    public void testGameGraveOfTheMadKing() {
+        ArrayList<Integer> seedList1 = new ArrayList<>();
+        seedList1.add(0);
+        seedList1.add(0);
+
+        try {
+            game.setCurrentLayout(Map.Grave_of_the_Mad_King, new Seed(seedList1));
+        } catch (InvalidSeedException | RoomFailedException e) {
+            fail(e.getMessage());
+        }
+
+        List<Room> roomsList = game.getCurrentLayout().getAllRooms();
+
+        try {
+            LayoutGenerator generator = new LayoutGenerator(Map.Grave_of_the_Mad_King, new Seed(seedList1));
+            assertEquals(generator.getMaxRoomCount(), roomsList.size());
+        } catch (InvalidSeedException e) {
+            fail();
+        }
+
+        assertEquals(Map.Grave_of_the_Mad_King, game.getMap());
+
+        game.move(Direction.EAST);
+        game.move(Direction.EAST);
+        game.move(Direction.EAST);
+        game.move(Direction.NORTH);
+
+        assertEquals(game.getCurrentRoom(), roomsList.get(12));
+
+        //This room should be the exit.
+        assertTrue(player.getCurrentRoomOfPlayer().isExit());
+    }
+
+    @Test
+    @DisplayName("Test simulated Game")
+    public void testGameAncientDungeon() {
         ArrayList<Integer> seedList1 = new ArrayList<>();
         seedList1.add(0);
         seedList1.add(0);
@@ -276,12 +311,137 @@ public class GameTest {
 
 
     @Test
+    @DisplayName("Test simulated Game")
+    public void testGameUnknownSewers() {
+        ArrayList<Integer> seedList1 = new ArrayList<>();
+        seedList1.add(0);
+        seedList1.add(0);
+
+        try {
+            game.setCurrentLayout(Map.Unknown_Sewers, new Seed(seedList1));
+        } catch (InvalidSeedException | RoomFailedException e) {
+            fail(e.getMessage());
+        }
+
+        List<Room> roomsList = game.getCurrentLayout().getAllRooms();
+
+        try {
+            LayoutGenerator generator = new LayoutGenerator(Map.Unknown_Sewers, new Seed(seedList1));
+            assertEquals(generator.getMaxRoomCount(), roomsList.size());
+        } catch (InvalidSeedException e) {
+            fail();
+        }
+
+        assertEquals("You are " + player.getName() + " and you are in the depths of a labyrinth.",
+                game.startText());
+
+        try {
+            assertEquals("This is an open path. You could just walk through.", game.inspect(Direction.NORTH));
+        } catch (RoomFailedException e) {
+            fail();
+        }
+
+        assertEquals("You find yourself in " + game.getCurrentRoom().getDescription() +
+                "You can search the room or move on.", game.check());
+
+        game.move(Direction.NORTH);
+        game.move(Direction.NORTH);
+        game.move(Direction.EAST);
+        List<Item> itemList1 = game.searchRoom();
+        assertEquals(1, itemList1.size());
+        Item keyItem1 = itemList1.get(0);
+        try {
+            game.pickUpItem(itemList1.get(0).getItemId());
+        } catch (NoSuchItemFoundException e) {
+            fail();
+        }
+
+        try {
+            assertEquals("A big, old metal key. It feels wet.",
+                    game.inspectItemInInventoryOfPlayer(keyItem1.getItemId()));
+        } catch (NoSuchItemFoundException e) {
+            fail();
+        }
+
+        game.move(Direction.WEST);
+        game.move(Direction.WEST);
+
+        List<Item> itemList2 = game.searchRoom();
+        assertEquals(1, itemList2.size());
+        Item keyItem2 = itemList2.get(0);
+        try {
+            game.pickUpItem(itemList2.get(0).getItemId());
+        } catch (NoSuchItemFoundException e) {
+            fail();
+        }
+        game.move(Direction.EAST);
+        game.move(Direction.NORTH);
+        game.move(Direction.NORTH);
+        game.move(Direction.NORTH);
+        try {
+            game.interaction(Direction.NORTH, keyItem2);
+        } catch (RoomFailedException e) {
+            fail();
+        }
+        game.move(Direction.NORTH);
+        try {
+            game.interaction(Direction.NORTH, keyItem1);
+        } catch (RoomFailedException e) {
+            fail();
+        }
+        game.move(Direction.NORTH);
+        game.move(Direction.NORTH);
+        game.move(Direction.NORTH);
+
+
+        assertEquals(game.getCurrentRoom(), roomsList.get(12));
+
+        //This room should be the exit.
+        assertTrue(player.getCurrentRoomOfPlayer().isExit());
+    }
+
+    @Test
+    @DisplayName("Test simulated Game")
+    public void testGameReset() {
+        ArrayList<Integer> seedList1 = new ArrayList<>();
+        seedList1.add(0);
+        seedList1.add(0);
+
+        try {
+            game.setCurrentLayout(Map.Unknown_Sewers, new Seed(seedList1));
+        } catch (InvalidSeedException | RoomFailedException e) {
+            fail(e.getMessage());
+        }
+
+        List<Room> roomsList = game.getCurrentLayout().getAllRooms();
+
+        try {
+            LayoutGenerator generator = new LayoutGenerator(Map.Unknown_Sewers, new Seed(seedList1));
+            assertEquals(generator.getMaxRoomCount(), roomsList.size());
+        } catch (InvalidSeedException e) {
+            fail();
+        }
+
+        Room startRoom = game.getCurrentRoom();
+        game.move(Direction.NORTH);
+        game.move(Direction.NORTH);
+        game.move(Direction.EAST);
+        assertEquals(roomsList.get(3), game.getCurrentRoom());
+        assertEquals(player.getCurrentRoomOfPlayer(), game.getCurrentRoom());
+        game.reset();
+        assertEquals(startRoom, player.getCurrentRoomOfPlayer());
+        assertEquals(0, player.getInventory().size());
+        assertEquals(0, game.getScore());
+    }
+
+        @Test
     @DisplayName("Test Null Cases")
     public void testNullCases() {
         assertThrows(IllegalArgumentException.class, () -> game.move(null));
         assertThrows(IllegalArgumentException.class, () -> game.inspect(null));
         assertThrows(IllegalArgumentException.class, () -> game.interaction(null, null));
         assertThrows(IllegalArgumentException.class, () -> game.interaction(Direction.NORTH, null));
+        assertThrows(InvalidSeedException.class, () -> game.setCurrentLayout(Map.Ancient_Dungeon, null));
     }
 
 

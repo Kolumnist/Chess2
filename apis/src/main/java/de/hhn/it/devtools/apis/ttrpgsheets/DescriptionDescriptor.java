@@ -1,9 +1,11 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
+import java.io.Serializable;
+
 /**
  * The Descriptor for the Description class.
  */
-public class DescriptionDescriptor {
+public class DescriptionDescriptor implements Serializable {
   private DescriptionType descriptionType;
   private String text;
 
@@ -64,7 +66,7 @@ public class DescriptionDescriptor {
 
   @Override
   public String toString() {
-    return "Description type = " + getDescriptionType()
-            + ", Text = " + getText();
+    return "DescriptionDescriptor: [Type: " + descriptionType
+            + ", Text: " + text + "]";
   }
 }

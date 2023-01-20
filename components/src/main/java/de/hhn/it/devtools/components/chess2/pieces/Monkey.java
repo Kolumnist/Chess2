@@ -27,6 +27,7 @@ public class Monkey extends Piece {
 
   @Override
   public void calculate(Board board) {
+    canDefeatKing = false;
     ArrayList<Integer> index = new ArrayList<>();
 
     calculateJump(board);
@@ -57,6 +58,7 @@ public class Monkey extends Piece {
       }
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, index);
+    canDefeatKing = false;
   }
 
   /**
@@ -84,13 +86,15 @@ public class Monkey extends Piece {
           || possibleJump[i].getY() < 0
           || possibleJump[i].getX() < 0
           || possibleJump[i].getY() > 7
-          || possibleJump[i].getX() > 7) {
+          || possibleJump[i].getX() > 7
+          || board.getSpecificField(possibleJump[i]).getFieldState()
+          == FieldState.HAS_CURRENT_PIECE) {
         index.add(i);
       }
     }
     possibleJump = shortenCoordinateArray(possibleJump, index);
 
-    //Testing if the Crow can defeat the enemy King.
+    //Testing if the Monkey can defeat the enemy King.
     for (int i = 0; i < possibleJump.length; i++) {
       if (board.getSpecificField(possibleJump[i]).getFieldState() == FieldState.OTHER_KING) {
         canDefeatKing = true;
@@ -100,7 +104,7 @@ public class Monkey extends Piece {
 
     //Testing if the own King is in jail and replacing the jumpCoordinate
     // if the Monkey stands on the right Field.
-    if (isKingInJail(board)) {
+    if (isKingInJailWithBanana(board)) {
       if (color == 'b'
           && (board.getSpecificField(new Coordinate(5, 4)).getFieldState()
           == FieldState.SELECTED
@@ -110,7 +114,7 @@ public class Monkey extends Piece {
           == FieldState.HAS_CURRENT_PIECE)) {
         replaceJumpCoordinate(possibleJump, new Coordinate(7, 4),
             new Coordinate(9, 4));
-      } else if (color == 'w'
+      } else if (color == 'r'
           && (board.getSpecificField(new Coordinate(2, 3)).getFieldState()
           == FieldState.SELECTED
           || board.getSpecificField(new Coordinate(2, 3)).getFieldState()
@@ -161,10 +165,10 @@ public class Monkey extends Piece {
    * @return the Coordinate of the Field if the Monkey jumps over another Piece
    */
   private Coordinate calculateJumpCoordinate(Coordinate otherPieceCoordinate) {
-    int newXValue = otherPieceCoordinate.getX() + (otherPieceCoordinate.getX() - coordinate.getX());
-    int newYValue = otherPieceCoordinate.getY() + (otherPieceCoordinate.getY() - coordinate.getY());
+    int newX = otherPieceCoordinate.getX() + (otherPieceCoordinate.getX() - coordinate.getX());
+    int newY = otherPieceCoordinate.getY() + (otherPieceCoordinate.getY() - coordinate.getY());
 
-    return new Coordinate(newXValue, newYValue);
+    return new Coordinate(newX, newY);
   }
 
   /**
@@ -173,15 +177,17 @@ public class Monkey extends Piece {
    * @param board the board of the game to test if the King is in jail
    * @return a boolean if the King is in jail or not
    */
-  private boolean isKingInJail(Board board) {
-    if (color == 'b') {
-      if (board.getSpecificField(new Coordinate(9, 4)).getFieldState()
-          == FieldState.JAIL_KING) {
+  private boolean isKingInJailWithBanana(Board board) {
+    if (color == 'b'
+        && board.getSpecificField(new Coordinate(9, 4)).getFieldState() == FieldState.JAIL_KING) {
+      King king = (King) board.getSpecificField(new Coordinate(9, 4)).getPiece();
+      if (king.hasBanana) {
         return true;
       }
-    } else if (color == 'w') {
-      if (board.getSpecificField(new Coordinate(8, 3)).getFieldState()
-          == FieldState.JAIL_KING) {
+    } else if (color == 'r'
+        && board.getSpecificField(new Coordinate(8, 3)).getFieldState() == FieldState.JAIL_KING) {
+      King king = (King) board.getSpecificField(new Coordinate(8, 3)).getPiece();
+      if (king.hasBanana) {
         return true;
       }
     }
@@ -202,6 +208,5 @@ public class Monkey extends Piece {
         array[i] = replaceCoordinate;
       }
     }
-    //return array;
   }
 }

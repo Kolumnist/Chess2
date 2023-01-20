@@ -1,8 +1,10 @@
 package wordle;
 
 import de.hhn.it.devtools.apis.wordle.IllegalGuessException;
+import de.hhn.it.devtools.apis.wordle.WordleGuessService;
+import de.hhn.it.devtools.apis.wordle.WordlePanelService;
 import de.hhn.it.devtools.apis.wordle.WordleService;
-import de.hhn.it.devtools.apis.wordle.WordleGuess;
+
 
 
 public class WordleServiceUsageDemo {
@@ -12,39 +14,47 @@ public class WordleServiceUsageDemo {
 
   public static void main(String[] args) throws IllegalGuessException {
 
+    WordleGuessService wordleGuessService = null;
+    WordlePanelService wordlePanelService = null;
     WordleService demo = null;
 
     demo.startGame(); // Player starts a new game
 
-    demo.selectWordle(); // System selects a Wordle for the user to guess
+    // Static component selects a solution for the user to guess
 
-    WordleGuess solution = new WordleGuess("Grace");
+    WordleGuessService solution = null;
+    solution.setLetterAtIndex(0, 'G'); // repeated until grace is entered
+
     logger.info("create WordleGuess with parameter: Grace");
 
-    WordleGuess firstGuess = new WordleGuess("Cargo");
+    WordleGuessService firstGuess = null;
+    firstGuess.setLetterAtIndex(0, 'C'); // repeated until grace is entered
     logger.info("create WordleGuess with parameter: Cargo");
 
-    demo.validateWordleGuess(firstGuess); // System validates the user's guess
+    demo.receiveAndComputeGuess(String.valueOf(firstGuess)); // System validates the user's guess
 
-    WordleGuess secondGuess = new WordleGuess("Grac");
+    WordleGuessService secondGuess = null; // repeated until grac is entered
+    secondGuess.setLetterAtIndex(0, 'G');
     logger.info("create WordleGuess with parameter: Grac");
 
-    demo.validateWordleGuess(secondGuess); // throws IllegalGuessException, because Guess is too short
+    demo.receiveAndComputeGuess(String.valueOf(secondGuess)); // throws IllegalGuessException, because Guess is too short
 
-    demo.validateWordleGuess(secondGuess); // Player adds 'e' to his Guess "Grace"
+    demo.receiveAndComputeGuess(String.valueOf(secondGuess)); // Player adds 'e' to his Guess "Grace"
     logger.info("GuessWord is equal to solution"); // Player wins Game
 
     demo.startAnotherGame();
 
-    demo.selectWordle(); // a new Wordle is selected for the user to guess
+    // Static component selects a new solution for the user to guess
 
-    WordleGuess secondSolution = new WordleGuess("Fairy");
+    WordleGuessService secondSolution = null;
+    secondSolution.setLetterAtIndex(0, 'F'); // repeated until Fairy is entered
     logger.info("New Solution is created");
 
-    WordleGuess newGuess = new WordleGuess("Fairy");
+    WordleGuessService newGuess = null;
+    newGuess.setLetterAtIndex(0, 'F'); // repeated until Fairy is entered
     logger.info("create WordleGuess with parameter: Fairy");
 
-    demo.validateWordleGuess(newGuess);
+    demo.receiveAndComputeGuess(String.valueOf(newGuess));
     logger.info("GuessWord is equal to solution"); // Player wins Game
 
     demo.quitGame();

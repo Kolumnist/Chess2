@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -42,6 +43,8 @@ public class RgcGameController implements Initializable {
   private AnchorPane anchorPane; // Value injected by FXMLLoader
 
   private Stage stage;
+
+  private Button continueButton;
 
 
   @FXML // fx:id="infoLable"
@@ -75,8 +78,8 @@ public class RgcGameController implements Initializable {
   @FXML
   void gpOnMouseExited() {
 
-
   }
+
   @FXML
   void gpOnMouseEntered() {
 
@@ -104,6 +107,10 @@ public class RgcGameController implements Initializable {
       throw new RuntimeException(e);
     }
 
+    RgcListener listener = new RgcListener(
+        (AnchorPane) singletonAttributeStore.getAttribute(ReactionGameController.RGC_ANCHOR_PANE),
+        service, this);
+
     singletonAttributeStore.setAttribute(RgcGameController.RGC_PLAYER_X_POSITION, 0d);
     singletonAttributeStore.setAttribute(RgcGameController.RGC_PLAYER_X_POSITION, 0d);
 
@@ -116,10 +123,20 @@ public class RgcGameController implements Initializable {
     keyHandler = event -> {
       if (event.getCode() == KeyCode.ESCAPE) {
         try {
-          if (service.getRun().getGameState() == GameState.RUNNING) {
-            openPauseMenu();
+
+          if (service.getRun().getGameState() == GameState.PAUSED) {
+            service.endRun();
+            service.removeCallback(listener);
+            RgcScreenController screenController = (RgcScreenController)
+                singletonAttributeStore.getAttribute(ReactionGameController.RGC_SCREEN_CONTROLLER);
+            gamePane.getChildren().remove(continueButton);
+            deleteHandlers();
+
+            screenController.switchTo("RgcEnterPlayerName");
           }
-        } catch (IOException e) {
+
+          openPauseMenu();
+        } catch (IOException | IllegalParameterException e) {
           throw new RuntimeException(e);
         }
         return;
@@ -133,9 +150,7 @@ public class RgcGameController implements Initializable {
 
     new RgcIngameTimer(service.getRun(), timeLabel);
 
-    new RgcListener(
-        (AnchorPane) singletonAttributeStore.getAttribute(ReactionGameController.RGC_ANCHOR_PANE),
-          service, this);
+
   }
 
   /**
@@ -154,27 +169,29 @@ public class RgcGameController implements Initializable {
     double y = (double) singletonAttributeStore.getAttribute(
         RgcGameController.RGC_PLAYER_Y_POSITION);
 
-    Button b = new Button("Continue");
+    continueButton = new Button("");
 
-    b.setMinWidth(30);
-    b.setMinHeight(30);
+    continueButton.setTooltip(new Tooltip("To continue click here!"));
+    continueButton.setId("continue");
 
-    b.setMaxWidth(30);
-    b.setMinHeight(30);
+    continueButton.setMinWidth(30);
+    continueButton.setMinHeight(30);
 
-    b.setStyle("-fx-border-color: BLACK;" + "-fx-border-width: 2;" + "-fx-background-color: BLUE");
+    continueButton.setMaxWidth(30);
+    continueButton.setMinHeight(30);
 
+    continueButton.setStyle("-fx-border-color: BLACK;" + "-fx-border-width: 2;" + "-fx-background-color: BLUE");
 
-    b.setOnAction(event -> {
+    continueButton.setOnAction(event -> {
       service.continueRun();
 
-      anchorPane.getChildren().remove(b);
+      gamePane.getChildren().remove(continueButton);
     });
 
-    b.setLayoutX(x - 15 > 0 ? x - 20 : 0);
-    b.setLayoutY(y - 15 > 0 ? y - 20 : 0);
+    continueButton.setLayoutX(x - 15 > 0 ? x - 20 : 0);
+    continueButton.setLayoutY(y - 15 > 0 ? y - 20 : 0);
 
-    anchorPane.getChildren().add(b);
+    gamePane.getChildren().add(continueButton);
   }
 
   public void deleteHandlers() {

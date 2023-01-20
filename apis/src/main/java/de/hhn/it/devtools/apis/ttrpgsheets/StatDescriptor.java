@@ -1,9 +1,11 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
+import java.io.Serializable;
+
 /**
  * The Descriptor for the Stat class.
  */
-public class StatDescriptor {
+public class StatDescriptor implements Serializable {
   private StatType statType;
   private int baseValue;
   private int offset;
@@ -19,15 +21,16 @@ public class StatDescriptor {
    * @param offset The offset of the Stat
    * @param abilityPointsUsed The ability points used in the Stat
    * @param miscellaneous The miscellaneous additions to the Stat
+   * @param levelStat True, if the Stat can be leveled
    */
   public StatDescriptor(StatType statType, int baseValue, int offset, int abilityPointsUsed,
                         int miscellaneous, boolean levelStat) {
-    setStatType(statType);
-    setBaseValue(baseValue);
-    setOffset(offset);
-    setAbilityPointsUsed(abilityPointsUsed);
-    setMiscellaneous(miscellaneous);
-    setLevelStat(levelStat);
+    this.statType = statType;
+    this.baseValue = baseValue;
+    this.offset = offset;
+    this.abilityPointsUsed = abilityPointsUsed;
+    this.miscellaneous = miscellaneous;
+    this.levelStat = levelStat;
   }
 
   public StatType getStatType() {
@@ -80,11 +83,11 @@ public class StatDescriptor {
 
   @Override
   public String toString() {
-    return "Stat Type: " + getStatType()
-            + "\nBase Value: " + getBaseValue()
-            + "\nOffset: " + getOffset()
-            + "\nAbility Points Used: " + getAbilityPointsUsed()
-            + "\nMiscellaneous: " + getMiscellaneous()
-            + "\nLevel Stat: " + isLevelStat();
+    return "StatDescriptor: [Type: " + statType
+            + ", Base Value: " + baseValue
+            + ", Offset: " + offset
+            + ", Ability Points Used: " + abilityPointsUsed
+            + ", Miscellaneous: " + miscellaneous
+            + ", Level Stat: " + levelStat + "]";
   }
 }

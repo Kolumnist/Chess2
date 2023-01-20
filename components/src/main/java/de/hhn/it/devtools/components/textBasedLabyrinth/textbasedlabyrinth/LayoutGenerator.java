@@ -13,7 +13,6 @@ public class LayoutGenerator {
     private Seed seed;
     private ArrayList<Layout> allLayouts;
     private Room startRoom;
-    private Room endRoom;
     private boolean isPrepared;
     private int maxRoomCount = 13;
 
@@ -51,6 +50,8 @@ public class LayoutGenerator {
     public ArrayList<Room> getAllRooms() {
         return allRooms;
     }
+
+    public boolean isPrepared() { return isPrepared; }
 
     /**
      *

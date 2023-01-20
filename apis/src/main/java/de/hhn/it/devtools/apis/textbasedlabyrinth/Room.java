@@ -39,67 +39,6 @@ public class Room {
     this.description = description;
   }
 
-  public void addItem(Item item) {
-    items.put(item.getItemId(), item);
-  }
-
-  public Room getRoom(Direction direction) throws RoomFailedException {
-    if(!roomMap.containsKey(direction)) {
-      throw new RoomFailedException("No Room in this direction" + direction);
-    }
-    return roomMap.get(direction);
-  }
-
-
-  public void setDoors() {
-    for (Direction direction : directions) {
-      if (roomMap.containsKey(direction)) {
-        Direction oppositeDirection = direction.getOpposite();
-        if (roomMap.get(direction).getDoorMap().containsKey(oppositeDirection)) {
-          doorMap.put(direction, roomMap.get(direction).getDoorMap().get(oppositeDirection));
-        } else {
-          doorMap.put(direction, new Door());
-        }
-      }
-    }
-  }
-
-
-  protected void setFakeInDirection(Direction direction) throws IllegalArgumentException {
-    if(roomMap.containsKey(direction)){
-      doorMap.get(direction).isFake();
-    }
-    else {
-      throw new IllegalArgumentException("Direction was invalid for a fake door: " + direction.toString());
-    }
-  }
-
-  public Door getDoor(Direction direction) throws RoomFailedException {
-    if (!doorMap.containsKey(direction)) {
-      throw new RoomFailedException("No door found in this direction: " + direction.toString());
-    }
-    else {
-      return doorMap.get(direction);
-    }
-  }
-
-  public void removeItem(int itemId) {
-    items.remove(itemId);
-  }
-
-  public int getRoomId() {
-    return roomId;
-  }
-
-  public HashMap<Direction, Door> getDoorMap() {
-    return doorMap;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-
   /**
    * Searching for an item in the room.
    *
@@ -118,24 +57,77 @@ public class Room {
    */
   public void setNextDoorRoom(Room room,Direction direction) {
     if(roomMap.containsKey(direction)){
+      roomMap.get(direction).getRoomMap().remove(direction.getOpposite());
       roomMap.replace(direction, room);
-      room.getRoomMap().replace(direction.getOpposite(), this);
     }
     else {
       roomMap.put(direction, room);
-      room.getRoomMap().put(direction.getOpposite(), this);
+    }
+    room.getRoomMap().put(direction.getOpposite(), this);
+  }
+
+  public void setDoors() {
+    for (Direction direction : directions) {
+      if (roomMap.containsKey(direction)) {
+        Direction oppositeDirection = direction.getOpposite();
+        if (roomMap.get(direction).getDoorMap().containsKey(oppositeDirection)) {
+          doorMap.put(direction, roomMap.get(direction).getDoorMap().get(oppositeDirection));
+        } else {
+          doorMap.put(direction, new Door());
+        }
+      }
     }
   }
 
-  public HashMap<Direction, Room> getRoomMap() {
-    return roomMap;
+  protected void setFakeInDirection(Direction direction) throws IllegalArgumentException {
+    if(roomMap.containsKey(direction)){
+      doorMap.get(direction).isFake();
+    }
+    else {
+      throw new IllegalArgumentException("Direction was invalid for a fake door: " + direction.toString());
+    }
   }
 
-  public void setExit(){
-    this.isExit = true;
+  public Room getRoom(Direction direction) throws RoomFailedException {
+    if(!roomMap.containsKey(direction)) {
+      throw new RoomFailedException("No Room in this direction" + direction);
+    }
+    return roomMap.get(direction);
   }
 
-  public boolean isExit() {
-    return isExit;
+  public Door getDoor(Direction direction) throws RoomFailedException {
+    if (!doorMap.containsKey(direction)) {
+      throw new RoomFailedException("No door found in this direction: " + direction.toString());
+    }
+    else {
+      return doorMap.get(direction);
+    }
   }
+
+  public void addItem(Item item) {
+    items.put(item.getItemId(), item);
+  }
+
+  public void removeItem(int itemId) throws NoSuchItemFoundException{
+    if(!items.containsKey(itemId)){
+      throw new NoSuchItemFoundException("No such Item found in this Room");
+    }
+    items.remove(itemId);
+  }
+
+  public int getRoomId() { return roomId; }
+
+  public HashMap<Direction, Door> getDoorMap() { return doorMap; }
+
+  public String getDescription() { return description; }
+
+  public HashMap<Direction, Room> getRoomMap() { return roomMap; }
+
+  public void setExit(){ this.isExit = true; }
+
+  public boolean isExit() { return isExit; }
+
+  public HashMap<Integer, Item> getItems() { return items; }
+
+  public ArrayList<Direction> getDirections() { return directions; }
 }

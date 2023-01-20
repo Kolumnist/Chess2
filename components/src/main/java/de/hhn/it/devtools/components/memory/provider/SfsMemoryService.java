@@ -1,9 +1,19 @@
 package de.hhn.it.devtools.components.memory.provider;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.apis.memory.*;
-
-import java.util.*;
+import de.hhn.it.devtools.apis.memory.CardSetDescriptor;
+import de.hhn.it.devtools.apis.memory.DeckListener;
+import de.hhn.it.devtools.apis.memory.Difficulty;
+import de.hhn.it.devtools.apis.memory.MemoryService;
+import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
+import de.hhn.it.devtools.apis.memory.PictureCardListener;
+import de.hhn.it.devtools.apis.memory.State;
+import de.hhn.it.devtools.apis.memory.TimerDescriptor;
+import de.hhn.it.devtools.apis.memory.TimerListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Implementation of MemoryService interface.
@@ -12,15 +22,11 @@ public class SfsMemoryService implements MemoryService {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(SfsMemoryService.class);
 
-  private Map<Integer, PictureCard> cards;
+  private final Map<Integer, PictureCard> cards;
+  private final List<SfsCardSet> cardSetStorage = new ArrayList<>();
+  private final SfsTimer timer;
   private SfsCardSet currentCardSet;
-
   private DeckListener deckListener;
-
-  private List<SfsCardSet> cardSetStorage = new ArrayList<>();
-
-
-  private SfsTimer timer;
 
   public SfsMemoryService() {
     cards = new HashMap<>();
@@ -104,7 +110,8 @@ public class SfsMemoryService implements MemoryService {
   }
 
   @Override
-  public void removeCallback(int id, PictureCardListener listener) throws IllegalParameterException {
+  public void removeCallback(int id, PictureCardListener listener)
+          throws IllegalParameterException {
     logger.info("removeCallback: id = {}, listener = {}", id, listener);
     PictureCard card = getPictureCardById(id);
     card.removeCallback(listener);
@@ -172,7 +179,7 @@ public class SfsMemoryService implements MemoryService {
     if (set == null) {
       throw new IllegalParameterException("CardSet is a null references");
     }
-    for (SfsCardSet c: cardSetStorage) {
+    for (SfsCardSet c : cardSetStorage) {
       if (c.getDescriptor().getDifficulty() == cardSet.getDescriptor().getDifficulty()) {
         throw new IllegalParameterException("CardSet already registered.");
       }
@@ -189,7 +196,7 @@ public class SfsMemoryService implements MemoryService {
    */
   public PictureCard getPictureCardById(int id) throws IllegalParameterException {
     logger.info("getPictureCardById: id = {}", id);
-    if(id < 0) {
+    if (id < 0) {
       throw new IllegalParameterException("PictureCard id cannot be negative.");
     }
     if (!cards.containsKey(id)) {
@@ -230,7 +237,8 @@ public class SfsMemoryService implements MemoryService {
    * @param cardDescriptors for the cards
    * @throws IllegalParameterException if the card descriptors do not exist
    */
-  private void fetchCards(PictureCardDescriptor[] cardDescriptors) throws IllegalParameterException {
+  private void fetchCards(PictureCardDescriptor[] cardDescriptors)
+          throws IllegalParameterException {
     //logger.info("fetchCards: cardDescriptors = {}", cardDescriptors);
     if (cardDescriptors == null) {
       throw new IllegalParameterException("The CardDescriptor Array is a null references.");
@@ -267,16 +275,18 @@ public class SfsMemoryService implements MemoryService {
    * Checks if two cards are a match.
    *
    * @param picture the picture card
-   * @param name the name card
+   * @param name    the name card
    * @return true, if the cards are a match
    * @throws IllegalParameterException if at least one picture card does not exist
    */
-  private boolean checkForMatch(PictureCard picture, PictureCard name) throws IllegalParameterException {
+  private boolean checkForMatch(PictureCard picture, PictureCard name)
+          throws IllegalParameterException {
     logger.info("matchCards: picture = {}, name = {}", picture, name);
-    if (currentCardSet.getDescriptor().getPictureReferences().containsKey(picture.getPictureCard().getPictureRef())
+    if (currentCardSet.getDescriptor().getPictureReferences()
+            .containsKey(picture.getPictureCard().getPictureRef())
             && name.getPictureCard().getName() != null) {
-      String picCard = currentCardSet.getDescriptor().getPictureReferences().get(picture.getPictureCard()
-              .getPictureRef()).toLowerCase();
+      String picCard = currentCardSet.getDescriptor().getPictureReferences()
+              .get(picture.getPictureCard().getPictureRef()).toLowerCase();
       return (name.getPictureCard().getName().toLowerCase().equals(picCard));
     } else {
       throw new IllegalParameterException("PictureCard has no appropriate picture "
@@ -292,18 +302,10 @@ public class SfsMemoryService implements MemoryService {
    * @return true, if the card have different types
    */
   private boolean checkForDifferentType(PictureCard a, PictureCard b) {
-    if(a.getPictureCard().getPictureRef() != -1) {
-      if(b.getPictureCard().getPictureRef() != -1) {
-        return false;
-      } else {
-        return true;
-      }
+    if (a.getPictureCard().getPictureRef() != -1) {
+      return b.getPictureCard().getPictureRef() == -1;
     } else {
-      if(b.getPictureCard().getName() != null) {
-        return false;
-      } else {
-        return true;
-      }
+      return b.getPictureCard().getName() == null;
     }
   }
 
@@ -315,11 +317,12 @@ public class SfsMemoryService implements MemoryService {
    * @return true, if the cards are a match
    * @throws IllegalParameterException if at least one picture card does not exist
    */
-  private boolean checkOrderForMatch(PictureCard a, PictureCard b) throws IllegalParameterException {
-    if(a.getPictureCard().getPictureRef() == -1) {
-      return checkForMatch(b,a);
+  private boolean checkOrderForMatch(PictureCard a, PictureCard b)
+          throws IllegalParameterException {
+    if (a.getPictureCard().getPictureRef() == -1) {
+      return checkForMatch(b, a);
     } else {
-      return checkForMatch(a,b);
+      return checkForMatch(a, b);
     }
   }
 

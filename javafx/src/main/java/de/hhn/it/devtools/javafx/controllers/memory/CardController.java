@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers.memory;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.apis.memory.MemoryService;
 import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
 import de.hhn.it.devtools.apis.memory.PictureCardListener;
 import de.hhn.it.devtools.apis.memory.State;
@@ -27,7 +28,7 @@ public class CardController implements PictureCardListener {
   private static int howManyAreTurned = 0;
   private final PictureCardDescriptor pictureCardDescriptor;
   private final MemoryScreenController screenController;
-  private final SfsMemoryService memoryService;
+  private final MemoryService memoryService;
   private final CardView view;
   private final Label name;
   private final ImageView picture;

@@ -49,8 +49,8 @@ public interface Chess2Service {
       throws IllegalParameterException, IllegalStateException;
 
   /**
-   * Changes the position of the selected piece and initializes a new Round if the moved piece
-   * was not a monkey.
+   * Changes the position of the selected piece and initializes a new Round if the moved piece was
+   * not a monkey.
    *
    * @param selectedCoordinate the position of the selected piece
    * @param newCoordinate      the new position of the piece
@@ -73,7 +73,7 @@ public interface Chess2Service {
       throws IllegalParameterException, IllegalStateException;
 
   /**
-   * Returns BLACK_WIN, WHITE_WIN, NO_WINNER, STILL_RUNNING as an Enum that defines which player won
+   * Returns BLACK_WIN, RED_WIN, NO_WINNER, STILL_RUNNING as an Enum that defines which player won
    * or if there is none.
    *
    * @return Enum which defines the player that won or if there is none
