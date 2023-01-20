@@ -43,10 +43,9 @@ public class Player {
 
     public Ship returnNextShip(ShipType type){
 
-        int size = type.getShipSize();
 
         for (Ship ownedShip : ownedShips) {
-            if ( ownedShip.getSize() == size && !ownedShip.getPlaced()) return ownedShip;
+            if ( ownedShip.getShipType().equals(type)  && !ownedShip.getPlaced()) return ownedShip;
         }
 
         return null;

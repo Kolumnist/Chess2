@@ -20,6 +20,22 @@
     -fx-background-color: red;
 }
 
-.buttonPlacedShips {
+.carrier {
     -fx-background-color: blueviolet;
+}
+
+.battleship {
+    -fx-background-color: red;
+}
+
+.cruiser {
+    -fx-background-color: chartreuse;
+}
+
+.submarine {
+    -fx-background-color: forestgreen;
+}
+
+.destroyer {
+    -fx-background-color: deeppink;
 }

@@ -10,6 +10,7 @@ public class Ship {
     private final int size;
     private int destroyedParts = 0;
     private boolean isVertical;
+    private ShipType shipType;
     //fieldPosition is always the panel at the top or at the left of the ship
     private Position fieldPosition;
     private boolean placed;
@@ -28,8 +29,15 @@ public class Ship {
         this.fieldPosition = fieldPosition;
         this.id = counterId;
         counterId++;
+        shipType = ShipSize;
     }
 
+    /**
+     * @return the ship type of the respective ship
+     */
+    public ShipType getShipType(){
+        return this.shipType;
+    }
 
     /**
      * @return the ship size of the respective ship

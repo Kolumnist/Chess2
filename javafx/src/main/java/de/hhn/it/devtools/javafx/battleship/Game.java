@@ -142,7 +142,6 @@ public class Game extends Stage{
                                 }
                             }
                         }
-
                     }
                 });
 
@@ -221,13 +220,38 @@ public class Game extends Stage{
     public void updateField(){
 
         // Only update if player places ship is done till now
-        PanelState[][] playerShipsPlaced = CmpBattleshipService.service.getPlayer().getShipField().getPanelMarkerMat();
+        //PanelState[][] playerShipsPlaced = CmpBattleshipService.service.getPlayer().getShipField().getPanelMarkerMat();
         for (int i = 0; i < sizeGrid ; i++) {
             for (int k = 0; k < sizeGrid ; k++) {
-                if(playerShipsPlaced[k][i] == PanelState.SHIP){
-                buttonsLower[k][i].getStyleClass().add("buttonPlacedShips");
+
+                switch (CmpBattleshipService.service.getPlayer().getShipField().getShipsOnField(k,i).getShipType()){
+
+                    case CARRIER:
+                        buttonsLower[k][i].getStyleClass().add("carrier");
+                        break;
+
+                    case BATTLESHIP:
+                        buttonsLower[k][i].getStyleClass().add("battleship");
+                        break;
+
+                    case CRUISER:
+                        buttonsLower[k][i].getStyleClass().add("cruiser");
+                        break;
+
+                    case SUBMARINE:
+                        buttonsLower[k][i].getStyleClass().add("submarine");
+                        break;
+
+                    case DESTROYER:
+                        buttonsLower[k][i].getStyleClass().add("destroyer");
+                        break;
+
+                    default: break;
+                }
+
+                //buttonsLower[k][i].getStyleClass().add("buttonPlacedShips");
                 }
             }
         }
     }
-}
+

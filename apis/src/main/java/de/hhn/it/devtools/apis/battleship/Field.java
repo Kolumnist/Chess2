@@ -9,6 +9,7 @@ public class Field {
     private static int size;
     //Index is false if no ship is on panel
     private PanelState[][] panelMarkerMat;
+    private Ship[][] shipsOnField;
     private final Player owner;
 
 
@@ -16,8 +17,17 @@ public class Field {
         this.owner = owner;
         Field.size= size;
         panelMarkerMat = new PanelState[size][size];
+        shipsOnField = new Ship[size][size];
     }
 
+
+    public Ship getShipsOnField(int x, int y) {
+        return shipsOnField[y][x];
+    }
+
+    public void setShipsOnField(Ship ship, int x, int y) {
+        this.shipsOnField[y][x] = ship;
+    }
 
     public static int getSize(){
         return size;
