@@ -17,7 +17,7 @@ public class SingleplayerGame extends Game {
   private final Profile player;
   private boolean playerIsFirst;
   private SingleplayerState singleplayerState;
-  private final Timer timer = new Timer(true);
+  private Timer timer = new Timer(true);
 
   /**
    * Create a new singleplayer game.
@@ -79,6 +79,8 @@ public class SingleplayerGame extends Game {
   @Override
   public void restart() {
     logger.info("restart: no params");
+    timer.cancel();
+    timer = new Timer(true);
     board = new Board();
     // Switch players if game was won by starting player or ended in a draw.
     if (gameState == GameState.FINISHED) {

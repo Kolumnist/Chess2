@@ -42,8 +42,8 @@ public class GameController implements Initializable, IConnectFourListener {
   @FXML
   void onRestart() {
     logger.info("onRestart: no params");
-    instance.restart();
     initialize(null, null);
+    instance.restart();
   }
 
   @Override
