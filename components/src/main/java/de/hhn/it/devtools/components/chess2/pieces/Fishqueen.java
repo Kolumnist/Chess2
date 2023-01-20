@@ -71,7 +71,9 @@ public class Fishqueen extends Piece {
           == FieldState.HAS_CURRENT_PIECE
           || board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_OTHER_PIECE
-          || board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.HAS_BEAR) {
+          || board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.HAS_BEAR
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.OTHER_KING) {
         int x = possibleMoves[i].getX() - coordinate.getX();
         int y = possibleMoves[i].getY() - coordinate.getY();
         int r = 1;

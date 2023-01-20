@@ -22,8 +22,8 @@ public class Queen extends Piece {
   }
 
   /**
-   * This method calculates all the possible movements of the queen piece.
-   * It also add the movements which are not possible to go into an arraylist/ set.
+   * This method calculates all the possible movements of the queen piece. It also add the movements
+   * which are not possible to go into an arraylist/ set.
    *
    * @param board the board of the game
    */
@@ -71,7 +71,9 @@ public class Queen extends Piece {
           == FieldState.HAS_CURRENT_PIECE
           || board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_OTHER_PIECE
-          || board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.HAS_BEAR) {
+          || board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.HAS_BEAR
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.OTHER_KING) {
         int x = possibleMoves[i].getX() - coordinate.getX();
         int y = possibleMoves[i].getY() - coordinate.getY();
         int r = 1;
@@ -170,10 +172,14 @@ public class Queen extends Piece {
 
     //Testing if the Queen can defeat the enemy King.
     for (int i = 0; i < possibleMoves.length; i++) {
-      if (board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.OTHER_KING) {
-        canDefeatKing = true;
-        break;
+        if (board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.OTHER_KING) {
+          canDefeatKing = true;
+          if (canDefeatKing == true) {
+            System.out.println("ahhhhh");
+
+          }
+          break;
+        }
       }
     }
   }
-}
