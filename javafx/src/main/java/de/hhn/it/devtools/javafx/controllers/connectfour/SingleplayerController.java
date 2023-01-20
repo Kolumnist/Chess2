@@ -7,6 +7,7 @@ import de.hhn.it.devtools.javafx.controllers.connectfour.helper.enums.StartingPl
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.ProfileNameComparator;
 import java.net.URL;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -62,7 +63,7 @@ public class SingleplayerController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     logger.info("initialize: {}, {}", location, resources);
     // Choose profile:
-    List<Profile> profiles = Instance.getInstance().getProfiles().values().stream().toList();
+    List<Profile> profiles = new LinkedList<>(Instance.getInstance().getProfiles().values());
     Comparator<Profile> comparator = new ProfileNameComparator();
     profiles.sort(comparator);
     playerChoiceBox.getItems().addAll(profiles);

@@ -11,10 +11,13 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class FileIO {
+  private static final org.slf4j.Logger logger =
+      org.slf4j.LoggerFactory.getLogger(FileIO.class);
 
   HashMap<UUID, Profile> profiles;
 
   public void loadProfileData() {
+    logger.info("loadProfileData: no params");
     File in = new File(getFilePath());
     try {
       FileInputStream fis = new FileInputStream(in);
@@ -27,6 +30,7 @@ public class FileIO {
   }
 
   public void saveProfileData() {
+    logger.info("saveProfileData: no params");
     profiles = Instance.getInstance().getProfiles();
     File out = new File(getFilePath());
     try {
@@ -40,6 +44,7 @@ public class FileIO {
   }
 
   private String getFilePath() {
+    logger.info("getFilePath: no params");
     String path = "javafx/src/main/resources/fxml/connectfour/files/Profiles.txt";
     File file = new File(path);
     return file.getAbsolutePath();

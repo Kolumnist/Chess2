@@ -9,15 +9,7 @@ public class Instance {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(Instance.class);
 
-  private static ConnectFour connectFour = new ConnectFour();
-
-  /**
-   * Reset the ConnectFour instance.
-   */
-  public static void reset() {
-    logger.info("reset: no params");
-    connectFour = new ConnectFour();
-  }
+  private static final ConnectFour connectFour = new ConnectFour();
 
   /**
    * Get the ConnectFour instance.
@@ -25,7 +17,7 @@ public class Instance {
    * @return instance
    */
   public static ConnectFour getInstance() {
-    logger.info("getConnectFour: no params");
+    logger.info("getInstance: no params");
     return connectFour;
   }
 }
