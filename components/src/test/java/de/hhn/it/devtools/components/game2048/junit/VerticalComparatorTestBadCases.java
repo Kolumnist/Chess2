@@ -1,5 +1,5 @@
 package de.hhn.it.devtools.components.game2048.junit;
 
-public class VerticalComparatorBadCases {
+public class VerticalComparatorTestBadCases {
 
 }
