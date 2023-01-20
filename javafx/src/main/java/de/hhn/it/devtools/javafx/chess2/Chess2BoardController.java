@@ -439,11 +439,11 @@ public class Chess2BoardController {
         throw new RuntimeException(e);
       }
       if (chessGame.getWinningPlayer() == WinningPlayerState.BLACK_WIN) {
-        Label l = new Label("Congratulation Player Black! You has won!");
+        Label l = new Label("Congratulation Player Black! You have won!");
         p.initialize(l);
       }
       if (chessGame.getWinningPlayer() == WinningPlayerState.RED_WIN) {
-        Label l = new Label("Congratulation Player White! You has won!");
+        Label l = new Label("Congratulation Player White! You have won!");
         p.initialize(l);
       }
     }
