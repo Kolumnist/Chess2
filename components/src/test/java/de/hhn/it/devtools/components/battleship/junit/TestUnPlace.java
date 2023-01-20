@@ -27,11 +27,8 @@ public class TestUnPlace {
     Computer computer = bsService.getComputer();
     Field computerField = new Field(9, computer);
 
-    private Map<Player, Owner> player2OwnerMap;
-
     @BeforeEach
     void setup() {
-        player2OwnerMap = new HashMap<>();
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
                 playerField.setPanelMarker(i, j, PanelState.NOSHIP);
@@ -42,8 +39,6 @@ public class TestUnPlace {
         computer.setShipfield(computerField);
         player.setAttackField(playerField);
         computer.setAttackField(computerField);
-        player2OwnerMap.put(player, Owner.PLAYER);
-        player2OwnerMap.put(computer, Owner.COMPUTER);
     }
 
     // Bad Cases
@@ -56,10 +51,10 @@ public class TestUnPlace {
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
-        bs.placeShip(player2OwnerMap.get(player), ship, 8, 5);
+        bs.placeShip(player, ship, 8, 5);
         bsService.setCurrentGameState(GameState.FIRINGSHOTS);
         IllegalGameStateException exception = assertThrows(IllegalGameStateException.class,
-                () -> bs.unPlace(player2OwnerMap.get(player), ship));
+                () -> bs.unPlace(player, ship));
     }
 
     // Good Cases
@@ -72,8 +67,8 @@ public class TestUnPlace {
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(true);
-        bs.placeShip(player2OwnerMap.get(player), ship, 0, 5);
-        bs.unPlace(player2OwnerMap.get(player), ship);
+        bs.placeShip(player, ship, 0, 5);
+        bs.unPlace(player, ship);
         assertEquals(false, ship.getPlaced());
     }
 
@@ -85,8 +80,8 @@ public class TestUnPlace {
         Position pos = new Position(null, null);
         Ship ship = new Ship(ShipType.BATTLESHIP, pos);
         ship.setIsVertical(false);
-        bs.placeShip(player2OwnerMap.get(player), ship, 5, 4);
-        bs.unPlace(player2OwnerMap.get(player), ship);
+        bs.placeShip(player, ship, 5, 4);
+        bs.unPlace(player, ship);
         assertEquals(false, ship.getPlaced());
     }
 

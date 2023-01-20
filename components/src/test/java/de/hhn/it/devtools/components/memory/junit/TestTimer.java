@@ -55,8 +55,8 @@ public class TestTimer {
     timer.addCallback(listener);
     timer.startTime();
     Thread.sleep(5000);
-    int length0 = listener.times.size();
     timer.removeCallback(listener);
+    int length0 = listener.times.size();
     Thread.sleep(5000);
     int length1 = listener.times.size();
     assertAll(

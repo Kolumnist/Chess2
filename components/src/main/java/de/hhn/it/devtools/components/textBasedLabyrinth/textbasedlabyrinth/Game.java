@@ -1,8 +1,6 @@
 package de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
 
-
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.RoomFailedException;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,14 +14,20 @@ public class Game implements GameService {
           org.slf4j.LoggerFactory.getLogger(Game.class);
 
 
-  public Room currentRoom;
-  public Player player;
+  private Room currentRoom;
+  private Player player;
   public Layout currentLayout;
   public ArrayList<Layout> layouts;
   private ArrayList<OutputListener> listeners;
   private ArrayList<Map> allMaps;
   public Map map;
   private int score;
+
+
+
+  public Game() {
+
+  }
 
 
   /**
@@ -33,6 +37,7 @@ public class Game implements GameService {
    */
   public void startup() {
     this.player = new Player("Jones");
+    this.currentLayout = new Layout(player);
     layouts = new ArrayList<>();
     listeners = new ArrayList<>();
     allMaps = new ArrayList<>();
@@ -42,7 +47,6 @@ public class Game implements GameService {
 
 
   public void start() {
-    score = 0;
     for (OutputListener outputListener : listeners) {
       outputListener.listenerStart();
     }
@@ -71,7 +75,7 @@ public class Game implements GameService {
    * This method deals with the player moving from room to room.
    * @param direction the direction in which the player is moving.
    */
-  public void move(Direction direction) {
+  public void move(Direction direction) throws IllegalArgumentException {
     if (direction == null) {
       throw new IllegalArgumentException("Direction should not be null.");
     }
@@ -114,7 +118,7 @@ public class Game implements GameService {
       player.setCurrentRoomOfPlayer(currentRoom);
     }
 
-    if(player.getCurrentRoomOfPlayer().isExit){
+    if(player.getCurrentRoomOfPlayer().isExit()){
       //
     }
   }
@@ -166,15 +170,9 @@ public class Game implements GameService {
     return successMessage;
   }
 
-  /**
-   * Gets the next room.
-   * It gives a list. Whether this list will be given to the main field in the ui or appear as a popup
-   * is not decided yet.
-   *
-   * @throws RoomFailedException description to room
-   *
-   */
-  public List<Item> searchRoom() throws RoomFailedException {
+
+
+  public List<Item> searchRoom() {
     List<Item> items = new ArrayList<>();
     items = itemSearcher();
     return items;
@@ -233,6 +231,7 @@ public class Game implements GameService {
    */
   public String dropItem(int itemId) throws NoSuchItemFoundException {
     Item droppedItem = player.removeItem(itemId);
+    currentRoom.addItem(droppedItem);
     String message = "You lay the item carefully on the ground.";
 
     if (droppedItem.getIsTreasure()) {
@@ -248,11 +247,8 @@ public class Game implements GameService {
     return message;
   }
 
-  /**
-   *
-   * @param itemId
-   * @throws NoSuchItemFoundException
-   */
+
+
   @Override
   public void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException {
     String message = player.getItem(itemId).getInfo();
@@ -289,19 +285,15 @@ public class Game implements GameService {
     return message;
   }
 
-  /**
-   *
-   * @param listener
-   */
+
+
   @Override
   public void addListener(OutputListener listener) {
     listeners.add(listener);
   }
 
-  /**
-   *
-   * @param listener
-   */
+
+
   @Override
   public void removeListener(OutputListener listener) {
     listeners.remove(listener);
@@ -318,10 +310,8 @@ public class Game implements GameService {
     return message;
   }
 
-  /**
-   *
-   * @return
-   */
+
+
   private List<Item> itemSearcher() {
     List<Item> items = new ArrayList<>();
     items = currentRoom.search();
@@ -329,19 +319,54 @@ public class Game implements GameService {
   }
 
   /**
-   * Setter for current Layout
-   * @param newMap Map to be selected
-   * @param newSeed Seed for the Map
+   * Setter for current layout
+   * @param newMap map to be selected
+   * @param newSeed seed for the map
    */
-  public void setCurrentLayout(Map newMap, Seed newSeed){
-    this.currentLayout = new Layout(player);
+  public void setCurrentLayout(Map newMap, Seed newSeed) throws RoomFailedException, InvalidSeedException {
+    if(newSeed == null){
+      throw new InvalidSeedException();
+    }
+    LayoutGenerator generator = new LayoutGenerator(newMap, newSeed);
+    try {
+      generator.generateLayout();
+    } catch (RoomFailedException e) {
+      throw new RoomFailedException();
+    }
+
+    generator.setLayout(currentLayout);
+    currentRoom = currentLayout.getStartRoom();
   }
 
-  /**
-   *
-   * @return
-   */
+
+
   public String getPlayerName() {
     return player.getName();
   }
+
+  @Override
+  public Map getMap() {
+    return map;
+  }
+
+  @Override
+  public Player getPlayer() {
+    return player;
+  }
+
+  public Layout getCurrentLayout() {
+    return currentLayout;
+  }
+
+  @Override
+  public Room getCurrentRoom() {
+    return currentRoom;
+  }
+
+  @Override
+  public int getScore() {
+    return score;
+  }
 }
+
+

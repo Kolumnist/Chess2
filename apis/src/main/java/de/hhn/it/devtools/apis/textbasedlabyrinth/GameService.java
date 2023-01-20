@@ -1,15 +1,11 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
-import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.NoSuchItemFoundException;
-import de.hhn.it.devtools.apis.textbasedlabyrinth.exceptions.RoomFailedException;
 import java.util.List;
 
 /**
  * Interface for the game.
  */
 public interface GameService {
-
-  int SCORE_BOARD = 0;
 
   /**
    * Let the user move the room in the given direction (if possible).
@@ -35,7 +31,7 @@ public interface GameService {
    * @param itemId the id of the item to be removed.
    * @return the message, which is about the success or failure of the operation.
    */
-  String dropItem(int itemId);
+  String dropItem(int itemId) throws NoSuchItemFoundException;
 
 
   void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException;
@@ -43,13 +39,13 @@ public interface GameService {
   /**
    * Inspect a door/pathway.
    */
-  String inspect(Direction direction);
+  String inspect(Direction direction) throws RoomFailedException;;
 
   /**
    * Let the user interact with the environment.
    * (Solve puzzles)
    */
-  String interaction(Direction direction, Item item);
+  String interaction(Direction direction, Item item) throws RoomFailedException;;
 
   /**
    * Let the user search through the room.
@@ -68,11 +64,11 @@ public interface GameService {
    * @param newMap Map to be selected
    * @param newSeed Seed for the Map
    */
-  void setCurrentLayout(Map newMap, Seed newSeed);
+  void setCurrentLayout(Map newMap, Seed newSeed) throws RoomFailedException, InvalidSeedException;
 
 
   /**
-   * Sets the current player name to the new string given if it is not null.
+   * Sets the current player name to the new String given if it is not null.
    * @param name the new name.
    * @return if it changed the name, true, else false.
    */
@@ -95,9 +91,26 @@ public interface GameService {
    */
   int getScore();
 
-  /**
-   * Update the current Scoreboard
-   * @return updated Scoreboard
-   */
-  int updateScore(int newScore);
+  void addListener(OutputListener listener);
+
+  void removeListener(OutputListener listener);
+
+  Player getPlayer();
+
+  Room getCurrentRoom();
+
+
+
+  void startup();
+
+  void start();
+
+  void end();
+
+  void reset();
+
+  public String getPlayerName();
+
+  public Map getMap();
+
 }

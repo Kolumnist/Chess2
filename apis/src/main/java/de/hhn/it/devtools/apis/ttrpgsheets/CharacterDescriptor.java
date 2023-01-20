@@ -1,14 +1,41 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * The Descriptor for the Character class.
  */
-public class CharacterDescriptor {
-  DescriptionDescriptor[] descriptions;
-  StatDescriptor[] stats;
-  DiceDescriptor dice;
+public class CharacterDescriptor implements Serializable {
+  public static final CharacterDescriptor EMPTY = new CharacterDescriptor(
+          new DescriptionDescriptor[]{
+                  new DescriptionDescriptor(DescriptionType.PLAYER_NAME, ""),
+                  new DescriptionDescriptor(DescriptionType.CHARACTER_NAME, ""),
+                  new DescriptionDescriptor(DescriptionType.NICKNAME, ""),
+                  new DescriptionDescriptor(DescriptionType.AGE, ""),
+                  new DescriptionDescriptor(DescriptionType.RACE, ""),
+                  new DescriptionDescriptor(DescriptionType.HEIGHT, ""),
+                  new DescriptionDescriptor(DescriptionType.WEIGHT, ""),
+                  new DescriptionDescriptor(DescriptionType.SKIN_COLOR, ""),
+                  new DescriptionDescriptor(DescriptionType.HAIR_COLOR, ""),
+                  new DescriptionDescriptor(DescriptionType.EYE_COLOR, ""),
+                  new DescriptionDescriptor(DescriptionType.CHARACTER_CLASS, ""),
+                  new DescriptionDescriptor(DescriptionType.OTHER, "")
+          },
+          new StatDescriptor[]{
+                  new StatDescriptor(StatType.LEVEL, 1, 0, 0, 0, false),
+                  new StatDescriptor(StatType.HEALTH, 30, 0, 0, 0, false),
+                  new StatDescriptor(StatType.MAX_HEALTH, 30, 5, 0, 0, true),
+                  new StatDescriptor(StatType.DEFENCE, 0, 1, 0, 0, true),
+                  new StatDescriptor(StatType.STRENGTH, 0, 1, 0, 0, true),
+                  new StatDescriptor(StatType.AGILITY, 0, 1, 0, 0, true),
+                  new StatDescriptor(StatType.DEXTERITY, 0, 1, 0, 0, true)
+          },
+          new DiceDescriptor(DiceType.D6, 1));
+
+  private DescriptionDescriptor[] descriptions;
+  private StatDescriptor[] stats;
+  private DiceDescriptor dice;
 
   /**
    * Constructor stating {@link DescriptionDescriptor}, {@link StatDescriptor}

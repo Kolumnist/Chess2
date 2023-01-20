@@ -1,7 +1,6 @@
 package de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
 
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.RoomFailedException;
-
+import de.hhn.it.devtools.apis.textbasedlabyrinth.*;
 import java.util.ArrayList;
 
 
@@ -14,9 +13,8 @@ public class LayoutGenerator {
     private Seed seed;
     private ArrayList<Layout> allLayouts;
     private Room startRoom;
-    private Room endRoom;
     private boolean isPrepared;
-    public int maxRoomCount = 13;
+    private int maxRoomCount = 13;
 
     public LayoutGenerator(Map map, Seed seed) {
         this.map = map;
@@ -28,13 +26,32 @@ public class LayoutGenerator {
     }
 
 
-    /**
-     *
-     * @param layout
-     */
     public void setLayout(Layout layout) {
         layout.setAllRooms(allRooms);
+        layout.setStartRoom();
     }
+
+    public int getMaxRoomCount() {
+        return maxRoomCount;
+    }
+
+    public Room getStartRoom() {
+        return startRoom;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public Seed getSeed() {
+        return seed;
+    }
+
+    public ArrayList<Room> getAllRooms() {
+        return allRooms;
+    }
+
+    public boolean isPrepared() { return isPrepared; }
 
     /**
      *
@@ -53,15 +70,12 @@ public class LayoutGenerator {
         isPrepared = true;
     }
 
-    /**
-     *
-     * @throws RoomFailedException
-     */
+
+
     public void generateLayout() throws RoomFailedException {
         if (!isPrepared) {
             reset();
         }
-        int specialRoomId = 1000;
 
 
 
@@ -80,6 +94,7 @@ public class LayoutGenerator {
             allRooms.get(10).setNextDoorRoom(allRooms.get(11), Direction.EAST);
             allRooms.get(11).setNextDoorRoom(allRooms.get(12), Direction.NORTH);
             logger.info(map.toString() + "created.");
+
         } else if (map.equals(Map.Ancient_Dungeon)) {
             startRoom.setNextDoorRoom(allRooms.get(1), Direction.WEST);
             allRooms.get(1).setNextDoorRoom(allRooms.get(4), Direction.WEST);
@@ -162,8 +177,8 @@ public class LayoutGenerator {
                 amountOfPuzzles = 3;
             }
 
-            Item key1 = new Item(1, "ExitKey", "A metal key. It fits into your hand well.");
-            allRooms.get(11).getDoor(Direction.WEST).setPuzzle(key1);
+            Item key1 = new Item(1, "ExitKey", "A metal key. It fits well into your hand.");
+            allRooms.get(11).getDoor(Direction.SOUTH).setPuzzle(key1);
             if (seed.getSeed().get(1) < 5) {
                 allRooms.get(4).addItem(key1);
             } else {
@@ -195,7 +210,7 @@ public class LayoutGenerator {
 
             int treasureId = 100;
             int amountOfTreasure = 1;
-            allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
+            allRooms.get(7).addItem(new Treasure(treasureId, "Treasure", "Treasure for Demo."));
             logger.info(map.toString() + "finished.");
 
         } else if (map.equals(Map.Unknown_Sewers)) {

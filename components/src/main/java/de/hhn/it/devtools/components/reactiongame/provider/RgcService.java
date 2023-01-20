@@ -3,12 +3,12 @@ package de.hhn.it.devtools.components.reactiongame.provider;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.reactiongame.Difficulty;
 import de.hhn.it.devtools.apis.reactiongame.GameState;
+import de.hhn.it.devtools.apis.reactiongame.HighscoreTupel;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameListener;
 import de.hhn.it.devtools.apis.reactiongame.ReactiongameService;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.IllegalFormatException;
-import java.util.SortedMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 /**
@@ -19,8 +19,10 @@ public class RgcService implements ReactiongameService {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(RgcService.class);
 
-  private RgcPlayer currentPlayer;
+  private final RgcPlayer currentPlayer;
   private RgcRun run;
+
+  private ArrayList<HighscoreTupel> highScoreSets;
 
 
   public RgcService() {
@@ -36,13 +38,16 @@ public class RgcService implements ReactiongameService {
   }
 
   @Override
-  public void addCallback(ReactiongameListener listener) {
+  public void addCallback(ReactiongameListener listener) throws IllegalStateException {
     logger.info("Added listener: " + listener.toString());
     run.getCallbacks().add(listener);
   }
 
   @Override
-  public void removeCallback(ReactiongameListener listener) {
+  public void removeCallback(ReactiongameListener listener) throws IllegalParameterException {
+    if (!run.getCallbacks().contains(listener)) {
+      throw new IllegalParameterException();
+    }
     logger.info("Removed listener: " + listener.toString());
     run.getCallbacks().remove(listener);
   }
@@ -52,94 +57,104 @@ public class RgcService implements ReactiongameService {
     logger.info("newRun ("  + difficulty + ")");
     run = new RgcRun(difficulty, currentPlayer);
 
-    run.getObstacleClock().setRunning(true);
-    run.getAimTargetClock().setRunning(true);
 
+    run.setGameState(GameState.RUNNING);
   }
 
   @Override
   public void pauseRun() throws IllegalStateException {
-    logger.info("Pause run");
-
-    if (run.getState() == GameState.PAUSED) {
+    if (run.getGameState() == GameState.PAUSED) {
       logger.info("Pause run illegal", new IllegalStateException());
       throw new IllegalStateException();
     }
+    logger.info("Pause run");
 
-    run.pauseClocks();
-
-    run.setState(GameState.PAUSED);
+    run.setGameState(GameState.PAUSED);
   }
 
   @Override
   public void continueRun() throws IllegalStateException {
-    logger.info("Continue run");
-    if (run.getState() != GameState.PAUSED) {
+    if (run.getGameState() != GameState.PAUSED) {
       logger.info("Continue run illegal", new IllegalStateException());
       throw new IllegalStateException();
     }
 
-    run.continueClocks();
+    logger.info("Continue run");
 
-    run.setState(GameState.RUNNING);
-
+    run.setGameState(GameState.RUNNING);
   }
 
   @Override
-  public void endRun() {
+  public void endRun() throws IllegalStateException {
+    if (run.getGameState() == GameState.FINISHED) {
+      logger.info("End run illegal", new IllegalStateException());
+      throw new IllegalStateException();
+    }
+
     logger.info("End run");
 
-
-    run.endRun();
-
-    run = null;
-
-    run.setState(GameState.FINISHED);
+    run.setGameState(GameState.FINISHED);
   }
 
   @Override
   public void keyPressed(char key) throws IllegalStateException {
     logger.info("Key pressed \"" + key + "\"");
 
-    run.setpKey(key);
+    if (run.getGameState() != GameState.RUNNING) {
+      return;
+    }
+
+    run.setKey(key);
 
     run.checkForTargetHit();
   }
 
   @Override
-  public void playerEnteredAimTarget(int aimtargetId) throws IllegalParameterException {
-    logger.info("Player entered aim target (" + aimtargetId + ")");
+  public void playerEnteredAimTarget(int aimTargetId) throws IllegalParameterException {
+    logger.info("Player entered aim target (" + aimTargetId + ")");
 
-    if (aimtargetId < 0) {
+    if (aimTargetId < 0) {
       throw new IllegalParameterException();
     }
 
-    run.setpObstacle(null);
-    run.setpAimTarget(run.getField().getTargetMap().get(aimtargetId));
+    if (run.getGameState() != GameState.RUNNING) {
+      return;
+    }
 
+    run.setObstacle(null);
+    run.setAimTarget(aimTargetId);
   }
 
   @Override
   public void playerEnteredObstacle(int obstacleId) throws IllegalParameterException {
-    logger.info("Player entered obstacle (" + obstacleId + ")");
-
     if (obstacleId < 0) {
       logger.info("Invalid obstacleId", new IllegalParameterException());
       throw new IllegalParameterException();
     }
+    logger.info("Player entered obstacle (" + obstacleId + ")");
 
-    run.setpAimTarget(null);
-    run.setpObstacle(run.getField().getObstacleMap().get(obstacleId));
+    if (run.getGameState() == GameState.RUNNING) {
+      run.setAimTarget(null);
+      run.setObstacle(obstacleId);
 
-    run.playerHitObstacle();
+      run.playerHitObstacle();
+    }
   }
 
   @Override
   public void playerLeftGameObject() {
     logger.info("Player left game object");
 
-    run.setpObstacle(null);
-    run.setpAimTarget(null);
+    run.setObstacle(null);
+    run.setAimTarget(null);
+  }
+
+  @Override
+  public void playerLeftField() {
+    logger.info("Player left field");
+    if (run.getGameState() == GameState.RUNNING) {
+      run.playerLosesLife();
+    }
   }
 
   @Override
@@ -150,12 +165,21 @@ public class RgcService implements ReactiongameService {
   }
 
   @Override
-  public void loadHighscoreTable(SortedMap<String, Integer> newHighScoreTable) {
-
+  public void loadHighscoreTable(ArrayList<HighscoreTupel> newHighScoreTable) {
+    highScoreSets = newHighScoreTable;
   }
 
   @Override
-  public SortedMap<String, Integer> saveHighscoreTable() throws IllegalFormatException {
-    return null;
+  public ArrayList<HighscoreTupel> saveHighscoreTable() throws IllegalFormatException {
+
+    if (run != null) {
+      highScoreSets.add(new HighscoreTupel(currentPlayer.getName(), run.getScore()));
+      Collections.sort(highScoreSets);
+
+      run = null;
+    }
+
+
+    return highScoreSets;
   }
 }
