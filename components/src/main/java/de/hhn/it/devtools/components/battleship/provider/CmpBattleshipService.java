@@ -38,6 +38,7 @@ public class CmpBattleshipService implements BattleshipService {
     }
 
     public void setCurrentGameState(GameState state){
+        logger.info("setCurrentGameState: state = {}", state);
         currentGameState = state;
     }
 
@@ -271,12 +272,11 @@ public class CmpBattleshipService implements BattleshipService {
     // nuri
     @Override
     public void createFields(int size) throws IllegalArgumentException, IllegalGameStateException, IllegalShipStateException, IllegalPositionException {
+        logger.info("createFields: size = {}", size);
 
         if(currentGameState != GameState.PREGAME){
             throw  new IllegalGameStateException("Wrong GameState! Required GameState is PreGame");
         }
-
-        logger.info("createFields: size = {}", size);
 
         player.setShipfield(new Field(size,player));
         player.setAttackField(new Field(size,player));
@@ -388,6 +388,8 @@ public class CmpBattleshipService implements BattleshipService {
     // moutassem
     @Override
     public void loadGame(SavedGame savedGame) throws IllegalFormatException {
+        logger.info("loadGame: savedGame = {}", savedGame);
+
         //TODO: Enter the name of the file from the playerName of the selected file via File Chooser
         Object saveFile = new Object();
         //Deserialization
