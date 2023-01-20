@@ -75,7 +75,7 @@ public class TestChessGameGoodCases {
   @DisplayName("Ending a Game of Chess which sets GameState to null")
   void TestEndGame() throws IllegalStateException {
     chess2Service.endGame();
-    assertNull(chess2Service.getGameState());
+    assertEquals(GameState.CHECKMATE, chess2Service.getGameState());
   }
 
   @Test
