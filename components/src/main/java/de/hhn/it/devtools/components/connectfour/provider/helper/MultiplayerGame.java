@@ -1,9 +1,9 @@
 package de.hhn.it.devtools.components.connectfour.provider.helper;
 
 import de.hhn.it.devtools.apis.connectfour.enums.GameState;
-import de.hhn.it.devtools.apis.connectfour.enums.MatchState;
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
+import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFourListener;
 
 /**
  * This class modells a multiplayer match.
@@ -18,10 +18,12 @@ public class MultiplayerGame extends Game {
   /**
    * Creates a new multiplayer game.
    *
-   * @param player1 Player 1.
-   * @param player2 Player 2.
+   * @param player1  Player 1.
+   * @param player2  Player 2.
+   * @param listener The game controller.
    */
-  public MultiplayerGame(Profile player1, Profile player2, boolean player1IsFirst) {
+  public MultiplayerGame(Profile player1, Profile player2, boolean player1IsFirst,
+                         IConnectFourListener listener) {
     logger.info("Constructor - player1 = {}, player2 = {}", player1, player2);
     this.player1 = player1;
     this.player2 = player2;

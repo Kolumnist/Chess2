@@ -1,9 +1,10 @@
 package de.hhn.it.devtools.components.connectfour.provider.helper;
 
 import de.hhn.it.devtools.apis.connectfour.enums.GameState;
-import de.hhn.it.devtools.apis.connectfour.enums.MatchState;
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
+import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFourListener;
+import java.util.Timer;
 
 /**
  * This class modells a singleplayer match.
@@ -12,16 +13,19 @@ public class SingleplayerGame extends Game {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SingleplayerGame.class);
 
-  private final Profile player1;
+  private final Profile player;
+  private final Timer timer = new Timer(true);
 
   /**
    * Creates a new singleplayer game.
    *
-   * @param player1 The player.
+   * @param player   The player.
+   * @param listener The game controller.
    */
-  public SingleplayerGame(Profile player1, boolean player1IsFirst) {
-    logger.info("Constructor - player = {}", player1);
-    this.player1 = player1;
+  public SingleplayerGame(Profile player, boolean player1IsFirst,
+                          IConnectFourListener listener) {
+    logger.info("Constructor - player = {}", player);
+    this.player = player;
     this.player1IsFirst = player1IsFirst;
     if (player1IsFirst) {
       matchState = MatchState.PLAYER_1_IS_PLAYING;
@@ -65,13 +69,13 @@ public class SingleplayerGame extends Game {
     if (gameState == GameState.FINISHED) {
       switch (matchState) {
         case PLAYER_1_WON -> {
-          player1.addSingleplayerWin();
+          player.addSingleplayerWin();
         }
         case COMPUTER_WON -> {
-          player1.addSingleplayerLoose();
+          player.addSingleplayerLoose();
         }
         default -> {
-          player1.addSingleplayerDraw();
+          player.addSingleplayerDraw();
         }
       }
     }
@@ -85,6 +89,6 @@ public class SingleplayerGame extends Game {
   @Override
   public String getDescription() {
     logger.info("getDescription: no params");
-    return descriptor.describeSingleplayer(matchState, player1);
+    return descriptor.describeSingleplayer(matchState, player);
   }
 }

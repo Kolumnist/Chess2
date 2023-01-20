@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface IConnectFour {
 
   /**
-   * Adds a listener to get updates on the state of the game or the current match.
+   * Add a listener.
    *
    * @param listener Object implementing the listener interface.
    * @throws IllegalArgumentException If the listener reference is null.
@@ -20,12 +20,17 @@ public interface IConnectFour {
   void addCallback(IConnectFourListener listener) throws IllegalArgumentException;
 
   /**
-   * Removes a listener.
+   * Remove a listener.
    *
    * @param listener Object implementing the listener interface.
    * @throws IllegalArgumentException If the listener reference is null.
    */
   void removeCallback(IConnectFourListener listener) throws IllegalArgumentException;
+
+  /**
+   * Remove all listeners.
+   */
+  void removeAllCallbacks();
 
   /**
    * Create a new user profile.
@@ -109,7 +114,7 @@ public interface IConnectFour {
   void placeDiscInColumn(int column) throws IllegalArgumentException, IllegalOperationException;
 
   /**
-   * Restarts the game with its current configuration. Switches players if game was FINISHED.
+   * Restart the game with its current configuration. Switches players if game was FINISHED.
    */
   void restart();
 }

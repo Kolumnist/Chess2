@@ -1,7 +1,5 @@
 package de.hhn.it.devtools.apis.connectfour.helper;
 
-import de.hhn.it.devtools.apis.connectfour.enums.MatchState;
-
 /**
  * This class models the descriptor which describes the current state of the match.
  */

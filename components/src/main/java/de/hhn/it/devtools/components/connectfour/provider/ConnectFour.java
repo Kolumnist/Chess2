@@ -8,8 +8,6 @@ import de.hhn.it.devtools.components.connectfour.provider.helper.Game;
 import de.hhn.it.devtools.components.connectfour.provider.helper.MultiplayerGame;
 import de.hhn.it.devtools.components.connectfour.provider.helper.SingleplayerGame;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -20,12 +18,12 @@ public class ConnectFour implements IConnectFour {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(ConnectFour.class);
 
-  private Game game;
+  private final HashMap<String, IConnectFourListener> listeners = new HashMap<>();
   private HashMap<UUID, Profile> profiles = new HashMap<>();
-  private final List<IConnectFourListener> listeners = new LinkedList<>();
+  private Game game;
 
   /**
-   * Adds a listener to get updates on the state of the game or the current match.
+   * Add a listener.
    *
    * @param listener Object implementing the listener interface.
    * @throws IllegalArgumentException If the listener reference is null.
@@ -34,16 +32,16 @@ public class ConnectFour implements IConnectFour {
   public void addCallback(IConnectFourListener listener) throws IllegalArgumentException {
     logger.info("addCallback: {}", listener);
     if (listener == null) {
-      throw new IllegalArgumentException("Listener was null reference.");
+      throw new IllegalArgumentException("Listener is a null reference.");
     }
-    if (listeners.contains(listener)) {
-      throw new IllegalArgumentException("Listener already registered.");
+    if (listeners.containsKey(listener.getName())) {
+      throw new IllegalArgumentException("Listener is already registered.");
     }
-    listeners.add(listener);
+    listeners.put(listener.getName(), listener);
   }
 
   /**
-   * Removes a listener.
+   * Remove a listener.
    *
    * @param listener Object implementing the listener interface.
    * @throws IllegalArgumentException If the listener reference is null.
@@ -52,12 +50,20 @@ public class ConnectFour implements IConnectFour {
   public void removeCallback(IConnectFourListener listener) throws IllegalArgumentException {
     logger.info("removeCallback: listener = {}", listener);
     if (listener == null) {
-      throw new IllegalArgumentException("Listener is null.");
+      throw new IllegalArgumentException("Listener is a null reference.");
     }
-    if (!listeners.contains(listener)) {
+    if (!listeners.containsKey(listener.getName())) {
       throw new IllegalArgumentException("Listener is not registered.");
     }
-    listeners.remove(listener);
+    listeners.remove(listener.getName());
+  }
+
+  /**
+   * Remove all listeners.
+   */
+  @Override
+  public void removeAllCallbacks() {
+    listeners.clear();
   }
 
   /**
@@ -101,7 +107,7 @@ public class ConnectFour implements IConnectFour {
    * @throws NoSuchElementException   If no profile with the ID exists.
    */
   @Override
-  public void deleteProfile(UUID id) throws IllegalArgumentException, NoSuchElementException{
+  public void deleteProfile(UUID id) throws IllegalArgumentException, NoSuchElementException {
     logger.info("deleteProfile: id = {}", id);
     checkId(id);
     profiles.remove(id);
@@ -157,7 +163,8 @@ public class ConnectFour implements IConnectFour {
     if (player == null) {
       throw new IllegalArgumentException("Player must not be null.");
     }
-    game = new SingleplayerGame(player, player1IsFirst);
+    IConnectFourListener listener = listeners.get("GameController");
+    game = new SingleplayerGame(player, player1IsFirst, listener);
   }
 
   /**
@@ -175,7 +182,8 @@ public class ConnectFour implements IConnectFour {
     if (player1 == null || player2 == null) {
       throw new IllegalArgumentException("Players must not be null.");
     }
-    game = new MultiplayerGame(player1, player2, player1IsFirst);
+    IConnectFourListener listener = listeners.get("GameController");
+    game = new MultiplayerGame(player1, player2, player1IsFirst, listener);
   }
 
   /**
@@ -189,17 +197,10 @@ public class ConnectFour implements IConnectFour {
   public void placeDiscInColumn(int column) throws IllegalOperationException {
     logger.info("placeDiscIn: column = {}", column);
     game.placeDiscInColumn(column);
-    listeners.get(0).update(
-        game.getMatchState(),
-        game.getDescription(),
-        game.getBoard().getAffectedColumn(),
-        game.getBoard().getAffectedRow(),
-        game.getBoard().getAffectedColor()
-    );
   }
 
   /**
-   * Restarts the game with its current configuration. Switches players if game was FINISHED.
+   * Restart the game with its current configuration. Switches players if game was FINISHED.
    */
   @Override
   public void restart() {

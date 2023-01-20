@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIO;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIo;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,7 +14,7 @@ public class ProfilesNewController {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(HighscoresController.class);
 
-  private final FileIO file = new FileIO();
+  private final FileIo file = new FileIo();
 
   @FXML
   Button cancelButton;

@@ -1,7 +1,6 @@
 package de.hhn.it.devtools.components.connectfour.provider.helper;
 
 import de.hhn.it.devtools.apis.connectfour.enums.GameState;
-import de.hhn.it.devtools.apis.connectfour.enums.MatchState;
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import java.util.Arrays;
 import java.util.LinkedList;

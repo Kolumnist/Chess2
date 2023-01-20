@@ -1,20 +1,40 @@
 package de.hhn.it.devtools.apis.connectfour.interfaces;
 
-import de.hhn.it.devtools.apis.connectfour.enums.MatchState;
-
 /**
  * Callback to notify observers about a state change of the game.
  */
 public interface IConnectFourListener {
 
   /**
+   * Return the name of the listener.
+   *
+   * @return Name of the listener.
+   */
+  String getName();
+
+  /**
    * Called when the match state changes. Updates game.
    *
    * @param description The new match description.
-   * @param matchState  The new match state.
-   * @param column      The affected column.
-   * @param row         The affected row.
-   * @param color       The new color.
    */
-  void update(MatchState matchState, String description, int column, int row, String color);
+  void updateDescription(String description);
+
+  /**
+   * Updates the specified tile.
+   *
+   * @param column The affected column.
+   * @param row    The affected row.
+   * @param color  The new color.
+   */
+  void updateTile(int column, int row, String color);
+
+  /**
+   * Locks the board. No user input.
+   */
+  void lock();
+
+  /**
+   * Unlocks the board. User input allowed.
+   */
+  void unlock();
 }

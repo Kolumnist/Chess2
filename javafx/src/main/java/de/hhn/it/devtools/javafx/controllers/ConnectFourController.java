@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers;
 
 import de.hhn.it.devtools.javafx.controllers.connectfour.SceneChanger;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIO;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIo;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 
@@ -12,7 +12,7 @@ public class ConnectFourController extends Controller {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(ConnectFourController.class);
 
-  private final FileIO file = new FileIO();
+  private final FileIo file = new FileIo();
 
   @FXML
   BorderPane root;

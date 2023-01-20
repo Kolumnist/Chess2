@@ -10,9 +10,9 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class FileIO {
+public class FileIo {
   private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(FileIO.class);
+      org.slf4j.LoggerFactory.getLogger(FileIo.class);
 
   HashMap<UUID, Profile> profiles;
 
