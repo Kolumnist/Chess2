@@ -68,4 +68,13 @@ public class Coordinate {
   public String coordinateToString() {
     return "" + x + y;
   }
+
+  /**
+   * Returns x and y as a String in the format "{ x, y }".
+   *
+   * @return the coordinate as a String
+   */
+  public String toString() {
+    return "{ X = " + x + ", Y = " + y + " }";
+  }
 }

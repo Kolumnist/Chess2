@@ -115,6 +115,15 @@ public abstract class Piece {
   protected Coordinate[] shortenCoordinateArray(Coordinate[] possibleMoves,
       ArrayList<Integer> index) {
     Coordinate[] shortedArray = new Coordinate[possibleMoves.length - index.size()];
+
+    if (shortedArray.length == 0) {
+      return shortedArray;
+    }
+
+    if (index.size() == 0) {
+      return possibleMoves;
+    }
+
     int j = 0;
     int k = 0;
 
