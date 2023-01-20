@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -99,8 +100,6 @@ public interface GameService {
 
   Room getCurrentRoom();
 
-
-
   void startup();
 
   void start();
@@ -112,5 +111,7 @@ public interface GameService {
   public String getPlayerName();
 
   public Map getMap();
+
+  public ArrayList<OutputListener> getListeners();
 
 }

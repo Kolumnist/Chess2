@@ -367,6 +367,8 @@ public class Game implements GameService {
   public int getScore() {
     return score;
   }
+
+  public ArrayList<OutputListener> getListeners() { return listeners; }
 }
 
 
