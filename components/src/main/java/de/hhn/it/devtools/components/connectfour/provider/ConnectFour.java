@@ -101,8 +101,9 @@ public class ConnectFour implements IConnectFour {
    * @throws NoSuchElementException   If no profile with the ID exists.
    */
   @Override
-  public void deleteProfile(UUID id) {
+  public void deleteProfile(UUID id) throws IllegalArgumentException, NoSuchElementException{
     logger.info("deleteProfile: id = {}", id);
+    checkId(id);
     profiles.remove(id);
   }
 
