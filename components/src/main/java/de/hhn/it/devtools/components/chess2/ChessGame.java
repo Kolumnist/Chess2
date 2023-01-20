@@ -345,6 +345,10 @@ public class ChessGame implements Chess2Service {
     /* When monkeyChaos, the monkey can only jump no other moves */
     if (monkeyChaos) {
       Monkey monkey = (Monkey) field.getPiece();
+      if (monkey == null) {
+        monkeyChaos = false;
+        return new Coordinate[64];
+      }
       return monkey.getPossibleJump();
     }
 
@@ -418,9 +422,9 @@ public class ChessGame implements Chess2Service {
         /* The SELECTED piece be a Monkey and is able to jump,
          * the current Player can move with the Monkey till he is not able to anymore! */
       } else if (selectedField.getPiece().getClass().equals(Monkey.class)
-          && ((selectedCoordinate.getY() > newCoordinate.getX() + 1
+          && ((selectedCoordinate.getX() > newCoordinate.getX() + 1
           || selectedCoordinate.getY() > newCoordinate.getY() + 1)
-          || (selectedCoordinate.getY() < newCoordinate.getX() - 1
+          || (selectedCoordinate.getX() < newCoordinate.getX() - 1
           || selectedCoordinate.getY() < newCoordinate.getY() - 1))) {
         gameBoard.getSpecificField(selectedCoordinate).setPiece(Optional.empty());
         gameBoard.getSpecificField(selectedCoordinate).setFieldState(FieldState.FREE_FIELD);
