@@ -40,6 +40,8 @@ public class Layout {
   public Room getStartRoom() {
     return startRoom;
   }
+
+  public Player getPlayer() { return player; }
 }
 
 /**
