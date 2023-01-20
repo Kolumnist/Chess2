@@ -77,9 +77,11 @@ public class Chess2ServiceController extends Controller implements Initializable
       }
       if (WinningPlayerState.RED_WIN == chessGame.getWinningPlayer()) {
         Label l = new Label("Player Black gave up.\nPlayer Red has won.");
+        p.initialize(l);
       }
       if (WinningPlayerState.BLACK_WIN == chessGame.getWinningPlayer()) {
         Label l = new Label("Player Red gave up.\nPlayer Black has won.");
+        p.initialize(l);
       }
     }
   }
