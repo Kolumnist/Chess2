@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.connectfour.ProfilesInfoController">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.connectfour.ProfilesInfoController">
     <center>
-        <AnchorPane fx:id="root" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
                 <Button layoutX="25.0" layoutY="605.0" mnemonicParsing="false" onAction="#onBack" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="Back" />
                 <Button fx:id="btnEditProfile" layoutX="955.0" layoutY="25.0" mnemonicParsing="false" onAction="#onEditProfile" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="Edit Profile" />

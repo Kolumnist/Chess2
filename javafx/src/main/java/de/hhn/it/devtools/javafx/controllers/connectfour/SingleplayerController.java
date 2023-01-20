@@ -49,7 +49,7 @@ public class SingleplayerController implements Initializable {
   @FXML
   void onStart() {
     logger.info("onStart: no params");
-    ConnectFour game = Instance.getConnectFour();
+    ConnectFour game = Instance.getInstance();
     game.setMode(Mode.SINGLEPLAYER);
     switch (startingPlayer) {
       case HUMAN -> {
@@ -85,7 +85,7 @@ public class SingleplayerController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     logger.info("initialize: {}, {}", location, resources);
     // Choose profile:
-    List<Profile> profiles = Instance.getConnectFour().getProfiles();
+    List<Profile> profiles = Instance.getInstance().getProfiles();
     Comparator<Profile> comparator = new ProfileNameComparator();
     profiles.sort(comparator);
     playerChoiceBox.getItems().addAll(profiles);

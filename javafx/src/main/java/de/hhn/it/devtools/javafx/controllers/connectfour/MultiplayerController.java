@@ -50,7 +50,7 @@ public class MultiplayerController implements Initializable {
   @FXML
   void onStart() {
     logger.info("Starting");
-    ConnectFour game = Instance.getConnectFour();
+    ConnectFour game = Instance.getInstance();
     game.setMode(Mode.MULTIPLAYER);
     switch (startingPlayer) {
       case PLAYER1 -> {
@@ -80,7 +80,7 @@ public class MultiplayerController implements Initializable {
     logger.info("Initializing");
 
     // player 1
-    List<Profile> profiles = Instance.getConnectFour().getProfiles();
+    List<Profile> profiles = Instance.getInstance().getProfiles();
     Comparator<Profile> comparator = new ProfileNameComparator();
     profiles.sort(comparator);
     player1ChoiceBox.getItems().addAll(profiles);
@@ -89,7 +89,7 @@ public class MultiplayerController implements Initializable {
       player1ChoiceBox.setDisable(true);
       logger.info("Player 1: " + player1);
       // player 2
-      for (Profile profile : Instance.getConnectFour().getProfiles()) {
+      for (Profile profile : Instance.getInstance().getProfiles()) {
         if (profile != player1) {
           player2ChoiceBox.getItems().add(profile);
         }

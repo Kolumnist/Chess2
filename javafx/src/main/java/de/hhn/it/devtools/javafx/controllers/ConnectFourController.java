@@ -1,60 +1,48 @@
 package de.hhn.it.devtools.javafx.controllers;
 
+import de.hhn.it.devtools.apis.connectfour.Profile;
 import de.hhn.it.devtools.javafx.controllers.connectfour.SceneChanger;
-import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIO;
-import java.net.URL;
-import java.util.ResourceBundle;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.FileIO;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
+import java.util.LinkedList;
+import java.util.List;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 
 /**
  * Main controller for the component.
  */
-public class ConnectFourController extends Controller implements Initializable {
+public class ConnectFourController extends Controller {
 
-  private final FileIO file = new FileIO();
+  private FileIO file = new FileIO();
 
   @FXML
   BorderPane root;
 
-  /**
-   * Opens singleplayer screen.
-   */
   @FXML
   void onSingleplayer() {
     SceneChanger.changeScene(root, "/fxml/connectfour/SingleplayerScreen.fxml");
   }
 
-  /**
-   * Opens multiplayer screen.
-   */
   @FXML
   void onMultiplayer() {
     SceneChanger.changeScene(root, "/fxml/connectfour/MultiplayerScreen.fxml");
   }
 
-  /**
-   * Opens highscores screen.
-   */
   @FXML
   void onHighscores() {
     SceneChanger.changeScene(root, "/fxml/connectfour/HighscoresScreen.fxml");
   }
 
-  /**
-   * Opens profiles screen.
-   */
   @FXML
   void onProfiles() {
     SceneChanger.changeScene(root, "/fxml/connectfour/ProfilesScreen.fxml");
   }
 
-  /**
-   * Loads existing profiles.
-   */
-  @Override
-  public void initialize(URL location, ResourceBundle resources) {
+  @FXML
+  public void initialize() {
     file.loadProfileData();
   }
+
 }

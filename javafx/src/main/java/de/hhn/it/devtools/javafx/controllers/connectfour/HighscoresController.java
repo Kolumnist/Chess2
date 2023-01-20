@@ -52,7 +52,7 @@ public class HighscoresController implements Initializable {
       ranking.getItems().clear();
       position.getItems().clear();
       wins.getItems().clear();
-      List<Profile> profiles = Instance.getConnectFour().getProfiles();
+      List<Profile> profiles = Instance.getInstance().getProfiles();
       if (sortByChoiceBox.getValue() == SortBy.Multiplayer_RANKING) {
         logger.info("sort by multiplayer");
         profiles.sort(new ProfileMultiplayerComparator());
@@ -66,7 +66,7 @@ public class HighscoresController implements Initializable {
         wins.getItems().add(profiles.get(i - 1).getSingleplayerWin());
       }
     });
-    List<Profile> profiles = Instance.getConnectFour().getProfiles();
+    List<Profile> profiles = Instance.getInstance().getProfiles();
     logger.info("sort by multiplayer");
     profiles.sort(new ProfileMultiplayerComparator());
     ranking.getItems().addAll(profiles);

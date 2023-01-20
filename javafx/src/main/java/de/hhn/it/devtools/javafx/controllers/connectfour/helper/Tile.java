@@ -52,7 +52,7 @@ public class Tile extends Pane {
       // If the disc can be placed...
       controller.lock();
       try {
-        ConnectFour instance = Instance.getConnectFour();
+        ConnectFour instance = Instance.getInstance();
         instance.placeDiscInColumn(column);
         // set tile color
         controller.update();

@@ -46,12 +46,12 @@ public class GameController implements Initializable, IConnectFourListener {
   @FXML
   void onRestart() {
     logger.info("Restart game");
-    Instance.getConnectFour().initializeGame();
+    Instance.getInstance().initializeGame();
     initialize(null, null);
   }
 
   public void updateTiles() {
-    Disc[][] b = Instance.getConnectFour().getDiscs();
+    Disc[][] b = Instance.getInstance().getDiscs();
     // column
     for (int i = 0; i < b.length; i++) {
       // row
@@ -68,13 +68,13 @@ public class GameController implements Initializable, IConnectFourListener {
     logger.info("update board");
     updateText();
     updateTiles();
-    if (Instance.getConnectFour().getGameState() == GameState.FINISHED
-        || Instance.getConnectFour().getGameState() == GameState.CANCELED) {
+    if (Instance.getInstance().getGameState() == GameState.FINISHED
+        || Instance.getInstance().getGameState() == GameState.CANCELED) {
       return;
     }
-    if (Instance.getConnectFour().computerIsNext()) {
+    if (Instance.getInstance().computerIsNext()) {
       logger.info("Computer is next");
-      Instance.getConnectFour().play();
+      Instance.getInstance().play();
       t.schedule(new TimerTask() {
         @Override
         public void run() {
@@ -105,10 +105,10 @@ public class GameController implements Initializable, IConnectFourListener {
         tiles[column][row] = tile;
       }
     }
-    Instance.getConnectFour().initializeGame();
-    if (Instance.getConnectFour().computerIsNext()) {
+    Instance.getInstance().initializeGame();
+    if (Instance.getInstance().computerIsNext()) {
       logger.info("Computer begins");
-      Instance.getConnectFour().play();
+      Instance.getInstance().play();
       t.schedule(new TimerTask() {
         @Override
         public void run() {

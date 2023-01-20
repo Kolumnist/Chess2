@@ -24,7 +24,7 @@ public class Instance {
    *
    * @return instance
    */
-  public static ConnectFour getConnectFour() {
+  public static ConnectFour getInstance() {
     logger.info("getConnectFour: no params");
     return connectFour;
   }
