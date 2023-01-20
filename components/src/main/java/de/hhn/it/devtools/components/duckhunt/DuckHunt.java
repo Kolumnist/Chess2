@@ -14,6 +14,7 @@ import de.hhn.it.devtools.apis.duckhunt.IllegalGameInfoException;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.function.Consumer;
 
 /**
  * Represents the Duck Hunt Game and contains the main game loop.
@@ -74,6 +75,17 @@ public class DuckHunt implements DuckHuntService {
   }
 
   /**
+   * Notifies all listeners.
+   *
+   * @param consumer
+   */
+  private void notifyListeners(Consumer<DuckHuntListener> consumer) {
+    for (DuckHuntListener listener : listeners) {
+      consumer.accept(listener);
+    }
+  }
+
+  /**
    * Shoots the gun at given coordinates, checks if ducks were hit and consumes ammo.
    *
    * @param x x cursor position
@@ -101,9 +113,9 @@ public class DuckHunt implements DuckHuntService {
               && gameSettings.getAmmoAmount() > 0) {
         duck.setStatus(DuckState.SCARRED);
         gameInfo.setPlayerScore(gameInfo.getPlayerScore() + 1);
-        listeners.forEach(listener -> {
+        notifyListeners((l) -> {
           try {
-            listener.duckHit(duck.getId());
+            l.duckHit(duck.getId());
           } catch (IllegalDuckIdException e) {
             throw new RuntimeException(e);
           }
@@ -113,9 +125,9 @@ public class DuckHunt implements DuckHuntService {
     ammoCount--;
     gameInfo.setAmmo(ammoCount);
 
-    listeners.forEach(listener -> {
+    notifyListeners((l) -> {
       try {
-        listener.newState(gameInfo);
+        l.newState(gameInfo);
       } catch (IllegalGameInfoException e) {
         throw new RuntimeException(e);
       }
@@ -128,9 +140,9 @@ public class DuckHunt implements DuckHuntService {
     ammoCount--;
     gameInfo.setAmmo(ammoCount);
 
-    listeners.forEach(listener -> {
+    notifyListeners((l) -> {
       try {
-        listener.newState(gameInfo);
+        l.newState(gameInfo);
       } catch (IllegalGameInfoException e) {
         throw new RuntimeException(e);
       }
@@ -143,9 +155,9 @@ public class DuckHunt implements DuckHuntService {
     ammoCount = gameSettings.getAmmoAmount();
     gameInfo.setAmmo(ammoCount);
 
-    listeners.forEach(listener -> {
+    notifyListeners((l) -> {
       try {
-        listener.newState(gameInfo);
+        l.newState(gameInfo);
       } catch (IllegalGameInfoException e) {
         throw new RuntimeException(e);
       }
@@ -158,14 +170,13 @@ public class DuckHunt implements DuckHuntService {
     newRound();
     gameLoop.startLoop();
     gameInfo.setState(GameState.RUNNING);
-    listeners.forEach(
-            listener -> {
-              try {
-                listener.newState(gameInfo);
-              } catch (IllegalGameInfoException e) {
-                throw new RuntimeException(e);
-              }
-            });
+    notifyListeners((l) -> {
+      try {
+        l.newState(gameInfo);
+      } catch (IllegalGameInfoException e) {
+        throw new RuntimeException(e);
+      }
+    });
   }
 
   @Override
@@ -173,14 +184,13 @@ public class DuckHunt implements DuckHuntService {
     logger.info("stopGame: no params");
     gameLoop.stopLoop();
     gameInfo.setState(GameState.GAMEOVER);
-    listeners.forEach(
-            listener -> {
-              try {
-                listener.newState(gameInfo);
-              } catch (IllegalGameInfoException e) {
-                throw new RuntimeException(e);
-              }
-            });
+    notifyListeners((l) -> {
+      try {
+        l.newState(gameInfo);
+      } catch (IllegalGameInfoException e) {
+        throw new RuntimeException(e);
+      }
+    });
   }
 
   @Override
@@ -188,14 +198,13 @@ public class DuckHunt implements DuckHuntService {
     logger.info("pauseGame: no params");
     gameLoop.pauseLoop();
     gameInfo.setState(GameState.PAUSED);
-    listeners.forEach(
-            listener -> {
-              try {
-                listener.newState(gameInfo);
-              } catch (IllegalGameInfoException e) {
-                throw new RuntimeException(e);
-              }
-            });
+    notifyListeners((l) -> {
+      try {
+        l.newState(gameInfo);
+      } catch (IllegalGameInfoException e) {
+        throw new RuntimeException(e);
+      }
+    });
   }
 
   @Override
@@ -203,14 +212,13 @@ public class DuckHunt implements DuckHuntService {
     logger.info("continueGame: no params");
     gameLoop.continueLoop();
     gameInfo.setState(GameState.RUNNING);
-    listeners.forEach(
-            listener -> {
-              try {
-                listener.newState(gameInfo);
-              } catch (IllegalGameInfoException e) {
-                throw new RuntimeException(e);
-              }
-            });
+    notifyListeners((l) -> {
+      try {
+        l.newState(gameInfo);
+      } catch (IllegalGameInfoException e) {
+        throw new RuntimeException(e);
+      }
+    });
   }
 
   @Override
