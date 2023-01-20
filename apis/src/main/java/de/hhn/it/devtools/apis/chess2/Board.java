@@ -1,8 +1,8 @@
 package de.hhn.it.devtools.apis.chess2;
 
 /**
- * Defines the board and lets you get all fields or a specific field.
- * An Object of Board updates while the game is running.
+ * Defines the board and lets you get all fields or a specific field. An Object of Board updates
+ * while the game is running.
  *
  * @author Collin Hoss, Michel Jouaux, Lara Mangi
  * @version 1.2
@@ -14,8 +14,8 @@ public class Board {
   public boolean lostPiece = false;
 
   /**
-   * Constructor of board.
-   * Initializes the fields. (It starts left bottom with 0/0 and goes to the right)
+   * Constructor of board. Initializes the fields. (It starts left bottom with 0/0 and goes to the
+   * right)
    */
   public Board() {
 

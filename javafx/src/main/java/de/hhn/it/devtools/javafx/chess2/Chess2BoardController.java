@@ -368,9 +368,9 @@ public class Chess2BoardController {
 
       //region Monkeychaos
       /*
-      * Do EVERYTHING that would normally happen
-      * on a pure button click on the monkey
-      */
+       * Do EVERYTHING that would normally happen
+       * on a pure button click on the monkey
+       */
       selectedButton = newButton;
       selectedCoordinate = new Coordinate(
           Integer.parseInt(selectedButton.getId().substring(6, 7)),
@@ -439,11 +439,11 @@ public class Chess2BoardController {
         throw new RuntimeException(e);
       }
       if (chessGame.getWinningPlayer() == WinningPlayerState.BLACK_WIN) {
-        Label l = new Label("Congratulation Player Black! You has won!");
+        Label l = new Label("Congratulation Player Black! You have won!");
         p.initialize(l);
       }
       if (chessGame.getWinningPlayer() == WinningPlayerState.RED_WIN) {
-        Label l = new Label("Congratulation Player White! You has won!");
+        Label l = new Label("Congratulation Player White! You have won!");
         p.initialize(l);
       }
     }
@@ -576,8 +576,8 @@ public class Chess2BoardController {
   }
 
   /**
-   * Makes the possiblyChecked Coordinate to the Coordinate of OTHER_KING.
-   * Then searches for the corresponding button and sets it to the checkedButton.
+   * Makes the possiblyChecked Coordinate to the Coordinate of OTHER_KING. Then searches for the
+   * corresponding button and sets it to the checkedButton.
    */
   private void makeCheck() {
     Coordinate possiblyChecked = null;
@@ -613,12 +613,12 @@ public class Chess2BoardController {
   }
 
   /**
-   * This method colors a Button and is mostly used with a loop through all button therefore
-   * the use of the max variable.
+   * This method colors a Button and is mostly used with a loop through all button therefore the use
+   * of the max variable.
    *
    * @param button the button which should get colored
-   * @param max maximum number of buttons that can get colored this turn
-   * @param color the new color of the button
+   * @param max    maximum number of buttons that can get colored this turn
+   * @param color  the new color of the button
    * @return max
    */
   private int colorOnePossibleButton(Button button, int max, String color) {
@@ -665,11 +665,11 @@ public class Chess2BoardController {
   }
 
   /**
-   * Chess2BoardController needs to have a chess2Service and Board to
-   * call certain methods and check for a lot of stuff.
+   * Chess2BoardController needs to have a chess2Service and Board to call certain methods and check
+   * for a lot of stuff.
    *
    * @param chessGame newest chessGame version
-   * @param board newest board version
+   * @param board     newest board version
    */
   public static void giveChessGameAndBoard(Chess2Service chessGame, Board board) {
     Chess2BoardController.chessGame = chessGame;

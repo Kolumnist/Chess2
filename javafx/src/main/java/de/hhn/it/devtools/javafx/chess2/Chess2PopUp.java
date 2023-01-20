@@ -15,7 +15,8 @@ public class Chess2PopUp {
 
   //ich brauch noch ne eigene stage und scene
 
-  // Je nachdem welcher Button in der Leiste aufgerufen wird (Give up / Won), soll das Label einen untersch. Text hervorbringen
+  // Je nachdem welcher Button in der Leiste aufgerufen wird (Give up / Won), soll das Label
+  // einen untersch. Text hervorbringen
   // Der button "buttonRematch" ist bei GiveUp -> insVisible
   // Der button "buttonRematch" ist bei Won -> Visible
 
@@ -25,7 +26,7 @@ public class Chess2PopUp {
     dialog.initModality(Modality.APPLICATION_MODAL);
     VBox dialogVbox = new VBox(50);
     dialogVbox.getChildren().add(popUpLabel);
-    Scene dialogScene = new Scene(dialogVbox,300,200);
+    Scene dialogScene = new Scene(dialogVbox, 300, 200);
     dialog.setScene(dialogScene);
     dialog.show();
   }
