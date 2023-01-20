@@ -57,6 +57,7 @@ public class Main extends Application {
 
     addModule("Template");
     addModule("CoffeeMakerService");
+    addModule("WordleGame");
   }
 
   @Override
