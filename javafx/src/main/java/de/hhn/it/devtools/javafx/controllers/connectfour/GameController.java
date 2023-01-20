@@ -55,7 +55,7 @@ public class GameController implements Initializable, IConnectFourListener {
   @Override
   public void updateTile(int column, int row, String color) {
     logger.info("updateTile: column = {}, row = {}, color = {}", color, row, color);
-    tiles[column][row].setColor(Color.valueOf(color));
+    tiles[column][5-row].setColor(Color.valueOf(color));
   }
 
   public void lock() {
@@ -79,7 +79,6 @@ public class GameController implements Initializable, IConnectFourListener {
         tiles[column][row] = tile;
       }
     }
-    // Since we only use this as a listener, the callbacks map can be cleared.
     instance.setCallback(this);
     instance.start();
   }

@@ -68,18 +68,43 @@ public class SingleplayerGame extends Game {
       }
     }
     gameState = GameState.RUNNING; // Start game.
+    listener.updateDescription(descriptor.describeSingleplayer(singleplayerState, player));
+    if (singleplayerState == SingleplayerState.COMPUTER_IS_PLAYING) {
+      play();
+    } else {
+      listener.unlock();
+    }
   }
 
   @Override
   public void start() {
     board = new Board();
-    gameState = GameState.RUNNING;
     if (playerIsFirst) {
       singleplayerState = SingleplayerState.HUMAN_IS_PLAYING;
     } else {
       singleplayerState = SingleplayerState.COMPUTER_IS_PLAYING;
     }
-    update();
+    gameState = GameState.RUNNING;
+    listener.updateDescription(descriptor.describeSingleplayer(singleplayerState, player));
+    if (singleplayerState == SingleplayerState.COMPUTER_IS_PLAYING) {
+      play();
+    }
+  }
+
+  /**
+   * Make the next move for the computer.
+   */
+  private void play() {
+    logger.info("play: no params");
+    int i = (int) (Math.random() * 6);
+    while (true) {
+      try {
+        placeDiscInColumn((i += 1) % 6);
+        break;
+      } catch (IllegalOperationException ignore) {
+      }
+    }
+    listener.unlock();
   }
 
   /**
@@ -88,23 +113,9 @@ public class SingleplayerGame extends Game {
   private void updatePlayerStatistics() {
     logger.info("updatePlayerStatistics: no params");
     switch (singleplayerState) {
-      case HUMAN_WON -> {
-        player.addSingleplayerWin();
-      }
-      case COMPUTER_WON -> {
-        player.addSingleplayerLoose();
-      }
-      default -> {
-        player.addSingleplayerDraw();
-      } // Draw
+      case HUMAN_WON -> player.addSingleplayerWin();
+      case COMPUTER_WON -> player.addSingleplayerLoose();
+      default -> player.addSingleplayerDraw(); // Draw
     }
-  }
-
-  /**
-   * Update the game controller.
-   */
-  private void update() {
-    logger.info("update: no params");
-    listener.updateDescription(descriptor.describeSingleplayer(singleplayerState, player));
   }
 }

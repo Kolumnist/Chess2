@@ -71,7 +71,6 @@ public class SingleplayerController implements Initializable {
     playerChoiceBox.setOnAction(event -> {
       playerChoiceBox.setDisable(true);
       player = playerChoiceBox.getValue();
-      logger.info("Player: " + player);
       // Choose starting player:
       startingPlayerChoiceBox.getItems().add(StartingPlayer.HUMAN);
       startingPlayerChoiceBox.getItems().add(StartingPlayer.COMPUTER);
@@ -81,7 +80,6 @@ public class SingleplayerController implements Initializable {
       startingPlayerChoiceBox.setOnAction(event2 -> {
         startingPlayerChoiceBox.setDisable(true);
         startingPlayer = startingPlayerChoiceBox.getValue();
-        logger.info("Starting player: " + startingPlayer);
         // Allow start.
         startButton.setDisable(false);
       });

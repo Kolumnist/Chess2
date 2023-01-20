@@ -16,6 +16,9 @@ public class FileIo {
 
   HashMap<UUID, Profile> profiles;
 
+  /**
+   * Load all profiles.
+   */
   public void loadProfileData() {
     logger.info("loadProfileData: no params");
     File in = new File(getFilePath());
@@ -29,6 +32,9 @@ public class FileIo {
     }
   }
 
+  /**
+   * Save all profiles.
+   */
   public void saveProfileData() {
     logger.info("saveProfileData: no params");
     profiles = Instance.getInstance().getProfiles();
@@ -43,6 +49,11 @@ public class FileIo {
     }
   }
 
+  /**
+   * Get file path.
+   *
+   * @return The file path.
+   */
   private String getFilePath() {
     logger.info("getFilePath: no params");
     String path = "javafx/src/main/resources/fxml/connectfour/files/Profiles.txt";

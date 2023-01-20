@@ -42,10 +42,35 @@ public class MultiplayerGame extends Game {
   public void placeDiscInColumn(int column) throws IllegalOperationException {
     logger.info("placeDiscInColumn: column = {}", column);
     int row = board.placeDiscInColumn(column);
+    listener.updateTile(column, row,
+        multiplayerState == MultiplayerState.PLAYER_1_IS_PLAYING ? "RED" : "GREEN");
+    // Game won?
     if (board.isWon()) {
+      if (multiplayerState == MultiplayerState.PLAYER_1_IS_PLAYING) {
+        multiplayerState = MultiplayerState.PLAYER_1_WON;
+      } else {
+        multiplayerState = MultiplayerState.PLAYER_2_WON;
+      }
+      gameState = GameState.FINISHED;
+      updatePlayerStatistics();
 
+      // Draw?
+    } else if (board.isDraw()) {
+      multiplayerState = MultiplayerState.DRAW;
+      gameState = GameState.FINISHED;
+      updatePlayerStatistics();
+    } else {
+      // Switch players.
+      if (multiplayerState == MultiplayerState.PLAYER_1_IS_PLAYING) {
+        multiplayerState = MultiplayerState.PLAYER_2_IS_PLAYING;
+      } else {
+        multiplayerState = MultiplayerState.PLAYER_1_IS_PLAYING;
+      }
+      listener.unlock();
     }
-    listener.updateDescription(descriptor.describeMultiplayer(multiplayerState, player1, player2));
+    // Update.
+    listener.updateDescription(
+        descriptor.describeMultiplayer(multiplayerState, player1, player2));
   }
 
   /**
@@ -70,6 +95,7 @@ public class MultiplayerGame extends Game {
       }
     }
     gameState = GameState.RUNNING; // Start game.
+    listener.unlock();
   }
 
   /**
@@ -84,7 +110,8 @@ public class MultiplayerGame extends Game {
     } else {
       multiplayerState = MultiplayerState.PLAYER_2_IS_PLAYING;
     }
-    update();
+    listener.updateDescription(descriptor.describeMultiplayer(multiplayerState, player1, player2));
+    listener.unlock();
   }
 
   /**
@@ -106,13 +133,5 @@ public class MultiplayerGame extends Game {
         player2.addMultiplayerDraw();
       } // Draw
     }
-  }
-
-  /**
-   * Update the game controller.
-   */
-  private void update(){
-    logger.info("update: no params");
-    listener.updateDescription(descriptor.describeMultiplayer(multiplayerState, player1, player2));
   }
 }
