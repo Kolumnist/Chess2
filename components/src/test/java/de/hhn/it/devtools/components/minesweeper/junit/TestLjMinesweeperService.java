@@ -2,24 +2,21 @@ package de.hhn.it.devtools.components.minesweeper.junit;
 
 import de.hhn.it.devtools.apis.minesweeper.MinesweeperCoordinates;
 import de.hhn.it.devtools.apis.minesweeper.Status;
-import de.hhn.it.devtools.components.minesweeper.provider.LJMinesweeperService;
+import de.hhn.it.devtools.components.minesweeper.provider.LjMinesweeperService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.security.Provider;
-
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayName("Testing LJMinesweeperService")
-public class TestLJMinesweeperService {
-    LJMinesweeperService service;
+@DisplayName("Testing LjMinesweeperService")
+public class TestLjMinesweeperService {
+    LjMinesweeperService service;
 
     @BeforeEach
     void init(){
-        service = new LJMinesweeperService(5,100,5);
+        service = new LjMinesweeperService(5,100,5);
     }
 
     @Test

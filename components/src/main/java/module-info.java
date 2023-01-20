@@ -1,3 +1,5 @@
+import de.hhn.it.devtools.components.minesweeper.provider.LjMinesweeperService;
+
 module devtools.components {
   exports de.hhn.it.devtools.components.example.coffeemakerservice.provider;
   exports de.hhn.it.devtools.components.battleship.provider;
@@ -25,5 +27,5 @@ module devtools.components {
   provides de.hhn.it.devtools.apis.chess2.Chess2Service
       with de.hhn.it.devtools.components.chess2.ChessGame;
   provides de.hhn.it.devtools.apis.minesweeper.MinesweeperService
-          with de.hhn.it.devtools.components.minesweeper.provider.LJMinesweeperService;
+          with LjMinesweeperService;
         }

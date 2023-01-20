@@ -71,7 +71,15 @@ public class TestHandler {
     @Test
     void testAdjustStatusForAdjustingFieldsCorner(){
         Handler handler = new Handler(3,3);
+        MinesweeperCoordinates coordinates = new MinesweeperCoordinates(0, 0);
+        handler.adjustStatusForAdjustingFieldsWrapper(coordinates);
 
+        int[][] matrix = handler.getMatrix();
+        assertAll("adjustStatusForAdjustingFields",
+            () -> assertTrue(matrix[0][1] > 0 || matrix [0][1] == -1),
+            () -> assertTrue(matrix[1][1] > 0 || matrix [1][1] == -1),
+            () -> assertTrue(matrix[1][0] > 0 || matrix [1][0] == -1)
+        );
     }
 
     @Test

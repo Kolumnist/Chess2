@@ -1,7 +1,8 @@
 package de.hhn.it.devtools.apis.minesweeper;
 
 /**
- * Koordinaten
+ * Coordinates to better pass parameters.
+ *
  * @author Lara Weller, Jason Herrmann
  * @version 0.1
  */
