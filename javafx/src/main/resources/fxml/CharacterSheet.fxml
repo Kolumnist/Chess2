@@ -158,7 +158,7 @@
                                           <Font size="50.0" />
                                        </font>
                                     </Label>
-                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRollDice" text="Würfeln" />
+                                    <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRollDice" text="Würfeln" />
                                  </children>
                               </VBox>
                            </children>
