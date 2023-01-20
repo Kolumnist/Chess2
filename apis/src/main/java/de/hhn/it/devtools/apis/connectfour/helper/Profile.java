@@ -1,12 +1,13 @@
 package de.hhn.it.devtools.apis.connectfour.helper;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.UUID;
 
 /**
  * This class models the user profile.
  */
-public class Profile {
+public class Profile implements Serializable {
   // The ID of the profile
   private final UUID id;
   private String name;
