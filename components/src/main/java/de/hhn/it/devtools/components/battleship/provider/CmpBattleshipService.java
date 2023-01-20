@@ -6,11 +6,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.IllegalFormatException;
 
-// TODO durchs Feld durch iterieren und gucken ob es Schiffs-Felder gibt, die nicht gebombt wurden, falls nein -> gegner gewinnt & GameState zu GameOver
-// TODO Button, der kommt (isVisible zu true in dem Fenster, wo "Ships left to place", davor ist der Button isVisible = false), wenn alle Schiffe platziert sind, wenn gedrückt wird -> GameState zu FiringShots
+// TODO iterate through the field and see if there are ship fields that were not bombed, if not -> opponent wins & GameState to GameOver
+// TODO Button that comes (isVisible to true in the window where "Ships left to place", before that the button isVisible = false) when all ships are placed, when pressed -> GameState to FiringShots.
 // TODO Write Computer AI
 // TODO change automatically gamestates (after all ships bombed, after all ships placed)
-// TODO start game button wenn der Spieler alle Schiffe plaziert hat damit er vielleicht noch schiffe umplatzieren/drehen kann bevor es losgeht
+// TODO start game button when the player has placed all ships so that he can maybe move/rotate ships before the game starts
 
 
 public class CmpBattleshipService implements BattleshipService {
@@ -90,9 +90,9 @@ public class CmpBattleshipService implements BattleshipService {
     public boolean isPlacementPossible(Player player, Ship shipToPlace, int x1, int y1, boolean isVertical) throws IllegalGameStateException {
         logger.info("isPlacementPossible: player = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}", player, shipToPlace, x1, y1, isVertical);
         int shipSize = shipToPlace.getSize();
-        // wenn x1 der Endpunkt (linkeste Punkt) des Schiffes ist dann diese Rechnung:
+        // if x1 is the endpoint (leftmost point) of the ship then this calculation:
         int endX = (x1 + shipSize) - 1;
-        // wenn y1 der Endpunkt (oberste Punkt) des Schiffes ist dann diese Rechnung:
+        // if y1 is the end point (top point) of the ship then this calculation:
         int endY = (y1 + shipSize) - 1;
         int fieldSize = Field.getSize();
         PanelState[][] shipField;
@@ -112,7 +112,7 @@ public class CmpBattleshipService implements BattleshipService {
                     return false;
                 }
             }
-            if(endY < fieldSize){  // < fieldSize, da wenn fielSize = 5 -> 0 bis 4
+            if(endY < fieldSize){  // < fieldSize, because if fielSize = 5 -> 0 to 4
                 return true;
             }
             else{
@@ -125,7 +125,7 @@ public class CmpBattleshipService implements BattleshipService {
                     return false;
                 }
             }
-            if (endX < fieldSize){  // < fieldSize, da wenn fieldSize = 5 -> 0 bis 4
+            if (endX < fieldSize){  // < fieldSize, because if fielSize = 5 -> 0 to 4
                 return true;
             }
             else{
@@ -138,18 +138,17 @@ public class CmpBattleshipService implements BattleshipService {
 
     // nedim
     @Override
-    public void placeShip(Player player, Ship shipToPlace, int x1, int y1) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException, IllegalArgumentException{
+    public void placeShip(Player player, Ship shipToPlace, int x1, int y1) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException, IllegalArgumentException {
+        logger.info("placeShip: player = {}, ship = {}, x-value = {}, y-value = {}, ", player, shipToPlace, x1, y1);
         boolean isPlaced = shipToPlace.getPlaced();
         boolean isVertical = shipToPlace.getIsVertical();
         int shipSize = shipToPlace.getSize();
-        // wenn x1 der Endpunkt (linkeste Punkt) des Schiffes ist dann diese Rechnung:
+        // if x1 is the endpoint (leftmost point) of the ship then this calculation:
         int endX = (x1 + shipSize) - 1;
-        // wenn y1 der Endpunkt (oberste Punkt) des Schiffes ist dann diese Rechnung:
+        // if y1 is the end point (top point) of the ship then this calculation:
         int endY = (y1 + shipSize) - 1;
         PanelState[][] panelStateField;
         Field shipField;
-
-        logger.info("placeShip: player = {}, ship = {}, x-value = {}, y-value = {}, isVertical = {}, endX = {}, endY = {}, isPlaced = {}, currentGameState = {}, isPlacementPossible = {}", player, shipToPlace, x1, y1, isVertical, endX, endY, isPlaced, currentGameState, isPlacementPossible(player, shipToPlace, x1, y1, isVertical));
 
         if(isPlaced){
             throw new IllegalShipStateException("Ship is already placed");
@@ -189,9 +188,9 @@ public class CmpBattleshipService implements BattleshipService {
         Position position = shipToMove.getFieldPosition();
         int x = position.getX(), y = position.getY();
         int shipSize = shipToMove.getSize();
-        // wenn x1 der Endpunkt (linkeste Punkt) des Schiffes ist dann diese Rechnung:
+        // if x1 is the endpoint (leftmost point) of the ship then this calculation:
         int endX = (x + shipSize) - 1;
-        // wenn y1 der Endpunkt (oberste Punkt) des Schiffes ist dann diese Rechnung:
+        // if y1 is the end point (top point) of the ship then this calculation:
         int endY = (y + shipSize) - 1;
         boolean isVertical = shipToMove.getIsVertical();
         PanelState[][] panelStateField;
@@ -220,14 +219,12 @@ public class CmpBattleshipService implements BattleshipService {
     // nedim
     @Override
     public void rotateShip(Player player, Ship shipToRotate) throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException, IllegalArgumentException {
-        // für die neuen koordinaten vielleicht eine berechnung?
-        // wenn Schiff vertikal liegt, dann ist x wert gleich aber y zwischen front und heck verschieden,
-        // wenn Schiff horizontal liegt, dann ist y wert gleich aber x zwischen front und heck verschieden
+        // if ship is vertical, then x value is equal but y between front and rear is different,
+        // if ship is horizontal, then y value is equal but x between front and rear is different
+        logger.info("rotateShip: player = {}, ship = {}", player, shipToRotate);
 
         boolean isVertical = shipToRotate.getIsVertical();
         boolean isPlaced = shipToRotate.getPlaced();
-
-        logger.info("rotateShip: player = {}, ship = {}", player, shipToRotate);
 
         if(isPlaced){
             throw new IllegalShipStateException("Ship is already placed");
@@ -297,7 +294,6 @@ public class CmpBattleshipService implements BattleshipService {
             }
         }
 
-        // 1x5er, 2x4er, 3er Variabel, 1x2er
         if(size == 5){
             player.setOwnedShips(new Ship(ShipType.DESTROYER, null ));
             player.setOwnedShips(new Ship(ShipType.DESTROYER, null ));
@@ -367,16 +363,16 @@ public class CmpBattleshipService implements BattleshipService {
         }
         //SavedGame Objekt erstellen
         SavedGame saveData = new SavedGame();
-        //TODO: Name des files vom Spieler eingeben
+        //TODO: Enter name of the file from the player
         String fileName = "X.ser";
 
-        //Serialisierung
+        //Serialization
         try {
-            //Streams zum speichern des Objektes
+            //Streams to store the object
             FileOutputStream file = new FileOutputStream(fileName);
             ObjectOutputStream out = new ObjectOutputStream(file);
 
-            //Methode zur Serialisierung
+            //Serialization method
             out.writeObject(saveData);
 
             out.close();
@@ -392,16 +388,16 @@ public class CmpBattleshipService implements BattleshipService {
     // moutassem
     @Override
     public void loadGame(SavedGame savedGame) throws IllegalFormatException {
-        //TODO: Name der ausgewählten Datei via File Chooser
+        //TODO: Enter the name of the file from the playerName of the selected file via File Chooser
         Object saveFile = new Object();
-        //Deserialisierung
+        //Deserialization
         try
         {
-            //Streams zum Einlesen des Files
+            //Streams for reading the file
             FileInputStream file = new FileInputStream("saveFile");
             ObjectInputStream in = new ObjectInputStream(file);
 
-            //Methode zur Deserialisierung des Objektes
+            //Method for deserialization of the object
             savedGame = (SavedGame) in.readObject();
 
             in.close();
@@ -420,22 +416,22 @@ public class CmpBattleshipService implements BattleshipService {
     // moutassem
     @Override
     public void concede() throws IllegalGameStateException {
-        //TODO: braucht zuerst UI
+        //TODO: needs first UI
         if(currentGameState == GameState.PREGAME || currentGameState == GameState.GAMEOVER){
             throw new IllegalGameStateException("You can not give up when the game is not going");
         }
         if(currentGameState == GameState.PLACINGSHIPS || currentGameState == GameState.FIRINGSHOTS) {
             currentGameState = GameState.GAMEOVER;
         }
-        //Anzeigen, dass CPU gewinnt
-        //Unter der Anzeige Knopf für rematch und Knopf für Rückkehr zum Hauptmenü
+        //Show that CPU wins
+        //Below the display button for rematch and button for return to main menu
     }
 
     // moutassem
     @Override
     public String displayRules() {
-        //TODO: braucht zuerst UI
-        //Regelfenster anzeigen
+        //TODO: needs first UI
+        //Show rule window
         return null;
     }
 
