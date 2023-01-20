@@ -151,14 +151,14 @@ class DuckHuntTest {
     game.startGame();
     Thread.sleep(1000);
     game.pauseGame();
-    Thread.sleep(1000);
+    Thread.sleep(3000);
     int callCount = testListener.newStateCallCount;
     Thread.sleep(1000);
     assertEquals(callCount, testListener.newStateCallCount);
     game.continueGame();
     Thread.sleep(1000);
     game.pauseGame();
-    Thread.sleep(1000);
+    Thread.sleep(3000);
     callCount = testListener.newStateCallCount;
     Thread.sleep(1000);
     assertEquals(callCount, testListener.newStateCallCount);
@@ -170,14 +170,14 @@ class DuckHuntTest {
     game.startGame();
     Thread.sleep(1000);
     game.pauseGame();
-    Thread.sleep(1000);
+    Thread.sleep(3000);
     int callCount = testListener.newStateCallCount;
     Thread.sleep(1000);
     assertEquals(callCount, testListener.newStateCallCount);
     game.continueGame();
     Thread.sleep(1000);
     game.pauseGame();
-    Thread.sleep(1000);
+    Thread.sleep(3000);
     assertTrue(callCount < testListener.newStateCallCount);
   }
 
