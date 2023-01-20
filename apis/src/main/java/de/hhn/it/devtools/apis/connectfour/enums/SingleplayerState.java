@@ -7,7 +7,7 @@ public enum SingleplayerState {
   /**
    * Player is placing the disk.
    */
-  HUMAN_PLAYING,
+  HUMAN_IS_PLAYING,
   /**
    * Computer is placing the disk.
    */

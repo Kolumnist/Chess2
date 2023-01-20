@@ -6,13 +6,6 @@ package de.hhn.it.devtools.apis.connectfour.interfaces;
 public interface IConnectFourListener {
 
   /**
-   * Return the name of the listener.
-   *
-   * @return Name of the listener.
-   */
-  String getName();
-
-  /**
    * Called when the match state changes. Updates game.
    *
    * @param description The new match description.

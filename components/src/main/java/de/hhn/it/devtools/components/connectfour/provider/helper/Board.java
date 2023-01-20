@@ -1,6 +1,5 @@
 package de.hhn.it.devtools.components.connectfour.provider.helper;
 
-import de.hhn.it.devtools.apis.connectfour.enums.GameState;
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -17,17 +16,10 @@ public class Board {
   private final int[] topRowIndex = new int[7];   // Index of first free row in each column.
   private int discsPlaced;                        // Number of discs placed.
 
-  private int affectedRow;
-  private int affectedColumn;
-  private String affectedColor;
-  private GameState gameState;
-  private MatchState matchState;
-
   private final LinkedList<Character> players = new LinkedList<>(); // Players.
 
-  public Board(MatchState matchState) {
+  public Board() {
     logger.info("Constructor - no params");
-    this.matchState = matchState;
     // Initialize board.
     for (int i = 0; i < 7; i++) {
       Arrays.fill(board[i], ' ');
@@ -43,31 +35,25 @@ public class Board {
    * Place a disc in this column.
    *
    * @param column Column in which the disc should be placed in.
+   * @return The row in which the disc was placed in.
    */
-  public void placeDiscInColumn(int column) throws IllegalOperationException {
+  public int placeDiscInColumn(int column) throws IllegalOperationException {
     logger.info("placeDiscInColumn: column = {}", column);
     // In case there is a row left:
     if (topRowIndex[column] < 6) {
-      board[column][topRowIndex[column]] = players.getFirst();
-      affectedColumn = column;
-      affectedRow = topRowIndex[column];
-      affectedColor = players.getFirst() == 'X' ? "RED" : "GREEN";
-      topRowIndex[column] = topRowIndex[column] + 1;
+      int row = topRowIndex[column];
+      board[column][row] = players.getFirst();
+      topRowIndex[column] = row + 1;
       discsPlaced++;
       nextPlayer();
-      nextState();
+      return row;
     } else {
       throw new IllegalOperationException("Column is full.");
     }
   }
 
-  /**
-   * Get next match state.
-   */
-
-  // make boolean
-  private void nextState() {
-    logger.info("nextState: no params");
+  public boolean isWon() {
+    logger.info("isWon: no params");
     final int maxX = 7;
     final int maxY = 6;
 
@@ -85,27 +71,14 @@ public class Board {
                 && w == board[x + 2 * dx][y + 2 * dy]
                 && w == board[lastX][lastY]) {
               // Game won.
-              if (matchState == MatchState.PLAYER_1_IS_PLAYING) {
-                matchState = MatchState.PLAYER_1_WON;
-              } else {
-                matchState = MatchState.PLAYER_2_WON;
-              }
-              gameState = GameState.FINISHED;
-              return;
+              return true;
             }
           }
         }
       }
     }
     // No winner.
-    if (isFull()) {
-      matchState = MatchState.DRAW; // Draw.
-      gameState = GameState.FINISHED;
-    } else if (matchState == MatchState.PLAYER_1_IS_PLAYING) {
-      matchState = MatchState.PLAYER_2_IS_PLAYING; // Player 2 is next.
-    } else {
-      matchState = MatchState.PLAYER_1_IS_PLAYING; // Player 1 is next.
-    }
+    return false;
   }
 
   /**
@@ -113,8 +86,8 @@ public class Board {
    *
    * @return True, if board is full, false if not.
    */
-  private boolean isFull() {
-    logger.info("isFull: no params");
+  public boolean isDraw() {
+    logger.info("isDraw: no params");
     return discsPlaced == NUMBER_OF_TILES;
   }
 
@@ -124,45 +97,5 @@ public class Board {
   private void nextPlayer() {
     logger.info("nextPlayer: no params");
     players.add(players.pop());
-  }
-
-  /**
-   * Get the current game state.
-   */
-  public GameState getGameState() {
-    logger.info("getGameState: no params");
-    return gameState;
-  }
-
-  /**
-   * Get the current match state.
-   */
-  public MatchState getMatchState() {
-    logger.info("getMatchState: no params");
-    return matchState;
-  }
-
-  /**
-   * Get affected row.
-   */
-  public int getAffectedRow() {
-    logger.info("getAffectedRow: no params");
-    return affectedRow;
-  }
-
-  /**
-   * Get affected column.
-   */
-  public int getAffectedColumn() {
-    logger.info("getAffectedColumn: no params");
-    return affectedColumn;
-  }
-
-  /**
-   * Get affected color.
-   */
-  public String getAffectedColor() {
-    logger.info("getAffectedCcolor: no params");
-    return affectedColor;
   }
 }

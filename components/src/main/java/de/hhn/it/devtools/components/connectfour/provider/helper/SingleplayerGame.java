@@ -1,9 +1,9 @@
 package de.hhn.it.devtools.components.connectfour.provider.helper;
 
 import de.hhn.it.devtools.apis.connectfour.enums.GameState;
+import de.hhn.it.devtools.apis.connectfour.enums.SingleplayerState;
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
-import de.hhn.it.devtools.apis.connectfour.interfaces.IConnectFourListener;
 import java.util.Timer;
 
 /**
@@ -14,48 +14,24 @@ public class SingleplayerGame extends Game {
       org.slf4j.LoggerFactory.getLogger(SingleplayerGame.class);
 
   private final Profile player;
+  private boolean playerIsFirst;
+  private SingleplayerState singleplayerState;
   private final Timer timer = new Timer(true);
 
   /**
-   * Creates a new singleplayer game.
+   * Create a new singleplayer game.
    *
-   * @param player   The player.
-   * @param listener The game controller.
+   * @param player        The player.
+   * @param playerIsFirst True if the human begins. Otherwise, false.
    */
-  public SingleplayerGame(Profile player, boolean player1IsFirst,
-                          IConnectFourListener listener) {
+  public SingleplayerGame(Profile player, boolean playerIsFirst) {
     logger.info("Constructor - player = {}", player);
     this.player = player;
-    this.player1IsFirst = player1IsFirst;
-    if (player1IsFirst) {
-      matchState = MatchState.PLAYER_1_IS_PLAYING;
-    } else {
-      matchState = MatchState.COMPUTER_IS_PLAYING;
-    }
-  }
-
-  @Override
-  public void restart() {
-    logger.info("restart: no params");
-    if (gameState == GameState.FINISHED) {
-      if (player1IsFirst) {
-        matchState = MatchState.COMPUTER_IS_PLAYING;
-        player1IsFirst = false;
-      } else {
-        matchState = MatchState.PLAYER_1_IS_PLAYING;
-        player1IsFirst = true;
-      }
-    } else {
-      if (player1IsFirst) {
-        matchState = MatchState.PLAYER_1_IS_PLAYING;
-      } else {
-        matchState = MatchState.COMPUTER_IS_PLAYING;
-      }
-    }
+    this.playerIsFirst = playerIsFirst;
   }
 
   /**
-   * Places the disc of the current player in the specified column.
+   * Place the disc in the specified column.
    *
    * @param column The column in which the disc is to be placed in.
    * @throws IllegalOperationException If column is full.
@@ -63,32 +39,72 @@ public class SingleplayerGame extends Game {
   @Override
   public void placeDiscInColumn(int column) throws IllegalOperationException {
     logger.info("placeDiscInColumn: column = {}", column);
-    board.placeDiscInColumn(column);
-    matchState = board.getMatchState();
-    gameState = board.getGameState();
+    int row = board.placeDiscInColumn(column);
+    if (board.isWon()) {
+
+    }
+    listener.updateDescription(descriptor.describeSingleplayer(singleplayerState, player));
+  }
+
+  /**
+   * Restart the game.
+   */
+  @Override
+  public void restart() {
+    logger.info("restart: no params");
+    board = new Board();
+    // Switch players if game was won by starting player or ended in a draw.
     if (gameState == GameState.FINISHED) {
-      switch (matchState) {
-        case PLAYER_1_WON -> {
-          player.addSingleplayerWin();
-        }
-        case COMPUTER_WON -> {
-          player.addSingleplayerLoose();
-        }
-        default -> {
-          player.addSingleplayerDraw();
+      if (playerIsFirst && singleplayerState == SingleplayerState.HUMAN_WON         // 1 & 1.
+          || !playerIsFirst && singleplayerState == SingleplayerState.COMPUTER_WON  // 2 & 2.
+          || singleplayerState == SingleplayerState.DRAW) {                         // Draw.
+        if (playerIsFirst) {
+          singleplayerState = SingleplayerState.COMPUTER_IS_PLAYING;  // Switch.
+          playerIsFirst = false;
+        } else {
+          singleplayerState = SingleplayerState.HUMAN_IS_PLAYING;     // Same.
+          playerIsFirst = true;
         }
       }
+    }
+    gameState = GameState.RUNNING; // Start game.
+  }
+
+  @Override
+  public void start() {
+    board = new Board();
+    gameState = GameState.RUNNING;
+    if (playerIsFirst) {
+      singleplayerState = SingleplayerState.HUMAN_IS_PLAYING;
+    } else {
+      singleplayerState = SingleplayerState.COMPUTER_IS_PLAYING;
+    }
+    update();
+  }
+
+  /**
+   * Update the player statistics.
+   */
+  private void updatePlayerStatistics() {
+    logger.info("updatePlayerStatistics: no params");
+    switch (singleplayerState) {
+      case HUMAN_WON -> {
+        player.addSingleplayerWin();
+      }
+      case COMPUTER_WON -> {
+        player.addSingleplayerLoose();
+      }
+      default -> {
+        player.addSingleplayerDraw();
+      } // Draw
     }
   }
 
   /**
-   * Describes the current match state.
-   *
-   * @return Description of the current match state.
+   * Update the game controller.
    */
-  @Override
-  public String getDescription() {
-    logger.info("getDescription: no params");
-    return descriptor.describeSingleplayer(matchState, player);
+  private void update() {
+    logger.info("update: no params");
+    listener.updateDescription(descriptor.describeSingleplayer(singleplayerState, player));
   }
 }

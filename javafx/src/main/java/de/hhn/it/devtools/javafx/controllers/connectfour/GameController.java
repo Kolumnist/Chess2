@@ -47,12 +47,6 @@ public class GameController implements Initializable, IConnectFourListener {
   }
 
   @Override
-  public String getName() {
-    logger.info("getName: no params");
-    return this.getClass().getSimpleName();
-  }
-
-  @Override
   public void updateDescription(String description) {
     logger.info("setDescription: description = {}", description);
     output.setText(description);
@@ -86,7 +80,7 @@ public class GameController implements Initializable, IConnectFourListener {
       }
     }
     // Since we only use this as a listener, the callbacks map can be cleared.
-    instance.removeAllCallbacks();
-    instance.addCallback(this);
+    instance.setCallback(this);
+    instance.start();
   }
 }

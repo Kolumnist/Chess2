@@ -1,5 +1,8 @@
 package de.hhn.it.devtools.apis.connectfour.helper;
 
+import de.hhn.it.devtools.apis.connectfour.enums.MultiplayerState;
+import de.hhn.it.devtools.apis.connectfour.enums.SingleplayerState;
+
 /**
  * This class models the descriptor which describes the current state of the match.
  */
@@ -10,30 +13,27 @@ public class Descriptor {
   /**
    * Describes the current match state for singleplayer mode.
    *
-   * @param matchState The current match state.
-   * @param player1    The selected player profile.
+   * @param singleplayerState The current match state.
+   * @param player1           The selected player profile.
    * @return The description of the current match state.
    */
-  public String describeSingleplayer(MatchState matchState, Profile player1) {
-    logger.info("describeSingleplayer: {}, {}", matchState, player1);
-    switch (matchState) {
-      case PLAYER_1_IS_PLAYING -> {
+  public String describeSingleplayer(SingleplayerState singleplayerState, Profile player1) {
+    logger.info("describeSingleplayer: {}, {}", singleplayerState, player1);
+    switch (singleplayerState) {
+      case HUMAN_IS_PLAYING -> {
         return player1 + " is playing!";
       }
-      case PLAYER_2_IS_PLAYING -> {
+      case COMPUTER_IS_PLAYING -> {
         return "Computer is playing!";
       }
-      case PLAYER_1_WON -> {
+      case HUMAN_WON -> {
         return player1 + " won!";
       }
-      case PLAYER_2_WON -> {
+      case COMPUTER_WON -> {
         return "Computer won!";
       }
-      case DRAW -> {
-        return "It's a draw!";
-      }
       default -> {
-        return "";
+        return "It's a draw!";
       }
     }
   }
@@ -41,14 +41,15 @@ public class Descriptor {
   /**
    * Describe the match state for multiplayer mode.
    *
-   * @param matchState The current match state.
-   * @param player1    The selected profile for player 1.
-   * @param player2    The selected profile for player 2.
+   * @param multiplayerState The current match state.
+   * @param player1          The selected profile for player 1.
+   * @param player2          The selected profile for player 2.
    * @return The description of the current match state.
    */
-  public String describeMultiplayer(MatchState matchState, Profile player1, Profile player2) {
-    logger.info("describeMultiplayer: {}, {}, {}", matchState, player1, player2);
-    switch (matchState) {
+  public String describeMultiplayer(MultiplayerState multiplayerState, Profile player1,
+                                    Profile player2) {
+    logger.info("describeMultiplayer: {}, {}, {}", multiplayerState, player1, player2);
+    switch (multiplayerState) {
       case PLAYER_1_IS_PLAYING -> {
         return player1 + " is playing!";
       }
@@ -61,11 +62,8 @@ public class Descriptor {
       case PLAYER_2_WON -> {
         return player2 + " won!";
       }
-      case DRAW -> {
-        return "It's a draw!";
-      }
       default -> {
-        return "";
+        return "It's a draw!";
       }
     }
   }
