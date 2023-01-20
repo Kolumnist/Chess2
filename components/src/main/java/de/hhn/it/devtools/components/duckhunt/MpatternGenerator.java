@@ -41,7 +41,7 @@ public final class MpatternGenerator {
    * @param ducks for which movement path shall be generated
    */
   public void generatePaths(DuckData[] ducks) throws DuckOrientationTranslationException {
-    logger.debug("generatePaths: ducks{}", ducks);
+    logger.debug("generatePaths: ducks{}", Arrays.toString(ducks));
     for (DuckData duck : ducks) {
       duckStartingPos.put(duck.getId(), new Vector2D());
       generatedPaths.put(duck.getId(), generateWaypoints(duck.getId()));

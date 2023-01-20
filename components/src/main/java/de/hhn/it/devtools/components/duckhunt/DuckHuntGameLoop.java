@@ -42,6 +42,7 @@ public class DuckHuntGameLoop extends Thread {
       public void run() {
         tps = ticks;
         ticks = 0;
+        logger.debug("TPS: " + tps);
       }
     }, Calendar.getInstance().getTime(), 1000);
   }
@@ -139,6 +140,11 @@ public class DuckHuntGameLoop extends Thread {
             }
           });
 
+      try {
+        Thread.sleep(20);
+      } catch (InterruptedException e) {
+        throw new RuntimeException(e);
+      }
       semaphore.release();
       deltaTime = (System.currentTimeMillis() - startTime) / 1000.0f;
       deltaTime += 0.02f;

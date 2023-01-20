@@ -50,7 +50,7 @@ class DuckHuntTest {
   void duckDropTest() throws IllegalParameterException, InterruptedException {
     game.addCallback(testListener);
     game.startGame();
-    Thread.sleep(1000);
+    Thread.sleep(5000);
     game.pauseGame();
     Thread.sleep(1000);
     game.getGameInfo().setState(GameState.RUNNING);
@@ -60,7 +60,7 @@ class DuckHuntTest {
     Vector2D preDuckPos = new Vector2D(testListener.duckPosition.duckData()[0].getX(),
         testListener.duckPosition.duckData()[0].getY());
     game.continueGame();
-    Thread.sleep(100);
+    Thread.sleep(1000);
     game.pauseGame();
     Thread.sleep(1000);
     Vector2D postDuckPos = new Vector2D(testListener.duckPosition.duckData()[0].getX(),
