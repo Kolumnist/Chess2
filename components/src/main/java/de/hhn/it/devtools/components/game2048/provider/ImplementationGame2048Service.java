@@ -16,7 +16,6 @@ public class ImplementationGame2048Service implements Game2048Service {
   private final ArrayList<Block> gameBoard;
   private final ArrayList<Position> freelist;
   private int currentScore;
-  private static int highScore;
   private boolean gameWon;
   private boolean gameLost;
   private ArrayList<Game2048Listener> gameListeners;
@@ -65,7 +64,6 @@ public class ImplementationGame2048Service implements Game2048Service {
       columnRow.clear();
     }
     addBlock(2);
-    updateScores();
     isGameWon();
     notifyGame2048Listener();
   }
@@ -222,23 +220,23 @@ public class ImplementationGame2048Service implements Game2048Service {
   }
 
   /**
-   * Loads Highscore and notifies all Frontends to present new Data.
+   * Notifies all Frontends to present new Data.
    */
   private void notifyGame2048Listener() {
     logger.info("notifyGame2048Listener: no params");
+    updateScores();
     Block[] gameBoardArray = new Block[gameBoard.size()];
     for (int i = 0; i < gameBoard.size(); i++) {
       gameBoardArray[i] = gameBoard.get(i);
     }
-    State currentState = new State(gameBoardArray, currentScore, highScore, gameWon, gameLost);
+    State currentState = new State(gameBoardArray, currentScore, gameWon, gameLost);
     gameListeners.forEach((listener) -> listener.newState(currentState));
   }
 
   /**
-   * Updates currentScore and highScore.
-   * Highscore gets saved if necessary.
+   * Updates currentScore.
    *
-   * @throws IllegalStateException if currentScore or highScore are negative
+   * @throws IllegalStateException if currentScore are negative
    */
   private void updateScores() throws IllegalStateException {
     currentScore = 0;
@@ -247,12 +245,6 @@ public class ImplementationGame2048Service implements Game2048Service {
     }
     if (currentScore < 0) {
       throw new IllegalStateException("Summ of Values of all Blocks in game-board is < 0");
-    }
-    if (highScore < 0) {
-      throw new IllegalStateException("Highscore is < 0");
-    }
-    if (currentScore > highScore) {
-      highScore = currentScore;
     }
   }
 
