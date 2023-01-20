@@ -74,13 +74,13 @@ public class Game extends Stage{
 
 
         // Creates the upper Playground
-        for ( int i = 0; i <sizeGrid; i++) {
-            Label lblAbc = new Label(abc[i].toString());
+        for ( int k = 0; k <sizeGrid; k++) {
+            Label lblAbc = new Label(abc[k].toString());
             lblAbc.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-padding: 0 15 0 0 ");
 
-            playgroundUpper.add(lblAbc, 0 ,i);
+            playgroundUpper.add(lblAbc, 0 ,k);
 
-            for ( int k = 0; k < sizeGrid; k++) {
+            for ( int i = 0; i < sizeGrid; i++) {
                 buttonsUpper[k][i] = new Button();
                 buttonsUpper[k][i].setPrefWidth(sizeButtons);
                 buttonsUpper[k][i].setPrefHeight(sizeButtons);
@@ -98,7 +98,7 @@ public class Game extends Stage{
                     }
                 });
 
-                playgroundUpper.add(buttonsUpper[k][i], k + 1, i);
+                playgroundUpper.add(buttonsUpper[k][i], i + 1, k);
             }
         }
 
@@ -113,13 +113,13 @@ public class Game extends Stage{
 
 
         // Creates the lower Playground
-        for (int i = 0; i <sizeGrid; i++) {
-            Label lblAbc = new Label(abc[i].toString());
+        for (int k = 0; k <sizeGrid; k++) {
+            Label lblAbc = new Label(abc[k].toString());
             lblAbc.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-padding: 0 15 0 0 ");
 
-            playgroundLower.add(lblAbc, 0 ,i);
+            playgroundLower.add(lblAbc, 0 ,k);
 
-            for (int k = 0; k < sizeGrid; k++) {
+            for (int i = 0; i < sizeGrid; i++) {
                 buttonsLower[k][i] = new Button();
                 buttonsLower[k][i].setPrefWidth(sizeButtons);
                 buttonsLower[k][i].setPrefHeight(sizeButtons);
@@ -146,7 +146,7 @@ public class Game extends Stage{
                     }
                 });
 
-                playgroundLower.add(buttonsLower[k][i], k + 1, i);
+                playgroundLower.add(buttonsLower[k][i], i + 1, k);
             }
         }
 
