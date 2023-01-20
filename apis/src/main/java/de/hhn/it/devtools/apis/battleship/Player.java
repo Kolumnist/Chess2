@@ -43,13 +43,22 @@ public class Player {
 
     public Ship returnNextShip(ShipType type){
 
-
         for (Ship ownedShip : ownedShips) {
-            if ( ownedShip.getShipType() == type  && !ownedShip.getPlaced()) return ownedShip;
+            if ( ownedShip.getShipType() == type  && !ownedShip.getPlaced()){
+                return ownedShip;
+            }
         }
 
         return null;
     }
 
+    public boolean hasUnplacedShipsLeft(){
+        for (Ship ownedShip : ownedShips) {
+            if(!ownedShip.getPlaced()){
+                return  true;
+            }
+        }
+        return false;
+    }
 
 }

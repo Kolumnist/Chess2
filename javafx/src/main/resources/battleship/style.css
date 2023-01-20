@@ -17,7 +17,7 @@
 }
 
 .buttonSelectShip {
-    -fx-background-color: red;
+    -fx-background-color: cornflowerblue;
 }
 
 .carrier {
@@ -39,3 +39,6 @@
 .destroyer {
     -fx-background-color: deeppink;
 }
+
+
+

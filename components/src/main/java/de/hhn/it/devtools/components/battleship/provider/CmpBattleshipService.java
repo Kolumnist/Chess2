@@ -203,14 +203,16 @@ public class CmpBattleshipService implements BattleshipService {
         shipField = player.getShipField();
         if(isVertical){
             for(int i = y; i <= endY; i++){
-                panelStateField[i][x] = PanelState.NOSHIP;
                 shipField.setPanelMarker(x, i, PanelState.NOSHIP);
+                player.getShipField().setShipsOnField(null,x,i);
+
+
             }
         }
         else {
             for(int i = x; i <= endX; i++){
-                panelStateField[y][i] = PanelState.NOSHIP;
                 shipField.setPanelMarker(i, y, PanelState.NOSHIP);
+                player.getShipField().setShipsOnField(null,i,y);
             }
         }
     }

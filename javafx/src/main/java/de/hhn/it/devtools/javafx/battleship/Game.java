@@ -19,6 +19,7 @@ public class Game extends Stage{
 
     ShipsLeft shipsleft;
 
+
     GridPane playgroundUpper = new GridPane();
     GridPane playgroundLower = new GridPane();
     GridPane numbersBetween = new GridPane();
@@ -27,6 +28,8 @@ public class Game extends Stage{
     Menu menuGame= new Menu("Game");
     Menu menuSound= new Menu("Sound");
     Menu menuHelp= new Menu("Help");
+
+    Player player = CmpBattleshipService.service.getPlayer();
 
     MenuItem gameSave = new MenuItem("Save");
     MenuItem gameLoad = new MenuItem("Load");
@@ -90,7 +93,6 @@ public class Game extends Stage{
                     @Override
                     public void handle(ActionEvent actionEvent) {
 
-                        buttonsUpper[k1][i1].setStyle("-fx-background-color: red");
 
                     }
                 });
@@ -123,7 +125,7 @@ public class Game extends Stage{
                 buttonsLower[k][i].setId("buttonsLower");
 
                 // needed but i don't fully understand why
-                int k1=k;
+                int k1= k;
                 int i1= i;
 
                 buttonsLower[k][i].setOnAction(new EventHandler<ActionEvent>() {
@@ -131,11 +133,82 @@ public class Game extends Stage{
                     public void handle(ActionEvent actionEvent) {
                         switch(CmpBattleshipService.service.getCurrentGameState()){
                             case PLACINGSHIPS -> {
-                                try {
-                                    CmpBattleshipService.service.placeShip(CmpBattleshipService.service.getPlayer(),shipsleft.getShipSelected(),i1,k1);
-                                    updateField();
-                                } catch (IllegalPositionException | IllegalShipStateException | IllegalGameStateException e) {
-                                    e.printStackTrace();
+
+                                Ship ship = shipsleft.getShipSelected();
+
+                                // if place ship is selected
+                                if (!shipsleft.placeMode && !shipsleft.isHorizontal) {
+
+                                    if(!shipsleft.getShipSelected().getIsVertical()){
+                                        try {
+                                            CmpBattleshipService.service.rotateShip(player,ship);
+                                        } catch (IllegalPositionException | IllegalGameStateException | IllegalShipStateException e) {
+                                            System.out.println(e.getMessage());
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    try {
+                                        CmpBattleshipService.service.placeShip(player, shipsleft.getShipSelected(), i1, k1);
+                                        updateField();
+                                        shipsleft.setShipSelected(null);
+                                        shipsleft.resetStylesSelectShips();
+
+                                        if(!player.hasUnplacedShipsLeft()){
+                                            shipsleft.startFiring.setVisible(true);
+                                        }
+
+
+                                    } catch (IllegalPositionException | IllegalGameStateException | IllegalShipStateException e) {
+                                        System.out.println(e.getMessage());
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                 if (!shipsleft.placeMode && shipsleft.isHorizontal){
+
+                                     if(shipsleft.getShipSelected().getIsVertical()) {
+                                         try {
+                                             CmpBattleshipService.service.rotateShip(player, ship);
+                                         } catch (IllegalPositionException | IllegalGameStateException | IllegalShipStateException e) {
+                                             System.out.println(e.getMessage());
+                                             e.printStackTrace();
+                                         }
+                                     }
+                                     try {
+                                         CmpBattleshipService.service.placeShip(player, shipsleft.getShipSelected(), i1, k1);
+                                         updateField();
+                                         shipsleft.setShipSelected(null);
+                                         shipsleft.resetStylesSelectShips();
+
+                                         if(!player.hasUnplacedShipsLeft()){
+                                             shipsleft.startFiring.setVisible(true);
+                                         }
+
+                                     } catch (IllegalPositionException | IllegalGameStateException | IllegalShipStateException e) {
+                                         System.out.println(e.getMessage());
+                                         e.printStackTrace();
+                                     }
+                                 }
+
+
+                                // if unplace ship is selected
+                                 if (shipsleft.placeMode) {
+
+                                    ship = player.getShipField().getShipsOnField(i1, k1);
+
+                                    if (ship != null) {
+                                        try {
+                                            CmpBattleshipService.service.unPlace(player, player.getShipField().getShipsOnField(i1, k1));
+                                            updateField();
+                                            shipsleft.startFiring.setVisible(false);
+                                        } catch (IllegalGameStateException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                    else;
+
                                 }
                             }
                         }
@@ -220,8 +293,12 @@ public class Game extends Stage{
         //PanelState[][] playerShipsPlaced = CmpBattleshipService.service.getPlayer().getShipField().getPanelMarkerMat();
         for (int i = 0; i < sizeGrid ; i++) {
             for (int k = 0; k < sizeGrid ; k++) {
+
                 Ship ship = CmpBattleshipService.service.getPlayer().getShipField().getShipsOnField(i,k);
-                if( ship == null) continue;
+                if( ship == null) {
+                    buttonsLower[k][i].getStyleClass().removeAll("carrier", "battleship", "cruiser", "submarine", "destroyer");
+                    continue;
+                }
 
                 switch (ship.getShipType()){
 

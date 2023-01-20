@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.javafx.battleship;
 
+import de.hhn.it.devtools.apis.battleship.GameState;
 import de.hhn.it.devtools.apis.battleship.Player;
 import de.hhn.it.devtools.apis.battleship.Ship;
 import de.hhn.it.devtools.apis.battleship.ShipType;
@@ -32,6 +33,13 @@ public class ShipsLeft {
     Button submarine = new Button("Submarine, length: 3");
     Button destroyer = new Button("Destroyer, length: 2");
 
+    Button rotate = new Button("horizontal");
+    Button unplace = new Button("place");
+    Button startFiring = new Button("Click to start firing");
+
+    Boolean placeMode = false;
+    boolean isHorizontal = true;
+
     Label carriersLeft = new Label();
     Label battleshipsLeft = new Label();
     Label cruisersLeft = new Label();
@@ -44,7 +52,8 @@ public class ShipsLeft {
         scene.getStylesheets().add("battleship/style.css");
 
         stage.setWidth(800);
-        stage.setHeight(600);
+        //stage.setHeight(600);
+        stage.setHeight(800);
         stage.setResizable(false);
 
 
@@ -52,6 +61,44 @@ public class ShipsLeft {
 
         title.setStyle("-fx-font-size: 30; -fx-background-color: white; -fx-text-fill: #5BC0BE; -fx-background-radius: 10");
         title.setPadding(new Insets(30,30,30,30));
+
+        startFiring.setVisible(false);
+
+        startFiring.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                CmpBattleshipService.service.setCurrentGameState(GameState.FIRINGSHOTS);
+                vbox.getChildren().remove(startFiring);
+            }
+        });
+
+        rotate.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(rotate.getText().equals("horizontal")){
+                    rotate.setText("vertical");
+                    isHorizontal  = false;
+                }
+                else {
+                    rotate.setText("horizontal");
+                    isHorizontal = true;
+                }
+            }
+        });
+
+        unplace.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(unplace.getText().equals("place")){
+                    unplace.setText("unplace");
+                    placeMode = true;
+                }
+                else {
+                    unplace.setText("place");
+                    placeMode = false;
+                }
+            }
+        });
 
         // Sets selected Ship
         carrier.setOnAction(new EventHandler<ActionEvent>() {
@@ -68,7 +115,7 @@ public class ShipsLeft {
         battleship.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                shipSelected = CmpBattleshipService.service.getPlayer().returnNextShip(ShipType.BATTLESHIP);
+                setShipSelected(CmpBattleshipService.service.getPlayer().returnNextShip(ShipType.BATTLESHIP));
                 resetStylesSelectShips();
                 battleship.getStyleClass().add("buttonSelectShip");
             }
@@ -78,7 +125,7 @@ public class ShipsLeft {
         cruiser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                shipSelected = CmpBattleshipService.service.getPlayer().returnNextShip(ShipType.CRUISER);
+                setShipSelected(CmpBattleshipService.service.getPlayer().returnNextShip(ShipType.CRUISER));
                 resetStylesSelectShips();
                 cruiser.getStyleClass().add("buttonSelectShip");
             }
@@ -88,7 +135,7 @@ public class ShipsLeft {
         submarine.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                shipSelected = CmpBattleshipService.service.getPlayer().returnNextShip(ShipType.SUBMARINE);
+                setShipSelected(CmpBattleshipService.service.getPlayer().returnNextShip(ShipType.SUBMARINE));
                 resetStylesSelectShips();
                 submarine.getStyleClass().add("buttonSelectShip");
             }
@@ -98,7 +145,7 @@ public class ShipsLeft {
         destroyer.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                shipSelected = CmpBattleshipService.service.getPlayer().returnNextShip(ShipType.DESTROYER);
+                setShipSelected(CmpBattleshipService.service.getPlayer().returnNextShip(ShipType.DESTROYER));
                 resetStylesSelectShips();
                 destroyer.getStyleClass().add("buttonSelectShip");
             }
@@ -121,6 +168,10 @@ public class ShipsLeft {
         vbox.getChildren().add(submarine);
         vbox.getChildren().add(destroyer);
 
+        vbox.getChildren().add(unplace);
+        vbox.getChildren().add(rotate);
+        vbox.getChildren().add(startFiring);
+
 
         stage.setScene(scene);
         stage.setTitle("Ships left to place");
@@ -139,6 +190,10 @@ public class ShipsLeft {
 
     public Ship getShipSelected() {
         return shipSelected;
+    }
+
+    public void setShipSelected(Ship ship){
+        shipSelected = ship;
     }
 }
 
