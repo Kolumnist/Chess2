@@ -11,13 +11,16 @@ public class Board {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(Board.class);
 
-  private final int NUMBER_OF_TILES = 42;         // Number of tiles.
+  private final int numberOfTiles = 42;         // Number of tiles.
   private final char[][] board = new char[7][6];  // Board: [column][row].
   private final int[] topRowIndex = new int[7];   // Index of first free row in each column.
   private int discsPlaced;                        // Number of discs placed.
 
   private final LinkedList<Character> players = new LinkedList<>(); // Players.
 
+  /**
+   * Create a new board.
+   */
   public Board() {
     logger.info("Constructor - no params");
     // Initialize board.
@@ -52,6 +55,11 @@ public class Board {
     }
   }
 
+  /**
+   * Check whether the game is won or not.
+   *
+   * @return True, if game is won. Return false, if otherwise.
+   */
   public boolean isWon() {
     logger.info("isWon: no params");
     final int maxX = 7;
@@ -88,7 +96,7 @@ public class Board {
    */
   public boolean isDraw() {
     logger.info("isDraw: no params");
-    return discsPlaced == NUMBER_OF_TILES;
+    return discsPlaced == numberOfTiles;
   }
 
   /**

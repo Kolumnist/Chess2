@@ -30,4 +30,9 @@ public interface IConnectFourListener {
    * Unlocks the board. User input allowed.
    */
   void unlock();
+
+  /**
+   * Saves the profile data.
+   */
+  void save();
 }

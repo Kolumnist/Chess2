@@ -5,6 +5,7 @@ import de.hhn.it.devtools.apis.connectfour.enums.SingleplayerState;
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * This class modells a singleplayer match.
@@ -40,10 +41,36 @@ public class SingleplayerGame extends Game {
   public void placeDiscInColumn(int column) throws IllegalOperationException {
     logger.info("placeDiscInColumn: column = {}", column);
     int row = board.placeDiscInColumn(column);
+    listener.updateTile(column, row,
+        singleplayerState == SingleplayerState.HUMAN_IS_PLAYING ? "RED" : "GREEN");
+    // Game won?
     if (board.isWon()) {
+      if (singleplayerState == SingleplayerState.HUMAN_IS_PLAYING) {
+        singleplayerState = SingleplayerState.HUMAN_WON;
+      } else {
+        singleplayerState = SingleplayerState.COMPUTER_WON;
+      }
+      gameState = GameState.FINISHED;
+      updatePlayerStatistics();
 
+      // Draw?
+    } else if (board.isDraw()) {
+      singleplayerState = SingleplayerState.DRAW;
+      gameState = GameState.FINISHED;
+      updatePlayerStatistics();
+    } else {
+      // Switch players.
+      if (singleplayerState == SingleplayerState.HUMAN_IS_PLAYING) {
+        singleplayerState = SingleplayerState.COMPUTER_IS_PLAYING;
+        play();
+      } else {
+        singleplayerState = SingleplayerState.HUMAN_IS_PLAYING;
+        listener.unlock();
+      }
     }
-    listener.updateDescription(descriptor.describeSingleplayer(singleplayerState, player));
+    // Update.
+    listener.updateDescription(
+        descriptor.describeSingleplayer(singleplayerState, player));
   }
 
   /**
@@ -55,24 +82,23 @@ public class SingleplayerGame extends Game {
     board = new Board();
     // Switch players if game was won by starting player or ended in a draw.
     if (gameState == GameState.FINISHED) {
-      if (playerIsFirst && singleplayerState == SingleplayerState.HUMAN_WON         // 1 & 1.
-          || !playerIsFirst && singleplayerState == SingleplayerState.COMPUTER_WON  // 2 & 2.
-          || singleplayerState == SingleplayerState.DRAW) {                         // Draw.
+      if (playerIsFirst && singleplayerState == SingleplayerState.HUMAN_WON           // 1 & 1.
+          || !playerIsFirst && singleplayerState == SingleplayerState.COMPUTER_WON    // 2 & 2.
+          || singleplayerState == SingleplayerState.DRAW) {                           // Draw.
         if (playerIsFirst) {
-          singleplayerState = SingleplayerState.COMPUTER_IS_PLAYING;  // Switch.
+          singleplayerState = SingleplayerState.COMPUTER_IS_PLAYING; // Switch.
           playerIsFirst = false;
         } else {
-          singleplayerState = SingleplayerState.HUMAN_IS_PLAYING;     // Same.
+          singleplayerState = SingleplayerState.HUMAN_IS_PLAYING; // Same.
           playerIsFirst = true;
         }
       }
     }
     gameState = GameState.RUNNING; // Start game.
-    listener.updateDescription(descriptor.describeSingleplayer(singleplayerState, player));
-    if (singleplayerState == SingleplayerState.COMPUTER_IS_PLAYING) {
-      play();
-    } else {
+    if (singleplayerState == SingleplayerState.HUMAN_IS_PLAYING) {
       listener.unlock();
+    } else {
+      play();
     }
   }
 
@@ -86,7 +112,9 @@ public class SingleplayerGame extends Game {
     }
     gameState = GameState.RUNNING;
     listener.updateDescription(descriptor.describeSingleplayer(singleplayerState, player));
-    if (singleplayerState == SingleplayerState.COMPUTER_IS_PLAYING) {
+    if (singleplayerState == SingleplayerState.HUMAN_IS_PLAYING) {
+      listener.unlock();
+    } else {
       play();
     }
   }
@@ -96,15 +124,18 @@ public class SingleplayerGame extends Game {
    */
   private void play() {
     logger.info("play: no params");
-    int i = (int) (Math.random() * 6);
-    while (true) {
-      try {
-        placeDiscInColumn((i += 1) % 6);
-        break;
-      } catch (IllegalOperationException ignore) {
+    timer.schedule(new TimerTask() {
+      int i = (int) (Math.random() * 6);
+
+      @Override
+      public void run() {
+        try {
+          placeDiscInColumn((i += 1) % 6);
+        } catch (IllegalOperationException ignore) {
+          run();
+        }
       }
-    }
-    listener.unlock();
+    }, 700);
   }
 
   /**
@@ -117,5 +148,6 @@ public class SingleplayerGame extends Game {
       case COMPUTER_WON -> player.addSingleplayerLoose();
       default -> player.addSingleplayerDraw(); // Draw
     }
+    listener.save();
   }
 }

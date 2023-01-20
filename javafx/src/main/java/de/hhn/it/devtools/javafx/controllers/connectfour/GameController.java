@@ -55,7 +55,7 @@ public class GameController implements Initializable, IConnectFourListener {
   @Override
   public void updateTile(int column, int row, String color) {
     logger.info("updateTile: column = {}, row = {}, color = {}", color, row, color);
-    tiles[column][5-row].setColor(Color.valueOf(color));
+    tiles[column][5 - row].setColor(Color.valueOf(color));
   }
 
   public void lock() {
@@ -66,6 +66,11 @@ public class GameController implements Initializable, IConnectFourListener {
   public void unlock() {
     logger.info("onUnlock: no params");
     board.setDisable(false);
+  }
+
+  public void save() {
+    logger.info("save: no params");
+    file.saveProfileData();
   }
 
   @Override

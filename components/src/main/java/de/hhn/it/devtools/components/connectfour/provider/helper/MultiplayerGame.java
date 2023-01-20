@@ -133,5 +133,6 @@ public class MultiplayerGame extends Game {
         player2.addMultiplayerDraw();
       } // Draw
     }
+    listener.save();
   }
 }

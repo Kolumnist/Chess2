@@ -3,10 +3,12 @@ package de.hhn.it.devtools.javafx.controllers.connectfour;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.ProfileMultiplayerComparator;
+import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.ProfileNameComparator;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.ProfileSingleplayerComparator;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.SortBy;
 import java.util.LinkedList;
 import java.util.List;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
@@ -48,20 +50,20 @@ public class HighscoresController {
       wins.getItems().clear();
       if (sortByChoiceBox.getValue() == SortBy.Multiplayer_RANKING) {
         profiles.sort(new ProfileMultiplayerComparator());
+        ranking.getItems().addAll(profiles);
+        for (int i = 0; i < profiles.size(); i++) {
+          position.getItems().add(i+1);
+          wins.getItems().add(profiles.get(i).getMultiplayerWin());
+        }
       } else {
         profiles.sort(new ProfileSingleplayerComparator());
-      }
-      ranking.getItems().addAll(profiles);
-      for (int i = 1; i <= profiles.size(); i++) {
-        position.getItems().add(i);
-        wins.getItems().add(profiles.get(i - 1).getSingleplayerWin());
+        ranking.getItems().addAll(profiles);
+        for (int i = 0; i < profiles.size(); i++) {
+          position.getItems().add(i+1);
+          wins.getItems().add(profiles.get(i).getSingleplayerWin());
+        }
       }
     });
-    profiles.sort(new ProfileMultiplayerComparator());
-    ranking.getItems().addAll(profiles);
-    for (int i = 1; i <= profiles.size(); i++) {
-      position.getItems().add(i);
-      wins.getItems().add(profiles.get(i - 1).getMultiplayerWin());
-    }
+    sortByChoiceBox.fireEvent(new ActionEvent());
   }
 }
