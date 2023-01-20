@@ -103,7 +103,12 @@ public class CmpBattleshipService implements BattleshipService {
             throw new IllegalGameStateException("Wrong GameState! Required GameState is PlacingShips");
         }
 
-        return checkShipOnPanel(isVertical, y1, endY, x1);
+        if(isVertical) {
+            return checkShipOnPanel(player, true, y1, endY, x1);
+        }
+        else {
+            return checkShipOnPanel(player, false, x1, endX, y1);
+        }
     }
 
     /**
@@ -113,7 +118,7 @@ public class CmpBattleshipService implements BattleshipService {
      * @param secondStartCoordinate second of the start coordinates where the ship should be placed (if startCoordinate is x then secondStartCoordinate is y and the other way around)
      * @return true if ship can be placed, false if not
      */
-    public boolean checkShipOnPanel(boolean isVertival, int startCoordinate, int endCoordinate, int secondStartCoordinate){
+    public boolean checkShipOnPanel(Player player, boolean isVertival, int startCoordinate, int endCoordinate, int secondStartCoordinate){
         for(int i = startCoordinate; i <= endCoordinate; i++){
             if(isVertival) {
                 // startCoordiante = y1, endCoordinate = endY, secondStartCoordinate = x1
