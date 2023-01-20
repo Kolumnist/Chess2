@@ -74,7 +74,7 @@ public class Coordinate {
    *
    * @return the coordinate as a String
    */
-  public String toString(){
-    return "{ " + x + ", " + y +" }";
+  public String toString() {
+    return "{ " + x + ", " + y + " }";
   }
 }

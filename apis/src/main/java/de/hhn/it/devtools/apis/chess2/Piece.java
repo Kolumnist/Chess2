@@ -116,7 +116,7 @@ public abstract class Piece {
       ArrayList<Integer> index) {
     Coordinate[] shortedArray = new Coordinate[possibleMoves.length - index.size()];
 
-    if (shortedArray.length == 0){
+    if (shortedArray.length == 0) {
       return shortedArray;
     }
 
