@@ -10,7 +10,6 @@ import java.io.IOException;
 public class Game2048FileIO {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(Game2048FileIO.class);
-
   /**
    * Loads the highest score a player scored on this physical device, from a File.
    */
@@ -68,4 +67,5 @@ public class Game2048FileIO {
       logger.warn("save highScore failed, because File related Error");
     }
   }
+
 }
