@@ -45,7 +45,7 @@ public class Player {
 
 
         for (Ship ownedShip : ownedShips) {
-            if ( ownedShip.getShipType().equals(type)  && !ownedShip.getPlaced()) return ownedShip;
+            if ( ownedShip.getShipType() == type  && !ownedShip.getPlaced()) return ownedShip;
         }
 
         return null;

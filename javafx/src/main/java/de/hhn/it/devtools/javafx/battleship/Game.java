@@ -1,9 +1,6 @@
 package de.hhn.it.devtools.javafx.battleship;
 
-import de.hhn.it.devtools.apis.battleship.IllegalGameStateException;
-import de.hhn.it.devtools.apis.battleship.IllegalPositionException;
-import de.hhn.it.devtools.apis.battleship.IllegalShipStateException;
-import de.hhn.it.devtools.apis.battleship.PanelState;
+import de.hhn.it.devtools.apis.battleship.*;
 import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -223,8 +220,10 @@ public class Game extends Stage{
         //PanelState[][] playerShipsPlaced = CmpBattleshipService.service.getPlayer().getShipField().getPanelMarkerMat();
         for (int i = 0; i < sizeGrid ; i++) {
             for (int k = 0; k < sizeGrid ; k++) {
+                Ship ship = CmpBattleshipService.service.getPlayer().getShipField().getShipsOnField(i,k);
+                if( ship == null) continue;
 
-                switch (CmpBattleshipService.service.getPlayer().getShipField().getShipsOnField(k,i).getShipType()){
+                switch (ship.getShipType()){
 
                     case CARRIER:
                         buttonsLower[k][i].getStyleClass().add("carrier");
