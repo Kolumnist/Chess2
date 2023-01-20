@@ -49,8 +49,8 @@ public interface Chess2Service {
       throws IllegalParameterException, IllegalStateException;
 
   /**
-   * Changes the position of the selected piece and initializes a new Round if the moved piece
-   * was not a monkey.
+   * Changes the position of the selected piece and initializes a new Round if the moved piece was
+   * not a monkey.
    *
    * @param selectedCoordinate the position of the selected piece
    * @param newCoordinate      the new position of the piece

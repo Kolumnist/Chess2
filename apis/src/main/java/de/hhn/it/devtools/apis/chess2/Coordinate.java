@@ -8,6 +8,7 @@ package de.hhn.it.devtools.apis.chess2;
  */
 
 public class Coordinate {
+
   private int x;
   private int y;
 
@@ -17,7 +18,7 @@ public class Coordinate {
    * @param x the x value of the coordinate.
    * @param y the y value of the coordinate.
    */
-  public Coordinate(int x, int  y) {
+  public Coordinate(int x, int y) {
     this.x = x;
     this.y = y;
   }
@@ -25,7 +26,8 @@ public class Coordinate {
   /**
    * Default Constructor.
    */
-  public Coordinate() {}
+  public Coordinate() {
+  }
 
   /**
    * Returns the xValue of the Coordinate.
@@ -59,11 +61,11 @@ public class Coordinate {
   }
 
   /**
-   * Returns x and y as a String in the format "xy"
+   * Returns x and y as a String in the format "xy".
    *
    * @return the coordinate as a String
    */
-  public String coordinateToString(){
-    return ""+x+y;
+  public String coordinateToString() {
+    return "" + x + y;
   }
 }
