@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.javafx.text_based_labyrinth_FX;
 
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Direction;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -18,6 +19,7 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     public static final String SCREEN_NAME = "GameMainScreen";
 
     private GameViewModel viewModel;
+    private GameScreenController screenController;
 
     @FXML
     Button openInventory;
@@ -45,13 +47,15 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     TextField actionTestField;
 
     public GameMainScreen(GameScreenController screenController) {
-
+        this.screenController = screenController;
     }
 
 
 
     public void update() {
-
+        actionTestField.clear();
+        roomTextField.clear();
+        playerTextField.clear();
     }
 
 
@@ -59,10 +63,13 @@ public class GameMainScreen extends AnchorPane implements Initializable {
 
 
 
+    public void setViewModel(GameViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        score.textProperty().bind(viewModel.getScore().asString());
     }
 
 
@@ -80,5 +87,64 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     public void updateActionField(String text) {
         actionTestField.clear();
         actionTestField.setText(text);
+    }
+
+    @FXML
+    public void moveAction(ActionEvent event) {
+        event.consume();
+        if (directionChoiceBox.getValue() == null) {
+            updateActionField("Please select a direction in which to move.");
+        } else {
+            viewModel.getGame().move(directionChoiceBox.getValue());
+        }
+    }
+
+    @FXML
+    public void inspectAction(ActionEvent event) {
+        event.consume();
+        if (directionChoiceBox.getValue() == null) {
+            updateActionField("Please select a direction in which to inspect.");
+        } else {
+            viewModel.getGame().inspect(directionChoiceBox.getValue());
+        }
+    }
+
+
+    @FXML
+    public void searchAction(ActionEvent event) {
+        event.consume();
+
+    }
+
+
+    @FXML
+    public void exitGame(ActionEvent event) throws UnknownTransitionException {
+        event.consume();
+        screenController.getMenuScreen().update();
+        try {
+            screenController.changeScreen(InteractScreen.SCREEN_NAME, MenuScreen.SCREEN_NAME);
+        } catch (UnknownTransitionException e) {
+            throw new UnknownTransitionException(e.getMessage(), e.getFrom(), e.getTo());
+        }
+    }
+    @FXML
+    public void interactionAction(ActionEvent event) throws UnknownTransitionException {
+        event.consume();
+        if (directionChoiceBox.getValue() == null) {
+            updateActionField("Please select a direction in which to inspect.");
+        } else {
+            screenController.getInteractScreen().setDirection(directionChoiceBox.getValue());
+            screenController.getInteractScreen().update();
+            try {
+                screenController.changeScreen(GameMainScreen.SCREEN_NAME, InteractScreen.SCREEN_NAME);
+            } catch (UnknownTransitionException e) {
+                throw new UnknownTransitionException(e.getMessage(), e.getFrom(), e.getTo());
+            }
+        }
+    }
+
+    @FXML
+    public void openInventoryAction(ActionEvent event) {
+
     }
 }

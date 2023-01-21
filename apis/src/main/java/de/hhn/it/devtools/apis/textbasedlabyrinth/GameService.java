@@ -45,7 +45,7 @@ public interface GameService {
    * Let the user interact with the environment.
    * (Solve puzzles)
    */
-  String interaction(Direction direction, Item item) throws RoomFailedException;;
+  boolean interaction(Direction direction, Item item) throws RoomFailedException;;
 
   /**
    * Let the user search through the room.
@@ -109,4 +109,5 @@ public interface GameService {
 
   public Map getMap();
 
+  void inspectItem(Item item, CurrentScreenRequesting requester);
 }

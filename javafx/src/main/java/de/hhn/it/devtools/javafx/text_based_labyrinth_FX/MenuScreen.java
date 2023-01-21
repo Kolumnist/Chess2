@@ -4,6 +4,7 @@ import de.hhn.it.devtools.apis.textbasedlabyrinth.InvalidSeedException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Map;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.RoomFailedException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Seed;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -60,7 +61,9 @@ public class MenuScreen extends AnchorPane implements Initializable {
         this.viewModel = viewModel;
     }
 
-    public void startGame() throws UnknownTransitionException {
+    @FXML
+    public void startGame(ActionEvent event) throws UnknownTransitionException {
+        event.consume();
         ArrayList<Integer> integers = new ArrayList<>();
         int a = 0;
         while (a < seedTextField.getText().length()) {

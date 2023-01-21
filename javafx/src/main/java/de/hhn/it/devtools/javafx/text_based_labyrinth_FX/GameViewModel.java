@@ -3,19 +3,30 @@ package de.hhn.it.devtools.javafx.text_based_labyrinth_FX;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Item;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.OutputListener;
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.Game;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 
 public class GameViewModel implements OutputListener {
 
 
     private Game game;
     private GameScreenController screenController;
-    private int score;
+    private IntegerProperty score = new SimpleIntegerProperty();
 
     public GameViewModel(Game game, GameScreenController screenController) {
         this.game = game;
         this.screenController = screenController;
+        this.score.setValue(0);
+
+        screenController.getMenuScreen().setViewModel(this);
+        screenController.getMainScreen().setViewModel(this);
+        screenController.getRoomInventoryScreen().setViewModel(this);
+        screenController.getInteractScreen().setViewModel(this);
+        screenController.getInventoryScreen().setViewModel(this);
+
         game.startup();
-        score = 0;
+
 
     }
 
@@ -63,22 +74,22 @@ public class GameViewModel implements OutputListener {
 
     @Override
     public void listenerStart() {
-
+        screenController.getMainScreen().update();
     }
 
     @Override
     public void listenerMove() {
-
+        screenController.getMainScreen().update();
     }
 
     @Override
-    public void outputPickUpItemInspect(String output) {
-
+    public void outputInventoryItemInspect(String output) {
+        screenController.getInventoryScreen().updateInspectField(output);
     }
 
     @Override
-    public void outputDropItemInspect(String output) {
-
+    public void outputRoomItemInspect(String output) {
+        screenController.getRoomInventoryScreen().updateInspectField(output);
     }
 
 
@@ -94,15 +105,18 @@ public class GameViewModel implements OutputListener {
 
     @Override
     public void listenerReset() {
-
+        screenController.getMainScreen().update();
+        screenController.getInteractScreen().update();
+        screenController.getInventoryScreen().update();
+        screenController.getRoomInventoryScreen().update();
     }
 
     @Override
     public void updateScore(int newScore) {
-        score = newScore;
+        score.setValue(newScore);
     }
 
-    public int getScore() {
+    public IntegerProperty getScore() {
         return score;
     }
 }

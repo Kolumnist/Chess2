@@ -119,7 +119,9 @@ public class Game implements GameService {
     }
 
     if(player.getCurrentRoomOfPlayer().isExit()){
-      //
+      end();
+      logger.info("Exit was reached. The player is victorious, with " + score + " as his final score.");
+      logger.info("Thank you for playing.");
     }
   }
 
@@ -129,12 +131,19 @@ public class Game implements GameService {
    * @param direction gets doors in all directions.
    * @throws IllegalArgumentException direction should not be null.
    */
-  public String inspect(Direction direction) throws RoomFailedException {
+  public String inspect(Direction direction) {
     if (direction == null) {
       throw new IllegalArgumentException("Direction should not be null.");
     }
 
-    String message = currentRoom.getDoor(direction).getInspectMessage();
+    String message = null;
+    try {
+      message = currentRoom.getDoor(direction).getInspectMessage();
+    } catch (RoomFailedException e) {
+      for (OutputListener outputListener : listeners) {
+        outputListener.sendOutputNavigation("There is no way in that direction.");
+      }
+    }
     for (OutputListener outputListener : listeners) {
       outputListener.sendOutputNavigation(message);
     }
@@ -148,7 +157,7 @@ public class Game implements GameService {
    * @param item item player uses.
    * @throws IllegalArgumentException direction not null.
    */
-  public String interaction(Direction direction, Item item) throws IllegalArgumentException, RoomFailedException {
+  public boolean interaction(Direction direction, Item item) throws IllegalArgumentException, RoomFailedException {
     if (direction == null) {
       throw new IllegalArgumentException("Direction should not be null.");
     }
@@ -167,7 +176,7 @@ public class Game implements GameService {
     for (OutputListener outputListener : listeners) {
       outputListener.sendOutputPlayerInteract(successMessage);
     }
-    return successMessage;
+    return unlocked;
   }
 
 
@@ -252,6 +261,32 @@ public class Game implements GameService {
   }
 
 
+  @Override
+  public void inspectItem(Item item, CurrentScreenRequesting requester) {
+    if (item == null) {
+      throw new IllegalArgumentException("Item was null.");
+    }
+    if (requester == null) {
+      throw new IllegalArgumentException("Item was null");
+    }
+    String message = item.getInfo();
+    for (OutputListener outputListener : listeners) {
+      switch (requester) {
+        case INTERACTION:
+          outputListener.sendOutputPlayerInteract(message);
+          break;
+        case ROOMINVENTORY:
+          outputListener.outputRoomItemInspect(message);
+          break;
+        case PLAYERINVENTORY:
+          outputListener.outputInventoryItemInspect(message);
+          break;
+        default:
+          throw new IllegalArgumentException("Requester could not be determined.");
+      }
+    }
+
+  }
 
   @Override
   public void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException {

@@ -19,6 +19,7 @@ public class RoomInventoryScreen extends AnchorPane implements Initializable {
     public static final String SCREEN_NAME = "RoomInventoryScreen";
 
     private GameViewModel viewModel;
+    private GameScreenController screenController;
     private ArrayList<Item> currentRoomItems;
 
     @FXML
@@ -41,13 +42,17 @@ public class RoomInventoryScreen extends AnchorPane implements Initializable {
 
 
     public RoomInventoryScreen(GameScreenController screenController) {
-
+        this.screenController = screenController;
     }
 
 
 
-    public void update() {
+    public void setViewModel(GameViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
 
+    public void update() {
+        itemInspectTextField.clear();
     }
 
 
@@ -58,12 +63,22 @@ public class RoomInventoryScreen extends AnchorPane implements Initializable {
     }
 
 
-    public void exitGame() {
-
+    @FXML
+    public void exitGame() throws UnknownTransitionException {
+        try {
+            screenController.changeScreen(RoomInventoryScreen.SCREEN_NAME, MenuScreen.SCREEN_NAME);
+        } catch (UnknownTransitionException e) {
+            throw new UnknownTransitionException(e.getMessage(), e.getFrom(), e.getTo());
+        }
     }
 
-    public void toMainScreen() {
-
+    @FXML
+    public void toMainScreen() throws UnknownTransitionException {
+        try {
+            screenController.changeScreen(RoomInventoryScreen.SCREEN_NAME, GameMainScreen.SCREEN_NAME);
+        } catch (UnknownTransitionException e) {
+            throw new UnknownTransitionException(e.getMessage(), e.getFrom(), e.getTo());
+        }
     }
 
 
