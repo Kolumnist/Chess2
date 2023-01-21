@@ -110,4 +110,6 @@ public interface GameService {
   public Map getMap();
 
   void inspectItem(Item item, CurrentScreenRequesting requester);
+
+  List<Map> getMaps();
 }

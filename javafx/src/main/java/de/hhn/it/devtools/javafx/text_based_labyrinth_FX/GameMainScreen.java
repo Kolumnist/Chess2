@@ -1,6 +1,8 @@
 package de.hhn.it.devtools.javafx.text_based_labyrinth_FX;
 
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Direction;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.Door;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.RoomFailedException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -56,6 +58,7 @@ public class GameMainScreen extends AnchorPane implements Initializable {
         actionTestField.clear();
         roomTextField.clear();
         playerTextField.clear();
+        playerName.setText(viewModel.getGame().getPlayerName());
     }
 
 
@@ -65,6 +68,7 @@ public class GameMainScreen extends AnchorPane implements Initializable {
 
     public void setViewModel(GameViewModel viewModel) {
         this.viewModel = viewModel;
+
     }
 
     @Override
@@ -127,18 +131,33 @@ public class GameMainScreen extends AnchorPane implements Initializable {
             throw new UnknownTransitionException(e.getMessage(), e.getFrom(), e.getTo());
         }
     }
+
     @FXML
-    public void interactionAction(ActionEvent event) throws UnknownTransitionException {
+    public void interactionAction(ActionEvent event) throws UnknownTransitionException, RoomFailedException {
         event.consume();
+        boolean transition = false;
         if (directionChoiceBox.getValue() == null) {
-            updateActionField("Please select a direction in which to inspect.");
+            updateActionField("Please select a direction in which to interact with something.");
         } else {
-            screenController.getInteractScreen().setDirection(directionChoiceBox.getValue());
-            screenController.getInteractScreen().update();
             try {
-                screenController.changeScreen(GameMainScreen.SCREEN_NAME, InteractScreen.SCREEN_NAME);
-            } catch (UnknownTransitionException e) {
-                throw new UnknownTransitionException(e.getMessage(), e.getFrom(), e.getTo());
+                Door targetDoor = viewModel.getGame().getCurrentRoom().getDoor(directionChoiceBox.getValue());
+                if (targetDoor.checkIfLocked()) {
+                    transition = true;
+                }
+            } catch (RoomFailedException e) {
+                throw new RoomFailedException(e.getMessage());
+            }
+
+            if (transition) {
+                screenController.getInteractScreen().setDirection(directionChoiceBox.getValue());
+                screenController.getInteractScreen().update();
+                try {
+                    screenController.changeScreen(GameMainScreen.SCREEN_NAME, InteractScreen.SCREEN_NAME);
+                } catch (UnknownTransitionException e) {
+                    throw new UnknownTransitionException(e.getMessage(), e.getFrom(), e.getTo());
+                }
+            } else {
+                updatePlayerActionField("There is nothing to interact with in that direction.");
             }
         }
     }

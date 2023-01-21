@@ -19,13 +19,15 @@ public class GameViewModel implements OutputListener {
         this.screenController = screenController;
         this.score.setValue(0);
 
+        game.startup();
+
         screenController.getMenuScreen().setViewModel(this);
         screenController.getMainScreen().setViewModel(this);
         screenController.getRoomInventoryScreen().setViewModel(this);
         screenController.getInteractScreen().setViewModel(this);
         screenController.getInventoryScreen().setViewModel(this);
 
-        game.startup();
+
 
 
     }

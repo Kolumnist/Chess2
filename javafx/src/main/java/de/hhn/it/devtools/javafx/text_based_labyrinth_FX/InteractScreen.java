@@ -65,6 +65,7 @@ public class InteractScreen extends AnchorPane implements Initializable {
 
     public void update() {
         interactTextField.clear();
+        playerName.setText(viewModel.getGame().getPlayerName());
         itemObservableList = FXCollections.observableList(viewModel.getGame().getCurrentRoom().getItemList());
         itemChoiceBox.setItems(itemObservableList);
     }
@@ -72,7 +73,7 @@ public class InteractScreen extends AnchorPane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        score.textProperty().bind(viewModel.getScore().asString());
     }
 
 

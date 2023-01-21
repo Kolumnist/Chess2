@@ -56,6 +56,7 @@ public class InventoryScreen extends AnchorPane implements Initializable {
 
     public void update() {
         itemInspectTextField.clear();
+        playerName.setText(viewModel.getGame().getPlayerName());
         itemObservableList = FXCollections.observableList(viewModel.getGame().getCurrentRoom().getItemList());
         itemChoiceBox.setItems(itemObservableList);
     }
@@ -63,7 +64,7 @@ public class InventoryScreen extends AnchorPane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        score.textProperty().bind(viewModel.getScore().asString());
     }
 
 
@@ -79,23 +80,33 @@ public class InventoryScreen extends AnchorPane implements Initializable {
     @FXML
     public void inspectItemAction(ActionEvent event) {
         event.consume();
-        viewModel.getGame().inspectItem(itemChoiceBox.getValue(), CurrentScreenRequesting.PLAYERINVENTORY);
+        if (itemChoiceBox.getValue() == null) {
+            updateInspectField("Please select an item.");
+        } else {
+            viewModel.getGame().inspectItem(itemChoiceBox.getValue(), CurrentScreenRequesting.PLAYERINVENTORY);
+        }
     }
 
     @FXML
     public void dropItemAction(ActionEvent event) {
         event.consume();
-        try {
-            viewModel.getGame().dropItem(itemChoiceBox.getValue().getItemId());
-        } catch (NoSuchItemFoundException e) {
-            updateInspectField(e.getMessage());
+        if (itemChoiceBox.getValue() == null) {
+            updateInspectField("Please select an item.");
+        } else {
+            try {
+                viewModel.getGame().dropItem(itemChoiceBox.getValue().getItemId());
+            } catch (NoSuchItemFoundException e) {
+                updateInspectField(e.getMessage());
+            }
         }
     }
+
 
 
     @FXML
     public void exitGame(ActionEvent event) throws UnknownTransitionException {
         event.consume();
+        screenController.getMenuScreen().update();
         try {
             screenController.changeScreen(InteractScreen.SCREEN_NAME, MenuScreen.SCREEN_NAME);
         } catch (UnknownTransitionException e) {

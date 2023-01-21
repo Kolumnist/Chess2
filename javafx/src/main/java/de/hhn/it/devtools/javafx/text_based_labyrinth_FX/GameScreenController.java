@@ -64,23 +64,18 @@ public class GameScreenController {
         switch (to) {
             case MenuScreen.SCREEN_NAME:
                 screen = menuScreen;
-                menuScreen.update();
                 break;
             case GameMainScreen.SCREEN_NAME:
                 screen = mainScreen;
-                mainScreen.update();
                 break;
             case InteractScreen.SCREEN_NAME:
                 screen = interactScreen;
-                interactScreen.update();
                 break;
             case InventoryScreen.SCREEN_NAME:
                 screen = inventoryScreen;
-                inventoryScreen.update();
                 break;
             case RoomInventoryScreen.SCREEN_NAME:
                 screen = roomInventoryScreen;
-                roomInventoryScreen.update();
                 break;
             default:
                 throw new UnknownTransitionException("Screen transition was not successful", from, to);

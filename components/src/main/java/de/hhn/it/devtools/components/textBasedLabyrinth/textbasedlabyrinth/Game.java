@@ -41,6 +41,11 @@ public class Game implements GameService {
     layouts = new ArrayList<>();
     listeners = new ArrayList<>();
     allMaps = new ArrayList<>();
+
+    allMaps.add(Map.Ancient_Dungeon);
+    allMaps.add(Map.Unknown_Sewers);
+    allMaps.add(Map.Grave_of_the_Mad_King);
+
     logger.info("Game initialized.");
     score = 0;
   }
@@ -94,6 +99,7 @@ public class Game implements GameService {
     if (!stop) {
       String message = checkDoor.open();
       for (OutputListener outputListener : listeners) {
+        outputListener.listenerMove();
         outputListener.sendOutputPlayer(message);
       }
       if (!checkDoor.checkIfLocked()) {
@@ -400,6 +406,11 @@ public class Game implements GameService {
   @Override
   public Room getCurrentRoom() {
     return currentRoom;
+  }
+
+  @Override
+  public ArrayList<Map> getMaps() {
+    return allMaps;
   }
 
   @Override

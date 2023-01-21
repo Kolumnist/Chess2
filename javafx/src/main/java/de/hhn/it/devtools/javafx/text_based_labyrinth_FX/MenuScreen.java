@@ -4,14 +4,19 @@ import de.hhn.it.devtools.apis.textbasedlabyrinth.InvalidSeedException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Map;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.RoomFailedException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Seed;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -24,6 +29,7 @@ public class MenuScreen extends AnchorPane implements Initializable {
 
     private GameViewModel viewModel;
     private GameScreenController screenController;
+    private ObservableList<Map> maps;
 
     @FXML
     TextField playerName;
@@ -33,10 +39,22 @@ public class MenuScreen extends AnchorPane implements Initializable {
     TextField seedTextField;
     @FXML
     Button startButton;
-
+    @FXML
+    Label labelA;
+    @FXML
+    Label labelB;
+    @FXML
+    Label labelC;
 
     public MenuScreen(GameScreenController screenController) {
         this.screenController = screenController;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Labyrinth/MenuScreen.fxml"));
+        loader.setController(this);
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -59,6 +77,8 @@ public class MenuScreen extends AnchorPane implements Initializable {
 
     public void setViewModel(GameViewModel viewModel) {
         this.viewModel = viewModel;
+        maps = FXCollections.observableList(viewModel.getGame().getMaps());
+        mapChoiceBox.setItems(maps);
     }
 
     @FXML
@@ -83,6 +103,7 @@ public class MenuScreen extends AnchorPane implements Initializable {
         }
 
         viewModel.getGame().start();
+        screenController.getMainScreen().update();
         try {
             screenController.changeScreen(MenuScreen.SCREEN_NAME, GameMainScreen.SCREEN_NAME);
         } catch (UnknownTransitionException e) {
