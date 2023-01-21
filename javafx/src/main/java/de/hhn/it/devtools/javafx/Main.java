@@ -58,9 +58,10 @@ public class Main extends Application {
     addModule("Template");
     addModule("CoffeeMakerService");
     addModule("Chess2Service");
-    addModule("ReactionGame");
+    //addModule("ReactionGame");
     addModule("MemoryService");
     addModule("CharacterSheet");
+    addModule("DuckHuntService");
   }
 
   @Override

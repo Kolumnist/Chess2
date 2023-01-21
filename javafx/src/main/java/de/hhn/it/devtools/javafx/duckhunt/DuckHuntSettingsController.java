@@ -14,71 +14,82 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class DuckHuntSettingsController implements Initializable {
+  private static final org.slf4j.Logger logger =
+      org.slf4j.LoggerFactory.getLogger(DuckHuntSettingsController.class);
 
-    @FXML
-    private Label maxDuckCountLabel;
+  public static final String SCREEN = "settings.screen";
+  private DuckHuntScreenController screenController;
 
-    @FXML
-    private Slider maxDuckCountSlider;
+  @FXML
+  private Label ammoCountLabel;
 
-    @FXML
-    private Label ammoCountLabel;
+  @FXML
+  private Slider ammoCountSlider;
 
-    @FXML
-    private Slider ammoCountSlider;
+  @FXML
+  private Button applyButton;
 
-    @FXML
-    private Button applyButton;
+  @FXML
+  private Button backButton;
 
-    @FXML
-    private Button backButton;
+  @FXML
+  private Label maxDuckCountLabel;
 
-    @FXML
-    private AnchorPane templateAnchorPane;
+  @FXML
+  private Slider maxDuckCountSlider;
 
-    @FXML
-    private Label volumeLabel;
+  @FXML
+  private AnchorPane anchorPane;
 
-    @FXML
-    private Slider volumeSlider;
+  @FXML
+  private Label volumeLabel;
 
+  @FXML
+  private Slider volumeSlider;
 
-    @FXML
-    void applyGameSettings(MouseEvent event) {
+  @FXML
+  void applyGameSettings(MouseEvent event) {
 
-    }
+  }
 
-    @FXML
-    void backToMainMenu(MouseEvent event) {
+  @FXML
+  void backToMainMenu(MouseEvent event) {
+    screenController.switchTo(SCREEN, DuckHuntMenuController.SCREEN);
+  }
 
-    }
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    DuckHuntAttributeStore duckHuntAttributeStore = DuckHuntAttributeStore.getReference();
+    screenController =
+        (DuckHuntScreenController) duckHuntAttributeStore
+            .getAttribute(DuckHuntScreenController.SCREEN_CONTROLLER);
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        maxDuckCountSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                maxDuckCountLabel.setText(Integer.toString((int) maxDuckCountSlider.getValue()));
-                if ((int) maxDuckCountSlider.getValue() >= (int) ammoCountSlider.getValue()) {
-                    ammoCountSlider.setValue((int) maxDuckCountSlider.getValue());
-                }
-            }
-        });
-        ammoCountSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                ammoCountLabel.setText(Integer.toString((int) ammoCountSlider.getValue()));
-                if ((int) ammoCountSlider.getValue() <= (int) maxDuckCountSlider.getValue()) {
-                    maxDuckCountSlider.setValue((int) ammoCountSlider.getValue());
-                }
-            }
-        });
-        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                volumeLabel.setText(Integer.toString((int) volumeSlider.getValue()));
-            }
-        });
-    }
+    logger.info("Start Screen initialized.");
+
+    maxDuckCountSlider.valueProperty().addListener(new ChangeListener<Number>() {
+      @Override
+      public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+        maxDuckCountLabel.setText(Integer.toString((int) maxDuckCountSlider.getValue()));
+        if ((int) maxDuckCountSlider.getValue() >= (int) ammoCountSlider.getValue()) {
+          ammoCountSlider.setValue((int) maxDuckCountSlider.getValue());
+        }
+      }
+    });
+    ammoCountSlider.valueProperty().addListener(new ChangeListener<Number>() {
+      @Override
+      public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+        ammoCountLabel.setText(Integer.toString((int) ammoCountSlider.getValue()));
+        if ((int) ammoCountSlider.getValue() <= (int) maxDuckCountSlider.getValue()) {
+          maxDuckCountSlider.setValue((int) ammoCountSlider.getValue());
+        }
+      }
+    });
+    volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+      @Override
+      public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+        volumeLabel.setText(Integer.toString((int) volumeSlider.getValue()));
+      }
+    });
+  }
 }
 
