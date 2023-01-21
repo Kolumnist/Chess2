@@ -51,7 +51,8 @@ public class DuckHuntSettingsController implements Initializable {
 
   @FXML
   void applyGameSettings(MouseEvent event) {
-
+    gameSettings.setAmmoAmount((int) ammoCountSlider.getValue());
+    gameSettings.setDuckAmount((int) maxDuckCountSlider.getValue());
   }
 
   @FXML
@@ -69,6 +70,8 @@ public class DuckHuntSettingsController implements Initializable {
         .getAttribute("gameSettings");
 
     logger.info("Start Screen initialized.");
+    System.out.println(gameSettings.getAmmoAmount() + " " + gameSettings.getduckAmount());
+
 
     maxDuckCountSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
       maxDuckCountLabel.setText(Integer.toString((int) maxDuckCountSlider.getValue()));
@@ -84,6 +87,9 @@ public class DuckHuntSettingsController implements Initializable {
     });
     volumeSlider.valueProperty().addListener((observable, oldValue, newValue) ->
         volumeLabel.setText(Integer.toString((int) volumeSlider.getValue())));
+
+    maxDuckCountSlider.setValue(gameSettings.getduckAmount());
+    ammoCountSlider.setValue(gameSettings.getAmmoAmount());
   }
 }
 

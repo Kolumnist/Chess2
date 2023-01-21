@@ -35,7 +35,7 @@ public class GameSettingsDescriptor {
    * @throws IllegalStateException is thrown when parameter volume out of range
    */
   public void setDuckAmount(int duckAmount) throws IllegalStateException {
-    if (duckAmount > 5 || duckAmount <= 0) {
+    if (duckAmount > 6 || duckAmount <= 0) {
       throw new IllegalStateException("Duck amount not in acceptable range");
     }
     this.duckAmount = duckAmount;
