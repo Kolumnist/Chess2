@@ -44,4 +44,6 @@ public interface WordleService {
    */
   void removeCallback(WordlePanelListener listener, WordlePanelService panel) throws IllegalParameterException;
 
+  WordlePanelService getPanelById(int id) throws IllegalParameterException;
+
 }
