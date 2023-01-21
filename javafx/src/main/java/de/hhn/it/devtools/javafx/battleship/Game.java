@@ -9,14 +9,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class Game extends Stage{
-
-    int switchCnt = 0;
 
     VBox root = new VBox();
     Scene GameScene = new Scene(root);
@@ -105,28 +102,26 @@ public class Game extends Stage{
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         if(service.getCurrentGameState() == GameState.FIRINGSHOTS){
-                            if(switchCnt % 2 == 0) {
                                 try {
                                     service.bombPanel(player, service.getComputer(), i1, k1);
-                                    service.checkWon(player);
-                                    switchCnt++;
+                                    if(service.checkWon(player)){
+                                        OutputWinner outputWinner = new OutputWinner(player);
+                                    }
                                 } catch (IllegalGameStateException e) {
                                     e.printStackTrace();
                                 }
-                            }
 
-//                            if(!(service.getPlayer().getAttackField().getPanelMarker(i1,k1) == PanelState.HIT)){
+                            if(!(service.getPlayer().getAttackField().getPanelMarker(i1,k1) == PanelState.HIT)){
                                 // 0 as oldZ because im forced to
-                            if(switchCnt % 2 != 0) {
                                 try {
                                     service.getComputer().comBomb(null, player, -1);
-                                    service.checkWon(service.getComputer());
-                                    switchCnt++;
+                                    if(service.checkWon(service.getComputer())){
+                                        OutputWinner outputWinner = new OutputWinner(service.getComputer());
+                                    }
                                 } catch (IllegalGameStateException e) {
                                     e.printStackTrace();
                                 }
                             }
-//                            }
                             updateField();
                         }
 

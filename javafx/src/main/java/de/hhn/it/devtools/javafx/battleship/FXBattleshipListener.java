@@ -7,6 +7,13 @@ import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
 public class FXBattleshipListener implements BattleshipListener {
 
     SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
+    private static final org.slf4j.Logger logger =
+            org.slf4j.LoggerFactory.getLogger(FXBattleshipListener.class);
+    BattleshipService service;
+
+    public FXBattleshipListener(){
+        this.service = (CmpBattleshipService) singletonAttributeStore.getAttribute("Battleship.service");
+    }
 
     /**
      * Informs the listener that the game has changed its state.
@@ -15,6 +22,9 @@ public class FXBattleshipListener implements BattleshipListener {
      */
     @Override
     public void newState(GameState state) {
+        logger.info("listener - newState: {}", state);
+
+
     }
 
     /**
@@ -24,6 +34,7 @@ public class FXBattleshipListener implements BattleshipListener {
      */
     @Override
     public void newFieldCreated(Field createdField) {
+        logger.info("listener - newFieldCreated: {}", createdField);
 
     }
 
@@ -35,6 +46,7 @@ public class FXBattleshipListener implements BattleshipListener {
      */
     @Override
     public void outputPlacingPossible(Ship ship, boolean possible) {
+        logger.info("listener - outputPlacingPossible: ship = {}, possible = {}", ship, possible);
 
     }
 
@@ -45,6 +57,7 @@ public class FXBattleshipListener implements BattleshipListener {
      */
     @Override
     public void outputShipPlaced(Ship ship) {
+        logger.info("listener - outputShipPlaced: {}", ship);
 /*
         Ship ship = shipsleft.getShipSelected();
 
@@ -134,6 +147,7 @@ public class FXBattleshipListener implements BattleshipListener {
      */
     @Override
     public void outputShipMovable(Ship ship) {
+        logger.info("listener - outputShipMovable: {}", ship);
 
     }
 
@@ -145,6 +159,7 @@ public class FXBattleshipListener implements BattleshipListener {
      */
     @Override
     public void outputBombingSuccessful(Position bombedPosition, boolean successful) {
+        logger.info("listener - outputBombingSuccessful: bombedPosition = {}, successful = {}", bombedPosition, successful);
 
     }
 
@@ -155,6 +170,7 @@ public class FXBattleshipListener implements BattleshipListener {
      */
     @Override
     public void outputWinner(boolean playerWon) {
+        logger.info("listener - outputWinner: playerWon = {}", playerWon);
 
     }
 }
