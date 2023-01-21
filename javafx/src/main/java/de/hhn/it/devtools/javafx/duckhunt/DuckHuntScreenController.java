@@ -1,12 +1,14 @@
 package de.hhn.it.devtools.javafx.duckhunt;
 
 import de.hhn.it.devtools.javafx.controllers.template.UnknownTransitionException;
+import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
-
+/**
+ * standard ScreenController.
+ */
 public class DuckHuntScreenController {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(DuckHuntScreenController.class);

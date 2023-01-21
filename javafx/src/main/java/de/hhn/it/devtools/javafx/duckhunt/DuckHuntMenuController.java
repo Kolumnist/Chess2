@@ -1,15 +1,16 @@
 package de.hhn.it.devtools.javafx.duckhunt;
 
-import de.hhn.it.devtools.javafx.controllers.DuckHuntServiceController;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
+/**
+ * Controller for the main Menu screen.
+ */
 public class DuckHuntMenuController implements Initializable {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(DuckHuntMenuController.class);
