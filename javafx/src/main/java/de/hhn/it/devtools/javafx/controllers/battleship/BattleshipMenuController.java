@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.javafx.controllers.battleship;
 
+import de.hhn.it.devtools.apis.battleship.GameState;
 import de.hhn.it.devtools.apis.battleship.IllegalGameStateException;
 import de.hhn.it.devtools.apis.battleship.IllegalPositionException;
 import de.hhn.it.devtools.apis.battleship.IllegalShipStateException;
@@ -25,6 +26,7 @@ public class BattleshipMenuController extends Controller {
 
         service = new CmpBattleshipService();
         singletonAttributeStore.setAttribute("Battleship.service", service);
+        service.setCurrentGameState(GameState.PREGAME);
         game = new Game(5);
         try {
             service.createFields(5);
@@ -39,6 +41,7 @@ public class BattleshipMenuController extends Controller {
 
         service = new CmpBattleshipService();
         singletonAttributeStore.setAttribute("Battleship.service", service);
+        service.setCurrentGameState(GameState.PREGAME);
 
         game = new Game(10);
         try {
@@ -55,6 +58,7 @@ public class BattleshipMenuController extends Controller {
 
         service = new CmpBattleshipService();
         singletonAttributeStore.setAttribute("Battleship.service", service);
+        service.setCurrentGameState(GameState.PREGAME);
 
         game = new Game(15);
         try {
