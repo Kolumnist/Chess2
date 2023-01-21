@@ -60,6 +60,7 @@ public class Main extends Application {
     addModule("Chess2Service");
     addModule("ReactionGame");
     addModule("MemoryService");
+    addModule("MinesweeperService");
   }
 
   @Override
