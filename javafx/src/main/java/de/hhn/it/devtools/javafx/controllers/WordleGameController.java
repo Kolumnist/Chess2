@@ -66,6 +66,7 @@ public class WordleGameController extends Controller implements Initializable {
             textField.setEditable(false);
             button.setDisable(true);
             System.out.println("-35 LP");
+            loadDefeatScreen();
         }
     }
 
@@ -93,6 +94,12 @@ public class WordleGameController extends Controller implements Initializable {
     @FXML
     private void loadVictoryScreen() throws IOException{
         VBox vbox = FXMLLoader.load(getClass().getResource("/fxml/wordle/victoryScreen.fxml"));
+        mainScreenVBox.getChildren().setAll(vbox);
+    }
+
+    @FXML
+    private void loadDefeatScreen() throws IOException{
+        VBox vbox = FXMLLoader.load(getClass().getResource("/fxml/wordle/defeatScreen.fxml"));
         mainScreenVBox.getChildren().setAll(vbox);
     }
 
