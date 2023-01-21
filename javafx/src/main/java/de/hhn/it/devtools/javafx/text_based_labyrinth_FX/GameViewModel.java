@@ -6,6 +6,8 @@ import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.Game;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+import java.util.List;
+
 
 public class GameViewModel implements OutputListener {
 
@@ -131,6 +133,71 @@ public class GameViewModel implements OutputListener {
     @Override
     public void updateScore(int newScore) {
         score.setValue(newScore);
+    }
+
+    @Override
+    public List<String> getOutputRoom() {
+        return null;
+    }
+
+    @Override
+    public List<String> getOutputPlayer() {
+        return null;
+    }
+
+    @Override
+    public List<String> getOutputInventory() {
+        return null;
+    }
+
+    @Override
+    public List<String> getOutputNavigation() {
+        return null;
+    }
+
+    @Override
+    public List<String> getOutputPlayerInteract() {
+        return null;
+    }
+
+    @Override
+    public List<String> getOutputInteractItemName() {
+        return null;
+    }
+
+    @Override
+    public List<String> getOutputRoomItemName() {
+        return null;
+    }
+
+    @Override
+    public List<String> getOutputRoomItemInspect() {
+        return null;
+    }
+
+    @Override
+    public List<String> getOutputInventoryItemInspect() {
+        return null;
+    }
+
+    @Override
+    public List<String> getOutputInventoryItemName() {
+        return null;
+    }
+
+    @Override
+    public List<Item> getOutputPickUpItems() {
+        return null;
+    }
+
+    @Override
+    public List<Item> getOutputDropItems() {
+        return null;
+    }
+
+    @Override
+    public List<Integer> getOutputScores() {
+        return null;
     }
 
     public IntegerProperty getScore() {

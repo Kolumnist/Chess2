@@ -55,6 +55,24 @@ public class GameTest {
         assertEquals(Map.Grave_of_the_Mad_King, game.getMap());
 
         game.move(Direction.EAST);
+
+        Item keyItem1 = game.searchRoom().get(0);
+
+        try {
+            game.pickUpItem(keyItem1.getItemId());
+        } catch (NoSuchItemFoundException e) {
+            fail();
+        }
+
+        OutputListener listener = new DummyCallback();
+        game.addListener(listener);
+
+        CurrentScreenRequesting csR1 = CurrentScreenRequesting.ROOMINVENTORY;
+
+        game.inspectItem(keyItem1, csR1);
+        assertTrue(listener.getOutputRoomItemInspect().contains(keyItem1.getInfo()));
+        assertTrue(listener.getOutputRoomItemName().contains(keyItem1.getName()));
+
         game.move(Direction.EAST);
         game.move(Direction.EAST);
 
@@ -69,9 +87,7 @@ public class GameTest {
         } catch (RoomFailedException e) {
             fail();
         }
-
         game.move(Direction.NORTH);
-
     }
 
     @Test
@@ -354,6 +370,18 @@ public class GameTest {
         assertEquals("You find yourself in " + game.getCurrentRoom().getDescription() +
                 "You can search the room or move on.", game.check());
 
+
+        OutputListener listener = new DummyCallback();
+        game.addListener(listener);
+
+        game.inspect(Direction.SOUTH);
+        assertTrue(listener.getOutputNavigation().contains("There is no way in that direction."));
+
+        game.move(Direction.SOUTH);
+
+        assertEquals(1, game.getListeners().size());
+        assertTrue(listener.getOutputNavigation().contains("There is no way in that direction."));
+
         game.move(Direction.NORTH);
         game.move(Direction.NORTH);
         game.move(Direction.EAST);
@@ -365,6 +393,12 @@ public class GameTest {
         } catch (NoSuchItemFoundException e) {
             fail();
         }
+
+        CurrentScreenRequesting csR1 = CurrentScreenRequesting.INTERACTION;
+
+        game.inspectItem(keyItem1, csR1);
+        assertTrue(listener.getOutputPlayerInteract().contains("A big, old metal key. It feels wet."));
+        assertTrue(listener.getOutputInteractItemName().contains("ExitKey"));
 
         try {
             assertEquals("A big, old metal key. It feels wet.",
@@ -388,6 +422,7 @@ public class GameTest {
         game.move(Direction.NORTH);
         game.move(Direction.NORTH);
         game.move(Direction.NORTH);
+
         try {
             game.interaction(Direction.NORTH, keyItem2);
         } catch (RoomFailedException e) {
@@ -463,6 +498,7 @@ public class GameTest {
         assertThrows(IllegalArgumentException.class, () -> game.inspectItem(null, currentScreenRequesting));
         assertThrows(IllegalArgumentException.class, () -> game.interaction(Direction.NORTH, null));
         assertThrows(InvalidSeedException.class, () -> game.setCurrentLayout(Map.Ancient_Dungeon, null));
+        assertThrows(NoSuchItemFoundException.class, () -> game.dropItem(1));
     }
 
 
