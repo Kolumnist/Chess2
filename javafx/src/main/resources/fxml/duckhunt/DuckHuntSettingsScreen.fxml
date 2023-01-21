@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<fx:root fx:id="anchorPane" maxHeight="680.0" maxWidth="1080.0" minHeight="680.0" minWidth="1080.0" prefHeight="680.0" prefWidth="1080.0" type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.duckhunt.DuckHuntSettingsController">
+<AnchorPane fx:id="anchorPane" maxHeight="680.0" maxWidth="1080.0" minHeight="680.0" minWidth="1080.0" prefHeight="680.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.duckhunt.DuckHuntSettingsController">
     <children>
       <ImageView fitHeight="855.0" fitWidth="1211.0" layoutX="-87.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -106,4 +106,4 @@
          </children>
       </VBox>
     </children>
-</fx:root>
+</AnchorPane>

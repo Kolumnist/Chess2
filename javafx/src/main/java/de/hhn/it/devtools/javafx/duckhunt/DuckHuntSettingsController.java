@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.javafx.duckhunt;
 
+import de.hhn.it.devtools.apis.duckhunt.GameSettingsDescriptor;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ public class DuckHuntSettingsController implements Initializable {
 
   public static final String SCREEN = "settings.screen";
   private DuckHuntScreenController screenController;
+  private GameSettingsDescriptor gameSettings;
 
   @FXML
   private Label ammoCountLabel;
@@ -63,33 +65,25 @@ public class DuckHuntSettingsController implements Initializable {
     screenController =
         (DuckHuntScreenController) duckHuntAttributeStore
             .getAttribute(DuckHuntScreenController.SCREEN_CONTROLLER);
+    gameSettings = (GameSettingsDescriptor) duckHuntAttributeStore
+        .getAttribute("gameSettings");
 
     logger.info("Start Screen initialized.");
 
-    maxDuckCountSlider.valueProperty().addListener(new ChangeListener<Number>() {
-      @Override
-      public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-        maxDuckCountLabel.setText(Integer.toString((int) maxDuckCountSlider.getValue()));
-        if ((int) maxDuckCountSlider.getValue() >= (int) ammoCountSlider.getValue()) {
-          ammoCountSlider.setValue((int) maxDuckCountSlider.getValue());
-        }
+    maxDuckCountSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+      maxDuckCountLabel.setText(Integer.toString((int) maxDuckCountSlider.getValue()));
+      if ((int) maxDuckCountSlider.getValue() >= (int) ammoCountSlider.getValue()) {
+        ammoCountSlider.setValue((int) maxDuckCountSlider.getValue());
       }
     });
-    ammoCountSlider.valueProperty().addListener(new ChangeListener<Number>() {
-      @Override
-      public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-        ammoCountLabel.setText(Integer.toString((int) ammoCountSlider.getValue()));
-        if ((int) ammoCountSlider.getValue() <= (int) maxDuckCountSlider.getValue()) {
-          maxDuckCountSlider.setValue((int) ammoCountSlider.getValue());
-        }
+    ammoCountSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+      ammoCountLabel.setText(Integer.toString((int) ammoCountSlider.getValue()));
+      if ((int) ammoCountSlider.getValue() <= (int) maxDuckCountSlider.getValue()) {
+        maxDuckCountSlider.setValue((int) ammoCountSlider.getValue());
       }
     });
-    volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-      @Override
-      public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-        volumeLabel.setText(Integer.toString((int) volumeSlider.getValue()));
-      }
-    });
+    volumeSlider.valueProperty().addListener((observable, oldValue, newValue) ->
+        volumeLabel.setText(Integer.toString((int) volumeSlider.getValue())));
   }
 }
 

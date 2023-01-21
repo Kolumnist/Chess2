@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.javafx.controllers;
 
+import de.hhn.it.devtools.apis.duckhunt.GameSettingsDescriptor;
 import de.hhn.it.devtools.javafx.duckhunt.DuckHuntAttributeStore;
 import de.hhn.it.devtools.javafx.duckhunt.DuckHuntMenuController;
 import de.hhn.it.devtools.javafx.duckhunt.DuckHuntScreenController;
@@ -14,13 +15,15 @@ public class DuckHuntServiceController extends Controller implements Initializab
 
   @FXML
   private AnchorPane backgroundAnchorPane;
-  DuckHuntScreenController screenController;
+  private DuckHuntScreenController screenController;
+  private GameSettingsDescriptor gameSettings;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     screenController = new DuckHuntScreenController(backgroundAnchorPane);
     DuckHuntAttributeStore duckHuntAttributeStore = DuckHuntAttributeStore.getReference();
     duckHuntAttributeStore.setAttribute(DuckHuntScreenController.SCREEN_CONTROLLER, screenController);
+    duckHuntAttributeStore.setAttribute("gameSettings", gameSettings);
 
     screenController.switchTo(null, DuckHuntMenuController.SCREEN);
   }
