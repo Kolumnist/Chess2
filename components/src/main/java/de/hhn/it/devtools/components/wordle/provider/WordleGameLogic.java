@@ -96,8 +96,8 @@ public class WordleGameLogic implements WordleService {
         panel.setState(State.CORRECT);
         panel.notifyListeners(State.CORRECT);
         logger.info("checkIfGuessIsCorrect returns true");
-        return true;
       }
+      return true;
     }
     logger.info("checkIfGuessIsCorrect returns false");
     return false;
