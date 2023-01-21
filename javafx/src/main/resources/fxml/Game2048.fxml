@@ -21,6 +21,6 @@
                 <Font size="15.0" />
             </font>
         </Button>
-      <TextArea layoutX="134.0" layoutY="231.0" prefHeight="110.0" prefWidth="332.0" text="Welcome to 2048! Use your arrow keys to tilt the board and move the blocks. Two blocks of the same value can collide and combine themselves to a new block with their combined value.&#10;The goal of the game is to combine blocks until you get one block with the value 2048. Have fun!" wrapText="true" />
+      <TextArea editable="false" layoutX="134.0" layoutY="231.0" prefHeight="110.0" prefWidth="332.0" text="Welcome to 2048! Use your WASD-keys to tilt the board and move the blocks. Two blocks of the same value can collide and combine themselves to a new block with their combined value.&#10;The goal of the game is to combine blocks until you get one block with the value 2048. Have fun!" wrapText="true" />
     </children>
 </AnchorPane>
