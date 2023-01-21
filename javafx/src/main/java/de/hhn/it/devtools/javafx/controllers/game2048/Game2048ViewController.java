@@ -126,7 +126,7 @@ public class Game2048ViewController {
   }
 
   /**
-   * Adds a Keylistener that calls the moveAllBlocks methode from ImplementationGame2048Service.
+   * Adds a KeyListener that calls the moveAllBlocks methode from ImplementationGame2048Service.
    * w ->Up / s ->down / a ->left / d ->right
    */
   private void addKeyCallback() {
