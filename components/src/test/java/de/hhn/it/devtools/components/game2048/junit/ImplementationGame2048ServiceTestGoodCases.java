@@ -1,8 +1,10 @@
 package de.hhn.it.devtools.components.game2048.junit;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.apis.game2048.Game2048Listener;
 import de.hhn.it.devtools.apis.game2048.MovingDirection;
 import de.hhn.it.devtools.apis.game2048.Position;
+import de.hhn.it.devtools.apis.game2048.State;
 import de.hhn.it.devtools.components.game2048.provider.ImplementationGame2048Service;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -131,17 +133,17 @@ public class ImplementationGame2048ServiceTestGoodCases {
     setUp(correctService, service);
     boolean thrown = false;
     try {
-      service.addBlock(new Position( 3,1), 2);
-      service.addBlock(new Position( 2,1), 2);
-      service.addBlock(new Position( 1,1), 2);
-      service.addBlock(new Position( 0,1), 2);
-      service.addBlock(new Position( 2,2), 2);
-      service.addBlock(new Position( 1,2), 2);
-      service.addBlock(new Position( 0,2), 2);
-      correctService.addBlock(new Position(3,2), 4);
-      correctService.addBlock(new Position(2,2), 4);
-      correctService.addBlock(new Position(2,1), 2);
-      correctService.addBlock(new Position(3,1), 4);
+      service.addBlock(new Position(3, 1), 2);
+      service.addBlock(new Position(2, 1), 2);
+      service.addBlock(new Position(1, 1), 2);
+      service.addBlock(new Position(0, 1), 2);
+      service.addBlock(new Position(2, 2), 2);
+      service.addBlock(new Position(1, 2), 2);
+      service.addBlock(new Position(0, 2), 2);
+      correctService.addBlock(new Position(3, 2), 4);
+      correctService.addBlock(new Position(2, 2), 4);
+      correctService.addBlock(new Position(2, 1), 2);
+      correctService.addBlock(new Position(3, 1), 4);
       service.predictableMoveAllBlocks(MovingDirection.right);
     } catch (IllegalParameterException e) {
       thrown = true;
@@ -161,17 +163,17 @@ public class ImplementationGame2048ServiceTestGoodCases {
     setUp(correctService, service);
     boolean thrown = false;
     try {
-      service.addBlock(new Position( 3,1), 2);
-      service.addBlock(new Position( 2,1), 2);
-      service.addBlock(new Position( 1,1), 2);
-      service.addBlock(new Position( 0,1), 2);
-      service.addBlock(new Position( 3,2), 2);
-      service.addBlock(new Position( 2,2), 2);
-      service.addBlock(new Position( 1,2), 2);
-      correctService.addBlock(new Position(1,2), 4);
-      correctService.addBlock(new Position(0,2), 4);
-      correctService.addBlock(new Position(1,1), 2);
-      correctService.addBlock(new Position(0,1), 4);
+      service.addBlock(new Position(3, 1), 2);
+      service.addBlock(new Position(2, 1), 2);
+      service.addBlock(new Position(1, 1), 2);
+      service.addBlock(new Position(0, 1), 2);
+      service.addBlock(new Position(3, 2), 2);
+      service.addBlock(new Position(2, 2), 2);
+      service.addBlock(new Position(1, 2), 2);
+      correctService.addBlock(new Position(1, 2), 4);
+      correctService.addBlock(new Position(0, 2), 4);
+      correctService.addBlock(new Position(1, 1), 2);
+      correctService.addBlock(new Position(0, 1), 4);
       service.predictableMoveAllBlocks(MovingDirection.left);
     } catch (IllegalParameterException e) {
       thrown = true;
@@ -181,5 +183,44 @@ public class ImplementationGame2048ServiceTestGoodCases {
     assertTrue(service.getGameBoard().containsAll(correctService.getGameBoard()));
     assertTrue(correctService.getFreelist().containsAll(service.getFreelist()));
     assertTrue(service.getFreelist().containsAll(correctService.getFreelist()));
+  }
+
+  @Test
+  @DisplayName("Tests if callbacks can be added and if they can be removed")
+  void testAddAndRemoveCallback(){
+    ImplementationGame2048Service correctService = new ImplementationGame2048Service();
+    ImplementationGame2048Service service = new ImplementationGame2048Service();
+    Game2048Listener listener = new Game2048Listener() {
+      @Override
+      public void newState(State state) {
+
+      }
+    };
+    boolean thrown = false;
+    try {
+      service.addCallback(listener);
+    } catch (IllegalParameterException e) {
+      thrown = true;
+    }
+    assertFalse(thrown);
+    try {
+      service.addCallback(listener);
+    } catch (IllegalParameterException e) {
+      thrown = true;
+    }
+    assertTrue(thrown);
+    thrown = false;
+    try {
+      service.removeCallback(listener);
+    } catch (IllegalParameterException e) {
+      thrown = true;
+    }
+    assertFalse(thrown);
+    try {
+      service.removeCallback(listener);
+    } catch (IllegalParameterException e) {
+      thrown = true;
+    }
+    assertTrue(thrown);
   }
 }
