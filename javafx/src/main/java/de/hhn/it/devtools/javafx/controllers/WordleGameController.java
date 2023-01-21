@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers;
 
 import de.hhn.it.devtools.components.wordle.provider.WordleGameLogic;
+import de.hhn.it.devtools.javafx.controllers.wordleAdditional.SimpleWordlePanelListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -86,6 +87,13 @@ public class WordleGameController extends Controller implements Initializable {
         }
         rowCount = rowCount +1;
         colCount = 0;
+    }
+
+    private void connectListenersToLabels() {
+        for (Node node: rowGridPane.getChildren()) {
+            Label currentLabel = (Label) node;
+            //backend.addCallback(new SimpleWordlePanelListener(currentLabel), );
+        }
     }
 
         @Override
