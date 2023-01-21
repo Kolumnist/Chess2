@@ -122,6 +122,7 @@ public class Game implements GameService {
     }
     if (!stop) {
       player.setCurrentRoomOfPlayer(currentRoom);
+      check();
     }
 
     if(player.getCurrentRoomOfPlayer().isExit()){
@@ -280,12 +281,15 @@ public class Game implements GameService {
       switch (requester) {
         case INTERACTION:
           outputListener.sendOutputPlayerInteract(message);
+          outputListener.sendOutputInteractItemName(item.getName());
           break;
         case ROOMINVENTORY:
           outputListener.outputRoomItemInspect(message);
+          outputListener.outputRoomItemName(item.getName());
           break;
         case PLAYERINVENTORY:
           outputListener.outputInventoryItemInspect(message);
+          outputListener.outputInventoryItemName(item.getName());
           break;
         default:
           throw new IllegalArgumentException("Requester could not be determined.");

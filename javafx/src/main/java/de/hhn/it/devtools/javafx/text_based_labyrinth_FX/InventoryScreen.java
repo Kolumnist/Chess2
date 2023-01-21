@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -14,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,6 +34,8 @@ public class InventoryScreen extends AnchorPane implements Initializable {
     @FXML
     TextField itemInspectTextField;
     @FXML
+    TextField itemNameField;
+    @FXML
     Button exitGameButton;
     @FXML
     Button returnButton;
@@ -49,6 +53,14 @@ public class InventoryScreen extends AnchorPane implements Initializable {
 
     public InventoryScreen(GameScreenController screenController) {
         this.screenController = screenController;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/labyrinth/InventoryScreen.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -56,6 +68,7 @@ public class InventoryScreen extends AnchorPane implements Initializable {
 
     public void update() {
         itemInspectTextField.clear();
+        itemNameField.clear();
         playerName.setText(viewModel.getGame().getPlayerName());
         itemObservableList = FXCollections.observableList(viewModel.getGame().getCurrentRoom().getItemList());
         itemChoiceBox.setItems(itemObservableList);
@@ -71,6 +84,11 @@ public class InventoryScreen extends AnchorPane implements Initializable {
     public void updateInspectField(String text) {
         itemInspectTextField.clear();
         itemInspectTextField.setText(text);
+    }
+
+    public void updateItemNameField(String text) {
+        itemNameField.clear();
+        itemNameField.setText(text);
     }
 
     public void setViewModel(GameViewModel viewModel) {

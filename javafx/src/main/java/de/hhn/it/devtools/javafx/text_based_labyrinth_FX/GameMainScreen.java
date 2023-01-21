@@ -5,6 +5,7 @@ import de.hhn.it.devtools.apis.textbasedlabyrinth.Door;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.RoomFailedException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -12,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -50,6 +52,14 @@ public class GameMainScreen extends AnchorPane implements Initializable {
 
     public GameMainScreen(GameScreenController screenController) {
         this.screenController = screenController;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/labyrinth/GameMainScreen.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -115,9 +125,14 @@ public class GameMainScreen extends AnchorPane implements Initializable {
 
 
     @FXML
-    public void searchAction(ActionEvent event) {
+    public void searchAction(ActionEvent event) throws UnknownTransitionException {
         event.consume();
-
+        screenController.getRoomInventoryScreen().update();
+        try {
+            screenController.changeScreen(GameMainScreen.SCREEN_NAME, RoomInventoryScreen.SCREEN_NAME);
+        } catch (UnknownTransitionException e) {
+            throw new UnknownTransitionException(e.getMessage(), e.getFrom(), e.getTo());
+        }
     }
 
 
@@ -163,7 +178,13 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     }
 
     @FXML
-    public void openInventoryAction(ActionEvent event) {
-
+    public void openInventoryAction(ActionEvent event) throws UnknownTransitionException {
+        event.consume();
+        screenController.getInventoryScreen().update();
+        try {
+            screenController.changeScreen(GameMainScreen.SCREEN_NAME, InventoryScreen.SCREEN_NAME);
+        } catch (UnknownTransitionException e) {
+            throw new UnknownTransitionException(e.getMessage(), e.getFrom(), e.getTo());
+        }
     }
 }

@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.javafx.text_based_labyrinth_FX;
 
+import de.hhn.it.devtools.apis.textbasedlabyrinth.CurrentScreenRequesting;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Direction;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Item;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.RoomFailedException;
@@ -7,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -14,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -34,6 +37,8 @@ public class InteractScreen extends AnchorPane implements Initializable {
     @FXML
     TextField interactTextField;
     @FXML
+    TextField itemNameField;
+    @FXML
     Button exitGameButton;
     @FXML
     Button returnButton;
@@ -53,6 +58,14 @@ public class InteractScreen extends AnchorPane implements Initializable {
     public InteractScreen(GameScreenController screenController) {
         this.screenController = screenController;
         finished = false;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/labyrinth/InteractionScreen.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setDirection(Direction direction) {
@@ -65,6 +78,7 @@ public class InteractScreen extends AnchorPane implements Initializable {
 
     public void update() {
         interactTextField.clear();
+        itemNameField.clear();
         playerName.setText(viewModel.getGame().getPlayerName());
         itemObservableList = FXCollections.observableList(viewModel.getGame().getCurrentRoom().getItemList());
         itemChoiceBox.setItems(itemObservableList);
@@ -74,6 +88,11 @@ public class InteractScreen extends AnchorPane implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         score.textProperty().bind(viewModel.getScore().asString());
+    }
+
+    public void updateItemNameField(String text) {
+        itemNameField.clear();
+        itemNameField.setText(text);
     }
 
 
@@ -115,6 +134,16 @@ public class InteractScreen extends AnchorPane implements Initializable {
             } catch (RoomFailedException e) {
                 throw new RoomFailedException(e.getMessage());
             }
+        }
+    }
+
+    @FXML
+    public void inspectItemAction(ActionEvent event) {
+        event.consume();
+        if (itemChoiceBox.getValue() == null) {
+            updateInteractField("Please select an item.");
+        } else {
+            viewModel.getGame().inspectItem(itemChoiceBox.getValue(), CurrentScreenRequesting.INTERACTION);
         }
     }
 }

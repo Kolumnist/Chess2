@@ -63,6 +63,11 @@ public class GameViewModel implements OutputListener {
     }
 
     @Override
+    public void sendOutputInteractItemName(String output) {
+        screenController.getInteractScreen().updateItemNameField(output);
+    }
+
+    @Override
     public void sendOutputPickUpItem(Item item) {
         String message = "You pick up " + item.getName() + ".";
         screenController.getRoomInventoryScreen().updateInspectField(message);
@@ -90,8 +95,18 @@ public class GameViewModel implements OutputListener {
     }
 
     @Override
+    public void outputInventoryItemName(String output) {
+        screenController.getInventoryScreen().updateItemNameField(output);
+    }
+
+    @Override
     public void outputRoomItemInspect(String output) {
         screenController.getRoomInventoryScreen().updateInspectField(output);
+    }
+
+    @Override
+    public void outputRoomItemName(String output) {
+        screenController.getRoomInventoryScreen().updateItemNameField(output);
     }
 
 
