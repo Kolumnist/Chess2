@@ -6,6 +6,7 @@ module devtools.components {
   exports de.hhn.it.devtools.components.chess2;
   exports de.hhn.it.devtools.components.memory.provider;
   exports de.hhn.it.devtools.components.reactiongame.provider;
+  exports de.hhn.it.devtools.components.game2048.provider;
   exports de.hhn.it.devtools.components.wordle.provider;
   requires org.slf4j;
     exports de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;

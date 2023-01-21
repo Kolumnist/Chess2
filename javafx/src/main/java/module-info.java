@@ -24,6 +24,10 @@ module devtools.javafx {
   exports de.hhn.it.devtools.javafx.text_based_labyrinth_FX;
   exports de.hhn.it.devtools.javafx.chess2;
   exports de.hhn.it.devtools.javafx.duckhunt;
+  exports de.hhn.it.devtools.javafx.game2048;
+  opens de.hhn.it.devtools.javafx.game2048 to javafx.fxml;
+  exports de.hhn.it.devtools.javafx.controllers.game2048;
+  opens de.hhn.it.devtools.javafx.controllers.game2048 to javafx.fxml;
   exports de.hhn.it.devtools.javafx.reactiongame;
   opens de.hhn.it.devtools.javafx.reactiongame to javafx.fxml;
   exports de.hhn.it.devtools.javafx.controllers.reactiongame;

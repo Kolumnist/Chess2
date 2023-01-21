@@ -58,7 +58,8 @@ public class Main extends Application {
     addModule("Template");
     addModule("CoffeeMakerService");
     addModule("Chess2Service");
-    //addModule("ReactionGame");
+    addModule("ReactionGame");
+    addModule("Game2048");
     addModule("MemoryService");
     addModule("CharacterSheet");
     addModule("BattleshipMenu");
