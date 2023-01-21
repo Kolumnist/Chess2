@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import de.hhn.it.devtools.apis.wordle.WordleService;
 import de.hhn.it.devtools.apis.wordle.WordleGuessService;
@@ -35,16 +36,43 @@ public class WordleGameController extends Controller implements Initializable {
      private Integer rowCount;
     private Integer colCount = 0;
 
+    private String userInput;
+
     private WordleService backend = new WordleGameLogic();
 
     @FXML
-    void buttonClicked(ActionEvent event) {
-        fillCurrentRowWithUserInput();
+    void buttonClicked(ActionEvent event) throws IllegalGuessException {
 
+        if(checkIfGuessWasValid()) {
+            backend.receiveAndComputeGuess(textField.getText());
+            fillCurrentRowWithUserInput();
+            textField.clear();
+        }
+    }
+
+    private boolean checkIfGuessWasValid() {
+        userInput = textField.getText();
+        if(userInput.length() < 5) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error!");
+            alert.setContentText("The guess was not long enough! Try again!");
+            alert.show();
+            return false;
+        }
+        if(userInput.length() > 5) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error!");
+            alert.setContentText("The guess was too long! Try again!");
+            alert.show();
+            return false;
+        }
+        return true;
     }
 
     private void fillCurrentRowWithUserInput() {
-        String userInput = textField.getText();
+        userInput = textField.getText();
 
         for(Node node: rowGridPane.getChildren()) {
             if(Objects.equals(GridPane.getRowIndex(node), rowCount)) {
@@ -62,6 +90,7 @@ public class WordleGameController extends Controller implements Initializable {
 
         @Override
         public void initialize (URL url, ResourceBundle resourceBundle){
+        backend.startGame();
         }
     }
 
