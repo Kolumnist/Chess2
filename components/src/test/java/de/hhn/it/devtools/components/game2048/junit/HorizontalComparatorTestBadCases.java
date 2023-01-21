@@ -6,24 +6,24 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.game2048.Block;
 import de.hhn.it.devtools.apis.game2048.MovingDirection;
 import de.hhn.it.devtools.apis.game2048.Position;
-import de.hhn.it.devtools.components.game2048.provider.Comparators.VerticalComparator;
+import de.hhn.it.devtools.components.game2048.provider.Comparators.HorizontalComparator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Test für schlechte Beispiele des VerticalComparator. ")
-public class VerticalComparatorTestBadCases {
+@DisplayName("Test für schlechte Beispiele des HorizontalComparator. ")
+public class HorizontalComparatorTestBadCases {
 
   @Test
-  @DisplayName("Test if vertical comparator compares the different blocks correctly" +
+  @DisplayName("Test if horizontal comparator compares the different blocks correctly" +
       " for these wrong assessments. ")
-  public void testCompareUp() throws IllegalParameterException {
+  public void testCompareRight() throws IllegalParameterException {
     try {
-      VerticalComparator comparator = new VerticalComparator(MovingDirection.right);
+      HorizontalComparator comparator = new HorizontalComparator(MovingDirection.up);
       System.out.println("Fail, should have thrown exception");
 
       Block block1 = new Block(new Position(1,1), 2);
-      Block block2 = new Block(new Position(1,2), 2);
-      Block block3 = new Block(new Position(1,3), 4);
+      Block block2 = new Block(new Position(2,1), 2);
+      Block block3 = new Block(new Position(3,1), 4);
 
       assertEquals(-1, comparator.compare(block1, block2));
       assertEquals(0, comparator.compare(block2, block2));
@@ -31,8 +31,13 @@ public class VerticalComparatorTestBadCases {
     } catch (IllegalParameterException e) {
       assertEquals(e, e);
 
-  }
+    }
+
+
+
 
   }
+
+
 
 }
