@@ -8,9 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("Test fÃ¼r schlechte Beispiele des ImplementationGame2048Service ")
+@DisplayName("Test für schlechte Beispiele des ImplementationGame2048Service. ")
 public class ImplementationGame2048ServiceTestBadCases {
 
+  @DisplayName("Tests the game board")
   void setUp(ImplementationGame2048Service correctService, ImplementationGame2048Service service) {
     for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 4; j++) {
@@ -23,6 +24,7 @@ public class ImplementationGame2048ServiceTestBadCases {
   }
 
   @Test
+  @DisplayName("Tests if exception is thrown if two blocks get added on the same position. ")
   void testAddingSamePosition() {
     ImplementationGame2048Service correctService = new ImplementationGame2048Service();
     ImplementationGame2048Service service = new ImplementationGame2048Service();

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("Test fÃ¼r gute Beispiele des ImplementationGame2048Service ")
+@DisplayName("Test für gute Beispiele des ImplementationGame2048Service. ")
 public class ImplementationGame2048ServiceTestGoodCases {
 
   void setUp(ImplementationGame2048Service correctService, ImplementationGame2048Service service) {
@@ -24,6 +24,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
   }
 
   @Test
+  @DisplayName("Tests the movement directions on an empty board. ")
   void testMoveEmptyBoard() {
     ImplementationGame2048Service correctService = new ImplementationGame2048Service();
     ImplementationGame2048Service service = new ImplementationGame2048Service();
@@ -40,6 +41,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
   }
 
   @Test
+  @DisplayName("Tests the movement directions on a board with two blocks. ")
   void testMoveAllDirections() {
     ImplementationGame2048Service correctService = new ImplementationGame2048Service();
     ImplementationGame2048Service service = new ImplementationGame2048Service();
@@ -62,6 +64,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
   }
 
   @Test
+  @DisplayName("Tests the movement direction up. ")
   void testMoveUp() {
     ImplementationGame2048Service correctService = new ImplementationGame2048Service();
     ImplementationGame2048Service service = new ImplementationGame2048Service();
@@ -91,6 +94,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
   }
 
   @Test
+  @DisplayName("Tests the movement direction down. ")
   void testMoveDown() {
     ImplementationGame2048Service correctService = new ImplementationGame2048Service();
     ImplementationGame2048Service service = new ImplementationGame2048Service();
@@ -120,6 +124,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
   }
 
   @Test
+  @DisplayName("Tests the movement direction right. ")
   void testMoveRight() {
     ImplementationGame2048Service correctService = new ImplementationGame2048Service();
     ImplementationGame2048Service service = new ImplementationGame2048Service();
@@ -147,7 +152,9 @@ public class ImplementationGame2048ServiceTestGoodCases {
     assertTrue(correctService.getFreelist().containsAll(service.getFreelist()));
     assertTrue(service.getFreelist().containsAll(correctService.getFreelist()));
   }
+
   @Test
+  @DisplayName("Tests the movement direction left. ")
   void testMoveLeft() {
     ImplementationGame2048Service correctService = new ImplementationGame2048Service();
     ImplementationGame2048Service service = new ImplementationGame2048Service();
