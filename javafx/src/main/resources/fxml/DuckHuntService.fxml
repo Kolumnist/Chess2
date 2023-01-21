@@ -1,43 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="680.0" maxWidth="1080.0" minHeight="680.0" minWidth="1080.0" prefHeight="680.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.duckhunt.DuckHuntServiceController">
-    <children>
-      <ImageView fitHeight="855.0" fitWidth="1211.0" layoutX="-87.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/duckhunt/HinterGrundHauptscreen.png" />
-         </image>
-      </ImageView>
-        <Label layoutX="350.0" layoutY="145.0" prefHeight="75.0" prefWidth="380.0" text="DUCK HUNT">
-            <font>
-                <Font name="Times New Roman" size="64.0" />
-            </font>
-        </Label>
-      <VBox layoutX="441.0" layoutY="285.0" prefHeight="250.0" prefWidth="200.0" spacing="10.0">
-         <children>
-            <Button fx:id="startGameButton" mnemonicParsing="false" onAction="#startGame" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: yellowgreen; -fx-background-radius: 8;" text="START GAME" textFill="WHITE">
-               <font>
-                  <Font name="Times New Roman" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="howToPlayButton" mnemonicParsing="false" onAction="#showInstructions" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: gray; -fx-background-radius: 8;" text="HOW TO PLAY" textFill="WHITE">
-               <font>
-                  <Font name="Times New Roman" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#showSettings" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: gray; -fx-background-radius: 8;" text="SETTINGS" textFill="WHITE">
-               <font>
-                  <Font name="Times New Roman" size="18.0" />
-               </font>
-            </Button>
-         </children>
-      </VBox>
-    </children>
+
+<AnchorPane fx:id="backgroundAnchorPane" maxHeight="680.0" maxWidth="1080.0" minHeight="680.0" minWidth="1080.0" prefHeight="680.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.DuckHuntServiceController">
+   <children>
+      <ImageView fitHeight="680.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+   </children>
 </AnchorPane>
