@@ -44,6 +44,9 @@ public class ImplementationGame2048Service implements Game2048Service {
     } catch (IllegalParameterException e) {
       e.printStackTrace();
     }
+    this.currentScore = 0;
+    this.gameWon = false;
+    this.gameLost = false;
     notifyGame2048Listener();
   }
 
@@ -122,9 +125,11 @@ public class ImplementationGame2048Service implements Game2048Service {
     if (freelist.size() > 1) {
       Position position = freelist.get((int) (Math.random() * (freelist.size() - 1)));
       addBlock(position, value);
+      gameLost = false;
     } else if (freelist.size() == 1) {
       Position position = freelist.get(0);
       addBlock(position, value);
+      gameLost = false;
     } else {
       logger.info("game is Lost");
       gameLost = true;
