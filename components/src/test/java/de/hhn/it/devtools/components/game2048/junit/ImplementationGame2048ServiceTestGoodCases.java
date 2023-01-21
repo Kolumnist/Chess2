@@ -3,7 +3,6 @@ package de.hhn.it.devtools.components.game2048.junit;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.game2048.MovingDirection;
 import de.hhn.it.devtools.apis.game2048.Position;
-import de.hhn.it.devtools.components.game2048.provider.Comparators.VerticalComparator;
 import de.hhn.it.devtools.components.game2048.provider.ImplementationGame2048Service;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -81,13 +80,99 @@ public class ImplementationGame2048ServiceTestGoodCases {
       correctService.addBlock(new Position(1, 3), 4);
       correctService.addBlock(new Position(1, 2), 2);
       service.predictableMoveAllBlocks(MovingDirection.up);
-      correctService.getGameBoard().sort(new VerticalComparator(MovingDirection.up));
-      service.getGameBoard().sort(new VerticalComparator(MovingDirection.up));
     } catch (IllegalParameterException e) {
       thrown = true;
     }
     assertFalse(thrown);
-    assertEquals(correctService.getGameBoard(), service.getGameBoard());
-    assertEquals(correctService.getFreelist(), service.getFreelist());
+    assertTrue(correctService.getGameBoard().containsAll(service.getGameBoard()));
+    assertTrue(service.getGameBoard().containsAll(correctService.getGameBoard()));
+    assertTrue(correctService.getFreelist().containsAll(service.getFreelist()));
+    assertTrue(service.getFreelist().containsAll(correctService.getFreelist()));
+  }
+
+  @Test
+  void testMoveDown() {
+    ImplementationGame2048Service correctService = new ImplementationGame2048Service();
+    ImplementationGame2048Service service = new ImplementationGame2048Service();
+    setUp(correctService, service);
+    boolean thrown = false;
+    try {
+      service.addBlock(new Position(2, 3), 2);
+      service.addBlock(new Position(2, 2), 2);
+      service.addBlock(new Position(2, 1), 2);
+      service.addBlock(new Position(2, 0), 2);
+      service.addBlock(new Position(1, 3), 2);
+      service.addBlock(new Position(1, 2), 2);
+      service.addBlock(new Position(1, 1), 2);
+      correctService.addBlock(new Position(2, 1), 4);
+      correctService.addBlock(new Position(2, 0), 4);
+      correctService.addBlock(new Position(1, 1), 2);
+      correctService.addBlock(new Position(1, 0), 4);
+      service.predictableMoveAllBlocks(MovingDirection.down);
+    } catch (IllegalParameterException e) {
+      thrown = true;
+    }
+    assertFalse(thrown);
+    assertTrue(correctService.getGameBoard().containsAll(service.getGameBoard()));
+    assertTrue(service.getGameBoard().containsAll(correctService.getGameBoard()));
+    assertTrue(correctService.getFreelist().containsAll(service.getFreelist()));
+    assertTrue(service.getFreelist().containsAll(correctService.getFreelist()));
+  }
+
+  @Test
+  void testMoveRight() {
+    ImplementationGame2048Service correctService = new ImplementationGame2048Service();
+    ImplementationGame2048Service service = new ImplementationGame2048Service();
+    setUp(correctService, service);
+    boolean thrown = false;
+    try {
+      service.addBlock(new Position( 3,1), 2);
+      service.addBlock(new Position( 2,1), 2);
+      service.addBlock(new Position( 1,1), 2);
+      service.addBlock(new Position( 0,1), 2);
+      service.addBlock(new Position( 2,2), 2);
+      service.addBlock(new Position( 1,2), 2);
+      service.addBlock(new Position( 0,2), 2);
+      correctService.addBlock(new Position(3,2), 4);
+      correctService.addBlock(new Position(2,2), 4);
+      correctService.addBlock(new Position(2,1), 2);
+      correctService.addBlock(new Position(3,1), 4);
+      service.predictableMoveAllBlocks(MovingDirection.right);
+    } catch (IllegalParameterException e) {
+      thrown = true;
+    }
+    assertFalse(thrown);
+    assertTrue(correctService.getGameBoard().containsAll(service.getGameBoard()));
+    assertTrue(service.getGameBoard().containsAll(correctService.getGameBoard()));
+    assertTrue(correctService.getFreelist().containsAll(service.getFreelist()));
+    assertTrue(service.getFreelist().containsAll(correctService.getFreelist()));
+  }
+  @Test
+  void testMoveLeft() {
+    ImplementationGame2048Service correctService = new ImplementationGame2048Service();
+    ImplementationGame2048Service service = new ImplementationGame2048Service();
+    setUp(correctService, service);
+    boolean thrown = false;
+    try {
+      service.addBlock(new Position( 3,1), 2);
+      service.addBlock(new Position( 2,1), 2);
+      service.addBlock(new Position( 1,1), 2);
+      service.addBlock(new Position( 0,1), 2);
+      service.addBlock(new Position( 3,2), 2);
+      service.addBlock(new Position( 2,2), 2);
+      service.addBlock(new Position( 1,2), 2);
+      correctService.addBlock(new Position(1,2), 4);
+      correctService.addBlock(new Position(0,2), 4);
+      correctService.addBlock(new Position(1,1), 2);
+      correctService.addBlock(new Position(0,1), 4);
+      service.predictableMoveAllBlocks(MovingDirection.left);
+    } catch (IllegalParameterException e) {
+      thrown = true;
+    }
+    assertFalse(thrown);
+    assertTrue(correctService.getGameBoard().containsAll(service.getGameBoard()));
+    assertTrue(service.getGameBoard().containsAll(correctService.getGameBoard()));
+    assertTrue(correctService.getFreelist().containsAll(service.getFreelist()));
+    assertTrue(service.getFreelist().containsAll(correctService.getFreelist()));
   }
 }
