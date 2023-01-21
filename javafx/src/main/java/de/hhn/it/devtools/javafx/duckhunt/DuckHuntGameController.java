@@ -1,14 +1,18 @@
 package de.hhn.it.devtools.javafx.duckhunt;
 
 import de.hhn.it.devtools.apis.duckhunt.*;
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.components.duckhunt.DuckHunt;
 import de.hhn.it.devtools.components.duckhunt.ScreenDimension;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -54,12 +58,17 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   private DuckHunt game;
   private Stage stage;
   private Scene scene;
+  private HashMap<Integer, ImageView> ducks;
+  private GameSettingsDescriptor gameSettings;
+  private int currentRound = 0;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    // stage creation
     DuckHuntAttributeStore duckHuntAttributeStore = DuckHuntAttributeStore.getReference();
     stage = (Stage) duckHuntAttributeStore.getAttribute("gameStage");
     scene = new Scene(anchorPane, 960, 720);
+    scene.setCursor(Cursor.CROSSHAIR);
     stage.setScene(scene);
     stage.setResizable(false);
     stage.show();
@@ -75,11 +84,25 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
       game.stopGame();
     });
 
+    // game creation
+    gameSettings = (GameSettingsDescriptor) duckHuntAttributeStore.getAttribute("gameSettings");
+
+    ducks = new HashMap<>();
+    for (int i = 0; i < gameSettings.getduckAmount(); i++) {
+      ducks.put(i, DuckHuntImageManager.NORTHDUCK.image);
+    }
+
     game = new DuckHunt(
-        (GameSettingsDescriptor) duckHuntAttributeStore.getAttribute("gameSettings"),
-        new ScreenDimension(960, 530)
+        gameSettings,
+        new ScreenDimension(960, 430)
     );
+    try {
+      game.addCallback(this);
+    } catch (IllegalParameterException e) {
+      throw new RuntimeException(e);
+    }
     game.startGame();
+    newRound();
   }
 
   void pauseGame() {
@@ -125,14 +148,30 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
 
   }
 
+  void newRound() {
+    ducks.forEach((integer, imageView) -> {
+      anchorPane.getChildren().add(imageView);
+    });
+  }
+
   @Override
   public void newState(GameInfo gameInfo) throws IllegalGameInfoException {
-
+    if (gameInfo == null) {
+      return;
+    }
+    if (gameInfo.getRound() > currentRound) {
+      newRound();
+      currentRound = gameInfo.getRound();
+    }
   }
 
   @Override
   public void newDuckPosition(DucksInfo duckPosition) throws IllegalDuckPositionException {
-
+    Arrays.stream(duckPosition.duckData()).forEach(duckData -> {
+      ImageView duck = ducks.get(duckData.getId());
+      duck.setX(duckData.getX());
+      duck.setY(duckData.getY());
+    });
   }
 
   @Override

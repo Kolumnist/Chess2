@@ -145,7 +145,7 @@ public final class MpatternGenerator {
   }
 
   private ArrayList<Vector2D> generatePath() {
-    return generatePath(new RangedRandom().nextLong(), 6);
+    return generatePath(new RangedRandom().nextLong(), 12);
   }
 
   private ArrayList<Vector2D> generatePath(long seed, int pointAmount) {
@@ -158,10 +158,13 @@ public final class MpatternGenerator {
         DuckOrientation.NORTH,
         DuckOrientation.NORTH,
         DuckOrientation.NORTH,
+        DuckOrientation.NORTH,
+        DuckOrientation.NORTHEAST,
         DuckOrientation.NORTHEAST,
         DuckOrientation.NORTHEAST,
         DuckOrientation.NORTHWEST,
         DuckOrientation.NORTHWEST,
+        DuckOrientation.SOUTHWEST,
         DuckOrientation.EAST,
         DuckOrientation.EAST,
         DuckOrientation.WEST,
@@ -183,8 +186,8 @@ public final class MpatternGenerator {
           = orientations[random.randomInt(0, orientations.length - 1)];
       // magnitude of the vector between previous and new point, relative to screen size
       int vectorLength = random.randomInt(
-              (int) Math.floor(screenDimension.getHeight() * 0.1),
-              (int) Math.floor((screenDimension.getHeight() * 0.15) * 2)
+              (int) Math.floor(screenDimension.getHeight() * 0.2),
+              (int) Math.floor((screenDimension.getHeight() * 0.3) * 2)
       );
       // get previous point
       Vector2D prevPoint;

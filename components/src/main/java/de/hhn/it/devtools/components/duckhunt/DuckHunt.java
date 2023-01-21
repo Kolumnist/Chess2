@@ -31,7 +31,7 @@ public class DuckHunt implements DuckHuntService {
   private final int gunSpread = 5;  // TODO configure gun spread by screenDimension
   private MpatternGenerator pathGenerator;
   private float deltaTime = 0.016f;
-  private final float duckSpeed = 10f;
+  private final float duckSpeed = 600f;
   private final float velocityToOvercome = 1f;
   DuckHuntGameLoop gameLoop = new DuckHuntGameLoop(this);
 
