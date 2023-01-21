@@ -18,6 +18,9 @@ import javafx.scene.control.Label;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Controller for the stat view.
+ */
 public class StatViewController extends CharacterViewController {
   private static final Logger logger = LoggerFactory.getLogger(CharacterViewController.class);
 
@@ -81,6 +84,13 @@ public class StatViewController extends CharacterViewController {
   private final HashMap<StatType, SimpleIntegerProperty> statOther2Property;
   private final SimpleIntegerProperty freeLevelPointsProperty;
 
+  /**
+   * Constructor for the controller.
+   * This class must be set manually with {@link javafx.fxml.FXMLLoader#setController(Object this)}
+   * before loading the fxml.
+   *
+   * @param characterSheet the character sheet
+   */
   public StatViewController(CharacterSheet characterSheet) {
     super(characterSheet);
     stat2Property = new HashMap<>();

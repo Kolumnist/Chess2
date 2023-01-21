@@ -18,6 +18,9 @@ import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The main controller for the character sheet service.
+ */
 public class CharacterSheetServiceController extends Controller implements CharacterSheetListener {
   private static final Logger logger = LoggerFactory
           .getLogger(CharacterSheetServiceController.class);
@@ -38,6 +41,10 @@ public class CharacterSheetServiceController extends Controller implements Chara
   private final PlayerDiceViewController playerDiceController;
   private Node playerDiceNode;
 
+  /**
+   * Constructor for the controller.
+   * All 3 views get loaded here.
+   */
   public CharacterSheetServiceController() {
     characterSheet = new DefaultCharacterSheet(CharacterDescriptor.EMPTY);
     descriptionController = new DescriptionViewController(characterSheet);
@@ -55,12 +62,13 @@ public class CharacterSheetServiceController extends Controller implements Chara
       loader.setController(playerDiceController);
       playerDiceNode = loader.load();
     } catch (IOException e) {
+      logger.error("Could not load a view");
       e.printStackTrace();
     }
   }
 
   @FXML
-  public void initialize() {
+  void initialize() {
     characterSheet.addCallback(this);
     descriptionPane.getChildren().add(descriptionNode);
     statPane.getChildren().add(statNode);

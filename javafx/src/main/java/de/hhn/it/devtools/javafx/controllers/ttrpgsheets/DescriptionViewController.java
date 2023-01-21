@@ -12,6 +12,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller for the description view.
+ */
 public class DescriptionViewController extends CharacterViewController {
 
   @FXML
@@ -37,8 +40,15 @@ public class DescriptionViewController extends CharacterViewController {
   @FXML
   private TextField weightTextField;
 
-  HashMap<DescriptionType, SimpleStringProperty> description2Property;
+  private final HashMap<DescriptionType, SimpleStringProperty> description2Property;
 
+  /**
+   * Constructor for the controller.
+   * This class must be set manually with {@link javafx.fxml.FXMLLoader#setController(Object this)}
+   * before loading the fxml.
+   *
+   * @param characterSheet the character sheet
+   */
   public DescriptionViewController(CharacterSheet characterSheet) {
     super(characterSheet);
     description2Property = new HashMap<>();

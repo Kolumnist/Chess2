@@ -21,6 +21,9 @@ import javafx.scene.control.TextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Controller for the player and dice view.
+ */
 public class PlayerDiceViewController extends CharacterViewController {
   private static final Logger logger = LoggerFactory.getLogger(CharacterViewController.class);
 
@@ -31,11 +34,19 @@ public class PlayerDiceViewController extends CharacterViewController {
   @FXML
   private TextField playerNameTextField;
 
-  CharacterSheetFileIo characterSheetFileIo;
-  SimpleStringProperty playerNameProperty;
-  SimpleStringProperty diceTypeProperty;
-  SimpleIntegerProperty diceResultProperty;
+  private final CharacterSheetFileIo characterSheetFileIo;
 
+  private final SimpleStringProperty playerNameProperty;
+  private final SimpleStringProperty diceTypeProperty;
+  private final SimpleIntegerProperty diceResultProperty;
+
+  /**
+   * Constructor for the controller.
+   * This class must be set manually with {@link javafx.fxml.FXMLLoader#setController(Object this)}
+   * before loading the fxml.
+   *
+   * @param characterSheet the character sheet
+   */
   public PlayerDiceViewController(CharacterSheet characterSheet) {
     super(characterSheet);
     characterSheetFileIo = new CharacterSheetFileIo();
@@ -130,6 +141,7 @@ public class PlayerDiceViewController extends CharacterViewController {
     logger.info("Set D100 pressed");
     characterSheet.changeDiceType(DiceType.D100);
   }
+
   @Override
   public void statChanged(StatDescriptor stat) {
 
