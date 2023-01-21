@@ -13,8 +13,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class Game extends Stage {
+
 
     VBox root = new VBox();
     Scene GameScene = new Scene(root);
@@ -49,10 +51,20 @@ public class Game extends Stage {
     Button[][] buttonsLower;
     int sizeGrid;
 
+    SoundHandler soundHandler;
+
     public Game(int gridSizeChoosen) {
 
         service = (CmpBattleshipService) singletonAttributeStore.getAttribute("Battleship.service");
         listener = new FXBattleshipListener(this);
+        singletonAttributeStore.setAttribute("Battleship.game", this);
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                soundHandler.stopMusic();
+            }
+        });
 
         try {
             service.addCallBack(listener);
@@ -60,8 +72,9 @@ public class Game extends Stage {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-
-
+        soundHandler = new SoundHandler("javafx/src/main/resources/battleship/battleshipLoop.wav");
+        soundHandler.runMusic();
+        soundHandler.changeVolume(4.0f);
         Reminder reminder = new Reminder();
 
 
