@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -47,6 +48,8 @@ public class Game extends Stage{
     Button[][] buttonsLower;
     int sizeGrid;
     public Game(int gridSizeChoosen){
+
+        Reminder reminder = new Reminder();
 
         service = (CmpBattleshipService) singletonAttributeStore.getAttribute("Battleship.service");
         player = service.getPlayer();
