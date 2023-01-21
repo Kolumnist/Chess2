@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fillWidth="false" prefHeight="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.ttrpgsheets.DescriptionViewController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefWidth="340.0" spacing="10.0">
+         <children>
+            <Label text="Beschreibung">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <GridPane hgap="20.0" vgap="10.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="0.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="0.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <VBox>
+                     <children>
+                        <Label text="Name" />
+                        <TextField fx:id="characterNameTextField" />
+                     </children>
+                  </VBox>
+                  <VBox GridPane.columnIndex="1">
+                     <children>
+                        <Label text="Spitzname" />
+                        <TextField fx:id="nickNameTextField" />
+                     </children>
+                  </VBox>
+                  <VBox GridPane.rowIndex="1">
+                     <children>
+                        <Label text="Alter" />
+                        <TextField fx:id="ageTextField" />
+                     </children>
+                  </VBox>
+                  <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Label text="Größe" />
+                        <TextField fx:id="heightTextField" />
+                     </children>
+                  </VBox>
+                  <VBox GridPane.rowIndex="2">
+                     <children>
+                        <Label text="Gewicht" />
+                        <TextField fx:id="weightTextField" />
+                     </children>
+                  </VBox>
+                  <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <Label text="Augenfarbe" />
+                        <TextField fx:id="eyeColorTextField" />
+                     </children>
+                  </VBox>
+                  <VBox GridPane.rowIndex="3">
+                     <children>
+                        <Label text="Hautfarbe" />
+                        <TextField fx:id="skinColorTextField" />
+                     </children>
+                  </VBox>
+                  <VBox GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <children>
+                        <Label text="Haarfarbe" />
+                        <TextField fx:id="hairColorTextField" />
+                     </children>
+                  </VBox>
+                  <VBox GridPane.rowIndex="4">
+                     <children>
+                        <Label text="Rasse" />
+                        <TextField fx:id="raceTextField" />
+                     </children>
+                  </VBox>
+                  <VBox GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <children>
+                        <Label text="Klasse" />
+                        <TextField fx:id="characterClassTextField" />
+                     </children>
+                  </VBox>
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+      <Region VBox.vgrow="ALWAYS" />
+      <VBox>
+         <children>
+            <Label text="Informationen" />
+            <TextArea fx:id="otherTextField" prefHeight="240.0" prefWidth="540.0" />
+         </children>
+      </VBox>
+   </children>
+</VBox>

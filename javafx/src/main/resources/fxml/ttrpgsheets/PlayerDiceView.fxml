@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.ttrpgsheets.PlayerDiceViewController">
+   <children>
+      <Label text="Spieler">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <VBox>
+         <children>
+            <Label text="Spielername" />
+            <TextField fx:id="playerNameTextField" />
+         </children>
+      </VBox>
+      <VBox>
+         <children>
+            <Label alignment="TOP_LEFT" contentDisplay="CENTER" text="Character Sheet" />
+            <HBox alignment="TOP_CENTER" spacing="10.0">
+               <children>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#onSave" prefWidth="70.0" text="Speichern" />
+                  <Button alignment="CENTER" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLoad" prefWidth="70.0" text="Laden" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" spacing="10.0">
+         <children>
+            <Label text="Würfel">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <MenuButton fx:id="diceMenuButton" maxHeight="1.7976931348623157E308" mnemonicParsing="false" prefWidth="150.0" text="Würfel wählen">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onSetD2" text="D2" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSetD4" text="D4" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSetD6" text="D6" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSetD8" text="D8" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSetD10" text="D10" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSetD12" text="D12" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSetD20" text="D20" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSetD100" text="D100" />
+               </items>
+            </MenuButton>
+            <Label fx:id="diceLabel" alignment="CENTER" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: WHITE; -fx-background-radius: 25;" text="6" textAlignment="CENTER">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+            <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRollDice" text="Würfeln" />
+         </children>
+      </VBox>
+   </children>
+</VBox>
