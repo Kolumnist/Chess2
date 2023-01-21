@@ -55,6 +55,7 @@ public class Game implements GameService {
     for (OutputListener outputListener : listeners) {
       outputListener.listenerStart();
     }
+    startText();
     logger.info("Game started.");
   }
 
@@ -62,6 +63,8 @@ public class Game implements GameService {
     for (OutputListener outputListener : listeners) {
       outputListener.listenerEnd();
     }
+    logger.info("Game ended.");
+    reset();
   }
 
   public void reset() {

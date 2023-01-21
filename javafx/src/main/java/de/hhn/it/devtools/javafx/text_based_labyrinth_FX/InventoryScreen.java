@@ -12,9 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,9 +31,9 @@ public class InventoryScreen extends AnchorPane implements Initializable {
     private ObservableList<Item> itemObservableList;
 
     @FXML
-    TextField itemInspectTextField;
+    TextArea itemInspectTextField;
     @FXML
-    TextField itemNameField;
+    TextArea itemNameField;
     @FXML
     Button exitGameButton;
     @FXML
@@ -77,7 +76,7 @@ public class InventoryScreen extends AnchorPane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        score.textProperty().bind(viewModel.getScore().asString());
+
     }
 
 
@@ -93,6 +92,7 @@ public class InventoryScreen extends AnchorPane implements Initializable {
 
     public void setViewModel(GameViewModel viewModel) {
         this.viewModel = viewModel;
+        score.textProperty().bind(viewModel.getScore().asString());
     }
 
     @FXML
@@ -125,6 +125,7 @@ public class InventoryScreen extends AnchorPane implements Initializable {
     public void exitGame(ActionEvent event) throws UnknownTransitionException {
         event.consume();
         screenController.getMenuScreen().update();
+        viewModel.getGame().end();
         try {
             screenController.changeScreen(InteractScreen.SCREEN_NAME, MenuScreen.SCREEN_NAME);
         } catch (UnknownTransitionException e) {

@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
+<?import javafx.scene.control.TextArea?>
 <fx:root maxHeight="480" maxWidth="680" minHeight="480" minWidth="680" prefHeight="400.0" prefWidth="600.0"
          xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" type="AnchorPane">
    <children>
@@ -17,8 +18,8 @@
       <Button fx:id="returnButton" layoutX="530.0" layoutY="26.0" mnemonicParsing="false"
               onAction="#toMainScreen" prefHeight="25.0" prefWidth="69.0" text="Return" />
       <ChoiceBox fx:id="itemChoiceBox" layoutX="415.0" layoutY="66.0" prefHeight="25.0" prefWidth="184.0" />
-      <TextField fx:id="itemNameField" layoutX="225.0" layoutY="119.0" />
-      <TextField fx:id="itemInspectTextField" layoutX="225.0" layoutY="169.0"
+      <TextArea fx:id="itemNameField" layoutX="225.0" layoutY="119.0" />
+      <TextArea fx:id="itemInspectTextField" layoutX="225.0" layoutY="169.0"
                  prefHeight="210.0" prefWidth="149.0" />
       <Button fx:id="inspectButton" layoutY="119.0" mnemonicParsing="false"
               onAction="#inspectItemAction" prefHeight="25.0" prefWidth="86.0" text="Inspect Item" />

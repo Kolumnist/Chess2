@@ -97,14 +97,20 @@ public class MenuScreen extends AnchorPane implements Initializable {
             a++;
         }
 
+        if (integers.size() < 1) {
+            integers.add(0);
+        }
+
         try {
             viewModel.getGame().setCurrentLayout(mapChoiceBox.getValue(), new Seed(integers));
         } catch (RoomFailedException | InvalidSeedException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
 
-        viewModel.getGame().start();
         screenController.getMainScreen().update();
+        viewModel.getGame().start();
+        viewModel.getGame().setPlayerName(playerName.getText());
+
         try {
             screenController.changeScreen(MenuScreen.SCREEN_NAME, GameMainScreen.SCREEN_NAME);
         } catch (UnknownTransitionException e) {

@@ -28,7 +28,7 @@ public class GameViewModel implements OutputListener {
         screenController.getInventoryScreen().setViewModel(this);
 
 
-
+        game.addListener(this);
 
     }
 

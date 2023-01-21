@@ -3,6 +3,8 @@ package de.hhn.it.devtools.javafx.text_based_labyrinth_FX;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Direction;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Door;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.RoomFailedException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,9 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,6 +25,7 @@ public class GameMainScreen extends AnchorPane implements Initializable {
 
     private GameViewModel viewModel;
     private GameScreenController screenController;
+    private ObservableList<Direction> directions;
 
     @FXML
     Button openInventory;
@@ -44,11 +46,11 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     @FXML
     ChoiceBox<Direction> directionChoiceBox;
     @FXML
-    TextField playerTextField;
+    TextArea playerTextField;
     @FXML
-    TextField roomTextField;
+    TextArea roomTextField;
     @FXML
-    TextField actionTestField;
+    TextArea actionTextField;
 
     public GameMainScreen(GameScreenController screenController) {
         this.screenController = screenController;
@@ -65,10 +67,12 @@ public class GameMainScreen extends AnchorPane implements Initializable {
 
 
     public void update() {
-        actionTestField.clear();
+        actionTextField.clear();
         roomTextField.clear();
         playerTextField.clear();
         playerName.setText(viewModel.getGame().getPlayerName());
+        directions = FXCollections.observableList(viewModel.getGame().getCurrentRoom().getDirections());
+        directionChoiceBox.setItems(directions);
     }
 
 
@@ -78,12 +82,13 @@ public class GameMainScreen extends AnchorPane implements Initializable {
 
     public void setViewModel(GameViewModel viewModel) {
         this.viewModel = viewModel;
+        score.textProperty().bind(viewModel.getScore().asString());
 
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        score.textProperty().bind(viewModel.getScore().asString());
+
     }
 
 
@@ -99,8 +104,8 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     }
 
     public void updateActionField(String text) {
-        actionTestField.clear();
-        actionTestField.setText(text);
+        actionTextField.clear();
+        actionTextField.setText(text);
     }
 
     @FXML
