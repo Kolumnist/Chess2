@@ -30,6 +30,7 @@ public class FileIo {
       ObjectInputStream ois = new ObjectInputStream(fis);
       profiles = (HashMap<UUID, Profile>) ois.readObject();
       Instance.getInstance().setProfiles(profiles);
+      ois.close();
     } catch (Exception e) {
       System.err.println(e.getMessage());
     }

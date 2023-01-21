@@ -154,22 +154,29 @@ public class Profile implements Serializable {
    * get singleplayer win percentage of the user profile.
    */
   public String getSingleplayerWinPercentage() {
-    int percentage = 0;
-    if ((singleplayerWin + singleplayerDraw + singleplayerLoose) != 0) {
-      percentage =
-          (singleplayerWin / (singleplayerWin + singleplayerDraw + singleplayerLoose)) * 100;
-    }
-    DecimalFormat df = new DecimalFormat("#.##");
-    return df.format(percentage);
+    return getString(singleplayerWin, singleplayerDraw, singleplayerLoose);
   }
 
   /**
    * get multiplayer win percentage of the user profile.
    */
   public String getMultiplayerWinPercentage() {
+    return getString(multiplayerWin, multiplayerDraw, multiplayerLoose);
+  }
+
+  /**
+   * Calculate win percentage.
+   *
+   * @param win   Number of games won.
+   * @param draw  Number of draws.
+   * @param loose Number of games lost.
+   * @return Win rate.
+   */
+  private String getString(int win, int draw, int loose) {
     int percentage = 0;
-    if ((multiplayerWin + multiplayerDraw + multiplayerLoose) != 0) {
-      percentage = (multiplayerWin / (multiplayerWin + multiplayerDraw + multiplayerLoose)) * 100;
+    int total = win + draw + loose;
+    if (win != 0) {
+      percentage = (int) (((float) win / total) * 100);
     }
     DecimalFormat df = new DecimalFormat("#.##");
     return df.format(percentage);
