@@ -7,6 +7,9 @@ import de.hhn.it.devtools.apis.wordle.WordleGuessService;
 import de.hhn.it.devtools.apis.wordle.WordlePanelListener;
 import de.hhn.it.devtools.apis.wordle.WordlePanelService;
 import de.hhn.it.devtools.apis.wordle.WordleService;
+import de.hhn.it.devtools.components.example.coffeemakerservice.provider.CoffeeMaker;
+
+import java.util.Map;
 
 
 public class WordleGameLogic implements WordleService {
@@ -171,6 +174,15 @@ public class WordleGameLogic implements WordleService {
   private String getCurrentWordleSolution() {
     logger.debug("getCurrentWordleSolution returns: " + currentWordleSolution);
     return currentWordleSolution;
+  }
+
+  public WordlePanel getPanelById(int id) throws IllegalParameterException {
+    Map<Integer, WordlePanel> panels = currentWordleGame.getPanels();
+    logger.info("getPanelById: id = {}", id);
+    if (!panels.containsKey(id)) {
+      throw new IllegalParameterException("Panel with id " + id + " does not exist.");
+    }
+    return panels.get(id);
   }
 
   public WordleGame getCurrentWordleGame() {
