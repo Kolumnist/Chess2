@@ -48,7 +48,8 @@ public class MenuScreen extends AnchorPane implements Initializable {
 
     public MenuScreen(GameScreenController screenController) {
         this.screenController = screenController;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Labyrinth/MenuScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/labyrinth/MenuScreen.fxml"));
+        loader.setRoot(this);
         loader.setController(this);
         try {
             loader.load();

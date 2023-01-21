@@ -22,14 +22,13 @@ public class LabyrinthLauncher extends Application {
         GameViewModel viewModel = new GameViewModel(game, screenController);
         TabPane root = new TabPane();
         Tab gameTab = new Tab("Labyrinth", pane);
-        screenController.changeScreen(MenuScreen.SCREEN_NAME, MenuScreen.SCREEN_NAME);
+
         root.getTabs().add(gameTab);
+        screenController.changeScreen(MenuScreen.SCREEN_NAME, MenuScreen.SCREEN_NAME);
 
         primaryStage.setTitle("Labyrinth Game");
         primaryStage.setScene(new Scene(root));
-        primaryStage.setResizable(false);
-        primaryStage.setHeight(520);
-        primaryStage.setWidth(615);
+
         primaryStage.show();
 
     }
