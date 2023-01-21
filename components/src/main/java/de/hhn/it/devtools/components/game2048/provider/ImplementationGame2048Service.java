@@ -320,4 +320,12 @@ public class ImplementationGame2048Service implements Game2048Service {
     }
     return row;
   }
+
+  public ArrayList<Block> getGameBoard() {
+    return gameBoard;
+  }
+
+  public ArrayList<Position> getFreelist() {
+    return freelist;
+  }
 }

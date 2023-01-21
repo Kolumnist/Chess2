@@ -6,9 +6,9 @@ public class Position {
 
 
   public Position(int xPosition, int yPosition) {
-    // TODO: 03.01.2023 andere exeption verwerfen?
-    if (xPosition < 0 || xPosition > 3) throw new RuntimeException("Illigal xPosition Parameter");
-    if (yPosition < 0 || yPosition > 3) throw new RuntimeException("Illigal yPosition Parameter");
+    // TODO: 03.01.2023 andere exception verwerfen?
+    if (xPosition < 0 || xPosition > 3) throw new RuntimeException("Illegal xPosition Parameter");
+    if (yPosition < 0 || yPosition > 3) throw new RuntimeException("Illegal yPosition Parameter");
     this.xPosition = xPosition;
     this.yPosition = yPosition;
   }
@@ -22,12 +22,12 @@ public class Position {
   }
 
   public Position changeXPosition(int xPosition) {
-    if (xPosition < 0 || xPosition > 3) throw new RuntimeException("Illigal xPosition Parameter");
+    if (xPosition < 0 || xPosition > 3) throw new RuntimeException("Illegal xPosition Parameter");
     return new Position(xPosition, this.yPosition);
   }
 
   public Position changeYPosition(int yPosition) {
-    if (yPosition < 0 || yPosition > 3) throw new RuntimeException("Illigal yPosition Parameter");
+    if (yPosition < 0 || yPosition > 3) throw new RuntimeException("Illegal yPosition Parameter");
     return new Position(this.xPosition, yPosition);
   }
 
