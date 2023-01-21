@@ -10,8 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class DuckHuntSettingsController implements Initializable {
@@ -21,6 +25,14 @@ public class DuckHuntSettingsController implements Initializable {
   public static final String SCREEN = "settings.screen";
   private DuckHuntScreenController screenController;
   private GameSettingsDescriptor gameSettings;
+  private Media media;
+  private MediaPlayer mediaPlayer;
+  private File directory;
+  private File[] files;
+  ArrayList<File> songs;
+  private int songNumber = 0;
+  private DuckHuntSoundManager duckHuntSoundManager;
+
 
   @FXML
   private Label ammoCountLabel;
@@ -53,11 +65,14 @@ public class DuckHuntSettingsController implements Initializable {
   void applyGameSettings(MouseEvent event) {
     gameSettings.setAmmoAmount((int) ammoCountSlider.getValue());
     gameSettings.setDuckAmount((int) maxDuckCountSlider.getValue());
+    duckHuntSoundManager.changeVolume(volumeSlider.getValue());
+    duckHuntSoundManager.playSound(DuckHuntSounds.BUTTONCLICK);
   }
 
   @FXML
   void backToMainMenu(MouseEvent event) {
     screenController.switchTo(SCREEN, DuckHuntMenuController.SCREEN);
+    duckHuntSoundManager.playSound(DuckHuntSounds.BUTTONCLICK);
   }
 
   @Override
@@ -66,11 +81,11 @@ public class DuckHuntSettingsController implements Initializable {
     screenController =
         (DuckHuntScreenController) duckHuntAttributeStore
             .getAttribute(DuckHuntScreenController.SCREEN_CONTROLLER);
+
     gameSettings = (GameSettingsDescriptor) duckHuntAttributeStore
         .getAttribute("gameSettings");
 
     logger.info("Start Screen initialized.");
-    System.out.println(gameSettings.getAmmoAmount() + " " + gameSettings.getduckAmount());
 
 
     maxDuckCountSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -90,6 +105,8 @@ public class DuckHuntSettingsController implements Initializable {
 
     maxDuckCountSlider.setValue(gameSettings.getduckAmount());
     ammoCountSlider.setValue(gameSettings.getAmmoAmount());
+
+    duckHuntSoundManager = new DuckHuntSoundManager();
   }
 }
 
