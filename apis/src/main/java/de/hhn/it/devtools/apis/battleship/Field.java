@@ -48,4 +48,5 @@ public class Field {
         panelMarkerMat[y][x] = newPanelState;
     }
 
+
 }

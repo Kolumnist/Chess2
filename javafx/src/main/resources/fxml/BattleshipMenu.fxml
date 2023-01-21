@@ -5,15 +5,29 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.paint.ImagePattern?>
+<?import javafx.scene.shape.Ellipse?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #0c1821;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.battleship.BattleshipMenuController">
    <children>
-      <ImageView fitHeight="200.0" fitWidth="400.0" translateX="250.0" translateY="40.0">
+
+      <ImageView fitHeight="200.0" fitWidth="400.0" translateX="250.0" translateY="40.0" style="-fx-background-radius:5">
          <image>
-            <Image url="@../battleship/GameMenuLogo.jpg" />
+            <Image url="@../battleship/GameMenuLogo.jpg"/>
          </image>
       </ImageView>
-      <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#create5x5" prefHeight="100.0" prefWidth="250.0" style="-fx-background-color: #ccc9dc;" text="Small (5x5)" translateX="325.0" translateY="80.0" />
-      <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#create10x10" prefHeight="100.0" prefWidth="250.0" style="-fx-background-color: #ccc9dc;" text="Medium (10x10)" translateX="325.0" translateY="110.0" />
-      <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#create15x15" prefHeight="100.0" prefWidth="250.0" style="-fx-background-color: #ccc9dc;" text="Big (15x15)" translateX="325.0" translateY="140.0" />
+
+      <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+              onMouseClicked="#create5x5" prefHeight="100.0" prefWidth="250.0"
+              style= "-fx-background-color: #1fa4de ; -fx-background-radius:20;"
+              text="Small (5x5)" translateX="325.0" translateY="80.0" />
+      <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+              onMouseClicked="#create10x10" prefHeight="100.0" prefWidth="250.0"
+              style= "-fx-background-color: #1fa4de ; -fx-background-radius:20;"
+              text="Medium (10x10)" translateX="325.0" translateY="110.0" />
+      <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+              onMouseClicked="#create15x15" prefHeight="100.0" prefWidth="250.0"
+              style= "-fx-background-color: #1fa4de ; -fx-background-radius:20;"
+              text="Big (15x15)" translateX="325.0" translateY="140.0" />
    </children>
 </VBox>

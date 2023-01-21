@@ -20,6 +20,7 @@ public class Game extends Stage{
 
     ShipsLeft shipsleft;
 
+    Stage stage = new Stage();
 
     GridPane playgroundUpper = new GridPane();
     GridPane playgroundLower = new GridPane();
@@ -67,7 +68,6 @@ public class Game extends Stage{
         menuBar.getMenus().add(menuGame);
         menuBar.getMenus().add(menuSound);
         menuBar.getMenus().add(menuHelp);
-        menuBar.prefWidthProperty().bind(Start.mainStage.widthProperty());
 
 
         int sizeButtons = 50;
@@ -99,7 +99,23 @@ public class Game extends Stage{
                 buttonsUpper[k][i].setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
+                        if(service.getCurrentGameState() == GameState.FIRINGSHOTS){
+                            try {
+                                service.bombPanel(player, service.getComputer(), i1, k1);
+                            } catch (IllegalGameStateException e) {
+                                e.printStackTrace();
+                            }
 
+                            if(!(service.getPlayer().getAttackField().getPanelMarker(i1,k1) == PanelState.HIT)){
+                                // 0 as oldZ because im forced to
+                                try {
+                                    service.getComputer().comBomb(null, player,0);
+                                } catch (IllegalGameStateException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            updateField();
+                        }
 
                     }
                 });
@@ -139,6 +155,7 @@ public class Game extends Stage{
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         switch(service.getCurrentGameState()){
+
                             case PLACINGSHIPS -> {
 
                                 Ship ship = shipsleft.getShipSelected();
@@ -257,7 +274,7 @@ public class Game extends Stage{
             public void handle(ActionEvent actionEvent) {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Save Game");
-                fileChooser.showSaveDialog(Start.mainStage);
+                fileChooser.showSaveDialog(stage);
             }
         });
 
@@ -267,7 +284,7 @@ public class Game extends Stage{
             public void handle(ActionEvent actionEvent) {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Load Game");
-                fileChooser.showOpenDialog(Start.mainStage);
+                fileChooser.showOpenDialog(stage);
             }
         });
 
@@ -287,10 +304,12 @@ public class Game extends Stage{
         root.getChildren().add(menuBar);
 
 
-        Start.mainStage.setTitle("Battleship");
-        Start.mainStage.setHeight(115*sizeGrid);
-        Start.mainStage.setWidth(60*sizeGrid);
-        Start.mainStage.setScene(GameScene);
+        stage.setTitle("Battleship");
+        stage.setHeight(115*sizeGrid);
+        stage.setWidth(60*sizeGrid);
+        stage.setScene(GameScene);
+        stage.show();
+
 
     }
 
@@ -299,6 +318,21 @@ public class Game extends Stage{
         // Only update if player places ship is done till now
         for (int i = 0; i < sizeGrid ; i++) {
             for (int k = 0; k < sizeGrid ; k++) {
+
+
+                PanelState computerFieldStates =  service.getPlayer().getAttackField().getPanelMarker(i,k);
+                if(computerFieldStates ==PanelState.HIT){
+                    buttonsUpper[k][i].getStyleClass().add("hit");
+                }
+                if (computerFieldStates.equals(PanelState.MISSED)){
+                    buttonsUpper[k][i].getStyleClass().add("missed");
+                }
+
+                PanelState playerFieldStates =  service.getComputer().getAttackField().getPanelMarker(i,k);
+                if(playerFieldStates ==PanelState.HIT){
+                    buttonsLower[k][i].getStyleClass().add("hit");
+                }
+
 
                 Ship ship = service.getPlayer().getShipField().getShipsOnField(i,k);
                 if( ship == null) {
@@ -334,5 +368,8 @@ public class Game extends Stage{
                 }
             }
         }
+
     }
+
+
 

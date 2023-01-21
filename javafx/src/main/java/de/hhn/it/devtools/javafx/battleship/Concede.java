@@ -22,15 +22,19 @@ public class Concede {
         newGameButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                /*
+                // Create new gameMenu in the main window
                 try {
-                    GameMenu gameMenu = new GameMenu();
+
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+
+                 */
             }
         });
         vbox.getChildren().add(a);
-        Start.mainStage.setScene(sceneGameMenu);
-        Start.mainStage.show();
+
+        // Set sceneGameMenu as new main stage from the main window and show it
     }
 }

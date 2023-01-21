@@ -40,6 +40,8 @@ public class Player {
     public ArrayList<Ship> getOwnedShips() {
         return ownedShips;
     }
+    
+
 
     public Ship returnNextShip(ShipType type){
 

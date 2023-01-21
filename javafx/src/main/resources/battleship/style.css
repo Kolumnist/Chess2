@@ -1,6 +1,7 @@
+
 .gameMenuButtons-style {
     -fx-background-color: #ccc9dc;
-
+    -fx-border-radius: 40;
 }
 
 #gameMenuVbox{
@@ -38,6 +39,14 @@
 
 .destroyer {
     -fx-background-color: deeppink;
+}
+
+.hit {
+    -fx-background-color: green;
+}
+
+.missed {
+    -fx-background-color: red;
 }
 
 
