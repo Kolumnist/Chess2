@@ -44,6 +44,9 @@ public class ImplementationGame2048Service implements Game2048Service {
     } catch (IllegalParameterException e) {
       e.printStackTrace();
     }
+    this.currentScore = 0;
+    this.gameWon = false;
+    this.gameLost = false;
     notifyGame2048Listener();
   }
 
@@ -122,9 +125,11 @@ public class ImplementationGame2048Service implements Game2048Service {
     if (freelist.size() > 1) {
       Position position = freelist.get((int) (Math.random() * (freelist.size() - 1)));
       addBlock(position, value);
+      gameLost = false;
     } else if (freelist.size() == 1) {
       Position position = freelist.get(0);
       addBlock(position, value);
+      gameLost = false;
     } else {
       logger.info("game is Lost");
       gameLost = true;
@@ -149,6 +154,7 @@ public class ImplementationGame2048Service implements Game2048Service {
     for (Block removed : columnRow) {
       gameBoard.remove(removed);
     }
+    boolean mergeForbid = false;
     Block previousBlock = null;
     switch (direction) {
       case up -> {
@@ -158,12 +164,15 @@ public class ImplementationGame2048Service implements Game2048Service {
           if (previousBlock == null) {
             Block movingBlock = columnRow.get(i).changeYPosition(3);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
-          } else if (previousBlock.getValue() == columnRow.get(i).getValue()) {
+            mergeForbid = false;
+          } else if (previousBlock.getValue() == columnRow.get(i).getValue() && !mergeForbid) {
             previousBlock = mergeBlocks(columnRow, i, previousBlock);
             i--;
+            mergeForbid = true;
           } else {
             Block movingBlock = columnRow.get(i).changeYPosition(previousBlock.getXYPosition().getYPosition() - 1);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
+            mergeForbid = false;
           }
         }
       }
@@ -174,12 +183,15 @@ public class ImplementationGame2048Service implements Game2048Service {
           if (previousBlock == null) {
             Block movingBlock = columnRow.get(i).changeYPosition(0);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
-          } else if (previousBlock.getValue() == columnRow.get(i).getValue()) {
+            mergeForbid = false;
+          } else if (previousBlock.getValue() == columnRow.get(i).getValue() && !mergeForbid) {
             previousBlock = mergeBlocks(columnRow, i, previousBlock);
             i--;
+            mergeForbid = true;
           } else {
             Block movingBlock = columnRow.get(i).changeYPosition(previousBlock.getXYPosition().getYPosition() + 1);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
+            mergeForbid = false;
           }
         }
       }
@@ -190,12 +202,15 @@ public class ImplementationGame2048Service implements Game2048Service {
           if (previousBlock == null) {
             Block movingBlock = columnRow.get(i).changeXPosition(3);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
-          } else if (previousBlock.getValue() == columnRow.get(i).getValue()) {
+            mergeForbid = false;
+          } else if (previousBlock.getValue() == columnRow.get(i).getValue() && !mergeForbid) {
             previousBlock = mergeBlocks(columnRow, i, previousBlock);
             i--;
+            mergeForbid = true;
           } else {
             Block movingBlock = columnRow.get(i).changeXPosition(previousBlock.getXYPosition().getXPosition() - 1);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
+            mergeForbid = false;
           }
         }
       }
@@ -206,12 +221,15 @@ public class ImplementationGame2048Service implements Game2048Service {
           if (previousBlock == null) {
             Block movingBlock = columnRow.get(i).changeXPosition(0);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
-          } else if (previousBlock.getValue() == columnRow.get(i).getValue()) {
+            mergeForbid = false;
+          } else if (previousBlock.getValue() == columnRow.get(i).getValue() && !mergeForbid) {
             previousBlock = mergeBlocks(columnRow, i, previousBlock);
             i--;
+            mergeForbid = true;
           } else {
             Block movingBlock = columnRow.get(i).changeXPosition(previousBlock.getXYPosition().getXPosition() + 1);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
+            mergeForbid = false;
           }
         }
       }
