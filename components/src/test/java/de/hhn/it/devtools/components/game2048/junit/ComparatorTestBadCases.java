@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("Test for bad cases of the VerticalComparator. ")
+@DisplayName("Test for bad cases of the VerticalComparator and the HorizontalComparator. ")
 public class ComparatorTestBadCases {
 
   @Test
