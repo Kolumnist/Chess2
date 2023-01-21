@@ -11,6 +11,7 @@ public class Board {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(Board.class);
 
+  private static final int BOARD_HEIGHT = 6;      // Height.
   private static final int NUMBER_OF_TILES = 42;  // Number of tiles.
   private final char[][] board = new char[7][6];  // Board: [column][row].
   private final int[] topRowIndex = new int[7];   // Index of first free row in each column.
@@ -43,7 +44,7 @@ public class Board {
   public int placeDiscInColumn(int column) throws IllegalOperationException {
     logger.info("placeDiscInColumn: column = {}", column);
     // In case there is a row left:
-    if (topRowIndex[column] < 6) {
+    if (topRowIndex[column] < BOARD_HEIGHT) {
       int row = topRowIndex[column];
       board[column][row] = players.getFirst();
       topRowIndex[column] = row + 1;
