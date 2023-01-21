@@ -11,7 +11,7 @@ public class Board {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(Board.class);
 
-  private final int numberOfTiles = 42;         // Number of tiles.
+  private static final int NUMBER_OF_TILES = 42;  // Number of tiles.
   private final char[][] board = new char[7][6];  // Board: [column][row].
   private final int[] topRowIndex = new int[7];   // Index of first free row in each column.
   private int discsPlaced;                        // Number of discs placed.
@@ -96,7 +96,7 @@ public class Board {
    */
   public boolean isDraw() {
     logger.info("isDraw: no params");
-    return discsPlaced == numberOfTiles;
+    return discsPlaced == NUMBER_OF_TILES;
   }
 
   /**
