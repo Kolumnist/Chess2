@@ -89,7 +89,7 @@ public class Game2048ViewController {
   private Text winGameLabel; // Value injected by FXMLLoader
 
   @FXML // fx:id="lostGameLabel"
-  private Text lostGameLabel; // Value injected by FXMLLoader
+  private Text loseGameLabel; // Value injected by FXMLLoader
 
   Label[] labelGameBoard;
   ImplementationGame2048Service service;
@@ -107,8 +107,6 @@ public class Game2048ViewController {
   @FXML
   void startGameButtonClicked(ActionEvent event) {
     service.initialisation();
-    winGameLabel.setVisible(false);
-    lostGameLabel.setVisible(false);
   }
 
   @FXML
@@ -118,7 +116,7 @@ public class Game2048ViewController {
     anchorPane = (AnchorPane) attributeStore.getAttribute(Game2048Controller.anchorPaneName);
     addKeyCallback();
     winGameLabel.setVisible(false);
-    lostGameLabel.setVisible(false);
+    loseGameLabel.setVisible(false);
     try {
       service.addCallback(listener);
     } catch (IllegalParameterException e) {
@@ -127,6 +125,10 @@ public class Game2048ViewController {
     service.initialisation();
   }
 
+  /**
+   * Adds a Keylistener that calls the moveAllBlocks methode from ImplementationGame2048Service.
+   * w ->Up / s ->down / a ->left / d ->right
+   */
   private void addKeyCallback() {
     Stage stage = (Stage) anchorPane.getScene().getWindow();
     stage.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
@@ -167,29 +169,38 @@ public class Game2048ViewController {
     });
   }
 
-  private void updateGameBoard() {
+  /**
+   * Present the new state of the game on screen.
+   */
+  private void updateScreen() {
     logger.info("updateGameBoard: no params");
     for (Block block : currentState.getBlocksOnGameboard()) {
       Label label = getLabel(block.getXYPosition());
       label.setText(String.valueOf(block.getValue()));
-      label.setVisible(true);
     }
-    if (currentState.isGameWon()) {
-      winGameLabel.setVisible(true);
-    }
-    if (currentState.isGameLost()) {
-      lostGameLabel.setVisible(true);
-    }
+    winGameLabel.setVisible(currentState.isGameWon());
+    loseGameLabel.setVisible(currentState.isGameLost());
+    currentScoreNumber.setText(String.valueOf(currentState.getCurrentScore()));
+    updateHighScore();
   }
 
+  /**
+   * Deletes all Blocks of the old State of the game.
+   * Writes the new state in currentState.
+   *
+   * @param state Contains all data that have to be presented
+   */
   public void setState(State state) {
     logger.info("setState: state = {}", state);
-    clearScreen();
+    clearGameBoard();
     currentState = state;
     updateScreen();
   }
 
-  private void clearScreen() {
+  /**
+   * Deletes all Blocks of the old State of the game.
+   */
+  private void clearGameBoard() {
     if (currentState != null) {
       for (Block block : currentState.getBlocksOnGameboard()) {
         getLabel(block.getXYPosition()).setText("");
@@ -197,12 +208,9 @@ public class Game2048ViewController {
     }
   }
 
-  private void updateScreen() {
-    updateGameBoard();
-    currentScoreNumber.setText(String.valueOf(currentState.getCurrentScore()));
-    updateHighScore();
-  }
-
+  /**
+   * Checks if old Highscore has to be updated.
+   */
   private void updateHighScore() {
     int oldHighscore = Game2048FileIO.loadHighscore();
     int currentScore = currentState.getCurrentScore();
