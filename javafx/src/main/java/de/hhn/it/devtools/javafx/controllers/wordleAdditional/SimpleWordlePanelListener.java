@@ -25,9 +25,9 @@ public class SimpleWordlePanelListener implements de.hhn.it.devtools.apis.wordle
 
     public void executeListenerTasks(State state) {
         switch (state) {
-            case CORRECT ->  label.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-            case PARTIALLY_CORRECT -> label.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
-            case FALSE -> label.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+            case CORRECT ->  label.setBackground(new Background(new BackgroundFill(Color.rgb(83,141,78), CornerRadii.EMPTY, Insets.EMPTY)));
+            case PARTIALLY_CORRECT -> label.setBackground(new Background(new BackgroundFill(Color.rgb(181,159,59), CornerRadii.EMPTY, Insets.EMPTY)));
+            case FALSE -> label.setBackground(new Background(new BackgroundFill(Color.rgb(102,102,102), CornerRadii.EMPTY, Insets.EMPTY)));
         }
     }
 
