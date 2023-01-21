@@ -1,7 +1,12 @@
 package de.hhn.it.devtools.javafx.controllers;
 
+import de.hhn.it.devtools.components.wordle.provider.WordleGameLogic;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import de.hhn.it.devtools.apis.wordle.WordleService;
 import de.hhn.it.devtools.apis.wordle.WordleGuessService;
@@ -9,103 +14,54 @@ import de.hhn.it.devtools.apis.wordle.IllegalGuessException;
 import de.hhn.it.devtools.apis.wordle.WordlePanelService;
 import de.hhn.it.devtools.apis.wordle.WordlePanelListener;
 import de.hhn.it.devtools.javafx.controllers.WordleGameController;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class WordleGameController extends Controller implements Initializable {
-    @FXML
-    private Label fifthRowFirstLabel;
+
 
     @FXML
-    private Label firstRowFourthLabel;
+    private TextField textField;
+    @FXML
+    private GridPane rowGridPane;
+     private Integer rowCount;
+    private Integer colCount = 0;
+
+    private WordleService backend = new WordleGameLogic();
 
     @FXML
-    private Label firstRowFifthLabel;
-
-    @FXML
-    private Label fifthRowFifthLabel;
-
-    @FXML
-    private Label fifthRowSecondLabel;
-
-    @FXML
-    private Label firstRowFirstLabel;
-
-    @FXML
-    private Label sixthRowFourthLabel;
-
-    @FXML
-    private Label thirdRowFirstLabel;
-
-    @FXML
-    private Label thirdRowSecondLabel;
-
-    @FXML
-    private Label secondRowSecondLabel;
-
-    @FXML
-    private Label thirdRowFifthLabel;
-
-    @FXML
-    private Label sixthRowSecondLabel;
-
-    @FXML
-    private Label fourthRowFirstLabel;
-
-    @FXML
-    private Label firstRowFSecondLabel;
-
-    @FXML
-    private Label fourthRowThirdLabel;
-
-    @FXML
-    private Label thirdRowFourthLabel;
-
-    @FXML
-    private Label fourthRowFourthLabel;
-
-    @FXML
-    private Label fifthRowThirdLabel;
-
-    @FXML
-    private Label fourthRowSecondLabel;
-
-    @FXML
-    private Label firstRowThirdLabel;
-
-    @FXML
-    private Label sixthRowThirdLabel;
-
-    @FXML
-    private Label secondRowFirstLabel;
-
-    @FXML
-    private Label secondRowFifthLabel;
-
-    @FXML
-    private Label fourthRowFifthLabel;
-
-    @FXML
-    private Label fifthRowFourthLabel;
-
-    @FXML
-    private Label secondRowFourthLabel;
-
-    @FXML
-    private Label sixthRowFirstLabel;
-
-    @FXML
-    private Label secondRowThirdLabel;
-
-    @FXML
-    private Label sixthRowFifthLabel;
-
-    @FXML
-    private Label thirdRowThirdLabel;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    void buttonClicked(ActionEvent event) {
+        fillCurrentRowWithUserInput();
 
     }
-}
+
+    private void fillCurrentRowWithUserInput() {
+        String userInput = textField.getText();
+
+        for(Node node: rowGridPane.getChildren()) {
+            if(Objects.equals(GridPane.getRowIndex(node), rowCount)) {
+                Label currentLabel = (Label) node;
+                currentLabel.setText(userInput.substring(colCount, colCount + 1));
+                colCount++;
+            }
+        }
+        if(rowCount == null) {
+            rowCount = 0;
+        }
+        rowCount = rowCount +1;
+        colCount = 0;
+    }
+
+        @Override
+        public void initialize (URL url, ResourceBundle resourceBundle){
+        }
+    }
+
