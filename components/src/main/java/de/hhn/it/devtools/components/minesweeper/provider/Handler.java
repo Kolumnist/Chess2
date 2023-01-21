@@ -78,15 +78,6 @@ public class Handler {
   }
 
   /**
-   * Wrapper Class to call adjustStatusForAdjustingFields.
-   *
-   * @param coords Coordinate to know where the bomb was placed
-   */
-  public  void adjustStatusForAdjustingFieldsWrapper(MinesweeperCoordinates coords) {
-    adjustStatusForAdjustingFields(coords);
-  }
-
-  /**
    * Method to Adjust Numbers around Bombs.
    *
    * @param coords Coordinate to know where the bomb was placed
@@ -108,14 +99,6 @@ public class Handler {
   }
 
   /**
-   * Wrapper Class to call createFieldForVisuals.
-   *
-   */
-  public void createFieldForVisualsWrapper() {
-    createFieldForVisuals();
-  }
-
-  /**
    * Method to create Field from matrix with Statuses instead of int.
    *
    */
@@ -128,16 +111,6 @@ public class Handler {
       }
     }
   }
-
-  /**
-   * Wrapper Class to call intToStatus.
-   *
-   * @param n int which will be converted to Status
-   */
-  public Status intToStatusWrapper(int n) {
-    return intToStatus(n);
-  }
-
 
   /**
    * Method to covert int to enum Status.
