@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<fx:root maxHeight="480" maxWidth="680" minHeight="480" minWidth="680" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" type="AnchorPane">
+   <children>
+      <TextField fx:id="playerName" layoutX="194.0" layoutY="89.0" prefHeight="25.0" prefWidth="200.0" />
+      <TextField fx:id="seedTextField" layoutX="226.0" layoutY="320.0" />
+      <Label fx:id="labelA"  layoutX="194.0" layoutY="72.0" text="Type your name in here" />
+      <Label fx:id="labelB"  layoutX="194.0" layoutY="126.0" text="Select a map" />
+      <Label fx:id="labelC"  layoutX="226.0" layoutY="303.0" text="Type in Seed(optional)" />
+      <Button fx:id="startButton" layoutX="268.0" layoutY="353.0" mnemonicParsing="false" onAction="#startGame"
+              text="Start Game" />
+      <ChoiceBox fx:id="mapChoiceBox" layoutX="219.0" layoutY="143.0" prefWidth="150.0" />
+   </children>
+</fx:root>

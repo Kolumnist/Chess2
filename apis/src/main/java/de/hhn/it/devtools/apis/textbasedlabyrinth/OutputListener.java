@@ -40,6 +40,7 @@ public interface OutputListener {
      * @param output string to be output.
      */
     void sendOutputPlayerInteract(String output);
+    void sendOutputInteractItemName(String output);
 
 
     /**
@@ -60,9 +61,11 @@ public interface OutputListener {
 
     void listenerMove();
 
-    void listenerPickUpItem();
+    void outputInventoryItemInspect(String output);
+    void outputInventoryItemName(String output);
 
-    void listenerDropItem();
+    void outputRoomItemInspect(String output);
+    void outputRoomItemName(String output);
 
     void listenerInteract();
 

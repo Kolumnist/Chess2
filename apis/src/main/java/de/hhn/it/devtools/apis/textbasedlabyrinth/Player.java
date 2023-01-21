@@ -36,7 +36,7 @@ public class Player {
    */
   public Item removeItem(int itemId) throws NoSuchItemFoundException {
     if (!inventory.containsKey(itemId)) {
-      throw new NoSuchItemFoundException();
+      throw new NoSuchItemFoundException("The item was not found.");
     }
     Item returnItem = inventory.get(itemId);
     inventory.remove(itemId);
