@@ -56,6 +56,20 @@ public class ShipsLeft {
 
         service = (CmpBattleshipService) singletonAttributeStore.getAttribute("Battleship.service");
 
+        int carrierCount = service.getPlayer().countShipType(ShipType.CARRIER);
+        int battleshipCount = service.getPlayer().countShipType(ShipType.BATTLESHIP);
+        int cruiserCount = service.getPlayer().countShipType(ShipType.CRUISER);
+        int submarineCount = service.getPlayer().countShipType(ShipType.SUBMARINE);
+        int destroyerCount = service.getPlayer().countShipType(ShipType.DESTROYER);
+
+        carrier.setText("Carrier, Length: 5, Ships Left: " + carrierCount);
+        battleship.setText("Battleship, Length: 4, Ships Left: " + battleshipCount);
+        cruiser.setText("Cruiser, Length: 3, Ships Left: " + cruiserCount);
+        submarine.setText("Submarine, Length: 3, Ships Left: " + submarineCount);
+        destroyer.setText("Destroyer, Length: 2, Ships Left: " + destroyerCount);
+
+
+
 
         scene.getStylesheets().add("battleship/style.css");
 
@@ -112,9 +126,14 @@ public class ShipsLeft {
         carrier.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                shipSelected = service.getPlayer().returnNextShip(ShipType.CARRIER);
-                resetStylesSelectShips();
-                carrier.getStyleClass().add("buttonSelectShip");
+                setShipSelected(service.getPlayer().returnNextShip(ShipType.CARRIER));
+                if(shipSelected != null) {
+                    resetStylesSelectShips();
+                    carrier.getStyleClass().add("buttonSelectShip");
+                }
+                else {
+                    resetStylesSelectShips();
+                }
 
             }
         });
@@ -124,8 +143,13 @@ public class ShipsLeft {
             @Override
             public void handle(ActionEvent actionEvent) {
                 setShipSelected(service.getPlayer().returnNextShip(ShipType.BATTLESHIP));
-                resetStylesSelectShips();
-                battleship.getStyleClass().add("buttonSelectShip");
+                if(shipSelected != null) {
+                    resetStylesSelectShips();
+                    battleship.getStyleClass().add("buttonSelectShip");
+                }
+                else {
+                    resetStylesSelectShips();
+                }
             }
         });
 
@@ -134,8 +158,13 @@ public class ShipsLeft {
             @Override
             public void handle(ActionEvent actionEvent) {
                 setShipSelected(service.getPlayer().returnNextShip(ShipType.CRUISER));
-                resetStylesSelectShips();
-                cruiser.getStyleClass().add("buttonSelectShip");
+                if(shipSelected!=null) {
+                    resetStylesSelectShips();
+                    cruiser.getStyleClass().add("buttonSelectShip");
+                }
+                else {
+                    resetStylesSelectShips();
+                }
             }
         });
 
@@ -144,8 +173,13 @@ public class ShipsLeft {
             @Override
             public void handle(ActionEvent actionEvent) {
                 setShipSelected(service.getPlayer().returnNextShip(ShipType.SUBMARINE));
-                resetStylesSelectShips();
-                submarine.getStyleClass().add("buttonSelectShip");
+                if(shipSelected!=null) {
+                    resetStylesSelectShips();
+                    submarine.getStyleClass().add("buttonSelectShip");
+                }
+                else {
+                    resetStylesSelectShips();
+                }
             }
         });
 
@@ -154,8 +188,13 @@ public class ShipsLeft {
             @Override
             public void handle(ActionEvent actionEvent) {
                 setShipSelected(service.getPlayer().returnNextShip(ShipType.DESTROYER));
-                resetStylesSelectShips();
-                destroyer.getStyleClass().add("buttonSelectShip");
+                if(shipSelected!=null) {
+                    resetStylesSelectShips();
+                    destroyer.getStyleClass().add("buttonSelectShip");
+                }
+                else {
+                    resetStylesSelectShips();
+                }
             }
         });
 

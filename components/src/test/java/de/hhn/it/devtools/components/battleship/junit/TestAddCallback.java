@@ -60,129 +60,6 @@ public class TestAddCallback {
                 () -> bs.addCallBack(listener));
     }
 
-    // Good Cases
-
-    @Test
-    @DisplayName("Test addCallback for the GameStates successfully")
-    public void addCallbackForGameStatesSuccessfully() throws IllegalParameterException {
-        BattleshipListenerInner listener = new BattleshipListenerInner();
-        listener.newState(GameState.PREGAME);
-        listener.newState(GameState.PLACINGSHIPS);
-        listener.newState(GameState.FIRINGSHOTS);
-        listener.newState(GameState.GAMEOVER);
-        bs.addCallBack(listener);
-        assertEquals(4, listener.states.size());
-        // Wenn man hier mit bsService.getListeners().size() bekommt man nur 1 als Wert zurück da nur einmal geadded wird (Zeile 72), aber der eine geaddede listener hat die 4 GameStates drin
-    }
-
-    @Test
-    @DisplayName("Test addCallback for ship that can be placed")
-    public void addCallbackForPossibleShip() throws IllegalParameterException, IllegalGameStateException {
-        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
-        BattleshipListenerInner listener = new BattleshipListenerInner();
-        Position pos = new Position(null, null);
-        Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        listener.outputPlacingPossible(ship, bs.isPlacementPossible(player, ship, 3, 2, false));
-        bs.addCallBack(listener);
-        assertEquals(1, listener.shipsPossible.size());
-    }
-
-    @Test
-    @DisplayName("Test addCallback for ship that can't be placed")
-    public void addCallbackForNotPossibleShip() throws IllegalGameStateException, IllegalParameterException {
-        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
-        BattleshipListenerInner listener = new BattleshipListenerInner();
-        Position pos = new Position(null, null);
-        Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        listener.outputPlacingPossible(ship, bs.isPlacementPossible(player, ship, 6, 2, false));
-        bs.addCallBack(listener);
-        assertEquals(1, listener.shipsNotPossible.size());
-    }
-
-    @Test
-    @DisplayName("Test addCallback for placed ship")
-    public void addCallbackForPlacedShip() throws IllegalParameterException, IllegalShipStateException, IllegalGameStateException, IllegalPositionException {
-        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
-        BattleshipListenerInner listener = new BattleshipListenerInner();
-        Position pos = new Position(null, null);
-        Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        ship.setIsVertical(true);
-        bs.placeShip(player, ship, 8, 0);
-        listener.outputShipPlaced(ship);
-        bs.addCallBack(listener);
-        assertEquals(1, listener.shipsPlaced.size());
-    }
-
-    @Test
-    @DisplayName("Test addCallback for an unplaced ship that can be moved")
-    public void addCallbackForRotatableShip() throws IllegalParameterException {
-        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
-        BattleshipListenerInner listener = new BattleshipListenerInner();
-        Position pos = new Position(null, null);
-        Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        ship.setIsVertical(true);
-        ship.setPlaced(false);
-        listener.outputShipMovable(ship);
-        bs.addCallBack(listener);
-        assertEquals(1, listener.shipsMovable.size());
-    }
-
-    @Test
-    @DisplayName("Test addCallback for bombed successfully")
-    public void addCallbackForSuccessfullyBombed() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException, IllegalParameterException {
-        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
-        BattleshipListenerInner listener = new BattleshipListenerInner();
-        Position pos = new Position(null, null);
-        Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        ship.setIsVertical(false);
-        bs.placeShip(computer, ship, 0, 8);
-
-        bsService.setCurrentGameState(GameState.FIRINGSHOTS);
-        Position bombing = new Position(2, 8);
-        listener.outputBombingSuccessful(bombing, bs.bombPanel(player, computer, 2, 8));
-        bs.addCallBack(listener);
-        assertEquals(1, listener.bombedSuccesful.size());
-    }
-
-    @Test
-    @DisplayName("Test addCallback for bombed unsuccessfully")
-    public void addCallbackForUnsuccessfullyBombed() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException, IllegalParameterException {
-        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
-        BattleshipListenerInner listener = new BattleshipListenerInner();
-        Position pos = new Position(null, null);
-        Ship ship = new Ship(ShipType.BATTLESHIP, pos);
-        ship.setIsVertical(false);
-        bs.placeShip(computer, ship, 0, 8);
-
-        bsService.setCurrentGameState(GameState.FIRINGSHOTS);
-        Position bombing = new Position(4, 8);
-        listener.outputBombingSuccessful(bombing, bs.bombPanel(player, computer, 4, 8));
-        bs.addCallBack(listener);
-        assertEquals(1, listener.bombedUnSuccesful.size());
-    }
-
-    @Test
-    @DisplayName("Test addCallback for player won")
-    public void addCallbackForPlayerWon() throws IllegalParameterException {
-        BattleshipListenerInner listener = new BattleshipListenerInner();
-        listener.outputWinner(true);
-        bs.addCallBack(listener);
-        assertEquals(true, listener.playerWin.get(0));
-    }
-
-    @Test
-    @DisplayName("Test addCallback for player lost - gives up")
-    public void addCallbackForPlayerLost() throws IllegalGameStateException, IllegalParameterException {
-        BattleshipListenerInner listener = new BattleshipListenerInner();
-        bsService.concede();
-        listener.outputWinner(false);
-        bs.addCallBack(listener);
-        assertAll(
-                () -> assertEquals(false, listener.playerWin.get(0)),
-                () -> assertEquals(GameState.GAMEOVER, bsService.getCurrentGameState())
-        );
-    }
-
 }
 
 // inner class as a BattleshipListener
@@ -211,48 +88,33 @@ class BattleshipListenerInner implements BattleshipListener {
     }
 
     @Override
-    public void newState(GameState state) {
-        states.add(state);
+    public void outputWinner(Player potentialWinner) {
+
     }
 
     @Override
-    public void newFieldCreated(Field createdField) {
-        fields.add(createdField);
+    public void updateUnplacedShips() {
+
     }
 
     @Override
-    public void outputPlacingPossible(Ship ship, boolean possible) {
-        if(possible) {
-            shipsPossible.add(ship);
-        }
-        if(!possible){
-            shipsNotPossible.add(ship);
-        }
+    public void updateFiringShotsButton() {
+
     }
 
     @Override
-    public void outputShipPlaced(Ship ship) {
-        shipsPlaced.add(ship);
+    public void allShipsPlaced() {
+
     }
 
     @Override
-    public void outputShipMovable(Ship ship) {
-        shipsMovable.add(ship);
+    public void updateField() {
+
     }
 
     @Override
-    public void outputBombingSuccessful(Position bombedPosition, boolean successful) {
-        if(successful){
-            bombedSuccesful.add(bombedPosition);
-        }
-        if(!successful){
-            bombedUnSuccesful.add(bombedPosition);
-        }
-    }
+    public void resetShipSelected() {
 
-    @Override
-    public void outputWinner(boolean playerWon) {
-        playerWin.add(playerWon);
     }
 
 }

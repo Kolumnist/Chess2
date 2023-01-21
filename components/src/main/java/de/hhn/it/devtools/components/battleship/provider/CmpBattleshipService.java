@@ -8,12 +8,14 @@ import java.util.IllegalFormatException;
 
 public class CmpBattleshipService implements BattleshipService {
 
-    public static CmpBattleshipService service = new CmpBattleshipService();
+    //
+    //public static CmpBattleshipService service = new CmpBattleshipService();
+
 
     static GameState currentGameState = GameState.PREGAME;
     int gameVolume;
     private final Player player = new Player();
-    private final Computer computer = new Computer();
+    private final Computer computer = new Computer(this);
     private ArrayList<BattleshipListener> listeners;
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(CmpBattleshipService.class);
@@ -170,9 +172,15 @@ public class CmpBattleshipService implements BattleshipService {
                 }
             }
         }
-        for (BattleshipListener a : listeners) {
-            a.outputShipPlaced(shipToPlace);
+        for (BattleshipListener listener: listeners) {
+            listener.updateField();
+            //listener.resetShipSelected();
+            listener.updateUnplacedShips();
+            if(!this.player.hasUnplacedShipsLeft()){
+                listener.allShipsPlaced();
+            }
         }
+
     }
 
     // nedim
@@ -210,6 +218,12 @@ public class CmpBattleshipService implements BattleshipService {
                 shipField.setPanelMarker(i, y, PanelState.NOSHIP);
                 player.getShipField().setShipsOnField(null,i,y);
             }
+        }
+
+        for (BattleshipListener listener: listeners) {
+            listener.updateField();
+            listener.updateFiringShotsButton();
+            listener.updateUnplacedShips();
         }
     }
 
@@ -250,12 +264,24 @@ public class CmpBattleshipService implements BattleshipService {
             // set ship part on position to bombed
             target.getShipField().setPanelMarker(x, y, PanelState.HIT);
             attacker.getAttackField().setPanelMarker(x, y,PanelState.HIT);
+
+            for (BattleshipListener listener: listeners) {
+                listener.updateField();
+                listener.outputWinner(attacker);
+            }
+
             return true;
         }
         else {
             //set position to bombed (not necessary hit)
             target.getShipField().setPanelMarker(x, y, PanelState.MISSED);
             attacker.getAttackField().setPanelMarker(x,y,PanelState.MISSED);
+
+            for (BattleshipListener listener: listeners) {
+                listener.updateField();
+                listener.outputWinner(attacker);
+            }
+
             return false;
         }
     }
@@ -282,6 +308,11 @@ public class CmpBattleshipService implements BattleshipService {
         else {
             logger.info("{} WON", winner);
             setCurrentGameState(GameState.GAMEOVER);
+
+            for (BattleshipListener listener: listeners) {
+                listener.updateField();
+            }
+
             return true;
         }
     }

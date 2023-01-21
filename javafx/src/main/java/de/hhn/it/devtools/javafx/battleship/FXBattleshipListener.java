@@ -9,168 +9,109 @@ public class FXBattleshipListener implements BattleshipListener {
     SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(FXBattleshipListener.class);
-    BattleshipService service;
+    CmpBattleshipService service;
+    Game game;
 
-    public FXBattleshipListener(){
+    public FXBattleshipListener(Game game){
         this.service = (CmpBattleshipService) singletonAttributeStore.getAttribute("Battleship.service");
+        this.game = game;
     }
 
-    /**
-     * Informs the listener that the game has changed its state.
-     *
-     * @param state current state of the game
-     */
     @Override
-    public void newState(GameState state) {
-        logger.info("listener - newState: {}", state);
-
-
-    }
-
-    /**
-     * Informs the listener that a new field was created
-     *
-     * @param createdField
-     */
-    @Override
-    public void newFieldCreated(Field createdField) {
-        logger.info("listener - newFieldCreated: {}", createdField);
-
-    }
-
-    /**
-     * Informs the listener that it's possible to place the ship at the current location
-     *
-     * @param ship
-     * @param possible true if possible
-     */
-    @Override
-    public void outputPlacingPossible(Ship ship, boolean possible) {
-        logger.info("listener - outputPlacingPossible: ship = {}, possible = {}", ship, possible);
-
-    }
-
-    /**
-     * Informs the listener that a ship was successfully placed
-     *
-     * @param ship
-     */
-    @Override
-    public void outputShipPlaced(Ship ship) {
-        logger.info("listener - outputShipPlaced: {}", ship);
-/*
-        Ship ship = shipsleft.getShipSelected();
-
-        // if place ship is selected
-        if (!shipsleft.placeMode && !shipsleft.isHorizontal) {
-
-            if(!shipsleft.getShipSelected().getIsVertical()){
-                try {
-                    service.rotateShip(player,ship);
-                } catch (IllegalPositionException | IllegalGameStateException | IllegalShipStateException e) {
-                    System.out.println(e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-
-            try {
-                service.placeShip(player, shipsleft.getShipSelected(), i1, k1);
-                updateField();
-                shipsleft.setShipSelected(null);
-                shipsleft.resetStylesSelectShips();
-
-                if(!player.hasUnplacedShipsLeft()){
-                    shipsleft.startFiring.setVisible(true);
-                }
-
-
-            } catch (IllegalPositionException | IllegalGameStateException | IllegalShipStateException e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-            }
-        }
-
-        if (!shipsleft.placeMode && shipsleft.isHorizontal){
-
-            if(shipsleft.getShipSelected().getIsVertical()) {
-                try {
-                    service.rotateShip(player, ship);
-                } catch (IllegalPositionException | IllegalGameStateException | IllegalShipStateException e) {
-                    System.out.println(e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-            try {
-                service.placeShip(player, shipsleft.getShipSelected(), i1, k1);
-                updateField();
-                shipsleft.setShipSelected(null);
-                shipsleft.resetStylesSelectShips();
-
-                if(!player.hasUnplacedShipsLeft()){
-                    shipsleft.startFiring.setVisible(true);
-                }
-
-            } catch (IllegalPositionException | IllegalGameStateException | IllegalShipStateException e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-            }w
-        }
-
-
-        // if unplace ship is selected
-        if (shipsleft.placeMode) {
-
-            ship = player.getShipField().getShipsOnField(i1, k1);
-
-            if (ship != null) {
-                try {
-                    service.unPlace(player, player.getShipField().getShipsOnField(i1, k1));
-                    updateField();
-                    shipsleft.startFiring.setVisible(false);
-                } catch (IllegalGameStateException e) {
-                    e.printStackTrace();
-                }
-
-            }
-            else;
-
+    public void outputWinner(Player potentialWinner) {
+        if (service.checkWon(potentialWinner)) {
+            OutputWinner outputWinner = new OutputWinner(potentialWinner);
         }
     }
 
- */
-    }
-
-    /**
-     * Informs the listener that a ship is not placed anymore and can be moved
-     *
-     * @param ship
-     */
     @Override
-    public void outputShipMovable(Ship ship) {
-        logger.info("listener - outputShipMovable: {}", ship);
+    public void updateUnplacedShips() {
+        int carrierCount = game.player.countShipType(ShipType.CARRIER);
+        int battleshipCount = game.player.countShipType(ShipType.BATTLESHIP);
+        int cruiserCount = game.player.countShipType(ShipType.CRUISER);
+        int submarineCount = game.player.countShipType(ShipType.SUBMARINE);
+        int destroyerCount = game.player.countShipType(ShipType.DESTROYER);
+
+        game.shipsleft.carrier.setText("Carrier, Length: 5, Ships Left: " + carrierCount);
+        game.shipsleft.battleship.setText("Battleship, Length: 4, Ships Left: " + battleshipCount);
+        game.shipsleft.cruiser.setText("Cruiser, Length: 3, Ships Left: " + cruiserCount);
+        game.shipsleft.submarine.setText("Submarine, Length: 3, Ships Left: " + submarineCount);
+        game.shipsleft.destroyer.setText("Destroyer, Length: 2, Ships Left: " + destroyerCount);
 
     }
 
-    /**
-     * Informs the listener that a bombing was (not)successful
-     *
-     * @param bombedPosition
-     * @param successful     false if no ship on the bombedPosition and if the ship part was already bombed
-     */
     @Override
-    public void outputBombingSuccessful(Position bombedPosition, boolean successful) {
-        logger.info("listener - outputBombingSuccessful: bombedPosition = {}, successful = {}", bombedPosition, successful);
-
+    public void updateFiringShotsButton() {
+        game.shipsleft.startFiring.setVisible(false);
     }
 
-    /**
-     * Informs the listener that the player or the computer has won
-     *
-     * @param playerWon true if player won, false if computer won
-     */
     @Override
-    public void outputWinner(boolean playerWon) {
-        logger.info("listener - outputWinner: playerWon = {}", playerWon);
-
+    public void allShipsPlaced() {
+            game.shipsleft.startFiring.setVisible(true);
     }
+
+    @Override
+    public void updateField() {
+
+            for (int i = 0; i < game.sizeGrid ; i++) {
+                for (int k = 0; k < game.sizeGrid ; k++) {
+
+
+                    PanelState computerFieldStates =  service.getPlayer().getAttackField().getPanelMarker(i,k);
+                    if(computerFieldStates ==PanelState.HIT){
+                        game.buttonsUpper[k][i].getStyleClass().add("hit");
+                    }
+                    if (computerFieldStates.equals(PanelState.MISSED)){
+                        game.buttonsUpper[k][i].getStyleClass().add("missed");
+                    }
+
+                    PanelState playerFieldStates =  service.getComputer().getAttackField().getPanelMarker(i,k);
+                    if(playerFieldStates ==PanelState.HIT){
+                        game.buttonsLower[k][i].getStyleClass().add("hit");
+                    }
+
+                    if (playerFieldStates.equals(PanelState.MISSED)){
+                        game.buttonsLower[k][i].getStyleClass().add("missed");
+                    }
+
+                    Ship ship = service.getPlayer().getShipField().getShipsOnField(i,k);
+                    if( ship == null) {
+                        game.buttonsLower[k][i].getStyleClass().removeAll("carrier", "battleship", "cruiser", "submarine", "destroyer");
+                        continue;
+                    }
+
+                    switch (ship.getShipType()){
+
+                        case CARRIER:
+                            game.buttonsLower[k][i].getStyleClass().add("carrier");
+                            break;
+
+                        case BATTLESHIP:
+                            game.buttonsLower[k][i].getStyleClass().add("battleship");
+                            break;
+
+                        case CRUISER:
+                            game.buttonsLower[k][i].getStyleClass().add("cruiser");
+                            break;
+
+                        case SUBMARINE:
+                            game.buttonsLower[k][i].getStyleClass().add("submarine");
+                            break;
+
+                        case DESTROYER:
+                            game.buttonsLower[k][i].getStyleClass().add("destroyer");
+                            break;
+
+                        default: break;
+                    }
+
+                }
+            }
+        }
+    @Override
+    public void resetShipSelected() {
+        game.shipsleft.setShipSelected(null);
+        game.shipsleft.resetStylesSelectShips();
+    }
+
 }
