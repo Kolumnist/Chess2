@@ -22,7 +22,7 @@
 }
 
 .carrier {
-    -fx-background-color: blueviolet;
+    -fx-background-color: aqua;
 }
 
 .battleship {
@@ -42,7 +42,7 @@
 }
 
 .hit {
-    -fx-background-color: green;
+    -fx-background-color: blue;
 }
 
 .missed {
