@@ -2,6 +2,7 @@ package de.hhn.it.devtools.javafx.controllers;
 
 import de.hhn.it.devtools.apis.game2048.State;
 import de.hhn.it.devtools.javafx.controllers.game2048.Game2048ScreenController;
+import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
 import de.hhn.it.devtools.javafx.game2048.Game2048FileIO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +14,6 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 
 
 public class Game2048Controller extends Controller implements Initializable {
@@ -34,6 +34,8 @@ public class Game2048Controller extends Controller implements Initializable {
   private Button startGameButton; // Value injected by FXMLLoader
 
   private State currentState;
+  public static final String anchorPaneName = "game2048.anchorPane";
+
 
   @FXML
   void startGameButtonClicked(ActionEvent event) {
@@ -48,5 +50,7 @@ public class Game2048Controller extends Controller implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     highscoreValueStart.setText(String.valueOf(Game2048FileIO.loadHighscore()));
+    SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getReference();
+    singletonAttributeStore.setAttribute(anchorPaneName, game2048AnchorPane);
   }
 }

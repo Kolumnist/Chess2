@@ -22,4 +22,8 @@ public class Game2048ScreenController {
     anchorPane.getChildren().clear();
     anchorPane.getChildren().add(n);
   }
+
+  public AnchorPane getAnchorPane() {
+    return anchorPane;
+  }
 }
