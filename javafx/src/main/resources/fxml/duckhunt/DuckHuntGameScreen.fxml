@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:id="anchorPane" maxHeight="720.0" maxWidth="960.0" minHeight="720.0" minWidth="960.0" prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.duckhunt.DuckHuntGameController">
+   <children>
+      <ImageView fx:id="backgroundImage" fitHeight="846.0" fitWidth="1387.0" layoutX="-1.0" layoutY="-8.0" onMouseClicked="#backgroundClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/duckhunt/Himmel.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="groundImage" fitHeight="190.0" fitWidth="966.0" layoutY="533.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/duckhunt/NurBoden.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="treeImage" fitHeight="445.0" fitWidth="225.0" layoutX="81.0" layoutY="49.0" onMouseClicked="#treeClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/duckhunt/Baum.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bushImage" fitHeight="162.0" fitWidth="139.0" layoutX="695.0" layoutY="304.0" onMouseClicked="#bushClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/duckhunt/Busch.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="grassImage" fitHeight="657.0" fitWidth="1269.0" layoutX="-1.0" layoutY="-123.0" onMouseClicked="#grassClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/duckhunt/NurGras.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

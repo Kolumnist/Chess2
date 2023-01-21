@@ -49,6 +49,6 @@ public class DuckHuntMenuController implements Initializable {
 
   @FXML
   void startGame(ActionEvent event) {
-
+    screenController.switchTo(DuckHuntMenuController.SCREEN, DuckHuntGameController.SCREEN);
   }
 }
