@@ -16,7 +16,7 @@ public class WordlePanel implements WordlePanelService {
   private char letter;
   private State state;
   private static int panelCount = 0;
-  private static int panelId;
+  private int panelId;
 
   private List<WordlePanelListener> listeners = new ArrayList<>();
 
