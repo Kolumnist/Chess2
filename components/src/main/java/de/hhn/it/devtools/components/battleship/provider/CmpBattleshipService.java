@@ -174,8 +174,10 @@ public class CmpBattleshipService implements BattleshipService {
         }
         for (BattleshipListener listener: listeners) {
             listener.updateField();
-            //listener.resetShipSelected();
-            listener.updateUnplacedShips();
+            if(player.equals(this.player)) {
+                listener.resetShipSelected();
+                listener.updateUnplacedShips();
+            }
             if(!this.player.hasUnplacedShipsLeft()){
                 listener.allShipsPlaced();
             }
@@ -223,7 +225,11 @@ public class CmpBattleshipService implements BattleshipService {
         for (BattleshipListener listener: listeners) {
             listener.updateField();
             listener.updateFiringShotsButton();
-            listener.updateUnplacedShips();
+
+            if(player.equals(this.player)){
+                listener.updateUnplacedShips();
+            }
+
         }
     }
 
