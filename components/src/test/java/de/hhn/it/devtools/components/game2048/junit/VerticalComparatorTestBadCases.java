@@ -10,7 +10,7 @@ import de.hhn.it.devtools.components.game2048.provider.Comparators.VerticalCompa
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Test für schlechte Beispiele des VerticalComparator. ")
+@DisplayName("Test for bad cases of the VerticalComparator. ")
 public class VerticalComparatorTestBadCases {
 
   @Test
