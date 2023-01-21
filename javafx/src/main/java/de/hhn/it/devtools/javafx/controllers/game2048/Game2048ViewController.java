@@ -1,15 +1,11 @@
 package de.hhn.it.devtools.javafx.controllers.game2048;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.apis.game2048.Block;
-import de.hhn.it.devtools.apis.game2048.MovingDirection;
-import de.hhn.it.devtools.apis.game2048.Position;
-import de.hhn.it.devtools.apis.game2048.State;
+import de.hhn.it.devtools.apis.game2048.*;
 import de.hhn.it.devtools.components.game2048.provider.ImplementationGame2048Service;
 import de.hhn.it.devtools.javafx.controllers.Game2048Controller;
 import de.hhn.it.devtools.javafx.controllers.template.SingletonAttributeStore;
 import de.hhn.it.devtools.javafx.game2048.Game2048FileIO;
-import de.hhn.it.devtools.javafx.game2048.ImplemtListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -21,7 +17,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Game2048ViewController {
+public class Game2048ViewController implements Game2048Listener{
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(Game2048ViewController.class);
 
@@ -92,8 +88,7 @@ public class Game2048ViewController {
   private Text loseGameLabel; // Value injected by FXMLLoader
 
   Label[] labelGameBoard;
-  ImplementationGame2048Service service;
-  ImplemtListener listener;
+  Game2048Service service;
   AnchorPane anchorPane;
 
   private State currentState;
@@ -101,7 +96,6 @@ public class Game2048ViewController {
   public Game2048ViewController() {
     service = new ImplementationGame2048Service();
     labelGameBoard = new Label[16];
-    listener = new ImplemtListener(this);
   }
 
   @FXML
@@ -118,7 +112,7 @@ public class Game2048ViewController {
     winGameLabel.setVisible(false);
     loseGameLabel.setVisible(false);
     try {
-      service.addCallback(listener);
+      service.addCallback(this);
     } catch (IllegalParameterException e) {
       e.printStackTrace();
     }
@@ -182,19 +176,6 @@ public class Game2048ViewController {
     loseGameLabel.setVisible(currentState.isGameLost());
     currentScoreNumber.setText(String.valueOf(currentState.getCurrentScore()));
     updateHighScore();
-  }
-
-  /**
-   * Deletes all Blocks of the old State of the game.
-   * Writes the new state in currentState.
-   *
-   * @param state Contains all data that have to be presented
-   */
-  public void setState(State state) {
-    logger.info("setState: state = {}", state);
-    clearGameBoard();
-    currentState = state;
-    updateScreen();
   }
 
   /**
@@ -296,5 +277,12 @@ public class Game2048ViewController {
       }
     }
     return gameBlock7;
+  }
+
+  @Override
+  public void newState(State state) {
+    clearGameBoard();
+    currentState = state;
+    updateScreen();
   }
 }
