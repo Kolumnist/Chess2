@@ -22,6 +22,11 @@ public class DummyCallback implements OutputListener{
     private List<String> outputInventory;
     private List<String> outputNavigation;
     private List<String> outputPlayerInteract;
+    private List<String> outputInteractItemName;
+    private List<String> outputRoomItemName;
+    private List<String> outputRoomItemInspect;
+    private List<String> outputInventoryItemInspect;
+    private List<String> outputInventoryItemName;
     private List<Item> outputPickUpItems;
     private List<Item> outputDropItems;
     private List<Integer> outputScores;
@@ -35,6 +40,11 @@ public class DummyCallback implements OutputListener{
         outputPickUpItems = new ArrayList<>();
         outputDropItems = new ArrayList<>();
         outputScores = new ArrayList<>();
+        outputInteractItemName = new ArrayList<>();
+        outputRoomItemName = new ArrayList<>();
+        outputRoomItemInspect = new ArrayList<>();
+        outputInventoryItemInspect = new ArrayList<>();
+        outputInventoryItemName = new ArrayList<>();
     }
 
     @Override
@@ -68,6 +78,9 @@ public class DummyCallback implements OutputListener{
     }
 
     @Override
+    public void sendOutputInteractItemName(String output) { outputInteractItemName.add(output); }
+
+    @Override
     public void sendOutputDropItem(Item item) {
         outputDropItems.add(item);
     }
@@ -83,14 +96,16 @@ public class DummyCallback implements OutputListener{
     }
 
     @Override
-    public void listenerPickUpItem() {
-
-    }
+    public void outputInventoryItemInspect(String output) { outputInventoryItemInspect.add(output); }
 
     @Override
-    public void listenerDropItem() {
+    public void outputInventoryItemName(String output) { outputInventoryItemName.add(output); }
 
-    }
+    @Override
+    public void outputRoomItemInspect(String output) { outputRoomItemInspect.add(output); }
+
+    @Override
+    public void outputRoomItemName(String output) { outputRoomItemName.add(output); }
 
     @Override
     public void listenerInteract() {
@@ -111,4 +126,43 @@ public class DummyCallback implements OutputListener{
     public void updateScore(int newScore) {
         outputScores.add(newScore);
     }
+
+    @Override
+    public List<String> getOutputRoom() { return outputRoom; }
+
+    @Override
+    public List<String> getOutputPlayer() { return outputPlayer; }
+
+    @Override
+    public List<String> getOutputInventory() { return outputInventory; }
+
+    @Override
+    public List<String> getOutputNavigation() { return outputNavigation; }
+
+    @Override
+    public List<String> getOutputPlayerInteract() { return outputPlayerInteract; }
+
+    @Override
+    public List<String> getOutputInteractItemName() { return outputInteractItemName; }
+
+    @Override
+    public List<String> getOutputRoomItemName() { return outputRoomItemName; }
+
+    @Override
+    public List<String> getOutputRoomItemInspect() { return outputRoomItemInspect; }
+
+    @Override
+    public List<String> getOutputInventoryItemInspect() { return outputInventoryItemInspect; }
+
+    @Override
+    public List<String> getOutputInventoryItemName() { return outputInventoryItemName; }
+
+    @Override
+    public List<Item> getOutputPickUpItems() { return outputPickUpItems; }
+
+    @Override
+    public List<Item> getOutputDropItems() { return outputDropItems; }
+
+    @Override
+    public List<Integer> getOutputScores() { return outputScores; }
 }

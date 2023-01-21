@@ -31,7 +31,7 @@ public class GameTest {
 
 
     @Test
-    @DisplayName("Test simulated Game")
+    @DisplayName("Test simulated Game Mad King Map")
     public void testGameGraveOfTheMadKing() {
         ArrayList<Integer> seedList1 = new ArrayList<>();
         seedList1.add(0);
@@ -57,16 +57,25 @@ public class GameTest {
         game.move(Direction.EAST);
         game.move(Direction.EAST);
         game.move(Direction.EAST);
+
+        try {
+            assertEquals(game.getCurrentRoom().getRoom(Direction.NORTH), roomsList.get(12));
+        } catch (RoomFailedException e) {
+            fail();
+        }
+
+        try {
+            assertTrue(player.getCurrentRoomOfPlayer().getRoom(Direction.NORTH).isExit());
+        } catch (RoomFailedException e) {
+            fail();
+        }
+
         game.move(Direction.NORTH);
 
-        assertEquals(game.getCurrentRoom(), roomsList.get(12));
-
-        //This room should be the exit.
-        assertTrue(player.getCurrentRoomOfPlayer().isExit());
     }
 
     @Test
-    @DisplayName("Test simulated Game")
+    @DisplayName("Test simulated Game Ancient Dungeon Map")
     public void testGameAncientDungeon() {
         ArrayList<Integer> seedList1 = new ArrayList<>();
         seedList1.add(0);
@@ -299,19 +308,24 @@ public class GameTest {
         assertEquals(game.getCurrentRoom(), roomsList.get(11));
 
 
-        game.move(Direction.EAST);
-        //The player should still be in room 12.
-        assertEquals(game.getCurrentRoom(), roomsList.get(12));
+        try {
+            assertEquals(game.getCurrentRoom().getRoom(Direction.EAST), roomsList.get(12));
+        } catch (RoomFailedException e) {
+            fail();
+        }
 
-        //This room should be the exit.
-        assertTrue(player.getCurrentRoomOfPlayer().isExit());
+        try {
+            assertTrue(player.getCurrentRoomOfPlayer().getRoom(Direction.EAST).isExit());
+        } catch (RoomFailedException e) {
+            fail();
+        }
 
 
     }
 
 
     @Test
-    @DisplayName("Test simulated Game")
+    @DisplayName("Test simulated Game Sewers Map")
     public void testGameUnknownSewers() {
         ArrayList<Integer> seedList1 = new ArrayList<>();
         seedList1.add(0);
@@ -335,11 +349,7 @@ public class GameTest {
         assertEquals("You are " + player.getName() + " and you are in the depths of a labyrinth.",
                 game.startText());
 
-        try {
-            assertEquals("This is an open path. You could just walk through.", game.inspect(Direction.NORTH));
-        } catch (RoomFailedException e) {
-            fail();
-        }
+        assertEquals("This is an open path. You could just walk through.", game.inspect(Direction.NORTH));
 
         assertEquals("You find yourself in " + game.getCurrentRoom().getDescription() +
                 "You can search the room or move on.", game.check());
@@ -391,13 +401,18 @@ public class GameTest {
         }
         game.move(Direction.NORTH);
         game.move(Direction.NORTH);
-        game.move(Direction.NORTH);
 
+        try {
+            assertEquals(game.getCurrentRoom().getRoom(Direction.NORTH), roomsList.get(12));
+        } catch (RoomFailedException e) {
+            fail();
+        }
 
-        assertEquals(game.getCurrentRoom(), roomsList.get(12));
-
-        //This room should be the exit.
-        assertTrue(player.getCurrentRoomOfPlayer().isExit());
+        try {
+            assertTrue(player.getCurrentRoomOfPlayer().getRoom(Direction.NORTH).isExit());
+        } catch (RoomFailedException e) {
+            fail();
+        }
     }
 
     @Test
@@ -422,6 +437,8 @@ public class GameTest {
             fail();
         }
 
+        assertEquals(3, game.getMaps().size());
+
         Room startRoom = game.getCurrentRoom();
         game.move(Direction.NORTH);
         game.move(Direction.NORTH);
@@ -437,9 +454,13 @@ public class GameTest {
         @Test
     @DisplayName("Test Null Cases")
     public void testNullCases() {
+        Item testItem = new Item(0,"testItem", "x");
+        CurrentScreenRequesting currentScreenRequesting = CurrentScreenRequesting.INTERACTION;
         assertThrows(IllegalArgumentException.class, () -> game.move(null));
         assertThrows(IllegalArgumentException.class, () -> game.inspect(null));
         assertThrows(IllegalArgumentException.class, () -> game.interaction(null, null));
+        assertThrows(IllegalArgumentException.class, () -> game.inspectItem(testItem, null));
+        assertThrows(IllegalArgumentException.class, () -> game.inspectItem(null, currentScreenRequesting));
         assertThrows(IllegalArgumentException.class, () -> game.interaction(Direction.NORTH, null));
         assertThrows(InvalidSeedException.class, () -> game.setCurrentLayout(Map.Ancient_Dungeon, null));
     }
