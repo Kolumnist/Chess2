@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -25,6 +26,7 @@ public class Main extends Application {
   private final int HEIGHT = 720;
   private RootController rootController;
   private Map<String, Module> moduleMap;
+  public static Stage primaryStage;
 
   public Main() {
     moduleMap = new HashMap<>();
@@ -47,6 +49,7 @@ public class Main extends Application {
 
     final Parent root = loader.load();
     rootController = loader.getController();
+    Main.primaryStage = primaryStage;
 
     primaryStage.setTitle("JavaFX UI");
     Scene scene = new Scene(root, WIDTH, HEIGHT);
