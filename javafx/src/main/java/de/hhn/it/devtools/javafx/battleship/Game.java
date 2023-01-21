@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 
 public class Game extends Stage{
 
+    int switchCnt = 0;
+
     VBox root = new VBox();
     Scene GameScene = new Scene(root);
 
@@ -103,20 +105,28 @@ public class Game extends Stage{
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         if(service.getCurrentGameState() == GameState.FIRINGSHOTS){
-                            try {
-                                service.bombPanel(player, service.getComputer(), i1, k1);
-                            } catch (IllegalGameStateException e) {
-                                e.printStackTrace();
-                            }
-
-                            if(!(service.getPlayer().getAttackField().getPanelMarker(i1,k1) == PanelState.HIT)){
-                                // 0 as oldZ because im forced to
+                            if(switchCnt % 2 == 0) {
                                 try {
-                                    service.getComputer().comBomb(null, player,0);
+                                    service.bombPanel(player, service.getComputer(), i1, k1);
+                                    service.checkWon(player);
+                                    switchCnt++;
                                 } catch (IllegalGameStateException e) {
                                     e.printStackTrace();
                                 }
                             }
+
+//                            if(!(service.getPlayer().getAttackField().getPanelMarker(i1,k1) == PanelState.HIT)){
+                                // 0 as oldZ because im forced to
+                            if(switchCnt % 2 != 0) {
+                                try {
+                                    service.getComputer().comBomb(null, player, -1);
+                                    service.checkWon(service.getComputer());
+                                    switchCnt++;
+                                } catch (IllegalGameStateException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+//                            }
                             updateField();
                         }
 

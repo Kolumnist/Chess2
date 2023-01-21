@@ -10,7 +10,7 @@ public class Reminder {
     Stage stage = new Stage();
     StackPane stackpane = new StackPane();
     Scene scene = new Scene(stackpane);
-    Label lbl = new Label("Help -> shipsLeft -> schiff auswählen");
+    Label lbl = new Label("Help -> shipsLeft -> select ship");
 
         Reminder(){
             stage.setScene(scene);

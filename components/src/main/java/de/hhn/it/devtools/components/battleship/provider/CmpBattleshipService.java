@@ -6,13 +6,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.IllegalFormatException;
 
-// TODO iterate through the field and see if there are ship fields that were not bombed, if not -> opponent wins & GameState to GameOver
-// TODO Button that comes (isVisible to true in the window where "Ships left to place", before that the button isVisible = false) when all ships are placed, when pressed -> GameState to FiringShots.
-// TODO Write Computer AI
-// TODO change automatically gamestates (after all ships bombed, after all ships placed)
-// TODO start game button when the player has placed all ships so that he can maybe move/rotate ships before the game starts
-
-
 public class CmpBattleshipService implements BattleshipService {
 
     public static CmpBattleshipService service = new CmpBattleshipService();
@@ -264,6 +257,32 @@ public class CmpBattleshipService implements BattleshipService {
             target.getShipField().setPanelMarker(x, y, PanelState.MISSED);
             attacker.getAttackField().setPanelMarker(x,y,PanelState.MISSED);
             return false;
+        }
+    }
+
+    public boolean checkWon(Player winner){
+        int cnt = 0;
+        Player checkEnemiesField;
+        if(winner.equals(computer)){
+            checkEnemiesField = player;
+        }
+        else {
+            checkEnemiesField = computer;
+        }
+        for(int i = 0; i < Field.getSize(); i++){
+            for(int j = 0; j < Field.getSize(); j++){
+                if(checkEnemiesField.getShipField().getPanelMarker(i, j) == PanelState.SHIP){
+                    cnt++;
+                }
+            }
+        }
+        if(cnt > 0){
+            return false;
+        }
+        else {
+            logger.info("{} WON", winner);
+            setCurrentGameState(GameState.GAMEOVER);
+            return true;
         }
     }
 
