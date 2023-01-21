@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers.ttrpgsheets;
 
 import de.hhn.it.devtools.apis.ttrpgsheets.CharacterDescriptor;
+import de.hhn.it.devtools.apis.ttrpgsheets.CharacterSheet;
 import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionType;
 import de.hhn.it.devtools.apis.ttrpgsheets.DiceDescriptor;
@@ -35,7 +36,8 @@ public class PlayerDiceViewController extends CharacterViewController {
   SimpleStringProperty diceTypeProperty;
   SimpleIntegerProperty diceResultProperty;
 
-  public PlayerDiceViewController() {
+  public PlayerDiceViewController(CharacterSheet characterSheet) {
+    super(characterSheet);
     characterSheetFileIo = new CharacterSheetFileIo();
     playerNameProperty = new SimpleStringProperty("");
     diceTypeProperty = new SimpleStringProperty();

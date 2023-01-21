@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.javafx.controllers.ttrpgsheets;
 
+import de.hhn.it.devtools.apis.ttrpgsheets.CharacterSheet;
 import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.DiceDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.OriginType;
@@ -80,7 +81,8 @@ public class StatViewController extends CharacterViewController {
   private final HashMap<StatType, SimpleIntegerProperty> statOther2Property;
   private final SimpleIntegerProperty freeLevelPointsProperty;
 
-  public StatViewController() {
+  public StatViewController(CharacterSheet characterSheet) {
+    super(characterSheet);
     stat2Property = new HashMap<>();
     statLevel2Property = new HashMap<>();
     statOther2Property = new HashMap<>();

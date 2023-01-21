@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.javafx.controllers.ttrpgsheets;
 
+import de.hhn.it.devtools.apis.ttrpgsheets.CharacterSheet;
 import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionDescriptor;
 import de.hhn.it.devtools.apis.ttrpgsheets.DescriptionType;
 import de.hhn.it.devtools.apis.ttrpgsheets.DiceDescriptor;
@@ -38,7 +39,8 @@ public class DescriptionViewController extends CharacterViewController {
 
   HashMap<DescriptionType, SimpleStringProperty> description2Property;
 
-  public DescriptionViewController() {
+  public DescriptionViewController(CharacterSheet characterSheet) {
+    super(characterSheet);
     description2Property = new HashMap<>();
     for (DescriptionType descriptionType : DescriptionType.values()) {
       description2Property.put(descriptionType, new SimpleStringProperty(""));

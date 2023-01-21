@@ -29,35 +29,34 @@ public class CharacterSheetServiceController extends Controller implements Chara
   @FXML
   private Pane playerDicePane;
 
-  private static final CharacterSheet characterSheet
-          = new DefaultCharacterSheet(CharacterDescriptor.EMPTY);;
+  private final CharacterSheet characterSheet;
 
-  private DescriptionViewController descriptionController;
+  private final DescriptionViewController descriptionController;
   private Node descriptionNode;
-  private StatViewController statController;
+  private final StatViewController statController;
   private Node statNode;
-  private PlayerDiceViewController playerDiceController;
+  private final PlayerDiceViewController playerDiceController;
   private Node playerDiceNode;
 
   public CharacterSheetServiceController() {
+    characterSheet = new DefaultCharacterSheet(CharacterDescriptor.EMPTY);
+    descriptionController = new DescriptionViewController(characterSheet);
+    statController = new StatViewController(characterSheet);
+    playerDiceController = new PlayerDiceViewController(characterSheet);
     FXMLLoader loader;
     try {
       loader = new FXMLLoader(getClass().getResource("/fxml/ttrpgsheets/DescriptionView.fxml"));
+      loader.setController(descriptionController);
       descriptionNode = loader.load();
-      descriptionController = loader.getController();
       loader = new FXMLLoader(getClass().getResource("/fxml/ttrpgsheets/StatView.fxml"));
+      loader.setController(statController);
       statNode = loader.load();
-      statController = loader.getController();
       loader = new FXMLLoader(getClass().getResource("/fxml/ttrpgsheets/PlayerDiceView.fxml"));
+      loader.setController(playerDiceController);
       playerDiceNode = loader.load();
-      playerDiceController = loader.getController();
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
-
-  public static CharacterSheet getCharacterSheet() {
-    return characterSheet;
   }
 
   @FXML
