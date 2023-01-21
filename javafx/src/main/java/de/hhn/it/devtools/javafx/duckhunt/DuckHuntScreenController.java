@@ -1,12 +1,14 @@
 package de.hhn.it.devtools.javafx.duckhunt;
 
 import de.hhn.it.devtools.javafx.controllers.template.UnknownTransitionException;
+import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
-
+/**
+ * standard ScreenController.
+ */
 public class DuckHuntScreenController {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(DuckHuntScreenController.class);
@@ -59,6 +61,19 @@ public class DuckHuntScreenController {
     return descriptionScreenContent;
   }
 
+  private Node getGameScreen() {
+    Node gameScreenContent = null;
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/duckhunt/DuckHuntGameScreen.fxml"));
+    try {
+      gameScreenContent = loader.load();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    duckHuntGameController = loader.getController();
+    return gameScreenContent;
+  }
+
   public void switchTo(String fromScreen, String toScreen) throws UnknownTransitionException {
     logger.info("Switching from " + fromScreen + " to " + toScreen);
     switch (toScreen) {
@@ -75,13 +90,10 @@ public class DuckHuntScreenController {
         anchorPane.getChildren().add(getDescriptionScreen());
         break;
       case DuckHuntGameController.SCREEN:
-        openGameView();
+        getGameScreen();
         break;
 
       default: throw new UnknownTransitionException("unknown screen: " + toScreen);
     }
-  }
-
-  private void openGameView() {
   }
 }
