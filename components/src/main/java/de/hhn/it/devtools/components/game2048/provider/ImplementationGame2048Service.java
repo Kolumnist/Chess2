@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class ImplementationGame2048Service implements Game2048Service {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(ImplementationGame2048Service.class);
-  private final ArrayList<Block> gameBoard;
-  private final ArrayList<Position> freelist;
+  private ArrayList<Block> gameBoard;
+  private ArrayList<Position> freelist;
   private int currentScore;
   private boolean gameWon;
   private boolean gameLost;
@@ -52,6 +52,13 @@ public class ImplementationGame2048Service implements Game2048Service {
 
   @Override
   public void moveAllBlocks(MovingDirection direction) throws IllegalParameterException {
+    predictableMoveAllBlocks(direction);
+    addBlock(2);
+    isGameWon();
+    notifyGame2048Listener();
+  }
+
+  public void predictableMoveAllBlocks(MovingDirection direction) throws IllegalParameterException {
     logger.info("moveAllBlocks: direction = {}", direction);
     ArrayList<Block> columnRow = new ArrayList<>();
     for (int i = 0; i < 4; i++) {
@@ -66,9 +73,6 @@ public class ImplementationGame2048Service implements Game2048Service {
       moveBlocks(columnRow, direction);
       columnRow.clear();
     }
-    addBlock(2);
-    isGameWon();
-    notifyGame2048Listener();
   }
 
   @Override
@@ -345,5 +349,16 @@ public class ImplementationGame2048Service implements Game2048Service {
 
   public ArrayList<Position> getFreelist() {
     return freelist;
+  }
+
+  /**
+   * Setter are only for Testing
+   */
+  public void setGameBoard(ArrayList<Block> gameBoard) {
+    this.gameBoard = gameBoard;
+  }
+
+  public void setFreelist(ArrayList<Position> freelist) {
+    this.freelist = freelist;
   }
 }
