@@ -4,26 +4,20 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.components.wordle.provider.WordleGameLogic;
 import de.hhn.it.devtools.javafx.controllers.wordleAdditional.SimpleWordlePanelListener;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import de.hhn.it.devtools.apis.wordle.WordleService;
-import de.hhn.it.devtools.apis.wordle.WordleGuessService;
 import de.hhn.it.devtools.apis.wordle.IllegalGuessException;
-import de.hhn.it.devtools.apis.wordle.WordlePanelService;
-import de.hhn.it.devtools.apis.wordle.WordlePanelListener;
-import de.hhn.it.devtools.javafx.controllers.WordleGameController;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-
+import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -35,20 +29,43 @@ public class WordleGameController extends Controller implements Initializable {
     private TextField textField;
     @FXML
     private GridPane rowGridPane;
-     private Integer rowCount;
+
+    @FXML
+    private VBox mainScreenVBox;
+
+    @FXML
+    private Button button;
+
+    private Integer rowCount;
+
     private Integer colCount = 0;
 
     private String userInput;
 
-    private WordleService backend = new WordleGameLogic();
+    private final WordleService backend = new WordleGameLogic();
+
+    private boolean isGameRunning = true;
+
 
     @FXML
-    void buttonClicked(ActionEvent event) throws IllegalGuessException {
+    void buttonClicked(ActionEvent event) throws IllegalGuessException, IOException {
 
         if(checkIfGuessWasValid()) {
-            backend.receiveAndComputeGuess(textField.getText());
+            isGameRunning = !backend.receiveAndComputeGuess(textField.getText());
             fillCurrentRowWithUserInput();
             textField.clear();
+        }
+        if (!isGameRunning){
+            textField.setEditable(false);
+            button.setDisable(true);
+            System.out.println("eZ win");
+            loadVictoryScreen();
+
+        }
+        if (isGameRunning && rowCount > 5){
+            textField.setEditable(false);
+            button.setDisable(true);
+            System.out.println("-35 LP");
         }
     }
 
@@ -71,6 +88,12 @@ public class WordleGameController extends Controller implements Initializable {
             return false;
         }
         return true;
+    }
+
+    @FXML
+    private void loadVictoryScreen() throws IOException{
+        VBox vbox = FXMLLoader.load(getClass().getResource("/fxml/wordle/victoryScreen.fxml"));
+        mainScreenVBox.getChildren().setAll(vbox);
     }
 
     private void fillCurrentRowWithUserInput() {
