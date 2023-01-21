@@ -18,6 +18,8 @@ public class ImplementationGame2048Service implements Game2048Service {
   private int currentScore;
   private boolean gameWon;
   private boolean gameLost;
+  private final int[] values;
+  private int valueIndex;
   private ArrayList<Game2048Listener> gameListeners;
 
   public ImplementationGame2048Service() {
@@ -27,6 +29,7 @@ public class ImplementationGame2048Service implements Game2048Service {
     this.gameWon = false;
     this.gameLost = false;
     this.gameListeners = new ArrayList<>();
+    values = new int[]{2, 2, 4, 0, 0};
   }
 
   @Override
@@ -53,7 +56,13 @@ public class ImplementationGame2048Service implements Game2048Service {
   @Override
   public void moveAllBlocks(MovingDirection direction) throws IllegalParameterException {
     predictableMoveAllBlocks(direction);
-    addBlock(2);
+    if (valueIndex >= values.length) {
+      valueIndex = 0;
+    }
+    int value = values[valueIndex++];
+    if (value > 0) {
+      addBlock(value);
+    }
     isGameWon();
     notifyGame2048Listener();
   }

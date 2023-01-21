@@ -227,7 +227,7 @@
                 <Font size="22.0" />
             </font>
         </Text>
-      <TextArea editable="false" layoutX="25.0" layoutY="141.0" prefHeight="292.0" prefWidth="252.0" text="You can move the blocks&#10;with your WASD-keys. The&#10;goal is to get a block with a&#10;value ofb2048, but you can &#10;still continue playing to get &#10;even greater highscores. &#10;Have fun!">
+      <TextArea editable="false" layoutX="25.0" layoutY="141.0" prefHeight="292.0" prefWidth="252.0" text="You can move the blocks&#10;with your WASD-keys. The&#10;goal is to get a block with a&#10;value of 2048, but you can &#10;still continue playing to get &#10;even greater highscores. &#10;Have fun!">
          <font>
             <Font size="18.0" />
          </font></TextArea>
