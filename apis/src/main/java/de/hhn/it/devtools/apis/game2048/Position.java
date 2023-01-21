@@ -6,7 +6,6 @@ public class Position {
 
 
   public Position(int xPosition, int yPosition) {
-    // TODO: 03.01.2023 andere exception verwerfen?
     if (xPosition < 0 || xPosition > 3) throw new RuntimeException("Illegal xPosition Parameter");
     if (yPosition < 0 || yPosition > 3) throw new RuntimeException("Illegal yPosition Parameter");
     this.xPosition = xPosition;
