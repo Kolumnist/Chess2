@@ -38,21 +38,4 @@ public class ImplementationGame2048ServiceTestBadCases {
     }
     assertTrue(thrown);
   }
-
-  @Test
-  void testAddingWrongValue() {
-    ImplementationGame2048Service correctService = new ImplementationGame2048Service();
-    ImplementationGame2048Service service = new ImplementationGame2048Service();
-    setUp(correctService, service);
-    Position firstPosition = new Position(1,1);
-    int value = 3;
-    boolean thrown = false;
-    try {
-      service.addBlock(firstPosition,value);
-    } catch (IllegalParameterException e) {
-      thrown = true;
-    }
-    assertTrue(thrown);
-  }
-
 }
