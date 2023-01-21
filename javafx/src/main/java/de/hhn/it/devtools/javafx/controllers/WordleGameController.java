@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.javafx.controllers;
 
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.components.wordle.provider.WordleGameLogic;
 import de.hhn.it.devtools.javafx.controllers.wordleAdditional.SimpleWordlePanelListener;
 import javafx.event.ActionEvent;
@@ -78,7 +79,7 @@ public class WordleGameController extends Controller implements Initializable {
         for(Node node: rowGridPane.getChildren()) {
             if(Objects.equals(GridPane.getRowIndex(node), rowCount)) {
                 Label currentLabel = (Label) node;
-                currentLabel.setText(userInput.substring(colCount, colCount + 1));
+                currentLabel.setText(userInput.substring(colCount, colCount + 1).toUpperCase());
                 colCount++;
             }
         }
@@ -89,16 +90,23 @@ public class WordleGameController extends Controller implements Initializable {
         colCount = 0;
     }
 
-    private void connectListenersToLabels() {
+    private void connectListenersToLabels() throws IllegalParameterException {
+        int counter = 0;
         for (Node node: rowGridPane.getChildren()) {
             Label currentLabel = (Label) node;
-            //backend.addCallback(new SimpleWordlePanelListener(currentLabel), );
+            backend.addCallback(new SimpleWordlePanelListener(currentLabel), backend.getPanelById(counter));
+            counter++;
         }
     }
 
         @Override
         public void initialize (URL url, ResourceBundle resourceBundle){
         backend.startGame();
+            try {
+                connectListenersToLabels();
+            } catch (IllegalParameterException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
