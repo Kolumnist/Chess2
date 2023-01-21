@@ -17,6 +17,7 @@ public class DuckHuntScreenController {
   private DuckHuntSettingsController duckHuntSettingsController;
   private DuckHuntMenuController duckHuntMenuController;
   private DuckHuntGameController duckHuntGameController;
+  private DuckHuntDescriptionController duckHuntDescriptionController;
 
   public DuckHuntScreenController(final AnchorPane anchorPane) {
     this.anchorPane = anchorPane;
@@ -46,6 +47,18 @@ public class DuckHuntScreenController {
     return settingsScreenContent;
   }
 
+  private Node getDescriptionScreen() {
+    Node descriptionScreenContent = null;
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/duckhunt/DuckHuntDescriptionScreen.fxml"));
+    try {
+      descriptionScreenContent = loader.load();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    duckHuntDescriptionController = loader.getController();
+    return descriptionScreenContent;
+  }
+
   public void switchTo(String fromScreen, String toScreen) throws UnknownTransitionException {
     logger.info("Switching from " + fromScreen + " to " + toScreen);
     switch (toScreen) {
@@ -56,6 +69,10 @@ public class DuckHuntScreenController {
       case DuckHuntMenuController.SCREEN:
         anchorPane.getChildren().clear();
         anchorPane.getChildren().add(getMenuScreen());
+        break;
+      case DuckHuntDescriptionController.SCREEN:
+        anchorPane.getChildren().clear();
+        anchorPane.getChildren().add(getDescriptionScreen());
         break;
       case DuckHuntGameController.SCREEN:
         openGameView();

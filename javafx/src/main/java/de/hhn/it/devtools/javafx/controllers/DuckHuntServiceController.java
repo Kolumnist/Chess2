@@ -21,6 +21,7 @@ public class DuckHuntServiceController extends Controller implements Initializab
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     screenController = new DuckHuntScreenController(backgroundAnchorPane);
+    gameSettings = new GameSettingsDescriptor();
     DuckHuntAttributeStore duckHuntAttributeStore = DuckHuntAttributeStore.getReference();
     duckHuntAttributeStore.setAttribute(DuckHuntScreenController.SCREEN_CONTROLLER, screenController);
     duckHuntAttributeStore.setAttribute("gameSettings", gameSettings);

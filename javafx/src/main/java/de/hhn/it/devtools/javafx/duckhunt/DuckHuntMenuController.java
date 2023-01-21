@@ -39,7 +39,7 @@ public class DuckHuntMenuController implements Initializable {
 
   @FXML
   void showInstructions(ActionEvent event) {
-
+    screenController.switchTo(DuckHuntMenuController.SCREEN, DuckHuntDescriptionController.SCREEN);
   }
 
   @FXML
