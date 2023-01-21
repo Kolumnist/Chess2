@@ -217,16 +217,19 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Label>
-        <Text fx:id="winGameLabel" layoutX="42.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You won the Game">
+        <Text fx:id="winGameLabel" layoutX="59.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You won the Game">
             <font>
                 <Font size="22.0" />
             </font>
         </Text>
-        <Text fx:id="loseGameLabel" layoutX="45.0" layoutY="533.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You lost the Game">
+        <Text fx:id="loseGameLabel" layoutX="62.0" layoutY="533.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You lost the Game">
             <font>
                 <Font size="22.0" />
             </font>
         </Text>
-      <TextArea editable="false" layoutX="56.0" layoutY="148.0" prefHeight="200.0" prefWidth="200.0" text="You can move the blocks with &#10;your WASD-keys. The goal is to &#10;get a block with a value of&#10;2048, but you can still continue&#10;playing to get even greater &#10;highscores. &#10;Have fun!" />
+      <TextArea editable="false" layoutX="25.0" layoutY="141.0" prefHeight="292.0" prefWidth="252.0" text="You can move the blocks&#10;with your WASD-keys. The&#10;goal is to get a block with a&#10;value ofb2048, but you can &#10;still continue playing to get &#10;even greater highscores. &#10;Have fun!">
+         <font>
+            <Font size="18.0" />
+         </font></TextArea>
     </children>
 </Pane>
