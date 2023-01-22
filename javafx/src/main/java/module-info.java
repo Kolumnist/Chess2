@@ -38,10 +38,10 @@ module devtools.javafx {
   exports de.hhn.it.devtools.javafx.controllers.reactiongame;
   opens de.hhn.it.devtools.javafx.controllers.reactiongame to javafx.fxml;
   exports de.hhn.it.devtools.javafx.controllers.memory;
-    exports de.hhn.it.devtools.javafx.minesweeper;
-    opens de.hhn.it.devtools.javafx.minesweeper to javafx.fxml;
-    exports de.hhn.it.devtools.javafx.minesweeper.helpers;
-    opens de.hhn.it.devtools.javafx.minesweeper.helpers to javafx.fxml;
-    exports de.hhn.it.devtools.javafx.controllers.battleship;
-    opens de.hhn.it.devtools.javafx.controllers.battleship to javafx.fxml;
+  exports de.hhn.it.devtools.javafx.minesweeper;
+  opens de.hhn.it.devtools.javafx.minesweeper to javafx.fxml;
+  exports de.hhn.it.devtools.javafx.minesweeper.helpers;
+  opens de.hhn.it.devtools.javafx.minesweeper.helpers to javafx.fxml;
+  exports de.hhn.it.devtools.javafx.controllers.battleship;
+  opens de.hhn.it.devtools.javafx.controllers.battleship to javafx.fxml;
 }

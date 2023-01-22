@@ -10,25 +10,25 @@ module devtools.components {
   exports de.hhn.it.devtools.components.game2048.provider;
   exports de.hhn.it.devtools.components.wordle.provider;
   requires org.slf4j;
-    exports de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
+  exports de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
   requires devtools.apis;
-    requires java.desktop;
-    provides  de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerService
-          with de.hhn.it.devtools.components.example.coffeemakerservice.provider.WnckCoffeeMakerService;
-  provides  de.hhn.it.devtools.apis.examples.coffeemakerservice.AdminCoffeeMakerService
-          with de.hhn.it.devtools.components.example.coffeemakerservice.provider.WnckCoffeeMakerService;
-  provides  de.hhn.it.devtools.apis.battleship.BattleshipService
-          with de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
+  requires java.desktop;
+  provides de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerService
+      with de.hhn.it.devtools.components.example.coffeemakerservice.provider.WnckCoffeeMakerService;
+  provides de.hhn.it.devtools.apis.examples.coffeemakerservice.AdminCoffeeMakerService
+      with de.hhn.it.devtools.components.example.coffeemakerservice.provider.WnckCoffeeMakerService;
+  provides de.hhn.it.devtools.apis.battleship.BattleshipService
+      with de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
   provides de.hhn.it.devtools.apis.duckhunt.DuckHuntService
-          with de.hhn.it.devtools.components.duckhunt.DuckHunt;
+      with de.hhn.it.devtools.components.duckhunt.DuckHunt;
   provides de.hhn.it.devtools.apis.game2048.Game2048Service
-          with de.hhn.it.devtools.components.game2048.provider.ImplementationGame2048Service;
+      with de.hhn.it.devtools.components.game2048.provider.ImplementationGame2048Service;
   provides de.hhn.it.devtools.apis.memory.MemoryService
-          with de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
+      with de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
   provides de.hhn.it.devtools.apis.chess2.Chess2Service
       with de.hhn.it.devtools.components.chess2.ChessGame;
   provides de.hhn.it.devtools.apis.wordle.WordleService
-          with de.hhn.it.devtools.components.wordle.provider.WordleGameLogic;
+      with de.hhn.it.devtools.components.wordle.provider.WordleGameLogic;
   provides de.hhn.it.devtools.apis.minesweeper.MinesweeperService
-          with  de.hhn.it.devtools.components.minesweeper.provider.LjMinesweeperService;
-        }
+      with de.hhn.it.devtools.components.minesweeper.provider.LjMinesweeperService;
+}
