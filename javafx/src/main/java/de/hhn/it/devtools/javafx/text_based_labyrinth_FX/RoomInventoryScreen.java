@@ -78,6 +78,8 @@ public class RoomInventoryScreen extends AnchorPane implements Initializable {
         itemInspectTextField.clear();
         itemNameField.clear();
         playerName.setText(viewModel.getGame().getPlayerName());
+        itemHashMap = new HashMap<>();
+        itemNames = new ArrayList<>();
         viewModel.getGame().getCurrentRoom().getItemList().listIterator()
                 .forEachRemaining(item -> itemHashMap.put(item.getName(),item));
         itemHashMap.keySet().stream().iterator().forEachRemaining(item -> itemNames.add(item));

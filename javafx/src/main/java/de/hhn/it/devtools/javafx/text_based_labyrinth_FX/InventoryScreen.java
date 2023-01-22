@@ -76,6 +76,8 @@ public class InventoryScreen extends AnchorPane implements Initializable {
         itemInspectTextField.clear();
         itemNameField.clear();
         playerName.setText(viewModel.getGame().getPlayerName());
+        itemHashMap = new HashMap<>();
+        itemNames = new ArrayList<>();
         itemHashMap = viewModel.getGame().getPlayer().getInventoryWithNames();
         itemHashMap.keySet().stream().iterator().forEachRemaining(item -> itemNames.add(item));
         itemObservableList = FXCollections.observableList(itemNames);
