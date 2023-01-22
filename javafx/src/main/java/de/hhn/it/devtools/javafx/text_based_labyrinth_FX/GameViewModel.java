@@ -26,6 +26,7 @@ public class GameViewModel implements OutputListener {
         screenController.getRoomInventoryScreen().setViewModel(this);
         screenController.getInteractScreen().setViewModel(this);
         screenController.getInventoryScreen().setViewModel(this);
+        screenController.getHelpScreen().setViewModel(this);
 
 
         game.addListener(this);

@@ -13,6 +13,7 @@ public class GameScreenController {
     private InteractScreen interactScreen;
     private InventoryScreen inventoryScreen;
     private RoomInventoryScreen roomInventoryScreen;
+    private HelpScreen helpScreen;
 
     private Pane paneController;
     private AnchorPane screen;
@@ -25,6 +26,8 @@ public class GameScreenController {
         interactScreen = new InteractScreen(this);
         inventoryScreen = new InventoryScreen(this);
         roomInventoryScreen = new RoomInventoryScreen(this);
+        helpScreen = new HelpScreen(this);
+
 
         paneController = pane;
         paneController.getChildren().clear();
@@ -49,6 +52,10 @@ public class GameScreenController {
 
     public RoomInventoryScreen getRoomInventoryScreen() {
         return roomInventoryScreen;
+    }
+
+    public HelpScreen getHelpScreen() {
+        return helpScreen;
     }
 
 
@@ -76,6 +83,9 @@ public class GameScreenController {
                 break;
             case RoomInventoryScreen.SCREEN_NAME:
                 screen = roomInventoryScreen;
+                break;
+            case HelpScreen.SCREEN_NAME:
+                screen = helpScreen;
                 break;
             default:
                 throw new UnknownTransitionException("Screen transition was not successful", from, to);
