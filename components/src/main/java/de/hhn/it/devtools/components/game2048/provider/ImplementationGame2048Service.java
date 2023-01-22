@@ -37,6 +37,7 @@ public class ImplementationGame2048Service implements Game2048Service {
     this.gameLost = false;
     this.gameListeners = new ArrayList<>();
     values = new int[]{2, 4, 4, 0, 0, 2, 4, 2, 8, 0, 0};
+    valueIndex = 0;
   }
 
   @Override
@@ -258,9 +259,6 @@ public class ImplementationGame2048Service implements Game2048Service {
             mergeForbid = false;
           }
         }
-      }
-      default -> {
-        logger.warn("Reaching default should be impossible");
       }
     }
     gameBoard.addAll(columnRow);

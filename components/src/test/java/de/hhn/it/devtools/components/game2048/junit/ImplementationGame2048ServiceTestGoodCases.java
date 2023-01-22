@@ -210,6 +210,87 @@ public class ImplementationGame2048ServiceTestGoodCases {
             () -> assertDoesNotThrow(() -> service.moveAllBlocks(MovingDirection.left)),
             () -> assertTrue((boolean) getField("gameWon").get(service))
     );
+  }
+
+  @Test
+  @DisplayName("Test if lose condition triggers correctly")
+  void testGameLost() {
+    assertAll(
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(3, 1), 2)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(2, 1), 4)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(1, 1), 6)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(0, 1), 8)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(3, 2), 10)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(2, 2), 12)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(1, 2), 14)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(0, 2), 16)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(3, 3), 18)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(2, 3), 20)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(1, 3), 22)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(0, 3), 24)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(3, 0), 26)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(2, 0), 28)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(1, 0), 30)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(0, 0), 32)),
+            () -> assertDoesNotThrow(() -> service.moveAllBlocks(MovingDirection.left)),
+            () -> assertTrue((boolean) getField("gameLost").get(service))
+    );
+  }
+
+
+  @Test
+  @DisplayName("Test if lose condition triggers correctly and freelist gets correctly" +
+               " updated one move before the game is lost")
+  void testFreelistAndGameNotLost() {
+    assertAll(
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(3, 1), 32)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(2, 1), 4)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(1, 1), 6)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(0, 1), 8)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(3, 2), 10)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(2, 2), 12)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(1, 2), 14)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(0, 2), 16)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(3, 3), 18)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(2, 3), 20)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(1, 3), 22)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(0, 3), 24)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(3, 0), 26)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(2, 0), 28)),
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(1, 0), 30)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(3, 1), 32)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(2, 1), 4)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(1, 1), 6)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(0, 1), 8)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(3, 2), 10)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(2, 2), 12)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(1, 2), 14)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(0, 2), 16)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(3, 3), 18)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(2, 3), 20)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(1, 3), 22)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(0, 3), 24)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(3, 0), 26)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(2, 0), 28)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(1, 0), 30)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(0, 0), 2)),
+            () -> assertDoesNotThrow(() -> service.moveAllBlocks(MovingDirection.left)),
+            () -> assertEquals(getField("freelist").get(service), getField("freelist").get(correctService)),
+            () -> assertFalse((boolean) getField("gameLost").get(service))
+    );
+  }
+
+  @Test
+  @DisplayName("Test if valueIndex gets reset to value zero ( after reset valueIndex ++) if value of valueIndex >= valueArray.length")
+  void testValueIndex() throws NoSuchFieldException, IllegalAccessException {
+    int valueIndex1 = (int) getField("valueIndex").get(service);
+    int valueIndex2 = 11;
+    assertAll(
+            () -> assertEquals(0, valueIndex1),
+            () -> getField("valueIndex").set(service, valueIndex2),
+            () -> assertEquals((int) getField("valueIndex").get(service), valueIndex2),
+            () -> assertDoesNotThrow(() -> service.moveAllBlocks(MovingDirection.up)),
+            () -> assertEquals(1, (int) getField("valueIndex").get(service)));
 
   }
 }
