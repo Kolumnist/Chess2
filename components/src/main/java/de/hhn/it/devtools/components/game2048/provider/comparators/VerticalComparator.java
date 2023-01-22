@@ -1,9 +1,8 @@
-package de.hhn.it.devtools.components.game2048.provider.Comparators;
+package de.hhn.it.devtools.components.game2048.provider.comparators;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.game2048.Block;
 import de.hhn.it.devtools.apis.game2048.MovingDirection;
-
 import java.util.Comparator;
 
 /**
@@ -16,11 +15,14 @@ public class VerticalComparator implements Comparator<Block> {
           org.slf4j.LoggerFactory.getLogger(VerticalComparator.class);
 
   /**
-   * direction = up => upDown = true
-   * direction = down => upDown = false
+   * direction = up => upDown = true.
+   * direction = down => upDown = false.
    */
   private boolean upDown;
 
+  /**
+   * Basic Constructor.
+   */
   public VerticalComparator(MovingDirection direction) throws IllegalParameterException {
     switch (direction) {
       case up -> {

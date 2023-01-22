@@ -2,8 +2,8 @@ package de.hhn.it.devtools.components.game2048.junit;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.game2048.MovingDirection;
-import de.hhn.it.devtools.components.game2048.provider.Comparators.HorizontalComparator;
-import de.hhn.it.devtools.components.game2048.provider.Comparators.VerticalComparator;
+import de.hhn.it.devtools.components.game2048.provider.comparators.HorizontalComparator;
+import de.hhn.it.devtools.components.game2048.provider.comparators.VerticalComparator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
