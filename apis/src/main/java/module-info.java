@@ -6,6 +6,10 @@ module devtools.apis {
   exports de.hhn.it.devtools.apis.examples.coffeemakerservice;
   exports de.hhn.it.devtools.apis.exceptions;
   exports de.hhn.it.devtools.apis.chess2;
+  exports de.hhn.it.devtools.apis.connectfour.enums;
+  exports de.hhn.it.devtools.apis.connectfour.exceptions;
+  exports de.hhn.it.devtools.apis.connectfour.helper;
+  exports de.hhn.it.devtools.apis.connectfour.interfaces;
   exports de.hhn.it.devtools.apis.battleship;
   exports de.hhn.it.devtools.apis.duckhunt;
   exports de.hhn.it.devtools.apis.memory;

@@ -9,6 +9,7 @@ module devtools.javafx {
   uses de.hhn.it.devtools.apis.examples.coffeemakerservice.AdminCoffeeMakerService;
   uses de.hhn.it.devtools.apis.battleship.BattleshipService;
   uses de.hhn.it.devtools.apis.chess2.Chess2Service;
+  uses de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourInterface;
   uses de.hhn.it.devtools.apis.duckhunt.DuckHuntService;
   uses de.hhn.it.devtools.apis.wordle.WordleService;
   opens de.hhn.it.devtools.javafx.controllers.wordleAdditional to javafx.fxml;
@@ -18,6 +19,7 @@ module devtools.javafx {
   opens de.hhn.it.devtools.javafx.battleship to javafx.fxml;
   opens de.hhn.it.devtools.javafx.text_based_labyrinth_FX to javafx.fxml;
   opens de.hhn.it.devtools.javafx.chess2 to javafx.fxml;
+  opens de.hhn.it.devtools.javafx.controllers.connectfour to javafx.fxml;
   opens de.hhn.it.devtools.javafx.duckhunt to javafx.fxml;
   opens de.hhn.it.devtools.javafx.controllers.memory to javafx.fxml;
   opens de.hhn.it.devtools.javafx.controllers.ttrpgsheets to javafx.fxml;
@@ -28,6 +30,7 @@ module devtools.javafx {
   exports de.hhn.it.devtools.javafx.battleship;
   exports de.hhn.it.devtools.javafx.text_based_labyrinth_FX;
   exports de.hhn.it.devtools.javafx.chess2;
+  exports de.hhn.it.devtools.javafx.controllers.connectfour;
   exports de.hhn.it.devtools.javafx.duckhunt;
   exports de.hhn.it.devtools.javafx.game2048;
   opens de.hhn.it.devtools.javafx.game2048 to javafx.fxml;

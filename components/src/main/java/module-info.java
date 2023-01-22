@@ -4,6 +4,7 @@ module devtools.components {
   exports de.hhn.it.devtools.components.duckhunt;
   exports de.hhn.it.devtools.components.ttrpgsheets;
   exports de.hhn.it.devtools.components.chess2;
+  exports de.hhn.it.devtools.components.connectfour.provider;
   exports de.hhn.it.devtools.components.memory.provider;
   exports de.hhn.it.devtools.components.reactiongame.provider;
   exports de.hhn.it.devtools.components.minesweeper.provider;
@@ -27,6 +28,8 @@ module devtools.components {
       with de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
   provides de.hhn.it.devtools.apis.chess2.Chess2Service
       with de.hhn.it.devtools.components.chess2.ChessGame;
+  provides de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourInterface
+      with de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
   provides de.hhn.it.devtools.apis.wordle.WordleService
       with de.hhn.it.devtools.components.wordle.provider.WordleGameLogic;
   provides de.hhn.it.devtools.apis.minesweeper.MinesweeperService
