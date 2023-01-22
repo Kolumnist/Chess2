@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.ConnectFourController">
+    <center>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="pveButton" layoutX="390.0" layoutY="160.0" mnemonicParsing="false" onAction="#onSingleplayer" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="Singleplayer" />
+                <Button fx:id="pvpButton" layoutX="390.0" layoutY="260.0" mnemonicParsing="false" onAction="#onMultiplayer" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="Multiplayer" />
+                <Button fx:id="highscoreButton" layoutX="390.0" layoutY="360.0" mnemonicParsing="false" onAction="#onHighscores" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="Highscores" />
+                <Button fx:id="profilesButton" layoutX="390.0" layoutY="460.0" mnemonicParsing="false" onAction="#onProfiles" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="Profiles" />
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="426.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.connectfour.ProfilesNewController">
+   <right>
+      <AnchorPane prefHeight="240.0" prefWidth="426.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="profileImageView" fitHeight="100.0" fitWidth="100.0" layoutX="163.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="cancelButton" layoutX="14.0" layoutY="177.0" mnemonicParsing="false" onAction="#onCancel" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="Cancel" />
+            <Button fx:id="saveButton" layoutX="263.0" layoutY="177.0" mnemonicParsing="false" onAction="#onSave" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="Save" />
+            <TextField fx:id="nameText" layoutX="139.0" layoutY="129.0" />
+            <Label layoutX="89.0" layoutY="133.0" text="Name" />
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>
