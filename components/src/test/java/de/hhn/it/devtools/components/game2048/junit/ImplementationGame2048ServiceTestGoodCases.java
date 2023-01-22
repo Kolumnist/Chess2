@@ -1,11 +1,10 @@
 package de.hhn.it.devtools.components.game2048.junit;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.apis.game2048.Game2048Listener;
 import de.hhn.it.devtools.apis.game2048.MovingDirection;
 import de.hhn.it.devtools.apis.game2048.Position;
-import de.hhn.it.devtools.apis.game2048.State;
 import de.hhn.it.devtools.components.game2048.provider.ImplementationGame2048Service;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +13,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Test für gute Beispiele des ImplementationGame2048Service. ")
 public class ImplementationGame2048ServiceTestGoodCases {
 
-  void setUp(ImplementationGame2048Service correctService, ImplementationGame2048Service service) {
+  DummyListener listener;
+
+  @BeforeEach
+  void setUp(){
+    listener = new DummyListener();
+  }
+
+  void initialiseServices(ImplementationGame2048Service correctService, ImplementationGame2048Service service) {
     for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 4; j++) {
         correctService.getFreelist().add(new Position(i, j));
@@ -30,7 +36,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
   void testMoveEmptyBoard() {
     ImplementationGame2048Service correctService = new ImplementationGame2048Service();
     ImplementationGame2048Service service = new ImplementationGame2048Service();
-    setUp(correctService, service);
+    initialiseServices(correctService, service);
     try {
       service.predictableMoveAllBlocks(MovingDirection.left);
       service.predictableMoveAllBlocks(MovingDirection.right);
@@ -47,7 +53,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
   void testMoveAllDirections() {
     ImplementationGame2048Service correctService = new ImplementationGame2048Service();
     ImplementationGame2048Service service = new ImplementationGame2048Service();
-    setUp(correctService, service);
+    initialiseServices(correctService, service);
     try {
       service.addBlock(new Position(2, 2), 2);
       correctService.addBlock(new Position(3, 3), 2);
@@ -70,7 +76,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
   void testMoveUp() {
     ImplementationGame2048Service correctService = new ImplementationGame2048Service();
     ImplementationGame2048Service service = new ImplementationGame2048Service();
-    setUp(correctService, service);
+    initialiseServices(correctService, service);
     boolean thrown = false;
     try {
       service.addBlock(new Position(2, 3), 2);
@@ -100,7 +106,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
   void testMoveDown() {
     ImplementationGame2048Service correctService = new ImplementationGame2048Service();
     ImplementationGame2048Service service = new ImplementationGame2048Service();
-    setUp(correctService, service);
+    initialiseServices(correctService, service);
     boolean thrown = false;
     try {
       service.addBlock(new Position(2, 3), 2);
@@ -130,7 +136,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
   void testMoveRight() {
     ImplementationGame2048Service correctService = new ImplementationGame2048Service();
     ImplementationGame2048Service service = new ImplementationGame2048Service();
-    setUp(correctService, service);
+    initialiseServices(correctService, service);
     boolean thrown = false;
     try {
       service.addBlock(new Position(3, 1), 2);
@@ -160,7 +166,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
   void testMoveLeft() {
     ImplementationGame2048Service correctService = new ImplementationGame2048Service();
     ImplementationGame2048Service service = new ImplementationGame2048Service();
-    setUp(correctService, service);
+    initialiseServices(correctService, service);
     boolean thrown = false;
     try {
       service.addBlock(new Position(3, 1), 2);
@@ -188,14 +194,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
   @Test
   @DisplayName("Tests if callbacks can be added and if they can be removed")
   void testAddAndRemoveCallback(){
-    ImplementationGame2048Service correctService = new ImplementationGame2048Service();
     ImplementationGame2048Service service = new ImplementationGame2048Service();
-    Game2048Listener listener = new Game2048Listener() {
-      @Override
-      public void newState(State state) {
-
-      }
-    };
     boolean thrown = false;
     try {
       service.addCallback(listener);
@@ -222,5 +221,30 @@ public class ImplementationGame2048ServiceTestGoodCases {
       thrown = true;
     }
     assertTrue(thrown);
+  }
+
+  @Test
+  void testListener(){
+    ImplementationGame2048Service service = new ImplementationGame2048Service();
+    try {
+      service.addCallback(listener);
+      service.initialisation();
+      service.moveAllBlocks(MovingDirection.up);
+      service.moveAllBlocks(MovingDirection.left);
+      service.moveAllBlocks(MovingDirection.right);
+    } catch (IllegalParameterException e) {
+      e.printStackTrace();
+    }
+    assertEquals(4,listener.getCountCalls());
+    try {
+      service.removeCallback(listener);
+      service.initialisation();
+      service.moveAllBlocks(MovingDirection.up);
+      service.moveAllBlocks(MovingDirection.left);
+      service.moveAllBlocks(MovingDirection.right);
+    } catch (IllegalParameterException e) {
+      e.printStackTrace();
+    }
+    assertEquals(4,listener.getCountCalls());
   }
 }

@@ -14,7 +14,7 @@ public class ComparatorTestBadCases {
 
   @Test
   @DisplayName("Test if exception is thrown for vertical comparator with wrong assessments. ")
-  public void testCompareVertical() throws IllegalParameterException {
+  public void testCompareVertical() {
     boolean thrown = false;
     try {
       VerticalComparator comparator = new VerticalComparator(MovingDirection.right);
@@ -22,10 +22,11 @@ public class ComparatorTestBadCases {
       thrown = true;
     }
     assertTrue(thrown);
+  }
 
-  }  @Test
+  @Test
   @DisplayName("Test if exception is thrown for horizontal comparator with wrong assessments. ")
-  public void testCompareHorizontal() throws IllegalParameterException {
+  public void testCompareHorizontal() {
     boolean thrown = false;
     try {
       HorizontalComparator comparator = new HorizontalComparator(MovingDirection.down);
