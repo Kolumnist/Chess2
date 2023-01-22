@@ -176,7 +176,7 @@ public class CmpBattleshipService implements BattleshipService {
             listener.updateField();
             if(player.equals(this.player)) {
                 listener.resetShipSelected();
-                listener.updateUnplacedShips();
+                listener.updateUnplacedShips(player);
             }
             if(!this.player.hasUnplacedShipsLeft()){
                 listener.allShipsPlaced();
@@ -227,7 +227,7 @@ public class CmpBattleshipService implements BattleshipService {
             listener.updateFiringShotsButton();
 
             if(player.equals(this.player)){
-                listener.updateUnplacedShips();
+                listener.updateUnplacedShips(player);
             }
 
         }
@@ -472,15 +472,12 @@ public class CmpBattleshipService implements BattleshipService {
     // moutassem
     @Override
     public void concede() throws IllegalGameStateException {
-        //TODO: needs first UI
         if(currentGameState == GameState.PREGAME || currentGameState == GameState.GAMEOVER){
             throw new IllegalGameStateException("You can not give up when the game is not going");
         }
         if(currentGameState == GameState.PLACINGSHIPS || currentGameState == GameState.FIRINGSHOTS) {
             currentGameState = GameState.GAMEOVER;
         }
-        //Show that CPU wins
-        //Below the display button for rematch and button for return to main menu
     }
 
     // moutassem

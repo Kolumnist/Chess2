@@ -305,6 +305,11 @@ public class Game extends Stage {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Concede concede = new Concede();
+                try {
+                    service.concede();
+                } catch (IllegalGameStateException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 

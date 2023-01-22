@@ -25,12 +25,12 @@ public class FXBattleshipListener implements BattleshipListener {
     }
 
     @Override
-    public void updateUnplacedShips() {
-        int carrierCount = game.player.countShipType(ShipType.CARRIER);
-        int battleshipCount = game.player.countShipType(ShipType.BATTLESHIP);
-        int cruiserCount = game.player.countShipType(ShipType.CRUISER);
-        int submarineCount = game.player.countShipType(ShipType.SUBMARINE);
-        int destroyerCount = game.player.countShipType(ShipType.DESTROYER);
+    public void updateUnplacedShips(Player player) {
+        int carrierCount = player.countShipType(ShipType.CARRIER);
+        int battleshipCount = player.countShipType(ShipType.BATTLESHIP);
+        int cruiserCount = player.countShipType(ShipType.CRUISER);
+        int submarineCount = player.countShipType(ShipType.SUBMARINE);
+        int destroyerCount = player.countShipType(ShipType.DESTROYER);
 
         game.shipsleft.carrier.setText("Carrier, Length: 5, Ships Left: " + carrierCount);
         game.shipsleft.battleship.setText("Battleship, Length: 4, Ships Left: " + battleshipCount);
