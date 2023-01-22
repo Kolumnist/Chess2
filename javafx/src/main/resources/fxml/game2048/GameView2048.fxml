@@ -18,22 +18,22 @@
                 <Font name="System Bold" size="38.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" layoutX="663.0" layoutY="36.0" prefHeight="50.0" prefWidth="150.0" text="High Score">
+        <Label alignment="CENTER" layoutX="599.0" layoutY="36.0" prefHeight="50.0" prefWidth="150.0" text="High Score">
             <font>
                 <Font size="23.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" layoutX="663.0" layoutY="86.0" prefHeight="50.0" prefWidth="150.0" text="Current Score">
+        <Label alignment="CENTER" layoutX="599.0" layoutY="86.0" prefHeight="50.0" prefWidth="150.0" text="Current Score">
             <font>
                 <Font size="23.0" />
             </font>
         </Label>
-        <Label fx:id="highScoreNumber" alignment="CENTER" layoutX="813.0" layoutY="36.0" prefHeight="50.0" prefWidth="150.0" text="highScoreNumber">
+        <Label fx:id="highScoreNumber" alignment="CENTER" layoutX="731.0" layoutY="36.0" prefHeight="50.0" prefWidth="232.0" text="highScoreNumber">
             <font>
                 <Font size="23.0" />
             </font>
         </Label>
-        <Label fx:id="currentScoreNumber" alignment="CENTER" layoutX="813.0" layoutY="86.0" prefHeight="50.0" prefWidth="150.0" text="currentScoreNumber">
+        <Label fx:id="currentScoreNumber" alignment="CENTER" layoutX="748.0" layoutY="86.0" prefHeight="50.0" prefWidth="215.0" text="currentScoreNumber">
             <font>
                 <Font size="23.0" />
             </font>
