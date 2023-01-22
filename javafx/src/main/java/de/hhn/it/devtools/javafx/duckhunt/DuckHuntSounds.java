@@ -5,7 +5,9 @@ package de.hhn.it.devtools.javafx.duckhunt;
  */
 public enum DuckHuntSounds {
   BUTTONCLICK("/sounds/duckhunt/ButtonClick.wav"),
-  GUNSHOT("/sounds/duckhunt/GunShot.wav");
+  GUNSHOT("/sounds/duckhunt/GunShot.wav"),
+  DRYSHOT("/sounds/duckhunt/DryShot.wav"),
+  AMBIANCE("/sounds/duckhunt/Ambiance.wav");
 
   private String directoryPath;
   DuckHuntSounds(String directoryPath) {

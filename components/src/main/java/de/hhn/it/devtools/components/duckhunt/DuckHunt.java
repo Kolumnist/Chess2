@@ -28,7 +28,7 @@ public class DuckHunt implements DuckHuntService {
   private DuckData[] ducks;
   private int ammoCount;
   private int duckCount;
-  private final int gunSpread = 100;  // TODO configure gun spread by screenDimension
+  private final int gunSpread = 60;  // TODO configure gun spread by screenDimension
   private MpatternGenerator pathGenerator;
   private float deltaTime = 0.016f;
   private final float duckSpeed = 600f;
@@ -103,6 +103,9 @@ public class DuckHunt implements DuckHuntService {
     if (gameInfo.getState() != GameState.RUNNING) {
       throw new RuntimeException();
     }
+    if (getGameInfo().getAmmo() <= 0) {
+      return;
+    }
 
     for (DuckData duck : ducks) {
       if (duck.getStatus() == DuckState.DEAD
@@ -113,8 +116,10 @@ public class DuckHunt implements DuckHuntService {
         continue;
       }
       // if amount of the vector between duck and shoot <= gunSpread
-      if (Math.sqrt(Math.pow(duck.getX() - x, 2) + Math.pow(duck.getY() - y, 2)) <= gunSpread
-              && gameSettings.getAmmoAmount() > 0) {
+      int duckCenterAdjustment = 50;
+      if (Math.sqrt(Math.pow((
+          duck.getX() + duckCenterAdjustment) - x, 2)
+          + Math.pow((duck.getY() + duckCenterAdjustment) - y, 2)) <= gunSpread) {
         duck.setStatus(DuckState.SCARRED);
         gameInfo.setPlayerScore(gameInfo.getPlayerScore() + 1);
         notifyListeners((l) -> {

@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -43,6 +44,7 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   @FXML private Label hitLabel;
   @FXML private Label nextRoundLabel;
   @FXML private Label scoreLabel;
+  @FXML private VBox pauseMenu;
 
   private DuckHunt game;
   private Stage stage;
@@ -50,6 +52,7 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   private HashMap<Integer, ImageView> ducks;
   private GameSettingsDescriptor gameSettings;
   private DuckHuntSoundManager soundManager;
+  private GameInfo gameInfo;
   private int currentRound = 0;
   private long score = 0;
 
@@ -73,6 +76,7 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
       System.out.println("stage close");
       stage.close();
       game.stopGame();
+      soundManager.stop();
     });
 
     soundManager = (DuckHuntSoundManager) duckHuntAttributeStore.getAttribute("soundManager");
@@ -84,12 +88,7 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
     for (int i = 0; i < gameSettings.getduckAmount(); i++) {
       ImageView duck = DuckHuntImageManager.NORTHDUCK.getImageView();
       duck.setOnMouseClicked(event -> {
-        if (game.getGameInfo().getState() == GameState.RUNNING) {
-          game.shoot(
-              Double.valueOf(event.getX()).intValue(),
-              Double.valueOf(event.getY()).intValue()
-          );
-        }
+        shoot(event);
       });
       ducks.put(i, duck);
     }
@@ -103,6 +102,7 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
     } catch (IllegalParameterException e) {
       throw new RuntimeException(e);
     }
+    soundManager.playLoopSound(DuckHuntSounds.AMBIANCE);
     game.startGame();
   }
 
@@ -126,34 +126,26 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   @FXML
   void exitGame(ActionEvent event) {
     stage.fireEvent(new WindowEvent(stage,WindowEvent.WINDOW_CLOSE_REQUEST));
-
   }
 
   @FXML
   void backgroundClicked(MouseEvent event) {
-    if (game.getGameInfo().getState() == GameState.RUNNING) {
-      game.shoot(
-          Double.valueOf(event.getX()).intValue(),
-          Double.valueOf(event.getY()).intValue()
-      );
-    }
+    shoot(event);
   }
 
   @FXML
   void bushClicked(MouseEvent event) {
-    if (game.getGameInfo().getState() == GameState.RUNNING) {
-      game.shoot(
-          Double.valueOf(event.getX()).intValue(),
-          Double.valueOf(event.getY()).intValue()
-      );
-    }
+    shoot(event);
   }
 
   @FXML
   void treeClicked(MouseEvent event) {
-    if (game.getGameInfo().getState() == GameState.RUNNING) {
-      game.shootObstacle();
-    }
+    shootObstacle();
+  }
+
+  @FXML
+  void groundClicked(MouseEvent event) {
+    shoot(event);
   }
 
   void newRound() {
@@ -179,7 +171,33 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
     anchorPane.getChildren().add(hitLabel);
     anchorPane.getChildren().add(scoreLabel);
     anchorPane.getChildren().add(nextRoundLabel);
+    anchorPane.getChildren().add(pauseMenu);
     //game.continueGame();
+  }
+
+  void shoot(MouseEvent event) {
+    if (gameInfo.getAmmo() <= 0) {
+      soundManager.playSound(DuckHuntSounds.DRYSHOT);
+      return;
+    }
+    soundManager.playSound(DuckHuntSounds.GUNSHOT);
+    if (game.getGameInfo().getState() == GameState.RUNNING) {
+      game.shoot(
+          Double.valueOf(event.getX()).intValue(),
+          Double.valueOf(event.getY()).intValue()
+      );
+    }
+  }
+
+  void shootObstacle() {
+    if (gameInfo.getAmmo() <= 0) {
+      soundManager.playSound(DuckHuntSounds.DRYSHOT);
+      return;
+    }
+    soundManager.playSound(DuckHuntSounds.GUNSHOT);
+    if (game.getGameInfo().getState() == GameState.RUNNING) {
+      game.shootObstacle();
+    }
   }
 
   void increaseScore() {
@@ -192,6 +210,7 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
     if (gameInfo == null) {
       return;
     }
+    this.gameInfo = gameInfo;
     ammoLabel.setText(String.valueOf(gameInfo.getAmmo()));
     if (gameInfo.getRound() > currentRound) {
       newRound();
