@@ -20,6 +20,7 @@ module devtools.javafx {
   opens de.hhn.it.devtools.javafx.chess2 to javafx.fxml;
   opens de.hhn.it.devtools.javafx.duckhunt to javafx.fxml;
   opens de.hhn.it.devtools.javafx.controllers.memory to javafx.fxml;
+  opens de.hhn.it.devtools.javafx.controllers.ttrpgsheets to javafx.fxml;
   exports de.hhn.it.devtools.javafx.controllers.wordleAdditional;
   exports de.hhn.it.devtools.javafx;
   exports de.hhn.it.devtools.javafx.controllers;
