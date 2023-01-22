@@ -17,7 +17,6 @@ public class WordlePanel implements WordlePanelService {
   private State state;
   private static int panelCount = 0;
   private int panelId;
-
   private List<WordlePanelListener> listeners = new ArrayList<>();
 
   /**
@@ -26,7 +25,6 @@ public class WordlePanel implements WordlePanelService {
    * @param letter The letter that will be entered into the field letter.
    */
   public WordlePanel(char letter) {
-
     this.letter = letter;
     this.state = State.INITIAL;
     panelId = panelCount;
@@ -88,6 +86,10 @@ public class WordlePanel implements WordlePanelService {
   }
   public void notifyListeners(State panelState) {
     listeners.forEach((listener) -> listener.newState(panelState));
+  }
+
+  public static void setPanelCount(int panelCount) {
+    WordlePanel.panelCount = panelCount;
   }
 }
 
