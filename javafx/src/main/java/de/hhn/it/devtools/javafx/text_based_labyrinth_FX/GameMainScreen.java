@@ -202,6 +202,7 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     @FXML
     public void openHelp(ActionEvent event) throws UnknownTransitionException {
         event.consume();
+        screenController.getHelpScreen().update();
         try {
             screenController.changeScreen(GameMainScreen.SCREEN_NAME, HelpScreen.SCREEN_NAME);
         } catch (UnknownTransitionException e) {
