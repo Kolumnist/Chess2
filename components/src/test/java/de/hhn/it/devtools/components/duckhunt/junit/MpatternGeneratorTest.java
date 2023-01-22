@@ -121,11 +121,11 @@ class MpatternGeneratorTest {
 
     final ArrayList<Vector2D> shouldBeCase = new ArrayList<>();
     shouldBeCase.add(new Vector2D(35, 100));
-    shouldBeCase.add(new Vector2D(57, 78));
-    shouldBeCase.add(new Vector2D(57, 51));
-    shouldBeCase.add(new Vector2D(34, 51));
-    shouldBeCase.add(new Vector2D(56, 51));
-    shouldBeCase.add(new Vector2D(82, 25));
+    shouldBeCase.add(new Vector2D(35, 55));
+    shouldBeCase.add(new Vector2D(72, 55));
+    shouldBeCase.add(new Vector2D(34, 17));
+    shouldBeCase.add(new Vector2D(89, 17));
+    shouldBeCase.add(new Vector2D(57, 49));
 
     assertEquals(result, shouldBeCase);
   }

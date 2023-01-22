@@ -1,20 +1,23 @@
 package de.hhn.it.devtools.components.duckhunt.junit;
 
-import de.hhn.it.devtools.apis.duckhunt.DuckData;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import de.hhn.it.devtools.apis.duckhunt.DuckState;
 import de.hhn.it.devtools.apis.duckhunt.GameSettingsDescriptor;
 import de.hhn.it.devtools.apis.duckhunt.GameState;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.components.duckhunt.DuckHunt;
 import de.hhn.it.devtools.components.duckhunt.ScreenDimension;
-import java.lang.reflect.Field;
-
 import de.hhn.it.devtools.components.duckhunt.Vector2D;
+import java.lang.reflect.Field;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class DuckHuntTest {
   DuckHunt game;
@@ -54,16 +57,16 @@ class DuckHuntTest {
     game.pauseGame();
     Thread.sleep(1000);
     game.getGameInfo().setState(GameState.RUNNING);
-    game.shoot(testListener.duckPosition.duckData()[0].getX(),
-        testListener.duckPosition.duckData()[0].getY());
+    game.shoot(testListener.duckPosition.duckData()[0].getX() - 50,
+        testListener.duckPosition.duckData()[0].getY() - 50);
     game.getGameInfo().setState(GameState.PAUSED);
-    Vector2D preDuckPos = new Vector2D(testListener.duckPosition.duckData()[0].getX(),
+    final Vector2D preDuckPos = new Vector2D(testListener.duckPosition.duckData()[0].getX(),
         testListener.duckPosition.duckData()[0].getY());
     game.continueGame();
     Thread.sleep(1000);
     game.pauseGame();
     Thread.sleep(1000);
-    Vector2D postDuckPos = new Vector2D(testListener.duckPosition.duckData()[0].getX(),
+    final Vector2D postDuckPos = new Vector2D(testListener.duckPosition.duckData()[0].getX(),
         testListener.duckPosition.duckData()[0].getY());
     assertEquals(DuckState.FALLING, testListener.duckPosition.duckData()[0].getStatus());
     System.out.println(preDuckPos.getY() + " < " + postDuckPos.getY());
@@ -72,7 +75,8 @@ class DuckHuntTest {
 
   @Test
   void shootTest()
-          throws IllegalParameterException, InterruptedException, NoSuchFieldException, IllegalAccessException {
+          throws IllegalParameterException, InterruptedException,
+          NoSuchFieldException, IllegalAccessException {
     game.addCallback(testListener);
     game.startGame();
     Thread.sleep(100);
@@ -82,8 +86,9 @@ class DuckHuntTest {
     Thread.sleep(1000);
     final int ammoCount = testListener.gameInfo.getAmmo();
     assertEquals(-1, testListener.duckHitId);
-    game.shoot(testListener.duckPosition.duckData()[0].getX(),
-        testListener.duckPosition.duckData()[0].getY());
+    System.out.println("Duck Position: " + testListener.duckPosition.duckData()[0].toString());
+    game.shoot(testListener.duckPosition.duckData()[0].getX() - 50,
+        testListener.duckPosition.duckData()[0].getY() - 50);
     Thread.sleep(1000);
     assertEquals(0, testListener.duckHitId);
     assertEquals(ammoCount - 1, testListener.gameInfo.getAmmo());
@@ -93,10 +98,12 @@ class DuckHuntTest {
     ScreenDimension screen = (ScreenDimension) screenDimField.get(game);
 
     //exception testing
-    assertThrows(RuntimeException.class,()->game.shoot(0,screen.getHeight()+1));
+    assertThrows(RuntimeException.class, () -> game.shoot(0, screen.getHeight() + 1));
     game.getGameInfo().setState(GameState.PAUSED);
-    assertThrows(RuntimeException.class,()->game.shoot(testListener.duckPosition.duckData()[0].getX(),
-            testListener.duckPosition.duckData()[0].getY()));
+    assertThrows(RuntimeException.class, () ->
+        game.shoot(testListener.duckPosition.duckData()[0].getX(),
+        testListener.duckPosition.duckData()[0].getY())
+    );
   }
 
   @Test
