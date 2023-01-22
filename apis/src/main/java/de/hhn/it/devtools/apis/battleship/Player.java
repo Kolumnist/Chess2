@@ -43,6 +43,16 @@ public class Player {
     
 
 
+    public int countShipType(ShipType type){
+        int count = 0;
+        for (Ship ownedShip : ownedShips) {
+            if ( ownedShip.getShipType() == type  && !ownedShip.getPlaced()){
+                count ++;
+            }
+        }
+        return  count;
+    }
+
     public Ship returnNextShip(ShipType type){
 
         for (Ship ownedShip : ownedShips) {

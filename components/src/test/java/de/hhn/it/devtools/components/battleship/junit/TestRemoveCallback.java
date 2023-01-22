@@ -3,6 +3,8 @@ package de.hhn.it.devtools.components.battleship.junit;
 import de.hhn.it.devtools.apis.battleship.*;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
+import de.hhn.it.devtools.components.battleship.provider.Computer;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +15,25 @@ public class TestRemoveCallback {
 
     CmpBattleshipService bsService = new CmpBattleshipService();
     BattleshipService bs = bsService;
+    Player player = bsService.getPlayer();
+    Field playerField = new Field(5, player);
+
+    Computer computer = bsService.getComputer();
+    Field computerField = new Field(5, computer);
+
+    @BeforeEach
+    void setup() {
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 5; j++){
+                playerField.setPanelMarker(i, j, PanelState.NOSHIP);
+                computerField.setPanelMarker(i, j, PanelState.NOSHIP);
+            }
+        }
+        player.setShipfield(playerField);
+        computer.setShipfield(computerField);
+        player.setAttackField(playerField);
+        computer.setAttackField(computerField);
+    }
 
     // Bad Cases
 
@@ -34,13 +55,19 @@ public class TestRemoveCallback {
     // Good cases
 
     @Test
-    @DisplayName("Test removeCallback successfully (here as example for GameState. but it works also for the others because it's the same)")
-    public void removeCallbackForGameStateSuccessfully() throws IllegalParameterException {
+    @DisplayName("Test removeCallback successfully")
+    public void removePotentialWinnerSuccessfully() throws IllegalShipStateException, IllegalGameStateException, IllegalPositionException, IllegalParameterException {
         BattleshipListenerInner listener = new BattleshipListenerInner();
-        listener.newState(GameState.PREGAME);
-        listener.newState(GameState.PLACINGSHIPS);
-        listener.newState(GameState.FIRINGSHOTS);
-        listener.newState(GameState.GAMEOVER);
+        Ship ship = new Ship(ShipType.DESTROYER, null);
+        ship.setIsVertical(false);
+        bsService.setCurrentGameState(GameState.PLACINGSHIPS);
+        bs.placeShip(computer, ship, 0, 0);
+        bsService.setCurrentGameState(GameState.FIRINGSHOTS);
+        bs.bombPanel(player, computer, 0, 0);
+        bs.bombPanel(player, computer, 1, 0);
+        if (bsService.checkWon(player)) {
+            listener.outputWinner(player);
+        }
         bs.addCallBack(listener);
 
         bs.removeCallback(listener);
