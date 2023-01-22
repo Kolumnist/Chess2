@@ -30,9 +30,21 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     @FXML
     Button openInventory;
     @FXML
-    Button moveButton;
+    Button moveButton1;
     @FXML
-    Button inspectButton;
+    Button inspectButton1;
+    @FXML
+    Button moveButton2;
+    @FXML
+    Button inspectButton2;
+    @FXML
+    Button moveButton3;
+    @FXML
+    Button inspectButton3;
+    @FXML
+    Button moveButton4;
+    @FXML
+    Button inspectButton4;
     @FXML
     Button searchButton;
     @FXML
@@ -46,13 +58,14 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     @FXML
     Label score;
     @FXML
-    ChoiceBox<Direction> directionChoiceBox;
-    @FXML
     TextArea playerTextField;
     @FXML
     TextArea roomTextField;
     @FXML
     TextArea actionTextField;
+    @FXML
+    ChoiceBox<Direction> directionChoiceBox;
+
 
     public GameMainScreen(GameScreenController screenController) {
         this.screenController = screenController;
@@ -115,23 +128,51 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     }
 
     @FXML
-    public void moveAction(ActionEvent event) {
+    public void moveAction1(ActionEvent event) {
         event.consume();
-        if (directionChoiceBox.getValue() == null) {
-            updateActionField("Please select a direction in which to move.");
-        } else {
-            viewModel.getGame().move(directionChoiceBox.getValue());
-        }
+        viewModel.getGame().move(Direction.NORTH);
     }
 
     @FXML
-    public void inspectAction(ActionEvent event) {
+    public void inspectAction1(ActionEvent event) {
         event.consume();
-        if (directionChoiceBox.getValue() == null) {
-            updateActionField("Please select a direction in which to inspect.");
-        } else {
-            viewModel.getGame().inspect(directionChoiceBox.getValue());
-        }
+        viewModel.getGame().move(Direction.NORTH);
+    }
+
+    @FXML
+    public void moveAction2(ActionEvent event) {
+        event.consume();
+        viewModel.getGame().move(Direction.EAST);
+    }
+
+    @FXML
+    public void inspectAction2(ActionEvent event) {
+        event.consume();
+        viewModel.getGame().move(Direction.EAST);
+    }
+
+    @FXML
+    public void moveAction3(ActionEvent event) {
+        event.consume();
+        viewModel.getGame().move(Direction.SOUTH);
+    }
+
+    @FXML
+    public void inspectAction3(ActionEvent event) {
+        event.consume();
+        viewModel.getGame().move(Direction.SOUTH);
+    }
+
+    @FXML
+    public void moveAction4(ActionEvent event) {
+        event.consume();
+        viewModel.getGame().move(Direction.WEST);
+    }
+
+    @FXML
+    public void inspectAction4(ActionEvent event) {
+        event.consume();
+        viewModel.getGame().move(Direction.WEST);
     }
 
 
