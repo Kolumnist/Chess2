@@ -1,8 +1,6 @@
 package de.hhn.it.devtools.javafx.duckhunt;
 
 import de.hhn.it.devtools.apis.duckhunt.GameSettingsDescriptor;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -21,6 +19,8 @@ public class DuckHuntSettingsController implements Initializable {
   public static final String SCREEN = "settings.screen";
   private DuckHuntScreenController screenController;
   private GameSettingsDescriptor gameSettings;
+  private DuckHuntSoundManager soundManager;
+
 
   @FXML
   private Label ammoCountLabel;
@@ -53,11 +53,14 @@ public class DuckHuntSettingsController implements Initializable {
   void applyGameSettings(MouseEvent event) {
     gameSettings.setAmmoAmount((int) ammoCountSlider.getValue());
     gameSettings.setDuckAmount((int) maxDuckCountSlider.getValue());
+    soundManager.changeVolume(volumeSlider.getValue());
+    soundManager.playSound(DuckHuntSounds.BUTTONCLICK);
   }
 
   @FXML
   void backToMainMenu(MouseEvent event) {
     screenController.switchTo(SCREEN, DuckHuntMenuController.SCREEN);
+    soundManager.playSound(DuckHuntSounds.BUTTONCLICK);
   }
 
   @Override
@@ -66,11 +69,13 @@ public class DuckHuntSettingsController implements Initializable {
     screenController =
         (DuckHuntScreenController) duckHuntAttributeStore
             .getAttribute(DuckHuntScreenController.SCREEN_CONTROLLER);
+
     gameSettings = (GameSettingsDescriptor) duckHuntAttributeStore
         .getAttribute("gameSettings");
+    soundManager = (DuckHuntSoundManager) duckHuntAttributeStore
+            .getAttribute("soundManager");
 
     logger.info("Start Screen initialized.");
-    System.out.println(gameSettings.getAmmoAmount() + " " + gameSettings.getduckAmount());
 
 
     maxDuckCountSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
