@@ -36,7 +36,7 @@ public class ImplementationGame2048Service implements Game2048Service {
     this.gameWon = false;
     this.gameLost = false;
     this.gameListeners = new ArrayList<>();
-    values = new int[]{2, 2, 4, 4, 0, 0};
+    values = new int[]{2, 4, 4, 0, 0, 2, 4, 2, 8, 0, 0};
   }
 
   @Override
@@ -289,9 +289,6 @@ public class ImplementationGame2048Service implements Game2048Service {
     currentScore = 0;
     for (Block gameBlock : gameBoard) {
       currentScore += gameBlock.getValue();
-    }
-    if (currentScore < 0) {
-      throw new IllegalStateException("Summ of Values of all Blocks in game-board is < 0");
     }
   }
 

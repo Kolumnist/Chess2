@@ -20,7 +20,7 @@ public class Block {
    * @param value      Current Value of the block
    */
   public Block(Position xyPosition, int value) {
-    if (value % 2 != 0) try {
+    if (value % 2 != 0 || value <= 0) try {
       throw new IllegalParameterException("Illegal value: " + value);
     } catch (IllegalParameterException e) {
       e.printStackTrace();
