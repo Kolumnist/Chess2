@@ -16,6 +16,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class InventoryScreen extends AnchorPane implements Initializable {
@@ -27,8 +30,10 @@ public class InventoryScreen extends AnchorPane implements Initializable {
     private GameViewModel viewModel;
     private GameScreenController screenController;
 
+    private HashMap<String, Item> itemHashMap;
+    private List<String> itemNames;
+    private ObservableList<String> itemObservableList;
 
-    private ObservableList<Item> itemObservableList;
 
     @FXML
     TextArea itemInspectTextField;
@@ -47,11 +52,13 @@ public class InventoryScreen extends AnchorPane implements Initializable {
     @FXML
     Button dropItem;
     @FXML
-    ChoiceBox<Item> itemChoiceBox;
+    ChoiceBox<String> itemChoiceBox;
 
 
     public InventoryScreen(GameScreenController screenController) {
         this.screenController = screenController;
+        this.itemHashMap = new HashMap<>();
+        this.itemNames = new ArrayList<>();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/labyrinth/InventoryScreen.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -69,7 +76,10 @@ public class InventoryScreen extends AnchorPane implements Initializable {
         itemInspectTextField.clear();
         itemNameField.clear();
         playerName.setText(viewModel.getGame().getPlayerName());
-        itemObservableList = FXCollections.observableList(viewModel.getGame().getCurrentRoom().getItemList());
+        viewModel.getGame().getCurrentRoom().getItemList().listIterator()
+                .forEachRemaining(item -> itemHashMap.put(item.getName(),item));
+        itemHashMap.keySet().stream().iterator().forEachRemaining(item -> itemNames.add(item));
+        itemObservableList = FXCollections.observableList(itemNames);
         itemChoiceBox.setItems(itemObservableList);
     }
 
@@ -101,7 +111,8 @@ public class InventoryScreen extends AnchorPane implements Initializable {
         if (itemChoiceBox.getValue() == null) {
             updateInspectField("Please select an item.");
         } else {
-            viewModel.getGame().inspectItem(itemChoiceBox.getValue(), CurrentScreenRequesting.PLAYERINVENTORY);
+            viewModel.getGame().inspectItem(itemHashMap.get(itemChoiceBox.getValue()),
+                    CurrentScreenRequesting.PLAYERINVENTORY);
         }
     }
 
@@ -112,7 +123,9 @@ public class InventoryScreen extends AnchorPane implements Initializable {
             updateInspectField("Please select an item.");
         } else {
             try {
-                viewModel.getGame().dropItem(itemChoiceBox.getValue().getItemId());
+                viewModel.getGame().dropItem(itemHashMap.get(itemChoiceBox.getValue()).getItemId());
+                itemHashMap.remove(itemChoiceBox.getValue());
+                itemNames.remove(itemChoiceBox.getValue());
             } catch (NoSuchItemFoundException e) {
                 updateInspectField(e.getMessage());
             }

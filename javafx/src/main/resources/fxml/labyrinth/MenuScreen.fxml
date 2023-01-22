@@ -8,7 +8,7 @@
 
 
 <fx:root maxHeight="480" maxWidth="680" minHeight="480" minWidth="680" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" type="AnchorPane">
+            prefWidth="613.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" type="AnchorPane">
    <children>
       <TextField fx:id="playerName" layoutX="194.0" layoutY="89.0" prefHeight="25.0" prefWidth="200.0" />
       <TextField fx:id="seedTextField" layoutX="226.0" layoutY="320.0" />
