@@ -12,6 +12,8 @@ public class MultiplayerGame extends Game {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(MultiplayerGame.class);
 
+  private String player1Color;
+  private String player2Color;
   private final Profile player1;
   private final Profile player2;
   private boolean player1IsFirst;
@@ -43,7 +45,7 @@ public class MultiplayerGame extends Game {
     logger.info("placeDiscInColumn: column = {}", column);
     int row = board.placeDiscInColumn(column);
     listener.updateTile(column, row,
-        multiplayerState == MultiplayerState.PLAYER_1_IS_PLAYING ? "RED" : "GREEN");
+        multiplayerState == MultiplayerState.PLAYER_1_IS_PLAYING ? player1Color : player2Color);
     // Game won?
     if (board.isWon()) {
       if (multiplayerState == MultiplayerState.PLAYER_1_IS_PLAYING) {
@@ -87,9 +89,13 @@ public class MultiplayerGame extends Game {
           || multiplayerState == MultiplayerState.DRAW) {                           // Draw.
         if (player1IsFirst) {
           multiplayerState = MultiplayerState.PLAYER_2_IS_PLAYING; // Switch.
+          player2Color = "RED";
+          player1Color = "GREEN";
           player1IsFirst = false;
         } else {
           multiplayerState = MultiplayerState.PLAYER_1_IS_PLAYING; // Same.
+          player1Color = "RED";
+          player2Color = "GREEN";
           player1IsFirst = true;
         }
       }
@@ -107,8 +113,12 @@ public class MultiplayerGame extends Game {
     gameState = GameState.RUNNING;
     if (player1IsFirst) {
       multiplayerState = MultiplayerState.PLAYER_1_IS_PLAYING;
+      player1Color = "RED";
+      player2Color = "GREEN";
     } else {
       multiplayerState = MultiplayerState.PLAYER_2_IS_PLAYING;
+      player2Color = "RED";
+      player1Color = "GREEN";
     }
     listener.updateDescription(descriptor.describeMultiplayer(multiplayerState, player1, player2));
     listener.unlock();

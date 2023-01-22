@@ -42,7 +42,8 @@ public class GameController implements Initializable, ConnectFourListenerInterfa
   @FXML
   void onRestart() {
     logger.info("onRestart: no params");
-    initialize(null, null);
+    lock();
+    initializeBoard();
     instance.restart();
   }
 
@@ -77,6 +78,16 @@ public class GameController implements Initializable, ConnectFourListenerInterfa
   public void initialize(URL location, ResourceBundle resources) {
     logger.info("initialize: location = {}, resources = {}", location, resources);
     lock();
+    initializeBoard();
+    instance.setCallback(this);
+    instance.start();
+  }
+
+  /**
+   * Initialize the board.
+   */
+  private void initializeBoard() {
+    logger.info("initializeBoard: no params");
     for (int column = 0; column < 7; column++) {
       for (int row = 0; row < 6; row++) {
         Tile tile = new Tile(column, row, this);
@@ -84,7 +95,5 @@ public class GameController implements Initializable, ConnectFourListenerInterfa
         tiles[column][row] = tile;
       }
     }
-    instance.setCallback(this);
-    instance.start();
   }
 }

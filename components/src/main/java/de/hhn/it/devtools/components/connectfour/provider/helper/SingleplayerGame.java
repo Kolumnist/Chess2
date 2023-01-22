@@ -14,6 +14,8 @@ public class SingleplayerGame extends Game {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SingleplayerGame.class);
 
+  private String humanColor;
+  private String computerColor;
   private final Profile player;
   private boolean playerIsFirst;
   private SingleplayerState singleplayerState;
@@ -42,7 +44,7 @@ public class SingleplayerGame extends Game {
     logger.info("placeDiscInColumn: column = {}", column);
     int row = board.placeDiscInColumn(column);
     listener.updateTile(column, row,
-        singleplayerState == SingleplayerState.HUMAN_IS_PLAYING ? "RED" : "GREEN");
+        singleplayerState == SingleplayerState.HUMAN_IS_PLAYING ? humanColor : computerColor);
     // Game won?
     if (board.isWon()) {
       if (singleplayerState == SingleplayerState.HUMAN_IS_PLAYING) {
@@ -89,10 +91,16 @@ public class SingleplayerGame extends Game {
           || singleplayerState == SingleplayerState.DRAW) {                           // Draw.
         if (playerIsFirst) {
           singleplayerState = SingleplayerState.COMPUTER_IS_PLAYING; // Switch.
+          computerColor = "RED";
+          humanColor = "GREEN";
           playerIsFirst = false;
+          System.err.println("Computer begins");
         } else {
           singleplayerState = SingleplayerState.HUMAN_IS_PLAYING; // Same.
+          humanColor = "RED";
+          computerColor = "GREEN";
           playerIsFirst = true;
+          System.err.println("Human begins");
         }
       }
     }
@@ -109,8 +117,12 @@ public class SingleplayerGame extends Game {
     board = new Board();
     if (playerIsFirst) {
       singleplayerState = SingleplayerState.HUMAN_IS_PLAYING;
+      humanColor = "RED";
+      computerColor = "GREEN";
     } else {
       singleplayerState = SingleplayerState.COMPUTER_IS_PLAYING;
+      computerColor = "RED";
+      humanColor = "GREEN";
     }
     gameState = GameState.RUNNING;
     listener.updateDescription(descriptor.describeSingleplayer(singleplayerState, player));
