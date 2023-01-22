@@ -8,6 +8,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Test für gute Beispiele des ImplementationGame2048Service. ")
@@ -28,16 +32,23 @@ public class ImplementationGame2048ServiceTestGoodCases {
     }
     correctService.getGameBoard().clear();
     service.getGameBoard().clear();
+
+  }
+
+  private Method getPredictableMoveAllBlocks() throws NoSuchMethodException {
+      Method predictableMoveAllBlocks = ImplementationGame2048Service.class.getDeclaredMethod("predictableMoveAllBlocks", MovingDirection.class);
+      predictableMoveAllBlocks.setAccessible(true);
+      return predictableMoveAllBlocks;
   }
 
   @Test
   @DisplayName("Tests the movement directions on an empty board. ")
   void testMoveEmptyBoard() {
     assertAll(
-            () -> assertDoesNotThrow(() -> service.predictableMoveAllBlocks(MovingDirection.left)),
-            () -> assertDoesNotThrow(() -> service.predictableMoveAllBlocks(MovingDirection.right)),
-            () -> assertDoesNotThrow(() -> service.predictableMoveAllBlocks(MovingDirection.down)),
-            () -> assertDoesNotThrow(() -> service.predictableMoveAllBlocks(MovingDirection.up)),
+            () -> assertDoesNotThrow(() -> Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service,MovingDirection.left)),
+            () -> assertDoesNotThrow(() -> Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service,MovingDirection.right)),
+            () -> assertDoesNotThrow(() -> Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service,MovingDirection.down)),
+            () -> assertDoesNotThrow(() -> Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service,MovingDirection.up)),
             () -> assertEquals(correctService.getGameBoard(), service.getGameBoard()));
   }
 
@@ -51,11 +62,11 @@ public class ImplementationGame2048ServiceTestGoodCases {
       e.printStackTrace();
     }
     try {
-      service.predictableMoveAllBlocks(MovingDirection.left);
-      service.predictableMoveAllBlocks(MovingDirection.right);
-      service.predictableMoveAllBlocks(MovingDirection.down);
-      service.predictableMoveAllBlocks(MovingDirection.up);
-    } catch (IllegalParameterException e) {
+      Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service,MovingDirection.left);
+      Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service,MovingDirection.right);
+      Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service,MovingDirection.down);
+      Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service,MovingDirection.up);
+    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
       e.printStackTrace();
     }
     assertEquals(correctService.getGameBoard(), service.getGameBoard());
@@ -76,7 +87,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
             () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(2, 2), 4)),
             () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(1, 3), 4)),
             () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(1, 2), 2)),
-            () -> assertDoesNotThrow(() -> service.predictableMoveAllBlocks(MovingDirection.up)),
+            () -> assertDoesNotThrow(() -> Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service,MovingDirection.up)),
             () -> assertTrue(correctService.getGameBoard().containsAll(service.getGameBoard())),
             () -> assertTrue(service.getGameBoard().containsAll(correctService.getGameBoard())),
             () -> assertTrue(correctService.getFreelist().containsAll(service.getFreelist())),
@@ -98,7 +109,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
             () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(2, 0), 4)),
             () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(1, 1), 2)),
             () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(1, 0), 4)),
-            () -> assertDoesNotThrow(() -> service.predictableMoveAllBlocks(MovingDirection.down)),
+            () -> assertDoesNotThrow(() -> Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service,MovingDirection.down)),
             () -> assertTrue(correctService.getGameBoard().containsAll(service.getGameBoard())),
             () -> assertTrue(service.getGameBoard().containsAll(correctService.getGameBoard())),
             () -> assertTrue(correctService.getFreelist().containsAll(service.getFreelist())),
@@ -120,7 +131,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
             () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(2, 2), 4)),
             () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(2, 1), 2)),
             () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(3, 1), 4)),
-            () -> assertDoesNotThrow(() -> service.predictableMoveAllBlocks(MovingDirection.right)),
+            () -> assertDoesNotThrow(() -> Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service,MovingDirection.right)),
             () -> assertTrue(correctService.getGameBoard().containsAll(service.getGameBoard())),
             () -> assertTrue(service.getGameBoard().containsAll(correctService.getGameBoard())),
             () -> assertTrue(correctService.getFreelist().containsAll(service.getFreelist())),
@@ -142,7 +153,7 @@ public class ImplementationGame2048ServiceTestGoodCases {
             () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(0, 2), 4)),
             () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(1, 1), 2)),
             () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(0, 1), 4)),
-            () -> assertDoesNotThrow(() -> service.predictableMoveAllBlocks(MovingDirection.left)),
+            () -> assertDoesNotThrow(() -> Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service,MovingDirection.left)),
             () -> assertTrue(correctService.getGameBoard().containsAll(service.getGameBoard())),
             () -> assertTrue(service.getGameBoard().containsAll(correctService.getGameBoard())),
             () -> assertTrue(correctService.getFreelist().containsAll(service.getFreelist())),
