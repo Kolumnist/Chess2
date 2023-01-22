@@ -282,7 +282,7 @@ public class DuckHunt implements DuckHuntService {
       if (duck.getStatus() == DuckState.FALLING && duck.getY() > screenDimension.getHeight()) {
         duck.setStatus(DuckState.DEAD);
       }
-      if (duck.getStatus() == DuckState.FLYAWAY && duck.getY() < 0) {
+      if (duck.getStatus() == DuckState.FLYAWAY && duck.getY() < -200) {
         duck.setStatus(DuckState.ESCAPED);
       }
       switch (duck.getStatus()) {
@@ -328,7 +328,7 @@ public class DuckHunt implements DuckHuntService {
     float velocity = duck.getVelocity();
     if (velocity > velocityToOvercome) { // if true duck can be moved to next position
       //TODO anpassen der Pixel beim Wegfliegen (analog drop)
-      duck.setY(duck.getY() - screenDimension.getHeight() /  30);
+      duck.setY(duck.getY() - screenDimension.getHeight() /  100);
       duck.setVelocity(velocity - velocityToOvercome);
     }
   }

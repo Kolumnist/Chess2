@@ -9,13 +9,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
@@ -62,7 +65,6 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
     DuckHuntAttributeStore duckHuntAttributeStore = DuckHuntAttributeStore.getReference();
     stage = (Stage) duckHuntAttributeStore.getAttribute("gameStage");
     scene = new Scene(anchorPane, 960, 720);
-    scene.setCursor(Cursor.CROSSHAIR);
     stage.setScene(scene);
     stage.setResizable(false);
     stage.show();
@@ -149,7 +151,7 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   }
 
   void newRound() {
-    //game.pauseGame();
+    game.pauseGame();
     nextRoundLabel.setDisable(false);
     nextRoundLabel.setVisible(true);
     try {
@@ -170,9 +172,9 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
     anchorPane.getChildren().add(ammoLabel);
     anchorPane.getChildren().add(hitLabel);
     anchorPane.getChildren().add(scoreLabel);
-    anchorPane.getChildren().add(nextRoundLabel);
     anchorPane.getChildren().add(pauseMenu);
-    //game.continueGame();
+    anchorPane.getChildren().add(nextRoundLabel);
+    game.continueGame();
   }
 
   void shoot(MouseEvent event) {
@@ -211,50 +213,57 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
       return;
     }
     this.gameInfo = gameInfo;
-    ammoLabel.setText(String.valueOf(gameInfo.getAmmo()));
-    if (gameInfo.getRound() > currentRound) {
-      newRound();
-      currentRound = gameInfo.getRound();
-    }
-  }
 
-  @Override
-  public void newDuckPosition(DucksInfo duckPosition) throws IllegalDuckPositionException {
-    Arrays.stream(duckPosition.duckData()).forEach(duckData -> {
-      ImageView duck = ducks.get(duckData.getId());
-      switch (duckData.getStatus()) {
-        case DEAD, ESCAPED -> {
-          duck.setDisable(true);
-          duck.setVisible(false);
-        }
-        case FALLING -> {
-          duck.setX(duckData.getX());
-          duck.setY(duckData.getY());
-          duck.setImage(DuckHuntImageManager.FALLINGDUCK.getImageView().getImage());
-        }
-        case SCARRED -> {
-          duck.setX(duckData.getX());
-          duck.setY(duckData.getY());
-          duck.setImage(DuckHuntImageManager.SCAREDDUCK.getImageView().getImage());
-        }
-        case FLYAWAY -> {
-          duck.setX(duckData.getX());
-          duck.setY(duckData.getY());
-          duck.setImage(DuckHuntImageManager.NORTHDUCK.getImageView().getImage());
-        }
-        default -> {
-          duck.setX(duckData.getX());
-          duck.setY(duckData.getY());
-          duck.setImage(DuckHuntImageManager.getDuckImageFromOrientation(
-              duckData.getOrientation()).getImageView().getImage()
-          );
-        }
+    Platform.runLater(() -> {
+      ammoLabel.setText(String.valueOf(gameInfo.getAmmo()));
+      if (gameInfo.getRound() > currentRound) {
+        DuckHuntGameController.this.newRound();
+        DuckHuntGameController.this.currentRound++;
       }
     });
   }
 
   @Override
+  public void newDuckPosition(DucksInfo duckPosition) throws IllegalDuckPositionException {
+    Platform.runLater(() -> {
+      Arrays.stream(duckPosition.duckData()).forEach(duckData -> {
+        ImageView duck = ducks.get(duckData.getId());
+        switch (duckData.getStatus()) {
+          case DEAD, ESCAPED -> {
+            duck.setDisable(true);
+            duck.setVisible(false);
+          }
+          case FALLING -> {
+            duck.setX(duckData.getX());
+            duck.setY(duckData.getY());
+            duck.setImage(DuckHuntImageManager.FALLINGDUCK.getImageView().getImage());
+          }
+          case SCARRED -> {
+            duck.setX(duckData.getX());
+            duck.setY(duckData.getY());
+            duck.setImage(DuckHuntImageManager.SCAREDDUCK.getImageView().getImage());
+          }
+          case FLYAWAY -> {
+            duck.setX(duckData.getX());
+            duck.setY(duckData.getY());
+            duck.setImage(DuckHuntImageManager.NORTHDUCK.getImageView().getImage());
+          }
+          default -> {
+            duck.setX(duckData.getX());
+            duck.setY(duckData.getY());
+            duck.setImage(DuckHuntImageManager.getDuckImageFromOrientation(
+                duckData.getOrientation()).getImageView().getImage()
+            );
+          }
+        }
+      });
+    });
+  }
+
+  @Override
   public void duckHit(int id) throws IllegalDuckIdException {
-    increaseScore();
+    Platform.runLater(() -> {
+      increaseScore();
+    });
   }
 }
