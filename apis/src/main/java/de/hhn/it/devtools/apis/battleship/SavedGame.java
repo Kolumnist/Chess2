@@ -5,6 +5,6 @@ import java.io.Serializable;
 /**
  * to save the current game
  */
-
 public class SavedGame implements Serializable {
+
 }
