@@ -167,7 +167,7 @@ public class TestWordleGameLogic {
 
   @Test
   void testGetPanelById() throws IllegalParameterException {
-    wordleGameLogic.startGame();
-    assertNotNull(wordleGameLogic.getPanelById(0));
+    wordleGameLogic.startAnotherGame();
+    assertEquals(0,wordleGameLogic.getPanelById(0).getId());
   }
 }
