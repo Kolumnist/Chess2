@@ -147,17 +147,20 @@ public class Game implements GameService {
     if (direction == null) {
       throw new IllegalArgumentException("Direction should not be null.");
     }
+    boolean stop = false;
 
     String message = null;
     try {
       message = currentRoom.getDoor(direction).getInspectMessage();
     } catch (RoomFailedException e) {
+      stop = true;
       for (OutputListener outputListener : listeners) {
         outputListener.sendOutputNavigation("There is no way in that direction.");
       }
-    }
-    for (OutputListener outputListener : listeners) {
-      outputListener.sendOutputNavigation(message);
+    } if (!stop) {
+      for (OutputListener outputListener : listeners) {
+        outputListener.sendOutputNavigation(message);
+      }
     }
     return message;
   }
