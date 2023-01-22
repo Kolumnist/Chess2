@@ -10,12 +10,9 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -268,9 +265,6 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
       });
     });
   }
-
-
-
 
   @Override
   public void duckHit(int id) throws IllegalDuckIdException {

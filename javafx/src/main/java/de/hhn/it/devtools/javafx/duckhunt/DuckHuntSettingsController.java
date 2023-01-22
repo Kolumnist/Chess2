@@ -105,4 +105,3 @@ public class DuckHuntSettingsController implements Initializable {
     ammoCountSlider.setValue(gameSettings.getAmmoAmount());
   }
 }
-
