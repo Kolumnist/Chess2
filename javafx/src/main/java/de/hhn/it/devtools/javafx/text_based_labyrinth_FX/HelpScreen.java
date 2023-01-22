@@ -56,7 +56,9 @@ public class HelpScreen extends AnchorPane implements Initializable {
 
 
 
-
+    public void update() {
+        playerName.setText(viewModel.getGame().getPlayerName());
+    }
 
 
 
