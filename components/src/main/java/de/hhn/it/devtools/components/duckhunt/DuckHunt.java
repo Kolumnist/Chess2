@@ -12,8 +12,10 @@ import de.hhn.it.devtools.apis.duckhunt.GameState;
 import de.hhn.it.devtools.apis.duckhunt.IllegalDuckIdException;
 import de.hhn.it.devtools.apis.duckhunt.IllegalGameInfoException;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EmptyStackException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.function.Consumer;
 
 /**
@@ -78,7 +80,7 @@ public class DuckHunt implements DuckHuntService {
   /**
    * Notifies all listeners.
    *
-   * @param consumer
+   * @param consumer to be run
    */
   private void notifyListeners(Consumer<DuckHuntListener> consumer) {
     for (DuckHuntListener listener : listeners) {
@@ -117,9 +119,9 @@ public class DuckHunt implements DuckHuntService {
       }
       // if amount of the vector between duck and shoot <= gunSpread
       int duckCenterAdjustment = 50;
-      if (Math.sqrt(Math.pow((
-          duck.getX() + duckCenterAdjustment) - x, 2)
-          + Math.pow((duck.getY() + duckCenterAdjustment) - y, 2)) <= gunSpread) {
+      if (Math.sqrt(Math.pow(
+          duck.getX() - (x + duckCenterAdjustment), 2)
+          + Math.pow(duck.getY() - (y + duckCenterAdjustment), 2)) <= gunSpread) {
         duck.setStatus(DuckState.SCARRED);
         gameInfo.setPlayerScore(gameInfo.getPlayerScore() + 1);
         notifyListeners((l) -> {
