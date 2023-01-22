@@ -39,7 +39,7 @@ public class DuckHuntServiceUsageDemo implements DuckHuntListener {
     Thread.sleep(1000);
 
     // shoot at duck
-    game.shoot(listener.ducksInfo.duckData()[0].getX(), listener.ducksInfo.duckData()[0].getY());
+    //game.shoot(listener.ducksInfo.duckData()[0].getX(), listener.ducksInfo.duckData()[0].getY());
 
     Thread.sleep(1000);
 
@@ -49,14 +49,14 @@ public class DuckHuntServiceUsageDemo implements DuckHuntListener {
 
   @Override
   public void newState(GameInfo gameInfo) throws IllegalGameInfoException {
-    logger.debug(gameInfo.toString());
+    //logger.debug(gameInfo.toString());
   }
 
   @Override
   public void newDuckPosition(DucksInfo duckPosition) throws IllegalDuckPositionException {
     ducksInfo = duckPosition;
     for (DuckData duck : duckPosition.duckData()) {
-      logger.debug(duck.toString());
+      //logger.debug(duck.toString());
     }
   }
 

@@ -1,11 +1,14 @@
 package de.hhn.it.devtools.components.game2048.provider;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.apis.game2048.*;
-import de.hhn.it.devtools.components.game2048.provider.Comparators.HorizontalComparator;
-import de.hhn.it.devtools.components.game2048.provider.Comparators.VerticalComparator;
-
-import java.io.*;
+import de.hhn.it.devtools.apis.game2048.Block;
+import de.hhn.it.devtools.apis.game2048.Game2048Listener;
+import de.hhn.it.devtools.apis.game2048.Game2048Service;
+import de.hhn.it.devtools.apis.game2048.MovingDirection;
+import de.hhn.it.devtools.apis.game2048.Position;
+import de.hhn.it.devtools.apis.game2048.State;
+import de.hhn.it.devtools.components.game2048.provider.comparators.HorizontalComparator;
+import de.hhn.it.devtools.components.game2048.provider.comparators.VerticalComparator;
 import java.util.ArrayList;
 
 /**
@@ -14,13 +17,28 @@ import java.util.ArrayList;
 public class ImplementationGame2048Service implements Game2048Service {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(ImplementationGame2048Service.class);
-  private final ArrayList<Block> gameboard;
-  private final ArrayList<Position> freelist;
+  private ArrayList<Block> gameBoard;
+  private ArrayList<Position> freelist;
   private int currentScore;
-  private static int highScore;
   private boolean gameWon;
   private boolean gameLost;
+  private final int[] values;
+  private int valueIndex;
   private ArrayList<Game2048Listener> gameListeners;
+
+  /**
+   * Basic Constructor.
+   */
+  public ImplementationGame2048Service() {
+    this.gameBoard = new ArrayList<>();
+    this.freelist = new ArrayList<>();
+    this.currentScore = 0;
+    this.gameWon = false;
+    this.gameLost = false;
+    this.gameListeners = new ArrayList<>();
+    values = new int[]{2, 4, 4, 0, 0, 2, 4, 2, 8, 0, 0};
+    valueIndex = 0;
+  }
 
   @Override
   public void initialisation() {
@@ -30,18 +48,79 @@ public class ImplementationGame2048Service implements Game2048Service {
         freelist.add(new Position(i, j));
       }
     }
-    gameboard.clear();
+    gameBoard.clear();
     try {
       addBlock(2);
       addBlock(2);
     } catch (IllegalParameterException e) {
       e.printStackTrace();
     }
-    loadHighscore();
+    this.currentScore = 0;
+    this.gameWon = false;
+    this.gameLost = false;
+    notifyGame2048Listener();
   }
 
   @Override
   public void moveAllBlocks(MovingDirection direction) throws IllegalParameterException {
+    predictableMoveAllBlocks(direction);
+    if (valueIndex >= values.length) {
+      valueIndex = 0;
+    }
+    int value = values[valueIndex++];
+    if (value > 0) {
+      addBlock(value);
+    }
+    isGameWon();
+    notifyGame2048Listener();
+  }
+
+  @Override
+  public void addCallback(Game2048Listener listener) throws IllegalParameterException {
+    logger.info("addCallback: listener = {}", listener);
+    if (listener == null) {
+      throw new IllegalParameterException("Listener was null reference.");
+    } else if (gameListeners.contains(listener)) {
+      throw new IllegalParameterException("There is already a Listener registered.");
+    } else {
+      gameListeners.add(listener);
+    }
+  }
+
+  @Override
+  public void removeCallback(Game2048Listener listener) throws IllegalParameterException {
+    logger.info("removeCallback: listener = {}", listener);
+    if (listener == null) {
+      throw new IllegalParameterException("Tried to remove null reference instead of a Listener.");
+    } else if (!gameListeners.contains(listener)) {
+      throw new IllegalParameterException("Removing Listener failed, because of wrong parameter.");
+    } else {
+      gameListeners.remove(listener);
+    }
+  }
+
+  /**
+   * Is public to enable direct manipulation of the game-board from outside this class.
+   *
+   * @param xyPosition x and y coordinates of new Block
+   * @param value      Value the Block should have
+   * @throws IllegalParameterException if Position is not a free Space or if {value % 2 == 1}
+   */
+  public void addBlock(Position xyPosition, int value) throws IllegalParameterException {
+    logger.info("addBlock: xyPosition = {}, value = {}", xyPosition, value);
+    if (freelist.contains(xyPosition)) {
+      freelist.remove(xyPosition);
+      gameBoard.add(new Block(xyPosition, value));
+    } else {
+      throw new IllegalParameterException("Tried to add Block to a Space that is not free.");
+    }
+  }
+
+  /**
+   * Contains core functionality of moveAllBlocks, but without adding a Block at a random Position.
+   * This makes the Methode predictable, which allows better testing.
+   */
+  private void predictableMoveAllBlocks(MovingDirection direction) throws IllegalParameterException {
     logger.info("moveAllBlocks: direction = {}", direction);
     ArrayList<Block> columnRow = new ArrayList<>();
     for (int i = 0; i < 4; i++) {
@@ -55,59 +134,6 @@ public class ImplementationGame2048Service implements Game2048Service {
       }
       moveBlocks(columnRow, direction);
       columnRow.clear();
-    }
-    addBlock(2);
-    updateScores();
-    isGameWon();
-    notifyGame2048Listener();
-  }
-
-  @Override
-  public void addCallback(Game2048Listener listener) throws IllegalParameterException {
-    if (listener == null) {
-      throw new IllegalParameterException("Listener was null reference.");
-    } else if (gameListeners.contains(listener)) {
-      throw new IllegalParameterException("There is already a Listener registered.");
-    } else {
-      gameListeners.add(listener);
-    }
-  }
-
-  @Override
-  public void removeCallback(Game2048Listener listener) throws IllegalParameterException {
-    if (listener == null) {
-      throw new IllegalParameterException("Tried to remove null reference instead of a Listener.");
-    } else if (!gameListeners.contains(listener)) {
-      throw new IllegalParameterException("Removing Listener failed, because of wrong parameter.");
-    } else {
-      gameListeners.remove(listener);
-    }
-  }
-
-  public ImplementationGame2048Service() {
-    this.gameboard = new ArrayList<>();
-    this.freelist = new ArrayList<>();
-    this.currentScore = 0;
-    this.gameWon = false;
-    this.gameLost = false;
-    this.gameListeners = null;
-    loadHighscore();
-  }
-
-  /**
-   * Is public to enable direct manipulation of the game-board from outside this class.
-   *
-   * @param xyPosition x and y coordinates of new Block
-   * @param value      Value the Block should have
-   * @throws IllegalParameterException if Position is not a free Space or if {value % 2 == 1}
-   */
-  public void addBlock(Position xyPosition, int value) throws IllegalParameterException {
-    logger.info("addBlock: xyPisition = {}, value = {}", xyPosition, value);
-    if (freelist.contains(xyPosition)) {
-      freelist.remove(xyPosition);
-      gameboard.add(new Block(xyPosition, value));
-    } else {
-      throw new IllegalParameterException("Tried to add Block to a Space that is not free.");
     }
   }
 
@@ -123,9 +149,11 @@ public class ImplementationGame2048Service implements Game2048Service {
     if (freelist.size() > 1) {
       Position position = freelist.get((int) (Math.random() * (freelist.size() - 1)));
       addBlock(position, value);
+      gameLost = false;
     } else if (freelist.size() == 1) {
       Position position = freelist.get(0);
       addBlock(position, value);
+      gameLost = false;
     } else {
       logger.info("game is Lost");
       gameLost = true;
@@ -140,16 +168,16 @@ public class ImplementationGame2048Service implements Game2048Service {
    * @param direction The Blocks will be moved in this direction
    * @throws IllegalParameterException if a parameter is a null referenz
    */
-  private void moveBlocks(ArrayList<Block> columnRow, MovingDirection direction) throws IllegalParameterException {
+  private void moveBlocks(ArrayList<Block> columnRow, MovingDirection direction)
+          throws IllegalParameterException {
     logger.info("moveBlocks: columnRow = {}, direction = {}", columnRow, direction);
     if (direction == null) {
       throw new IllegalParameterException("direction was null reference.");
-    } else if (columnRow == null) {
-      throw new IllegalParameterException("column or row were null reference.");
     }
     for (Block removed : columnRow) {
-      gameboard.remove(removed);
+      gameBoard.remove(removed);
     }
+    boolean mergeForbid = false;
     Block previousBlock = null;
     switch (direction) {
       case up -> {
@@ -159,12 +187,16 @@ public class ImplementationGame2048Service implements Game2048Service {
           if (previousBlock == null) {
             Block movingBlock = columnRow.get(i).changeYPosition(3);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
-          } else if (previousBlock.getValue() == columnRow.get(i).getValue()) {
+            mergeForbid = false;
+          } else if (previousBlock.getValue() == columnRow.get(i).getValue() && !mergeForbid) {
             previousBlock = mergeBlocks(columnRow, i, previousBlock);
             i--;
+            mergeForbid = true;
           } else {
-            Block movingBlock = columnRow.get(i).changeYPosition(previousBlock.getXYPosition().getYPosition() - 1);
+            Block movingBlock = columnRow.get(i).changeYPosition(
+                    previousBlock.getXYPosition().getYPosition() - 1);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
+            mergeForbid = false;
           }
         }
       }
@@ -175,12 +207,16 @@ public class ImplementationGame2048Service implements Game2048Service {
           if (previousBlock == null) {
             Block movingBlock = columnRow.get(i).changeYPosition(0);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
-          } else if (previousBlock.getValue() == columnRow.get(i).getValue()) {
+            mergeForbid = false;
+          } else if (previousBlock.getValue() == columnRow.get(i).getValue() && !mergeForbid) {
             previousBlock = mergeBlocks(columnRow, i, previousBlock);
             i--;
+            mergeForbid = true;
           } else {
-            Block movingBlock = columnRow.get(i).changeYPosition(previousBlock.getXYPosition().getYPosition() + 1);
+            Block movingBlock = columnRow.get(i).changeYPosition(
+                    previousBlock.getXYPosition().getYPosition() + 1);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
+            mergeForbid = false;
           }
         }
       }
@@ -191,12 +227,16 @@ public class ImplementationGame2048Service implements Game2048Service {
           if (previousBlock == null) {
             Block movingBlock = columnRow.get(i).changeXPosition(3);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
-          } else if (previousBlock.getValue() == columnRow.get(i).getValue()) {
+            mergeForbid = false;
+          } else if (previousBlock.getValue() == columnRow.get(i).getValue() && !mergeForbid) {
             previousBlock = mergeBlocks(columnRow, i, previousBlock);
             i--;
+            mergeForbid = true;
           } else {
-            Block movingBlock = columnRow.get(i).changeXPosition(previousBlock.getXYPosition().getXPosition() - 1);
+            Block movingBlock = columnRow.get(i).changeXPosition(
+                    previousBlock.getXYPosition().getXPosition() - 1);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
+            mergeForbid = false;
           }
         }
       }
@@ -207,61 +247,54 @@ public class ImplementationGame2048Service implements Game2048Service {
           if (previousBlock == null) {
             Block movingBlock = columnRow.get(i).changeXPosition(0);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
-          } else if (previousBlock.getValue() == columnRow.get(i).getValue()) {
+            mergeForbid = false;
+          } else if (previousBlock.getValue() == columnRow.get(i).getValue() && !mergeForbid) {
             previousBlock = mergeBlocks(columnRow, i, previousBlock);
             i--;
+            mergeForbid = true;
           } else {
-            Block movingBlock = columnRow.get(i).changeXPosition(previousBlock.getXYPosition().getXPosition() + 1);
+            Block movingBlock = columnRow.get(i).changeXPosition(
+                    previousBlock.getXYPosition().getXPosition() + 1);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
+            mergeForbid = false;
           }
         }
       }
     }
-    gameboard.addAll(columnRow);
+    gameBoard.addAll(columnRow);
   }
 
   /**
-   * Notifies all Frontends to present new Data
+   * Notifies all Frontends to present new Data.
    */
   private void notifyGame2048Listener() {
     logger.info("notifyGame2048Listener: no params");
-    Block[] gameboardArray = new Block[gameboard.size()];
-    for (int i = 0; i < gameboard.size(); i++) {
-      gameboardArray[i] = gameboard.get(i);
+    updateScores();
+    Block[] gameBoardArray = new Block[gameBoard.size()];
+    for (int i = 0; i < gameBoard.size(); i++) {
+      gameBoardArray[i] = gameBoard.get(i);
     }
-    State currentState = new State(gameboardArray, currentScore, highScore, gameWon, gameLost);
+    State currentState = new State(gameBoardArray, currentScore, gameWon, gameLost);
     gameListeners.forEach((listener) -> listener.newState(currentState));
   }
 
   /**
-   * Updates currentScore and highScore.
-   * Highscore gets saved if necessary.
+   * Updates currentScore.
    *
-   * @throws IllegalStateException if currentScore or highScore are negative
+   * @throws IllegalStateException if currentScore are negative
    */
   private void updateScores() throws IllegalStateException {
     currentScore = 0;
-    for (Block gameBlock : gameboard) {
+    for (Block gameBlock : gameBoard) {
       currentScore += gameBlock.getValue();
-    }
-    if (currentScore < 0) {
-      throw new IllegalStateException("Summ of Values of all Blocks in game-board is < 0");
-    }
-    if (highScore < 0) {
-      throw new IllegalStateException("Highscore is < 0");
-    }
-    if (currentScore > highScore) {
-      highScore = currentScore;
-      saveHighscore();
     }
   }
 
   /**
-   * Checks if there is a Block with value >= 2048,
-   * if so the game is won
+   * Checks if there is a Block with value >= 2048, if so the game is won.
    */
   private void isGameWon() {
-    for (Block gameBlock : gameboard) {
+    for (Block gameBlock : gameBoard) {
       if (gameBlock.getValue() >= 2048) {
         gameWon = true;
         break;
@@ -270,64 +303,7 @@ public class ImplementationGame2048Service implements Game2048Service {
   }
 
   /**
-   * Loads the highest score a player scored on this physical device, from a File.
-   */
-  private void loadHighscore() {
-    logger.info("readHighscore: no params");
-    highScore = 0;
-    FileInputStream fileInputStream = null;
-    try {
-      fileInputStream = new FileInputStream("SaveGame2048.txt");
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-    if (fileInputStream != null) {
-      ObjectInputStream objectInputStream;
-      try {
-        objectInputStream = new ObjectInputStream(fileInputStream);
-        highScore = objectInputStream.readInt();
-        objectInputStream.close();
-        logger.info("readHighscore, highscore = {}", highScore);
-      } catch (IOException e) {
-        logger.warn("load highScore failed, because of ObjectOutputStream Error");
-        e.printStackTrace();
-      }
-    } else {
-      logger.warn("load highScore failed, because File related Error");
-    }
-  }
-
-  /**
-   * Writes the current value of highScore in a File.
-   * CAUTION!!! If old highScore in the File is greater than the new highScore,
-   * the old highScore will be overwritten.
-   */
-  private void saveHighscore() {
-    logger.info("safeHighscore: no params");
-    FileOutputStream fileOutputStream = null;
-    try {
-      fileOutputStream = new FileOutputStream("SaveGame2048.txt");
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-    if (fileOutputStream != null) {
-      ObjectOutputStream objectOutputStream;
-      try {
-        objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeInt(highScore);
-        objectOutputStream.flush();
-        objectOutputStream.close();
-      } catch (IOException e) {
-        logger.warn("save highScore failed, because of ObjectOutputStream Error");
-        e.printStackTrace();
-      }
-    } else {
-      logger.warn("save highScore failed, because File related Error");
-    }
-  }
-
-  /**
-   * Adds moved block to columnRow, updates freelist, returns moved Block as previousBlock
+   * Adds moved block to columnRow, updates freelist, returns moved Block as previousBlock.
    */
   private Block changeColumnRow(ArrayList<Block> columnRow, int i, Block movingBlock) {
     Block previousBlock;
@@ -351,14 +327,10 @@ public class ImplementationGame2048Service implements Game2048Service {
    *
    * @param currentColumn index of the current Column
    * @return List of Blocks with {xPosition == currentColumn}
-   * @throws IllegalParameterException if currentCollumn is outside Boundaries
    */
-  private ArrayList<Block> getColumn(int currentColumn) throws IllegalParameterException {
-    if (currentColumn > 3 || currentColumn < 0) {
-      throw new IllegalParameterException("Tried to get column outside the game-board boundaries");
-    }
+  private ArrayList<Block> getColumn(int currentColumn) {
     ArrayList<Block> column = new ArrayList<>();
-    for (Block block : gameboard) {
+    for (Block block : gameBoard) {
       if (block.getXYPosition().getXPosition() == currentColumn) {
         column.add(block);
       }
@@ -371,18 +343,22 @@ public class ImplementationGame2048Service implements Game2048Service {
    *
    * @param currentRow index of the current Column
    * @return List of Blocks with {yPosition == currentColumn}
-   * @throws IllegalParameterException if currentRow is outside Boundaries
    */
-  private ArrayList<Block> getRow(int currentRow) throws IllegalParameterException {
-    if (currentRow > 3 || currentRow < 0) {
-      throw new IllegalParameterException("Tried to get row outside the game-board boundaries");
-    }
+  private ArrayList<Block> getRow(int currentRow) {
     ArrayList<Block> row = new ArrayList<>();
-    for (Block block : gameboard) {
+    for (Block block : gameBoard) {
       if (block.getXYPosition().getYPosition() == currentRow) {
         row.add(block);
       }
     }
     return row;
+  }
+
+  public ArrayList<Block> getGameBoard() {
+    return gameBoard;
+  }
+
+  public ArrayList<Position> getFreelist() {
+    return freelist;
   }
 }

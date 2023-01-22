@@ -14,6 +14,8 @@ module devtools.apis{
         exports de.hhn.it.devtools.apis.reactiongame;
         exports de.hhn.it.devtools.apis.game2048;
         exports de.hhn.it.devtools.apis.textbasedlabyrinth;
-        }
+        exports de.hhn.it.devtools.apis.wordle;
+
+}
 
 

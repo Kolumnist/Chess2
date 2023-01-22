@@ -1,5 +1,7 @@
 package de.hhn.it.devtools.javafx.reactiongame;
 
+import de.hhn.it.devtools.apis.reactiongame.HighscoreTupel;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,26 +12,29 @@ import java.util.Collections;
 
 public class RgcHighScoreHandler {
 
+  public static ArrayList<HighscoreTupel> highscoreList;
 
-  public ArrayList<RgcHighScoreSet> loadHighscoreList() {
+  public static ArrayList<HighscoreTupel> readHighscoreList() {
     ObjectInputStream ois;
+    File file = new File("src/main/resources/reactiongame/highscore.list");
+
     try {
       ois = new ObjectInputStream(
-          new FileInputStream("javafx/src/main/resources/reactiongame/highscore.list"));
+          new FileInputStream(file.getAbsolutePath()));
     } catch (IOException e) {
       makeDemoHighscoreList();
       try {
         ois = new ObjectInputStream(
-            new FileInputStream("javafx/src/main/resources/reactiongame/highscore.list"));
+            new FileInputStream(file.getAbsolutePath()));
       } catch (IOException ex) {
         throw new RuntimeException(ex);
       }
     }
 
-    ArrayList<RgcHighScoreSet> out;
+    ArrayList<HighscoreTupel> out;
 
     try {
-      out = (ArrayList<RgcHighScoreSet>) ois.readObject();
+      out = (ArrayList<HighscoreTupel>) ois.readObject();
     } catch (IOException | ClassNotFoundException e) {
       throw new RuntimeException(e);
     }
@@ -42,11 +47,11 @@ public class RgcHighScoreHandler {
     return out;
   }
 
-  public void writeHighscoreList(ArrayList<RgcHighScoreSet> newHighScoreList) {
+  public static void writeHighscoreList(ArrayList<HighscoreTupel> newHighScoreList) {
     ObjectOutputStream oos;
     try {
       oos = new ObjectOutputStream(
-          new FileOutputStream("javafx/src/main/resources/reactiongame/highscore.list"));
+          new FileOutputStream(new File("src/main/resources/reactiongame/highscore.list").getAbsolutePath()));
       oos.writeObject(newHighScoreList);
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -59,20 +64,22 @@ public class RgcHighScoreHandler {
     }
   }
 
-  public void makeDemoHighscoreList() {
-    ArrayList<RgcHighScoreSet> scores = new ArrayList<>();
+  public static void makeDemoHighscoreList() {
+    ArrayList<HighscoreTupel> scores = new ArrayList<>();
 
-    scores.add(new RgcHighScoreSet("Neptune", 500));
-    scores.add(new RgcHighScoreSet("Jupiter", 400));
-    scores.add(new RgcHighScoreSet("Mars", 300));
+    scores.add(new HighscoreTupel("Max", 500));
+    scores.add(new HighscoreTupel("Tobi", 420));
+    scores.add(new HighscoreTupel("Jonas", 360));
+    scores.add(new HighscoreTupel("Nicobert", -1));
 
     Collections.sort(scores);
 
     ObjectOutputStream oos;
 
     try {
+      File file = new File("src/main/resources/reactiongame/highscore.list");
       oos = new ObjectOutputStream(
-          new FileOutputStream("javafx/src/main/resources/reactiongame/highscore.list"));
+          new FileOutputStream(file.getAbsolutePath()));
 
       oos.writeObject(scores);
     } catch (IOException e) {

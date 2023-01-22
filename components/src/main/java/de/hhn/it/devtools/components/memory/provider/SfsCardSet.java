@@ -7,6 +7,9 @@ import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Simple implementation of the CardSet.
+ */
 public class SfsCardSet {
   private CardSetDescriptor descriptor;
 

@@ -21,6 +21,7 @@ public class MemoryScreenController {
           org.slf4j.LoggerFactory.getLogger(MemoryScreenController.class);
 
   AnchorPane anchorPane;
+  private int highScore = 0;
 
   private StartScreenController startScreenController;
   private Node startScreenContent;
@@ -224,7 +225,18 @@ public class MemoryScreenController {
    */
   public void gameWon() {
     gameScreenController.gameWon();
+    checkHighScore();
     switchTo(WinningPopupController.OPEN_POPUP);
+  }
+
+  /**
+   * Changes the highScore on the start screen.
+   */
+  public void checkHighScore() {
+    if (Integer.parseInt(getCurrentTime()) <= highScore) {
+      return;
+    }
+    startScreenController.setHighScore(getCurrentTime() + " sec");
   }
 
   /**

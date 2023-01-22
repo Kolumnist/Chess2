@@ -31,8 +31,68 @@ public class GameTest {
 
 
     @Test
-    @DisplayName("Test simulated Game")
-    public void testGameFunction() {
+    @DisplayName("Test simulated Game Mad King Map")
+    public void testGameGraveOfTheMadKing() {
+        ArrayList<Integer> seedList1 = new ArrayList<>();
+        seedList1.add(0);
+        seedList1.add(0);
+
+        try {
+            game.setCurrentLayout(Map.Grave_of_the_Mad_King, new Seed(seedList1));
+        } catch (InvalidSeedException | RoomFailedException e) {
+            fail(e.getMessage());
+        }
+
+        List<Room> roomsList = game.getCurrentLayout().getAllRooms();
+
+        try {
+            LayoutGenerator generator = new LayoutGenerator(Map.Grave_of_the_Mad_King, new Seed(seedList1));
+            assertEquals(generator.getMaxRoomCount(), roomsList.size());
+        } catch (InvalidSeedException e) {
+            fail();
+        }
+
+        assertEquals(Map.Grave_of_the_Mad_King, game.getMap());
+
+        game.move(Direction.EAST);
+
+        Item keyItem1 = game.searchRoom().get(0);
+
+        try {
+            game.pickUpItem(keyItem1.getItemId());
+        } catch (NoSuchItemFoundException e) {
+            fail();
+        }
+
+        OutputListener listener = new DummyCallback();
+        game.addListener(listener);
+
+        CurrentScreenRequesting csR1 = CurrentScreenRequesting.ROOMINVENTORY;
+
+        game.inspectItem(keyItem1, csR1);
+        assertTrue(listener.getOutputRoomItemInspect().contains(keyItem1.getInfo()));
+        assertTrue(listener.getOutputRoomItemName().contains(keyItem1.getName()));
+
+        game.move(Direction.EAST);
+        game.move(Direction.EAST);
+
+        try {
+            assertEquals(game.getCurrentRoom().getRoom(Direction.NORTH), roomsList.get(12));
+        } catch (RoomFailedException e) {
+            fail();
+        }
+
+        try {
+            assertTrue(player.getCurrentRoomOfPlayer().getRoom(Direction.NORTH).isExit());
+        } catch (RoomFailedException e) {
+            fail();
+        }
+        game.move(Direction.NORTH);
+    }
+
+    @Test
+    @DisplayName("Test simulated Game Ancient Dungeon Map")
+    public void testGameAncientDungeon() {
         ArrayList<Integer> seedList1 = new ArrayList<>();
         seedList1.add(0);
         seedList1.add(0);
@@ -264,24 +324,181 @@ public class GameTest {
         assertEquals(game.getCurrentRoom(), roomsList.get(11));
 
 
-        game.move(Direction.EAST);
-        //The player should still be in room 12.
-        assertEquals(game.getCurrentRoom(), roomsList.get(12));
+        try {
+            assertEquals(game.getCurrentRoom().getRoom(Direction.EAST), roomsList.get(12));
+        } catch (RoomFailedException e) {
+            fail();
+        }
 
-        //This room should be the exit.
-        assertTrue(player.getCurrentRoomOfPlayer().isExit());
+        try {
+            assertTrue(player.getCurrentRoomOfPlayer().getRoom(Direction.EAST).isExit());
+        } catch (RoomFailedException e) {
+            fail();
+        }
 
 
     }
 
 
     @Test
+    @DisplayName("Test simulated Game Sewers Map")
+    public void testGameUnknownSewers() {
+        ArrayList<Integer> seedList1 = new ArrayList<>();
+        seedList1.add(0);
+        seedList1.add(0);
+
+        try {
+            game.setCurrentLayout(Map.Unknown_Sewers, new Seed(seedList1));
+        } catch (InvalidSeedException | RoomFailedException e) {
+            fail(e.getMessage());
+        }
+
+        List<Room> roomsList = game.getCurrentLayout().getAllRooms();
+
+        try {
+            LayoutGenerator generator = new LayoutGenerator(Map.Unknown_Sewers, new Seed(seedList1));
+            assertEquals(generator.getMaxRoomCount(), roomsList.size());
+        } catch (InvalidSeedException e) {
+            fail();
+        }
+
+        assertEquals("You are " + player.getName() + " and you are in the depths of a labyrinth.",
+                game.startText());
+
+        assertEquals("This is an open path. You could just walk through.", game.inspect(Direction.NORTH));
+
+        assertEquals("You find yourself in " + game.getCurrentRoom().getDescription() +
+                "You can search the room or move on.", game.check());
+
+
+        OutputListener listener = new DummyCallback();
+        game.addListener(listener);
+
+        game.inspect(Direction.SOUTH);
+        assertTrue(listener.getOutputNavigation().contains("There is no way in that direction."));
+
+        game.move(Direction.SOUTH);
+
+        assertEquals(1, game.getListeners().size());
+        assertTrue(listener.getOutputNavigation().contains("There is no way in that direction."));
+
+        game.move(Direction.NORTH);
+        game.move(Direction.NORTH);
+        game.move(Direction.EAST);
+        List<Item> itemList1 = game.searchRoom();
+        assertEquals(1, itemList1.size());
+        Item keyItem1 = itemList1.get(0);
+        try {
+            game.pickUpItem(itemList1.get(0).getItemId());
+        } catch (NoSuchItemFoundException e) {
+            fail();
+        }
+
+        CurrentScreenRequesting csR1 = CurrentScreenRequesting.INTERACTION;
+
+        game.inspectItem(keyItem1, csR1);
+        assertTrue(listener.getOutputPlayerInteract().contains("A big, old metal key. It feels wet."));
+        assertTrue(listener.getOutputInteractItemName().contains("ExitKey"));
+
+        try {
+            assertEquals("A big, old metal key. It feels wet.",
+                    game.inspectItemInInventoryOfPlayer(keyItem1.getItemId()));
+        } catch (NoSuchItemFoundException e) {
+            fail();
+        }
+
+        game.move(Direction.WEST);
+        game.move(Direction.WEST);
+
+        List<Item> itemList2 = game.searchRoom();
+        assertEquals(1, itemList2.size());
+        Item keyItem2 = itemList2.get(0);
+        try {
+            game.pickUpItem(itemList2.get(0).getItemId());
+        } catch (NoSuchItemFoundException e) {
+            fail();
+        }
+        game.move(Direction.EAST);
+        game.move(Direction.NORTH);
+        game.move(Direction.NORTH);
+        game.move(Direction.NORTH);
+
+        try {
+            game.interaction(Direction.NORTH, keyItem2);
+        } catch (RoomFailedException e) {
+            fail();
+        }
+        game.move(Direction.NORTH);
+        try {
+            game.interaction(Direction.NORTH, keyItem1);
+        } catch (RoomFailedException e) {
+            fail();
+        }
+        game.move(Direction.NORTH);
+        game.move(Direction.NORTH);
+
+        try {
+            assertEquals(game.getCurrentRoom().getRoom(Direction.NORTH), roomsList.get(12));
+        } catch (RoomFailedException e) {
+            fail();
+        }
+
+        try {
+            assertTrue(player.getCurrentRoomOfPlayer().getRoom(Direction.NORTH).isExit());
+        } catch (RoomFailedException e) {
+            fail();
+        }
+    }
+
+    @Test
+    @DisplayName("Test simulated Game")
+    public void testGameReset() {
+        ArrayList<Integer> seedList1 = new ArrayList<>();
+        seedList1.add(0);
+        seedList1.add(0);
+
+        try {
+            game.setCurrentLayout(Map.Unknown_Sewers, new Seed(seedList1));
+        } catch (InvalidSeedException | RoomFailedException e) {
+            fail(e.getMessage());
+        }
+
+        List<Room> roomsList = game.getCurrentLayout().getAllRooms();
+
+        try {
+            LayoutGenerator generator = new LayoutGenerator(Map.Unknown_Sewers, new Seed(seedList1));
+            assertEquals(generator.getMaxRoomCount(), roomsList.size());
+        } catch (InvalidSeedException e) {
+            fail();
+        }
+
+        assertEquals(3, game.getMaps().size());
+
+        Room startRoom = game.getCurrentRoom();
+        game.move(Direction.NORTH);
+        game.move(Direction.NORTH);
+        game.move(Direction.EAST);
+        assertEquals(roomsList.get(3), game.getCurrentRoom());
+        assertEquals(player.getCurrentRoomOfPlayer(), game.getCurrentRoom());
+        game.reset();
+        assertEquals(startRoom, player.getCurrentRoomOfPlayer());
+        assertEquals(0, player.getInventory().size());
+        assertEquals(0, game.getScore());
+    }
+
+        @Test
     @DisplayName("Test Null Cases")
     public void testNullCases() {
+        Item testItem = new Item(0,"testItem", "x");
+        CurrentScreenRequesting currentScreenRequesting = CurrentScreenRequesting.INTERACTION;
         assertThrows(IllegalArgumentException.class, () -> game.move(null));
         assertThrows(IllegalArgumentException.class, () -> game.inspect(null));
         assertThrows(IllegalArgumentException.class, () -> game.interaction(null, null));
+        assertThrows(IllegalArgumentException.class, () -> game.inspectItem(testItem, null));
+        assertThrows(IllegalArgumentException.class, () -> game.inspectItem(null, currentScreenRequesting));
         assertThrows(IllegalArgumentException.class, () -> game.interaction(Direction.NORTH, null));
+        assertThrows(InvalidSeedException.class, () -> game.setCurrentLayout(Map.Ancient_Dungeon, null));
+        assertThrows(NoSuchItemFoundException.class, () -> game.dropItem(1));
     }
 
 
