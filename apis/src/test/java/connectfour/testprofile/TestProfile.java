@@ -1,4 +1,4 @@
-package connectfour;
+package connectfour.testprofile;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

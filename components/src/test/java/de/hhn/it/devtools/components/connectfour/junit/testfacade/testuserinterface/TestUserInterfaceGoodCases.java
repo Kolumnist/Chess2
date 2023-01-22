@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.components.connectfour.junit;
+package de.hhn.it.devtools.components.connectfour.junit.testfacade.testuserinterface;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Test user interface with good cases.")
+@DisplayName("Test user interface: good cases.")
 public class TestUserInterfaceGoodCases {
 
   ConnectFour connectFour;

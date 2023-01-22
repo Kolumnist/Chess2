@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.components.connectfour.junit;
+package de.hhn.it.devtools.components.connectfour.junit.testfacade.testcallback;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -7,7 +7,7 @@ import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Test callback.")
+@DisplayName("Test callback: bad cases.")
 public class TestCallbackBadCases {
 
   @Test
