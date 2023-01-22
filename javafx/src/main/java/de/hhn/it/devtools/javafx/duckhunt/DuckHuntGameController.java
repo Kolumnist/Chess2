@@ -217,7 +217,9 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
       return;
     }
     this.gameInfo = gameInfo;
-    ammoLabel.setText(String.valueOf(gameInfo.getAmmo()));
+    //ammoLabel.setText(String.valueOf(gameInfo.getAmmo()));
+    drawAmmo(gameInfo.getAmmo());
+    drawMissed();
     if (gameInfo.getRound() > currentRound) {
       newRound();
       currentRound = gameInfo.getRound();
@@ -262,5 +264,17 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   @Override
   public void duckHit(int id) throws IllegalDuckIdException {
     increaseScore();
+  }
+
+  private void drawAmmo(int ammoCount) {
+    ammoLabel.setText(String.valueOf(ammoCount));
+  }
+
+  private void drawMissed() {
+    String missedLabelText = "";
+    for (int x = 0; x < gameInfo.getMissedCount(); x++) {
+      missedLabelText = missedLabelText.concat("█");
+    }
+    hitLabel.setText(missedLabelText);
   }
 }
