@@ -36,6 +36,7 @@ public class WordleGameLogic implements WordleService {
       logger.info("Method startAnotherGame was called before startGame");
     }
     else {
+      WordlePanel.setPanelCount(0);
       String prevSolution = getCurrentWordleSolution();
       String newSolution = WordleSolutionSelector.selectWordle();
       if (!newSolution.equals(prevSolution)) {
