@@ -5,10 +5,8 @@ import de.hhn.it.devtools.components.wordle.provider.WordleGameLogic;
 import de.hhn.it.devtools.javafx.controllers.wordleAdditional.SimpleWordlePanelListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,7 +14,6 @@ import de.hhn.it.devtools.apis.wordle.WordleService;
 import de.hhn.it.devtools.apis.wordle.IllegalGuessException;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -31,10 +28,10 @@ public class WordleGameController extends Controller implements Initializable {
     private GridPane rowGridPane;
 
     @FXML
-    private VBox mainScreenVBox;
+    private Button button;
 
     @FXML
-    private Button button;
+    private Button playAnotherRound;
 
     private Integer rowCount;
 
@@ -59,19 +56,37 @@ public class WordleGameController extends Controller implements Initializable {
             textField.setEditable(false);
             button.setDisable(true);
             System.out.println("eZ win");
-            loadVictoryScreen();
+            playAnotherRound.setVisible(true);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Victory");
+            alert.setHeaderText("Congratulations! You won!");
+            alert.show();
+
 
         }
         if (isGameRunning && rowCount > 5){
             textField.setEditable(false);
             button.setDisable(true);
             System.out.println("-35 LP");
-            loadDefeatScreen();
+            playAnotherRound.setVisible(true);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Defeat");
+            alert.setHeaderText("Oh no! You lost!");
+            alert.setContentText("Better luck next time!");
+            alert.show();
         }
+    }
+
+    @FXML
+    void restartGame(ActionEvent event) {
+
     }
 
     private boolean checkIfGuessWasValid() {
         userInput = textField.getText();
+
+        char[] inputArray = userInput.toCharArray();
+
         if(userInput.length() < 5) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -80,6 +95,7 @@ public class WordleGameController extends Controller implements Initializable {
             alert.show();
             return false;
         }
+
         if(userInput.length() > 5) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -88,19 +104,18 @@ public class WordleGameController extends Controller implements Initializable {
             alert.show();
             return false;
         }
+
+        for(int i = 0; i < 5; i++) {
+            if (!Character.isLetter(inputArray[i])) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error!");
+                alert.setContentText("Only letters are allowed!");
+                alert.show();
+                return false;
+            }
+        }
         return true;
-    }
-
-    @FXML
-    private void loadVictoryScreen() throws IOException{
-        VBox vbox = FXMLLoader.load(getClass().getResource("/fxml/wordle/victoryScreen.fxml"));
-        mainScreenVBox.getChildren().setAll(vbox);
-    }
-
-    @FXML
-    private void loadDefeatScreen() throws IOException{
-        VBox vbox = FXMLLoader.load(getClass().getResource("/fxml/wordle/defeatScreen.fxml"));
-        mainScreenVBox.getChildren().setAll(vbox);
     }
 
     private void fillCurrentRowWithUserInput() {
@@ -129,8 +144,9 @@ public class WordleGameController extends Controller implements Initializable {
         }
     }
 
-        @Override
+    @Override
         public void initialize (URL url, ResourceBundle resourceBundle){
+        playAnotherRound.setVisible(false);
         backend.startGame();
             try {
                 connectListenersToLabels();
