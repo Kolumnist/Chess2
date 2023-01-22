@@ -15,10 +15,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class SfsPictureCard implements PictureCard {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(SfsPictureCard.class);
+  private static AtomicInteger idCounter = new AtomicInteger(0);
   private List<PictureCardListener> listeners;
   private PictureCardDescriptor descriptor;
-  private static AtomicInteger idCounter = new AtomicInteger(0);
 
+  /**
+   * Constructor.
+   *
+   * @param descriptor the pictureCardDescriptor of the Card
+   */
   public SfsPictureCard(PictureCardDescriptor descriptor) {
     logger.debug("Constructor - {}", descriptor);
     listeners = new ArrayList<>();
@@ -26,9 +31,16 @@ public class SfsPictureCard implements PictureCard {
     this.descriptor = descriptor;
   }
 
+  /**
+   * Resets the ID counter.
+   */
+  public static void resetIdCounter() {
+    idCounter.set(0);
+  }
 
   @Override
   public void turnCard() throws IllegalStateException {
+    logger.info("turnCard: no params");
     if (descriptor.getState().equals(State.MATCHED)) {
       throw new IllegalStateException("PictureCard is already matched.");
     }
@@ -44,6 +56,7 @@ public class SfsPictureCard implements PictureCard {
 
   @Override
   public void addCallback(PictureCardListener listener) throws IllegalParameterException {
+    logger.info("addCallback: listener = {}", listener);
     if (listener == null) {
       throw new IllegalParameterException("Listener was null reference.");
     }
@@ -57,6 +70,7 @@ public class SfsPictureCard implements PictureCard {
 
   @Override
   public void removeCallback(PictureCardListener listener) throws IllegalParameterException {
+    logger.info("removeCallback: listener = {}", listener);
     if (listener == null) {
       throw new IllegalParameterException("Listener was null reference.");
     }
@@ -70,21 +84,15 @@ public class SfsPictureCard implements PictureCard {
 
   @Override
   public PictureCardDescriptor getPictureCard() {
+    logger.info("getPictureCard: no params");
     return descriptor;
   }
 
   @Override
   public void matchCard() {
+    logger.info("matchCard: no params");
     descriptor.setState(State.MATCHED);
     notifyListeners(State.MATCHED);
-  }
-
-
-  /**
-   * Resets the ID counter.
-   */
-  public static void resetIdCounter() {
-    idCounter.set(0);
   }
 
   /**

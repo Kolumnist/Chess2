@@ -1,8 +1,7 @@
 package de.hhn.it.devtools.components.textbasedlabyrinth.junit;
 
 import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.*;
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.InvalidSeedException;
-import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+import de.hhn.it.devtools.apis.textbasedlabyrinth.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

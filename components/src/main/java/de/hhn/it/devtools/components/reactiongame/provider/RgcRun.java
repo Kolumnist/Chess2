@@ -13,22 +13,20 @@ public class RgcRun {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(RgcRun.class);
 
-  private ArrayList<ReactiongameListener> callbacks = new ArrayList<>();
+  private final ArrayList<ReactiongameListener> callbacks;
   private final RgcField field = new RgcField();
   private final RgcPlayer player;
   private final RgcObstacleClock obstacleClock; // 2 verschiedene Timer für front und backend?
   private final RgcAimTargetClock aimTargetClock;
   private final Difficulty difficulty;
-  private GameState state;
+  private GameState gameState;
 
-  private RgcObstacle pObstacle; // player is in this obstacle
-  private RgcAimTarget pAimTarget; // player is in this aimtarget
-  private char pKey;
+  private RgcObstacle obstacle; // player is in this obstacle
+  private RgcAimTarget aimTarget; // player is in this aimTarget
+  private char key;
   private int score;
   private boolean isInvincible = false;
-  private Thread iFrameThread;
-
-  private boolean isRunning = true;
+  private Thread iframeThread;
 
 
   /**
@@ -40,6 +38,9 @@ public class RgcRun {
     logger.info("Create run with difficulty: " + difficulty);
     this.difficulty = difficulty;
     this.player = player;
+
+    gameState = GameState.RUNNING;
+
     player.setCurrentLife(3);
 
     callbacks = new ArrayList<>();
@@ -47,7 +48,7 @@ public class RgcRun {
     aimTargetClock = new RgcAimTargetClock(this);
     obstacleClock = new RgcObstacleClock(this);
 
-    iFrameThread = new Thread(new RgcIFrameRunnable(this));
+    iframeThread = new Thread(new RgcIframeRunnable(this));
   }
 
 
@@ -63,24 +64,32 @@ public class RgcRun {
     return player;
   }
 
-  public GameState getState() {
-    return state;
+  public GameState getGameState() {
+    return gameState;
   }
 
-  public void setState(GameState state) {
-    this.state = state;
+  public void setGameState(GameState gameState) {
+    this.gameState = gameState;
   }
 
-  public void setpObstacle(RgcObstacle pObstacle) {
-    this.pObstacle = pObstacle;
+  public void setObstacle(RgcObstacle obstacle) {
+    this.obstacle = obstacle;
   }
 
-  public void setpAimTarget(RgcAimTarget pAimTarget) {
-    this.pAimTarget = pAimTarget;
+  public void setObstacle(int obstacleId) {
+    obstacle = field.getObstacleMap().get(obstacleId);
   }
 
-  public void setpKey(char pKey) {
-    this.pKey = pKey;
+  public void setAimTarget(RgcAimTarget aimTarget) {
+    this.aimTarget = aimTarget;
+  }
+
+  public void setAimTarget(int aimTargetId) {
+    aimTarget = field.getTargetMap().get(aimTargetId);
+  }
+
+  public void setKey(char key) {
+    this.key = key;
   }
 
   public void setInvincible(boolean invincible) {
@@ -90,6 +99,7 @@ public class RgcRun {
   public Difficulty getDifficulty() {
     return difficulty;
   }
+
 
   public RgcObstacleClock getObstacleClock() {
     return obstacleClock;
@@ -103,77 +113,40 @@ public class RgcRun {
     return score;
   }
 
-  public char getpKey() {
-    return pKey;
+  public char getKey() {
+    return key;
   }
 
-  public RgcAimTarget getpAimTarget() {
-    return pAimTarget;
+  public RgcAimTarget getAimTarget() {
+    return aimTarget;
   }
 
-  public RgcObstacle getpObstacle() {
-    return pObstacle;
+  public RgcObstacle getObstacle() {
+    return obstacle;
   }
 
-  public boolean isRunning() {
-    return isRunning;
-  }
 
-  /**
-   * Pauses the clocks.
-   */
-  public void pauseClocks() {
-    logger.info("Pause clocks");
 
-    obstacleClock.setRunning(false);
-    aimTargetClock.setRunning(false);
-  }
-
-  /**
-   * Continues clocks.
-   */
-  public void continueClocks() {
-    logger.info("Continue clocks");
-
-    obstacleClock.setRunning(true);
-    aimTargetClock.setRunning(true);
-  }
-
-  /**
-   * Ends / stops clocks.
-   */
-  public void endRun() {
-    logger.info("End run");
-
-    isRunning = false;
-
-    obstacleClock.setRunning(false);
-    obstacleClock.setEnded(true);
-
-    aimTargetClock.setRunning(false);
-    aimTargetClock.setEnded(true);
-
-    for (ReactiongameListener callback :
-        callbacks) {
-      callback.gameOver();
-    }
-  }
 
 
   /**
    * Methods gets called when player runs into an obstacle or after his iframes end.
    */
   public void playerHitObstacle() {
-    if (isInvincible || pObstacle == null) {
-      logger.info("Obstacle not found / invis");
+    logger.info("Player hit obstacle");
+
+    if (isInvincible || obstacle == null) {
+      logger.info("Player no longer in an obstacle or invincible");
       return; // if player is not in an object or invincible - do nothing
     }
-    logger.info("Player hit obstacle");
     // player is in iFrames OR no longer in an obstacle
 
-    isInvincible = true;
-    iFrameThread = new Thread(new RgcIFrameRunnable(this));
-    iFrameThread.start();
+
+
+    for (ReactiongameListener callback :
+        callbacks) {
+      callback.hitObstacle(obstacle.getId());
+    }
 
     playerLosesLife();
   }
@@ -182,11 +155,25 @@ public class RgcRun {
    * Lowers the player lives by one. If it falls below 1, the game is over.
    */
   public void playerLosesLife() {
+
+    if (isInvincible) {
+      return;
+    }
+
+    isInvincible = true;
+    iframeThread = new Thread(new RgcIframeRunnable(this));
+    iframeThread.start();
+
     logger.info("Player loses life (" + (player.getCurrentLife() - 1) + ")");
     player.setCurrentLife(player.getCurrentLife() - 1);
 
     if (player.getCurrentLife() < 1) { // is player game over?
-      endRun();
+      gameState = GameState.FINISHED;
+
+      for (ReactiongameListener callback :
+          callbacks) {
+        callback.gameOver();
+      }
     }
 
     for (ReactiongameListener callback :
@@ -199,17 +186,16 @@ public class RgcRun {
    * Methods checks if the player is in an aimtarget and pressed the right key.
    */
   public void checkForTargetHit() {
-    if (pAimTarget != null && pAimTarget.getKey() == pKey) {
-      logger.info(pAimTarget.getId() + " | " + pKey);
-      score += 100;
+    if (aimTarget != null && aimTarget.getKey() == key) {
+      score += 2 * difficulty.scoreMultiplier;
 
-      field.removeAimTarget(pAimTarget.getId());
+      field.removeAimTarget(aimTarget.getId());
 
-      aimTargetClock.removeAimTarget(pAimTarget.getId());
+      aimTargetClock.removeAimTarget(aimTarget.getId());
 
       for (ReactiongameListener callback :
           callbacks) { // raise score
-        callback.removeAimTarget(pAimTarget.getId());
+        callback.removeAimTarget(aimTarget.getId());
         callback.changeScore(score);
       }
     }
@@ -222,7 +208,7 @@ public class RgcRun {
    * @param obstacleId identifier
    */
   public void addObstacle(int obstacleId) {
-    if (!isRunning) {
+    if (!(gameState == GameState.RUNNING)) {
       return;
     }
 
@@ -245,7 +231,7 @@ public class RgcRun {
    * @param obstacleId identifier
    */
   public void removeObstacle(int obstacleId) {
-    if (!isRunning) {
+    if (!(gameState == GameState.RUNNING)) {
       return;
     }
     logger.info("Remove obstacle (" + obstacleId + ")");
@@ -266,12 +252,14 @@ public class RgcRun {
    * @param aimTargetId identifier
    */
   public void addAimTarget(int aimTargetId) {
-    if (!isRunning) {
+    if (!(gameState == GameState.RUNNING)) {
       return;
     }
+
     RgcAimTarget aimTarget = field.addRandomAimTarget(aimTargetId);
     logger.info(
-        "Add aim target (" + aimTargetId + ") (" + aimTarget.getX() + "|" + aimTarget.getY() + ")");
+        "Add aim target (" + aimTargetId + ") (" + aimTarget.getXposition()
+            + "|" + aimTarget.getYposition() + ")");
 
     for (ReactiongameListener callback :
         callbacks) {
@@ -286,9 +274,10 @@ public class RgcRun {
    * @param aimTargetId identifier
    */
   public void removeAimTarget(int aimTargetId) {
-    if (!isRunning) {
+    if (!(gameState == GameState.RUNNING)) {
       return;
     }
+
     logger.info("Removed aim target (" + aimTargetId + ")");
 
     field.removeAimTarget(aimTargetId);

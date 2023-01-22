@@ -1,6 +1,5 @@
 package de.hhn.it.devtools.javafx.controllers.reactiongame;
 
-import de.hhn.it.devtools.javafx.controllers.template.ScreenController;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

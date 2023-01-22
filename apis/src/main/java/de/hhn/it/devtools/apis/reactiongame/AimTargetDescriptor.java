@@ -28,18 +28,34 @@ public class AimTargetDescriptor implements GameObstacleDescriptor{
     this.key = key;
   }
 
+  /**
+   *
+   * @return returns the x-coordinate
+   */
   public int getX() {
     return x;
   }
 
+  /**
+   *
+   * @return returns the y-coordinate
+   */
   public int getY() {
     return y;
   }
 
+  /**
+   *
+   * @return returns the radius
+   */
   public int getR() {
     return r;
   }
 
+  /**
+   *
+   * @return returns the key
+   */
   public char getKey() {
     return key;
   }

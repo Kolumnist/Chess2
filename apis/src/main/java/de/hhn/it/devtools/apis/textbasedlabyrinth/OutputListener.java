@@ -1,5 +1,7 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
+import java.util.List;
+
 /**
  * Interface for callback method
  */
@@ -14,7 +16,7 @@ public interface OutputListener {
 
     /**
      * Output about the state of the player and the actions done by him.
-     * Picking items up is currently considered a player action, not an inventory action.
+     * Picking items up and dropping them is currently considered a player action, not an inventory action.
      * @param output String to be output.
      */
     void sendOutputPlayer(String output);
@@ -22,7 +24,7 @@ public interface OutputListener {
 
     /**
      * Output about the state of the inventory and items inspected inside it.
-     * Mainly for inspecting the items. Now for dropping items as well.
+     * Mainly for inspecting the items.
      * @param output String to be output.
      */
     void sendOutputInventory(String output);
@@ -41,6 +43,8 @@ public interface OutputListener {
      */
     void sendOutputPlayerInteract(String output);
 
+    void sendOutputInteractItemName(String output);
+
 
     /**
      * Output collected when player picks up an item.
@@ -55,4 +59,48 @@ public interface OutputListener {
      */
     void sendOutputDropItem(Item item);
 
+
+    void listenerStart();
+
+    void listenerMove();
+
+    void outputInventoryItemInspect(String output);
+    void outputInventoryItemName(String output);
+
+    void outputRoomItemInspect(String output);
+    void outputRoomItemName(String output);
+
+    void listenerInteract();
+
+    void listenerEnd();
+
+    void listenerReset();
+
+    void updateScore(int newScore);
+
+    public List<String> getOutputRoom();
+
+    public List<String> getOutputPlayer();
+
+    public List<String> getOutputInventory();
+
+    public List<String> getOutputNavigation();
+
+    public List<String> getOutputPlayerInteract();
+
+    public List<String> getOutputInteractItemName();
+
+    public List<String> getOutputRoomItemName();
+
+    public List<String> getOutputRoomItemInspect();
+
+    public List<String> getOutputInventoryItemInspect();
+
+    public List<String> getOutputInventoryItemName();
+
+    public List<Item> getOutputPickUpItems();
+
+    public List<Item> getOutputDropItems();
+
+    public List<Integer> getOutputScores();
 }

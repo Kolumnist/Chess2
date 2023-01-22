@@ -37,10 +37,12 @@ public interface Game2048Service {
    * When the Application gets started, a Listener will be added
    * too ensure that the Frontend (Package javafx) gets informed, how the new
    * Data (game-board, current Score and high Score) look like.
+   * Also notifies GameListener so that a new State can be acquired immediately after
+   * adding a new Game2048Service
    *
    * @param listener object implementing the listener interface.
    * @throws IllegalParameterException if the listener is a null reference or
-   * if there is already another Listener registered
+   *                                   if there is already another Listener registered
    */
   void addCallback(Game2048Listener listener) throws IllegalParameterException;
 

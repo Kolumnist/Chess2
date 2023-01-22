@@ -1,42 +1,46 @@
 package de.hhn.it.devtools.components.battleship.junit;
 
-import de.hhn.it.devtools.apis.battleship.*;
-import de.hhn.it.devtools.components.battleship.provider.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import de.hhn.it.devtools.apis.battleship.BattleshipService;
+import de.hhn.it.devtools.apis.battleship.GameState;
+import de.hhn.it.devtools.apis.battleship.IllegalGameStateException;
+import de.hhn.it.devtools.apis.battleship.SavedGame;
+import de.hhn.it.devtools.components.battleship.provider.CmpBattleshipService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Test saveGame")
 public class TestSaveGame {
 
-    // TODO: maybe find good ways how to test this method
+  // TODO: maybe find good ways how to test this method
 
-    // Field size for tests set to 9
+  // Field size for tests set to 9
 
-    CmpBattleshipService bsService = new CmpBattleshipService();
-    BattleshipService bs = bsService;
+  CmpBattleshipService bsService = new CmpBattleshipService();
+  BattleshipService bs = bsService;
 
-    // Bad Case
+  // Bad Case
 
-    @Test
-    @DisplayName("Test saveGame in wrong GameState")
-    public void saveGameInWrongGameState() {
-        bsService.setCurrentGameState(GameState.PREGAME);
-        IllegalGameStateException exception = assertThrows(IllegalGameStateException.class,
-                () -> bs.saveGame());
-    }
+  @Test
+  @DisplayName("Test saveGame in wrong GameState")
+  public void saveGameInWrongGameState() {
+    bsService.setCurrentGameState(GameState.PREGAME);
+    assertThrows(IllegalGameStateException.class,
+        () -> bs.saveGame());
+  }
 
-    // Good Case
+  // Good Case
 
-    @Test
-    @DisplayName("Test saveGame successfully")
-    public void saveGameSuccessful() throws IllegalGameStateException {
-        bsService.setCurrentGameState(GameState.FIRINGSHOTS);
-        SavedGame save1 = bs.saveGame();
-        SavedGame save2 = bs.saveGame();
+  @Test
+  @DisplayName("Test saveGame successfully")
+  public void saveGameSuccessful() throws IllegalGameStateException {
+    bsService.setCurrentGameState(GameState.FIRINGSHOTS);
+    SavedGame save1 = bs.saveGame();
+    SavedGame save2 = bs.saveGame();
 
-        assertEquals(save1, save2);
-    }
+    assertEquals(save1, save2);
+  }
 
 }

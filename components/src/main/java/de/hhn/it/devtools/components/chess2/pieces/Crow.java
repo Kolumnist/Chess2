@@ -24,6 +24,7 @@ public class Crow extends Piece {
   @Override
   public void calculate(Board board) {
     boolean nearEnemy = false;
+    canDefeatKing = false;
 
     defeatPieceMove(board);
 

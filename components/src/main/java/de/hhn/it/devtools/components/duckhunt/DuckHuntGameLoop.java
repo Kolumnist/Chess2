@@ -13,13 +13,16 @@ import java.util.concurrent.TimeUnit;
  * Handles the GameLoop.
  */
 public class DuckHuntGameLoop extends Thread {
-  private DuckHunt game;
+  private final DuckHunt game;
   private float deltaTime = 0.016f;
-  private int tps = 0; // Ticks per Second
   private int ticks = 0;
-  private Timer timer;
+  private final Timer timer;
   private final Semaphore semaphore = new Semaphore(1);
   private boolean isRunning = false;
+  /**
+   * Ticks per Second used for performance monitoring.
+   */
+  private int tps = 0; // Ticks per Second
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(DuckHuntGameLoop.class);
 
@@ -39,6 +42,7 @@ public class DuckHuntGameLoop extends Thread {
       public void run() {
         tps = ticks;
         ticks = 0;
+        logger.debug("TPS: " + tps);
       }
     }, Calendar.getInstance().getTime(), 1000);
   }
@@ -136,6 +140,11 @@ public class DuckHuntGameLoop extends Thread {
             }
           });
 
+      try {
+        Thread.sleep(20);
+      } catch (InterruptedException e) {
+        throw new RuntimeException(e);
+      }
       semaphore.release();
       deltaTime = (System.currentTimeMillis() - startTime) / 1000.0f;
       deltaTime += 0.02f;

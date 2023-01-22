@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * AttributeStore of memory
+ * AttributeStore of memory.
  */
 public class MemoryAttributeStore {
   private static final org.slf4j.Logger logger =
@@ -28,6 +28,12 @@ public class MemoryAttributeStore {
     }
   }
 
+  /**
+   * Sets an attribute.
+   *
+   * @param name name of the attribute
+   * @param object object of the attribute
+   */
   public void setAttribute(final String name, final Object object) {
     assertNameIsValid(name);
     if (object == null) {
@@ -36,6 +42,12 @@ public class MemoryAttributeStore {
     attributeMap.put(name, object);
   }
 
+  /**
+   * Return an attribute.
+   *
+   * @param name name of the attribute
+   * @return object the attribute
+   */
   public Object getAttribute(final String name) {
     assertNameIsValid(name);
     if (!attributeMap.containsKey(name)) {
@@ -44,6 +56,11 @@ public class MemoryAttributeStore {
     return attributeMap.get(name);
   }
 
+  /**
+   * Removes an attribute.
+   *
+   * @param name name of the attribute
+   */
   public void removeAttribute(final String name) {
     assertNameIsValid(name);
 

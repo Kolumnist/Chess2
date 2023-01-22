@@ -1,9 +1,11 @@
 package de.hhn.it.devtools.apis.ttrpgsheets;
 
+import java.io.Serializable;
+
 /**
  * The Descriptor for the Dice class.
  */
-public class DiceDescriptor {
+public class DiceDescriptor implements Serializable {
   private DiceType diceType;
   private int result;
 
@@ -56,7 +58,7 @@ public class DiceDescriptor {
 
   @Override
   public String toString() {
-    return "Dice type = " + getDiceType()
-            + ", Result = " + getResult();
+    return "DiceDescriptor: [Type: " + diceType
+            + ", Result = " + result;
   }
 }

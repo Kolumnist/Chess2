@@ -1,7 +1,6 @@
 package de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
 
-import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.exceptions.RoomFailedException;
-
+import de.hhn.it.devtools.apis.textbasedlabyrinth.*;
 import java.util.ArrayList;
 
 
@@ -14,7 +13,6 @@ public class LayoutGenerator {
     private Seed seed;
     private ArrayList<Layout> allLayouts;
     private Room startRoom;
-    private Room endRoom;
     private boolean isPrepared;
     private int maxRoomCount = 13;
 
@@ -26,8 +24,6 @@ public class LayoutGenerator {
         String exampleDescription = "A dark, cold room.";
         reset();
     }
-
-
 
 
     public void setLayout(Layout layout) {
@@ -54,6 +50,8 @@ public class LayoutGenerator {
     public ArrayList<Room> getAllRooms() {
         return allRooms;
     }
+
+    public boolean isPrepared() { return isPrepared; }
 
     /**
      *
@@ -84,8 +82,8 @@ public class LayoutGenerator {
         //This part attaches rooms to other rooms, creating a layout based on the selected map.
         if (map.equals(Map.Grave_of_the_Mad_King)) {
             startRoom.setNextDoorRoom(allRooms.get(1), Direction.WEST);
-            allRooms.get(1).setNextDoorRoom(allRooms.get(2), Direction.WEST);
-            allRooms.get(1).setNextDoorRoom(allRooms.get(3), Direction.NORTH);
+            allRooms.get(1).setNextDoorRoom(allRooms.get(3), Direction.WEST);
+            allRooms.get(1).setNextDoorRoom(allRooms.get(2), Direction.NORTH);
             startRoom.setNextDoorRoom(allRooms.get(4), Direction.NORTH);
             allRooms.get(4).setNextDoorRoom(allRooms.get(5), Direction.NORTH);
             allRooms.get(5).setNextDoorRoom(allRooms.get(6), Direction.NORTH);
@@ -167,7 +165,7 @@ public class LayoutGenerator {
             int treasureId = 100;
             int amountOfTreasure = 1;
 
-            allRooms.get(7).addItem(new Item(treasureId, "Treasure", "Treasure for Demo."));
+            allRooms.get(7).addItem(new Treasure(treasureId, "Treasure", "Treasure for Demo."));
             logger.info(map.toString() + "finished.");
 
         } else if (map.equals(Map.Ancient_Dungeon)) {

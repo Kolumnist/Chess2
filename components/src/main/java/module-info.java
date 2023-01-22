@@ -1,5 +1,3 @@
-import de.hhn.it.devtools.components.minesweeper.provider.LjMinesweeperService;
-
 module devtools.components {
   exports de.hhn.it.devtools.components.example.coffeemakerservice.provider;
   exports de.hhn.it.devtools.components.battleship.provider;
@@ -9,7 +7,10 @@ module devtools.components {
   exports de.hhn.it.devtools.components.memory.provider;
   exports de.hhn.it.devtools.components.reactiongame.provider;
   exports de.hhn.it.devtools.components.minesweeper.provider;
+  exports de.hhn.it.devtools.components.game2048.provider;
+  exports de.hhn.it.devtools.components.wordle.provider;
   requires org.slf4j;
+    exports de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth;
   requires devtools.apis;
     requires java.desktop;
     provides  de.hhn.it.devtools.apis.examples.coffeemakerservice.CoffeeMakerService
@@ -26,6 +27,8 @@ module devtools.components {
           with de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
   provides de.hhn.it.devtools.apis.chess2.Chess2Service
       with de.hhn.it.devtools.components.chess2.ChessGame;
+  provides de.hhn.it.devtools.apis.wordle.WordleService
+          with de.hhn.it.devtools.components.wordle.provider.WordleGameLogic;
   provides de.hhn.it.devtools.apis.minesweeper.MinesweeperService
-          with LjMinesweeperService;
+          with  de.hhn.it.devtools.components.minesweeper.provider.LjMinesweeperService;
         }
