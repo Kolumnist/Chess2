@@ -44,11 +44,11 @@ class MpatternGeneratorTest {
   void getNextMoveTest() throws DuckOrientationTranslationException {
     patternGenerator.generatePaths(ducks);
     DuckOrientation orientation = patternGenerator.getNextMove(0);
-    assertTrue(orientation == DuckOrientation.WEST
-              || orientation == DuckOrientation.NORTHWEST
-              || orientation == DuckOrientation.NORTH
+    assertTrue(orientation == DuckOrientation.EAST
               || orientation == DuckOrientation.NORTHEAST
-              || orientation == DuckOrientation.EAST);
+              || orientation == DuckOrientation.NORTH
+              || orientation == DuckOrientation.NORTHWEST
+              || orientation == DuckOrientation.WEST);
   }
 
   @Test

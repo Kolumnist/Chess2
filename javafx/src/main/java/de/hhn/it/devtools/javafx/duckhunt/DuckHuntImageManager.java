@@ -1,25 +1,24 @@
 package de.hhn.it.devtools.javafx.duckhunt;
 
 import de.hhn.it.devtools.apis.duckhunt.DuckOrientation;
-import javafx.geometry.NodeOrientation;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
 
 public enum DuckHuntImageManager {
-  NORTHDUCK("/images/duckhunt/NorthDuck.gif", false),
-  NORTHWESTDUCK("/images/duckhunt/NorthWestDuck.gif", false),
-  WESTDUCK("/images/duckhunt/WestDuck.gif", false),
-  NORTHEASTDUCK("/images/duckhunt/NorthWestDuck.gif", true),
-  EASTDUCK("/images/duckhunt/WestDuck.gif", true),
-  SCAREDDUCK("/images/duckhunt/ScaredDuck.png", false),
-  FALLINGDUCK("/images/duckhunt/FallingDuck.gif", false);
+  NORTHDUCK("/images/duckhunt/NorthDuck.gif"),
+  NORTHWESTDUCK("/images/duckhunt/NorthWestDuck.gif"),
+  WESTDUCK("/images/duckhunt/WestDuck.gif"),
+  NORTHEASTDUCK("/images/duckhunt/NorthEastDuck.gif"),
+  EASTDUCK("/images/duckhunt/EastDuck.gif"),
+  SCAREDDUCK("/images/duckhunt/ScaredDuck.png"),
+  FALLINGDUCK("/images/duckhunt/FallingDuck.gif");
 
   private Image image;
   private URL path;
 
-  DuckHuntImageManager(String stringPath, boolean isMirrored) {
+  DuckHuntImageManager(String stringPath) {
     path = getClass().getResource(stringPath);
     image = new Image(path.toExternalForm());
   }
@@ -37,20 +36,17 @@ public enum DuckHuntImageManager {
 
   public static DuckHuntImageManager getDuckImageFromOrientation(DuckOrientation orientation) {
     switch (orientation) {
-      case NORTH, SOUTH -> {
-        return NORTHDUCK;
-      }
-      case NORTHWEST, SOUTHWEST -> {
-        return NORTHWESTDUCK;
-      }
-      case WEST -> {
-        return WESTDUCK;
-      }
-      case NORTHEAST, SOUTHEAST -> {
+      case SOUTH, NORTHEAST -> {
         return NORTHEASTDUCK;
       }
-      case EAST -> {
+      case EAST, SOUTHEAST -> {
         return EASTDUCK;
+      }
+      case SOUTHWEST, WEST -> {
+        return WESTDUCK;
+      }
+      case NORTHWEST -> {
+        return NORTHWESTDUCK;
       }
       default -> {
         return NORTHDUCK;

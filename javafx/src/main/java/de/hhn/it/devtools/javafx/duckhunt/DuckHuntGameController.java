@@ -65,6 +65,11 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
     DuckHuntAttributeStore duckHuntAttributeStore = DuckHuntAttributeStore.getReference();
     stage = (Stage) duckHuntAttributeStore.getAttribute("gameStage");
     scene = new Scene(anchorPane, 960, 720);
+    //scene.setCursor(Cursor.CROSSHAIR);
+    URL cursorPath = getClass().getResource("/images/duckhunt/Crosshair.png");
+    //Image cursorImage = new Image(cursorPath.toExternalForm());
+    Image cursorImage = new Image(cursorPath.toExternalForm(), 300, 300, false, false);
+    scene.setCursor(new ImageCursor(cursorImage));
     stage.setScene(scene);
     stage.setResizable(false);
     stage.show();
@@ -219,6 +224,8 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
       if (gameInfo.getRound() > currentRound) {
         DuckHuntGameController.this.newRound();
         DuckHuntGameController.this.currentRound++;
+        drawAmmo(gameInfo.getAmmo());
+        drawMissed();
       }
     });
   }
@@ -265,5 +272,17 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
     Platform.runLater(() -> {
       increaseScore();
     });
+  }
+
+  private void drawAmmo(int ammoCount) {
+    ammoLabel.setText(String.valueOf(ammoCount));
+  }
+
+  private void drawMissed() {
+    String missedLabelText = "";
+    for (int x = 0; x < gameInfo.getMissedCount(); x++) {
+      missedLabelText = missedLabelText.concat("█");
+    }
+    hitLabel.setText(missedLabelText);
   }
 }
