@@ -46,7 +46,7 @@
                         <Font name="Times New Roman" size="30.0" />
                      </font>
                   </Label>
-                  <Slider fx:id="maxDuckCountSlider" blockIncrement="1.0" majorTickUnit="1.0" max="6.0" min="1.0" minorTickCount="1" prefHeight="30.0" prefWidth="330.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" GridPane.columnIndex="1" />
+                  <Slider fx:id="maxDuckCountSlider" blockIncrement="1.0" majorTickUnit="1.0" max="6.0" min="1.0" minorTickCount="0" prefHeight="30.0" prefWidth="330.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" GridPane.columnIndex="1" />
                   <Label prefHeight="75.0" prefWidth="380.0" style="-fx-background-color: WHITE; -fx-border-radius: 8; -fx-border-color: GRAY; -fx-background-radius: 8;" text="Ammo Count" GridPane.rowIndex="1">
                      <font>
                         <Font name="Times New Roman" size="30.0" />
@@ -57,7 +57,7 @@
                         <Font name="Times New Roman" size="30.0" />
                      </font>
                   </Label>
-                  <Slider fx:id="ammoCountSlider" blockIncrement="1.0" majorTickUnit="1.0" max="12.0" min="1.0" minorTickCount="1" prefHeight="30.0" prefWidth="330.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="3.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Slider fx:id="ammoCountSlider" blockIncrement="1.0" majorTickUnit="1.0" max="12.0" min="1.0" minorTickCount="0" prefHeight="30.0" prefWidth="330.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="3.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Slider fx:id="volumeSlider" minorTickCount="5" prefHeight="30.0" prefWidth="330.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="20.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
                      <children>

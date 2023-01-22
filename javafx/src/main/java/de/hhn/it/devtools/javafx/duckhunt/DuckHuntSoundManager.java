@@ -12,10 +12,7 @@ public class DuckHuntSoundManager {
   private double volume;
 
   public DuckHuntSoundManager() {
-    URL resource = getClass().getResource("/sounds/duckhunt/ButtonClick.wav");
-    directory = new File(resource.getFile());
-    media = new Media(directory.toURI().toString());
-    mediaPlayer = new MediaPlayer(media);
+    volume = 20d;
   }
 
   public void playSound(DuckHuntSounds sound) {

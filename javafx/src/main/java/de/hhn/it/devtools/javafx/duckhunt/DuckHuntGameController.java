@@ -60,6 +60,7 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   private Scene scene;
   private HashMap<Integer, ImageView> ducks;
   private GameSettingsDescriptor gameSettings;
+  private DuckHuntSoundManager soundManager;
   private int currentRound = 0;
 
   @Override
@@ -83,6 +84,8 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
       stage.close();
       game.stopGame();
     });
+
+    soundManager = (DuckHuntSoundManager) duckHuntAttributeStore.getAttribute("soundManager");
 
     // game creation
     gameSettings = (GameSettingsDescriptor) duckHuntAttributeStore.getAttribute("gameSettings");

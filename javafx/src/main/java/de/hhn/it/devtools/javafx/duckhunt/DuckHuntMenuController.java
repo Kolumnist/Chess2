@@ -17,6 +17,7 @@ public class DuckHuntMenuController implements Initializable {
 
   public static final String SCREEN = "menu.screen";
   private DuckHuntScreenController screenController;
+  private DuckHuntSoundManager soundManager;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -24,6 +25,7 @@ public class DuckHuntMenuController implements Initializable {
     screenController =
         (DuckHuntScreenController) duckHuntAttributeStore
             .getAttribute(DuckHuntScreenController.SCREEN_CONTROLLER);
+    soundManager = (DuckHuntSoundManager) duckHuntAttributeStore.getAttribute("soundManager");
   }
 
   @FXML
@@ -40,16 +42,19 @@ public class DuckHuntMenuController implements Initializable {
 
   @FXML
   void showInstructions(ActionEvent event) {
+    soundManager.playSound(DuckHuntSounds.BUTTONCLICK);
     screenController.switchTo(DuckHuntMenuController.SCREEN, DuckHuntDescriptionController.SCREEN);
   }
 
   @FXML
   void showSettings(ActionEvent event) {
+    soundManager.playSound(DuckHuntSounds.BUTTONCLICK);
     screenController.switchTo(DuckHuntMenuController.SCREEN, DuckHuntSettingsController.SCREEN);
   }
 
   @FXML
   void startGame(ActionEvent event) {
+    soundManager.playSound(DuckHuntSounds.BUTTONCLICK);
     screenController.switchTo(DuckHuntMenuController.SCREEN, DuckHuntGameController.SCREEN);
   }
 }

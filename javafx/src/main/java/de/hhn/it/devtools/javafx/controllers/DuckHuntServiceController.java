@@ -2,10 +2,7 @@ package de.hhn.it.devtools.javafx.controllers;
 
 import de.hhn.it.devtools.apis.duckhunt.GameSettingsDescriptor;
 import de.hhn.it.devtools.javafx.Main;
-import de.hhn.it.devtools.javafx.duckhunt.DuckHuntAttributeStore;
-import de.hhn.it.devtools.javafx.duckhunt.DuckHuntGameController;
-import de.hhn.it.devtools.javafx.duckhunt.DuckHuntMenuController;
-import de.hhn.it.devtools.javafx.duckhunt.DuckHuntScreenController;
+import de.hhn.it.devtools.javafx.duckhunt.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -23,6 +20,7 @@ public class DuckHuntServiceController extends Controller implements Initializab
   private DuckHuntScreenController screenController;
   private GameSettingsDescriptor gameSettings;
   private Stage gameStage;
+  private DuckHuntSoundManager soundManager;
 
   public DuckHuntServiceController() {
     gameStage = new Stage();
@@ -43,10 +41,12 @@ public class DuckHuntServiceController extends Controller implements Initializab
   public void initialize(URL location, ResourceBundle resources) {
     screenController = new DuckHuntScreenController(backgroundAnchorPane);
     gameSettings = new GameSettingsDescriptor();
+    soundManager = new DuckHuntSoundManager();
     DuckHuntAttributeStore duckHuntAttributeStore = DuckHuntAttributeStore.getReference();
     duckHuntAttributeStore.setAttribute(DuckHuntScreenController.SCREEN_CONTROLLER, screenController);
     duckHuntAttributeStore.setAttribute("gameSettings", gameSettings);
     duckHuntAttributeStore.setAttribute("gameStage", gameStage);
+    duckHuntAttributeStore.setAttribute("soundManager", soundManager);
 
     screenController.switchTo(null, DuckHuntMenuController.SCREEN);
   }
