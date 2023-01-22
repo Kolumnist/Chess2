@@ -10,6 +10,7 @@ import java.io.IOException;
 public class Game2048FileIO {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(Game2048FileIO.class);
+
   /**
    * Loads the highest score a player scored on this physical device, from a File.
    */
@@ -19,25 +20,21 @@ public class Game2048FileIO {
     FileInputStream fileInputStream = null;
     try {
       fileInputStream = new FileInputStream("javafx\\src\\main\\java\\de\\hhn\\it\\devtools\\javafx\\game2048\\SaveGame2048.txt");
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-    if (fileInputStream != null) {
       ObjectInputStream objectInputStream;
-      try {
-        objectInputStream = new ObjectInputStream(fileInputStream);
-        highScore = objectInputStream.readInt();
-        objectInputStream.close();
-        logger.info("readHighscore, highScore = {}", highScore);
-      } catch (IOException e) {
-        logger.warn("load highScore failed, because of ObjectOutputStream Error");
-        e.printStackTrace();
-      }
-    } else {
-      logger.warn("load highScore failed, because File related Error");
+      objectInputStream = new ObjectInputStream(fileInputStream);
+      highScore = objectInputStream.readInt();
+      objectInputStream.close();
+      logger.info("readHighscore, highScore = {}", highScore);
+
+    } catch (FileNotFoundException e) {
+      logger.info("File does not exist yet");
+    } catch (IOException e) {
+      logger.warn("load highScore failed, because of ObjectOutputStream Error");
     }
     return highScore;
   }
+
+
 
   /**
    * Writes the current value of highScore in a File.

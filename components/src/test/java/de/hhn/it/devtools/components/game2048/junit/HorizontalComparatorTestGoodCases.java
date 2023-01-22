@@ -8,6 +8,7 @@ import de.hhn.it.devtools.components.game2048.provider.comparators.HorizontalCom
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Test for good cases of the HorizontalComparator. ")
@@ -15,7 +16,7 @@ public class HorizontalComparatorTestGoodCases {
 
   @Test
   @DisplayName("Test if horizontal comparator compares the different blocks " +
-      "correctly for right. ")
+               "correctly for right. ")
   public void testCompareRight() {
     HorizontalComparator comparator = null;
     try {
@@ -24,19 +25,21 @@ public class HorizontalComparatorTestGoodCases {
       e.printStackTrace();
     }
 
-    Block block1 = new Block(new Position(1,1), 2);
-    Block block2 = new Block(new Position(2,1), 2);
-    Block block3 = new Block(new Position(3,1), 4);
+    Block block1 = new Block(new Position(1, 1), 2);
+    Block block2 = new Block(new Position(2, 1), 2);
+    Block block3 = new Block(new Position(3, 1), 4);
 
     assert comparator != null;
-    assertEquals(1, comparator.compare(block1, block2));
-    assertEquals(0, comparator.compare(block2, block2));
-    assertEquals(-1, comparator.compare(block3, block2));
+    HorizontalComparator finalComparator = comparator;
+    assertAll(() -> assertEquals(1, finalComparator.compare(block1, block2)),
+            () -> assertEquals(0, finalComparator.compare(block2, block2)),
+            () -> assertEquals(-1, finalComparator.compare(block3, block2))
+    );
   }
 
   @Test
   @DisplayName("Test if horizontal comparator compares the different blocks " +
-      "correctly for left. ")
+               "correctly for left. ")
   public void testCompareLeft() {
     HorizontalComparator comparator = null;
     try {
@@ -45,14 +48,15 @@ public class HorizontalComparatorTestGoodCases {
       e.printStackTrace();
     }
 
-    Block block1 = new Block(new Position(1,1), 2);
-    Block block2 = new Block(new Position(2,1), 2);
-    Block block3 = new Block(new Position(3,1), 4);
+    Block block1 = new Block(new Position(1, 1), 2);
+    Block block2 = new Block(new Position(2, 1), 2);
+    Block block3 = new Block(new Position(3, 1), 4);
 
     assert comparator != null;
-    assertEquals(-1, comparator.compare(block1, block2));
-    assertEquals(0, comparator.compare(block2, block2));
-    assertEquals(1, comparator.compare(block3, block2));
-
+    HorizontalComparator finalComparator = comparator;
+    assertAll(() -> assertEquals(-1, finalComparator.compare(block1, block2)),
+            () -> assertEquals(0, finalComparator.compare(block2, block2)),
+            () -> assertEquals(1, finalComparator.compare(block3, block2))
+    );
   }
 }

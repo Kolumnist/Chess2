@@ -36,7 +36,7 @@ public class ImplementationGame2048Service implements Game2048Service {
     this.gameWon = false;
     this.gameLost = false;
     this.gameListeners = new ArrayList<>();
-    values = new int[]{2, 2, 4, 4, 0, 0};
+    values = new int[]{2, 4, 4, 0, 0, 2, 4, 2, 8, 0, 0};
   }
 
   @Override
@@ -99,27 +99,6 @@ public class ImplementationGame2048Service implements Game2048Service {
   }
 
   /**
-   * Contains core functionality of moveAllBlocks, but without adding a Bllock at a random Position.
-   * This makes the Methode predictable, which allows better testing.
-   */
-  public void predictableMoveAllBlocks(MovingDirection direction) throws IllegalParameterException {
-    logger.info("moveAllBlocks: direction = {}", direction);
-    ArrayList<Block> columnRow = new ArrayList<>();
-    for (int i = 0; i < 4; i++) {
-      if (direction == MovingDirection.down || direction == MovingDirection.up) {
-        columnRow.addAll(getColumn(i));
-      } else {
-        columnRow.addAll(getRow(i));
-      }
-      if (columnRow.size() == 0) {
-        continue;
-      }
-      moveBlocks(columnRow, direction);
-      columnRow.clear();
-    }
-  }
-
-  /**
    * Is public to enable direct manipulation of the game-board from outside this class.
    *
    * @param xyPosition x and y coordinates of new Block
@@ -133,6 +112,27 @@ public class ImplementationGame2048Service implements Game2048Service {
       gameBoard.add(new Block(xyPosition, value));
     } else {
       throw new IllegalParameterException("Tried to add Block to a Space that is not free.");
+    }
+  }
+
+  /**
+   * Contains core functionality of moveAllBlocks, but without adding a Block at a random Position.
+   * This makes the Methode predictable, which allows better testing.
+   */
+  private void predictableMoveAllBlocks(MovingDirection direction) throws IllegalParameterException {
+    logger.info("moveAllBlocks: direction = {}", direction);
+    ArrayList<Block> columnRow = new ArrayList<>();
+    for (int i = 0; i < 4; i++) {
+      if (direction == MovingDirection.down || direction == MovingDirection.up) {
+        columnRow.addAll(getColumn(i));
+      } else {
+        columnRow.addAll(getRow(i));
+      }
+      if (columnRow.size() == 0) {
+        continue;
+      }
+      moveBlocks(columnRow, direction);
+      columnRow.clear();
     }
   }
 
@@ -172,8 +172,6 @@ public class ImplementationGame2048Service implements Game2048Service {
     logger.info("moveBlocks: columnRow = {}, direction = {}", columnRow, direction);
     if (direction == null) {
       throw new IllegalParameterException("direction was null reference.");
-    } else if (columnRow == null) {
-      throw new IllegalParameterException("column or row were null reference.");
     }
     for (Block removed : columnRow) {
       gameBoard.remove(removed);
@@ -292,9 +290,6 @@ public class ImplementationGame2048Service implements Game2048Service {
     for (Block gameBlock : gameBoard) {
       currentScore += gameBlock.getValue();
     }
-    if (currentScore < 0) {
-      throw new IllegalStateException("Summ of Values of all Blocks in game-board is < 0");
-    }
   }
 
   /**
@@ -334,12 +329,8 @@ public class ImplementationGame2048Service implements Game2048Service {
    *
    * @param currentColumn index of the current Column
    * @return List of Blocks with {xPosition == currentColumn}
-   * @throws IllegalParameterException if currentColumn is outside Boundaries
    */
-  private ArrayList<Block> getColumn(int currentColumn) throws IllegalParameterException {
-    if (currentColumn > 3 || currentColumn < 0) {
-      throw new IllegalParameterException("Tried to get column outside the game-board boundaries");
-    }
+  private ArrayList<Block> getColumn(int currentColumn) {
     ArrayList<Block> column = new ArrayList<>();
     for (Block block : gameBoard) {
       if (block.getXYPosition().getXPosition() == currentColumn) {
@@ -354,12 +345,8 @@ public class ImplementationGame2048Service implements Game2048Service {
    *
    * @param currentRow index of the current Column
    * @return List of Blocks with {yPosition == currentColumn}
-   * @throws IllegalParameterException if currentRow is outside Boundaries
    */
-  private ArrayList<Block> getRow(int currentRow) throws IllegalParameterException {
-    if (currentRow > 3 || currentRow < 0) {
-      throw new IllegalParameterException("Tried to get row outside the game-board boundaries");
-    }
+  private ArrayList<Block> getRow(int currentRow) {
     ArrayList<Block> row = new ArrayList<>();
     for (Block block : gameBoard) {
       if (block.getXYPosition().getYPosition() == currentRow) {
@@ -375,16 +362,5 @@ public class ImplementationGame2048Service implements Game2048Service {
 
   public ArrayList<Position> getFreelist() {
     return freelist;
-  }
-
-  /**
-   * Setter are only for Testing.
-   */
-  public void setGameBoard(ArrayList<Block> gameBoard) {
-    this.gameBoard = gameBoard;
-  }
-
-  public void setFreelist(ArrayList<Position> freelist) {
-    this.freelist = freelist;
   }
 }
