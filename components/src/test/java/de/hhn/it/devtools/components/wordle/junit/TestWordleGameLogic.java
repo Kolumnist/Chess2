@@ -170,4 +170,12 @@ public class TestWordleGameLogic {
     wordleGameLogic.startAnotherGame();
     assertEquals(0,wordleGameLogic.getPanelById(0).getId());
   }
+
+  @Test
+  void testGetPanelByIdThrowsException() throws IllegalParameterException {
+    wordleGameLogic.startAnotherGame();
+    assertThrows(
+        IllegalParameterException.class, () -> wordleGameLogic.getPanelById(-1)
+    );
+  }
 }
