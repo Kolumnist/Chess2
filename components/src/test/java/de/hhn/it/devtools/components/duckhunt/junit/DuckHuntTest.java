@@ -192,9 +192,9 @@ class DuckHuntTest {
   @Test
   void changeGameSettingsTest()
       throws IllegalParameterException, NoSuchFieldException, IllegalAccessException {
-    GameSettingsDescriptor newSettingsDescriptor = new GameSettingsDescriptor(1, 3);
+    GameSettingsDescriptor newSettingsDescriptor = new GameSettingsDescriptor(1, 3, 15);
     DuckHunt testGame = new DuckHunt(
-        new GameSettingsDescriptor(2, 5),
+        new GameSettingsDescriptor(2, 5, 15),
         new ScreenDimension(500, 500)
     );
     Field f = testGame.getClass().getDeclaredField("gameSettings");

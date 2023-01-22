@@ -63,7 +63,8 @@ public class DuckHunt implements DuckHuntService {
   }
 
   private void init() {
-    this.gameInfo = new GameInfo(0, gameSettings.getAmmoAmount(), 0, 15);
+    this.gameInfo = new GameInfo(0, gameSettings.getAmmoAmount(), 0,
+            gameSettings.getMaxMissedCount());
     this.listeners = new ArrayList<>();
     ammoCount = gameSettings.getAmmoAmount();
     duckCount = gameSettings.getduckAmount();

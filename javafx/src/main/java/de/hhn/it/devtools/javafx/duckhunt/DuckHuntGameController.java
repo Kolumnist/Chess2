@@ -267,6 +267,9 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
     });
   }
 
+
+
+
   @Override
   public void duckHit(int id) throws IllegalDuckIdException {
     Platform.runLater(() -> {

@@ -7,6 +7,7 @@ public class GameSettingsDescriptor {
 
   private int duckAmount;
   private int ammoAmount;
+  private int maxMissedCount;
 
   /**
    * Standard Constructor setting default duckAmount and ammoAmount.
@@ -14,14 +15,16 @@ public class GameSettingsDescriptor {
   public GameSettingsDescriptor() {
     duckAmount = 1;
     ammoAmount = 3;
+    maxMissedCount = 15;
   }
 
   /**
-   * Constructor setting given duckAmount and ammoAmount.
+   * Constructor setting given duckAmount, maxMissedCount and ammoAmount.
    */
-  public GameSettingsDescriptor(int duckAmount, int ammoAmount) {
+  public GameSettingsDescriptor(int duckAmount, int ammoAmount, int maxMissedCount) {
     this.duckAmount = duckAmount;
     this.ammoAmount = ammoAmount;
+    this.maxMissedCount = maxMissedCount;
   }
 
   public int getduckAmount() {
@@ -58,11 +61,28 @@ public class GameSettingsDescriptor {
     this.ammoAmount = ammoAmount;
   }
 
+  public int getMaxMissedCount() {
+    return maxMissedCount;
+  }
+  /**
+   * MaxMissedCount setter with parameter range check.
+   *
+   * @param maxMissedCount the maxMissedCount to be set (range: 1 - (maxInteger-1))
+   * @throws IllegalStateException is thrown when parameter volume out of range
+   */
+  public void setMaxMissedCount(int maxMissedCount) {
+    if (ammoAmount > Integer.MAX_VALUE - 1 || ammoAmount <= 0) {
+      throw new IllegalStateException("maxMissedCount not in acceptable range");
+    }
+    this.maxMissedCount = maxMissedCount;
+  }
+
   @Override
   public String toString() {
     return "GameSettingsDescriptor{"
          + "duckAmount=" + duckAmount
          + ", ammoAmount=" + ammoAmount
+         + ", maxMissedCount=" + maxMissedCount
          + '}';
   }
 

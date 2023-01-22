@@ -26,7 +26,7 @@
                 <Font name="Times New Roman" size="64.0" />
             </font>
         </Label>
-      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#0000005c" height="378.0" layoutX="143.0" layoutY="267.0" stroke="BLACK" strokeType="INSIDE" width="809.0" />
+      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#0000005c" height="388.0" layoutX="143.0" layoutY="257.0" stroke="BLACK" strokeType="INSIDE" width="809.0" />
       <VBox alignment="TOP_CENTER" layoutX="153.0" layoutY="291.0" prefHeight="348.0" prefWidth="788.0">
          <children>
             <GridPane prefHeight="258.0" prefWidth="749.0">
@@ -37,28 +37,30 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label prefHeight="75.0" prefWidth="380.0" style="-fx-background-color: WHITE; -fx-border-color: GRAY; -fx-border-radius: 8; -fx-background-radius: 8;" text="MAX Duck Count" textAlignment="CENTER">
+                  <Label prefHeight="50.0" prefWidth="380.0" style="-fx-background-color: WHITE; -fx-border-color: GRAY; -fx-border-radius: 8; -fx-background-radius: 8;" text="MAX Duck Count" textAlignment="CENTER">
                      <font>
                         <Font name="Times New Roman" size="30.0" />
                      </font>
                   </Label>
                   <Slider fx:id="maxDuckCountSlider" blockIncrement="1.0" majorTickUnit="1.0" max="6.0" min="1.0" minorTickCount="0" prefHeight="30.0" prefWidth="330.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" GridPane.columnIndex="1" />
-                  <Label prefHeight="75.0" prefWidth="380.0" style="-fx-background-color: WHITE; -fx-border-radius: 8; -fx-border-color: GRAY; -fx-background-radius: 8;" text="Ammo Count" GridPane.rowIndex="1">
+                  <Label prefHeight="50.0" prefWidth="261.0" style="-fx-background-color: WHITE; -fx-border-radius: 8; -fx-border-color: GRAY; -fx-background-radius: 8;" text="Ammo Count" GridPane.rowIndex="2">
                      <font>
                         <Font name="Times New Roman" size="30.0" />
                      </font>
                   </Label>
-                  <Label prefHeight="75.0" prefWidth="380.0" style="-fx-background-color: WHITE; -fx-border-color: GRAY; -fx-border-radius: 8; -fx-background-radius: 8;" text="Volume" GridPane.rowIndex="2">
+                  <Label prefHeight="50.0" prefWidth="380.0" style="-fx-background-color: WHITE; -fx-border-color: GRAY; -fx-border-radius: 8; -fx-background-radius: 8;" text="Volume" GridPane.rowIndex="3">
                      <font>
                         <Font name="Times New Roman" size="30.0" />
                      </font>
                   </Label>
-                  <Slider fx:id="ammoCountSlider" blockIncrement="1.0" majorTickUnit="1.0" max="12.0" min="1.0" minorTickCount="0" prefHeight="30.0" prefWidth="330.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="3.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Slider fx:id="volumeSlider" minorTickCount="5" prefHeight="30.0" prefWidth="330.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="20.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Slider fx:id="missedCountSlider" blockIncrement="1.0" majorTickUnit="1.0" max="20.0" min="1.0" minorTickCount="0" prefHeight="30.0" prefWidth="330.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="15.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Slider fx:id="ammoCountSlider" blockIncrement="1.0" majorTickUnit="1.0" max="12.0" min="1.0" minorTickCount="0" prefHeight="30.0" prefWidth="330.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="3.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Slider fx:id="volumeSlider" minorTickCount="5" prefHeight="30.0" prefWidth="330.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="20.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
                      <children>
                         <Label fx:id="maxDuckCountLabel" alignment="CENTER" prefHeight="50.0" prefWidth="60.0" style="-fx-border-color: GRAY; -fx-border-radius: 8; -fx-background-color: WHITE; -fx-background-radius: 8;" text="2" textAlignment="CENTER">
@@ -68,7 +70,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <children>
                         <Label fx:id="ammoCountLabel" alignment="CENTER" prefHeight="50.0" prefWidth="60.0" style="-fx-border-color: GRAY; -fx-border-radius: 8; -fx-background-color: WHITE; -fx-background-radius: 8;" text="3" textAlignment="CENTER">
                            <font>
@@ -77,7 +79,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <children>
                         <Label fx:id="volumeLabel" alignment="CENTER" prefHeight="50.0" prefWidth="60.0" style="-fx-border-color: GRAY; -fx-border-radius: 8; -fx-background-color: WHITE; -fx-background-radius: 8;" text="20" textAlignment="CENTER">
                            <font>
@@ -86,6 +88,20 @@
                         </Label>
                      </children>
                   </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <children>
+                        <Label fx:id="missedCountLabel" alignment="CENTER" prefHeight="50.0" prefWidth="60.0" style="-fx-border-color: GRAY; -fx-border-radius: 8; -fx-background-color: WHITE; -fx-background-radius: 8;" text="15" textAlignment="CENTER">
+                           <font>
+                              <Font name="Times New Roman" size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label prefHeight="50.0" prefWidth="380.0" style="-fx-background-color: WHITE; -fx-border-color: GRAY; -fx-border-radius: 8; -fx-background-radius: 8;" text="Missed Count" textAlignment="CENTER" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Times New Roman" size="30.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">

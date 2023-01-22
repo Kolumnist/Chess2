@@ -39,6 +39,10 @@ public class DuckHuntSettingsController implements Initializable {
 
   @FXML
   private Slider maxDuckCountSlider;
+  @FXML
+  private Label missedCountLabel;
+  @FXML
+  private Slider missedCountSlider;
 
   @FXML
   private AnchorPane anchorPane;
@@ -53,6 +57,7 @@ public class DuckHuntSettingsController implements Initializable {
   void applyGameSettings(MouseEvent event) {
     gameSettings.setAmmoAmount((int) ammoCountSlider.getValue());
     gameSettings.setDuckAmount((int) maxDuckCountSlider.getValue());
+    gameSettings.setMaxMissedCount((int) missedCountSlider.getValue());
     soundManager.changeVolume(volumeSlider.getValue());
     soundManager.playSound(DuckHuntSounds.BUTTONCLICK);
   }
@@ -83,6 +88,9 @@ public class DuckHuntSettingsController implements Initializable {
       if ((int) maxDuckCountSlider.getValue() >= (int) ammoCountSlider.getValue()) {
         ammoCountSlider.setValue((int) maxDuckCountSlider.getValue());
       }
+    });
+    missedCountSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+      missedCountLabel.setText(Integer.toString((int) missedCountSlider.getValue()));
     });
     ammoCountSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
       ammoCountLabel.setText(Integer.toString((int) ammoCountSlider.getValue()));
