@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers.wordleAdditional;
 
 import de.hhn.it.devtools.apis.wordle.State;
+import de.hhn.it.devtools.apis.wordle.WordlePanelListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -9,7 +10,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
-public class SimpleWordlePanelListener implements de.hhn.it.devtools.apis.wordle.WordlePanelListener {
+public class SimpleWordlePanelListener implements WordlePanelListener {
 
     @FXML
     private Label label;
