@@ -60,25 +60,25 @@ public interface ConnectFourInterface {
    * Get all user profiles.
    *
    * @return List of user profiles.
-   * @throws NoSuchElementException If no profiles are registered.
    */
-  HashMap<UUID, Profile> getProfiles() throws NoSuchElementException;
+  HashMap<UUID, Profile> getProfiles();
 
   /**
    * Set all user profiles.
    *
    * @param profiles The profiles.
+   * @throws IllegalArgumentException If profiles is null reference.
    */
   void setProfiles(HashMap<UUID, Profile> profiles) throws IllegalArgumentException;
 
   /**
    * Create new singleplayer game.
    *
-   * @param player         The profile of the player.
-   * @param player1IsFirst True, if player 1 begins. Otherwise, false.
+   * @param player        The profile of the player.
+   * @param playerIsFirst True, if player 1 begins. Otherwise, false.
    * @throws IllegalArgumentException If the argument isn't a valid player profile.
    */
-  void playSingleplayerGame(Profile player, boolean player1IsFirst) throws IllegalArgumentException;
+  void playSingleplayerGame(Profile player, boolean playerIsFirst) throws IllegalArgumentException;
 
   /**
    * Create new multiplayer game.

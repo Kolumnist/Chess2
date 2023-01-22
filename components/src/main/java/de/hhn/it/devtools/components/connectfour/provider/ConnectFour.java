@@ -92,8 +92,9 @@ public class ConnectFour implements ConnectFourInterface {
    * @throws NoSuchElementException   If no profile with the ID exists.
    */
   @Override
-  public Profile getProfile(UUID id) {
+  public Profile getProfile(UUID id) throws IllegalArgumentException, NoSuchElementException {
     logger.info("getProfile: id = {}", id);
+    checkId(id);
     return profiles.get(id);
   }
 
@@ -115,26 +116,29 @@ public class ConnectFour implements ConnectFourInterface {
    * @param profiles The profiles.
    */
   @Override
-  public void setProfiles(HashMap<UUID, Profile> profiles) {
+  public void setProfiles(HashMap<UUID, Profile> profiles) throws IllegalArgumentException {
     logger.info("setProfiles: profiles = {}", profiles);
+    if (profiles == null) {
+      throw new IllegalArgumentException("profiles is null reference");
+    }
     this.profiles = profiles;
   }
 
   /**
    * Create new singleplayer game.
    *
-   * @param player         The profile of the player.
-   * @param player1IsFirst True, if player 1 begins. Otherwise, false.
+   * @param player        The profile of the player.
+   * @param playerIsFirst True, if player 1 begins. Otherwise, false.
    * @throws IllegalArgumentException If the argument isn't a valid player profile.
    */
   @Override
-  public void playSingleplayerGame(Profile player, boolean player1IsFirst)
+  public void playSingleplayerGame(Profile player, boolean playerIsFirst)
       throws IllegalArgumentException {
     logger.info("playSingleplayerGame: player = {}", player);
     if (player == null) {
       throw new IllegalArgumentException("Player must not be null.");
     }
-    game = new SingleplayerGame(player, player1IsFirst);
+    game = new SingleplayerGame(player, playerIsFirst);
   }
 
   /**
@@ -163,8 +167,12 @@ public class ConnectFour implements ConnectFourInterface {
    * @throws IllegalOperationException If column is full.
    */
   @Override
-  public void placeDiscInColumn(int column) throws IllegalOperationException {
+  public void placeDiscInColumn(int column)
+      throws IllegalArgumentException, IllegalOperationException {
     logger.info("placeDiscIn: column = {}", column);
+    if (column < 0 || column > 6) {
+      throw new IllegalArgumentException("Column index is not between 0 and 6.");
+    }
     game.placeDiscInColumn(column);
   }
 

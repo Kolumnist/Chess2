@@ -22,7 +22,7 @@ public class TestUserInterfaceGoodCases {
 
   @Test
   @DisplayName("adding one new profile with name results in one entry.")
-  public void addNewProfile() throws IllegalArgumentException {
+  public void addNewProfile() {
     int profileCount = connectFour.getProfiles().size();
     connectFour.createProfile("Max");
     List<Profile> profiles = connectFour.getProfiles().values().stream().toList();
