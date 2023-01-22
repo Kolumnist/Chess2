@@ -87,8 +87,7 @@ public class InteractScreen extends AnchorPane implements Initializable {
         interactTextField.clear();
         itemNameField.clear();
         playerName.setText(viewModel.getGame().getPlayerName());
-        viewModel.getGame().getCurrentRoom().getItemList().listIterator()
-                .forEachRemaining(item -> itemHashMap.put(item.getName(),item));
+        itemHashMap = viewModel.getGame().getPlayer().getInventoryWithNames();
         itemHashMap.keySet().stream().iterator().forEachRemaining(item -> itemNames.add(item));
         itemObservableList = FXCollections.observableList(itemNames);
         itemChoiceBox.setItems(itemObservableList);
