@@ -6,6 +6,7 @@ import de.hhn.it.devtools.javafx.controllers.wordleAdditional.SimpleWordlePanelL
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -13,7 +14,12 @@ import javafx.scene.control.Label;
 import de.hhn.it.devtools.apis.wordle.WordleService;
 import de.hhn.it.devtools.apis.wordle.IllegalGuessException;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -45,7 +51,7 @@ public class WordleGameController extends Controller implements Initializable {
 
 
     @FXML
-    void buttonClicked(ActionEvent event) throws IllegalGuessException, IOException {
+    void enterButtonClicked(ActionEvent event) throws IllegalGuessException, IOException {
 
         if(checkIfGuessWasValid()) {
             isGameRunning = !backend.receiveAndComputeGuess(textField.getText());
@@ -79,8 +85,23 @@ public class WordleGameController extends Controller implements Initializable {
 
     @FXML
     void restartGame(ActionEvent event) {
-
-    }
+        backend.startAnotherGame();
+        isGameRunning = true;
+        for(Node node: rowGridPane.getChildren()) {
+            Label currentLabel = (Label) node;
+            currentLabel.setBackground(new Background(new BackgroundFill(Color.rgb(18,18,19), CornerRadii.EMPTY, Insets.EMPTY)));
+            currentLabel.setText(" ");
+            }
+        textField.setEditable(true);
+        button.setDisable(false);
+        rowCount = null;
+        try {
+            connectListenersToLabels();
+        } catch (IllegalParameterException e) {
+            throw new RuntimeException(e);
+        }
+        playAnotherRound.setVisible(false);
+        }
 
     private boolean checkIfGuessWasValid() {
         userInput = textField.getText();
