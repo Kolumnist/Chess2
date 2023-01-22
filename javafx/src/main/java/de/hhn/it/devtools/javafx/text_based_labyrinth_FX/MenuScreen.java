@@ -4,6 +4,7 @@ import de.hhn.it.devtools.apis.textbasedlabyrinth.InvalidSeedException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Map;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.RoomFailedException;
 import de.hhn.it.devtools.apis.textbasedlabyrinth.Seed;
+import de.hhn.it.devtools.components.textBasedLabyrinth.textbasedlabyrinth.Game;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,13 +16,15 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MenuScreen extends AnchorPane implements Initializable {
+
+    private static final org.slf4j.Logger logger =
+            org.slf4j.LoggerFactory.getLogger(MenuScreen.class);
 
 
 
@@ -99,6 +102,12 @@ public class MenuScreen extends AnchorPane implements Initializable {
 
         if (integers.size() < 1) {
             integers.add(0);
+        }
+
+        for (Integer i : integers) {
+            i = Math.abs(i);
+            //logger.info(i.toString());
+            //System.out.println(i.toString());
         }
 
         try {
