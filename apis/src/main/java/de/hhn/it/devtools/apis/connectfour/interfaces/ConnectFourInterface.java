@@ -104,10 +104,5 @@ public interface ConnectFourInterface {
    * Start the game.
    */
   void start();
-
-  /**
-   * Restart the game with its current configuration. Switches players if game was FINISHED.
-   */
-  void restart();
 }
 

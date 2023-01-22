@@ -27,11 +27,6 @@ public abstract class Game {
       throws IllegalOperationException;
 
   /**
-   * Restarts the game.
-   */
-  public abstract void restart();
-
-  /**
    * Starts the game.
    */
   public abstract void start();

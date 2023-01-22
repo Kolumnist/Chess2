@@ -49,17 +49,19 @@ public class SingleplayerGame extends Game {
     if (board.isWon()) {
       if (singleplayerState == SingleplayerState.HUMAN_IS_PLAYING) {
         singleplayerState = SingleplayerState.HUMAN_WON;
+        playerIsFirst = false;
       } else {
         singleplayerState = SingleplayerState.COMPUTER_WON;
+        playerIsFirst = true;
       }
       gameState = GameState.FINISHED;
       updatePlayerStatistics();
-
       // Draw?
     } else if (board.isDraw()) {
       singleplayerState = SingleplayerState.DRAW;
       gameState = GameState.FINISHED;
       updatePlayerStatistics();
+      playerIsFirst = !playerIsFirst;
     } else {
       // Switch players.
       if (singleplayerState == SingleplayerState.HUMAN_IS_PLAYING) {
@@ -75,45 +77,11 @@ public class SingleplayerGame extends Game {
         descriptor.describeSingleplayer(singleplayerState, player));
   }
 
-  /**
-   * Restart the game.
-   */
-  @Override
-  public void restart() {
-    logger.info("restart: no params");
-    timer.cancel();
-    timer = new Timer(true);
-    board = new Board();
-    // Switch players if game was won by starting player or ended in a draw.
-    if (gameState == GameState.FINISHED) {
-      if (playerIsFirst && singleplayerState == SingleplayerState.HUMAN_WON           // 1 & 1.
-          || !playerIsFirst && singleplayerState == SingleplayerState.COMPUTER_WON    // 2 & 2.
-          || singleplayerState == SingleplayerState.DRAW) {                           // Draw.
-        if (playerIsFirst) {
-          singleplayerState = SingleplayerState.COMPUTER_IS_PLAYING; // Switch.
-          computerColor = "RED";
-          humanColor = "GREEN";
-          playerIsFirst = false;
-          System.err.println("Computer begins");
-        } else {
-          singleplayerState = SingleplayerState.HUMAN_IS_PLAYING; // Same.
-          humanColor = "RED";
-          computerColor = "GREEN";
-          playerIsFirst = true;
-          System.err.println("Human begins");
-        }
-      }
-    }
-    gameState = GameState.RUNNING; // Start game.
-    if (singleplayerState == SingleplayerState.HUMAN_IS_PLAYING) {
-      listener.unlock();
-    } else {
-      play();
-    }
-  }
-
   @Override
   public void start() {
+    logger.info("start: no params");
+    timer.cancel();
+    timer = new Timer(true);
     board = new Board();
     if (playerIsFirst) {
       singleplayerState = SingleplayerState.HUMAN_IS_PLAYING;
@@ -126,10 +94,10 @@ public class SingleplayerGame extends Game {
     }
     gameState = GameState.RUNNING;
     listener.updateDescription(descriptor.describeSingleplayer(singleplayerState, player));
-    if (singleplayerState == SingleplayerState.HUMAN_IS_PLAYING) {
-      listener.unlock();
-    } else {
+    if (singleplayerState == SingleplayerState.COMPUTER_IS_PLAYING) {
       play();
+    } else {
+      listener.unlock();
     }
   }
 

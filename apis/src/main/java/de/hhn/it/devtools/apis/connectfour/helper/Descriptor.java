@@ -14,20 +14,20 @@ public class Descriptor {
    * Describes the current match state for singleplayer mode.
    *
    * @param singleplayerState The current match state.
-   * @param player1           The selected player profile.
+   * @param player            The selected player profile.
    * @return The description of the current match state.
    */
-  public String describeSingleplayer(SingleplayerState singleplayerState, Profile player1) {
-    logger.info("describeSingleplayer: {}, {}", singleplayerState, player1);
+  public String describeSingleplayer(SingleplayerState singleplayerState, Profile player) {
+    logger.info("describeSingleplayer: {}, {}", singleplayerState, player);
     switch (singleplayerState) {
       case HUMAN_IS_PLAYING -> {
-        return player1 + " is playing!";
+        return player + " is playing!";
       }
       case COMPUTER_IS_PLAYING -> {
         return "Computer is playing!";
       }
       case HUMAN_WON -> {
-        return player1 + " won!";
+        return player + " won!";
       }
       case COMPUTER_WON -> {
         return "Computer won!";

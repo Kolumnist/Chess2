@@ -44,7 +44,7 @@ public class GameController implements Initializable, ConnectFourListenerInterfa
     logger.info("onRestart: no params");
     lock();
     initializeBoard();
-    instance.restart();
+    instance.start();
   }
 
   @Override

@@ -179,15 +179,6 @@ public class ConnectFour implements ConnectFourInterface {
   }
 
   /**
-   * Restart the game with its current configuration. Switches players if game was FINISHED.
-   */
-  @Override
-  public void restart() {
-    logger.info("restart: no params");
-    game.restart();
-  }
-
-  /**
    * Check if the name is valid.
    *
    * @param name The profile name.

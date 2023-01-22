@@ -50,8 +50,10 @@ public class MultiplayerGame extends Game {
     if (board.isWon()) {
       if (multiplayerState == MultiplayerState.PLAYER_1_IS_PLAYING) {
         multiplayerState = MultiplayerState.PLAYER_1_WON;
+        player1IsFirst = false;
       } else {
         multiplayerState = MultiplayerState.PLAYER_2_WON;
+        player1IsFirst = true;
       }
       gameState = GameState.FINISHED;
       updatePlayerStatistics();
@@ -59,6 +61,7 @@ public class MultiplayerGame extends Game {
       // Draw?
     } else if (board.isDraw()) {
       multiplayerState = MultiplayerState.DRAW;
+      player1IsFirst = !player1IsFirst;
       gameState = GameState.FINISHED;
       updatePlayerStatistics();
     } else {
@@ -76,41 +79,12 @@ public class MultiplayerGame extends Game {
   }
 
   /**
-   * Restart the game.
-   */
-  @Override
-  public void restart() {
-    logger.info("restart: no params");
-    board = new Board();
-    // Switch players if game was won by starting player or ended in a draw.
-    if (gameState == GameState.FINISHED) {
-      if (player1IsFirst && multiplayerState == MultiplayerState.PLAYER_1_WON       // 1 & 1.
-          || !player1IsFirst && multiplayerState == MultiplayerState.PLAYER_2_WON   // 2 & 2.
-          || multiplayerState == MultiplayerState.DRAW) {                           // Draw.
-        if (player1IsFirst) {
-          multiplayerState = MultiplayerState.PLAYER_2_IS_PLAYING; // Switch.
-          player2Color = "RED";
-          player1Color = "GREEN";
-          player1IsFirst = false;
-        } else {
-          multiplayerState = MultiplayerState.PLAYER_1_IS_PLAYING; // Same.
-          player1Color = "RED";
-          player2Color = "GREEN";
-          player1IsFirst = true;
-        }
-      }
-    }
-    gameState = GameState.RUNNING; // Start game.
-    listener.unlock();
-  }
-
-  /**
    * Start the game.
    */
   @Override
   public void start() {
+    logger.info("start: no params");
     board = new Board();
-    gameState = GameState.RUNNING;
     if (player1IsFirst) {
       multiplayerState = MultiplayerState.PLAYER_1_IS_PLAYING;
       player1Color = "RED";
@@ -120,8 +94,10 @@ public class MultiplayerGame extends Game {
       player2Color = "RED";
       player1Color = "GREEN";
     }
+    gameState = GameState.RUNNING;
     listener.updateDescription(descriptor.describeMultiplayer(multiplayerState, player1, player2));
     listener.unlock();
+
   }
 
   /**
