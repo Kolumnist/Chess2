@@ -69,7 +69,7 @@ public class WordleGameController extends Controller implements Initializable {
 
 
     }
-    if (isGameRunning && rowCount > 5){
+    if (rowCount != null && isGameRunning && rowCount > 5){
       textField.setEditable(false);
       button.setDisable(true);
       System.out.println("-35 LP");
