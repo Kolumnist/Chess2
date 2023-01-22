@@ -76,7 +76,6 @@ public class Game extends Stage {
     }
     soundHandler = new SoundHandler("javafx/src/main/resources/battleship/battleshipLoop.wav");
     soundHandler.runMusic();
-    soundHandler.changeVolume(4.0f);
     new Reminder();
 
     player = service.getPlayer();

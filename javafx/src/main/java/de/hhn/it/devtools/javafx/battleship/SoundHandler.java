@@ -14,8 +14,12 @@ public class SoundHandler {
   String path;
   Clip clip;
   FloatControl fc;
+  float startVolume = 0.5f;
+  float range;
 
   SoundHandler(String path) {
+
+
     this.path = path;
     AudioInputStream inputStream;
     try {
@@ -23,7 +27,8 @@ public class SoundHandler {
       clip = AudioSystem.getClip();
       clip.open(inputStream);
       fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-      fc.setValue(-15.0f);
+      range= fc.getMaximum() - fc.getMinimum();
+      changeVolume(startVolume);
     } catch (UnsupportedAudioFileException | IOException e) {
       System.out.println(e.getMessage());
       e.printStackTrace();
@@ -43,6 +48,6 @@ public class SoundHandler {
   }
 
   void changeVolume(float volume) {
-    fc.setValue(volume);
+    fc.setValue((range * volume) + fc.getMinimum());
   }
 }

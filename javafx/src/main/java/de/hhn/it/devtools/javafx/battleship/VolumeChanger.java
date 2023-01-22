@@ -22,13 +22,15 @@ public class VolumeChanger {
   public VolumeChanger() {
 
     mute.setPrefSize(50, 50);
-    Slider volumeSlider = new Slider(-30, 6, 1);
+    Slider volumeSlider = new Slider(0, 1, 0.05);
     volumeSlider.setShowTickMarks(true);
     game = (Game) singletonAttributeStore.getAttribute("Battleship.game");
+
 
     volumeSlider.valueProperty().addListener(
         (observable, oldValue, newValue) -> game.soundHandler.changeVolume(
             (float) volumeSlider.getValue()));
+
 
     mute.setOnAction(actionEvent -> {
       if (isMuted) {
