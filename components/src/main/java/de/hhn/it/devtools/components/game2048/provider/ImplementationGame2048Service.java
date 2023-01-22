@@ -99,7 +99,7 @@ public class ImplementationGame2048Service implements Game2048Service {
   }
 
   /**
-   * Contains core functionality of moveAllBlocks, but without adding a Bllock at a random Position.
+   * Contains core functionality of moveAllBlocks, but without adding a Block at a random Position.
    * This makes the Methode predictable, which allows better testing.
    */
   public void predictableMoveAllBlocks(MovingDirection direction) throws IllegalParameterException {

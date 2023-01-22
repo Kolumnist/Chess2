@@ -8,6 +8,7 @@ import de.hhn.it.devtools.components.game2048.provider.comparators.VerticalCompa
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Test for good cases of the VerticalComparator. ")
@@ -29,9 +30,11 @@ public class VerticalComparatorTestGoodCases {
     Block block3 = new Block(new Position(1,3), 4);
 
     assert comparator != null;
-    assertEquals(1, comparator.compare(block1, block2));
-    assertEquals(0, comparator.compare(block2, block2));
-    assertEquals(-1, comparator.compare(block3, block2));
+    VerticalComparator finalComparator = comparator;
+    assertAll(() -> assertEquals(1, finalComparator.compare(block1, block2)),
+            () -> assertEquals(0, finalComparator.compare(block2, block2)),
+            () -> assertEquals(-1, finalComparator.compare(block3, block2))
+    );
   }
 
   @Test
@@ -50,8 +53,10 @@ public class VerticalComparatorTestGoodCases {
     Block block3 = new Block(new Position(1,3), 4);
 
     assert comparator != null;
-    assertEquals(-1, comparator.compare(block1, block2));
-    assertEquals(0, comparator.compare(block2, block2));
-    assertEquals(1, comparator.compare(block3, block2));
+    VerticalComparator finalComparator = comparator;
+    assertAll(() -> assertEquals(-1, finalComparator.compare(block1, block2)),
+            () -> assertEquals(0, finalComparator.compare(block2, block2)),
+            () -> assertEquals(1, finalComparator.compare(block3, block2))
+    );
   }
 }

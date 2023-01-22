@@ -7,7 +7,7 @@ import de.hhn.it.devtools.components.game2048.provider.comparators.VerticalCompa
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName("Test for bad cases of the VerticalComparator and the HorizontalComparator. ")
 public class ComparatorTestBadCases {
@@ -15,24 +15,12 @@ public class ComparatorTestBadCases {
   @Test
   @DisplayName("Test if exception is thrown for vertical comparator with wrong assessments. ")
   public void testCompareVertical() {
-    boolean thrown = false;
-    try {
-      VerticalComparator comparator = new VerticalComparator(MovingDirection.right);
-    } catch (IllegalParameterException e) {
-      thrown = true;
-    }
-    assertTrue(thrown);
+    assertThrows(IllegalParameterException.class,() -> new VerticalComparator(MovingDirection.right));
   }
 
   @Test
   @DisplayName("Test if exception is thrown for horizontal comparator with wrong assessments. ")
   public void testCompareHorizontal() {
-    boolean thrown = false;
-    try {
-      HorizontalComparator comparator = new HorizontalComparator(MovingDirection.down);
-    } catch (IllegalParameterException e) {
-      thrown = true;
-    }
-    assertTrue(thrown);
+    assertThrows(IllegalParameterException.class,() -> new HorizontalComparator(MovingDirection.up));
   }
 }
