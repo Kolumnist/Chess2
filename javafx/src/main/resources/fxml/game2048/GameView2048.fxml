@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.game2048.Game2048ViewController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.game2048.Game2048ViewController">
     <children>
-        <Button layoutX="813.0" layoutY="459.0" mnemonicParsing="false" onAction="#startGameButtonClicked" prefHeight="50.0" prefWidth="150.0" text="new Game">
+        <Button layoutX="784.0" layoutY="450.0" mnemonicParsing="false" onAction="#startGameButtonClicked" prefHeight="59.0" prefWidth="179.0" text="new Game">
             <font>
                 <Font size="23.0" />
             </font>
@@ -21,22 +18,22 @@
                 <Font name="System Bold" size="38.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" layoutX="663.0" layoutY="36.0" prefHeight="50.0" prefWidth="150.0" text="High Score">
+        <Label alignment="CENTER" layoutX="599.0" layoutY="36.0" prefHeight="50.0" prefWidth="150.0" text="High Score">
             <font>
                 <Font size="23.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" layoutX="663.0" layoutY="86.0" prefHeight="50.0" prefWidth="150.0" text="Current Score">
+        <Label alignment="CENTER" layoutX="599.0" layoutY="86.0" prefHeight="50.0" prefWidth="150.0" text="Current Score">
             <font>
                 <Font size="23.0" />
             </font>
         </Label>
-        <Label fx:id="highScoreNumber" alignment="CENTER" layoutX="813.0" layoutY="36.0" prefHeight="50.0" prefWidth="150.0" text="highScoreNumber">
+        <Label fx:id="highScoreNumber" alignment="CENTER" layoutX="731.0" layoutY="36.0" prefHeight="50.0" prefWidth="232.0" text="highScoreNumber">
             <font>
                 <Font size="23.0" />
             </font>
         </Label>
-        <Label fx:id="currentScoreNumber" alignment="CENTER" layoutX="813.0" layoutY="86.0" prefHeight="50.0" prefWidth="150.0" text="currentScoreNumber">
+        <Label fx:id="currentScoreNumber" alignment="CENTER" layoutX="748.0" layoutY="86.0" prefHeight="50.0" prefWidth="215.0" text="currentScoreNumber">
             <font>
                 <Font size="23.0" />
             </font>

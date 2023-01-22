@@ -62,6 +62,7 @@ public class Main extends Application {
     addModule("MemoryService");
     addModule("CharacterSheet");
     addModule("BattleshipMenu");
+    addModule("WordleGame");
   }
 
   @Override

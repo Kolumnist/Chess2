@@ -10,7 +10,7 @@
       <Label fx:id="playerName" layoutY="5.0" text="Playername" />
       <Label fx:id="score" layoutX="286.0" layoutY="5.0" text="Label" />
       <Button fx:id="exitGameButton" layoutX="530.0" layoutY="1.0" mnemonicParsing="false" onAction="#exitGame" text="Exit Game" />
-      <Button fx:id="returnButton" layoutX="530.0" layoutY="26.0" mnemonicParsing="false" onAction="#toMainScreen" prefHeight="25.0" prefWidth="69.0" text="Return" />
+      <Button fx:id="returnButton" layoutX="390.0" layoutY="1.0" mnemonicParsing="false" onAction="#toMainScreen" prefHeight="25.0" prefWidth="69.0" text="Return" />
       <TextArea fx:id="playerField" layoutX="100.0" layoutY="71.0" prefHeight="105.0" prefWidth="149.0" />
       <TextArea fx:id="roomField" layoutX="100.0" layoutY="199.0" prefHeight="105.0" prefWidth="149.0" />
       <TextArea fx:id="navigationField" layoutX="100.0" layoutY="328.0" prefHeight="105.0" prefWidth="149.0" />

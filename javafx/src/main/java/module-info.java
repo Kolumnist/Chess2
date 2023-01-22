@@ -10,6 +10,8 @@ module devtools.javafx {
   uses de.hhn.it.devtools.apis.battleship.BattleshipService;
   uses de.hhn.it.devtools.apis.chess2.Chess2Service;
   uses de.hhn.it.devtools.apis.duckhunt.DuckHuntService;
+  uses de.hhn.it.devtools.apis.wordle.WordleService;
+  opens de.hhn.it.devtools.javafx.controllers.wordleAdditional to javafx.fxml;
   opens de.hhn.it.devtools.javafx.controllers to javafx.fxml;
   opens de.hhn.it.devtools.javafx.controllers.coffeemaker to javafx.fxml;
   opens de.hhn.it.devtools.javafx.controllers.template to javafx.fxml;
@@ -18,6 +20,7 @@ module devtools.javafx {
   opens de.hhn.it.devtools.javafx.chess2 to javafx.fxml;
   opens de.hhn.it.devtools.javafx.duckhunt to javafx.fxml;
   opens de.hhn.it.devtools.javafx.controllers.memory to javafx.fxml;
+  exports de.hhn.it.devtools.javafx.controllers.wordleAdditional;
   exports de.hhn.it.devtools.javafx;
   exports de.hhn.it.devtools.javafx.controllers;
   exports de.hhn.it.devtools.javafx.controllers.coffeemaker;
