@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -47,7 +49,9 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   @FXML private Label hitLabel;
   @FXML private Label nextRoundLabel;
   @FXML private Label scoreLabel;
+  @FXML private Label gameOverLabel;
   @FXML private VBox pauseMenu;
+
 
   private DuckHunt game;
   private Stage stage;
@@ -65,9 +69,7 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
     DuckHuntAttributeStore duckHuntAttributeStore = DuckHuntAttributeStore.getReference();
     stage = (Stage) duckHuntAttributeStore.getAttribute("gameStage");
     scene = new Scene(anchorPane, 960, 720);
-    //scene.setCursor(Cursor.CROSSHAIR);
     URL cursorPath = getClass().getResource("/images/duckhunt/Crosshair.png");
-    //Image cursorImage = new Image(cursorPath.toExternalForm());
     Image cursorImage = new Image(cursorPath.toExternalForm(), 300, 300, false, false);
     scene.setCursor(new ImageCursor(cursorImage));
     stage.setScene(scene);
@@ -85,7 +87,6 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
       game.stopGame();
       soundManager.stop();
     });
-
     soundManager = (DuckHuntSoundManager) duckHuntAttributeStore.getAttribute("soundManager");
 
     // game creation
@@ -132,7 +133,7 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
 
   @FXML
   void exitGame(ActionEvent event) {
-    stage.fireEvent(new WindowEvent(stage,WindowEvent.WINDOW_CLOSE_REQUEST));
+    stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
   }
 
   @FXML
@@ -208,8 +209,9 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   }
 
   void increaseScore() {
-    score += 100;
-    scoreLabel.setText(String.format("%010d", score));
+    gameInfo.setPlayerScore(gameInfo.getPlayerScore());
+    scoreLabel.setText(String.format("%010d",
+            gameInfo.getPlayerScore() * 100));
   }
 
   @Override
@@ -287,5 +289,14 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
       missedLabelText = missedLabelText.concat("█");
     }
     hitLabel.setText(missedLabelText);
+  }
+
+  private void gameOver() {
+    exitButton.getParent().setDisable(false);
+    exitButton.getParent().setVisible(true);
+    continueButton.setDisable(true);
+    continueButton.setVisible(false);
+    gameOverLabel.setDisable(false);
+    gameOverLabel.setVisible(true);
   }
 }

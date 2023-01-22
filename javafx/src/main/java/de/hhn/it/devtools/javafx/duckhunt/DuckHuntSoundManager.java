@@ -44,6 +44,8 @@ public class DuckHuntSoundManager {
   }
 
   public void stop() {
+    mediaPlayer.pause();
+    mediaLoopPlayer.pause();
     mediaPlayer.stop();
     mediaLoopPlayer.stop();
   }

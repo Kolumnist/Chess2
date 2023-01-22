@@ -35,6 +35,11 @@
             <Font name="Times New Roman Bold" size="50.0" />
          </font>
       </Label>
+      <Label fx:id="gameOverLabel" disable="true" layoutX="322.0" layoutY="206.0" text="GAME OVER" textAlignment="CENTER" textFill="RED" underline="true" visible="false">
+         <font>
+            <Font name="Times New Roman Bold" size="50.0" />
+         </font>
+      </Label>
       <Label fx:id="ammoLabel" layoutX="125.0" layoutY="629.0" text="3" textFill="WHITE">
          <font>
             <Font name="Times New Roman Bold" size="33.0" />
@@ -45,9 +50,9 @@
             <Font name="Times New Roman" size="33.0" />
          </font>
       </Label>
-      <Label fx:id="hitLabel" contentDisplay="CENTER" layoutX="341.0" layoutY="625.0" prefHeight="43.0" prefWidth="266.0" text="███████████████" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+      <Label fx:id="hitLabel" contentDisplay="CENTER" layoutX="335.0" layoutY="625.0" prefHeight="43.0" prefWidth="335.0" text="████████████████████" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
          <font>
-            <Font name="System Bold" size="25.0" />
+            <Font name="System Bold" size="22.0" />
          </font>
       </Label>
       <VBox fx:id="pauseMenu" disable="true" layoutX="378.0" layoutY="167.0" prefHeight="161.0" prefWidth="203.0" spacing="50.0" visible="false">
