@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.components.connectfour.junit.testfacade.testcallback;
+package de.hhn.it.devtools.components.connectfour.junit;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

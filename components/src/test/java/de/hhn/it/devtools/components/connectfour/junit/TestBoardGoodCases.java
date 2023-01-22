@@ -1,4 +1,4 @@
-package de.hhn.it.devtools.components.connectfour.junit.testhelper.testboard;
+package de.hhn.it.devtools.components.connectfour.junit;
 
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import de.hhn.it.devtools.components.connectfour.provider.helper.Board;

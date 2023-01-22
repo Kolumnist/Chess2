@@ -1,11 +1,11 @@
-package de.hhn.it.devtools.components.connectfour.junit.testfacade.testuserinterface;
+package de.hhn.it.devtools.components.connectfour.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import java.util.List;
-import java.util.NoSuchElementException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,8 +21,8 @@ public class TestUserInterfaceGoodCases {
   }
 
   @Test
-  @DisplayName("adding one new profile with name results in one entry.")
-  public void addNewProfile() {
+  @DisplayName("Add one new profile with name results in one entry.")
+  public void testAddNewProfile() {
     int profileCount = connectFour.getProfiles().size();
     connectFour.createProfile("Max");
     List<Profile> profiles = connectFour.getProfiles().values().stream().toList();
@@ -31,9 +31,8 @@ public class TestUserInterfaceGoodCases {
   }
 
   @Test
-  @DisplayName("delete one profile and check the result.")
-  public void removeOneProfile()
-      throws IllegalArgumentException, NoSuchElementException {
+  @DisplayName("Delete one profile and check the result.")
+  public void testRemoveOneProfile() {
     int profileCount = connectFour.getProfiles().size();
     connectFour.createProfile("Alice");
     Profile bob = connectFour.createProfile("Bob");
@@ -41,5 +40,13 @@ public class TestUserInterfaceGoodCases {
     connectFour.deleteProfile(bob.getId());
     List<Profile> profiles = connectFour.getProfiles().values().stream().toList();
     assertEquals(profileCount + 2, profiles.size());
+  }
+
+  @Test
+  @DisplayName("Change a profile name.")
+  public void testChangeProfileName() {
+    Profile alice = connectFour.createProfile("Alice");
+    connectFour.setProfileName(alice.getId(), "Alicia");
+    Assertions.assertEquals(connectFour.getProfile(alice.getId()).getName(), "Alicia");
   }
 }

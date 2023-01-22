@@ -1,11 +1,11 @@
-package de.hhn.it.devtools.components.connectfour.junit.testfacade.testuserinterface;
+package de.hhn.it.devtools.components.connectfour.junit;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourInterface;
-import de.hhn.it.devtools.components.connectfour.junit.helper.DummyCallback;
+import de.hhn.it.devtools.components.connectfour.junit.DummyCallback;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.Assertions;
