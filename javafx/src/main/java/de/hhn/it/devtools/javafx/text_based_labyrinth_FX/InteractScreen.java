@@ -17,6 +17,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class InteractScreen extends AnchorPane implements Initializable {
@@ -27,9 +30,11 @@ public class InteractScreen extends AnchorPane implements Initializable {
 
     private GameViewModel viewModel;
     private GameScreenController screenController;
-    private ObservableList<Item> itemObservableList;
+    private ObservableList<String> itemObservableList;
     private Direction direction;
     private boolean finished;
+    private HashMap<String, Item> itemHashMap;
+    private List<String> itemNames;
 
 
 
@@ -50,13 +55,15 @@ public class InteractScreen extends AnchorPane implements Initializable {
     @FXML
     Button useButton;
     @FXML
-    ChoiceBox<Item> itemChoiceBox;
+    ChoiceBox<String> itemChoiceBox;
 
 
 
     public InteractScreen(GameScreenController screenController) {
         this.screenController = screenController;
         finished = false;
+        itemHashMap = new HashMap<>();
+        itemNames = new ArrayList<>();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/labyrinth/InteractionScreen.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -80,7 +87,10 @@ public class InteractScreen extends AnchorPane implements Initializable {
         interactTextField.clear();
         itemNameField.clear();
         playerName.setText(viewModel.getGame().getPlayerName());
-        itemObservableList = FXCollections.observableList(viewModel.getGame().getCurrentRoom().getItemList());
+        viewModel.getGame().getCurrentRoom().getItemList().listIterator()
+                .forEachRemaining(item -> itemHashMap.put(item.getName(),item));
+        itemHashMap.keySet().stream().iterator().forEachRemaining(item -> itemNames.add(item));
+        itemObservableList = FXCollections.observableList(itemNames);
         itemChoiceBox.setItems(itemObservableList);
     }
 
@@ -130,7 +140,7 @@ public class InteractScreen extends AnchorPane implements Initializable {
             updateInteractField("There is nothing more to do here.");
         } else {
             try {
-                finished = viewModel.getGame().interaction(direction, itemChoiceBox.getValue());
+                finished = viewModel.getGame().interaction(direction, itemHashMap.get(itemChoiceBox.getValue()));
             } catch (RoomFailedException e) {
                 throw new RoomFailedException(e.getMessage());
             }
@@ -143,7 +153,8 @@ public class InteractScreen extends AnchorPane implements Initializable {
         if (itemChoiceBox.getValue() == null) {
             updateInteractField("Please select an item.");
         } else {
-            viewModel.getGame().inspectItem(itemChoiceBox.getValue(), CurrentScreenRequesting.INTERACTION);
+            viewModel.getGame().inspectItem(itemHashMap.get(itemChoiceBox.getValue()),
+                    CurrentScreenRequesting.INTERACTION);
         }
     }
 }
