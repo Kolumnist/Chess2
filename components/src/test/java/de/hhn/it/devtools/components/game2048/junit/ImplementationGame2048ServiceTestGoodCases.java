@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
@@ -33,7 +32,6 @@ public class ImplementationGame2048ServiceTestGoodCases {
     }
     correctService.getGameBoard().clear();
     service.getGameBoard().clear();
-
   }
 
   private Method getPredictableMoveAllBlocks() throws NoSuchMethodException {
@@ -56,27 +54,22 @@ public class ImplementationGame2048ServiceTestGoodCases {
             () -> assertDoesNotThrow(() -> Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service, MovingDirection.right)),
             () -> assertDoesNotThrow(() -> Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service, MovingDirection.down)),
             () -> assertDoesNotThrow(() -> Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service, MovingDirection.up)),
-            () -> assertEquals(correctService.getGameBoard(), service.getGameBoard()));
+            () -> assertEquals(correctService.getGameBoard(), service.getGameBoard())
+    );
   }
 
   @Test
   @DisplayName("Tests the movement directions on a board with two blocks. ")
   void testMoveAllDirections() {
-    try {
-      service.addBlock(new Position(2, 2), 2);
-      correctService.addBlock(new Position(3, 3), 2);
-    } catch (IllegalParameterException e) {
-      e.printStackTrace();
-    }
-    try {
-      Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service, MovingDirection.left);
-      Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service, MovingDirection.right);
-      Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service, MovingDirection.down);
-      Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service, MovingDirection.up);
-    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-      e.printStackTrace();
-    }
-    assertEquals(correctService.getGameBoard(), service.getGameBoard());
+    assertAll(
+            () -> assertDoesNotThrow(() -> service.addBlock(new Position(2, 2), 2)),
+            () -> assertDoesNotThrow(() -> correctService.addBlock(new Position(3, 3), 2)),
+            () -> assertDoesNotThrow(() -> Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service, MovingDirection.left)),
+            () -> assertDoesNotThrow(() -> Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service, MovingDirection.right)),
+            () -> assertDoesNotThrow(() -> Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service, MovingDirection.down)),
+            () -> assertDoesNotThrow(() -> Objects.requireNonNull(getPredictableMoveAllBlocks()).invoke(service, MovingDirection.up)),
+            () -> assertEquals(correctService.getGameBoard(), service.getGameBoard())
+    );
   }
 
   @Test
@@ -98,7 +91,8 @@ public class ImplementationGame2048ServiceTestGoodCases {
             () -> assertTrue(correctService.getGameBoard().containsAll(service.getGameBoard())),
             () -> assertTrue(service.getGameBoard().containsAll(correctService.getGameBoard())),
             () -> assertTrue(correctService.getFreelist().containsAll(service.getFreelist())),
-            () -> assertTrue(service.getFreelist().containsAll(correctService.getFreelist())));
+            () -> assertTrue(service.getFreelist().containsAll(correctService.getFreelist()))
+    );
   }
 
   @Test
@@ -120,7 +114,8 @@ public class ImplementationGame2048ServiceTestGoodCases {
             () -> assertTrue(correctService.getGameBoard().containsAll(service.getGameBoard())),
             () -> assertTrue(service.getGameBoard().containsAll(correctService.getGameBoard())),
             () -> assertTrue(correctService.getFreelist().containsAll(service.getFreelist())),
-            () -> assertTrue(service.getFreelist().containsAll(correctService.getFreelist())));
+            () -> assertTrue(service.getFreelist().containsAll(correctService.getFreelist()))
+    );
   }
 
   @Test
@@ -142,7 +137,8 @@ public class ImplementationGame2048ServiceTestGoodCases {
             () -> assertTrue(correctService.getGameBoard().containsAll(service.getGameBoard())),
             () -> assertTrue(service.getGameBoard().containsAll(correctService.getGameBoard())),
             () -> assertTrue(correctService.getFreelist().containsAll(service.getFreelist())),
-            () -> assertTrue(service.getFreelist().containsAll(correctService.getFreelist())));
+            () -> assertTrue(service.getFreelist().containsAll(correctService.getFreelist()))
+    );
   }
 
   @Test
@@ -164,7 +160,8 @@ public class ImplementationGame2048ServiceTestGoodCases {
             () -> assertTrue(correctService.getGameBoard().containsAll(service.getGameBoard())),
             () -> assertTrue(service.getGameBoard().containsAll(correctService.getGameBoard())),
             () -> assertTrue(correctService.getFreelist().containsAll(service.getFreelist())),
-            () -> assertTrue(service.getFreelist().containsAll(correctService.getFreelist())));
+            () -> assertTrue(service.getFreelist().containsAll(correctService.getFreelist()))
+    );
   }
 
   @Test
@@ -174,32 +171,27 @@ public class ImplementationGame2048ServiceTestGoodCases {
     assertAll(() -> assertDoesNotThrow(() -> service.addCallback(listener)),
             () -> assertThrows(IllegalParameterException.class, () -> service.addCallback(listener)),
             () -> assertDoesNotThrow(() -> service.removeCallback(listener)),
-            () -> assertThrows(IllegalParameterException.class, () -> service.removeCallback(listener)));
+            () -> assertThrows(IllegalParameterException.class, () -> service.removeCallback(listener))
+    );
 
   }
 
   @Test
   @DisplayName("Test if Listener get notified after initialisation() and moveAllBlocks(...)")
   void testListener() {
-    try {
-      service.addCallback(listener);
-      service.initialisation();
-      service.moveAllBlocks(MovingDirection.up);
-      service.moveAllBlocks(MovingDirection.left);
-      service.moveAllBlocks(MovingDirection.right);
-    } catch (IllegalParameterException e) {
-      e.printStackTrace();
-    }
-    try {
-      service.removeCallback(listener);
-      service.initialisation();
-      service.moveAllBlocks(MovingDirection.up);
-      service.moveAllBlocks(MovingDirection.left);
-      service.moveAllBlocks(MovingDirection.right);
-    } catch (IllegalParameterException e) {
-      e.printStackTrace();
-    }
-    assertEquals(4, listener.getCountCalls());
+    assertAll(
+    () -> assertDoesNotThrow(() ->service.addCallback(listener)),
+    () -> assertDoesNotThrow(() ->service.initialisation()),
+    () -> assertDoesNotThrow(() ->service.moveAllBlocks(MovingDirection.up)),
+    () -> assertDoesNotThrow(() ->service.moveAllBlocks(MovingDirection.left)),
+    () -> assertDoesNotThrow(() ->service.moveAllBlocks(MovingDirection.right)),
+    () -> assertDoesNotThrow(() ->service.removeCallback(listener)),
+    () -> assertDoesNotThrow(() ->service.initialisation()),
+    () -> assertDoesNotThrow(() ->service.moveAllBlocks(MovingDirection.up)),
+    () -> assertDoesNotThrow(() ->service.moveAllBlocks(MovingDirection.left)),
+    () -> assertDoesNotThrow(() ->service.moveAllBlocks(MovingDirection.right)),
+    () -> assertEquals(4, listener.getCountCalls())
+    );
   }
 
   @Test
@@ -291,6 +283,5 @@ public class ImplementationGame2048ServiceTestGoodCases {
             () -> assertEquals((int) getField("valueIndex").get(service), valueIndex2),
             () -> assertDoesNotThrow(() -> service.moveAllBlocks(MovingDirection.up)),
             () -> assertEquals(1, (int) getField("valueIndex").get(service)));
-
   }
 }

@@ -32,12 +32,9 @@ public class ImplementationGame2048ServiceTestBadCases {
   void testAddingSamePosition() {
     Position firstPosition = new Position(1, 1);
     int value = 2;
-    try {
-      service.addBlock(firstPosition, value);
-    } catch (IllegalParameterException e) {
-      e.printStackTrace();
-    }
-    assertThrows(IllegalParameterException.class, () -> service.addBlock(firstPosition, value));
+    assertAll(() -> assertDoesNotThrow(() -> service.addBlock(firstPosition, value)),
+            () -> assertThrows(IllegalParameterException.class, () -> service.addBlock(firstPosition, value))
+    );
   }
 
   @Test
@@ -51,6 +48,7 @@ public class ImplementationGame2048ServiceTestBadCases {
   @DisplayName("Tests if null references are caught for callbacks. ")
   void testCallbackNullReferenz() {
     assertAll(() -> assertThrows(IllegalParameterException.class, () -> service.addCallback(null)),
-            () -> assertThrows(IllegalParameterException.class, () -> service.removeCallback(null)));
+            () -> assertThrows(IllegalParameterException.class, () -> service.removeCallback(null))
+    );
   }
 }
