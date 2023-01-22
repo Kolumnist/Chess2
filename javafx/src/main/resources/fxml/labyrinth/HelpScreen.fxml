@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<fx:root maxHeight="480" maxWidth="680" minHeight="480" minWidth="608.0" prefHeight="480.0" prefWidth="613.0" type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="playerName" layoutY="5.0" text="Playername" />
+      <Label fx:id="score" layoutX="286.0" layoutY="5.0" text="Label" />
+      <Button fx:id="exitGameButton" layoutX="530.0" layoutY="1.0" mnemonicParsing="false" onAction="#exitGame" text="Exit Game" />
+      <Button fx:id="returnButton" layoutX="530.0" layoutY="26.0" mnemonicParsing="false" onAction="#toMainScreen" prefHeight="25.0" prefWidth="69.0" text="Return" />
+      <TextArea fx:id="playerField" layoutX="100.0" layoutY="71.0" prefHeight="105.0" prefWidth="149.0" />
+      <TextArea fx:id="roomField" layoutX="100.0" layoutY="199.0" prefHeight="105.0" prefWidth="149.0" />
+      <TextArea fx:id="navigationField" layoutX="100.0" layoutY="328.0" prefHeight="105.0" prefWidth="149.0" />
+      <Label fx:id="help1" layoutX="261.0" layoutY="71.0" prefHeight="57.0" prefWidth="149.0" text="This is the field were your &#10;recent action as a player &#10;will be shown. &#10;&#10;" />
+      <Label fx:id="help2" layoutX="261.0" layoutY="199.0" prefHeight="92.0" prefWidth="149.0" text="This is the field were &#10;information about your &#10;current situation will be&#10;shown, like about the room&#10;you are currently inside.&#10;&#10;" />
+      <Label fx:id="help3" layoutX="261.0" layoutY="328.0" prefHeight="79.0" prefWidth="149.0" text="This is the field were &#10;navigational information&#10;and help will be given to&#10;you. &#10;" />
+   </children>
+</fx:root>

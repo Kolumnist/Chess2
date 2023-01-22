@@ -93,6 +93,7 @@ public class InventoryScreen extends AnchorPane implements Initializable {
     public void updateInspectField(String text) {
         itemInspectTextField.clear();
         itemInspectTextField.setText(text);
+        itemInspectTextField.setWrapText(true);
     }
 
     public void updateItemNameField(String text) {

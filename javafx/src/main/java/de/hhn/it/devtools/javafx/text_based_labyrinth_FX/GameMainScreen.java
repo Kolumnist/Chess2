@@ -40,6 +40,8 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     @FXML
     Button exitGameButton;
     @FXML
+    Button helpButton;
+    @FXML
     Label playerName;
     @FXML
     Label score;
@@ -96,16 +98,20 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     public void updatePlayerActionField(String text) {
         playerTextField.clear();
         playerTextField.setText(text);
+        playerTextField.setWrapText(true);
     }
 
     public void updateRoomField(String text) {
         roomTextField.clear();
         roomTextField.setText(text);
+        roomTextField.setWrapText(true);
     }
+
 
     public void updateActionField(String text) {
         actionTextField.clear();
         actionTextField.setText(text);
+        actionTextField.setWrapText(true);
     }
 
     @FXML
@@ -188,6 +194,16 @@ public class GameMainScreen extends AnchorPane implements Initializable {
         screenController.getInventoryScreen().update();
         try {
             screenController.changeScreen(GameMainScreen.SCREEN_NAME, InventoryScreen.SCREEN_NAME);
+        } catch (UnknownTransitionException e) {
+            throw new UnknownTransitionException(e.getMessage(), e.getFrom(), e.getTo());
+        }
+    }
+
+    @FXML
+    public void openHelp(ActionEvent event) throws UnknownTransitionException {
+        event.consume();
+        try {
+            screenController.changeScreen(GameMainScreen.SCREEN_NAME, HelpScreen.SCREEN_NAME);
         } catch (UnknownTransitionException e) {
             throw new UnknownTransitionException(e.getMessage(), e.getFrom(), e.getTo());
         }

@@ -108,6 +108,7 @@ public class InteractScreen extends AnchorPane implements Initializable {
     public void updateInteractField(String text) {
         interactTextField.clear();
         interactTextField.setText(text);
+        interactTextField.setWrapText(true);
     }
 
     @FXML
