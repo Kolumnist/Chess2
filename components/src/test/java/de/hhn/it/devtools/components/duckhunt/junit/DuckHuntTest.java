@@ -57,8 +57,9 @@ class DuckHuntTest {
     game.pauseGame();
     Thread.sleep(1000);
     game.getGameInfo().setState(GameState.RUNNING);
-    game.shoot(testListener.duckPosition.duckData()[0].getX() - 50,
-        testListener.duckPosition.duckData()[0].getY() - 50);
+    final int xShoot = testListener.duckPosition.duckData()[0].getX() + 50;
+    final int yShoot = testListener.duckPosition.duckData()[0].getY() + 50;
+    game.shoot(Math.min(xShoot, 500), Math.min(yShoot, 500));
     game.getGameInfo().setState(GameState.PAUSED);
     final Vector2D preDuckPos = new Vector2D(testListener.duckPosition.duckData()[0].getX(),
         testListener.duckPosition.duckData()[0].getY());
@@ -79,16 +80,16 @@ class DuckHuntTest {
           NoSuchFieldException, IllegalAccessException {
     game.addCallback(testListener);
     game.startGame();
-    Thread.sleep(100);
+    Thread.sleep(1000);
     game.pauseGame();
     game.getGameInfo().setState(GameState.RUNNING);
-
     Thread.sleep(1000);
     final int ammoCount = testListener.gameInfo.getAmmo();
     assertEquals(-1, testListener.duckHitId);
     System.out.println("Duck Position: " + testListener.duckPosition.duckData()[0].toString());
-    game.shoot(testListener.duckPosition.duckData()[0].getX() - 50,
-        testListener.duckPosition.duckData()[0].getY() - 50);
+    final int xShoot = testListener.duckPosition.duckData()[0].getX() + 50;
+    final int yShoot = testListener.duckPosition.duckData()[0].getY() + 50;
+    game.shoot(Math.min(xShoot, 500), Math.min(yShoot, 500));
     Thread.sleep(1000);
     assertEquals(0, testListener.duckHitId);
     assertEquals(ammoCount - 1, testListener.gameInfo.getAmmo());
