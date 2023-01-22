@@ -22,23 +22,23 @@
 }
 
 .carrier {
-    -fx-background-color: aqua;
+    -fx-background-color: #595F72;
 }
 
 .battleship {
-    -fx-background-color: red;
+    -fx-background-color: #575D90;
 }
 
 .cruiser {
-    -fx-background-color: chartreuse;
+    -fx-background-color: #84A07C;
 }
 
 .submarine {
-    -fx-background-color: forestgreen;
+    -fx-background-color: #C3D350;
 }
 
 .destroyer {
-    -fx-background-color: deeppink;
+    -fx-background-color: #E6F14A;
 }
 
 .hit {

@@ -8,52 +8,40 @@ package de.hhn.it.devtools.apis.battleship;
 public interface BattleshipListener {
 
     /**
-     *  Informs the listener that the game has changed its state.
-     * @param state current state of the game
+     * to check if player who shot won, if yes new windows with the player that won
+     * @param potentialWinner is the player that shot the last shot
      */
-    void newState(GameState state);
+    void outputWinner(Player potentialWinner);
 
 
     /**
-     * Informs the listener that a new field was created
-     * @param createdField
+     * @param player the player whose number of ships is updated
+     * updates the button text to indicate how many ships are left
      */
-    void newFieldCreated(Field createdField);
+    void updateUnplacedShips(Player player);
 
 
     /**
-     * Informs the listener that it's possible to place the ship at the current location
-     * @param ship
-     * @param possible true if possible
+     * if not all ships are placed the button to enter the FIRINGSHOTS state is made invisible
      */
-    void outputPlacingPossible(Ship ship, boolean possible);
+    void updateFiringShotsButton();
 
 
     /**
-     * Informs the listener that a ship was successfully placed
-     * @param ship
+     * when all ships are placed so that the button for state change to FIRINGSHOTS is displayed
      */
-    void outputShipPlaced(Ship ship);
+    void allShipsPlaced();
 
 
     /**
-     * Informs the listener that a ship is not placed anymore and can be moved
-     * @param ship
+     * to update the field after a change
      */
-    void outputShipMovable(Ship ship);
+    void updateField();
 
 
     /**
-     * Informs the listener that a bombing was (not)successful
-     * @param bombedPosition
-     * @param successful false if no ship on the bombedPosition and if the ship part was already bombed
+     * reset the appearance of the button so that it does not always look as if it is selected
      */
-    void outputBombingSuccessful(Position bombedPosition, boolean successful);
+    void resetShipSelected();
 
-
-    /**
-     * Informs the listener that the player or the computer has won
-     * @param playerWon true if player won, false if computer won
-     */
-    void outputWinner(boolean playerWon);
 }

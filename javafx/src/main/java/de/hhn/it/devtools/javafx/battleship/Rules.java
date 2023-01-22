@@ -16,8 +16,10 @@ public class Rules {
     Rules(){
 
         // Label displays the rules of Battleship
-        Label txt = new Label("- asjdpjasd " +
-                " /n test");
+        Label txt = new Label("You have to guess and hit the enemies ships. \n\n" +
+                "If you sink all of the computers ships, you win. \n\n" +
+                "If the computer sink all of your ships, you lose. \n\n" +
+                "To see what kind of ships you can still set, press help -> ships left");
 
         txt.setWrapText(true);
         txt.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-font-family: Arial, sans-serif; -fx-font-weight: bold");
