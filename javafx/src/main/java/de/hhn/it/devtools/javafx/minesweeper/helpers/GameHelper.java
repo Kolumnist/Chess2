@@ -94,7 +94,7 @@ public class GameHelper {
                 @Override
                 public void run() {
                     //Handle Inifity Time
-                    if (GameHelper.getTime() == -99){
+                    if (GameHelper.getTime() == -99) {
                         menu.setText("Infinity");
                         return;
                     }
@@ -110,7 +110,7 @@ public class GameHelper {
                             }
                             GameHelper.setTimeSpent(GameHelper.timeInTimer);
                             //Check if Time ran out
-                            if(GameHelper.timeInTimer >= GameHelper.getTime()){
+                            if(GameHelper.timeInTimer >= GameHelper.getTime()) {
                                 try {
                                     GameHelper.stopTimer();
                                     ViewSwitchHelper.switchTo("minesweeper/LosePopUp");

@@ -32,6 +32,16 @@ public class MinesweeperPopUpStartController implements Initializable {
     private TextField tbTime;
 
     public MinesweeperPopUpStartController() {
+
+    }
+
+    @FXML
+    void clickedCheckBox(ActionEvent event) {
+        if(checkBox.isSelected()){
+            tbTime.setEditable(false);
+        }else{
+            tbTime.setEditable(true);
+        }
     }
 
     @Override
