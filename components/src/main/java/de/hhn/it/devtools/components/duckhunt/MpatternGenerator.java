@@ -159,18 +159,18 @@ public final class MpatternGenerator {
         DuckOrientation.NORTH,
         DuckOrientation.NORTH,
         DuckOrientation.NORTH,
-        DuckOrientation.NORTHEAST,
-        DuckOrientation.NORTHEAST,
-        DuckOrientation.NORTHEAST,
         DuckOrientation.NORTHWEST,
         DuckOrientation.NORTHWEST,
-        DuckOrientation.SOUTHWEST,
-        DuckOrientation.EAST,
-        DuckOrientation.EAST,
-        DuckOrientation.WEST,
-        DuckOrientation.WEST,
+        DuckOrientation.NORTHWEST,
+        DuckOrientation.NORTHEAST,
+        DuckOrientation.NORTHEAST,
         DuckOrientation.SOUTHEAST,
+        DuckOrientation.WEST,
+        DuckOrientation.WEST,
+        DuckOrientation.EAST,
+        DuckOrientation.EAST,
         DuckOrientation.SOUTHWEST,
+        DuckOrientation.SOUTHEAST,
         DuckOrientation.SOUTH
     };
 
@@ -222,27 +222,27 @@ public final class MpatternGenerator {
     if (new Vector2D(prevPoint.getX() + DuckOrientation.NORTH.getX(),
             prevPoint.getY() + DuckOrientation.NORTH.getY()).equals(point)) {
       return DuckOrientation.NORTH;
-    } else if (new Vector2D(prevPoint.getX() + DuckOrientation.NORTHEAST.getX(),
-            prevPoint.getY() + DuckOrientation.NORTHEAST.getY()).equals(point)) {
-      return DuckOrientation.NORTHEAST;
-    } else if (new Vector2D(prevPoint.getX() + DuckOrientation.EAST.getX(),
-            prevPoint.getY() + DuckOrientation.EAST.getY()).equals(point)) {
-      return DuckOrientation.EAST;
-    } else if (new Vector2D(prevPoint.getX() + DuckOrientation.SOUTHEAST.getX(),
-            prevPoint.getY() + DuckOrientation.SOUTHEAST.getY()).equals(point)) {
-      return DuckOrientation.SOUTHEAST;
-    } else if (new Vector2D(prevPoint.getX() + DuckOrientation.SOUTH.getX(),
-            prevPoint.getY() + DuckOrientation.SOUTH.getY()).equals(point)) {
-      return DuckOrientation.SOUTH;
-    } else if (new Vector2D(prevPoint.getX() + DuckOrientation.SOUTHWEST.getX(),
-            prevPoint.getY() + DuckOrientation.SOUTHWEST.getY()).equals(point)) {
-      return DuckOrientation.SOUTHWEST;
-    } else if (new Vector2D(prevPoint.getX() + DuckOrientation.WEST.getX(),
-            prevPoint.getY() + DuckOrientation.WEST.getY()).equals(point)) {
-      return DuckOrientation.WEST;
     } else if (new Vector2D(prevPoint.getX() + DuckOrientation.NORTHWEST.getX(),
             prevPoint.getY() + DuckOrientation.NORTHWEST.getY()).equals(point)) {
       return DuckOrientation.NORTHWEST;
+    } else if (new Vector2D(prevPoint.getX() + DuckOrientation.WEST.getX(),
+            prevPoint.getY() + DuckOrientation.WEST.getY()).equals(point)) {
+      return DuckOrientation.WEST;
+    } else if (new Vector2D(prevPoint.getX() + DuckOrientation.SOUTHWEST.getX(),
+            prevPoint.getY() + DuckOrientation.SOUTHWEST.getY()).equals(point)) {
+      return DuckOrientation.SOUTHWEST;
+    } else if (new Vector2D(prevPoint.getX() + DuckOrientation.SOUTH.getX(),
+            prevPoint.getY() + DuckOrientation.SOUTH.getY()).equals(point)) {
+      return DuckOrientation.SOUTH;
+    } else if (new Vector2D(prevPoint.getX() + DuckOrientation.SOUTHEAST.getX(),
+            prevPoint.getY() + DuckOrientation.SOUTHEAST.getY()).equals(point)) {
+      return DuckOrientation.SOUTHEAST;
+    } else if (new Vector2D(prevPoint.getX() + DuckOrientation.EAST.getX(),
+            prevPoint.getY() + DuckOrientation.EAST.getY()).equals(point)) {
+      return DuckOrientation.EAST;
+    } else if (new Vector2D(prevPoint.getX() + DuckOrientation.NORTHEAST.getX(),
+            prevPoint.getY() + DuckOrientation.NORTHEAST.getY()).equals(point)) {
+      return DuckOrientation.NORTHEAST;
     } else {
       throw new DuckOrientationTranslationException("Error in translation of point to movement");
     }
