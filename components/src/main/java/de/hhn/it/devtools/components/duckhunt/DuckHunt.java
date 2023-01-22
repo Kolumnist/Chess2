@@ -12,8 +12,8 @@ import de.hhn.it.devtools.apis.duckhunt.GameState;
 import de.hhn.it.devtools.apis.duckhunt.IllegalDuckIdException;
 import de.hhn.it.devtools.apis.duckhunt.IllegalGameInfoException;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import java.util.ArrayList;
-import java.util.EmptyStackException;
+
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -28,7 +28,7 @@ public class DuckHunt implements DuckHuntService {
   private DuckData[] ducks;
   private int ammoCount;
   private int duckCount;
-  private final int gunSpread = 5;  // TODO configure gun spread by screenDimension
+  private final int gunSpread = 100;  // TODO configure gun spread by screenDimension
   private MpatternGenerator pathGenerator;
   private float deltaTime = 0.016f;
   private final float duckSpeed = 600f;
@@ -280,7 +280,12 @@ public class DuckHunt implements DuckHuntService {
       }
       switch (duck.getStatus()) {
         case FLYING -> moveDuck(duck);
-        case SCARRED -> duck.setStatus(DuckState.FALLING);
+        case SCARRED -> new Timer().schedule(new TimerTask() {
+          @Override
+          public void run() {
+            duck.setStatus(DuckState.FALLING);
+          }
+        }, 1000);
         case FALLING -> dropDuck(duck);
         case FLYAWAY -> ascendDuck(duck);
         case DEAD -> { /*dead is not used in this method*/ }

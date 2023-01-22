@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
@@ -31,29 +32,17 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
 
   public static final String SCREEN = "game.screen";
 
-  @FXML
-  private AnchorPane anchorPane;
-
-  @FXML
-  private Button continueButton;
-
-  @FXML
-  private Button exitButton;
-
-  @FXML
-  private ImageView backgroundImage;
-
-  @FXML
-  private ImageView bushImage;
-
-  @FXML
-  private ImageView grassImage;
-
-  @FXML
-  private ImageView groundImage;
-
-  @FXML
-  private ImageView treeImage;
+  @FXML private AnchorPane anchorPane;
+  @FXML private Button continueButton;
+  @FXML private Button exitButton;
+  @FXML private ImageView backgroundImage;
+  @FXML private ImageView bushImage;
+  @FXML private ImageView groundImage;
+  @FXML private ImageView treeImage;
+  @FXML private Label ammoLabel;
+  @FXML private Label hitLabel;
+  @FXML private Label nextRoundLabel;
+  @FXML private Label scoreLabel;
 
   private DuckHunt game;
   private Stage stage;
@@ -61,6 +50,7 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   private HashMap<Integer, ImageView> ducks;
   private GameSettingsDescriptor gameSettings;
   private int currentRound = 0;
+  private long score = 0;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -89,7 +79,16 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
 
     ducks = new HashMap<>();
     for (int i = 0; i < gameSettings.getduckAmount(); i++) {
-      ducks.put(i, DuckHuntImageManager.NORTHDUCK.image);
+      ImageView duck = DuckHuntImageManager.NORTHDUCK.getImageView();
+      duck.setOnMouseClicked(event -> {
+        if (game.getGameInfo().getState() == GameState.RUNNING) {
+          game.shoot(
+              Double.valueOf(event.getX()).intValue(),
+              Double.valueOf(event.getY()).intValue()
+          );
+        }
+      });
+      ducks.put(i, duck);
     }
 
     game = new DuckHunt(
@@ -102,7 +101,6 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
       throw new RuntimeException(e);
     }
     game.startGame();
-    newRound();
   }
 
   void pauseGame() {
@@ -130,28 +128,60 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
 
   @FXML
   void backgroundClicked(MouseEvent event) {
-
+    if (game.getGameInfo().getState() == GameState.RUNNING) {
+      game.shoot(
+          Double.valueOf(event.getX()).intValue(),
+          Double.valueOf(event.getY()).intValue()
+      );
+    }
   }
 
   @FXML
   void bushClicked(MouseEvent event) {
-
-  }
-
-  @FXML
-  void grassClicked(MouseEvent event) {
-
+    if (game.getGameInfo().getState() == GameState.RUNNING) {
+      game.shoot(
+          Double.valueOf(event.getX()).intValue(),
+          Double.valueOf(event.getY()).intValue()
+      );
+    }
   }
 
   @FXML
   void treeClicked(MouseEvent event) {
-
+    if (game.getGameInfo().getState() == GameState.RUNNING) {
+      game.shootObstacle();
+    }
   }
 
   void newRound() {
+    //game.pauseGame();
+    nextRoundLabel.setDisable(false);
+    nextRoundLabel.setVisible(true);
+    try {
+      Thread.sleep(2000);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
+    nextRoundLabel.setDisable(true);
+    nextRoundLabel.setVisible(false);
+    anchorPane.getChildren().clear();
+    anchorPane.getChildren().add(backgroundImage);
     ducks.forEach((integer, imageView) -> {
       anchorPane.getChildren().add(imageView);
     });
+    anchorPane.getChildren().add(bushImage);
+    anchorPane.getChildren().add(treeImage);
+    anchorPane.getChildren().add(groundImage);
+    anchorPane.getChildren().add(ammoLabel);
+    anchorPane.getChildren().add(hitLabel);
+    anchorPane.getChildren().add(scoreLabel);
+    anchorPane.getChildren().add(nextRoundLabel);
+    //game.continueGame();
+  }
+
+  void increaseScore() {
+    score += 100;
+    scoreLabel.setText(String.format("%010d", score));
   }
 
   @Override
@@ -159,6 +189,7 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
     if (gameInfo == null) {
       return;
     }
+    ammoLabel.setText(String.valueOf(gameInfo.getAmmo()));
     if (gameInfo.getRound() > currentRound) {
       newRound();
       currentRound = gameInfo.getRound();
@@ -169,13 +200,39 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   public void newDuckPosition(DucksInfo duckPosition) throws IllegalDuckPositionException {
     Arrays.stream(duckPosition.duckData()).forEach(duckData -> {
       ImageView duck = ducks.get(duckData.getId());
-      duck.setX(duckData.getX());
-      duck.setY(duckData.getY());
+      switch (duckData.getStatus()) {
+        case DEAD, ESCAPED -> {
+          duck.setDisable(true);
+          duck.setVisible(false);
+        }
+        case FALLING -> {
+          duck.setX(duckData.getX());
+          duck.setY(duckData.getY());
+          duck.setImage(DuckHuntImageManager.FALLINGDUCK.getImageView().getImage());
+        }
+        case SCARRED -> {
+          duck.setX(duckData.getX());
+          duck.setY(duckData.getY());
+          duck.setImage(DuckHuntImageManager.SCAREDDUCK.getImageView().getImage());
+        }
+        case FLYAWAY -> {
+          duck.setX(duckData.getX());
+          duck.setY(duckData.getY());
+          duck.setImage(DuckHuntImageManager.NORTHDUCK.getImageView().getImage());
+        }
+        default -> {
+          duck.setX(duckData.getX());
+          duck.setY(duckData.getY());
+          duck.setImage(DuckHuntImageManager.getDuckImageFromOrientation(
+              duckData.getOrientation()).getImageView().getImage()
+          );
+        }
+      }
     });
   }
 
   @Override
   public void duckHit(int id) throws IllegalDuckIdException {
-
+    increaseScore();
   }
 }
