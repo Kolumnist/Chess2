@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="370.0" style="-fx-background-color: #121213;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="370.0" style="-fx-background-color: #121213;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.wordleAdditional.VictoryScreenController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
@@ -24,7 +24,7 @@
       </HBox>
       <VBox alignment="CENTER" prefHeight="94.0" prefWidth="370.0">
          <children>
-            <Button mnemonicParsing="false" text="Play Again">
+            <Button fx:id="playAgainButton" mnemonicParsing="false" text="Play Again">
                <font>
                   <Font name="Dubai Regular" size="15.0" />
                </font>
@@ -32,7 +32,7 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Exit">
+            <Button fx:id="exitButton" mnemonicParsing="false" text="Exit">
                <font>
                   <Font name="Dubai Regular" size="15.0" />
                </font>

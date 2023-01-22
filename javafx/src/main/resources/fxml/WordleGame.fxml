@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="mainScreenVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="600.0" style="-fx-background-color: #121213;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.WordleGameController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="144.0" prefWidth="600.0">
+         <children>
+            <GridPane alignment="CENTER" prefHeight="72.0" prefWidth="600.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="200.0" text="Wordle" textFill="WHITE" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="Dubai Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="playAnotherRound" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#restartGame" text="Play another round">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Button>
+               </children>
+            </GridPane>
+         </children>
+      </HBox>
+      <Separator prefWidth="200.0" style="-fx-background-color: black;" />
+      <GridPane fx:id="rowGridPane" alignment="CENTER" minHeight="240.0" minWidth="240.0" prefHeight="570.0" prefWidth="400.0" style="-fx-background-color: #121213;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="504.0" minWidth="10.0" prefWidth="440.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="504.0" minWidth="10.0" prefWidth="440.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="504.0" minWidth="10.0" prefWidth="440.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="504.0" minWidth="10.0" prefWidth="440.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="504.0" minWidth="10.0" prefWidth="440.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="firstlabel" alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #3a3a3c; -fx-border-width: 3;" text=" " textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+         </VBox.margin>
+      </GridPane>
+      <HBox alignment="CENTER" prefHeight="129.0" prefWidth="600.0">
+         <children>
+            <TextField fx:id="textField" />
+            <Button fx:id="button" mnemonicParsing="false" onAction="#enterButtonClicked" text="Enter" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>

@@ -18,7 +18,7 @@ public interface WordleService {
    */
   void startAnotherGame();
 
-  void receiveAndComputeGuess(String stringGuess) throws IllegalGuessException;
+  boolean receiveAndComputeGuess(String stringGuess) throws IllegalGuessException;
 
 
   /**
@@ -43,5 +43,7 @@ public interface WordleService {
    * @throws IllegalParameterException if the given ID or listener do not exist
    */
   void removeCallback(WordlePanelListener listener, WordlePanelService panel) throws IllegalParameterException;
+
+  WordlePanelService getPanelById(int id) throws IllegalParameterException;
 
 }

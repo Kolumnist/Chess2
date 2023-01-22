@@ -164,4 +164,18 @@ public class TestWordleGameLogic {
     wordleGameLogic.addCallback(testListener, testPanel);
     assertDoesNotThrow(() -> wordleGameLogic.removeCallback(testListener, testPanel));
   }
+
+  @Test
+  void testGetPanelById() throws IllegalParameterException {
+    wordleGameLogic.startAnotherGame();
+    assertEquals(0,wordleGameLogic.getPanelById(0).getId());
+  }
+
+  @Test
+  void testGetPanelByIdThrowsException() throws IllegalParameterException {
+    wordleGameLogic.startAnotherGame();
+    assertThrows(
+        IllegalParameterException.class, () -> wordleGameLogic.getPanelById(-1)
+    );
+  }
 }
