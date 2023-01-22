@@ -1,10 +1,14 @@
 package de.hhn.it.devtools.components.game2048.provider;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.apis.game2048.*;
-import de.hhn.it.devtools.components.game2048.provider.Comparators.HorizontalComparator;
-import de.hhn.it.devtools.components.game2048.provider.Comparators.VerticalComparator;
-
+import de.hhn.it.devtools.apis.game2048.Block;
+import de.hhn.it.devtools.apis.game2048.Game2048Listener;
+import de.hhn.it.devtools.apis.game2048.Game2048Service;
+import de.hhn.it.devtools.apis.game2048.MovingDirection;
+import de.hhn.it.devtools.apis.game2048.Position;
+import de.hhn.it.devtools.apis.game2048.State;
+import de.hhn.it.devtools.components.game2048.provider.comparators.HorizontalComparator;
+import de.hhn.it.devtools.components.game2048.provider.comparators.VerticalComparator;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +26,9 @@ public class ImplementationGame2048Service implements Game2048Service {
   private int valueIndex;
   private ArrayList<Game2048Listener> gameListeners;
 
+  /**
+   * Basic Constructor.
+   */
   public ImplementationGame2048Service() {
     this.gameBoard = new ArrayList<>();
     this.freelist = new ArrayList<>();
@@ -29,7 +36,7 @@ public class ImplementationGame2048Service implements Game2048Service {
     this.gameWon = false;
     this.gameLost = false;
     this.gameListeners = new ArrayList<>();
-    values = new int[]{2, 2, 4, 0, 0};
+    values = new int[]{2, 2, 4, 4, 0, 0};
   }
 
   @Override
@@ -67,6 +74,34 @@ public class ImplementationGame2048Service implements Game2048Service {
     notifyGame2048Listener();
   }
 
+  @Override
+  public void addCallback(Game2048Listener listener) throws IllegalParameterException {
+    logger.info("addCallback: listener = {}", listener);
+    if (listener == null) {
+      throw new IllegalParameterException("Listener was null reference.");
+    } else if (gameListeners.contains(listener)) {
+      throw new IllegalParameterException("There is already a Listener registered.");
+    } else {
+      gameListeners.add(listener);
+    }
+  }
+
+  @Override
+  public void removeCallback(Game2048Listener listener) throws IllegalParameterException {
+    logger.info("removeCallback: listener = {}", listener);
+    if (listener == null) {
+      throw new IllegalParameterException("Tried to remove null reference instead of a Listener.");
+    } else if (!gameListeners.contains(listener)) {
+      throw new IllegalParameterException("Removing Listener failed, because of wrong parameter.");
+    } else {
+      gameListeners.remove(listener);
+    }
+  }
+
+  /**
+   * Contains core functionality of moveAllBlocks, but without adding a Bllock at a random Position.
+   * This makes the Methode predictable, which allows better testing.
+   */
   public void predictableMoveAllBlocks(MovingDirection direction) throws IllegalParameterException {
     logger.info("moveAllBlocks: direction = {}", direction);
     ArrayList<Block> columnRow = new ArrayList<>();
@@ -81,31 +116,6 @@ public class ImplementationGame2048Service implements Game2048Service {
       }
       moveBlocks(columnRow, direction);
       columnRow.clear();
-    }
-  }
-
-  @Override
-  public void addCallback(Game2048Listener listener) throws IllegalParameterException {
-    logger.info("addCallback: listener = {}", listener);
-    if (listener == null) {
-      throw new IllegalParameterException("Listener was null reference.");
-    } else if (gameListeners.contains(listener)) {
-      throw new IllegalParameterException("There is already a Listener registered.");
-    } else {
-      gameListeners.add(listener);
-    }
-    notifyGame2048Listener();
-  }
-
-  @Override
-  public void removeCallback(Game2048Listener listener) throws IllegalParameterException {
-    logger.info("removeCallback: listener = {}", listener);
-    if (listener == null) {
-      throw new IllegalParameterException("Tried to remove null reference instead of a Listener.");
-    } else if (!gameListeners.contains(listener)) {
-      throw new IllegalParameterException("Removing Listener failed, because of wrong parameter.");
-    } else {
-      gameListeners.remove(listener);
     }
   }
 
@@ -157,7 +167,8 @@ public class ImplementationGame2048Service implements Game2048Service {
    * @param direction The Blocks will be moved in this direction
    * @throws IllegalParameterException if a parameter is a null referenz
    */
-  private void moveBlocks(ArrayList<Block> columnRow, MovingDirection direction) throws IllegalParameterException {
+  private void moveBlocks(ArrayList<Block> columnRow, MovingDirection direction)
+          throws IllegalParameterException {
     logger.info("moveBlocks: columnRow = {}, direction = {}", columnRow, direction);
     if (direction == null) {
       throw new IllegalParameterException("direction was null reference.");
@@ -183,7 +194,8 @@ public class ImplementationGame2048Service implements Game2048Service {
             i--;
             mergeForbid = true;
           } else {
-            Block movingBlock = columnRow.get(i).changeYPosition(previousBlock.getXYPosition().getYPosition() - 1);
+            Block movingBlock = columnRow.get(i).changeYPosition(
+                    previousBlock.getXYPosition().getYPosition() - 1);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
             mergeForbid = false;
           }
@@ -202,7 +214,8 @@ public class ImplementationGame2048Service implements Game2048Service {
             i--;
             mergeForbid = true;
           } else {
-            Block movingBlock = columnRow.get(i).changeYPosition(previousBlock.getXYPosition().getYPosition() + 1);
+            Block movingBlock = columnRow.get(i).changeYPosition(
+                    previousBlock.getXYPosition().getYPosition() + 1);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
             mergeForbid = false;
           }
@@ -221,7 +234,8 @@ public class ImplementationGame2048Service implements Game2048Service {
             i--;
             mergeForbid = true;
           } else {
-            Block movingBlock = columnRow.get(i).changeXPosition(previousBlock.getXYPosition().getXPosition() - 1);
+            Block movingBlock = columnRow.get(i).changeXPosition(
+                    previousBlock.getXYPosition().getXPosition() - 1);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
             mergeForbid = false;
           }
@@ -240,11 +254,15 @@ public class ImplementationGame2048Service implements Game2048Service {
             i--;
             mergeForbid = true;
           } else {
-            Block movingBlock = columnRow.get(i).changeXPosition(previousBlock.getXYPosition().getXPosition() + 1);
+            Block movingBlock = columnRow.get(i).changeXPosition(
+                    previousBlock.getXYPosition().getXPosition() + 1);
             previousBlock = changeColumnRow(columnRow, i, movingBlock);
             mergeForbid = false;
           }
         }
+      }
+      default -> {
+        logger.warn("Reaching default should be impossible");
       }
     }
     gameBoard.addAll(columnRow);
@@ -280,8 +298,7 @@ public class ImplementationGame2048Service implements Game2048Service {
   }
 
   /**
-   * Checks if there is a Block with value >= 2048,
-   * if so the game is won
+   * Checks if there is a Block with value >= 2048, if so the game is won.
    */
   private void isGameWon() {
     for (Block gameBlock : gameBoard) {
@@ -293,7 +310,7 @@ public class ImplementationGame2048Service implements Game2048Service {
   }
 
   /**
-   * Adds moved block to columnRow, updates freelist, returns moved Block as previousBlock
+   * Adds moved block to columnRow, updates freelist, returns moved Block as previousBlock.
    */
   private Block changeColumnRow(ArrayList<Block> columnRow, int i, Block movingBlock) {
     Block previousBlock;
@@ -361,7 +378,7 @@ public class ImplementationGame2048Service implements Game2048Service {
   }
 
   /**
-   * Setter are only for Testing
+   * Setter are only for Testing.
    */
   public void setGameBoard(ArrayList<Block> gameBoard) {
     this.gameBoard = gameBoard;
