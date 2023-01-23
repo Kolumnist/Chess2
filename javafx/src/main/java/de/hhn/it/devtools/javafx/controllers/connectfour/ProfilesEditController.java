@@ -1,8 +1,13 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
+import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIo;
+
+import java.util.HashMap;
 import java.util.NoSuchElementException;
+import java.util.UUID;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -44,25 +49,42 @@ public class ProfilesEditController {
   @FXML
   void onSave() {
     logger.info("onSave: no params");
+    boolean goodName = true;
+    HashMap<UUID, Profile> profiles = Instance.getInstance().getProfiles();
     Stage stage = (Stage) saveButton.getScene().getWindow();
-    try {
-      ProfilesInfoController.pinfo.setName(nameText.getText());
-    } catch (IllegalArgumentException e) {
-      System.err.println(e.getMessage());
+    for(Profile value : profiles.values()) {
+      if (value.getName().equalsIgnoreCase(nameText.getText())) {
+        goodName = false;
+      }
     }
-    file.saveProfileData();
-    stage.close();
+    if(!goodName) {
+      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert.setTitle("Name already taken");
+      alert.setHeaderText("The profile " + nameText.getText() + " already exists!");
+      alert.setContentText("Please use another name.");
+      alert.showAndWait();
+      nameText.clear();
+    } else {
+      try {
+        ProfilesInfoController.pinfo.setName(nameText.getText());
+      } catch (IllegalArgumentException e) {
+        System.err.println(e.getMessage());
+      }
+      file.saveProfileData();
+      stage.close();
+    }
   }
 
   @FXML
   void onDelete() {
     logger.info("onDelete: no params");
-    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.OK, ButtonType.CANCEL);
     alert.setTitle("Confirm delete");
     alert.setHeaderText("You're about to delete " + ProfilesInfoController.pinfo.getName() + "!");
     alert.setContentText("Do you want to delete this Profile?");
+    alert.showAndWait();
 
-    if (alert.showAndWait().isPresent() && alert.showAndWait().get() == ButtonType.OK) {
+    if (alert.getResult() == ButtonType.OK) {
       Stage stage = (Stage) root.getScene().getWindow();
       try {
         Instance.getInstance().deleteProfile(ProfilesInfoController.pinfo.getId());

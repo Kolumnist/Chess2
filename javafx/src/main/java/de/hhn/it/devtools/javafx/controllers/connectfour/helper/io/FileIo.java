@@ -60,7 +60,7 @@ public class FileIo {
    */
   private String getFilePath() {
     logger.info("getFilePath: no params");
-    String path = "javafx/src/main/resources/fxml/connectfour/files/Profiles.txt";
+    String path = "javafx/src/main/resources/fxml/connectfour/files/Profiles.bin";
     File file = new File(path);
     return file.getAbsolutePath();
   }

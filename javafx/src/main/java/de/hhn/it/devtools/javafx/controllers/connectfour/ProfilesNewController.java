@@ -1,14 +1,19 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
+import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIo;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * This class modells the new profile controller.
@@ -44,14 +49,31 @@ public class ProfilesNewController {
   @FXML
   void onSave() {
     logger.info("onSave: no params");
+    boolean goodName = true;
+    HashMap<UUID, Profile> profiles = Instance.getInstance().getProfiles();
     Stage stage = (Stage) saveButton.getScene().getWindow();
-    try {
-      Instance.getInstance().createProfile(nameText.getText());
-    } catch (IllegalArgumentException e) {
-      System.err.println(e.getMessage());
+    for(Profile value : profiles.values()) {
+      if (value.getName().equalsIgnoreCase(nameText.getText())) {
+        goodName = false;
+      }
     }
-    file.saveProfileData();
-    stage.close();
+    if(!goodName) {
+      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert.setTitle("Name already taken");
+      alert.setHeaderText("The profile " + nameText.getText() + " already exists!");
+      alert.setContentText("Please use another name.");
+      alert.showAndWait();
+      nameText.clear();
+    } else {
+      try {
+        Instance.getInstance().createProfile(nameText.getText());
+      } catch (IllegalArgumentException e) {
+        System.err.println(e.getMessage());
+      }
+      file.saveProfileData();
+      stage.close();
+    }
+
   }
 
   /**

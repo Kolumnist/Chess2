@@ -60,7 +60,7 @@ public class ProfilesInfoController {
           FXMLLoader.load(Objects.requireNonNull(
               getClass().getResource("/fxml/connectfour/ProfilesEditScreen.fxml")));
       Stage stage = new Stage();
-      stage.setTitle("New Profile");
+      stage.setTitle("Edit Profile " + pinfo.getName());
       stage.setScene(new Scene(proot, 426, 240));
       stage.initModality(Modality.APPLICATION_MODAL);
       stage.setResizable(false);
