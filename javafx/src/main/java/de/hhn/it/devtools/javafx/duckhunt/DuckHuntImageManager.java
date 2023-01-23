@@ -1,11 +1,13 @@
 package de.hhn.it.devtools.javafx.duckhunt;
 
 import de.hhn.it.devtools.apis.duckhunt.DuckOrientation;
+import java.net.URL;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.net.URL;
-
+/**
+ * Provides the different duck images.
+ */
 public enum DuckHuntImageManager {
   NORTHDUCK("/images/duckhunt/NorthDuck.gif"),
   NORTHWESTDUCK("/images/duckhunt/NorthWestDuck.gif"),
@@ -23,6 +25,11 @@ public enum DuckHuntImageManager {
     image = new Image(path.toExternalForm());
   }
 
+  /**
+   * Supplies the image view.
+   *
+   * @return image view of duck
+   */
   public ImageView getImageView() {
     ImageView imageView = new ImageView(image);
     imageView.setPreserveRatio(true);
@@ -34,6 +41,12 @@ public enum DuckHuntImageManager {
     return path;
   }
 
+  /**
+   * Translates DuckOrientation to related duck image enum.
+   *
+   * @param orientation of the duck
+   * @return image enum
+   */
   public static DuckHuntImageManager getDuckImageFromOrientation(DuckOrientation orientation) {
     switch (orientation) {
       case SOUTH, NORTHEAST -> {

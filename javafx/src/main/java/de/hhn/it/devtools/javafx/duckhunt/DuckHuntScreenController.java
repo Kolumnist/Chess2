@@ -7,7 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
 /**
- * standard ScreenController.
+ * Duckhunt ScreenController.
  */
 public class DuckHuntScreenController {
   private static final org.slf4j.Logger logger =
@@ -27,7 +27,8 @@ public class DuckHuntScreenController {
 
   private Node getMenuScreen() {
     Node menuScreenContent = null;
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/duckhunt/DuckHuntMenuScreen.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass()
+        .getResource("/fxml/duckhunt/DuckHuntMenuScreen.fxml"));
     try {
       menuScreenContent = loader.load();
     } catch (IOException e) {
@@ -39,7 +40,8 @@ public class DuckHuntScreenController {
 
   private Node getSettingsScreen() {
     Node settingsScreenContent = null;
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/duckhunt/DuckHuntSettingsScreen.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass()
+        .getResource("/fxml/duckhunt/DuckHuntSettingsScreen.fxml"));
     try {
       settingsScreenContent = loader.load();
     } catch (IOException e) {
@@ -51,7 +53,8 @@ public class DuckHuntScreenController {
 
   private Node getDescriptionScreen() {
     Node descriptionScreenContent = null;
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/duckhunt/DuckHuntDescriptionScreen.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass()
+        .getResource("/fxml/duckhunt/DuckHuntDescriptionScreen.fxml"));
     try {
       descriptionScreenContent = loader.load();
     } catch (IOException e) {
@@ -63,7 +66,8 @@ public class DuckHuntScreenController {
 
   private Node getGameScreen() {
     Node gameScreenContent = null;
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/duckhunt/DuckHuntGameScreen.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass()
+        .getResource("/fxml/duckhunt/DuckHuntGameScreen.fxml"));
     try {
       gameScreenContent = loader.load();
     } catch (IOException e) {
@@ -74,6 +78,13 @@ public class DuckHuntScreenController {
     return gameScreenContent;
   }
 
+  /**
+   * Switches screens.
+   *
+   * @param fromScreen current screen
+   * @param toScreen screen to switch to
+   * @throws UnknownTransitionException if toScreen is unknown
+   */
   public void switchTo(String fromScreen, String toScreen) throws UnknownTransitionException {
     logger.info("Switching from " + fromScreen + " to " + toScreen);
     switch (toScreen) {
