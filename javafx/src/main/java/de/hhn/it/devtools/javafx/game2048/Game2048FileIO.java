@@ -12,28 +12,29 @@ public class Game2048FileIO {
   public static int loadHighscore() {
     logger.info("readHighscore: no params");
     int highScore = 0;
-
-    FileInputStream fileInputStream;
-    try {
-      fileInputStream = new FileInputStream(String.valueOf(ClassLoader.getSystemResource("game2048/SaveGame2048.txt")));
-      ObjectInputStream objectInputStream;
-      objectInputStream = new ObjectInputStream(fileInputStream);
-      highScore = objectInputStream.readInt();
-      objectInputStream.close();
-      logger.info("readHighscore, highScore = {}", highScore);
-
-    } catch (FileNotFoundException e) {
-      createHighscore(highScore);
-    } catch (IOException e) {
-      logger.warn("load highScore failed, because of ObjectOutputStream Error");
-    }
+//    try {
+//      String s =String.valueOf(ClassLoader.getSystemResource("SaveGame2048.txt"));
+//      FileInputStream fileInputStream = new FileInputStream(new File
+//              (ClassLoader.getSystemResource("resources/game2048/SaveGame2048").toURI().getPath()));
+//      logger.info("_________________________________" + s);
+//      DataInputStream DataInputStream;
+//      DataInputStream = new DataInputStream(fileInputStream);
+//      highScore = DataInputStream.readInt();
+//      DataInputStream.close();
+//      logger.info("readHighscore, highScore = {}", highScore);
+//    } catch (FileNotFoundException e) {
+//      createHighscore(highScore);
+//    } catch (IOException e) {
+//      logger.warn("load highScore failed, because of ObjectOutputStream Error");
+//    } catch (URISyntaxException e) {
+//      logger.info("Classloader error");
+//    }
     return highScore;
   }
 
   private static void createHighscore(int highScore) {
     logger.info("createHighscore: no params");
     ObjectOutputStream oos;
-
     try {
       File file = new File(String.valueOf(ClassLoader.getSystemResource("game2048/SaveGame2048.txt")));
       oos = new ObjectOutputStream(
@@ -53,17 +54,17 @@ public class Game2048FileIO {
    */
   public static void saveHighscore(int highScore) {
     logger.info("saveHighscore: no params");
-    FileOutputStream fileOutputStream;
-    try {
-      fileOutputStream = new FileOutputStream(String.valueOf(ClassLoader.getSystemResource("game2048/SaveGame2048.txt")));
-      ObjectOutputStream objectOutputStream;
-      objectOutputStream = new ObjectOutputStream(fileOutputStream);
-      objectOutputStream.writeInt(highScore);
-      objectOutputStream.flush();
-      objectOutputStream.close();
-    } catch (IOException e) {
-      logger.warn("save highScore failed, because of ObjectOutputStream Error");
-    }
+//    try {
+//      FileOutputStream fileOutputStream = new FileOutputStream(String.valueOf(ClassLoader.getSystemResource("game2048/SaveGame2048.txt")));
+//      DataOutputStream dataOutputStream;
+//      dataOutputStream = new DataOutputStream(fileOutputStream);
+//      dataOutputStream.writeInt(highScore);
+//      dataOutputStream.flush();
+//      dataOutputStream.close();
+//      fileOutputStream.close();
+//    } catch (IOException e) {
+//      logger.warn("save highScore failed, because of ObjectOutputStream Error");
+//    }
   }
 
 }
