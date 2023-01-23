@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
+import de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourInterface;
 import de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourListenerInterface;
-import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.board.Tile;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIo;
@@ -23,7 +23,7 @@ public class GameController implements Initializable, ConnectFourListenerInterfa
 
   private final FileIo file = new FileIo();
   private final Tile[][] tiles = new Tile[7][6];
-  private final ConnectFour instance = Instance.getInstance();
+  private final ConnectFourInterface instance = Instance.getInstance();
 
   @FXML
   Pane root;
