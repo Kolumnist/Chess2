@@ -30,7 +30,7 @@ public class ProfilesController {
   @FXML
   Pane root;
   @FXML
-  VBox vBox;
+  VBox verticalBox;
   @FXML
   Button btnNewProfile;
 
@@ -86,7 +86,7 @@ public class ProfilesController {
     next.setText(p.getName());
     next.setId(p.getId() + "");
     next.setOnAction(this::onProfile);
-    vBox.getChildren().add(next);
+    verticalBox.getChildren().add(next);
   }
 
   /**
@@ -98,7 +98,7 @@ public class ProfilesController {
     List<Profile> profiles =
         new LinkedList<>(Instance.getInstance().getProfiles().values().stream().toList());
     profiles.sort(Comparator.comparing(Profile::getName));
-    vBox.getChildren().clear();
+    verticalBox.getChildren().clear();
     for (Profile profile : profiles) {
       addProfileButton(profile);
     }
