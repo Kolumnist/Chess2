@@ -12,9 +12,11 @@ public class Game2048FileIO {
   public static int loadHighscore() {
     logger.info("readHighscore: no params");
     int highScore = 0;
+
+//ClassLoader.getSystemResource()
     FileInputStream fileInputStream;
     try {
-      fileInputStream = new FileInputStream(new File("javafx/src/main/resources/game2048/SaveGame2048.txt").getAbsolutePath());
+      fileInputStream = new FileInputStream(String.valueOf(ClassLoader.getSystemResource("game2048/SaveGame2048.txt")));
       ObjectInputStream objectInputStream;
       objectInputStream = new ObjectInputStream(fileInputStream);
       highScore = objectInputStream.readInt();
@@ -22,24 +24,25 @@ public class Game2048FileIO {
       logger.info("readHighscore, highScore = {}", highScore);
 
     } catch (FileNotFoundException e) {
-      createHighscoreFile(highScore);
+      createHighscore(highScore);
     } catch (IOException e) {
       logger.warn("load highScore failed, because of ObjectOutputStream Error");
     }
     return highScore;
   }
 
-  private static void createHighscoreFile(int highScore) {
+  private static void createHighscore(int highScore) {
+    logger.info("createHighscore: no params");
     ObjectOutputStream oos;
 
     try {
-      File file = new File("javafx/src/main/resources/game2048/SaveGame2048.txt");
+      File file = new File(String.valueOf(ClassLoader.getSystemResource("game2048/SaveGame2048.txt")));
       oos = new ObjectOutputStream(
               new FileOutputStream(file.getAbsolutePath()));
 
       oos.writeObject(highScore);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      logger.info("createHighscore Failed");
     }
   }
 
@@ -53,7 +56,7 @@ public class Game2048FileIO {
     logger.info("saveHighscore: no params");
     FileOutputStream fileOutputStream;
     try {
-      fileOutputStream = new FileOutputStream(new File("javafx/src/main/resources/game2048/SaveGame2048.txt").getAbsolutePath());
+      fileOutputStream = new FileOutputStream(String.valueOf(ClassLoader.getSystemResource("game2048/SaveGame2048.txt")));
       ObjectOutputStream objectOutputStream;
       objectOutputStream = new ObjectOutputStream(fileOutputStream);
       objectOutputStream.writeInt(highScore);
