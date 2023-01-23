@@ -41,6 +41,34 @@ public class TestMultiplayerGame {
   }
 
   @Test
+  @DisplayName("Test lost.")
+  void testLost() {
+    try {
+      multiplayerGame.placeDiscInColumn(0); // RED
+      multiplayerGame.placeDiscInColumn(1); // GREEN
+      multiplayerGame.placeDiscInColumn(2); // RED
+      multiplayerGame.placeDiscInColumn(1); // GREEN
+      multiplayerGame.placeDiscInColumn(3); // RED
+      multiplayerGame.placeDiscInColumn(1); // GREEN
+      multiplayerGame.placeDiscInColumn(4); // RED
+      multiplayerGame.placeDiscInColumn(1); // GREEN
+      // Bow won, Alice lost.
+    } catch (IllegalOperationException e) {
+      Assertions.fail();
+    }
+    if (alice.getMultiplayerLoose() != 1 || alice.getMultiplayerWin() != 0 ||
+        alice.getMultiplayerDraw() != 0) {
+      // Invalid player statistics.
+      Assertions.fail();
+    }
+    if (bob.getMultiplayerLoose() != 0 || bob.getMultiplayerWin() != 1 ||
+        bob.getMultiplayerDraw() != 0) {
+      // Invalid player statistics.
+      Assertions.fail();
+    }
+  }
+
+  @Test
   @DisplayName("Test won.")
   void testWon() {
     try {

@@ -32,6 +32,29 @@ public class TestSingleplayerGame {
   }
 
   @Test
+  @DisplayName("Test lost.")
+  void testLost() {
+    try {
+      singleplayerGame.placeDiscInColumn(0); // RED
+      singleplayerGame.placeDiscInColumn(1); // GREEN
+      singleplayerGame.placeDiscInColumn(2); // RED
+      singleplayerGame.placeDiscInColumn(1); // GREEN
+      singleplayerGame.placeDiscInColumn(3); // RED
+      singleplayerGame.placeDiscInColumn(1); // GREEN
+      singleplayerGame.placeDiscInColumn(0); // RED
+      singleplayerGame.placeDiscInColumn(1); // GREEN
+      // Computer won, Alice lost.
+    } catch (IllegalOperationException e) {
+      Assertions.fail();
+    }
+    if (alice.getSingleplayerLoose() != 1 || alice.getSingleplayerWin() != 0 ||
+        alice.getSingleplayerDraw() != 0) {
+      // Invalid player statistics.
+      Assertions.fail();
+    }
+  }
+
+  @Test
   @DisplayName("Test won.")
   void testWon() {
     try {
