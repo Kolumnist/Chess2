@@ -6,40 +6,46 @@
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane fx:id="root" prefHeight="680.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.connectfour.MultiplayerController">
-    <children>
-        <Button layoutX="480.0" layoutY="493.0" mnemonicParsing="false" onAction="#onBack" prefHeight="37.0" prefWidth="198.0" style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="Back" />
-        <Button fx:id="startButton" disable="true" layoutX="479.0" layoutY="408.0" mnemonicParsing="false" onAction="#onStart" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="Start" />
-        <ChoiceBox fx:id="player1ChoiceBox" layoutX="261.0" layoutY="174.0" prefHeight="40.0" prefWidth="200.0">
-            <tooltip>
-                <Tooltip text="choose a profile" />
-            </tooltip>
-        </ChoiceBox>
-        <ChoiceBox fx:id="player2ChoiceBox" disable="true" layoutX="699.0" layoutY="176.0" prefHeight="40.0" prefWidth="200.0">
-            <tooltip>
-                <Tooltip text="choose the starting player" />
-            </tooltip>
-        </ChoiceBox>
-        <ChoiceBox fx:id="startingPlayerChoiceBox" disable="true" layoutX="478.0" layoutY="320.0" prefHeight="40.0" prefWidth="200.0">
-            <tooltip>
-                <Tooltip text="choose a starting player" />
-            </tooltip>
-        </ChoiceBox>
-        <Label layoutX="299.0" layoutY="98.0" text="Player 1">
-            <font>
-                <Font size="34.0" />
-            </font>
-        </Label>
-        <Label layoutX="732.0" layoutY="97.0" text="Player 2">
-            <font>
-                <Font size="34.0" />
-            </font>
-        </Label>
-        <Label layoutX="474.0" layoutY="252.0" text="Starting Player">
-            <font>
-                <Font size="34.0" />
-            </font>
-        </Label>
-    </children>
+<AnchorPane fx:id="root" prefHeight="680.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="de.hhn.it.devtools.javafx.controllers.connectfour.MultiplayerController">
+    <Button layoutX="480.0" layoutY="493.0" mnemonicParsing="false" onAction="#onBack"
+            prefHeight="37.0" prefWidth="198.0"
+            style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="Back"/>
+    <Button fx:id="startButton" disable="true" layoutX="479.0" layoutY="408.0"
+            mnemonicParsing="false" onAction="#onStart" prefHeight="40.0" prefWidth="200.0"
+            style="-fx-background-color: BLUE; -fx-text-fill: WHITE;" text="Start"/>
+    <ChoiceBox fx:id="player1ChoiceBox" layoutX="261.0" layoutY="174.0" prefHeight="40.0"
+               prefWidth="200.0">
+        <tooltip>
+            <Tooltip text="choose a profile"/>
+        </tooltip>
+    </ChoiceBox>
+    <ChoiceBox fx:id="player2ChoiceBox" disable="true" layoutX="699.0" layoutY="176.0"
+               prefHeight="40.0" prefWidth="200.0">
+        <tooltip>
+            <Tooltip text="choose the starting player"/>
+        </tooltip>
+    </ChoiceBox>
+    <ChoiceBox fx:id="startingPlayerChoiceBox" disable="true" layoutX="478.0" layoutY="320.0"
+               prefHeight="40.0" prefWidth="200.0">
+        <tooltip>
+            <Tooltip text="choose a starting player"/>
+        </tooltip>
+    </ChoiceBox>
+    <Label layoutX="299.0" layoutY="98.0" text="Player 1">
+        <font>
+            <Font size="34.0"/>
+        </font>
+    </Label>
+    <Label layoutX="732.0" layoutY="97.0" text="Player 2">
+        <font>
+            <Font size="34.0"/>
+        </font>
+    </Label>
+    <Label layoutX="474.0" layoutY="252.0" text="Starting Player">
+        <font>
+            <Font size="34.0"/>
+        </font>
+    </Label>
 </AnchorPane>
