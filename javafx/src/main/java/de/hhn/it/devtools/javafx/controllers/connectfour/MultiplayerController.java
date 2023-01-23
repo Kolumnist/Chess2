@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
-import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
+import de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourInterface;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.enums.StartingPlayer;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.sorting.ProfileNameComparator;
@@ -47,7 +47,7 @@ public class MultiplayerController implements Initializable {
   @FXML
   void onStart() {
     logger.info("onStart: no params");
-    ConnectFour instance = Instance.getInstance();
+    ConnectFourInterface instance = Instance.getInstance();
     switch (startingPlayer) {
       case PLAYER1 -> instance.playMultiplayerGame(player1, player2, true);
       case PLAYER2 -> instance.playMultiplayerGame(player1, player2, false);
