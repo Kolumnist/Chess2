@@ -24,7 +24,7 @@
         </Label>
       <VBox alignment="TOP_CENTER" layoutX="153.0" layoutY="291.0" prefHeight="348.0" prefWidth="788.0">
          <children>
-            <TextArea editable="false" prefHeight="296.0" prefWidth="788.0" style="-fx-border-color: BLACK;" text="The goal of DuckHunt is to shoot as many Ducks &#10;as possible. &#10;But watch out! They are sneaky and can hide behind the Tree.&#10;&#10;You have a limited Ammo Ammount per round and &#10;you are only allowed to miss a certain number of ducks.&#10;So don't be to sloppy when you aim for them.&#10;&#10;In the Settings you can controll how many ducks should &#10;spawn once at a time,&#10;you can determine how many bullets you have per round&#10;and after what ammount of missed Ducks you are GAME OVER.&#10;&#10;So have fun and Beat your own Highscore!">
+            <TextArea editable="false" prefHeight="296.0" prefWidth="788.0" style="-fx-border-color: BLACK;" text="The goal of DuckHunt is to shoot as many DUCKS&#10;as possible. &#10;But watch out! They are sneaky and can hide behind the TREE.&#10;&#10;You have a limited amount of AMMO per round and &#10;are only allowed to MISS a certain NUMBER of ducks.&#10;So don't be to sloppy while taking aim.&#10;&#10;In the Settings you can control how many ducks are going to be &#10;spawned each round,&#10;you can also adjust the AMOUNT OF AMMO per round to your liking&#10;and after what AMOUNT OF MISSED DUCKS you are GAME OVER.&#10;&#10;So have fun and beat your own Highscore!">
                <font>
                   <Font name="Times New Roman" size="22.0" />
                </font></TextArea>
