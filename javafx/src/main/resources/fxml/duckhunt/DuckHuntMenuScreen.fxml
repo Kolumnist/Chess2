@@ -22,17 +22,17 @@
         </Label>
       <VBox layoutX="441.0" layoutY="285.0" prefHeight="250.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <Button fx:id="startGameButton" mnemonicParsing="false" onAction="#startGame" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: yellowgreen; -fx-background-radius: 8;" text="START GAME" textFill="WHITE">
+            <Button fx:id="startGameButton" mnemonicParsing="false" onAction="#startGame" prefHeight="45.0" prefWidth="200.0" stylesheets="@greenButton.css" text="START GAME" textFill="WHITE">
                <font>
                   <Font name="Times New Roman" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="howToPlayButton" mnemonicParsing="false" onAction="#showInstructions" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: gray; -fx-background-radius: 8;" text="HOW TO PLAY" textFill="WHITE">
+            <Button fx:id="howToPlayButton" mnemonicParsing="false" onAction="#showInstructions" prefHeight="45.0" prefWidth="200.0" stylesheets="@grayButton.css" text="HOW TO PLAY" textFill="WHITE">
                <font>
                   <Font name="Times New Roman" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#showSettings" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: gray; -fx-background-radius: 8;" text="SETTINGS" textFill="WHITE">
+            <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#showSettings" prefHeight="45.0" prefWidth="200.0" stylesheets="@grayButton.css" text="SETTINGS" textFill="WHITE">
                <font>
                   <Font name="Times New Roman" size="18.0" />
                </font>
