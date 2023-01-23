@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.minesweeper.WinPopUpController">
+   <center>
+      <Label fx:id="winPopUpLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="#1b0101" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <graphic>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="86.0" prefWidth="600.0" text="You won!" textAlignment="CENTER">
+                     <font>
+                        <Font name="Times New Roman Bold Italic" size="53.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="150.0" right="150.0" />
+                     </padding>
+                  </Label>
+                  <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="247.0" prefHeight="35.0" prefWidth="600.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label prefHeight="39.0" prefWidth="127.0" text="Time spend:" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets right="30.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox layoutX="373.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label fx:id="lbTimeSpent" />
+                           </children>
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="16.0" prefWidth="600.0">
+                     <children>
+                        <Button fx:id="buttonRestartWin" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonRestartWin" prefHeight="67.0" prefWidth="261.0" style="-fx-background-color: #00CBFF; -fx-border-color: black;" text="RESTART">
+                           <font>
+                              <Font name="Times New Roman Bold Italic" size="36.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="161.0" prefHeight="16.0" prefWidth="600.0">
+                     <children>
+                        <Button fx:id="buttonMenu" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonMenuWin" prefHeight="67.0" prefWidth="257.0" style="-fx-background-color: #00CBFF; -fx-border-color: black;" text="MENU">
+                           <font>
+                              <Font name="Times New Roman Bold Italic" size="36.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </graphic>
+      </Label>
+   </center>
+</BorderPane>

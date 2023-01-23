@@ -35,13 +35,19 @@ public class Puzzle {
    * @return puzzle is solved right.
    */
   public boolean setSolved(int keyId) {
-    if (this.keyId == keyId) { isSolved = true; }
+    if (this.keyId == keyId) {
+      isSolved = true;
+    }
     return isSolved;
   }
 
-  public boolean checkIfSolved() { return isSolved; }
+  public boolean checkIfSolved() {
+    return isSolved;
+  }
 
-  public String getDescription() { return description; }
+  public String getDescription() {
+    return description;
+  }
 
   public String getUnlockMessage() {
     return unlockMessage;

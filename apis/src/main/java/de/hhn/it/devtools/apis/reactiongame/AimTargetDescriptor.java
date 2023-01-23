@@ -15,7 +15,6 @@ public class AimTargetDescriptor implements GameObstacleDescriptor{
   /**
    * Basic constructor for an aim target.
    *
-   * @param id identifier
    * @param x position
    * @param y position
    * @param r radius
