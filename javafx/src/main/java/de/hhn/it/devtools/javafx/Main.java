@@ -61,7 +61,7 @@ public class Main extends Application {
     addModule("Game2048");
     addModule("MemoryService");
     addModule("MinesweeperService");
-    //addModule("CharacterSheet");
+    addModule("CharacterSheetService");
     addModule("BattleshipMenu");
     addModule("WordleGame");
   }
