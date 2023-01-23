@@ -13,7 +13,6 @@ public class Game2048FileIO {
     logger.info("readHighscore: no params");
     int highScore = 0;
 
-//ClassLoader.getSystemResource()
     FileInputStream fileInputStream;
     try {
       fileInputStream = new FileInputStream(String.valueOf(ClassLoader.getSystemResource("game2048/SaveGame2048.txt")));
