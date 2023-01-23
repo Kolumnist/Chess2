@@ -195,6 +195,9 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   }
 
   void shoot(MouseEvent event) {
+    if (gameInfo.getState() != GameState.RUNNING) {
+      return;
+    }
     if (gameInfo.getAmmo() <= 0) {
       soundManager.playSound(DuckHuntSounds.DRYSHOT);
       return;
@@ -209,6 +212,9 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   }
 
   void shootObstacle() {
+    if (gameInfo.getState() != GameState.RUNNING) {
+      return;
+    }
     if (gameInfo.getAmmo() <= 0) {
       soundManager.playSound(DuckHuntSounds.DRYSHOT);
       return;
