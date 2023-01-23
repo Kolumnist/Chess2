@@ -2,6 +2,7 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Player Class for the Game, the Player can move to other Rooms and interact with environment.
@@ -36,7 +37,7 @@ public class Player {
    */
   public Item removeItem(int itemId) throws NoSuchItemFoundException {
     if (!inventory.containsKey(itemId)) {
-      throw new NoSuchItemFoundException();
+      throw new NoSuchItemFoundException("The item was not found.");
     }
     Item returnItem = inventory.get(itemId);
     inventory.remove(itemId);
@@ -90,5 +91,14 @@ public class Player {
 
   public HashMap<Integer, Item> getInventory() {
     return inventory;
+  }
+
+  public HashMap<String, Item> getInventoryWithNames() {
+    Set<Integer> keySet = inventory.keySet();
+    HashMap<String, Item> items = new HashMap<>();
+    for (Integer i : keySet) {
+      items.put(inventory.get(i).getName(), inventory.get(i));
+    }
+    return items;
   }
 }

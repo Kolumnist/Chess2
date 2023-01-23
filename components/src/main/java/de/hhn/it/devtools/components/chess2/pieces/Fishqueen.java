@@ -22,13 +22,14 @@ public class Fishqueen extends Piece {
   }
 
   /**
-   * This method calculates all the possible movements of the fishqueen piece.
-   * It also add the movements which are not possible to go into an arraylist/ set.
+   * This method calculates all the possible movements of the fishqueen piece. It also add the
+   * movements which are not possible to go into an arraylist/ set.
    *
    * @param board the board of the game
    */
   @Override
   public void calculate(Board board) {
+    canDefeatKing = false;
     possibleMoves = new Coordinate[64];
     int k = 0;
     for (int g = 1; g <= 7; g++) {
@@ -63,14 +64,17 @@ public class Fishqueen extends Piece {
 
       //region never look at this code
 
-      //This code checks if there are other pieces/the bear/current pieces in the possible movement of the fishqueen
-      //because the fishqueen can't defeat the current piece and she can also not jump over a piece or defeat a piece and walks again
-      //so we add all the movements the fishqueen can't go into a set
+      //This code checks if there are other pieces/the bear/current pieces in the
+      //possible movement of the fishqueen because the fishqueen can't defeat the current piece
+      //and she can also not jump over a piece or defeat a piece and walks again so we add all
+      // the movements the fishqueen can't go into a set
       if (board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_CURRENT_PIECE
           || board.getSpecificField(possibleMoves[i]).getFieldState()
           == FieldState.HAS_OTHER_PIECE
-          || board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.HAS_BEAR) {
+          || board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.HAS_BEAR
+          || board.getSpecificField(possibleMoves[i]).getFieldState()
+          == FieldState.OTHER_KING) {
         int x = possibleMoves[i].getX() - coordinate.getX();
         int y = possibleMoves[i].getY() - coordinate.getY();
         int r = 1;
@@ -163,8 +167,16 @@ public class Fishqueen extends Piece {
             == FieldState.HAS_CURRENT_PIECE) {
           indexSet.add(i);
         }
-      }//endregion never look at this code
+      } //endregion never look at this code
     }
     possibleMoves = shortenCoordinateArray(possibleMoves, indexSet);
+
+    //Testing if the Fishqueen can defeat the enemy King.
+    for (int i = 0; i < possibleMoves.length; i++) {
+      if (board.getSpecificField(possibleMoves[i]).getFieldState() == FieldState.OTHER_KING) {
+        canDefeatKing = true;
+        break;
+      }
+    }
   }
 }

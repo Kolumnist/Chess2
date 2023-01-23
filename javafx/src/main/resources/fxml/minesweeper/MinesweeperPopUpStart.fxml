@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.minesweeper.MinesweeperPopUpStartController">
+   <center>
+      <Label fx:id="popUpLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="#1b0101" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <graphic>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="61.0" prefWidth="600.0" text="Minesweeper" textAlignment="CENTER">
+                     <font>
+                        <Font name="Times New Roman Bold Italic" size="53.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="150.0" right="150.0" />
+                     </padding>
+                  </Label>
+                  <HBox alignment="CENTER" prefHeight="16.0" prefWidth="600.0">
+                     <children>
+                        <Button fx:id="buttonEasy" maxWidth="105.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonEasy" prefWidth="105.0" style="-fx-background-color: limegreen; -fx-border-color: black;" text="easy" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="100.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="buttonMedium" layoutX="149.0" layoutY="10.0" maxWidth="105.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonMedium" prefWidth="105.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="medium" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="buttonHard" layoutX="104.0" layoutY="10.0" maxWidth="105.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonHard" prefWidth="105.0" style="-fx-background-color: red; -fx-border-color: black;" text="hard" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="100.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" top="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="247.0" prefHeight="35.0" prefWidth="600.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label prefHeight="39.0" prefWidth="109.0" text="Time:" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="373.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <TextField fx:id="tbTime" prefHeight="39.0" prefWidth="131.0" promptText="e.g. 100">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="207.0" prefHeight="35.0" prefWidth="600.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0" />
+                        <VBox layoutX="373.0" layoutY="10.0" prefHeight="35.0" prefWidth="710.0">
+                           <children>
+                              <CheckBox fx:id="checkBox" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#clickedCheckBox" prefHeight="32.0" prefWidth="143.0" text="no time limit">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="300.0" />
+                                 </VBox.margin>
+                              </CheckBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="35.0" prefWidth="600.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label prefHeight="39.0" prefWidth="109.0" text="Size:" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="373.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <TextField fx:id="tbSize" prefHeight="39.0" prefWidth="116.0" promptText="e.g. 10">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="35.0" prefWidth="600.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label prefHeight="50.0" prefWidth="100.0" text="Mines:" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="422.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <TextField fx:id="tbMines" promptText="e.g. 10">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="16.0" prefWidth="600.0">
+                     <children>
+                        <Button fx:id="buttonStart" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonStart" prefHeight="67.0" prefWidth="202.0" style="-fx-background-color: #00CBFF; -fx-border-color: black;" text="START">
+                           <font>
+                              <Font name="Times New Roman Bold Italic" size="36.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </graphic>
+      </Label>
+   </center>
+</BorderPane>

@@ -5,8 +5,7 @@ package de.hhn.it.devtools.apis.battleship;
  */
 public class IllegalShipStateException extends Exception {
 
-    // Contructor
-    public IllegalShipStateException(String exceptionMessage) {
-        super(exceptionMessage);
-    }
+  public IllegalShipStateException(String exceptionMessage) {
+    super(exceptionMessage);
+  }
 }

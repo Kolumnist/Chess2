@@ -13,8 +13,7 @@ import de.hhn.it.devtools.components.chess2.pieces.Queen;
 import java.util.Optional;
 
 /**
- * The Player class should display a player that has his pieces
- * and a color.
+ * The Player class should display a player that has his pieces and a color.
  *
  * @author Collin Hoss, Lara Mangi, Michel Jouaux
  * @version 1.3
@@ -42,14 +41,14 @@ public class Player {
   }
 
   /**
-   * All pieces that the players has get initialized here it works with a offset to check
-   * which color the player has.
+   * All pieces that the players has get initialized here it works with a offset to check which
+   * color the player has.
    */
   protected void initializeMyPieces() {
     int coordOffset7 = 0;
     int coordOffset5 = 0;
 
-    if (color == 'w') {
+    if (color == 'r') {
       myPieces[14] = new Queen(color, new Coordinate(3, 0));
       myPieces[15] = new King(color, new Coordinate(4, 0), true);
     } else {
@@ -109,7 +108,7 @@ public class Player {
    */
   protected void setKingOnJail(Piece jailPiece) {
     Coordinate jailCoordinate;
-    if (jailPiece.getColor() == 'w') {
+    if (jailPiece.getColor() == 'r') {
       jailCoordinate = new Coordinate(8, 3);
     } else {
       jailCoordinate = new Coordinate(9, 4);
@@ -125,7 +124,7 @@ public class Player {
    */
   protected void setQueenOnJail(Piece jailPiece) {
     Coordinate jailCoordinate;
-    if (jailPiece.getColor() == 'w') {
+    if (jailPiece.getColor() == 'r') {
       jailCoordinate = new Coordinate(9, 3);
     } else {
       jailCoordinate = new Coordinate(8, 4);

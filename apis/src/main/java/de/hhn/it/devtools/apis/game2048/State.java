@@ -27,15 +27,9 @@ public class State {
    */
   private final boolean gameLost;
 
-  /**
-   * contains the new Highscore.
-   */
-  private final int newHighscore;
-
-  public State(Block[] blocksOnGameboard, int newCurrentScore, int newHighscore, boolean gameWon, boolean gameLost) {
+  public State(Block[] blocksOnGameboard, int newCurrentScore, boolean gameWon, boolean gameLost) {
     this.blocksOnGameboard = blocksOnGameboard;
     this.newCurrentScore = newCurrentScore;
-    this.newHighscore = newHighscore;
     this.gameWon = gameWon;
     this.gameLost = gameLost;
   }
@@ -44,12 +38,8 @@ public class State {
     return blocksOnGameboard;
   }
 
-  public int getNewCurrentScore() {
+  public int getCurrentScore() {
     return newCurrentScore;
-  }
-
-  public int getNewHighscore() {
-    return newHighscore;
   }
 
   public boolean isGameLost() {
@@ -67,7 +57,6 @@ public class State {
            ", newCurrentHighscore=" + newCurrentScore +
            ", gameWon=" + gameWon +
            ", gameLost=" + gameLost +
-           ", newHighscore=" + newHighscore +
            '}';
   }
 }

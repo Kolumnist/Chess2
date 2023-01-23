@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,10 +32,10 @@ public interface GameService {
    * @param itemId the id of the item to be removed.
    * @return the message, which is about the success or failure of the operation.
    */
-  String dropItem(int itemId) throws NoSuchItemFoundException;
+  Item dropItem(int itemId) throws NoSuchItemFoundException;
 
 
-  void inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException;
+  String inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException;
 
   /**
    * Inspect a door/pathway.
@@ -45,7 +46,7 @@ public interface GameService {
    * Let the user interact with the environment.
    * (Solve puzzles)
    */
-  String interaction(Direction direction, Item item) throws RoomFailedException;;
+  boolean interaction(Direction direction, Item item) throws RoomFailedException;;
 
   /**
    * Let the user search through the room.
@@ -99,8 +100,6 @@ public interface GameService {
 
   Room getCurrentRoom();
 
-
-
   void startup();
 
   void start();
@@ -112,5 +111,10 @@ public interface GameService {
   public String getPlayerName();
 
   public Map getMap();
+
+  void inspectItem(Item item, CurrentScreenRequesting requester);
+
+  List<Map> getMaps();
+  public ArrayList<OutputListener> getListeners();
 
 }

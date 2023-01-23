@@ -42,7 +42,7 @@ public class TestChessGameBadCases {
     assertEquals(WinningPlayerState.NO_WINNER, chess2Service.getWinningPlayer());
     chess2Service.giveUp();
     assertEquals(WinningPlayerState.NO_WINNER, chess2Service.getWinningPlayer());
-    assertNull(chess2Service.getGameState());
+    assertEquals(GameState.CHECKMATE, chess2Service.getGameState());
 
     chess2Service.startNewGame();
 //Moving with a non piece field and moving to a field where I normally couldn't move

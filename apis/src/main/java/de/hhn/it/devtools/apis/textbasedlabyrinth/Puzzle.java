@@ -9,7 +9,7 @@ public class Puzzle {
   //private final int puzzleId;
   private boolean isSolved;
   private boolean isBeingWorkedOn;
-  private int keyId;
+  private final int keyId;
   private String description;
   private String unlockMessage;
   private String lockedMessage;
@@ -28,17 +28,6 @@ public class Puzzle {
     lockedMessage = "The door does not unlock.";
   }
 
-
-  public boolean checkIfSolved() {
-
-    return isSolved;
-  }
-
-  public String getDescription() {
-
-    return description;
-  }
-
   /**
    * Sets the puzzle to solved after it is done right.
    *
@@ -52,11 +41,23 @@ public class Puzzle {
     return isSolved;
   }
 
+  public boolean checkIfSolved() {
+    return isSolved;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
   public String getUnlockMessage() {
     return unlockMessage;
   }
 
   public String getLockedMessage() {
     return lockedMessage;
+  }
+
+  public int getKeyId() {
+    return keyId;
   }
 }

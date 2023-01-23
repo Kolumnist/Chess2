@@ -1,5 +1,7 @@
 package de.hhn.it.devtools.apis.game2048;
 
+import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
+
 /**
  * This class represent the blocks with their position and their values.
  * A Block in the bottom left corner has xposition = yposition = 0
@@ -18,7 +20,11 @@ public class Block {
    * @param value      Current Value of the block
    */
   public Block(Position xyPosition, int value) {
-    if (value % 2 != 0) throw new RuntimeException("Illegal value Parameter");
+    if (value % 2 != 0 || value <= 0) try {
+      throw new IllegalParameterException("Illegal value: " + value);
+    } catch (IllegalParameterException e) {
+      e.printStackTrace();
+    }
     this.xyPosition = xyPosition;
     this.value = value;
   }

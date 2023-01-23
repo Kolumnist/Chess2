@@ -1,5 +1,7 @@
 package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
+import java.util.List;
+
 /**
  * Interface for callback method
  */
@@ -41,6 +43,8 @@ public interface OutputListener {
      */
     void sendOutputPlayerInteract(String output);
 
+    void sendOutputInteractItemName(String output);
+
 
     /**
      * Output collected when player picks up an item.
@@ -60,9 +64,11 @@ public interface OutputListener {
 
     void listenerMove();
 
-    void listenerPickUpItem();
+    void outputInventoryItemInspect(String output);
+    void outputInventoryItemName(String output);
 
-    void listenerDropItem();
+    void outputRoomItemInspect(String output);
+    void outputRoomItemName(String output);
 
     void listenerInteract();
 
@@ -72,5 +78,29 @@ public interface OutputListener {
 
     void updateScore(int newScore);
 
+    public List<String> getOutputRoom();
 
+    public List<String> getOutputPlayer();
+
+    public List<String> getOutputInventory();
+
+    public List<String> getOutputNavigation();
+
+    public List<String> getOutputPlayerInteract();
+
+    public List<String> getOutputInteractItemName();
+
+    public List<String> getOutputRoomItemName();
+
+    public List<String> getOutputRoomItemInspect();
+
+    public List<String> getOutputInventoryItemInspect();
+
+    public List<String> getOutputInventoryItemName();
+
+    public List<Item> getOutputPickUpItems();
+
+    public List<Item> getOutputDropItems();
+
+    public List<Integer> getOutputScores();
 }
