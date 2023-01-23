@@ -116,7 +116,7 @@ public class MenuScreen extends AnchorPane implements Initializable {
             throw new IllegalArgumentException(e.getMessage());
         }
 
-        screenController.getMainScreen().update();
+
         viewModel.getGame().start();
         viewModel.getGame().setPlayerName(playerName.getText());
 

@@ -136,7 +136,7 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     @FXML
     public void inspectAction1(ActionEvent event) {
         event.consume();
-        viewModel.getGame().move(Direction.NORTH);
+        viewModel.getGame().inspect(Direction.NORTH);
     }
 
     @FXML
@@ -148,7 +148,7 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     @FXML
     public void inspectAction2(ActionEvent event) {
         event.consume();
-        viewModel.getGame().move(Direction.EAST);
+        viewModel.getGame().inspect(Direction.EAST);
     }
 
     @FXML
@@ -160,7 +160,7 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     @FXML
     public void inspectAction3(ActionEvent event) {
         event.consume();
-        viewModel.getGame().move(Direction.SOUTH);
+        viewModel.getGame().inspect(Direction.SOUTH);
     }
 
     @FXML
@@ -172,7 +172,7 @@ public class GameMainScreen extends AnchorPane implements Initializable {
     @FXML
     public void inspectAction4(ActionEvent event) {
         event.consume();
-        viewModel.getGame().move(Direction.WEST);
+        viewModel.getGame().inspect(Direction.WEST);
     }
 
 
