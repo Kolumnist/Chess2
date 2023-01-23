@@ -39,7 +39,7 @@
             </Label>
          </children>
       </VBox>
-      <VBox layoutX="345.0" layoutY="168.0" prefHeight="57.0" prefWidth="315.0">
+      <VBox disable="true" layoutX="345.0" layoutY="168.0" prefHeight="57.0" prefWidth="315.0" visible="false">
          <children>
             <Label fx:id="gameOverLabel" text="GAME OVER" textAlignment="CENTER" textFill="RED" underline="true">
                <font>
