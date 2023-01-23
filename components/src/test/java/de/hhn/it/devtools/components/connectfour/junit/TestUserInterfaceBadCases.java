@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourInterface;
-import de.hhn.it.devtools.components.connectfour.junit.DummyCallback;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.Assertions;
@@ -18,12 +17,13 @@ public class TestUserInterfaceBadCases {
 
   ConnectFourInterface game;
   Profile alice;
+  Profile bob;
 
   @BeforeEach
   void setup() throws IllegalArgumentException {
     game = new ConnectFour();
     alice = game.createProfile("Alice");
-    alice = game.createProfile("Bob");
+    bob = game.createProfile("Bob");
   }
 
   @Test
@@ -110,6 +110,8 @@ public class TestUserInterfaceBadCases {
   @DisplayName("Play multiplayer game with null references as players")
   void playMultiplayerGameWithNullPlayers() {
     assertThrows(IllegalArgumentException.class,
+        () -> game.playSingleplayerGame(null, true));
+    assertThrows(IllegalArgumentException.class,
         () -> game.playMultiplayerGame(null, null, true));
   }
 
@@ -119,12 +121,30 @@ public class TestUserInterfaceBadCases {
     game.playSingleplayerGame(alice, true);
     assertThrows(IllegalArgumentException.class,
         () -> game.placeDiscInColumn(9));
+    game.playMultiplayerGame(alice, bob, true);
+    assertThrows(IllegalArgumentException.class,
+        () -> game.placeDiscInColumn(9));
   }
 
   @Test
   @DisplayName("Place disc in full column.")
   void placeDiscInFullColumn() {
     game.playSingleplayerGame(alice, true);
+    game.setCallback(new DummyCallback());
+    game.start();
+    try {
+      for (int i = 0; i < 6; i++) {
+        game.placeDiscInColumn(2);
+      }
+    } catch (IllegalOperationException e) {
+      // Column should spill over yet.
+      Assertions.fail();
+    }
+    // Disc cannot be placed in full column.
+    assertThrows(IllegalOperationException.class,
+        () -> game.placeDiscInColumn(2));
+
+    game.playMultiplayerGame(alice, bob, true);
     game.setCallback(new DummyCallback());
     game.start();
     try {
