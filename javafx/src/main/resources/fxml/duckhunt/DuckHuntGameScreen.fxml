@@ -30,16 +30,24 @@
             <Image url="@../../images/duckhunt/Gras.png" />
          </image>
       </ImageView>
-      <Label fx:id="nextRoundLabel" disable="true" layoutX="312.0" layoutY="196.0" text="NEXT ROUND" textAlignment="CENTER" textFill="WHITE" underline="true" visible="false">
-         <font>
-            <Font name="Times New Roman Bold" size="50.0" />
-         </font>
-      </Label>
-      <Label fx:id="gameOverLabel" disable="true" layoutX="322.0" layoutY="206.0" text="GAME OVER" textAlignment="CENTER" textFill="RED" underline="true" visible="false">
-         <font>
-            <Font name="Times New Roman Bold" size="50.0" />
-         </font>
-      </Label>
+      <VBox disable="true" layoutX="335.0" layoutY="139.0" prefHeight="57.0" prefWidth="335.0" visible="false">
+         <children>
+            <Label fx:id="nextRoundLabel" text="NEXT ROUND" textAlignment="CENTER" textFill="WHITE" underline="true">
+               <font>
+                  <Font name="Times New Roman Bold" size="50.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="345.0" layoutY="168.0" prefHeight="57.0" prefWidth="315.0">
+         <children>
+            <Label fx:id="gameOverLabel" text="GAME OVER" textAlignment="CENTER" textFill="RED" underline="true">
+               <font>
+                  <Font name="Times New Roman Bold" size="50.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
       <Label fx:id="ammoLabel" layoutX="125.0" layoutY="629.0" text="3" textFill="WHITE">
          <font>
             <Font name="Times New Roman Bold" size="33.0" />

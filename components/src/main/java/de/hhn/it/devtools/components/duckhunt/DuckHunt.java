@@ -385,9 +385,11 @@ public class DuckHunt implements DuckHuntService {
     logger.trace("newRound: no params");
     gameInfo.setRound(gameInfo.getRound() + 1);
     reload();
-    calculateNewDuckPaths();
     for (DuckData duck : ducks) {
       duck.setStatus(DuckState.FLYING);
+    }
+    calculateNewDuckPaths();
+    for (DuckData duck : ducks) {
       duck.setX(pathGenerator.getStartingPos(duck.getId()).getX());
       duck.setY(pathGenerator.getStartingPos(duck.getId()).getY());
     }

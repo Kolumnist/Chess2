@@ -5,10 +5,10 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.components.duckhunt.DuckHunt;
 import de.hhn.it.devtools.components.duckhunt.ScreenDimension;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.ResourceBundle;
+import java.util.*;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,6 +29,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
 /**
  * Creates additional window with the duck hunt game running.
@@ -60,7 +62,7 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   private GameSettingsDescriptor gameSettings;
   private DuckHuntSoundManager soundManager;
   private GameInfo gameInfo;
-  private int currentRound = 0;
+  private int currentRound = 1;
   private long score = 0;
 
   @Override
@@ -99,6 +101,13 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
         shoot(event);
       });
       ducks.put(i, duck);
+    }
+
+    int duckCount = 1;
+    for (Map.Entry<Integer, ImageView> entry : ducks.entrySet()) {
+      anchorPane.getChildren().add(
+          anchorPane.getChildren().indexOf(backgroundImage) + duckCount, entry.getValue());
+      duckCount++;
     }
 
     game = new DuckHunt(
@@ -156,31 +165,28 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
     shoot(event);
   }
 
+  private List<ImageView> getDuckList() {
+    return anchorPane.getChildren().stream()
+        .filter(node -> node instanceof ImageView && node.getId().contains("duck"))
+        .map(ImageView.class::cast)
+        .toList();
+  }
+
   void newRound() {
-    game.pauseGame();
-    nextRoundLabel.setDisable(false);
-    nextRoundLabel.setVisible(true);
-    try {
-      Thread.sleep(2000);
-    } catch (InterruptedException e) {
-      throw new RuntimeException(e);
-    }
-    nextRoundLabel.setDisable(true);
-    nextRoundLabel.setVisible(false);
-    anchorPane.getChildren().clear();
-    anchorPane.getChildren().add(backgroundImage);
-    ducks.forEach((integer, imageView) -> {
-      anchorPane.getChildren().add(imageView);
+    Platform.runLater(() -> {
+      game.pauseGame();
     });
-    anchorPane.getChildren().add(bushImage);
-    anchorPane.getChildren().add(treeImage);
-    anchorPane.getChildren().add(groundImage);
-    anchorPane.getChildren().add(ammoLabel);
-    anchorPane.getChildren().add(hitLabel);
-    anchorPane.getChildren().add(scoreLabel);
-    anchorPane.getChildren().add(pauseMenu);
-    anchorPane.getChildren().add(nextRoundLabel);
-    game.continueGame();
+    final KeyFrame kf1 = new KeyFrame(Duration.seconds(2), e -> {
+      nextRoundLabel.getParent().setVisible(false);
+      nextRoundLabel.getParent().setDisable(true);
+    });
+    final KeyFrame kf2 = new KeyFrame(Duration.seconds(0), e -> {
+      nextRoundLabel.getParent().setVisible(true);
+      nextRoundLabel.getParent().setDisable(false);
+      game.continueGame();
+    });
+    final Timeline timeline = new Timeline(kf1, kf2);
+    Platform.runLater(timeline::play);
   }
 
   void shoot(MouseEvent event) {
@@ -220,16 +226,13 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
       return;
     }
     this.gameInfo = gameInfo;
+    drawAmmo(gameInfo.getAmmo());
 
-    Platform.runLater(() -> {
-      ammoLabel.setText(String.valueOf(gameInfo.getAmmo()));
-      if (gameInfo.getRound() > currentRound) {
-        DuckHuntGameController.this.newRound();
-        DuckHuntGameController.this.currentRound++;
-        drawAmmo(gameInfo.getAmmo());
-        drawMissed();
-      }
-    });
+    if (gameInfo.getRound() > currentRound) {
+      drawMissed();
+      newRound();
+      currentRound++;
+    }
   }
 
   @Override
@@ -258,6 +261,8 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
             duck.setImage(DuckHuntImageManager.NORTHDUCK.getImageView().getImage());
           }
           default -> {
+            duck.setDisable(false);
+            duck.setVisible(true);
             duck.setX(duckData.getX());
             duck.setY(duckData.getY());
             duck.setImage(DuckHuntImageManager.getDuckImageFromOrientation(
@@ -280,15 +285,19 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   }
 
   private void drawAmmo(int ammoCount) {
-    ammoLabel.setText(String.valueOf(ammoCount));
+    Platform.runLater(() -> {
+        ammoLabel.setText(String.valueOf(ammoCount));
+    });
   }
 
   private void drawMissed() {
-    String missedLabelText = "";
-    for (int x = 0; x < gameInfo.getMissedCount(); x++) {
-      missedLabelText = missedLabelText.concat("█");
-    }
-    hitLabel.setText(missedLabelText);
+    Platform.runLater(() -> {
+      String missedLabelText = "";
+      for (int x = 0; x < gameInfo.getMissedCount(); x++) {
+        missedLabelText = missedLabelText.concat("█");
+      }
+      hitLabel.setText(missedLabelText);
+    });
   }
 
   private void gameOver() {

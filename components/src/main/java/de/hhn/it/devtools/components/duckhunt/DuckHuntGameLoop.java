@@ -125,6 +125,20 @@ public class DuckHuntGameLoop extends Thread {
           game.stopGame();
         } else {
           game.newRound();
+          game.getListeners().forEach(listener -> {
+            try {
+              listener.newState(game.getGameInfo());
+            } catch (IllegalGameInfoException e) {
+              throw new RuntimeException(e);
+            }
+          });
+          semaphore.release();
+          try {
+            Thread.sleep(2000);
+          } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+          }
+          continue;
         }
       }
 
