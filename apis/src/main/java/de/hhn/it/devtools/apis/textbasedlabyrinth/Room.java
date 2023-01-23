@@ -115,19 +115,38 @@ public class Room {
     items.remove(itemId);
   }
 
-  public int getRoomId() { return roomId; }
+  public int getRoomId() {
+    return roomId;
+  }
 
-  public HashMap<Direction, Door> getDoorMap() { return doorMap; }
+  public HashMap<Direction, Door> getDoorMap() {
+    return doorMap;
+  }
 
-  public String getDescription() { return description; }
+  public String getDescription() {
+    return description;
+  }
 
-  public HashMap<Direction, Room> getRoomMap() { return roomMap; }
+  public HashMap<Direction, Room> getRoomMap() {
+    return roomMap;
+  }
 
-  public void setExit(){ this.isExit = true; }
+  public void setExit() {
+    this.isExit = true;
+  }
 
-  public boolean isExit() { return isExit; }
+  public boolean isExit() {
+    return isExit;
+  }
 
-  public HashMap<Integer, Item> getItems() { return items; }
+  public HashMap<Integer, Item> getItems() {
+    return items;
+  }
+
+  public List<Item> getItemList() {
+    List<Item> list = items.values().stream().toList();
+    return list;
+  }
 
   public ArrayList<Direction> getDirections() { return directions; }
 }

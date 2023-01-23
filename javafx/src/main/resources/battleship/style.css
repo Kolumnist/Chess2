@@ -1,6 +1,7 @@
+
 .gameMenuButtons-style {
     -fx-background-color: #ccc9dc;
-
+    -fx-border-radius: 40;
 }
 
 #gameMenuVbox{
@@ -15,5 +16,38 @@
     -fx-padding: 50px 10px 10px 10px;
     -fx-spacing: 30px;
 }
+
+.buttonSelectShip {
+    -fx-background-color: cornflowerblue;
+}
+
+.carrier {
+    -fx-background-color: #595F72;
+}
+
+.battleship {
+    -fx-background-color: #575D90;
+}
+
+.cruiser {
+    -fx-background-color: #84A07C;
+}
+
+.submarine {
+    -fx-background-color: #C3D350;
+}
+
+.destroyer {
+    -fx-background-color: #E6F14A;
+}
+
+.hit {
+    -fx-background-color: blue;
+}
+
+.missed {
+    -fx-background-color: red;
+}
+
 
 

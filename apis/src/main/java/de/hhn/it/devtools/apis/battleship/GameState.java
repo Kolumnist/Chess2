@@ -5,12 +5,20 @@ package de.hhn.it.devtools.apis.battleship;
  */
 
 public enum GameState {
-    /** Game hasn't started yet */
-    PREGAME,
-    /** Players are placing their ships */
-    PLACINGSHIPS,
-    /** Players are shooting at each other's fields */
-    FIRINGSHOTS,
-    /** One player has no remaining ships */
-    GAMEOVER;
+  /**
+   * Game hasn't started yet
+   */
+  PREGAME,
+  /**
+   * Players are placing their ships
+   */
+  PLACINGSHIPS,
+  /**
+   * Players are shooting at each other's fields
+   */
+  FIRINGSHOTS,
+  /**
+   * One player has no remaining ships
+   */
+  GAMEOVER
 }
