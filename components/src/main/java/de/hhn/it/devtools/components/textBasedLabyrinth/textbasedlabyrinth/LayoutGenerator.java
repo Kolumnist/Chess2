@@ -150,7 +150,7 @@ public class LayoutGenerator {
                 allRooms.get(2).addItem(key1);
             }
 
-            if (amountOfPuzzles >= 2) {
+            if (amountOfPuzzles == 2) {
                 Item key2 = new Item(2, "Small rusty key", "A small, rusty key.");
                 allRooms.get(4).getDoor(Direction.SOUTH).setPuzzle(key2);
                 if (seed.getSeed().get(1) < 3) {
@@ -185,7 +185,7 @@ public class LayoutGenerator {
                 allRooms.get(9).addItem(key1);
             }
 
-            if (amountOfPuzzles >= 2) {
+            if (amountOfPuzzles == 2) {
                 Item key2 = new Item(2, "Small blue key", "Though clearly metal, this key has a blue tint");
                 allRooms.get(1).getDoor(Direction.WEST).setPuzzle(key2);
                 if (seed.getSeed().get(1) == 0) {
@@ -197,7 +197,7 @@ public class LayoutGenerator {
                 }
             }
 
-            if (amountOfPuzzles >= 3) {
+            if (amountOfPuzzles == 3) {
                 Item key3 = new Item(3, "Metal key",
                         "On closer inspection, this key has a 10 itched into its metal.");
                 allRooms.get(10).getDoor(Direction.EAST).setPuzzle(key3);
@@ -227,9 +227,9 @@ public class LayoutGenerator {
                 allRooms.get(5).addItem(key1);
             }
 
-            if (amountOfPuzzles >= 2) {
+            if (amountOfPuzzles == 2) {
                 Item key2 = new Item(2, "Small rusty key", "A small, rusty key.");
-                allRooms.get(7).getDoor(Direction.SOUTH).setPuzzle(key2);
+                allRooms.get(6).getDoor(Direction.NORTH).setPuzzle(key2);
                 if (seed.getSeed().get(1) < 5) {
                     allRooms.get(4).addItem(key2);
                 } else {

@@ -74,6 +74,7 @@ public class Game implements GameService {
     player.setCurrentRoomOfPlayer(currentRoom);
     for (OutputListener outputListener : listeners) {
       outputListener.listenerReset();
+      outputListener.updateScore(score);
     }
 
     logger.info("Game reset.");
