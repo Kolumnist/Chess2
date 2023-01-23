@@ -9,7 +9,7 @@ public class Puzzle {
   //private final int puzzleId;
   private boolean isSolved;
   private boolean isBeingWorkedOn;
-  private int keyId;
+  private final int keyId;
   private String description;
   private String unlockMessage;
   private String lockedMessage;
@@ -35,13 +35,19 @@ public class Puzzle {
    * @return puzzle is solved right.
    */
   public boolean setSolved(int keyId) {
-    if (this.keyId == keyId) { isSolved = true; }
+    if (this.keyId == keyId) {
+      isSolved = true;
+    }
     return isSolved;
   }
 
-  public boolean checkIfSolved() { return isSolved; }
+  public boolean checkIfSolved() {
+    return isSolved;
+  }
 
-  public String getDescription() { return description; }
+  public String getDescription() {
+    return description;
+  }
 
   public String getUnlockMessage() {
     return unlockMessage;
@@ -51,5 +57,7 @@ public class Puzzle {
     return lockedMessage;
   }
 
-  public int getKeyId() { return keyId; }
+  public int getKeyId() {
+    return keyId;
+  }
 }

@@ -43,4 +43,22 @@ public class TestOutputListener {
         game.removeListener(listener);
         assertEquals(0, game.getListeners().size());
     }
+
+    @Test
+    @DisplayName("Test add Callback in Game")
+    public void checkOutputListenerSendOutputRoom(){
+        OutputListener listener = new DummyCallback();
+        game.addListener(listener);
+        listener.sendOutputRoom("Yes");
+        assertEquals("Yes", listener.getOutputRoom().get(0));
+    }
+
+    @Test
+    @DisplayName("Test add Callback in Game")
+    public void checkOutputListenerSendOutputPlayer(){
+        OutputListener listener = new DummyCallback();
+        game.addListener(listener);
+        listener.sendOutputPlayer("Yes");
+        assertEquals("Yes", listener.getOutputPlayer().get(0));
+    }
 }

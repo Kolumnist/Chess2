@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+
+<VBox fx:id="main" maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.MinesweeperServiceController">
+    <children>
+        <MenuBar VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="Menu">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuBarMenu" text="Open Menu" />
+                    </items></Menu>
+                <Menu mnemonicParsing="false" text="Restart">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuBarRestart" text="Restart Game" />
+                    </items></Menu>
+                <Menu mnemonicParsing="false" text="Color">
+                    <graphic>
+                        <ColorPicker fx:id="colorPicker" accessibleRole="CHECK_MENU_ITEM" editable="true" onAction="#colorPicked">
+                            <value>
+                                <Color green="0.658823549747467" blue="1.0" />
+                            </value>
+                        </ColorPicker>
+                    </graphic>
+                </Menu>
+                <Menu fx:id="timer" mnemonicParsing="false" text="Timer" />
+            </menus>
+        </MenuBar>
+        <BorderPane fx:id="mainBorderPane" prefHeight="200.0" prefWidth="200.0" />
+    </children>
+</VBox>

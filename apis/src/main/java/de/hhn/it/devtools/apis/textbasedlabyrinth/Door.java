@@ -68,7 +68,7 @@ public class Door {
 
     locked = true;
     hasPuzzle = true;
-    inspectMessage = "This door is locked.";
+    inspectMessage = "There is a door in front of you. It seems to be locked.";
   }
 
   /**

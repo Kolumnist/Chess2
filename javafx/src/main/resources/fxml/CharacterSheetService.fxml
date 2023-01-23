@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane maxHeight="680.0" maxWidth="1080.0" minHeight="680.0" minWidth="1080.0" prefHeight="680.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhn.it.devtools.javafx.controllers.CharacterSheetServiceController">
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+   <children>
+      <Pane fx:id="descriptionPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Pane fx:id="playerDicePane" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="0.0" />
+      <Pane fx:id="statPane" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+   </children>
+</AnchorPane>

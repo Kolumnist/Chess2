@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<fx:root maxHeight="480" maxWidth="680" minHeight="480" minWidth="613.0" prefHeight="480.0" prefWidth="613.0" type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="playerName" text="Playername" />
+      <Label fx:id="score" layoutX="286.0" text="Label" />
+      <Button fx:id="openInventory" layoutX="543.0" layoutY="72.0" mnemonicParsing="false" onAction="#openInventoryAction" prefHeight="25.0" prefWidth="70.0" text="Inventory" />
+      <TextArea fx:id="playerTextField" layoutX="31.0" layoutY="72.0" prefHeight="90.0" prefWidth="240.0" />
+      <TextArea fx:id="roomTextField" layoutX="31.0" layoutY="175.0" prefHeight="90.0" prefWidth="240.0" />
+      <TextArea fx:id="actionTextField" layoutX="31.0" layoutY="278.0" prefHeight="90.0" prefWidth="240.0" />
+      <Button fx:id="interactionButton" layoutX="417.0" layoutY="368.0" mnemonicParsing="false" onAction="#interactionAction" text="Interaction" />
+      <Button fx:id="searchButton" layoutX="520.0" layoutY="368.0" mnemonicParsing="false" onAction="#searchAction" prefHeight="25.0" prefWidth="70.0" text="Search" />
+      <Button fx:id="inspectButton1" layoutX="408.0" layoutY="149.0" mnemonicParsing="false" onAction="#inspectAction1" prefHeight="25.0" prefWidth="91.0" text="Inspect" />
+      <Button fx:id="moveButton1" layoutX="408.0" layoutY="91.0" mnemonicParsing="false" onAction="#moveAction1" prefHeight="25.0" prefWidth="91.0" text="Move" />
+      <Button fx:id="helpButton" layoutX="463.0" layoutY="2.0" mnemonicParsing="false" onAction="#openHelp" text="Help" />
+      <Button fx:id="moveButton4" layoutX="307.0" layoutY="181.0" mnemonicParsing="false" onAction="#moveAction4" prefHeight="25.0" prefWidth="91.0" text="Move" />
+      <Button fx:id="moveButton2" layoutX="509.0" layoutY="181.0" mnemonicParsing="false" onAction="#moveAction2" prefHeight="25.0" prefWidth="91.0" text="Move" />
+      <Button fx:id="moveButton3" layoutX="408.0" layoutY="265.0" mnemonicParsing="false" onAction="#moveAction3" prefHeight="25.0" prefWidth="91.0" text="Move" />
+      <Button fx:id="inspectButton4" layoutX="307.0" layoutY="239.0" mnemonicParsing="false" onAction="#inspectAction4" prefHeight="25.0" prefWidth="91.0" text="Inspect" />
+      <Button fx:id="inspectButton3" layoutX="408.0" layoutY="323.0" mnemonicParsing="false" onAction="#inspectAction3" prefHeight="25.0" prefWidth="91.0" text="Inspect" />
+      <Button fx:id="inspectButton2" layoutX="509.0" layoutY="239.0" mnemonicParsing="false" onAction="#inspectAction2" prefHeight="25.0" prefWidth="91.0" text="Inspect" />
+      <ChoiceBox fx:id="directionChoiceBox" layoutX="342.0" layoutY="397.0" prefWidth="150.0" />
+      <Button fx:id="exitGameButton" layoutX="543.0" layoutY="2.0" mnemonicParsing="false" onAction="#exitGame" text="Exit Game" />
+      <Label layoutX="342.0" layoutY="212.0" prefHeight="17.0" prefWidth="41.0" text="West" />
+      <Label layoutX="440.0" layoutY="122.0" text="North" />
+      <Label layoutX="541.0" layoutY="212.0" text="East" />
+      <Label layoutX="442.0" layoutY="299.0" text="South" />
+   </children>
+</fx:root>

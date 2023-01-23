@@ -126,4 +126,20 @@ public class TestLayoutGenerator {
         // a Treasure should be here
         assertTrue(layoutGenerator1.getAllRooms().get(7).getItems().containsKey(100));
     }
+
+    @Test
+    @DisplayName("Test if LayoutGenerator created a correct Room Assignment, Puzzle and Item Placement" +
+            "(we only make some samples for the sake of everyone's sanity")
+    public void checkLayoutGeneratorSewersTest() throws RoomFailedException {
+        LayoutGenerator layoutGenerator1 = new LayoutGenerator(Map.Unknown_Sewers, seedLow);
+        layoutGenerator1.generateLayout();
+
+        assertTrue(layoutGenerator1.getAllRooms().get(7).getDoor(Direction.NORTH).hasPuzzle());
+        assertTrue(layoutGenerator1.getAllRooms().get(6).getDoor(Direction.NORTH).hasPuzzle());
+        // Exit Key should be here
+        assertTrue(layoutGenerator1.getAllRooms().get(3).getItems().containsKey(1));
+        assertTrue(layoutGenerator1.getAllRooms().get(4).getItems().containsKey(2));
+        // a Treasure should be here
+        assertTrue(layoutGenerator1.getAllRooms().get(7).getItems().containsKey(100));
+    }
 }

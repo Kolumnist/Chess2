@@ -4,7 +4,6 @@ import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.apis.wordle.State;
 import de.hhn.it.devtools.apis.wordle.WordlePanelListener;
 import de.hhn.it.devtools.apis.wordle.WordlePanelService;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +15,7 @@ public class WordlePanel implements WordlePanelService {
   private char letter;
   private State state;
   private static int panelCount = 0;
-  private static int panelId;
-
+  private int panelId;
   private List<WordlePanelListener> listeners = new ArrayList<>();
 
   /**
@@ -26,7 +24,6 @@ public class WordlePanel implements WordlePanelService {
    * @param letter The letter that will be entered into the field letter.
    */
   public WordlePanel(char letter) {
-
     this.letter = letter;
     this.state = State.INITIAL;
     panelId = panelCount;
@@ -64,6 +61,13 @@ public class WordlePanel implements WordlePanelService {
     panelId = id;
   }
 
+  /**
+   * Method that adds a given Listener to this Panel.
+   *
+   * @param listener Listener which is to be added to this Panel
+   * @throws IllegalParameterException Thrown when the listener is either already registered
+   *      or the given Listener was a null reference
+   */
   public void addCallback(final WordlePanelListener listener) throws IllegalParameterException {
     if (listener == null) {
       throw new IllegalParameterException("Listener was null reference.");
@@ -75,6 +79,14 @@ public class WordlePanel implements WordlePanelService {
 
     listeners.add(listener);
   }
+
+  /**
+   * Method that removes a Listener from this panel.
+   *
+   * @param listener Listener which is to be removed
+   * @throws IllegalParameterException Thrown when the Listener which was to be removed is either
+   *      a null reference of the given Listener was not registered in the first place
+   */
   public void removeCallback(final WordlePanelListener listener) throws IllegalParameterException {
     if (listener == null) {
       throw new IllegalParameterException("Listener was null reference.");
@@ -86,8 +98,13 @@ public class WordlePanel implements WordlePanelService {
 
     listeners.remove(listener);
   }
+
   public void notifyListeners(State panelState) {
     listeners.forEach((listener) -> listener.newState(panelState));
+  }
+
+  public static void setPanelCount(int panelCount) {
+    WordlePanel.panelCount = panelCount;
   }
 }
 
