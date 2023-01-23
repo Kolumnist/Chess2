@@ -10,7 +10,10 @@ import java.util.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.css.converter.EffectConverter;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.ImageCursor;
@@ -18,12 +21,14 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
@@ -50,6 +55,7 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   @FXML private Label scoreLabel;
   @FXML private Label gameOverLabel;
   @FXML private VBox pauseMenu;
+  @FXML private Button exitGameOverButton;
 
 
   private DuckHunt game;
@@ -81,10 +87,17 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
       }
     });
     stage.setOnCloseRequest(event -> {
-      System.out.println("stage close");
+      if (gameInfo.getState() != GameState.GAMEOVER) {
+        game.stopGame();
+      }
       stage.close();
-      game.stopGame();
       soundManager.stop();
+    });
+    exitButton.setOnAction(event -> {
+      stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+    });
+    exitGameOverButton.setOnAction(event -> {
+      stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     });
     soundManager = (DuckHuntSoundManager) duckHuntAttributeStore.getAttribute("soundManager");
 
@@ -135,11 +148,6 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
     continueButton.getParent().setDisable(true);
     continueButton.getParent().setVisible(false);
     game.continueGame();
-  }
-
-  @FXML
-  void exitGame(ActionEvent event) {
-    stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
   }
 
   @FXML
@@ -223,10 +231,14 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
       return;
     }
     this.gameInfo = gameInfo;
+    drawMissed();
     drawAmmo(gameInfo.getAmmo());
 
-    if (gameInfo.getRound() > currentRound) {
-      drawMissed();
+    if (gameInfo.getMissedCount() <= 0 && gameInfo.getState() == GameState.GAMEOVER) {
+      gameOver();
+    }
+
+    if (gameInfo.getRound() > currentRound && gameInfo.getState() == GameState.RUNNING) {
       newRound();
       currentRound++;
     }
@@ -295,11 +307,9 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
   }
 
   private void gameOver() {
-    exitButton.getParent().setDisable(false);
-    exitButton.getParent().setVisible(true);
-    continueButton.setDisable(true);
-    continueButton.setVisible(false);
-    gameOverLabel.setDisable(false);
-    gameOverLabel.setVisible(true);
+    Platform.runLater(() -> {
+      exitGameOverButton.getParent().setDisable(false);
+      exitGameOverButton.getParent().setVisible(true);
+    });
   }
 }
