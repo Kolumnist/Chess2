@@ -9,7 +9,7 @@ public class Puzzle {
   //private final int puzzleId;
   private boolean isSolved;
   private boolean isBeingWorkedOn;
-  private int keyId;
+  private final int keyId;
   private String description;
   private String unlockMessage;
   private String lockedMessage;
@@ -57,5 +57,7 @@ public class Puzzle {
     return lockedMessage;
   }
 
-  public int getKeyId() { return keyId; }
+  public int getKeyId() {
+    return keyId;
+  }
 }
