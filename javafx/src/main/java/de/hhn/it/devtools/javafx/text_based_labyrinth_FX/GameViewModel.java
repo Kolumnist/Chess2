@@ -87,7 +87,7 @@ public class GameViewModel implements OutputListener {
 
     @Override
     public void listenerMove() {
-        screenController.getMainScreen().update();
+
     }
 
     @Override
