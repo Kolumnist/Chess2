@@ -26,11 +26,9 @@ public class VolumeChanger {
     volumeSlider.setShowTickMarks(true);
     game = (Game) singletonAttributeStore.getAttribute("Battleship.game");
 
-
     volumeSlider.valueProperty().addListener(
         (observable, oldValue, newValue) -> game.soundHandler.changeVolume(
             (float) volumeSlider.getValue()));
-
 
     mute.setOnAction(actionEvent -> {
       if (isMuted) {

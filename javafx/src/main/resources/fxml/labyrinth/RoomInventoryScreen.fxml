@@ -11,8 +11,8 @@
       <Label fx:id="playerName" layoutY="5.0" text="Playername" />
       <Label fx:id="score" layoutX="286.0" layoutY="5.0" text="Label" />
       <Button fx:id="exitGameButton" layoutX="530.0" layoutY="1.0" mnemonicParsing="false" onAction="#exitGame" text="Exit Game" />
-      <Button fx:id="returnButton" layoutX="530.0" layoutY="26.0" mnemonicParsing="false" onAction="#toMainScreen" prefHeight="25.0" prefWidth="69.0" text="Return" />
-      <ChoiceBox fx:id="itemChoiceBox" layoutX="415.0" layoutY="66.0" prefHeight="25.0" prefWidth="184.0" />
+      <Button fx:id="returnButton" layoutX="415.0" layoutY="1.0" mnemonicParsing="false" onAction="#toMainScreen" prefHeight="25.0" prefWidth="69.0" text="Return" />
+      <ChoiceBox fx:id="itemChoiceBox" layoutX="415.0" layoutY="119.0" prefHeight="25.0" prefWidth="184.0" />
       <TextArea fx:id="itemNameField" layoutX="225.0" layoutY="119.0" prefHeight="7.0" prefWidth="149.0" />
       <TextArea fx:id="itemInspectTextField" layoutX="225.0" layoutY="169.0" prefHeight="210.0" prefWidth="149.0" />
       <Button fx:id="inspectItem" layoutY="119.0" mnemonicParsing="false" onAction="#inspectItemAction" prefHeight="25.0" prefWidth="86.0" text="Inspect Item" />

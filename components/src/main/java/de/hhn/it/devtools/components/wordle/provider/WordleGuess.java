@@ -21,6 +21,12 @@ public class WordleGuess implements WordleGuessService {
       wordleWord[i].setState(State.INITIAL);
     }
   }
+
+  /**
+   * Constructor of the WordleGuess class where a String is passed.
+   *
+   * @param word String that will be the content of the WordleGuess
+   */
   public WordleGuess(String word) {
     for (int i = 0; i < wordleWord.length; i++) {
       // i als ID entfernt, da ID inhärent über static counter vergeben wird
@@ -33,8 +39,13 @@ public class WordleGuess implements WordleGuessService {
     return wordleWord;
   }
 
-  public void changeContentsOfWordlePanels(String newContent){
-    for(int i = 0; i<=4;i++){
+  /**
+   * Method that changes the Chars within the WordlePanels of the WordleGuess.
+   *
+   * @param newContent New String whose chars will be assigned to the WordlePanels of this Guess
+   */
+  public void changeContentsOfWordlePanels(String newContent) {
+    for (int i = 0; i <= 4; i++) {
       setLetterAtIndex(i, newContent.toLowerCase().charAt(i));
     }
   }
@@ -63,7 +74,8 @@ public class WordleGuess implements WordleGuessService {
   }
 
   /**
-   * Method that returns the contents of the WordlePanel Array as a String
+   * Method that returns the contents of the WordlePanel Array as a String.
+   *
    * @return String that contains the guess as a String
    */
   public String getWordleGuessAsString() {

@@ -33,8 +33,8 @@ public class CmpBattleshipService implements BattleshipService {
   static GameState currentGameState = GameState.PREGAME;
   private final Player player = new Player();
   private final Computer computer = new Computer(this);
-  int gameVolume;
   private final ArrayList<BattleshipListener> listeners;
+  int gameVolume;
 
   public CmpBattleshipService() {
     listeners = new ArrayList<>();
@@ -155,7 +155,8 @@ public class CmpBattleshipService implements BattleshipService {
   // nedim
   @Override
   public void placeShip(Player player, Ship shipToPlace, int x1, int y1)
-      throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException, IllegalArgumentException {
+      throws IllegalPositionException, IllegalShipStateException,
+      IllegalGameStateException, IllegalArgumentException {
     logger.info("placeShip: player = {}, ship = {}, x-value = {}, y-value = {}, ", player,
         shipToPlace, x1, y1);
     boolean isPlaced = shipToPlace.getPlaced();
@@ -206,7 +207,8 @@ public class CmpBattleshipService implements BattleshipService {
     logger.info("unPlace: player = {}, ship = {}", player, shipToMove);
     shipToMove.setPlaced(false);
     Position position = shipToMove.getFieldPosition();
-    int x = position.getX(), y = position.getY();
+    int x = position.getX();
+    int y = position.getY();
     int shipSize = shipToMove.getSize();
     // if x1 is the endpoint (leftmost point) of the ship then this calculation:
     int endX = (x + shipSize) - 1;
@@ -247,7 +249,8 @@ public class CmpBattleshipService implements BattleshipService {
   // nedim
   @Override
   public void rotateShip(Player player, Ship shipToRotate)
-      throws IllegalPositionException, IllegalShipStateException, IllegalGameStateException, IllegalArgumentException {
+      throws IllegalPositionException, IllegalShipStateException,
+      IllegalGameStateException, IllegalArgumentException {
     // if ship is vertical, then x value is equal but y between front and rear is different,
     // if ship is horizontal, then y value is equal but x between front and rear is different
     logger.info("rotateShip: player = {}, ship = {}", player, shipToRotate);
@@ -335,7 +338,8 @@ public class CmpBattleshipService implements BattleshipService {
   // nuri
   @Override
   public void createFields(int size)
-      throws IllegalArgumentException, IllegalGameStateException, IllegalShipStateException, IllegalPositionException {
+      throws IllegalArgumentException, IllegalGameStateException,
+      IllegalShipStateException, IllegalPositionException {
     logger.info("createFields: size = {}", size);
 
     if (currentGameState != GameState.PREGAME) {
