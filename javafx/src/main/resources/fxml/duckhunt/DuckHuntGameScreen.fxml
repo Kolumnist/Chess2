@@ -61,7 +61,7 @@
                   <Font name="Times New Roman Bold" size="50.0" />
                </font>
             </Label>
-            <Button fx:id="exitGameOverButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="228.0" style="-fx-background-color: indianred; -fx-background-radius: 8;" text="EXIT" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="exitGameOverButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="228.0" stylesheets="@redButton.css" text="EXIT" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Times New Roman" size="18.0" />
                </font>
@@ -70,12 +70,12 @@
       </VBox>
       <VBox fx:id="pauseMenu" disable="true" layoutX="401.0" layoutY="116.0" pickOnBounds="false" prefHeight="161.0" prefWidth="203.0" spacing="50.0" visible="false">
          <children>
-            <Button fx:id="continueButton" mnemonicParsing="false" onAction="#continueGame" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: yellowgreen; -fx-background-radius: 8;" text="CONTINUE" textFill="WHITE">
+            <Button fx:id="continueButton" mnemonicParsing="false" onAction="#continueGame" prefHeight="45.0" prefWidth="200.0" stylesheets="@greenButton.css" text="CONTINUE" textFill="WHITE">
                <font>
                   <Font name="Times New Roman" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="exitButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: indianred; -fx-background-radius: 8;" text="EXIT" textFill="WHITE">
+            <Button fx:id="exitButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" stylesheets="@redButton.css" text="EXIT" textFill="WHITE">
                <font>
                   <Font name="Times New Roman" size="18.0" />
                </font>

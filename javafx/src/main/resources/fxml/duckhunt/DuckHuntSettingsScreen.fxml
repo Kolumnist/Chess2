@@ -106,13 +106,13 @@
             </GridPane>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#backToMainMenu" style="-fx-background-color: GRAY; -fx-background-radius: 8;" text="Back" textFill="WHITE">
+                  <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#backToMainMenu" stylesheets="@grayButton.css" text="Back" textFill="WHITE">
                      <font>
                         <Font name="Times New Roman" size="30.0" />
                      </font>
                   </Button>
                   <HBox prefHeight="100.0" prefWidth="139.0" />
-                  <Button fx:id="applyButton" mnemonicParsing="false" onMouseClicked="#applyGameSettings" style="-fx-background-color: GRAY; -fx-background-radius: 8;" text="Apply" textFill="WHITE">
+                  <Button fx:id="applyButton" mnemonicParsing="false" onMouseClicked="#applyGameSettings" stylesheets="@grayButton.css" text="Apply" textFill="WHITE">
                      <font>
                         <Font name="Times New Roman" size="30.0" />
                      </font>
