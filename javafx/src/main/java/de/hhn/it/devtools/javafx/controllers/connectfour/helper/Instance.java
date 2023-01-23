@@ -1,5 +1,6 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour.helper;
 
+import de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourInterface;
 import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
 
 /**
@@ -9,14 +10,14 @@ public class Instance {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(Instance.class);
 
-  private static final ConnectFour connectFour = new ConnectFour();
+  private static final ConnectFourInterface connectFour = new ConnectFour();
 
   /**
    * Get the ConnectFour instance.
    *
    * @return instance
    */
-  public static ConnectFour getInstance() {
+  public static ConnectFourInterface getInstance() {
     logger.info("getInstance: no params");
     return connectFour;
   }

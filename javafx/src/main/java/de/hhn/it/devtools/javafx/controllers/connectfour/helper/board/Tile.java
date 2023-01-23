@@ -1,7 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour.helper.board;
 
 import de.hhn.it.devtools.apis.connectfour.exceptions.IllegalOperationException;
-import de.hhn.it.devtools.components.connectfour.provider.ConnectFour;
+import de.hhn.it.devtools.apis.connectfour.interfaces.ConnectFourInterface;
 import de.hhn.it.devtools.javafx.controllers.connectfour.GameController;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import javafx.geometry.Insets;
@@ -50,7 +50,7 @@ public class Tile extends Pane {
     setOnMouseClicked(event -> {
       controller.lock();
       try {
-        ConnectFour instance = Instance.getInstance();
+        ConnectFourInterface instance = Instance.getInstance();
         instance.placeDiscInColumn(column);
       } catch (IllegalOperationException e) {
         controller.unlock();
