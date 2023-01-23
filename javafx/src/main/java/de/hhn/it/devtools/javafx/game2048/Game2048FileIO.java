@@ -1,11 +1,6 @@
 package de.hhn.it.devtools.javafx.game2048;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileNotFoundException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class Game2048FileIO {
   private static final org.slf4j.Logger logger =
@@ -17,9 +12,9 @@ public class Game2048FileIO {
   public static int loadHighscore() {
     logger.info("readHighscore: no params");
     int highScore = 0;
-    FileInputStream fileInputStream = null;
+    FileInputStream fileInputStream;
     try {
-      fileInputStream = new FileInputStream("javafx\\src\\main\\java\\de\\hhn\\it\\devtools\\javafx\\game2048\\SaveGame2048.txt");
+      fileInputStream = new FileInputStream(new File("javafx/src/main/resources/game2048/SaveGame2048.txt").getAbsolutePath());
       ObjectInputStream objectInputStream;
       objectInputStream = new ObjectInputStream(fileInputStream);
       highScore = objectInputStream.readInt();
@@ -27,13 +22,26 @@ public class Game2048FileIO {
       logger.info("readHighscore, highScore = {}", highScore);
 
     } catch (FileNotFoundException e) {
-      logger.info("File does not exist yet");
+      createHighscoreFile(highScore);
     } catch (IOException e) {
       logger.warn("load highScore failed, because of ObjectOutputStream Error");
     }
     return highScore;
   }
 
+  private static void createHighscoreFile(int highScore) {
+    ObjectOutputStream oos;
+
+    try {
+      File file = new File("javafx/src/main/resources/game2048/SaveGame2048.txt");
+      oos = new ObjectOutputStream(
+              new FileOutputStream(file.getAbsolutePath()));
+
+      oos.writeObject(highScore);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
 
   /**
@@ -43,25 +51,16 @@ public class Game2048FileIO {
    */
   public static void saveHighscore(int highScore) {
     logger.info("saveHighscore: no params");
-    FileOutputStream fileOutputStream = null;
+    FileOutputStream fileOutputStream;
     try {
-      fileOutputStream = new FileOutputStream("javafx\\src\\main\\java\\de\\hhn\\it\\devtools\\javafx\\game2048\\SaveGame2048.txt");
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-    if (fileOutputStream != null) {
+      fileOutputStream = new FileOutputStream(new File("javafx/src/main/resources/game2048/SaveGame2048.txt").getAbsolutePath());
       ObjectOutputStream objectOutputStream;
-      try {
-        objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeInt(highScore);
-        objectOutputStream.flush();
-        objectOutputStream.close();
-      } catch (IOException e) {
-        logger.warn("save highScore failed, because of ObjectOutputStream Error");
-        e.printStackTrace();
-      }
-    } else {
-      logger.warn("save highScore failed, because File related Error");
+      objectOutputStream = new ObjectOutputStream(fileOutputStream);
+      objectOutputStream.writeInt(highScore);
+      objectOutputStream.flush();
+      objectOutputStream.close();
+    } catch (IOException e) {
+      logger.warn("save highScore failed, because of ObjectOutputStream Error");
     }
   }
 
