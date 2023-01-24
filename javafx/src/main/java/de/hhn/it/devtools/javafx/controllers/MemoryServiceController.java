@@ -89,9 +89,13 @@ public class MemoryServiceController extends Controller implements Initializable
    * @return CardSetDescriptor of the chosen difficulty
    */
   public CardSetDescriptor fetchCardSets(String difficulty) {
+    //funktioniert nicht
     //File folder = new File(Objects.requireNonNull(getClass().getClassLoader()
     //  .getResource("/fxml/memory/pictures/sets/" + difficulty + "/")).getFile());
-    File folder = new File("javafx/src/main/resources/fxml/memory/pictures/sets/" + difficulty);
+    //funktioniert für Aufruf der main
+    //File folder = new File("javafx/src/main/resources/fxml/memory/pictures/sets/" + difficulty);
+    //funktioniert für gradle run
+    File folder = new File(getClass().getResource("/fxml/memory/pictures/sets/"+difficulty).getFile());
     HashMap<Integer, String> pictureReferences = new HashMap<>();
     PictureCardDescriptor[] pictureCardDescriptors = new PictureCardDescriptor[5 * 4];
     int cnt = 0;
