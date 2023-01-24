@@ -79,7 +79,7 @@ public class DuckHuntGameController implements Initializable, DuckHuntListener {
     stage = (Stage) duckHuntAttributeStore.getAttribute("gameStage");
     scene = new Scene(anchorPane, 960, 720);
     URL cursorPath = getClass().getResource("/images/duckhunt/Crosshair.png");
-    Image cursorImage = new Image(cursorPath.toExternalForm(), 300, 300, false, false);
+    Image cursorImage = new Image(cursorPath.toExternalForm(), 40, 40, true, false);
     scene.setCursor(new ImageCursor(cursorImage));
     stage.setScene(scene);
     stage.setResizable(false);
