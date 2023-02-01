@@ -31,6 +31,7 @@ public class ConnectFour implements ConnectFourInterface {
 
   @Override
   public void setCallback(ConnectFourListenerInterface listener) throws IllegalArgumentException {
+    logger.info("setCallback: listener = {}", listener);
     if (listener == null) {
       throw new IllegalArgumentException("Listener is a null reference.");
     }
@@ -134,7 +135,7 @@ public class ConnectFour implements ConnectFourInterface {
   @Override
   public void playSingleplayerGame(Profile player, boolean playerIsFirst)
       throws IllegalArgumentException {
-    logger.info("playSingleplayerGame: player = {}", player);
+    logger.info("playSingleplayerGame: player = {}, playerIsFirst = {}", player, playerIsFirst);
     if (player == null) {
       throw new IllegalArgumentException("Player must not be null.");
     }
@@ -152,7 +153,8 @@ public class ConnectFour implements ConnectFourInterface {
   @Override
   public void playMultiplayerGame(Profile player1, Profile player2, boolean player1IsFirst)
       throws IllegalArgumentException {
-    logger.info("playSingleplayerGame: player1 = {}, player2 = {}", player1, player2);
+    logger.info("playSingleplayerGame: player1 = {}, player2 = {}, player1IsFirst = {}", player1,
+        player2, player1IsFirst);
     if (player1 == null || player2 == null) {
       throw new IllegalArgumentException("Players must not be null.");
     }
