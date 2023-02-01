@@ -28,7 +28,7 @@ public class SingleplayerGame extends Game {
    * @param playerIsFirst True if the human begins. Otherwise, false.
    */
   public SingleplayerGame(Profile player, boolean playerIsFirst) {
-    logger.info("Constructor - player = {}", player);
+    logger.info("Constructor - player = {}, playerIsFirst = {}", player, playerIsFirst);
     this.player = player;
     this.playerIsFirst = playerIsFirst;
   }
