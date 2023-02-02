@@ -3,6 +3,7 @@ package de.hhn.it.devtools.javafx.controllers.connectfour;
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.Instance;
 import de.hhn.it.devtools.javafx.controllers.connectfour.helper.io.FileIo;
+import java.io.File;
 import java.util.HashMap;
 import java.util.UUID;
 import javafx.beans.binding.Bindings;
@@ -82,7 +83,23 @@ public class ProfilesNewController {
   public void initialize() {
     logger.info("initialize: no params");
     saveButton.disableProperty().bind(Bindings.isEmpty(nameText.textProperty()));
-    Image profileImg = new Image("/fxml/connectfour/files/images/dummy-profile-pic.png");
+    String path = "javafx/src/main/resources/fxml/connectfour/files/images/dummy-profile-pic.png";
+    File file;
+    Image profileImg = null;
+    try {
+      file = new File(path);
+      profileImg = new Image(file.getAbsolutePath());
+    } catch (Exception e) {
+      logger.info("initialize: failed once!");
+      try {
+        path = "src/main/resources/fxml/connectfour/files/images/dummy-profile-pic.png";
+        file = new File(path);
+        profileImg = new Image(file.getAbsolutePath());
+      } catch (Exception ex) {
+        logger.info("initialize: failed twice!");
+        System.err.println(ex.getMessage());
+      }
+    }
     profileImageView.setImage(profileImg);
   }
 

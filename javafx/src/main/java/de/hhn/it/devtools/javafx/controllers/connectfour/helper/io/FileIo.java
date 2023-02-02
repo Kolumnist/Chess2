@@ -32,7 +32,18 @@ public class FileIo {
       Instance.getInstance().setProfiles(profiles);
       ois.close();
     } catch (Exception e) {
-      System.err.println(e.getMessage());
+      logger.info("loadProfileData: failed once!");
+      in = new File(getFilePathGradle());
+      try {
+        FileInputStream fis = new FileInputStream(in);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        profiles = (HashMap<UUID, Profile>) ois.readObject();
+        Instance.getInstance().setProfiles(profiles);
+        ois.close();
+      } catch (Exception ex) {
+        logger.info("loadProfileData: failed twice! ERROR!");
+        System.err.println(ex.getMessage());
+      }
     }
   }
 
@@ -49,7 +60,17 @@ public class FileIo {
       ObjectOutputStream oos = new ObjectOutputStream(fos);
       oos.writeObject(profiles);
     } catch (Exception e) {
-      System.err.println(e.getMessage());
+      logger.info("saveProfileData: failed once!");
+      out = new File(getFilePathGradle());
+      try {
+        new FileOutputStream(getFilePath()).close();
+        FileOutputStream fos = new FileOutputStream(out);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(profiles);
+      } catch (Exception ex) {
+        logger.info("saveProfileData: failed twice! ERROR!");
+        System.err.println(ex.getMessage());
+      }
     }
   }
 
@@ -61,6 +82,18 @@ public class FileIo {
   private String getFilePath() {
     logger.info("getFilePath: no params");
     String path = "javafx/src/main/resources/fxml/connectfour/files/Profiles.bin";
+    File file = new File(path);
+    return file.getAbsolutePath();
+  }
+
+  /**
+   * Get file path when first getFilePath not successful.
+   *
+   * @return The file path.
+   */
+  private String getFilePathGradle() {
+    logger.info("getFilePath: no params");
+    String path = "src/main/resources/fxml/connectfour/files/Profiles.bin";
     File file = new File(path);
     return file.getAbsolutePath();
   }
