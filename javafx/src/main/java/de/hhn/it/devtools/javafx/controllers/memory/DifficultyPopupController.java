@@ -2,10 +2,8 @@ package de.hhn.it.devtools.javafx.controllers.memory;
 
 import de.hhn.it.devtools.apis.memory.Difficulty;
 import de.hhn.it.devtools.javafx.controllers.MemoryServiceController;
-import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
