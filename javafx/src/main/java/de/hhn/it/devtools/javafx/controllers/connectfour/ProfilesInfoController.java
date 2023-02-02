@@ -1,6 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers.connectfour;
 
 import de.hhn.it.devtools.apis.connectfour.helper.Profile;
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 import javafx.fxml.FXML;
@@ -98,7 +99,23 @@ public class ProfilesInfoController {
       mdrawLabel.setText(pinfo.getMultiplayerDraw() + "");
       swinpLabel.setText(pinfo.getSingleplayerWinPercentage() + "");
       mwinpLabel.setText(pinfo.getMultiplayerWinPercentage() + "");
-      Image profileImg = new Image("/fxml/connectfour/files/images/dummy-profile-pic.png");
+      String path = "javafx/src/main/resources/fxml/connectfour/files/images/dummy-profile-pic.png";
+      File file;
+      Image profileImg = null;
+      try {
+        file = new File(path);
+        profileImg = new Image(file.getAbsolutePath());
+      } catch (Exception e) {
+        logger.info("initialize: failed once!");
+        try {
+          path = "src/main/resources/fxml/connectfour/files/images/dummy-profile-pic.png";
+          file = new File(path);
+          profileImg = new Image(file.getAbsolutePath());
+        } catch (Exception ex) {
+          logger.info("initialize: failed twice!");
+          System.err.println(ex.getMessage());
+        }
+      }
       profileImageView.setImage(profileImg);
     }
   }
