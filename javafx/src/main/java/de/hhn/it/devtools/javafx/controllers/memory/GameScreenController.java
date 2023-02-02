@@ -1,10 +1,7 @@
 package de.hhn.it.devtools.javafx.controllers.memory;
 
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
-import de.hhn.it.devtools.apis.memory.MemoryService;
-import de.hhn.it.devtools.apis.memory.PictureCardDescriptor;
-import de.hhn.it.devtools.apis.memory.State;
-import de.hhn.it.devtools.apis.memory.TimerListener;
+import de.hhn.it.devtools.apis.memory.*;
 import de.hhn.it.devtools.components.memory.provider.SfsMemoryService;
 import de.hhn.it.devtools.javafx.controllers.MemoryServiceController;
 import de.hhn.it.devtools.javafx.memory.CardView;
@@ -45,8 +42,19 @@ public class GameScreenController implements Initializable, TimerListener {
   @FXML
   private Label timeTextLabel;
 
-  @FXML
   private GridPane mainGrid;
+
+  @FXML
+  private GridPane easyGrid;
+
+  @FXML
+  private GridPane mediumGrid;
+
+  @FXML
+  private GridPane hardGrid;
+
+  @FXML
+  private GridPane veryHardGrid;
 
   @FXML
   private Label systemLabel;
@@ -69,13 +77,15 @@ public class GameScreenController implements Initializable, TimerListener {
                     .getAttribute(MemoryServiceController.SCREEN_CONTROLLER);
     memoryService = (SfsMemoryService) memoryAttributeStore
             .getAttribute(MemoryServiceController.MEMORY_SERVICE);
-
+    Difficulty currentDifficulty = (Difficulty) memoryAttributeStore
+            .getAttribute(MemoryServiceController.DIFFICULTY);
+    mainGrid = getGridByDifficulty(currentDifficulty);
     int cnt = 0;
     PictureCardDescriptor[] currentDeck = shuffle((PictureCardDescriptor[]) memoryAttributeStore
             .getAttribute(MemoryServiceController.CURRENT_DECK));
     for (int i = 0; i < mainGrid.getColumnCount(); i++) {
       for (int j = 0; j < mainGrid.getRowCount(); j++) {
-        mainGrid.add(new CardView(currentDeck[cnt++]), i, j);
+        mainGrid.add(new CardView(currentDeck[cnt++], mainGrid.getColumnCount()*mainGrid.getRowCount()), i, j);
       }
     }
 
@@ -221,5 +231,33 @@ public class GameScreenController implements Initializable, TimerListener {
   public void currentTime(int time) {
     Platform.runLater(() ->
         timeDisplayLabel.setText(Integer.toString(time)));
+  }
+
+  /**
+   * Switches grid according to difficulty.
+   *
+   * @param difficulty chosen difficulty
+   * @return current grid
+   */
+  private GridPane getGridByDifficulty(Difficulty difficulty) {
+    switch (difficulty) {
+      case EASY -> {
+        easyGrid.setVisible(true);
+        return easyGrid;
+      }
+      case MEDIUM -> {
+        mediumGrid.setVisible(true);
+        return mediumGrid;
+      }
+      case HARD -> {
+        hardGrid.setVisible(true);
+        return hardGrid;
+      }
+      case VERYHARD -> {
+        veryHardGrid.setVisible(true);
+        return veryHardGrid;
+      }
+    }
+    return mainGrid;
   }
 }
