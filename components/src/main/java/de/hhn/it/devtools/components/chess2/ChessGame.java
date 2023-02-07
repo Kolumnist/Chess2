@@ -6,6 +6,7 @@ import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.Field;
 import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.GameState;
+import de.hhn.it.devtools.apis.chess2.IllegalStateException;
 import de.hhn.it.devtools.apis.chess2.Piece;
 import de.hhn.it.devtools.apis.chess2.WinningPlayerState;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
@@ -266,8 +267,12 @@ public class ChessGame implements Chess2Service {
   }
 
   @Override
-  public void endGame() {
+  public void endGame() throws IllegalStateException {
     logger.info("endGame");
+
+    if (gameState == GameState.CHECKMATE) {
+      throw new IllegalStateException();
+    }
 
     gameState = GameState.CHECKMATE;
     otherKingCoordinate = new Coordinate(3, 7);
@@ -374,7 +379,7 @@ public class ChessGame implements Chess2Service {
     logger.info("moveSelectedPiece: {} | {}", selectedCoordinate, newCoordinate);
 
     if (gameBoard.getSpecificField(selectedCoordinate).getFieldState() != FieldState.SELECTED) {
-      return gameBoard;
+      throw new IllegalParameterException();
     }
 
     FieldState oldPieceFieldState = gameBoard.getSpecificField(newCoordinate).getFieldState();
