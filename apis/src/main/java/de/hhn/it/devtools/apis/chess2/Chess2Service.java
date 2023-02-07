@@ -56,6 +56,7 @@ public interface Chess2Service {
    * @param newCoordinate      the new position of the piece
    * @return freshly set board
    * @throws IllegalParameterException if newPos is a null reference or incomplete
+   * @throws InvalidMoveException if a move is invalid
    * @throws IllegalStateException     if the method gets called during a wrong state
    */
   Board moveSelectedPiece(Coordinate selectedCoordinate, Coordinate newCoordinate)
