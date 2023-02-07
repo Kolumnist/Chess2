@@ -102,7 +102,7 @@ public class CardController implements PictureCardListener {
    */
   private void initPictureCard() {
     try {
-      picture.setImage(new Image(getPathByPictureReference(pictureCardDescriptor.getPictureRef())));
+      picture.setImage(new Image("file:" + getPathByPictureReference(pictureCardDescriptor.getPictureRef())));
     } catch (IllegalParameterException e) {
       e.printStackTrace();
     }
