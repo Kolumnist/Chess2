@@ -2,7 +2,7 @@ package de.hhn.it.devtools.apis.textbasedlabyrinth;
 
 
 /**
- * A class for "doors".
+ * Class for Doors. They will be the obstacle or entrance to the next room
  */
 public class Door {
 
@@ -24,10 +24,12 @@ public class Door {
   }
 
   /**
-   * Open door.
+   * Method to unlock the Door. if there is no Puzzle on the door, nothing will happen.
+   * If there is a puzzle, the Door will check if the Key item is the fitting one and
+   * if true will unlock the door.
    *
-   * @param item using item
-   * @return door is open
+   * @param item key item that will be tested if it fits for the current puzzle.
+   * @return true if the item is the correct key item for the puzzle of the door.
    */
   public boolean unlock(Item item) {
     if (!hasPuzzle) {
@@ -43,9 +45,9 @@ public class Door {
   }
 
   /**
-   * Get info about the puzzle.
+   * Returns the Inspect message of the door or the puzzle description if available.
    *
-   * @return puzzle
+   * @return Inspect message of door.
    */
   public String getInspectMessage() {
     String s = inspectMessage;
@@ -59,13 +61,12 @@ public class Door {
   }
 
   /**
-   * Item needs to be used for the door.
+   * sets Puzzle for door and assignees item as a key for it.
    *
-   * @param key get item
+   * @param key item object used to solve this puzzle.
    */
   public void setPuzzle(Item key) {
     this.puzzle = new Puzzle(key.getItemId());
-
     locked = true;
     hasPuzzle = true;
     inspectMessage = "There is a door in front of you. It seems to be locked.";
@@ -92,7 +93,6 @@ public class Door {
   }
 
   public boolean checkIfLocked() {
-
     return locked;
   }
 
@@ -108,14 +108,9 @@ public class Door {
     fake = true;
   }
 
-  public void isNotFakeAnymore() {
-    fake = false;
-  }
-
   public Puzzle getPuzzle() {
     return puzzle;
   }
-
 
   public void setInspectMessage(String inspectMessage) {
     this.inspectMessage = inspectMessage;

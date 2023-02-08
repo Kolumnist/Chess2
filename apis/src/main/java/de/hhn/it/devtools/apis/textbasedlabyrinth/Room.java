@@ -42,7 +42,7 @@ public class Room {
   /**
    * Searching for an item in the room.
    *
-   * @return item
+   * @return copy of list of items in the room.
    * @throws NullPointerException room does not have items
    */
   public List<Item> search() throws NullPointerException {
@@ -51,21 +51,24 @@ public class Room {
   }
 
   /**
-   * Set a room as the room next door for the current room and vis versa.
+   * Sets a room as the next door room for a specified direction.
    *
-   * @param room room to be assigned as the next door room
+   * @param room room to be set as neighbor.
+   * @param direction specified direction.
    */
-  public void setNextDoorRoom(Room room,Direction direction) {
-    if(roomMap.containsKey(direction)){
+  public void setNextDoorRoom(Room room, Direction direction) {
+    if (roomMap.containsKey(direction)) {
       roomMap.get(direction).getRoomMap().remove(direction.getOpposite());
       roomMap.replace(direction, room);
-    }
-    else {
+    } else {
       roomMap.put(direction, room);
     }
     room.getRoomMap().put(direction.getOpposite(), this);
   }
 
+  /**
+   * Create doors for room in directions where there are next door room set.
+   */
   public void setDoors() {
     for (Direction direction : directions) {
       if (roomMap.containsKey(direction)) {
@@ -79,37 +82,51 @@ public class Room {
     }
   }
 
-  protected void setFakeInDirection(Direction direction) throws IllegalArgumentException {
-    if(roomMap.containsKey(direction)){
-      doorMap.get(direction).isFake();
-    }
-    else {
-      throw new IllegalArgumentException("Direction was invalid for a fake door: " + direction.toString());
-    }
-  }
-
+  /**
+   * Returns next door room from specified direction.
+   * @param direction specified direction.
+   * @return room of specified direction.
+   * @throws RoomFailedException if no room is found.
+   */
   public Room getRoom(Direction direction) throws RoomFailedException {
-    if(!roomMap.containsKey(direction)) {
+    if (!roomMap.containsKey(direction)) {
       throw new RoomFailedException("No Room in this direction" + direction);
     }
     return roomMap.get(direction);
   }
 
+  /**
+   * Returns next door room's door from specified direction.
+   *
+   * @param direction specified direction.
+   * @return door of specified direction.
+   * @throws RoomFailedException if no room is found.
+   */
   public Door getDoor(Direction direction) throws RoomFailedException {
     if (!doorMap.containsKey(direction)) {
       throw new RoomFailedException("No door found in this direction: " + direction.toString());
-    }
-    else {
+    } else {
       return doorMap.get(direction);
     }
   }
 
+  /**
+   * add items to room.
+   *
+   * @param item to be added.
+   */
   public void addItem(Item item) {
     items.put(item.getItemId(), item);
   }
 
-  public void removeItem(int itemId) throws NoSuchItemFoundException{
-    if(!items.containsKey(itemId)){
+  /**
+   * remove item from room.
+   *
+   * @param itemId id of item to be removed.
+   * @throws NoSuchItemFoundException if no such item found.
+   */
+  public void removeItem(int itemId) throws NoSuchItemFoundException {
+    if (!items.containsKey(itemId)) {
       throw new NoSuchItemFoundException("No such Item found in this Room");
     }
     items.remove(itemId);
@@ -143,10 +160,16 @@ public class Room {
     return items;
   }
 
+  /**
+   * make a copy of a list of items inside the room.
+   * @return list of items inside room.
+   */
   public List<Item> getItemList() {
     List<Item> list = items.values().stream().toList();
     return list;
   }
 
-  public ArrayList<Direction> getDirections() { return directions; }
+  public ArrayList<Direction> getDirections() {
+    return directions;
+  }
 }

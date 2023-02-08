@@ -9,112 +9,165 @@ import java.util.List;
 public interface GameService {
 
   /**
-   * Let the user move the room in the given direction (if possible).
+   * let the user move in the selected direction if possible.
+   *
+   * @param direction direction the player wants to move to.
+   * @throws RoomFailedException if there is no room in the selected direction.
    */
   void move(Direction direction) throws RoomFailedException;
 
 
   /**
-   * Gets item for player.
-   *
+   * Picks up item from the room and adds it into player inventory.
    * if the Item is a Treasure, Scoreboard will be updated instead of being send to the inventory
    *
-   * @param itemId gets an item
-   * @return gives item to player
+   * @param itemId id of item to be picked up
+   * @return picked up item
    * @throws NoSuchItemFoundException if item not found.
-   * @throws NullPointerException if item cant be null.
    */
   Item pickUpItem(int itemId) throws NoSuchItemFoundException;
 
   /**
-   * Method to remove an item from the player inventory.
+   * removes item from player inventory and adds to the inventory of the current room.
    *
    * @param itemId the id of the item to be removed.
-   * @return the message, which is about the success or failure of the operation.
+   * @return removed item
+   * @throws NoSuchItemFoundException if item not found.
    */
   Item dropItem(int itemId) throws NoSuchItemFoundException;
 
-
+  /**
+   * Inspect the item in the inventory of the player, showing its item description and info.
+   *
+   * @param itemId id of the item to be inspected.
+   * @return info message of inspected item.
+   * @throws NoSuchItemFoundException if no such item found.
+   */
   String inspectItemInInventoryOfPlayer(int itemId) throws NoSuchItemFoundException;
 
   /**
-   * Inspect a door/pathway.
+   * inspect a direction to check if there is an open passage or not.
+   *
+   * @param direction direction to be inspected.
+   * @return inspect message of the door in the selected direction.
+   * @throws RoomFailedException if no room found.
    */
-  String inspect(Direction direction) throws RoomFailedException;;
+  String inspect(Direction direction) throws RoomFailedException;
 
   /**
-   * Let the user interact with the environment.
-   * (Solve puzzles)
+   * Lets the user interact with a door, trying to unlock it.
+   *
+   * @param direction direction to be interacted with.
+   * @param item item used for interaction.
+   * @return true if interaction was a success.
+   * @throws RoomFailedException if no such room was found.
    */
-  boolean interaction(Direction direction, Item item) throws RoomFailedException;;
+  boolean interaction(Direction direction, Item item) throws RoomFailedException;
 
   /**
-   * Let the user search through the room.
+   * Search current room for items.
+   *
+   * @return list of items in current room of player.
+   * @throws RoomFailedException if no such room is found.
    */
   List<Item> searchRoom() throws RoomFailedException;
 
 
   /**
-   * Method for setting the layout class.
+   * Method for setting the layout of the game.
+   *
    * @param layout the layout to be assigned.
    */
   void setLayout(Layout layout);
 
   /**
    * Setter for current layout. This will invoke the layoutGenerator, then the setLayout(Layout layout).
-   * @param newMap Map to be selected
-   * @param newSeed Seed for the Map
+   *
+   * @param newMap Map to be selected.
+   * @param newSeed Seed for the Map.
+   * @throws RoomFailedException if no such room is found.
+   * @throws InvalidSeedException if newSeed is invalid.
    */
   void setCurrentLayout(Map newMap, Seed newSeed) throws RoomFailedException, InvalidSeedException;
 
 
   /**
    * Sets the current player name to the new String given if it is not null.
+   *
    * @param name the new name.
    * @return if it changed the name, true, else false.
    */
   boolean setPlayerName(String name);
 
   /**
-   * Text to be given to the player at the start of the game.
+   * Text message for the player at the start of the game.
+   *
+   * @return start text for the player.
    */
   String startText();
 
   /**
    * Message to be given to the player after (probably) every action
    * and every time the player moves between rooms.
+   *
+   * @return message to player of current room description.
    */
   String check();
 
   /**
-   * Returns current Score board
-   * @return int Score of Player
+   * sends inspect message to player.
+   *
+   * @param item item to be inspected.
+   * @param requester decides if the info comes from either Playerinventory, Roominventory or the interaction window.
    */
-  int getScore();
+  void inspectItem(Item item, CurrentScreenRequesting requester);
 
+  /**
+   * Adds callback listener to listener list.
+   *
+   * @param listener listener to be added.
+   */
   void addListener(OutputListener listener);
 
+  /**
+   * removes callback listener from listener list.
+   *
+   * @param listener listener to be removed.
+   */
   void removeListener(OutputListener listener);
+
+  /**
+   * initialize player and lists for smooth game building.
+   */
+  void startup();
+
+  /**
+   * start the game.
+   */
+  void start();
+
+  /**
+   * end the game.
+   */
+  void end();
+
+  /**
+   * reset all game data.
+   */
+  void reset();
 
   Player getPlayer();
 
   Room getCurrentRoom();
 
-  void startup();
+  String getPlayerName();
 
-  void start();
-
-  void end();
-
-  void reset();
-
-  public String getPlayerName();
-
-  public Map getMap();
-
-  void inspectItem(Item item, CurrentScreenRequesting requester);
+  Map getMap();
 
   List<Map> getMaps();
-  public ArrayList<OutputListener> getListeners();
+
+  ArrayList<OutputListener> getListeners();
+
+  int getScore();
 
 }

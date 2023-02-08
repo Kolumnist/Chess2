@@ -51,6 +51,9 @@ public class Game implements GameService {
   }
 
 
+  /**
+   *
+   */
   public void start() {
     for (OutputListener outputListener : listeners) {
       outputListener.listenerStart();
@@ -59,6 +62,9 @@ public class Game implements GameService {
     logger.info("Game started.");
   }
 
+  /**
+   *
+   */
   public void end() {
     for (OutputListener outputListener : listeners) {
       outputListener.listenerEnd();
@@ -67,6 +73,9 @@ public class Game implements GameService {
     reset();
   }
 
+  /**
+   *
+   */
   public void reset() {
     player.reset();
     score = 0;
@@ -158,7 +167,8 @@ public class Game implements GameService {
       for (OutputListener outputListener : listeners) {
         outputListener.sendOutputNavigation("There is no way in that direction.");
       }
-    } if (!stop) {
+    }
+    if (!stop) {
       for (OutputListener outputListener : listeners) {
         outputListener.sendOutputNavigation(message);
       }

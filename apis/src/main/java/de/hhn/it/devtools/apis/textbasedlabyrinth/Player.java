@@ -23,13 +23,16 @@ public class Player {
     inventory = new HashMap<>();
   }
 
-
+  /**
+   * adds item to player inventory.
+   * @param item item to be added.
+   */
   public void addItem(Item item) {
     inventory.put(item.getItemId(), item);
   }
 
   /**
-   * Javadoc.
+   * removes item from player inventory.
    *
    * @param itemId the item to be removed.
    * @throws NoSuchItemFoundException if the item is not contained.
@@ -45,25 +48,17 @@ public class Player {
   }
 
   /**
-   * Javadoc.
+   * Get item from player inventory.
    *
-   * @param itemId Item
-   * @return return
-   * @throws NoSuchItemFoundException exception
+   * @param itemId id of Item
+   * @return item
+   * @throws NoSuchItemFoundException if the item is not contained.
    */
   public Item getItem(int itemId) throws NoSuchItemFoundException {
     if (!inventory.containsKey(itemId)) {
       throw new NoSuchItemFoundException();
     }
     return inventory.get(itemId);
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   /**
@@ -85,6 +80,9 @@ public class Player {
     this.currentRoomOfPlayer = currentRoomOfPlayer;
   }
 
+  /**
+   * reset player inventory.
+   */
   public void reset() {
     inventory.clear();
   }
@@ -93,6 +91,10 @@ public class Player {
     return inventory;
   }
 
+  /**
+   *
+   * @return
+   */
   public HashMap<String, Item> getInventoryWithNames() {
     Set<Integer> keySet = inventory.keySet();
     HashMap<String, Item> items = new HashMap<>();
@@ -100,5 +102,13 @@ public class Player {
       items.put(inventory.get(i).getName(), inventory.get(i));
     }
     return items;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 }

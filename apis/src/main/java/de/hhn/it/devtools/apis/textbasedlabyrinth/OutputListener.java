@@ -7,7 +7,6 @@ import java.util.List;
  */
 public interface OutputListener {
 
-
     /**
      * Output to what is happening in the current room and what state it is right now.
      * @param output String to be output.
@@ -21,7 +20,6 @@ public interface OutputListener {
      */
     void sendOutputPlayer(String output);
 
-
     /**
      * Output about the state of the inventory and items inspected inside it.
      * Mainly for inspecting the items.
@@ -29,13 +27,11 @@ public interface OutputListener {
      */
     void sendOutputInventory(String output);
 
-
     /**
      * Output about where the player can go.
      * @param output string to be output.
      */
     void sendOutputNavigation(String output);
-
 
     /**
      * Output collected when player interacts with a door or obstacle.
@@ -43,6 +39,10 @@ public interface OutputListener {
      */
     void sendOutputPlayerInteract(String output);
 
+    /**
+     * Output collected when player interacts with an item.
+     * @param output string to be output.
+     */
     void sendOutputInteractItemName(String output);
 
 
@@ -52,22 +52,38 @@ public interface OutputListener {
      */
     void sendOutputPickUpItem(Item item);
 
-
     /**
      * Output collected when player drops an item.
      * @param item item that can give output.
      */
     void sendOutputDropItem(Item item);
 
-
     void listenerStart();
 
     void listenerMove();
 
+    /**
+     * Output collected when player inspects item in inventory.
+     * @param output that can give output.
+     */
     void outputInventoryItemInspect(String output);
+
+    /**
+     * Output collected when player inspects item in inventory.
+     * @param output that can give output.
+     */
     void outputInventoryItemName(String output);
 
+    /**
+     * Output collected when player inspects item lying in a room.
+     * @param output that can give output.
+     */
     void outputRoomItemInspect(String output);
+
+    /**
+     * Output collected when player inspects item name lying in a room.
+     * @param output that can give output.
+     */
     void outputRoomItemName(String output);
 
     void listenerInteract();
@@ -78,29 +94,29 @@ public interface OutputListener {
 
     void updateScore(int newScore);
 
-    public List<String> getOutputRoom();
+    List<String> getOutputRoom();
 
-    public List<String> getOutputPlayer();
+    List<String> getOutputPlayer();
 
-    public List<String> getOutputInventory();
+    List<String> getOutputInventory();
 
-    public List<String> getOutputNavigation();
+    List<String> getOutputNavigation();
 
-    public List<String> getOutputPlayerInteract();
+    List<String> getOutputPlayerInteract();
 
-    public List<String> getOutputInteractItemName();
+    List<String> getOutputInteractItemName();
 
-    public List<String> getOutputRoomItemName();
+    List<String> getOutputRoomItemName();
 
-    public List<String> getOutputRoomItemInspect();
+    List<String> getOutputRoomItemInspect();
 
-    public List<String> getOutputInventoryItemInspect();
+    List<String> getOutputInventoryItemInspect();
 
-    public List<String> getOutputInventoryItemName();
+    List<String> getOutputInventoryItemName();
 
-    public List<Item> getOutputPickUpItems();
+    List<Item> getOutputPickUpItems();
 
-    public List<Item> getOutputDropItems();
+    List<Item> getOutputDropItems();
 
-    public List<Integer> getOutputScores();
+    List<Integer> getOutputScores();
 }

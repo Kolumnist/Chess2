@@ -12,8 +12,11 @@ public class Item {
   protected boolean isTreasure;
 
   /**
-   * Every Item has an Item id, a name and a information.
+   * Item constructor.
    *
+   * @param id id of the item.
+   * @param name name of the item.
+   * @param info info of the item.
    */
   public Item(int id, String name, String info) {
     this.itemId = id;
@@ -36,10 +39,6 @@ public class Item {
 
   public boolean getIsTreasure(){
     return isTreasure;
-  }
-
-  public boolean getIsTrapActivator() {
-    return false;
   }
 
 }
