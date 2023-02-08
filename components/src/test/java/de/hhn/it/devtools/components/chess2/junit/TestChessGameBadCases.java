@@ -1,8 +1,12 @@
 package de.hhn.it.devtools.components.chess2.junit;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import de.hhn.it.devtools.apis.chess2.Board;
-import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.Chess2Service;
+import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.Field;
 import de.hhn.it.devtools.apis.chess2.FieldState;
 import de.hhn.it.devtools.apis.chess2.GameState;
@@ -15,13 +19,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TestChessGameBadCases {
 
   Chess2Service chess2Service;
@@ -47,6 +44,32 @@ public class TestChessGameBadCases {
     chess2Service.startNewGame();
 //Moving with a non piece field and moving to a field where I normally couldn't move
     assertEquals(GameState.RUNNING, chess2Service.getGameState());
+  }
+
+  @Test
+  @DisplayName("Try to end a game that has the wrong GameState")
+  public void testIllegalStateExceptionInEndGameBeforeGameStarted()
+      throws IllegalStateException {
+    Board board = chess2Service.startNewGame();
+    chess2Service.endGame();
+    assertThrows(de.hhn.it.devtools.apis.chess2.IllegalStateException.class,
+        () -> chess2Service.endGame());
+  }
+
+  @Test
+  @DisplayName("Try to move on the bear with the bear which should not be possible")
+  public void testInvalidMoveExceptionByMovingBearOnBear()
+      throws IllegalParameterException, InvalidMoveException, IllegalStateException {
+    Board board = chess2Service.startNewGame();
+    Coordinate[] possibleMoves = chess2Service.getPossibleMoves(new Coordinate(3, 0));
+    Coordinate bear = new Coordinate();
+    for (Field field : board.getFields()) {
+      bear = field.getFieldState() == FieldState.HAS_BEAR ? field.getCoordinate() : bear;
+    }
+    Coordinate finalBear1 = bear;
+    Coordinate finalBear2 = bear;
+    assertThrows(de.hhn.it.devtools.apis.chess2.InvalidMoveException.class,
+        () -> chess2Service.moveSelectedPiece(finalBear1, finalBear2));
   }
 
 }
