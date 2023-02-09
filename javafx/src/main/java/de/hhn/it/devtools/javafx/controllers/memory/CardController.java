@@ -33,6 +33,7 @@ public class CardController implements PictureCardListener {
   private final Label name;
   private final ImageView picture;
   private final Pane cover;
+  private int winCount;
 
 
   /**
@@ -41,7 +42,7 @@ public class CardController implements PictureCardListener {
    * @param pictureCardDescriptor the picture card descriptor the controller
    *                              hould be constructed for
    */
-  public CardController(PictureCardDescriptor pictureCardDescriptor, CardView view) {
+  public CardController(PictureCardDescriptor pictureCardDescriptor, CardView view, int winCount) {
     this.screenController = (MemoryScreenController) MemoryAttributeStore.getReference()
             .getAttribute(MemoryServiceController.SCREEN_CONTROLLER);
     this.memoryService = (SfsMemoryService) MemoryAttributeStore.getReference()
@@ -52,6 +53,7 @@ public class CardController implements PictureCardListener {
     this.name = view.name;
     this.picture = view.picture;
     this.cover = view.cover;
+    this.winCount = winCount;
 
     if (isNameCard(pictureCardDescriptor)) {
       initNameCard();
@@ -100,7 +102,7 @@ public class CardController implements PictureCardListener {
    */
   private void initPictureCard() {
     try {
-      picture.setImage(new Image(getPathByPictureReference(pictureCardDescriptor.getPictureRef())));
+      picture.setImage(new Image("file:" + getPathByPictureReference(pictureCardDescriptor.getPictureRef())));
     } catch (IllegalParameterException e) {
       e.printStackTrace();
     }
@@ -182,7 +184,7 @@ public class CardController implements PictureCardListener {
             view.setDisable(true);
             screenController.setGameScreenMessage("Cards match!");
           });
-          if (++cardMatched == 20) {
+          if (++cardMatched == winCount) {
             cardMatched = 0;
             Platform.runLater(screenController::gameWon);
           }

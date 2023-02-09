@@ -1,7 +1,6 @@
 package de.hhn.it.devtools.javafx.memory;
 
 import de.hhn.it.devtools.javafx.controllers.memory.DifficultyPopupController;
-import de.hhn.it.devtools.javafx.controllers.memory.MemoryScreenController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 

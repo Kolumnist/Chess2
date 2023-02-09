@@ -68,10 +68,10 @@ public class MemoryServiceController extends Controller implements Initializable
       e.printStackTrace();
     }
     try {
-      memoryService.addCardSet(fetchCardSets("easy"));
-      memoryService.addCardSet(fetchCardSets("medium"));
-      memoryService.addCardSet(fetchCardSets("hard"));
-      memoryService.addCardSet(fetchCardSets("veryhard"));
+      memoryService.addCardSet(fetchCardSets("easy", 3*4));
+      memoryService.addCardSet(fetchCardSets("medium",4*4));
+      memoryService.addCardSet(fetchCardSets("hard",5*4));
+      memoryService.addCardSet(fetchCardSets("veryhard",6*4));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -88,7 +88,7 @@ public class MemoryServiceController extends Controller implements Initializable
    * @param difficulty the chosen difficulty
    * @return CardSetDescriptor of the chosen difficulty
    */
-  public CardSetDescriptor fetchCardSets(String difficulty) {
+  public CardSetDescriptor fetchCardSets(String difficulty, int count) {
     //funktioniert nicht
     //File folder = new File(Objects.requireNonNull(getClass().getClassLoader()
     //  .getResource("/fxml/memory/pictures/sets/" + difficulty + "/")).getFile());
@@ -97,7 +97,7 @@ public class MemoryServiceController extends Controller implements Initializable
     //funktioniert für gradle run
     File folder = new File(getClass().getResource("/fxml/memory/pictures/sets/"+difficulty).getFile());
     HashMap<Integer, String> pictureReferences = new HashMap<>();
-    PictureCardDescriptor[] pictureCardDescriptors = new PictureCardDescriptor[5 * 4];
+    PictureCardDescriptor[] pictureCardDescriptors = new PictureCardDescriptor[count];
     int cnt = 0;
     int i;
     int j;

@@ -13,7 +13,7 @@ public class CardView extends Pane {
   public final ImageView picture;
   public final Pane cover;
 
-  public CardView(PictureCardDescriptor pictureCardDescriptor) {
+  public CardView(PictureCardDescriptor pictureCardDescriptor, int winCount) {
     this.setPrefSize(150, 120);
     this.setMaxSize(150, 120);
     this.setStyle("-fx-background-color: WHITE;"
@@ -33,7 +33,7 @@ public class CardView extends Pane {
     this.getChildren().add(name);
     this.getChildren().add(cover);
     name.setAlignment(Pos.CENTER);
-    controller = new CardController(pictureCardDescriptor, this);
+    controller = new CardController(pictureCardDescriptor, this, winCount);
     this.setOnMouseClicked(controller::onMouseClicked);
   }
 }
