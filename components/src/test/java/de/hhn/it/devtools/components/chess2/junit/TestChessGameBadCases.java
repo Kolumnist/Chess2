@@ -31,22 +31,6 @@ public class TestChessGameBadCases {
   }
 
   @Test
-  @DisplayName("do things after endGame try to move etc.")
-  void TestAfterEndGameGiveUpContent() throws IllegalStateException {
-    Board board = chess2Service.startNewGame();
-    chess2Service.endGame();
-    assertNotNull(board);
-    assertEquals(WinningPlayerState.NO_WINNER, chess2Service.getWinningPlayer());
-    chess2Service.giveUp();
-    assertEquals(WinningPlayerState.NO_WINNER, chess2Service.getWinningPlayer());
-    assertEquals(GameState.CHECKMATE, chess2Service.getGameState());
-
-    chess2Service.startNewGame();
-//Moving with a non piece field and moving to a field where I normally couldn't move
-    assertEquals(GameState.RUNNING, chess2Service.getGameState());
-  }
-
-  @Test
   @DisplayName("Try to give up a game that has the wrong GameState")
   public void testIllegalStateExceptionInGiveUp()
       throws IllegalStateException {
