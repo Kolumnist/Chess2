@@ -1,7 +1,5 @@
 package de.hhn.it.devtools.components.chess2.junit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import de.hhn.it.devtools.apis.chess2.Board;
@@ -9,10 +7,8 @@ import de.hhn.it.devtools.apis.chess2.Chess2Service;
 import de.hhn.it.devtools.apis.chess2.Coordinate;
 import de.hhn.it.devtools.apis.chess2.Field;
 import de.hhn.it.devtools.apis.chess2.FieldState;
-import de.hhn.it.devtools.apis.chess2.GameState;
 import de.hhn.it.devtools.apis.chess2.IllegalStateException;
 import de.hhn.it.devtools.apis.chess2.InvalidMoveException;
-import de.hhn.it.devtools.apis.chess2.WinningPlayerState;
 import de.hhn.it.devtools.apis.exceptions.IllegalParameterException;
 import de.hhn.it.devtools.components.chess2.ChessGame;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +43,7 @@ public class TestChessGameBadCases {
   @Test
   @DisplayName("Try to move on the bear with the bear which should not be possible")
   public void testInvalidMoveExceptionByMovingBearOnBear()
-      throws IllegalParameterException, InvalidMoveException, IllegalStateException {
+      throws IllegalStateException, IllegalParameterException {
     Board board = chess2Service.startNewGame();
     Coordinate[] possibleMoves = chess2Service.getPossibleMoves(new Coordinate(3, 0));
     Coordinate bear = new Coordinate();
