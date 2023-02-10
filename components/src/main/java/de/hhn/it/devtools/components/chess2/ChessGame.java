@@ -268,12 +268,8 @@ public class ChessGame implements Chess2Service {
   }
 
   @Override
-  public void endGame() throws IllegalStateException {
+  public void endGame() {
     logger.info("endGame");
-
-    if (gameState == GameState.CHECKMATE) {
-      throw new IllegalStateException();
-    }
 
     gameState = GameState.CHECKMATE;
     otherKingCoordinate = new Coordinate(3, 7);
@@ -287,11 +283,11 @@ public class ChessGame implements Chess2Service {
   }
 
   @Override
-  public void giveUp() {
+  public void giveUp() throws IllegalStateException {
     logger.info("giveUp");
 
     if (gameState == GameState.CHECKMATE || winState != WinningPlayerState.STILL_RUNNING) {
-      return;
+      throw new IllegalStateException();
     }
 
     gameState = GameState.CHECKMATE;

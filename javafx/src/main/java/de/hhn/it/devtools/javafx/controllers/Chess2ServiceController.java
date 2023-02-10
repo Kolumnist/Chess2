@@ -64,7 +64,7 @@ public class Chess2ServiceController extends Controller implements Initializable
   }
 
   @FXML
-  void onGiveUpButtonClick(ActionEvent event) {
+  void onGiveUpButtonClick(ActionEvent event) throws IllegalStateException {
     if (chessGame.getWinningPlayer() == WinningPlayerState.STILL_RUNNING) {
       chess2Service.giveUp();
       Chess2PopUp p = new Chess2PopUp();

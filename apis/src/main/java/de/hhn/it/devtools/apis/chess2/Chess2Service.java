@@ -20,15 +20,15 @@ public interface Chess2Service {
 
   /**
    * Destroys an instance of ChessGame and brings scene back to main menu.
-   *
-   * @throws IllegalStateException if the method gets called during a wrong state
    */
-  void endGame() throws IllegalStateException;
+  void endGame();
 
   /**
    * Calls the method showWinningPlayer and after that calls reset or returns to the main menu.
+   *
+   * @throws IllegalStateException if the method gets called during a wrong state
    */
-  void giveUp();
+  void giveUp() throws IllegalStateException;
 
   /**
    * Returns all positions with the state "HAS_CURRENT_PIECE".

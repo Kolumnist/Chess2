@@ -122,7 +122,7 @@ public class TestChessGameGoodCases {
 
   @Test
   @DisplayName("Player White gives Up and Black wins")
-  void TestWhiteGiveUp() {
+  void TestWhiteGiveUp() throws IllegalStateException {
     chess2Service.giveUp();
     assertEquals(WinningPlayerState.BLACK_WIN, chess2Service.getWinningPlayer());
   }
@@ -337,7 +337,7 @@ public class TestChessGameGoodCases {
 
   @Test
   @DisplayName("GameState after a Player gave up, should be CHECKMATE")
-  void TestGetGameState_WhenGivenUp() {
+  void TestGetGameState_WhenGivenUp() throws IllegalStateException {
     chess2Service.giveUp();
     GameState gameState = chess2Service.getGameState();
     assertEquals(GameState.CHECKMATE, gameState);
