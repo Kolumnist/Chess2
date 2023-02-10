@@ -47,13 +47,17 @@ public class TestChessGameBadCases {
   }
 
   @Test
-  @DisplayName("Try to end a game that has the wrong GameState")
-  public void testIllegalStateExceptionInEndGameBeforeGameStarted()
+  @DisplayName("Try to give up a game that has the wrong GameState")
+  public void testIllegalStateExceptionInGiveUp()
       throws IllegalStateException {
     Board board = chess2Service.startNewGame();
     chess2Service.endGame();
     assertThrows(de.hhn.it.devtools.apis.chess2.IllegalStateException.class,
-        () -> chess2Service.endGame());
+        () -> chess2Service.giveUp());
+    board = chess2Service.startNewGame();
+    chess2Service.giveUp();
+    assertThrows(de.hhn.it.devtools.apis.chess2.IllegalStateException.class,
+        () -> chess2Service.giveUp());
   }
 
   @Test
